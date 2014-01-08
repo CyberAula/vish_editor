@@ -87,7 +87,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Update UI when enter in a slideset
 	 */
 	var onEnterSlideset = function(slideset){
-		updateThumbnails(slideset);
+		V.Editor.Slides.updateThumbnail(slideset);
 		$("#bottomside").show();
 		
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
@@ -116,7 +116,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 
 		$("#bottomside").hide();
-		$("#subslide_selected > img").attr("src","");
+		$("#slideset_selected > img").attr("src","");
 
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
 		if(typeof slidesetCreator.onLeaveSlideset == "function"){
@@ -129,7 +129,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		_showSlideButtons(slideset);
 
 		//Mark slideset thumbnail as selected
-		$("#subslide_selected_img").addClass("selectedSlidesetThumbnail");
+		$("#slideset_selected_img").addClass("selectedSlidesetThumbnail");
 
 		var currentSubslide = getCurrentSubslide();
 		if(currentSubslide){
@@ -150,7 +150,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		_hideSlideButtons(slideset);
 
 		//Mark slideset thumbnail as unselected
-		$("#subslide_selected_img").removeClass("selectedSlidesetThumbnail");
+		$("#slideset_selected_img").removeClass("selectedSlidesetThumbnail");
 
 		//Unload slideset
 		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
@@ -246,13 +246,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		$(slide).find("img.help_in_slide:first").hide();
 	}
 
-	var updateThumbnails = function(slideset){
-		var thumbnailURL = V.Editor.Thumbnails.getThumbnailURL(slideset);
-		$("#subslide_selected > img").attr("src",thumbnailURL);
-		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(slideset);
-		$(slideThumbnail).attr("src",thumbnailURL);
-	}
-
 
 	/////////////////
 	// Events
@@ -280,7 +273,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		openSubslide					: openSubslide,
 		closeSubslideWithNumber			: closeSubslideWithNumber,
 		closeSubslide 					: closeSubslide,
-		updateThumbnails				: updateThumbnails,
 		onClickOpenSlideset				: onClickOpenSlideset
 	};
 

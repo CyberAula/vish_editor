@@ -54,7 +54,7 @@ VISH.Slides = (function(V,$,undefined){
 					break;
 			}
 		}
-	}
+	};
 
 	var updateSlideClass = function(slideNumber, className) {
 		var el = getSlideWithNumber(slideNumber);
@@ -94,7 +94,7 @@ VISH.Slides = (function(V,$,undefined){
 
 	var getSlides = function(){
 		return slideEls;
-	}
+	};
 
 	var setSlides = function(newSlideEls){
 		slideEls = newSlideEls;
@@ -103,31 +103,44 @@ VISH.Slides = (function(V,$,undefined){
 		$.each(slideEls, function(index, value) {
 			$(value).attr("slidenumber",index+1);
 		});
-	}
+	};
 
 	var getCurrentSlide = function(){
 		return slideEls[curSlideIndex];
-	}
+	};
 
-	var getCurrentSubSlide = function(){
-		if (curSubSlideId === null){
+	var getCurrentSubslide = function(){
+		if(V.Editing){
+			return V.Editor.Slideset.getCurrentSubslide();
+		}
+
+		if(curSubSlideId === null){
 			return null;
 		} else {
 			return $("#"+curSubSlideId);
 		}
-	}
+	};
+
+	var getTargetSlide = function(){
+		var cSubslide = getCurrentSubslide();
+		if((typeof cSubslide == "undefined") || (cSubslide === null)){
+			return getCurrentSlide();
+		} else {
+			return cSubslide;
+		}
+	};
 
 	var getCurrentSlideNumber = function(){
 		return curSlideIndex+1;
-	}
+	};
 
 	var setCurrentSlideNumber = function(currentSlideNumber){
 		_setCurrentSlideIndex(currentSlideNumber-1);
-	}
+	};
 
 	var _setCurrentSlideIndex = function(newCurSlideIndex){
 		curSlideIndex = newCurSlideIndex;
-	}
+	};
 
 	var getSlideWithNumber = function(slideNumber){
 		var no = slideNumber-1;
@@ -151,7 +164,7 @@ VISH.Slides = (function(V,$,undefined){
 		} else {
 			return 0;
 		}
-	}
+	};
 
 	var getSlidesQuantity = function(){
 		var slides = getSlides();
@@ -160,7 +173,7 @@ VISH.Slides = (function(V,$,undefined){
 		} else {
 			return 0;
 		}	
-	}
+	};
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
@@ -176,15 +189,15 @@ VISH.Slides = (function(V,$,undefined){
 			//slideEl is not a slide
 			return null;
 		}
-	}
+	};
 
 	var isCurrentFirstSlide = function(){
 		return curSlideIndex===0;
-	}
+	};
 
 	var isCurrentLastSlide = function(){
 		return curSlideIndex===slideEls.length-1;
-	}
+	};
 
 
 	/* Slide events */
@@ -295,7 +308,7 @@ VISH.Slides = (function(V,$,undefined){
 			updateSlides();
 			triggerEnterEvent(curSlideIndex+1);
 		}
-	}
+	};
   
    /**
 	* Go to the last slide
@@ -363,7 +376,7 @@ VISH.Slides = (function(V,$,undefined){
 		curSubSlideId = subSlideId;
 		$("#closeButton").hide();
 		//Open subslide will call V.ViewerAdapter.decideIfPageSwitcher();
-	}
+	};
 
 	var _onCloseSubslide = function(){
 		curSubSlideId = null;
@@ -376,7 +389,7 @@ VISH.Slides = (function(V,$,undefined){
 		} else {
 			V.ViewerAdapter.decideIfPageSwitcher();
 		}
-	}
+	};
 
 	var isSlideset = function(type){
 		switch(type){
@@ -386,7 +399,7 @@ VISH.Slides = (function(V,$,undefined){
 			default:
 				return false;
 		}
-	}
+	};
 
 	return {	
 			init          			: init,
@@ -394,7 +407,8 @@ VISH.Slides = (function(V,$,undefined){
 			getSlides 				: getSlides,
 			setSlides				: setSlides,
 			getCurrentSlide 		: getCurrentSlide,
-			getCurrentSubSlide 		: getCurrentSubSlide,
+			getCurrentSubslide 		: getCurrentSubslide,
+			getTargetSlide			: getTargetSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
 			setCurrentSlideNumber	: setCurrentSlideNumber,
 			getSlideWithNumber		: getSlideWithNumber,

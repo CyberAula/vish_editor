@@ -394,7 +394,27 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		} else {
 			removeSlide(V.Slides.getCurrentSlide());
 		}
-	}
+	};
+
+	var updateThumbnail = function(slide){
+		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(slide);
+		var thumbnailURL = V.Editor.Thumbnails.getThumbnailURL(slide);
+
+		//Capure load img error
+		$(slideThumbnail).error(function(response){
+			//Load the default image
+			_updateThumbnail(slide,slideThumbnail,V.Editor.Thumbnails.getDefaultThumbnailURL(slide));
+		});
+
+		_updateThumbnail(slide,slideThumbnail,thumbnailURL);
+	};
+
+	var _updateThumbnail = function(slide,slideThumbnail,thumbnailURL){
+		if(V.Editor.Slideset.isSlideset(slide)){
+			$("#slideset_selected > img").attr("src",thumbnailURL);
+		}
+		$(slideThumbnail).attr("src",thumbnailURL);
+	};
 
 	return {
 		showSlides				: showSlides,
@@ -411,6 +431,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		removeSubslide			: removeSubslide,
 		removeSlideKeyboard		: removeSlideKeyboard,
 		isSubslide				: isSubslide,
+		updateThumbnail			: updateThumbnail,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide
 	};
 

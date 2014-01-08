@@ -17,7 +17,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
 
-			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
+			$(document).on('click', '#slideset_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			
 			//Settings events
 			$(document).on('click', '#presentation_details_preview_thumbnail', V.Editor.Settings.onChangeThumbnailClicked);

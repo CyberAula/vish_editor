@@ -202,7 +202,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		// ViewBar
 		if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
-			if (V.Slides.getCurrentSubSlide()!==null){
+			if (V.Slides.getCurrentSubslide()!==null){
 				//Subslide active
 				$("#forward_arrow").hide();
 				$("#back_arrow").hide();

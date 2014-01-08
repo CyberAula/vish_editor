@@ -191,14 +191,12 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param style: optional param with the style, used in editing presentation
 	*/
 	var drawImage = function(image_url, area, style, hyperlink){
-		_drawImageInArea(image_url, area, style, hyperlink);
-	};
-
-	var _drawImageInArea = function(image_url, area, style, hyperlink){
 		var current_area;
+		var renderOnInit = false;
 
 		if(area){
 			current_area = area;
+			renderOnInit = true;
 		}	else {
 			current_area = V.Editor.getCurrentArea();
 		}
@@ -251,6 +249,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 			}
 		});
 
+		if(renderOnInit === false){
+			V.Editor.Slides.updateThumbnail(V.Slides.getTargetSlide());
+		};
 	};
 
 	var getAddContentMode = function(){

@@ -307,6 +307,7 @@ VISH.Editor = (function(V,$,undefined){
 			area.addClass("editable");
 			V.Editor.Tools.addTooltipToZone(area);
 			selectArea(null);
+			V.Editor.Slides.updateThumbnail(V.Slides.getTargetSlide());
 			$.fancybox.close();
 		}
 		options.buttons = [button1,button2];
@@ -351,7 +352,6 @@ VISH.Editor = (function(V,$,undefined){
 	 * Add class 'preventNoselectable' to a element to never call _onNoSelectableClicked
 	 * Add class 'selectable' to a element to call onSelectableClicked and never call _onNoSelectableClicked
 	*/
-
 
 	/**
 	* function called when user clicks on template zone with class selectable

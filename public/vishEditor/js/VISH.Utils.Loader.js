@@ -46,7 +46,7 @@ VISH.Utils.Loader = (function(V,undefined){
 						options.callback();
 					}
 				}
-			})
+			});
 			$(image).error(function(response){
 				if((options)&&(options.defaultOnError)){
 					//Try to load the default image
@@ -60,7 +60,7 @@ VISH.Utils.Loader = (function(V,undefined){
 						}
 
 						//Only return when the first time we load a default source
-						//The same image will call load o error callback again.
+						//The same image will call load or error callback again.
 						return;
 					}
 				}
@@ -74,7 +74,7 @@ VISH.Utils.Loader = (function(V,undefined){
 					}
 				}
 				
-			})
+			});
 		});
 	}
 
