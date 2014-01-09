@@ -12,6 +12,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	//State vars
 	var lastSelectedSlideThumbnail = undefined;
+	var lastSelectedSubslideThumbnail = undefined;
 	
 	var init = function(){
 	}
@@ -163,6 +164,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var moveThumbnailsToSlide = function(slideNumber){
 		var element = $("img.image_barbutton[slideNumber=" + slideNumber + "]");
 		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
+	}
+
+	var moveThumbnailsToSubslide = function(slideNumber){
+		var element = $("#subslides_list img.image_barbutton[slideNumber=" + slideNumber + "]").parent();
+		V.Editor.Scrollbar.goToElement(slidesetThumbnailsDivId,element);
 	}
   
 	var getThumbnailForSlide = function(slide){
@@ -342,7 +348,22 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var selectSubslideThumbnail = function(no){
 		$("#subslides_list img.image_barbutton").removeClass("selectedSubslideThumbnail");
+		if(no===null){
+			//Used to unselect all subslide thumbnails
+			return;
+		}
 		$("#subslides_list img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSubslideThumbnail");
+
+		var advance = ((lastSelectedSubslideThumbnail===undefined)||(no > lastSelectedSubslideThumbnail));
+		lastSelectedSubslideThumbnail = no;
+		var subslide = V.Slides.getSubslideWithNumber(V.Slides.getCurrentSlide(),no);
+		if(!isThumbnailVisible(subslide)){
+			if(advance){
+				moveThumbnailsToSubslide(Math.max(no-7,1));
+			} else {
+				moveThumbnailsToSubslide(no);
+			}
+		};
 	};
 
 	var isThumbnailVisible = function(slide){
@@ -354,7 +375,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		}
 		if(V.Editor.Slides.isSubslide(slide)){
 			var offsetLeft = offset.left;
-			return ((offsetTop > 466) && (offsetTop < 1119));
+			return ((offsetLeft > 466) && (offsetLeft < 1119));
 		} else {
 			//Standard slide
 			var offsetTop = offset.top;
@@ -363,16 +384,17 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	};
 
 	return {
-		init              		: init,
-		redrawThumbnails  		: redrawThumbnails,
-		selectThumbnail	  		: selectThumbnail,
-		moveThumbnailsToSlide	: moveThumbnailsToSlide,
-		drawSlidesetThumbnails  : drawSlidesetThumbnails,
-		selectSubslideThumbnail	: selectSubslideThumbnail,
-		getThumbnailURL			: getThumbnailURL,
-		getDefaultThumbnailURL 	: getDefaultThumbnailURL,
-		getThumbnailForSlide 	: getThumbnailForSlide,
-		isThumbnailVisible		: isThumbnailVisible
+		init              			: init,
+		redrawThumbnails  			: redrawThumbnails,
+		drawSlidesetThumbnails  	: drawSlidesetThumbnails,
+		selectThumbnail	  			: selectThumbnail,
+		selectSubslideThumbnail		: selectSubslideThumbnail,
+		moveThumbnailsToSlide		: moveThumbnailsToSlide,
+		moveThumbnailsToSubslide	: moveThumbnailsToSubslide,
+		getThumbnailURL				: getThumbnailURL,
+		getDefaultThumbnailURL 		: getDefaultThumbnailURL,
+		getThumbnailForSlide 		: getThumbnailForSlide,
+		isThumbnailVisible			: isThumbnailVisible
 	}
 
 }) (VISH, jQuery);

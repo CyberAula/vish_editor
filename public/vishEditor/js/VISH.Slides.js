@@ -175,6 +175,10 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
+	var getSubslideWithNumber = function(slideset,subslideNumber){
+		return $(slideset).children("article[slidenumber='" + subslideNumber + "']");
+	};
+
 	var getNumberOfSlide = function(slide){
 		if(slideEls){
 			var result = 0;
@@ -438,6 +442,7 @@ VISH.Slides = (function(V,$,undefined){
 			getTargetSlideNumber	: getTargetSlideNumber,
 			setCurrentSlideNumber	: setCurrentSlideNumber,
 			getSlideWithNumber		: getSlideWithNumber,
+			getSubslideWithNumber	: getSubslideWithNumber,
 			getNumberOfSlide		: getNumberOfSlide,
 			getSlidesQuantity		: getSlidesQuantity,
 			getSlideType 			: getSlideType,

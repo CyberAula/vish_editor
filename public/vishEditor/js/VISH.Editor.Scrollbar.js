@@ -81,7 +81,7 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 	};
   
 	var insertElement = function(containerId,element,posc){
-	}
+	};
 
 	return {
 		createScrollbar	  : createScrollbar,
