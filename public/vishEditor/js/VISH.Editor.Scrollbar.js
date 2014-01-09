@@ -78,7 +78,7 @@ VISH.Editor.Scrollbar = (function(V,$,undefined){
 		if(!hasId){
 			$(element).removeAttr("id",tmpId);
 		}
-	}
+	};
   
 	var insertElement = function(containerId,element,posc){
 	}

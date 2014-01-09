@@ -9,8 +9,11 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	//Tmp vars
 	var redrawThumbnailsCallback;
 	var drawSlidesetThumbnailsCallback;
+
+	//State vars
+	var lastSelectedSlideThumbnail = undefined;
 	
-	var init = function(){ 
+	var init = function(){
 	}
 	 
 	var redrawThumbnails = function(successCallback){
@@ -144,12 +147,19 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var selectThumbnail = function(no){
 		$("#slides_list img.image_barbutton").removeClass("selectedSlideThumbnail");
 		$("#slides_list img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
+
+		var advance = ((lastSelectedSlideThumbnail===undefined)||(no > lastSelectedSlideThumbnail));
+		lastSelectedSlideThumbnail = no;
+		var slide = V.Slides.getSlideWithNumber(no);
+		if(!isThumbnailVisible(slide)){
+			if(advance){
+				moveThumbnailsToSlide(Math.max(no-5,1));
+			} else {
+				moveThumbnailsToSlide(no);
+			}
+		};
 	};
 
-
-    /*
-     * SlideNumber can be also the slide element itself
-     */
 	var moveThumbnailsToSlide = function(slideNumber){
 		var element = $("img.image_barbutton[slideNumber=" + slideNumber + "]");
 		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
@@ -335,6 +345,23 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		$("#subslides_list img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSubslideThumbnail");
 	};
 
+	var isThumbnailVisible = function(slide){
+		var slideThumbnail = getThumbnailForSlide(slide);
+		var offset = $(slideThumbnail).offset();
+		if((typeof offset == "undefined")||(offset===null)){
+			//Transitory states...
+			return true;
+		}
+		if(V.Editor.Slides.isSubslide(slide)){
+			var offsetLeft = offset.left;
+			return ((offsetTop > 466) && (offsetTop < 1119));
+		} else {
+			//Standard slide
+			var offsetTop = offset.top;
+			return ((offsetTop > 132) && (offsetTop < 667));
+		}
+	};
+
 	return {
 		init              		: init,
 		redrawThumbnails  		: redrawThumbnails,
@@ -344,7 +371,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		selectSubslideThumbnail	: selectSubslideThumbnail,
 		getThumbnailURL			: getThumbnailURL,
 		getDefaultThumbnailURL 	: getDefaultThumbnailURL,
-		getThumbnailForSlide 	: getThumbnailForSlide
+		getThumbnailForSlide 	: getThumbnailForSlide,
+		isThumbnailVisible		: isThumbnailVisible
 	}
 
 }) (VISH, jQuery);
