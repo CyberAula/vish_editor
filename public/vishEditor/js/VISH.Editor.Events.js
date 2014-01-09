@@ -436,6 +436,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
 		case 39: // right arrow
+			if(V.Editor.Slides.isSlideFocused()){
+				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
+					V.Editor.Slides.forwardOneSubslide();
+				}
+				event.preventDefault();
+			}
+			break;
 		case 40: //down arrow	    
 			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
@@ -447,6 +454,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;
 		case 37: // left arrow
+			if(V.Editor.Slides.isSlideFocused()){
+				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
+					V.Editor.Slides.backwardOneSubslide();
+				}
+				event.preventDefault();
+			}
+			break;
 		case 38: //up arrow	
 			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){

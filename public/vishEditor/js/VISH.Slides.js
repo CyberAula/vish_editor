@@ -134,6 +134,30 @@ VISH.Slides = (function(V,$,undefined){
 		return curSlideIndex+1;
 	};
 
+	var getCurrentSubslideNumber = function(){
+		var cSubslide = getCurrentSubslide();
+		if((typeof cSubslide == "undefined") || (cSubslide === null)){
+			return undefined;
+		}
+		var cSubslideNumber = $(cSubslide).attr("slidenumber");
+		if(typeof cSubslideNumber == "string"){
+			try {
+				return parseInt(cSubslideNumber);
+			} catch(err) {
+				return undefined;
+			}
+		}
+	};
+
+	var getTargetSlideNumber = function(){
+		var cSubslide = getCurrentSubslide();
+		if((typeof cSubslide == "undefined") || (cSubslide === null)){
+			return getCurrentSubslideNumber();
+		} else {
+			return getCurrentSlideNumber();
+		}
+	};
+
 	var setCurrentSlideNumber = function(currentSlideNumber){
 		_setCurrentSlideIndex(currentSlideNumber-1);
 	};
@@ -391,7 +415,7 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var isSlideset = function(type){
+	var isSlidesetType = function(type){
 		switch(type){
 			case V.Constant.FLASHCARD:
 			case V.Constant.VTOUR:
@@ -410,6 +434,8 @@ VISH.Slides = (function(V,$,undefined){
 			getCurrentSubslide 		: getCurrentSubslide,
 			getTargetSlide			: getTargetSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
+			getCurrentSubslideNumber	: getCurrentSubslideNumber,
+			getTargetSlideNumber	: getTargetSlideNumber,
 			setCurrentSlideNumber	: setCurrentSlideNumber,
 			getSlideWithNumber		: getSlideWithNumber,
 			getNumberOfSlide		: getNumberOfSlide,
@@ -424,7 +450,7 @@ VISH.Slides = (function(V,$,undefined){
 			lastSlide				: lastSlide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			isSlideset				: isSlideset,
+			isSlidesetType			: isSlidesetType,
 			triggerEnterEvent 		: triggerEnterEvent,
 			triggerEnterEventById	: triggerEnterEventById,
 			triggerLeaveEvent 		: triggerLeaveEvent,

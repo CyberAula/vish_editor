@@ -58,7 +58,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 */
 	var isSlideset = function(obj){
 		type = _getTypeIfPresent(obj);
-		return V.Slides.isSlideset(type);
+		return V.Slides.isSlidesetType(type);
 	}
 
 	var _getTypeIfPresent = function(obj){
@@ -76,6 +76,10 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 
 	var setCurrentSubslide = function(newSubslide){
 		currentSubslide = newSubslide;
+	};
+
+	var getSubslidesQuantity = function(slideset){
+		return $(slideset).children("article").length;
 	};
 
 
@@ -273,7 +277,8 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		openSubslide					: openSubslide,
 		closeSubslideWithNumber			: closeSubslideWithNumber,
 		closeSubslide 					: closeSubslide,
-		onClickOpenSlideset				: onClickOpenSlideset
+		onClickOpenSlideset				: onClickOpenSlideset,
+		getSubslidesQuantity			: getSubslidesQuantity
 	};
 
 

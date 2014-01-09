@@ -38,6 +38,59 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	};
 
 
+	/* Subslide Movement (with keyboard) */
+
+	/**
+	 * Function to go to next subslide in a slideset
+	 */
+	var forwardOneSubslide = function(event){
+		moveSubslides(1);
+	};
+
+   /**
+	* Function to go to previous subslide in a slideset
+	*/
+	var backwardOneSubslide = function(){
+		moveSubslides(-1);
+	};
+
+   /**
+	* Function to move n subslides and change the thumbnails and focus
+	* n > 0 (advance subslides)
+	* n < 0 (go back)
+	*/
+	var moveSubslides = function(n){
+		var cSlide = V.Slides.getCurrentSlide();
+		if(!V.Editor.Slideset.isSlideset(cSlide)){
+			return;
+		}
+		var cSubslideNumber = V.Slides.getCurrentSubslideNumber();
+		if(typeof cSubslideNumber == "undefined"){
+			cSubslideNumber = 0;
+		}
+		//Get subslides quantity
+		var subslidesQuantity = V.Editor.Slideset.getSubslidesQuantity(cSlide);
+
+		var no = cSubslideNumber+n;
+		var cno = Math.min(Math.max(0,no),subslidesQuantity);
+		if(no===cno){
+			goToSubslide(no);
+		}
+	};
+
+   /**
+	* Go to the subslide no
+	*/
+	var goToSubslide = function(no){
+		if(no===0){
+			//Select slideset
+			V.Editor.Slideset.onClickOpenSlideset();
+		} else {
+			V.Editor.Slideset.openSubslideWithNumber(no);
+		}
+	};
+
+
 	/*
 	 *	Move slide_to_move after or before reference_slide.
 	 *  Movement param posible values: "after", "before"
@@ -432,7 +485,11 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		removeSlideKeyboard		: removeSlideKeyboard,
 		isSubslide				: isSubslide,
 		updateThumbnail			: updateThumbnail,
-		copyTextAreasOfSlide	: copyTextAreasOfSlide
-	};
+		copyTextAreasOfSlide	: copyTextAreasOfSlide,
+		forwardOneSubslide		: forwardOneSubslide,
+		backwardOneSubslide		: backwardOneSubslide,
+		moveSubslides			: moveSubslides,
+		goToSubslide			: goToSubslide
+	}; 
 
 }) (VISH, jQuery);
