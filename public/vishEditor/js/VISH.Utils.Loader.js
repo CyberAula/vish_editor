@@ -102,25 +102,37 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 
 		var head = document.getElementsByTagName('head')[0];
-		if(head) {
+		if(head){
 			var script = document.createElement('script');
 			script.setAttribute('src',scriptSrc);
 			script.setAttribute('type','text/javascript');
 
+			//Only call callback once
+			var callbackCalled = false;
+
+			var callCallback = function(){
+				if(!callbackCalled){
+					if(typeof callback == "function"){
+						callbackCalled = true;
+						callback();
+					}
+				}
+			};
+
 			var loadFunction = function(){
 				if((this.readyState == 'complete')||(this.readyState == 'loaded')){
-					callback();
+					callCallback();
 				}
 			};
 			//calling a function after the js is loaded (IE)
 			script.onreadystatechange = loadFunction;
 
 			//calling a function after the js is loaded (Firefox & GChrome)
-			script.onload = callback;
+			script.onload = callCallback;
 
 			head.appendChild(script);
 		}
-	}
+	};
 
 	var loadGoogleLibrary = function(scriptSrc,callback){
 		if(typeof callback === "function"){
@@ -135,14 +147,14 @@ VISH.Utils.Loader = (function(V,undefined){
 			// We can not use this callback, because the loaded script would load more scripts internally
 			// So, despite the script is loaded, the full library may be not
 		});
-	}
+	};
 
 	var onGoogleLibraryLoaded = function(){
 		if(typeof _loadGoogleLibraryCallback === "function"){
 			_loadGoogleLibraryCallback();
 		}
 		_loadGoogleLibraryCallback = undefined;
-	}
+	};
 
 	/**
 	* Function to dinamically add a css
@@ -158,23 +170,28 @@ VISH.Utils.Loader = (function(V,undefined){
 		//Callback
 		if(typeof callback == "function"){
 
-			//calling a function after the css is loaded (Firefox & Google Chrome)
-			link.onload = function(){
-				callback();
+			//Only call callback once
+			var callbackCalled = false;
+
+			var callCallback = function(){
+				if(!callbackCalled){
+					callbackCalled = true;
+					callback();
+				}
 			}
 
-			link.onerror = function(){
-				callback();
-			}
+			//calling a function after the css is loaded (Firefox & Google Chrome)
+			link.onload = callCallback;
+			link.onerror = callCallback;
 
 			var loadFunction = function(){
 				if((this.readyState == 'complete')||(this.readyState == 'loaded')){
-					callback();
+					callCallback();
 				}
 			};
 			//calling a function after the css is loaded (IE)
 			link.onreadystatechange = loadFunction;
-		}
+		};
 
 		head.appendChild(link);
 	};
