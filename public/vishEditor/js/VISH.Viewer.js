@@ -130,8 +130,15 @@ VISH.Viewer = (function(V,$,undefined){
 			} else if (myDoc.documentElement.mozRequestFullScreen) {
 				myElem.mozRequestFullScreen();
 			} else if (myDoc.documentElement.webkitRequestFullScreen) {
-				myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
-			}	    
+				myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+				setTimeout(function(){
+					if (!myDoc.webkitCurrentFullScreenElement){
+						// Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
+						//Fix known Safari bug
+						myElem.webkitRequestFullScreen();
+					}
+				},250);
+			}
 		} else {
 			if (myDoc.cancelFullScreen) {
 				myDoc.cancelFullScreen();
