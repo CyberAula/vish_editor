@@ -929,7 +929,7 @@ VISH.Utils = (function(V,undefined){
 
 		var splitedHash = location.hash.split("?");
 		if(splitedHash.length > 1){
-			newHash = newHash + splitedHash[1];
+			newHash = newHash + "?" + splitedHash[1];
 		}
 
 		location.hash = newHash;
