@@ -32,13 +32,13 @@ VISH.Recommendations = (function(V,$,undefined){
 		      'onComplete'  : function(data) {
 		      		$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
 		      		$("#fancybox-wrap").css("margin-top", "0px");
-		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
 		      		_isRecVisible = true;
 		      },
 		      'onClosed' : function(data) {
 		      		$("#fancybox-outer").css("background", "white");
 		      		$("#fancybox-wrap").css("margin-top", "-14px");
-		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
 		      		_isRecVisible = false;
 		      }
 		});
