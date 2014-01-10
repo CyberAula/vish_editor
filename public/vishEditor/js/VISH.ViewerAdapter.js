@@ -12,6 +12,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var isInExternalSite;
 	var isInVishSite;
 
+	//Uniq mode (to show only one slide of an excursion)
+	var uniqMode;
+
 	//Fullscreen fallbacks
 	var enter_fs_button;
 	var enter_fs_url;
@@ -101,6 +104,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 		}
 
+		//Determine uniq mode
+		var hashParams = V.Utils.getHashParams();
+		if(hashParams["uniq"] === "true"){
+			uniqMode = true;
+		} else {
+			uniqMode = false;
+		}
+
 		//////////////
 		//Restrictions
 		/////////////
@@ -119,6 +130,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 		}
 
+		//Uniq mode
+		if(uniqMode){
+			showViewbar = false;
+		}
 
 		////////////////
 		//Init interface

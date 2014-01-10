@@ -877,7 +877,7 @@ VISH.Utils = (function(V,undefined){
 
 	var updateHash = function(){
 		var location = _getLocationForHash();
-		location.hash = ('#' + (V.Slides.getCurrentSlideNumber()));
+		location.hash = ('#' + V.Slides.getCurrentSlideNumber() + location.hash.substr(2,location.hash.length));
 	};
 
 	var getSlideNumberFromHash = function(){
@@ -886,7 +886,7 @@ VISH.Utils = (function(V,undefined){
 			if(typeof location == "undefined"){
 				return;
 			}
-			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.substr(1))));
+			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.substr(1,1))));
 			if(isNaN(sNumber)){
 				return undefined;
 			} else {
@@ -895,6 +895,27 @@ VISH.Utils = (function(V,undefined){
 		} catch(err){
 			return undefined;
 		}
+	};
+
+	var getHashParams = function(){
+		var params = {};
+
+		// var location = _getLocationForHash();
+		var location = window.top.location;
+		var splitHash = location.hash.split("?");
+		if (splitHash.length > 1) {
+			var hashParams = splitHash[1];
+			var splitParams = hashParams.split("&");
+			var sPL = splitParams.length;
+			for(var i=0; i<sPL; i++){
+				var paramInHash = splitParams[i];
+				var splitParamInHash = paramInHash.split("=");
+				if(splitParamInHash.length === 2){
+					params[splitParamInHash[0]] = splitParamInHash[1];
+				}
+			}
+		}
+		return params;
 	};
 
 	var _getLocationForHash = function(){
@@ -932,6 +953,7 @@ VISH.Utils = (function(V,undefined){
 		showPNotValidDialog		: showPNotValidDialog,
 		isObseleteVersion		: isObseleteVersion,
 		updateHash				: updateHash,
+		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash
 	};
 
