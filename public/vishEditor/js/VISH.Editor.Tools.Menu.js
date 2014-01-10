@@ -48,6 +48,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			var options = V.Utils.getOptions();
 			//Check exit option in menu
 			if(typeof options.exitURL != "string"){
+				V.exitPath = options.exitURL;
 				$(".menu_option.menu_action[action='exit']").parent().hide();
 			}
 			
@@ -299,7 +300,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _exitFromVE = function(){
 		V.Editor.Events.allowExitWithoutConfirmation();
-		window.top.location.href = V.Utils.getOptions().exitURL;
+		window.top.location.href = V.exitPath;
 	}
 
 	var insertSmartcard = function(){

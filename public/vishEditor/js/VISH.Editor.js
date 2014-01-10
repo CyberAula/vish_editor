@@ -719,6 +719,12 @@ VISH.Editor = (function(V,$,undefined){
 									}
 								}
 							}
+						} else {
+							//Order == "unpublish"
+							if((typeof data != "undefined")&&(data.exitPath)){
+								//Update exit path
+								V.exitPath = data.exitPath;
+							}
 						}
 						if(typeof successCallback == "function"){
 							successCallback(data);
