@@ -899,10 +899,27 @@ VISH.Utils = (function(V,undefined){
 
 	var getHashParams = function(){
 		var params = {};
+		var hash;
 
-		// var location = _getLocationForHash();
-		var location = window.top.location;
-		var splitHash = location.hash.split("?");
+		if(V.Status.getIsInIframe()){
+			//Get params always from parent (if possible)
+			try {
+				if(typeof window.parent.location.href === "undefined"){
+					return params;
+				}
+				var iframe = window.frameElement;
+				var hash = $(iframe).attr("src").split("#").pop();
+				if(hash!=""){
+					hash = "#" + hash;
+				}
+			} catch (err){
+				return params;
+			}
+		} else {
+			hash = window.location.hash;
+		}
+		
+		var splitHash = hash.split("?");
 		if (splitHash.length > 1) {
 			var hashParams = splitHash[1];
 			var splitParams = hashParams.split("&");
@@ -920,7 +937,7 @@ VISH.Utils = (function(V,undefined){
 
 	var _getLocationForHash = function(){
 		if(!V.Status.getIsInIframe()){
-			return location;
+			return window.location;
 		} else if(V.Status.getIsInVishSite() || V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
 			return window.top.location;
 		} else {
