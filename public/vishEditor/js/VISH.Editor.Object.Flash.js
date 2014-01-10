@@ -18,6 +18,7 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	  var embedTag = document.createElement('embed');
 	  embedTag.setAttribute('id', idToResize );
 	  embedTag.setAttribute('class', template + "_object");
+	  src = V.Utils.addParamToUrl(src,"wmode","opaque");
 	  embedTag.setAttribute('src', src);
 	  embedTag.setAttribute('wmode', 'opaque');
 	  $(embedDiv).append(embedTag); 
