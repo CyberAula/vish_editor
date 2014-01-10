@@ -873,6 +873,41 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
+	/* Hash Management */
+
+	var updateHash = function(){
+		var location = _getLocationForHash();
+		location.hash = ('#' + (V.Slides.getCurrentSlideNumber()));
+	};
+
+	var getSlideNumberFromHash = function(){
+		try {
+			var location = _getLocationForHash();
+			if(typeof location == "undefined"){
+				return;
+			}
+			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.substr(1))));
+			if(isNaN(sNumber)){
+				return undefined;
+			} else {
+				return sNumber;
+			}
+		} catch(err){
+			return undefined;
+		}
+	};
+
+	var _getLocationForHash = function(){
+		if(!V.Status.getIsInIframe()){
+			return location;
+		} else if(V.Status.getIsInVishSite() || V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
+			return window.top.location;
+		} else {
+			return undefined;
+		}
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -895,7 +930,9 @@ VISH.Utils = (function(V,undefined){
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog,
-		isObseleteVersion		: isObseleteVersion
+		isObseleteVersion		: isObseleteVersion,
+		updateHash				: updateHash,
+		getSlideNumberFromHash	: getSlideNumberFromHash
 	};
 
 }) (VISH);

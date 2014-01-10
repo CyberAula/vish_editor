@@ -1,8 +1,22 @@
 VISH.Status = (function(V,$,undefined){
 	var _device;
+
+	//In an iframe or not
 	var _isInIframe;
+	//In the same domain (no iframe or embed in the same domain) or not
 	var _isAnotherDomain;
+
+	//Online or offline
 	var _isOnline;
+
+	//SCORM Package (same domain but external site)
+	var _scorm;
+
+	//External or Internal site
+	var _isInExternalSite;
+	var _isInVishSite;
+
+	//Mode
 	var _isSlave;
 	var _isPreventDefault;
 
@@ -14,6 +28,7 @@ VISH.Status = (function(V,$,undefined){
 	var init = function(callback){
 		_checkIframe();
 		_checkDomain();
+		_checkSite();
 		_isVEFocused = false;
 		_isWindowFocused = false;
 		_isCKEditorInstanceFocused = false;
@@ -36,7 +51,7 @@ VISH.Status = (function(V,$,undefined){
 	var _checkIframe = function(){
 		_isInIframe = ((window.location != window.parent.location) ? true : false);
 		return _isInIframe;
-	}
+	};
 
    /*
 	* Use to see if we are embeded in another domain
@@ -65,7 +80,24 @@ VISH.Status = (function(V,$,undefined){
 		}
 
 		return _isAnotherDomain;
-	}
+	};
+
+   /*
+	* Use to see if we are inside an iframe
+	*/
+	var _checkSite = function(){
+		var options = V.Utils.getOptions();
+
+		//SCORM package
+		if(typeof options["scorm"] == "boolean"){
+			_scorm = options["scorm"];
+		} else {
+			_scorm = false;
+		}
+
+		_isInExternalSite = ((_isAnotherDomain)||(_scorm));
+		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
+	};
 
 
 	/*
@@ -131,6 +163,18 @@ VISH.Status = (function(V,$,undefined){
 
 	var isOnline = function(){
 		return _isOnline;
+	};
+
+	var getIsScorm = function(){
+		return _scorm;
+	};
+
+	var getIsInExternalSite = function(){
+		return _isInExternalSite;
+	};
+
+	var getIsInVishSite = function(){
+		return _isInVishSite;
 	};
 
 	var isSlaveMode = function(){
@@ -215,6 +259,9 @@ VISH.Status = (function(V,$,undefined){
 		getIsEmbed 					: getIsEmbed,
 		getIsInIframe				: getIsInIframe,
 		getIframe					: getIframe,
+		getIsScorm					: getIsScorm,
+		getIsInExternalSite			: getIsInExternalSite,
+		getIsInVishSite				: getIsInVishSite,
 		isOnline 					: isOnline,
 		isSlaveMode 				: isSlaveMode,
 		setSlaveMode				: setSlaveMode,

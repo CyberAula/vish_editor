@@ -83,9 +83,10 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferAnimationLoaded = function(options,presentation){
+		V.Slides.updateCurrentSlideFromHash();
 		//we have to update slides AFTER load theme and before anything
 		//This way we prevent undesired behaviours 
-		V.Slides.updateSlides(); 
+		V.Slides.updateSlides();
 
 		V.Quiz.init(); //initQuizAfterRender
 
@@ -105,7 +106,7 @@ VISH.Viewer = (function(V,$,undefined){
 			//Try to win focus
 			window.focus();
 		}
-	}
+	};
 
 
 	/**
@@ -267,15 +268,16 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 	};
 
+
 	return {
-		init 					: init,
-		toggleFullScreen 		: toggleFullScreen, 
-		getOptions				: getOptions,
-		updateSlideCounter		: updateSlideCounter,
-		getCurrentPresentation	: getCurrentPresentation,
-		getPresentationType		: getPresentationType,
-		onSlideEnterViewer		: onSlideEnterViewer,
-		onSlideLeaveViewer		: onSlideLeaveViewer
+		init 						: init,
+		toggleFullScreen 			: toggleFullScreen, 
+		getOptions					: getOptions,
+		updateSlideCounter			: updateSlideCounter,
+		getCurrentPresentation		: getCurrentPresentation,
+		getPresentationType			: getPresentationType,
+		onSlideEnterViewer			: onSlideEnterViewer,
+		onSlideLeaveViewer			: onSlideLeaveViewer
 	};
 
 }) (VISH,jQuery);

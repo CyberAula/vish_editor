@@ -9,7 +9,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var embed;
 	var scorm;
 	var showViewbar;
-	var isInexternalSite;
+	var isInExternalSite;
 	var isInVishSite;
 
 	//Fullscreen fallbacks
@@ -42,6 +42,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		embed = V.Status.getIsEmbed();
 		showViewbar = _defaultViewbar();
 
+		//SCORM package
+		scorm = V.Status.getIsScorm();
+
+		//External or internal site
+		isInExternalSite = V.Status.getIsInExternalSite();
+		isInVishSite = V.Status.getIsInVishSite();
+
 		if(options){
 			//Decide if we must render the presentation in fullscreen mode
 			if(typeof render_full != "boolean"){
@@ -49,11 +56,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 			if(typeof options["preview"] == "boolean"){
 				is_preview = options["preview"];
-			}
-
-			//SCORM package
-			if(typeof options["scorm"] == "boolean"){
-				scorm = options["scorm"];
 			}
 
 			//Close button
@@ -89,11 +91,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			exit_fs_button = false;
 			fs_button = false;
 			can_use_nativeFs = false;
-			scorm = false;
 		}
-
-		isInexternalSite = ((embed)||(scorm));
-		isInVishSite = ((!isInexternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
 
 		is_preview_insertMode = false;
 		if(is_preview){
@@ -157,7 +155,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Watermark
-		if(isInexternalSite){
+		if(isInExternalSite){
 			if((options)&&(typeof options.watermarkURL == "string")){
 				$("#embedWatermark").parent().attr("href",options.watermarkURL);
 				$("#embedWatermark").show();

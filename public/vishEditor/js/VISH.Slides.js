@@ -13,7 +13,6 @@ VISH.Slides = (function(V,$,undefined){
 
 	/* Initialization Method */
 	var init = function(){
-		_getcurSlideIndexFromHash();
 	};
 
 	/* 
@@ -22,12 +21,8 @@ VISH.Slides = (function(V,$,undefined){
 	var updateSlides = function(){
 		setSlides(document.querySelectorAll('section.slides > article'));
 		_updateSlideClasses();
-		_updateHash();
-	};
-
-	var _updateHash = function(){
 		if(!V.Editing){
-			location.replace('#' + (curSlideIndex + 1));
+			V.Utils.updateHash();
 		}
 	};
 
@@ -70,21 +65,6 @@ VISH.Slides = (function(V,$,undefined){
 		for (var i in SLIDE_CLASSES) {
 			if (className != SLIDE_CLASSES[i]) {
 				$(el).removeClass(SLIDE_CLASSES[i]);
-			}
-		}
-	};
-
-	var _getcurSlideIndexFromHash = function() {
-		if(V.Editing){
-			//Start in 0 (no slides), if there are slides, this param will be updated
-			setCurrentSlideNumber(0);
-		} else {
-			var slideNo = parseInt(location.hash.substr(1));
-			if (slideNo) {
-				setCurrentSlideNumber(slideNo);
-			} else {
-				//Start in 1 (first slide)
-				setCurrentSlideNumber(1);
 			}
 		}
 	};
@@ -195,12 +175,7 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	var getSlidesQuantity = function(){
-		var slides = getSlides();
-		if((typeof slides != "undefined")&&(slides.length)){
-			return slides.length;
-		} else {
-			return 0;
-		}	
+		return document.querySelectorAll('section.slides > article').length;
 	};
 
 	var getSlideType = function(slideEl){
@@ -225,6 +200,18 @@ VISH.Slides = (function(V,$,undefined){
 
 	var isCurrentLastSlide = function(){
 		return curSlideIndex===slideEls.length-1;
+	};
+
+
+	/* Hash Management */
+	var updateCurrentSlideFromHash = function() {
+		var slideNo = V.Utils.getSlideNumberFromHash();
+		if (slideNo) {
+			setCurrentSlideNumber(slideNo);
+		} else {
+			//Start in 1 (first slide)
+			setCurrentSlideNumber(1);
+		}
 	};
 
 
@@ -432,6 +419,7 @@ VISH.Slides = (function(V,$,undefined){
 	return {	
 			init          			: init,
 			updateSlides			: updateSlides,
+			updateCurrentSlideFromHash	: updateCurrentSlideFromHash,
 			getSlides 				: getSlides,
 			setSlides				: setSlides,
 			getCurrentSlide 		: getCurrentSlide,

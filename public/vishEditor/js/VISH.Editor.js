@@ -122,7 +122,14 @@ VISH.Editor = (function(V,$,undefined){
 	var _initAferPresentationLoaded = function(options,presentation){
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
-			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+			var slideNo = V.Utils.getSlideNumberFromHash();
+			if (slideNo) {
+				V.Slides.goToSlide(slideNo);
+				V.Editor.Thumbnails.selectThumbnail(slideNo);
+				V.Editor.Thumbnails.moveThumbnailsToSlide(slideNo);
+			} else {
+				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+			}
 		});
 		
 		if(initialPresentation){
@@ -172,6 +179,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		//Fill About screen
 		$("#VEversion").html(V.VERSION);
+
+		//Update current slide
+		V.Editor.Slides.updateCurrentSlideFromHash();
 
 		//Try to win focus
 		window.focus();
@@ -661,7 +671,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(slideDOM).removeClass("temp_shown");
 		
 		return slide;
-	}
+	};
 
 	var sendPresentation = function(presentation,order,successCallback,failCallback){
 		switch(V.Configuration.getConfiguration().mode){

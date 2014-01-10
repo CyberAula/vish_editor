@@ -1,5 +1,13 @@
 VISH.Editor.Slides = (function(V,$,undefined){
 
+	/* Hash Management */
+	var updateCurrentSlideFromHash = function(){
+		var slideNo = V.Utils.getSlideNumberFromHash();
+		if(slideNo){
+			V.Slides.goToSlide(slideNo);
+		}
+	};
+
 	var showSlides = function(){
 		$(".slides > article").removeClass("temp_hidden");
 	};
@@ -470,6 +478,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	};
 
 	return {
+		updateCurrentSlideFromHash	: updateCurrentSlideFromHash,
 		showSlides				: showSlides,
 		hideSlides				: hideSlides,
 		isSlideFocused			: isSlideFocused,
