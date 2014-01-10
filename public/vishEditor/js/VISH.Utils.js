@@ -362,10 +362,58 @@ VISH.Utils = (function(V,undefined){
 		window.top.location = the_url;
 	};
 
+	var removeParamFromUrl = function(url,paramName){
+		if((typeof url !== "string")||(typeof paramName !== "string")){
+			return url;
+		}
+
+		//Remove hash
+		var splitHash = url.split("#");
+		url = splitHash[0];
+
+		var splitParams = url.split("?");
+		if (splitParams.length === 2){
+			url = splitParams[0];
+			var params = splitParams[1];
+
+			var validParams = [];
+			var splitParams = params.split("&");
+			var sPL = splitParams.length;
+			for(var i=0; i<sPL; i++){
+				var splitParam = splitParams[i].split("=");
+				if(splitParam[0]!=paramName){
+					validParams.push({key: splitParam[0], value: splitParam[1]}); 
+				}
+			}
+			//Add valid params
+			var vPL = validParams.length;
+			for(var j=0; j<vPL; j++){
+				var param = validParams[j];
+				if(j===0){
+					url = url + "?";
+				} else {
+					url = url + "&";
+				}
+				url = url + param.key + "=" + param.value;
+			}
+		}
+
+		//Add hash (if present)
+		if(splitHash.length>1){
+			url = url + "#" + splitHash[1];
+		}
+
+		return url;
+	};
+
 	var addParamToUrl = function(url,paramName,paramValue){
 		if((typeof url !== "string")||(typeof paramName !== "string")||(typeof paramValue !== "string")){
 			return url;
 		}
+
+		//Remove param (to overwrite it in case if exists)
+		url = removeParamFromUrl(url,paramName);
+
 		//Remove hash
 		var splitHash = url.split("#");
 		url = splitHash[0];
@@ -383,7 +431,7 @@ VISH.Utils = (function(V,undefined){
 		}
 		
 		return url;
-	}
+	};
 
 	var getParamsFromUrl = function(url){
 		var params = {};
@@ -945,6 +993,7 @@ VISH.Utils = (function(V,undefined){
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
+		removeParamFromUrl		: removeParamFromUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
