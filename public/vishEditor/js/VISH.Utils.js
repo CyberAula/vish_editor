@@ -925,7 +925,14 @@ VISH.Utils = (function(V,undefined){
 
 	var updateHash = function(){
 		var location = _getLocationForHash();
-		location.hash = ('#' + V.Slides.getCurrentSlideNumber() + location.hash.substr(2,location.hash.length));
+		var newHash = '#' + V.Slides.getCurrentSlideNumber();
+
+		var splitedHash = location.hash.split("?");
+		if(splitedHash.length > 1){
+			newHash = newHash + splitedHash[1];
+		}
+
+		location.hash = newHash;
 	};
 
 	var getSlideNumberFromHash = function(){
@@ -934,7 +941,7 @@ VISH.Utils = (function(V,undefined){
 			if(typeof location == "undefined"){
 				return;
 			}
-			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.substr(1,1))));
+			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.split("?")[0].split("#").pop())));
 			if(isNaN(sNumber)){
 				return undefined;
 			} else {

@@ -120,16 +120,16 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	var _initAferPresentationLoaded = function(options,presentation){
+		// var slideNo = V.Utils.getSlideNumberFromHash();
+		// if(slideNo){
+		// 	V.Slides.setCurrentSlideNumber(slideNo);
+		// }
+		V.Editor.Slides.updateCurrentSlideFromHash();
+
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
-			var slideNo = V.Utils.getSlideNumberFromHash();
-			if (slideNo) {
-				V.Slides.goToSlide(slideNo);
-				V.Editor.Thumbnails.selectThumbnail(slideNo);
-				V.Editor.Thumbnails.moveThumbnailsToSlide(slideNo);
-			} else {
-				V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
-			}
+			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+			V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 		});
 		
 		if(initialPresentation){
@@ -179,9 +179,6 @@ VISH.Editor = (function(V,$,undefined){
 
 		//Fill About screen
 		$("#VEversion").html(V.VERSION);
-
-		//Update current slide
-		V.Editor.Slides.updateCurrentSlideFromHash();
 
 		//Try to win focus
 		window.focus();

@@ -4,7 +4,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	var updateCurrentSlideFromHash = function(){
 		var slideNo = V.Utils.getSlideNumberFromHash();
 		if(slideNo){
-			V.Slides.goToSlide(slideNo);
+			V.Slides.setCurrentSlideNumber(slideNo);
 		}
 	};
 
