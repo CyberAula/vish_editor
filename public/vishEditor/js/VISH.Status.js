@@ -9,6 +9,10 @@ VISH.Status = (function(V,$,undefined){
 	//Online or offline
 	var _isOnline;
 
+	//Preview
+	var _is_preview;
+	var _is_preview_insertMode;
+
 	//SCORM Package (same domain but external site)
 	var _scorm;
 
@@ -29,6 +33,7 @@ VISH.Status = (function(V,$,undefined){
 		_checkIframe();
 		_checkDomain();
 		_checkSite();
+		_checkPreview();
 		_isVEFocused = false;
 		_isWindowFocused = false;
 		_isCKEditorInstanceFocused = false;
@@ -97,6 +102,24 @@ VISH.Status = (function(V,$,undefined){
 
 		_isInExternalSite = ((_isAnotherDomain)||(_scorm));
 		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
+	};
+
+	var _checkPreview = function(){
+		var options = V.Utils.getOptions();
+
+		if(typeof options["preview"] == "boolean"){
+			_is_preview = options["preview"];
+		} else {
+			_is_preview = false;
+		}
+
+		_is_preview_insertMode = false;
+		if(_is_preview){
+			var presentation = V.Viewer.getCurrentPresentation();
+			if(presentation.insertMode===true){
+				_is_preview_insertMode = true;
+			}
+		}
 	};
 
 
@@ -175,6 +198,14 @@ VISH.Status = (function(V,$,undefined){
 
 	var getIsInVishSite = function(){
 		return _isInVishSite;
+	};
+
+	var getIsPreview = function(){
+		return _is_preview;
+	};
+
+	var getIsPreviewInsertMode = function(){
+		return _is_preview_insertMode;
 	};
 
 	var isSlaveMode = function(){
@@ -262,6 +293,8 @@ VISH.Status = (function(V,$,undefined){
 		getIsScorm					: getIsScorm,
 		getIsInExternalSite			: getIsInExternalSite,
 		getIsInVishSite				: getIsInVishSite,
+		getIsPreview 				: getIsPreview,
+		getIsPreviewInsertMode		: getIsPreviewInsertMode,
 		isOnline 					: isOnline,
 		isSlaveMode 				: isSlaveMode,
 		setSlaveMode				: setSlaveMode,

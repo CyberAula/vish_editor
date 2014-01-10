@@ -45,6 +45,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		embed = V.Status.getIsEmbed();
 		showViewbar = _defaultViewbar();
 
+		//Preview
+		is_preview = V.Status.getIsPreview();
+		is_preview_insertMode = V.Status.getIsPreviewInsertMode();
+
 		//SCORM package
 		scorm = V.Status.getIsScorm();
 
@@ -56,9 +60,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//Decide if we must render the presentation in fullscreen mode
 			if(typeof render_full != "boolean"){
 				render_full = ((options["full"]===true)&&(!V.Status.getIsInIframe()) || (options["forcefull"]===true));
-			}
-			if(typeof options["preview"] == "boolean"){
-				is_preview = options["preview"];
 			}
 
 			//Close button
@@ -88,7 +89,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			
 		} else {
 			render_full = false;
-			is_preview = false;
 			close_button = false;
 			enter_fs_button = false;
 			exit_fs_button = false;
@@ -96,14 +96,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			can_use_nativeFs = false;
 		}
 
-		is_preview_insertMode = false;
-		if(is_preview){
-			var presentation = V.Viewer.getCurrentPresentation();
-			if(presentation.insertMode===true){
-				is_preview_insertMode = true;
-			}
-		}
-
+		
 		//Determine uniq mode
 		var hashParams = V.Utils.getHashParams();
 		if(hashParams["uniq"] === "true"){
@@ -111,6 +104,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			uniqMode = false;
 		}
+
 
 		//////////////
 		//Restrictions

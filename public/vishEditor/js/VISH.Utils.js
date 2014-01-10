@@ -972,10 +972,10 @@ VISH.Utils = (function(V,undefined){
 	};
 
 	var _getLocationForHash = function(){
-		if(!V.Status.getIsInIframe()){
+		if(!V.Status.getIsInIframe() || V.Status.getIsPreview()){
 			return window.location;
 		} else if(V.Status.getIsInVishSite() || V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
-			return window.top.location;
+			return window.parent.location;
 		} else {
 			return undefined;
 		}
