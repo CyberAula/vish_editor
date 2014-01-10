@@ -29,11 +29,13 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
 	}
 	
 	var generateWrapperForWeb = function(url){
-		return "<iframe src='" + url + "?wmode=transparent'></iframe>"
+		url = V.Utils.addParamToUrl(url,"wmode","opaque");
+		return "<iframe src='" + url + "' wmode='opaque'></iframe>";
 	}
 	
 	var generatePreviewWrapperForWeb = function(url){
-		return "<iframe class='objectPreview' src='" + url + "'></iframe>"
+		url = V.Utils.addParamToUrl(url,"wmode","opaque");
+		return "<iframe class='objectPreview' src='" + url + "' wmode='opaque'></iframe>";
 	};
 			
 	return {

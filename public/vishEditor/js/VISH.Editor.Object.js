@@ -297,7 +297,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return "<img class='imagePreview' src='" + object + "'></img>";
 						break;
 					case V.Constant.MEDIA.FLASH:
-						return "<embed class='objectPreview' src='" + object + "' wmode='opaque' ></embed>";
+						object = V.Utils.addParamToUrl(object,"wmode","opaque");
+						return "<embed class='objectPreview' src='" + object + "'></embed>";
 						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:

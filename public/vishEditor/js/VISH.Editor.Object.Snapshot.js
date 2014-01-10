@@ -62,8 +62,9 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	
 	var _wrapperSnapShot = function(content){
 		var objectInfo = V.Object.getObjectInfo(content);
+		content = V.Utils.addParamToUrl(content,"wmode","opaque");
 		if(objectInfo.wrapper===null){
-			return "<iframe src='" + content + "'></iframe>";
+			return "<iframe src='" + content + "' wmode='opaque'></iframe>";
 		} else {
 			return content;
 		}
@@ -72,7 +73,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	/**
 	* Param style: optional param with the style, used in editing presentation
 	*/
-	var drawSnapShot = function(wrapper, area, style,scrollTop,scrollLeft){
+	var drawSnapShot = function(wrapper,area,style,scrollTop,scrollLeft){
 		var current_area;
 		var object_style = "";
 		if(area){
