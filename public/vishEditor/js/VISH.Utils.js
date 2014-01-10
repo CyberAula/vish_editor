@@ -899,26 +899,7 @@ VISH.Utils = (function(V,undefined){
 
 	var getHashParams = function(){
 		var params = {};
-		var hash;
-
-		if(V.Status.getIsInIframe()){
-			//Get params always from parent (if possible)
-			try {
-				if(typeof window.parent.location.href === "undefined"){
-					return params;
-				}
-				var iframe = window.frameElement;
-				var hash = $(iframe).attr("src").split("#").pop();
-				if(hash!=""){
-					hash = "#" + hash;
-				}
-			} catch (err){
-				return params;
-			}
-		} else {
-			hash = window.location.hash;
-		}
-		
+		var hash = window.location.hash;
 		var splitHash = hash.split("?");
 		if (splitHash.length > 1) {
 			var hashParams = splitHash[1];
