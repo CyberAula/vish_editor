@@ -48,8 +48,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			var options = V.Utils.getOptions();
 			//Check exit option in menu
 			if(typeof options.exitURL != "string"){
-				V.exitPath = options.exitURL;
 				$(".menu_option.menu_action[action='exit']").parent().hide();
+			} else {
+				V.exitPath = options.exitURL;
 			}
 			
 			_initialized = true;

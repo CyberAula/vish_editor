@@ -949,17 +949,17 @@ VISH.Utils = (function(V,undefined){
 	var updateHash = function(){
 		var newHash = '#' + V.Slides.getCurrentSlideNumber();
 
+		//Propagate hash (slidenumber without params)
+		if(getOptions()["readHashFromParent"]===true){
+			window.parent.location.hash = newHash;
+		}
+
 		var splitedHash = location.hash.split("?");
 		if(splitedHash.length > 1){
 			newHash = newHash + "?" + splitedHash[1];
 		}
 
 		window.location.hash = newHash;
-
-		//Propagate hash
-		if(getOptions()["readHashFromParent"]===true){
-			window.parent.location.hash = newHash;
-		}
 	};
 
 	var getHashParams = function(){
