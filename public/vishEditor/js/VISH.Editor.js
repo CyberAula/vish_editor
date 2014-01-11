@@ -578,6 +578,10 @@ VISH.Editor = (function(V,$,undefined){
 					if($(div).attr("hyperlink")){
 						element.hyperlink = $(div).attr("hyperlink");
 					}
+					if($(div).attr("vishubpdfexid")){
+						element.options = {};
+						element.options["vishubPdfexId"] = $(div).attr("vishubpdfexid");
+					}
 				} else if(element.type==V.Constant.VIDEO){
 					var video = $(div).find("video");
 					element.poster = $(video).attr("poster");
