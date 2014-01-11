@@ -1,9 +1,8 @@
 VISH.Editor.Object.Flash = (function(V,$,undefined){
 	
-	
 	var drawFlashObjectWithSource = function(src){
 	  var current_area = V.Editor.getCurrentArea();
-	  var template = V.Editor.getTemplate();
+	  var template = V.Editor.getTemplate(current_area);
 
 	  var nextFlashId = V.Utils.getId();
 	  var idToDrag = "draggable" + nextFlashId;

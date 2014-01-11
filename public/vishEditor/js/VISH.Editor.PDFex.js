@@ -67,6 +67,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 							for(var v=0; v<13; v++){
 								responseTest.urls.push("http://localhost/vishEditor/examples/contents/pdf2p/Presentacion_INTED2013_VishViewer-"+v+".jpg");
 							}
+							responseTest.pdfexId = 365;
 							processResponse(responseTest);
 						},10000);
 						break;
@@ -115,7 +116,7 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
 		bar.width('0%');
 		percent.html('0%');
-	}	
+	};	
 
 	var _showErrorDialog = function(msg){
 		var options = {};
@@ -129,20 +130,20 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		}
 		options.buttons = [button1];
 		V.Utils.showDialog(options);
-	}
+	};
 	
 	var processResponse = function(jsonResponse){
 		try  {
-			var presentation = generatePresentationWithImgArray(jsonResponse.urls);
+			var presentation = _generatePresentationWithImgArray(jsonResponse.urls,jsonResponse.pdfexId);
 			V.Editor.Presentation.previewPresentation(presentation);
 			//We don't need to call V.Utils.Loader.stopLoading();
 			//because previewPresentation close all active fancyboxes
 		} catch(e) {
 			V.Utils.Loader.stopLoading();	
 		}
-	}
+	};
 
-	var generatePresentationWithImgArray = function(imgs){
+	var _generatePresentationWithImgArray = function(imgs,pdfexId){
 		var presentation = {};
 		presentation.VEVersion = V.VERSION;
 		presentation.type = V.Constant.PRESENTATION;
@@ -151,12 +152,12 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		
 		for(var i=0; i<imgs.length; i++){
 			var imageUrl = imgs[i];
-			presentation.slides.push(_generateSlideWithImg(i,imageUrl));
+			presentation.slides.push(_generateSlideWithImg(i,imageUrl,pdfexId));
 		}
 		return presentation;
-	}
+	};
 
-	var _generateSlideWithImg = function(index,imgUrl){
+	var _generateSlideWithImg = function(index,imgUrl,pdfexId){
 		var slide = {};
 		slide.id = "article"+index;
 		slide.type = V.Constant.STANDARD;
@@ -168,10 +169,15 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 		element.body = imgUrl;
 		element.id = slide.id + "_zone1";
 		element.type = V.Constant.IMAGE;
+
+		if(typeof pdfexId != "undefined"){
+			element.options = {};
+			element.options["vishubPdfexId"] = pdfexId;
+		}
 		slide.elements.push(element);
 
 		return slide;
-	}
+	};
 
 	return {
 		init 		: init,

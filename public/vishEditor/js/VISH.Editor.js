@@ -801,7 +801,7 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr('template');
-		}	else if(getCurrentArea()){
+		} else if(getCurrentArea()){
 			return getCurrentArea().parent().attr('template');
 		}
 		return null;

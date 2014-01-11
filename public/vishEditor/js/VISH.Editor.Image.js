@@ -190,7 +190,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param area: optional param indicating the area to add the image, used for editing presentations
 	* param style: optional param with the style, used in editing presentation
 	*/
-	var drawImage = function(image_url, area, style, hyperlink){
+	var drawImage = function(image_url, area, style, hyperlink, options){
 		var current_area;
 		var renderOnInit = false;
 
@@ -209,13 +209,18 @@ VISH.Editor.Image = (function(V,$,undefined){
 			newStyle = "width:"+image_width+"px;";
 		}
 
-		var template = V.Editor.getTemplate(); 
+		var template = V.Editor.getTemplate(current_area);
 		var nextImageId = V.Utils.getId();
 		var idToDragAndResize = "draggable" + nextImageId;
 		current_area.attr('type','image');
 		if(hyperlink){
 			current_area.attr('hyperlink',hyperlink);
 		}
+		if(typeof options != "undefined"){
+			if (typeof options["vishubPdfexId"] != "undefined"){
+				current_area.attr('vishubpdfexid',options["vishubPdfexId"]);
+			}
+		};
 		current_area.html("<img class='"+template+"_image' id='"+idToDragAndResize+"' draggable='true' title='Click to drag' src='"+image_url+"' style='"+newStyle+"'/>");
 
 		if(!style){
@@ -238,7 +243,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 					$(theImg).height(dimentionsToDraw.height);
 				}
 			});
-		}
+		};
 
 		V.Editor.addDeleteButton(current_area);
 		
