@@ -13,12 +13,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		user_id = V.User.getId();
 		presentation_id = V.Viewer.getCurrentPresentation().id;
 		_isRecVisible = false;
-
-		if(options && options["urlToGetRecommendations"]){
-			url_to_get_recommendations = options["urlToGetRecommendations"];			
-		}
 		generated = false;
 
+		if(options){
+			if(typeof options["urlToGetRecommendations"] == "string"){
+				url_to_get_recommendations = options["urlToGetRecommendations"];
+			}
+		}
+		
 		//redimention of fancybox is done in ViewerAdapter (line 300 aprox)
 		$("#fancyRec").fancybox({
 			  'type'	: 'inline',
