@@ -3,7 +3,8 @@ VISH.Recommendations = (function(V,$,undefined){
 	var url_to_get_recommendations;
 	var user_id;
 	var presentation_id;
-	var generated;
+	var _requesting;
+	var _generated;
 	var _isRecVisible;
 
 	/**
@@ -13,7 +14,8 @@ VISH.Recommendations = (function(V,$,undefined){
 		user_id = V.User.getId();
 		presentation_id = V.Viewer.getCurrentPresentation().id;
 		_isRecVisible = false;
-		generated = false;
+		_requesting = false;
+		_generated = false;
 
 		if(options){
 			if(typeof options["urlToGetRecommendations"] == "string"){
@@ -21,7 +23,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			}
 		}
 		
-		//redimention of fancybox is done in ViewerAdapter (line 300 aprox)
+		//Redimension of fancybox is done in ViewerAdapter
 		$("#fancyRec").fancybox({
 			  'type'	: 'inline',
 			  'autoDimensions' : false,
@@ -47,16 +49,35 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	/**
-	 * function to call ViSH via AJAX to get recommendation of excursions
+	 * Function to check if this is the appropiate moment to request the recommendations
 	 */
-	var generateFancybox = function(){
-		if(!generated){
+	var checkForRecommendations = function(){
+		var slidesQuantity = V.Slides.getSlidesQuantity();
+		var cSlideNumber = V.Slides.getCurrentSlideNumber();
+
+		if(cSlideNumber > slidesQuantity - 2){
+			if(!_generated){
+				_requestRecommendations();
+			}
+		}
+	}
+
+	/**
+	 * Function to call ViSH via AJAX to get recommendation of excursions
+	 */
+	var _requestRecommendations = function(){
+		if(!_generated){
 			if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH){
+				if(_requesting == true){
+					return;
+				} else {
+					_requesting = true;
+				}
 				if(url_to_get_recommendations !== undefined){
 					var params_to_send = {
 						user_id: user_id,
 						excursion_id: presentation_id,
-						quantity: 9
+						quantity: 6
 					};
 					$.ajax({
 						type    : "GET",
@@ -64,26 +85,30 @@ VISH.Recommendations = (function(V,$,undefined){
 						data    : params_to_send,
 						success : function(data) {
 							_fillFancyboxWithData(data);
+						},
+						error: function(error){
+							_requesting = false;
 						}
 					});
 				}
 			} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
-				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
+				_fillFancyboxWithData(V.Samples.API.recommendationList);
 			}
 		}
 	};
 
 	var _fillFancyboxWithData = function(data){
 		if((!data)||(data.length===0)){
+			_requesting = false;
 			return;
 		}
 
         var ex;
         var result = "";
-        for (var i = data.length - 1; i >= 0; i--) {
+        for (var i = data.length - 1; i >= 0; i--){
         	ex = data[i];
         	if(V.Status.getIsEmbed()){
-        		result += '<a href="'+ex.url+'.full">';
+        		result += '<a target="_blank" href="'+ex.url+'.full">';
         	}
         	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+i+'">'+
                         '<ul class="rec-thumbnail">'+
@@ -99,25 +124,34 @@ VISH.Recommendations = (function(V,$,undefined){
                           '</li>'+
                         '</ul>'+
                     '</div>';
-            if(V.Status.getIsEmbed()){
-        		result += '</a>';
-        	}
-        };
+			if(V.Status.getIsEmbed()){
+				result += '</a>';
+			}
+		};
         $("#fancy_recommendations .rec-grid").html(result);
-        generated = true;
+        _generated = true;
+        _requesting = false;
 
         if(!V.Status.getIsEmbed()){
         	//we join the recom-X with sending the parent to the excursion url
-        	 for (var i = data.length - 1; i >= 0; i--) {
+        	 for (var i = data.length - 1; i >= 0; i--){
         	 	$("#recom-"+data[i].id).click(function(my_event){
         	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(".rec-excursion").attr("number")].url);
         	 	});
         	 }
-        }
-
+        };
 	};
 
 	var showFancybox = function(){
+		if(V.Editing){
+			return;
+		}
+		if(!V.Status.getDevice().desktop){
+			return;
+		}
+		if(V.Viewer.getPresentationType()!= V.Constant.PRESENTATION){
+			return;
+		}
 		if((V.Utils.getOptions())&&(V.Utils.getOptions().preview)){
 			return;
 		}
@@ -127,6 +161,11 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(isRecVisible()){
 			return;
 		}
+		if((!_generated)&&(!_requesting)){
+			//Request recommendations
+			_requestRecommendations();
+		}
+		//Show fancybox
 		$("#fancyRec").trigger('click');
 	};
 
@@ -136,7 +175,7 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	return {
 		init          			: init,
-		generateFancybox		: generateFancybox,
+		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
 		isRecVisible 			: isRecVisible
 	};

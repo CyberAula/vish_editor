@@ -270,7 +270,7 @@ VISH.Slides = (function(V,$,undefined){
 	* n < 0 (go back)
 	*/
 	var moveSlides = function(n){
-		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))&&(V.Viewer.getPresentationType()===V.Constant.PRESENTATION)&&(!V.Recommendations.isRecVisible())){
+		if((n>0)&&(!V.Editing)&&(isCurrentLastSlide())){
 			V.Recommendations.showFancybox();
 			return;
 		}

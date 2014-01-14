@@ -196,9 +196,7 @@ VISH.Viewer = (function(V,$,undefined){
 			V.VirtualTour.loadVirtualTour(slide.id);
 		}
 
-		if(_isRecommendationMoment()){
-			V.Recommendations.generateFancybox();
-		}
+		V.Recommendations.checkForRecommendations();
 	};	
 
 	/**
@@ -225,21 +223,6 @@ VISH.Viewer = (function(V,$,undefined){
 			V.VirtualTour.unloadVirtualTour(slide.id);
 		}
 	};
-
-	/**
-	 * function to check if this is the penultimate Slide (or the only one) and call to get the recommendations
-	 */
-	var _isRecommendationMoment = function(){
-		var number_of_slides = V.Slides.getSlides().length;
-		var slide_number = V.Slides.getCurrentSlideNumber();
-
-		if(number_of_slides===1 || slide_number===(number_of_slides-1)){
-			return true;
-		} else {
-			return false;
-		}
-	};
-	
 	
 	/**
 	 * function to update the number that indicates what slide is diplayed
