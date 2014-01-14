@@ -1454,6 +1454,7 @@ a.button_advert:hover {
 	font-size: 1.1rem;
 	display: inline-block;
 	color: #40cc7f;
+	white-space: nowrap;
 }
 
 .recbutton {
@@ -1477,6 +1478,10 @@ a.button_advert:hover {
 .recbutton:hover {
 	opacity: 1;
 	text-shadow: 1px 1px #666;
+}
+
+img.rec-menu_icon {
+	margin-left: 5%;
 }
 
 .viewer_button {

@@ -33,11 +33,18 @@ VISH.Recommendations = (function(V,$,undefined){
 		      'height': '100%',
 		      'padding': 0,
 		      'overlayOpacity': 0,
+		      'onStart' : function(){
+		      	$("#fancybox-outer").css("display","none");
+		      },
 		      'onComplete'  : function(data) {
-		      		$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
-		      		$("#fancybox-wrap").css("margin-top", "0px");
-		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
-		      		_isRecVisible = true;
+				$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
+				$("#fancybox-wrap").css("margin-top", "0px");
+				V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
+				_isRecVisible = true;
+				setTimeout(function (){
+					V.ViewerAdapter.updateFancyboxAfterSetupSize();
+					$("#fancybox-outer").css("display","block");
+				}, 350);
 		      },
 		      'onClosed' : function(data) {
 		      		$("#fancybox-outer").css("background", "white");
@@ -119,8 +126,8 @@ VISH.Recommendations = (function(V,$,undefined){
                           '<li class="rec-info-excursion">'+
                             '<div class="rec-title-excursion">'+ex.title+'</div>'+
                             '<div class="rec-by">by <span class="rec-name">'+ex.author+'</span></div>'+
-                            '<span class="rec-visits">'+ex.views+'</span> <span class="rec-views">views</span>'+
-                            '<div class="rec-likes">'+ex.favourites+'<img class="rec-menu_icon" src="http://vishub.org/assets/icons/star-on10.png"></div>'+
+                            '<span class="rec-visits">'+ex.views+'</span> <span class="rec-views">'+V.I18n.getTrans("i.exviews")+'</span>'+
+                            '<div class="rec-likes"><span class="rec-likes-number">'+333+'</span><img class="rec-menu_icon" src="http://vishub.org/assets/icons/star-on10.png"></div>'+
                           '</li>'+
                         '</ul>'+
                     '</div>';
@@ -165,6 +172,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			//Request recommendations
 			_requestRecommendations();
 		}
+
 		//Show fancybox
 		$("#fancyRec").trigger('click');
 	};
@@ -173,11 +181,22 @@ VISH.Recommendations = (function(V,$,undefined){
 		return _isRecVisible;
 	}
 
+	var aftersetupSize = function(increase){
+		if(increase > 0.82){
+			$(".rec-excursion").css("width","44%");
+		} else if(increase > 0.36){
+			$(".rec-excursion").css("width","40%");
+		} else {
+			$(".rec-excursion").css("width","36%");
+		}
+	}
+
 	return {
 		init          			: init,
 		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
-		isRecVisible 			: isRecVisible
+		isRecVisible 			: isRecVisible,
+		aftersetupSize			: aftersetupSize
 	};
 
 }) (VISH,jQuery);

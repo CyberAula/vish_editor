@@ -176,6 +176,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$(".rec-first-row").show();
 		} else {
 			$(".rec-first-row").hide();
+			$(".rec-second-row").css("margin-top","10%"); //Center second row vertically
 		}
 
 		if(close_button){
@@ -388,6 +389,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);
+
+		//Recommendations callbacks
+		V.Recommendations.aftersetupSize(increase,increaseW);
 	};
 
 	var _getDesiredVieweBarHeight = function(windowHeight){
