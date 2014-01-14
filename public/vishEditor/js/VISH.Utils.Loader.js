@@ -250,10 +250,10 @@ VISH.Utils.Loader = (function(V,undefined){
 	var stopLoading = function(callback){
 		var diff = Date.now()-t1Loading;
 
-		if(diff < 1250){
+		if(diff < 1350){
 			setTimeout(function(){
 				stopLoading(callback);
-			},Math.min(1250-diff,1250));
+			},Math.max(0,Math.min(1350-diff,1350)));
 		} else {
 			var closed = false;
 			var tWClose = 0;

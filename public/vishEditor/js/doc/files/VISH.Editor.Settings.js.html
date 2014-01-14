@@ -358,8 +358,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var _onInitialTagsReceived = function(data){
 		tagsLoaded = true;
 
-		data = V.Editor.Competitions.addCompetitionTags(data);
-
 		V.Utils.Loader.stopLoadingInContainer($(&quot;#tagBoxIntro&quot;));
 		$(&quot;#tagBoxIntro&quot;).html($(&quot;#tagBoxIntro&quot;).attr(&quot;HTMLcontent&quot;));
 

@@ -387,7 +387,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return &quot;&lt;img class=&#x27;imagePreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;img&gt;&quot;;
 						break;
 					case V.Constant.MEDIA.FLASH:
-						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27; wmode=&#x27;opaque&#x27; &gt;&lt;&#x2F;embed&gt;&quot;;
+						object = V.Utils.addParamToUrl(object,&quot;wmode&quot;,&quot;opaque&quot;);
+						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;embed&gt;&quot;;
 						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:

@@ -434,7 +434,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	};
 
 	var uploadTmpJSON = function(json, successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
 			if(typeof failCallback == "function"){
 				setTimeout(function(){
 					// var iframe = $("#hiddenIframeForAjaxDownloads");
@@ -452,11 +452,12 @@ VISH.Editor.API = (function(V,$,undefined){
 			dataType: 'json',
 			data: { 
 				"authenticity_token" : V.User.getToken(),
-				"json": JSON.stringify(json)
+				"json": JSON.stringify(json),
+				"responseFormat": "json"
 			},
-			success: function(data) {
-				if((data)&&(data.fileId)){
-					V.Editor.API.downloadTmpJSON(data.fileId);
+			success: function(data){
+				if((data)&&(data.url)){
+					_downloadFile(data.url);
 					if(typeof successCallback == "function"){
 						successCallback();
 					}
@@ -470,13 +471,12 @@ VISH.Editor.API = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
-	var downloadTmpJSON = function(fileId){
-		var filename = fileId
+	var _downloadFile = function(fileURL){
 		var iframe = $("#hiddenIframeForAjaxDownloads");
-		$(iframe).attr("src",'/excursions/tmpJson.json?fileId='+fileId+'&filename='+filename);
-	}
+		$(iframe).attr("src",fileURL);
+	};
 
 	
 	return {
@@ -493,8 +493,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
 		requestThumbnails           : requestThumbnails,
-		uploadTmpJSON               : uploadTmpJSON,
-		downloadTmpJSON             : downloadTmpJSON
+		uploadTmpJSON               : uploadTmpJSON
 	};
 
 }) (VISH, jQuery);

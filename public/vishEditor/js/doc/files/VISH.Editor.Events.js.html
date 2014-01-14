@@ -107,7 +107,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
 			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
 
-			$(document).on(&#x27;click&#x27;, &#x27;#subslide_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
+			$(document).on(&#x27;click&#x27;, &#x27;#slideset_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
 			
 			&#x2F;&#x2F;Settings events
 			$(document).on(&#x27;click&#x27;, &#x27;#presentation_details_preview_thumbnail&#x27;, V.Editor.Settings.onChangeThumbnailClicked);
@@ -135,13 +135,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on(&#x27;change&#x27;, &#x27;#tlt_seconds&#x27;, V.Editor.Settings.onTLTchange);
 			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 			
-			
-			$(document).on(&#x27;click&#x27;,&#x27;div.slidethumb&#x27;, V.Editor.onSlideThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;div.templatethumb&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;div.stthumb&#x27;, V.Editor.onSlideThumbClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;#animation_fancybox div.slidethumb&#x27;, V.Editor.onAnimationThumbClicked); &#x2F;&#x2F;animations thumb
+
 			$(document).on(&#x27;click&#x27;,&#x27;.stthumb_wrapper p&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, V.Editor.onEditableClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.selectable&#x27;, V.Editor.onSelectableClicked);
-			$(document).on(&#x27;click&#x27;,&#x27;:not(&quot;.selectable&quot;)&#x27;, V.Editor.onNoSelectableClicked);
+			$(document).on(&#x27;click&#x27;,&#x27;:not(&quot;.selectable&quot;):not(&quot;.preventNoselectable&quot;)&#x27;, V.Editor.onNoSelectableClicked);
 			
 			$(document).on(&#x27;click&#x27;,&#x27;.delete_content&#x27;, V.Editor.onDeleteItemClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.delete_slide&#x27;, V.Editor.onDeleteSlideClicked);
@@ -151,10 +152,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on(&#x27;click&#x27;,&#x27;#theme_fancybox img[theme]&#x27;, V.Editor.Themes.onThemeSelected);
 
 			$(document).on(&quot;click&quot;, &quot;.change_bg_button&quot;, V.Editor.Tools.changeBackground);
-
-
-			&#x2F;&#x2F;create the functions to add the tags when click on fancybox
-			$(document).on(&quot;click&quot;, &quot;.comp_checkbox input&quot;, V.Editor.Competitions.specialTagSelected);
 
 			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
 			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
@@ -379,10 +376,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;help_in_settings_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in Competitions
-		$(document).on(&#x27;click&#x27;,&#x27;#help_in_competitions&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;help_in_competitions_help&#x27;, &#x27;bottom&#x27;);
-		})
 
 		&#x2F;&#x2F;Help in pedagogical options settings	
 		$(document).on(&#x27;click&#x27;,&#x27;#help_pedagogical_selection&#x27;, function(){
@@ -533,6 +526,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
 		case 39: &#x2F;&#x2F; right arrow
+			if(V.Editor.Slides.isSlideFocused()){
+				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
+					V.Editor.Slides.forwardOneSubslide();
+				}
+				event.preventDefault();
+			}
+			break;
 		case 40: &#x2F;&#x2F;down arrow	    
 			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
@@ -544,6 +544,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;
 		case 37: &#x2F;&#x2F; left arrow
+			if(V.Editor.Slides.isSlideFocused()){
+				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
+					V.Editor.Slides.backwardOneSubslide();
+				}
+				event.preventDefault();
+			}
+			break;
 		case 38: &#x2F;&#x2F;up arrow	
 			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){

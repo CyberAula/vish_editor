@@ -99,8 +99,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var embed;
 	var scorm;
 	var showViewbar;
-	var isInexternalSite;
+	var isInExternalSite;
 	var isInVishSite;
+
+	&#x2F;&#x2F;Uniq mode (to show only one slide of an excursion)
+	var uniqMode;
 
 	&#x2F;&#x2F;Fullscreen fallbacks
 	var enter_fs_button;
@@ -132,18 +135,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		embed = V.Status.getIsEmbed();
 		showViewbar = _defaultViewbar();
 
+		&#x2F;&#x2F;Preview
+		is_preview = V.Status.getIsPreview();
+		is_preview_insertMode = V.Status.getIsPreviewInsertMode();
+
+		&#x2F;&#x2F;SCORM package
+		scorm = V.Status.getIsScorm();
+
+		&#x2F;&#x2F;External or internal site
+		isInExternalSite = V.Status.getIsInExternalSite();
+		isInVishSite = V.Status.getIsInVishSite();
+
 		if(options){
 			&#x2F;&#x2F;Decide if we must render the presentation in fullscreen mode
 			if(typeof render_full != &quot;boolean&quot;){
 				render_full = ((options[&quot;full&quot;]===true)&amp;&amp;(!V.Status.getIsInIframe()) || (options[&quot;forcefull&quot;]===true));
-			}
-			if(typeof options[&quot;preview&quot;] == &quot;boolean&quot;){
-				is_preview = options[&quot;preview&quot;];
-			}
-
-			&#x2F;&#x2F;SCORM package
-			if(typeof options[&quot;scorm&quot;] == &quot;boolean&quot;){
-				scorm = options[&quot;scorm&quot;];
 			}
 
 			&#x2F;&#x2F;Close button
@@ -173,25 +179,22 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			
 		} else {
 			render_full = false;
-			is_preview = false;
 			close_button = false;
 			enter_fs_button = false;
 			exit_fs_button = false;
 			fs_button = false;
 			can_use_nativeFs = false;
-			scorm = false;
 		}
 
-		isInexternalSite = ((embed)||(scorm));
-		isInVishSite = ((!isInexternalSite)&amp;&amp;(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH));
-
-		is_preview_insertMode = false;
-		if(is_preview){
-			var presentation = V.Viewer.getCurrentPresentation();
-			if(presentation.insertMode===true){
-				is_preview_insertMode = true;
-			}
+		
+		&#x2F;&#x2F;Determine uniq mode
+		var hashParams = V.Utils.getHashParams();
+		if(hashParams[&quot;uniq&quot;] === &quot;true&quot;){
+			uniqMode = true;
+		} else {
+			uniqMode = false;
 		}
+
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Restrictions
@@ -211,6 +214,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 		}
 
+		&#x2F;&#x2F;Uniq mode
+		if(uniqMode){
+			showViewbar = false;
+		}
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Init interface
@@ -247,7 +254,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Watermark
-		if(isInexternalSite){
+		if(isInExternalSite){
 			if((options)&amp;&amp;(typeof options.watermarkURL == &quot;string&quot;)){
 				$(&quot;#embedWatermark&quot;).parent().attr(&quot;href&quot;,options.watermarkURL);
 				$(&quot;#embedWatermark&quot;).show();
@@ -292,7 +299,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F; ViewBar
 		if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
-			if (V.Slides.getCurrentSubSlide()!==null){
+			if (V.Slides.getCurrentSubslide()!==null){
 				&#x2F;&#x2F;Subslide active
 				$(&quot;#forward_arrow&quot;).hide();
 				$(&quot;#back_arrow&quot;).hide();

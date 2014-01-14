@@ -210,9 +210,16 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	var _initAferPresentationLoaded = function(options,presentation){
+		&#x2F;&#x2F; var slideNo = V.Utils.getSlideNumberFromHash();
+		&#x2F;&#x2F; if(slideNo){
+		&#x2F;&#x2F; 	V.Slides.setCurrentSlideNumber(slideNo);
+		&#x2F;&#x2F; }
+		V.Editor.Slides.updateCurrentSlideFromHash();
+
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+			V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 		});
 		
 		if(initialPresentation){
@@ -323,7 +330,11 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		$.fancybox.close();
-	}
+	};
+
+	var onAnimationThumbClicked = function(){
+		$.fancybox.close();
+	};
 
 	&#x2F;**
 	 * Function called when user clicks on an editable element
@@ -393,6 +404,7 @@ VISH.Editor = (function(V,$,undefined){
 			area.addClass(&quot;editable&quot;);
 			V.Editor.Tools.addTooltipToZone(area);
 			selectArea(null);
+			V.Editor.Slides.updateThumbnail(V.Slides.getTargetSlide());
 			$.fancybox.close();
 		}
 		options.buttons = [button1,button2];
@@ -430,6 +442,14 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
+
+	&#x2F;*
+	 * Selectable elements are zones which can be selected.
+	 * Add class &#x27;noSelectableElement&#x27; to a element to call _onNoSelectableClicked without restrictions
+	 * Add class &#x27;preventNoselectable&#x27; to a element to never call _onNoSelectableClicked
+	 * Add class &#x27;selectable&#x27; to a element to call onSelectableClicked and never call _onNoSelectableClicked
+	*&#x2F;
+
 	&#x2F;**
 	* function called when user clicks on template zone with class selectable
 	*&#x2F;
@@ -443,17 +463,19 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on any element without class selectable
 	*&#x2F;
 	var onNoSelectableClicked = function(event){
-		
-		&#x2F;&#x2F;Add class &#x27;noSelectableElement&#x27; to a element to call _onNoSelectableClicked without restrictions
-		if(!$(event.target).hasClass(&quot;noSelectableElement&quot;)){
+
+		var target = $(event.target);
+		var targetParent = $(target).parent();
+
+		if(!$(target).hasClass(&quot;noSelectableElement&quot;)){
 
 			&#x2F;&#x2F;No hide toolbar when we are working in a fancybox
 			if($(&quot;#fancybox-content&quot;).is(&quot;:visible&quot;)){
 				return;
 			}
 
-			&#x2F;&#x2F;No hide toolbar for selectable childrens
-			if($(event.target).parent().hasClass(&quot;selectable&quot;)){
+			&#x2F;&#x2F;No hide toolbar for selectable or preventNoselectable childrens
+			if($(targetParent).hasClass(&quot;selectable&quot;) || $(targetParent).hasClass(&quot;preventNoselectable&quot;)){
 				return;
 			}
 
@@ -479,10 +501,14 @@ VISH.Editor = (function(V,$,undefined){
 
 		}
 
+		cleanArea();
+	};
+
+	var cleanArea = function(){
 		V.Editor.Tools.cleanZoneTools(getCurrentArea());
 		setCurrentArea(null);
 		_removeSelectableProperties();
-	};
+	}
 	
 	var _addSelectableProperties = function(zone){
 		$(zone).removeClass(&quot;zoneUnselected&quot;);
@@ -532,6 +558,8 @@ VISH.Editor = (function(V,$,undefined){
 			},500);
 		}
 
+		V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		cleanArea();
 		V.Editor.Tools.loadToolsForSlide(slide);
 	};
   
@@ -640,6 +668,10 @@ VISH.Editor = (function(V,$,undefined){
 					if($(div).attr(&quot;hyperlink&quot;)){
 						element.hyperlink = $(div).attr(&quot;hyperlink&quot;);
 					}
+					if($(div).attr(&quot;vishubpdfexid&quot;)){
+						element.options = {};
+						element.options[&quot;vishubPdfexId&quot;] = $(div).attr(&quot;vishubpdfexid&quot;);
+					}
 				} else if(element.type==V.Constant.VIDEO){
 					var video = $(div).find(&quot;video&quot;);
 					element.poster = $(video).attr(&quot;poster&quot;);
@@ -730,7 +762,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(slideDOM).removeClass(&quot;temp_shown&quot;);
 		
 		return slide;
-	}
+	};
 
 	var sendPresentation = function(presentation,order,successCallback,failCallback){
 		switch(V.Configuration.getConfiguration().mode){
@@ -780,6 +812,12 @@ VISH.Editor = (function(V,$,undefined){
 										window.top.history.replaceState(&quot;&quot;,&quot;&quot;,data.editPath);
 									}
 								}
+							}
+						} else {
+							&#x2F;&#x2F;Order == &quot;unpublish&quot;
+							if((typeof data != &quot;undefined&quot;)&amp;&amp;(data.exitPath)){
+								&#x2F;&#x2F;Update exit path
+								V.exitPath = data.exitPath;
 							}
 						}
 						if(typeof successCallback == &quot;function&quot;){
@@ -857,7 +895,7 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr(&#x27;template&#x27;);
-		}	else if(getCurrentArea()){
+		} else if(getCurrentArea()){
 			return getCurrentArea().parent().attr(&#x27;template&#x27;);
 		}
 		return null;
@@ -959,6 +997,7 @@ VISH.Editor = (function(V,$,undefined){
 		getTemplate				: getTemplate,
 		getCurrentArea			: getCurrentArea,
 		getLastArea				: getLastArea,
+		cleanArea				: cleanArea,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
@@ -973,6 +1012,7 @@ VISH.Editor = (function(V,$,undefined){
 		onSlideEnterEditor 		: onSlideEnterEditor,
 		onSlideLeaveEditor		: onSlideLeaveEditor,
 		onSlideThumbClicked		: onSlideThumbClicked,
+		onAnimationThumbClicked	: onAnimationThumbClicked,
 		onEditableClicked		: onEditableClicked,
 		onSelectableClicked 	: onSelectableClicked,
 		onNoSelectableClicked 	: onNoSelectableClicked,

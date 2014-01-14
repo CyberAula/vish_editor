@@ -103,12 +103,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		user_id = V.User.getId();
 		presentation_id = V.Viewer.getCurrentPresentation().id;
 		_isRecVisible = false;
-
-		if(options &amp;&amp; options[&quot;urlToGetRecommendations&quot;]){
-			url_to_get_recommendations = options[&quot;urlToGetRecommendations&quot;];			
-		}
 		generated = false;
 
+		if(options){
+			if(typeof options[&quot;urlToGetRecommendations&quot;] == &quot;string&quot;){
+				url_to_get_recommendations = options[&quot;urlToGetRecommendations&quot;];
+			}
+		}
+		
 		&#x2F;&#x2F;redimention of fancybox is done in ViewerAdapter (line 300 aprox)
 		$(&quot;#fancyRec&quot;).fancybox({
 			  &#x27;type&#x27;	: &#x27;inline&#x27;,
@@ -122,13 +124,13 @@ VISH.Recommendations = (function(V,$,undefined){
 		      &#x27;onComplete&#x27;  : function(data) {
 		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(0,0,0,.7)&quot;);
 		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;0px&quot;);
-		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
 		      		_isRecVisible = true;
 		      },
 		      &#x27;onClosed&#x27; : function(data) {
 		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
 		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;-14px&quot;);
-		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber()-1);
+		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
 		      		_isRecVisible = false;
 		      }
 		});
