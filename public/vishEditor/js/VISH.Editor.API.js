@@ -416,7 +416,6 @@ VISH.Editor.API = (function(V,$,undefined){
 		};
 
 		$.ajax({
-			async: false,
 			type: 'GET',
 			url: '/excursion_thumbnails.json',
 			dataType: 'json',
@@ -440,13 +439,12 @@ VISH.Editor.API = (function(V,$,undefined){
 					// var iframe = $("#hiddenIframeForAjaxDownloads");
 					// $(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
 					failCallback();
-				},800);
+				},100);
 			}
 			return;
 		}
 
 		$.ajax({
-			async: false,
 			type: 'POST',
 			url: '/excursions/tmpJson.json',
 			dataType: 'json',
