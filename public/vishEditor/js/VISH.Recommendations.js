@@ -33,6 +33,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		      'height': '100%',
 		      'padding': 0,
 		      'overlayOpacity': 0,
+		      'center': false,
 		      'onStart' : function(){
 		      	$("#fancybox-outer").css("display","none");
 		      },
@@ -41,10 +42,8 @@ VISH.Recommendations = (function(V,$,undefined){
 				$("#fancybox-wrap").css("margin-top", "0px");
 				V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
 				_isRecVisible = true;
-				setTimeout(function (){
-					V.ViewerAdapter.updateFancyboxAfterSetupSize();
-					$("#fancybox-outer").css("display","block");
-				}, 350);
+				V.ViewerAdapter.updateFancyboxAfterSetupSize();
+				$("#fancybox-outer").css("display","block");
 		      },
 		      'onClosed' : function(data) {
 		      		$("#fancybox-outer").css("background", "white");

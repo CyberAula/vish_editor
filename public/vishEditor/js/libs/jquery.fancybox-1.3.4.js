@@ -1020,6 +1020,11 @@
 	};
 
 	$.fancybox.center = function() {
+
+		if(currentOpts && currentOpts.center === false){
+			return;
+		}
+
 		var view, align;
 
 		if (busy) {
@@ -1149,6 +1154,8 @@
 		showNavArrows : true,
 		enableEscapeButton : true,
 		enableKeyboardNav : true,
+
+		center: true,
 
 		onStart : function(){},
 		onCancel : function(){},
