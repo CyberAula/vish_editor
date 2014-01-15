@@ -435,7 +435,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			&#x2F;&#x2F;on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
-			var diff = t1 - Date.now();
+			var diff = Date.now() - t1;
 			setTimeout(function(){
 				&#x2F;&#x2F;on error
 				var options = {};
