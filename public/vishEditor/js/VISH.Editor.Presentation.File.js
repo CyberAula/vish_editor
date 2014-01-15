@@ -46,7 +46,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 		})(file);
 
 		reader.readAsText(file);
-	}
+	};
 
 	var _showErrorDialog = function(){
 		var options = {};
@@ -60,7 +60,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 		}
 		options.buttons = [button1];
 		V.Utils.showDialog(options);
-	}
+	};
 
 	var _showNoFileDialog = function(){
 		var options = {};
@@ -74,17 +74,17 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 		}
 		options.buttons = [button1];
 		V.Utils.showDialog(options);
-	}
+	};
 
-	var exportToJSON = function(successCallback,failCallback){
+	var exportTo = function(format,successCallback,failCallback){
 		var presentation = V.Editor.savePresentation();
-		V.Editor.API.uploadTmpJSON(presentation,successCallback,failCallback);
-	}
+		V.Editor.API.uploadTmpJSON(presentation,format,successCallback,failCallback);
+	};
 
 	return {
-		init 				: init,
-		onLoadTab 			: onLoadTab,
-		exportToJSON		: exportToJSON
+		init 			: init,
+		onLoadTab 		: onLoadTab,
+		exportTo		: exportTo
 	};
 
 }) (VISH, jQuery);

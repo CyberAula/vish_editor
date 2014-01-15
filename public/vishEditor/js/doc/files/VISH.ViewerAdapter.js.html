@@ -266,6 +266,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$(&quot;.rec-first-row&quot;).show();
 		} else {
 			$(&quot;.rec-first-row&quot;).hide();
+			$(&quot;.rec-second-row&quot;).css(&quot;margin-top&quot;,&quot;10%&quot;); &#x2F;&#x2F;Center second row vertically
 		}
 
 		if(close_button){
@@ -478,6 +479,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);
+
+		&#x2F;&#x2F;Recommendations callbacks
+		V.Recommendations.aftersetupSize(increase,increaseW);
 	};
 
 	var _getDesiredVieweBarHeight = function(windowHeight){

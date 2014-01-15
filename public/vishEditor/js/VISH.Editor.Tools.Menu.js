@@ -338,10 +338,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		return false; //Prevent iframe to move
 	};
 
-	var exportToJSON = function(){
+	var _exportTo = function(format){
 		var t1 = Date.now();
 		V.Utils.Loader.startLoading();
-		V.Editor.Presentation.File.exportToJSON(function(){
+		V.Editor.Presentation.File.exportTo(format,function(){
 			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
@@ -351,7 +351,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				var options = {};
 				options.width = 600;
 				options.height = 185;
-				options.text = V.I18n.getTrans("i.exportPresToJSONerrorNotification");
+
+				if(format=="scorm"){
+					options.text = V.I18n.getTrans("i.exportPresToSCORMerrorNotification");
+				} else {
+					//JSON
+					options.text = V.I18n.getTrans("i.exportPresToJSONerrorNotification");
+				}
+				
 				var button1 = {};
 				button1.text = V.I18n.getTrans("i.Ok");
 				button1.callback = function(){
@@ -361,6 +368,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				V.Utils.showDialog(options);
 			},Math.max(1250-diff,0));
 		});
+	};
+
+	var exportToJSON = function(){
+		_exportTo("json");
+	};
+
+	var exportToSCORM = function(){
+		_exportTo("scorm");
 	};
 
 	var displaySettings = function(){
@@ -387,6 +402,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
 		exportToJSON 					: exportToJSON,
+		exportToSCORM					: exportToSCORM,
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onUnpublishButtonClicked		: onUnpublishButtonClicked,

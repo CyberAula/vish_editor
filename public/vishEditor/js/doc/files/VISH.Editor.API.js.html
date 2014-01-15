@@ -506,7 +506,6 @@ VISH.Editor.API = (function(V,$,undefined){
 		};
 
 		$.ajax({
-			async: false,
 			type: &#x27;GET&#x27;,
 			url: &#x27;&#x2F;excursion_thumbnails.json&#x27;,
 			dataType: &#x27;json&#x27;,
@@ -523,30 +522,32 @@ VISH.Editor.API = (function(V,$,undefined){
 		});
 	};
 
-	var uploadTmpJSON = function(json, successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+	var uploadTmpJSON = function(json, responseFormat, successCallback, failCallback){
+		responseFormat = (typeof responseFormat==&quot;string&quot;) ? responseFormat : &quot;json&quot;
+
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
 			if(typeof failCallback == &quot;function&quot;){
 				setTimeout(function(){
 					&#x2F;&#x2F; var iframe = $(&quot;#hiddenIframeForAjaxDownloads&quot;);
 					&#x2F;&#x2F; $(iframe).attr(&quot;src&quot;,&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;excursions&#x2F;tmpJson.json?fileId=1&#x27;);
 					failCallback();
-				},800);
+				},100);
 			}
 			return;
 		}
 
 		$.ajax({
-			async: false,
 			type: &#x27;POST&#x27;,
 			url: &#x27;&#x2F;excursions&#x2F;tmpJson.json&#x27;,
 			dataType: &#x27;json&#x27;,
 			data: { 
 				&quot;authenticity_token&quot; : V.User.getToken(),
-				&quot;json&quot;: JSON.stringify(json)
+				&quot;json&quot;: JSON.stringify(json),
+				&quot;responseFormat&quot;: responseFormat
 			},
-			success: function(data) {
-				if((data)&amp;&amp;(data.fileId)){
-					V.Editor.API.downloadTmpJSON(data.fileId);
+			success: function(data){
+				if((data)&amp;&amp;(data.url)){
+					_downloadFile(data.url);
 					if(typeof successCallback == &quot;function&quot;){
 						successCallback();
 					}
@@ -560,13 +561,12 @@ VISH.Editor.API = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
-	var downloadTmpJSON = function(fileId){
-		var filename = fileId
+	var _downloadFile = function(fileURL){
 		var iframe = $(&quot;#hiddenIframeForAjaxDownloads&quot;);
-		$(iframe).attr(&quot;src&quot;,&#x27;&#x2F;excursions&#x2F;tmpJson.json?fileId=&#x27;+fileId+&#x27;&amp;filename=&#x27;+filename);
-	}
+		$(iframe).attr(&quot;src&quot;,fileURL);
+	};
 
 	
 	return {
@@ -583,8 +583,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
 		requestThumbnails           : requestThumbnails,
-		uploadTmpJSON               : uploadTmpJSON,
-		downloadTmpJSON             : downloadTmpJSON
+		uploadTmpJSON               : uploadTmpJSON
 	};
 
 }) (VISH, jQuery);

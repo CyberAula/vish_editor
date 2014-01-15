@@ -210,12 +210,9 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	var _initAferPresentationLoaded = function(options,presentation){
-		&#x2F;&#x2F; var slideNo = V.Utils.getSlideNumberFromHash();
-		&#x2F;&#x2F; if(slideNo){
-		&#x2F;&#x2F; 	V.Slides.setCurrentSlideNumber(slideNo);
-		&#x2F;&#x2F; }
-		V.Editor.Slides.updateCurrentSlideFromHash();
-
+		if(initialPresentation){
+			V.Editor.Slides.updateCurrentSlideFromHash();
+		}
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
@@ -260,6 +257,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(!initialPresentation){
 			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:&quot;1&quot;, slideNumber:1});
 			V.Editor.Slides.addSlide(slide);
+			V.Slides.goToSlide(1);
 		}
 
 		&#x2F;&#x2F;Init settings

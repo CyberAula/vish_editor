@@ -93,7 +93,8 @@ VISH.Recommendations = (function(V,$,undefined){
 	var url_to_get_recommendations;
 	var user_id;
 	var presentation_id;
-	var generated;
+	var _requesting;
+	var _generated;
 	var _isRecVisible;
 
 	&#x2F;**
@@ -103,7 +104,8 @@ VISH.Recommendations = (function(V,$,undefined){
 		user_id = V.User.getId();
 		presentation_id = V.Viewer.getCurrentPresentation().id;
 		_isRecVisible = false;
-		generated = false;
+		_requesting = false;
+		_generated = false;
 
 		if(options){
 			if(typeof options[&quot;urlToGetRecommendations&quot;] == &quot;string&quot;){
@@ -111,7 +113,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			}
 		}
 		
-		&#x2F;&#x2F;redimention of fancybox is done in ViewerAdapter (line 300 aprox)
+		&#x2F;&#x2F;Redimension of fancybox is done in ViewerAdapter
 		$(&quot;#fancyRec&quot;).fancybox({
 			  &#x27;type&#x27;	: &#x27;inline&#x27;,
 			  &#x27;autoDimensions&#x27; : false,
@@ -121,11 +123,17 @@ VISH.Recommendations = (function(V,$,undefined){
 		      &#x27;height&#x27;: &#x27;100%&#x27;,
 		      &#x27;padding&#x27;: 0,
 		      &#x27;overlayOpacity&#x27;: 0,
+		      &#x27;center&#x27;: false,
+		      &#x27;onStart&#x27; : function(){
+		      	$(&quot;#fancybox-outer&quot;).css(&quot;display&quot;,&quot;none&quot;);
+		      },
 		      &#x27;onComplete&#x27;  : function(data) {
-		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(0,0,0,.7)&quot;);
-		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;0px&quot;);
-		      		V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
-		      		_isRecVisible = true;
+				$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(0,0,0,.7)&quot;);
+				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;0px&quot;);
+				V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
+				_isRecVisible = true;
+				V.ViewerAdapter.updateFancyboxAfterSetupSize();
+				$(&quot;#fancybox-outer&quot;).css(&quot;display&quot;,&quot;block&quot;);
 		      },
 		      &#x27;onClosed&#x27; : function(data) {
 		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
@@ -137,16 +145,35 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	&#x2F;**
-	 * function to call ViSH via AJAX to get recommendation of excursions
+	 * Function to check if this is the appropiate moment to request the recommendations
 	 *&#x2F;
-	var generateFancybox = function(){
-		if(!generated){
+	var checkForRecommendations = function(){
+		var slidesQuantity = V.Slides.getSlidesQuantity();
+		var cSlideNumber = V.Slides.getCurrentSlideNumber();
+
+		if(cSlideNumber &gt; slidesQuantity - 2){
+			if(!_generated){
+				_requestRecommendations();
+			}
+		}
+	}
+
+	&#x2F;**
+	 * Function to call ViSH via AJAX to get recommendation of excursions
+	 *&#x2F;
+	var _requestRecommendations = function(){
+		if(!_generated){
 			if(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH){
+				if(_requesting == true){
+					return;
+				} else {
+					_requesting = true;
+				}
 				if(url_to_get_recommendations !== undefined){
 					var params_to_send = {
 						user_id: user_id,
 						excursion_id: presentation_id,
-						quantity: 9
+						quantity: 6
 					};
 					$.ajax({
 						type    : &quot;GET&quot;,
@@ -154,26 +181,30 @@ VISH.Recommendations = (function(V,$,undefined){
 						data    : params_to_send,
 						success : function(data) {
 							_fillFancyboxWithData(data);
+						},
+						error: function(error){
+							_requesting = false;
 						}
 					});
 				}
 			} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
-				_fillFancyboxWithData(VISH.Samples.API.recommendationList);
+				_fillFancyboxWithData(V.Samples.API.recommendationList);
 			}
 		}
 	};
 
 	var _fillFancyboxWithData = function(data){
 		if((!data)||(data.length===0)){
+			_requesting = false;
 			return;
 		}
 
         var ex;
         var result = &quot;&quot;;
-        for (var i = data.length - 1; i &gt;= 0; i--) {
+        for (var i = data.length - 1; i &gt;= 0; i--){
         	ex = data[i];
         	if(V.Status.getIsEmbed()){
-        		result += &#x27;&lt;a href=&quot;&#x27;+ex.url+&#x27;.full&quot;&gt;&#x27;;
+        		result += &#x27;&lt;a target=&quot;_blank&quot; href=&quot;&#x27;+ex.url+&#x27;.full&quot;&gt;&#x27;;
         	}
         	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+i+&#x27;&quot;&gt;&#x27;+
                         &#x27;&lt;ul class=&quot;rec-thumbnail&quot;&gt;&#x27;+
@@ -184,30 +215,39 @@ VISH.Recommendations = (function(V,$,undefined){
                           &#x27;&lt;li class=&quot;rec-info-excursion&quot;&gt;&#x27;+
                             &#x27;&lt;div class=&quot;rec-title-excursion&quot;&gt;&#x27;+ex.title+&#x27;&lt;&#x2F;div&gt;&#x27;+
                             &#x27;&lt;div class=&quot;rec-by&quot;&gt;by &lt;span class=&quot;rec-name&quot;&gt;&#x27;+ex.author+&#x27;&lt;&#x2F;span&gt;&lt;&#x2F;div&gt;&#x27;+
-                            &#x27;&lt;span class=&quot;rec-visits&quot;&gt;&#x27;+ex.views+&#x27;&lt;&#x2F;span&gt; &lt;span class=&quot;rec-views&quot;&gt;views&lt;&#x2F;span&gt;&#x27;+
-                            &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&#x27;+ex.favourites+&#x27;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;http:&#x2F;&#x2F;vishub.org&#x2F;assets&#x2F;icons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
+                            &#x27;&lt;span class=&quot;rec-visits&quot;&gt;&#x27;+ex.views+&#x27;&lt;&#x2F;span&gt; &lt;span class=&quot;rec-views&quot;&gt;&#x27;+V.I18n.getTrans(&quot;i.exviews&quot;)+&#x27;&lt;&#x2F;span&gt;&#x27;+
+                            &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&lt;span class=&quot;rec-likes-number&quot;&gt;&#x27;+333+&#x27;&lt;&#x2F;span&gt;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;http:&#x2F;&#x2F;vishub.org&#x2F;assets&#x2F;icons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
                           &#x27;&lt;&#x2F;li&gt;&#x27;+
                         &#x27;&lt;&#x2F;ul&gt;&#x27;+
                     &#x27;&lt;&#x2F;div&gt;&#x27;;
-            if(V.Status.getIsEmbed()){
-        		result += &#x27;&lt;&#x2F;a&gt;&#x27;;
-        	}
-        };
+			if(V.Status.getIsEmbed()){
+				result += &#x27;&lt;&#x2F;a&gt;&#x27;;
+			}
+		};
         $(&quot;#fancy_recommendations .rec-grid&quot;).html(result);
-        generated = true;
+        _generated = true;
+        _requesting = false;
 
         if(!V.Status.getIsEmbed()){
         	&#x2F;&#x2F;we join the recom-X with sending the parent to the excursion url
-        	 for (var i = data.length - 1; i &gt;= 0; i--) {
+        	 for (var i = data.length - 1; i &gt;= 0; i--){
         	 	$(&quot;#recom-&quot;+data[i].id).click(function(my_event){
         	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(&quot;.rec-excursion&quot;).attr(&quot;number&quot;)].url);
         	 	});
         	 }
-        }
-
+        };
 	};
 
 	var showFancybox = function(){
+		if(V.Editing){
+			return;
+		}
+		if(!V.Status.getDevice().desktop){
+			return;
+		}
+		if(V.Viewer.getPresentationType()!= V.Constant.PRESENTATION){
+			return;
+		}
 		if((V.Utils.getOptions())&amp;&amp;(V.Utils.getOptions().preview)){
 			return;
 		}
@@ -217,6 +257,12 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(isRecVisible()){
 			return;
 		}
+		if((!_generated)&amp;&amp;(!_requesting)){
+			&#x2F;&#x2F;Request recommendations
+			_requestRecommendations();
+		}
+
+		&#x2F;&#x2F;Show fancybox
 		$(&quot;#fancyRec&quot;).trigger(&#x27;click&#x27;);
 	};
 
@@ -224,11 +270,22 @@ VISH.Recommendations = (function(V,$,undefined){
 		return _isRecVisible;
 	}
 
+	var aftersetupSize = function(increase){
+		if(increase &gt; 0.82){
+			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;44%&quot;);
+		} else if(increase &gt; 0.36){
+			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;40%&quot;);
+		} else {
+			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;36%&quot;);
+		}
+	}
+
 	return {
 		init          			: init,
-		generateFancybox		: generateFancybox,
+		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
-		isRecVisible 			: isRecVisible
+		isRecVisible 			: isRecVisible,
+		aftersetupSize			: aftersetupSize
 	};
 
 }) (VISH,jQuery);

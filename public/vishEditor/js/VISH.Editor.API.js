@@ -432,7 +432,9 @@ VISH.Editor.API = (function(V,$,undefined){
 		});
 	};
 
-	var uploadTmpJSON = function(json, successCallback, failCallback){
+	var uploadTmpJSON = function(json, responseFormat, successCallback, failCallback){
+		responseFormat = (typeof responseFormat=="string") ? responseFormat : "json"
+
 		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
 			if(typeof failCallback == "function"){
 				setTimeout(function(){
@@ -451,7 +453,7 @@ VISH.Editor.API = (function(V,$,undefined){
 			data: { 
 				"authenticity_token" : V.User.getToken(),
 				"json": JSON.stringify(json),
-				"responseFormat": "json"
+				"responseFormat": responseFormat
 			},
 			success: function(data){
 				if((data)&&(data.url)){

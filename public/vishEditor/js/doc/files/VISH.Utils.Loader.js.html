@@ -343,7 +343,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		if(diff &lt; 1250){
 			setTimeout(function(){
 				stopLoading(callback);
-			},Math.min(1250-diff,1250));
+			},Math.max(0,Math.min(1250-diff,1250)));
 		} else {
 			var closed = false;
 			var tWClose = 0;
