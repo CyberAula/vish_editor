@@ -12,6 +12,8 @@ VISH.Editor = (function(V,$,undefined){
 	var initialPresentation = false;
 	//drafPresentation stores the initial presentation
 	var draftPresentation;
+	//isDraft indicate if the presentation is a draft
+	var _isDraft;
 
 	//last presentation stored in the server
 	var lastStoredPresentationStringify;
@@ -41,6 +43,10 @@ VISH.Editor = (function(V,$,undefined){
 
 		V.Debugging.init(options);
 		
+		if(presentation){
+			initialPresentation = true;
+		}
+
 		if(options){
 			initOptions = options;
 			if((options.configuration)&&(V.Configuration)){
@@ -50,7 +56,9 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			initOptions = {};
 		}
-		
+
+		_isDraft = _initPresentationDraft();
+
 		// V.Storage.setTestingMode(true);
 		
 		V.Utils.init();
@@ -91,7 +99,7 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		//If we have to edit
-		if(presentation){
+		if(initialPresentation){
 			presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
 				$("#waiting_overlay").hide();
@@ -506,6 +514,8 @@ VISH.Editor = (function(V,$,undefined){
 		//Save settings (metadata, theme, animation, ...)
 		presentation = V.Editor.Settings.saveSettings();
 
+		presentation = _saveLORData(presentation);
+
 		//Slides of the presentation
 		presentation.slides = [];
 
@@ -539,6 +549,42 @@ VISH.Editor = (function(V,$,undefined){
 		// V.Debugging.log("\n\nViSH Editor save the following presentation:\n");
 		// V.Debugging.log(JSON.stringify(presentation));
 
+		return presentation;
+	};
+
+	var _saveLORData = function(presentation){
+		switch(V.Configuration.getConfiguration().mode){
+			case V.Constant.VISH:
+			case V.Constant.NOSERVER:
+				//Look for Id and draft
+				presentation["vishMetadata"] = {};
+				presentation["vishMetadata"]["url"] = "http://vishub.org";
+
+				var options = V.Utils.getOptions();
+				var LORPresentation = getDraftPresentation();
+
+				// //Look for draft in options
+				// if(options){
+				// 	if(options.draft==false){
+				// 		presentation["vishMetadata"]["draft"] = false;
+				// 	} else {
+				// 		presentation["vishMetadata"]["draft"] = true;
+				// 	}
+				// }
+
+				// //Look for draft and id in LOR metadata
+				// if(LORPresentation && LORPresentation["vishMetadata"]){
+				// 	var LORMetadata = LORPresentation["vishMetadata"];
+				// 	if(!presentation["vishMetadata"]["draft"] && LORMetadata["draft"]){
+				// 		presentation["vishMetadata"]["draft"] = LORMetadata["draft"];
+				// 	}
+				// 	if(LORMetadata["id"]){
+				// 		presentation["vishMetadata"]["id"] = LORMetadata["id"];
+				// 	}
+				// }
+				
+				break;
+		};
 		return presentation;
 	};
 	
@@ -721,8 +767,12 @@ VISH.Editor = (function(V,$,undefined){
 									}
 								}
 							}
+							if(order=="publish"){
+								_isDraft = false;
+							}
 						} else {
 							//Order == "unpublish"
+							_isDraft = true;
 							if((typeof data != "undefined")&&(data.exitPath)){
 								//Update exit path
 								V.exitPath = data.exitPath;
@@ -744,6 +794,12 @@ VISH.Editor = (function(V,$,undefined){
 
 					if(order != "unpublish"){
 						lastStoredPresentationStringify = JSON.stringify(presentation);
+						if(order=="publish"){
+							_isDraft = false;
+						}
+					} else {
+						//Order == "unpublish"
+						_isDraft = true;
 					}
 
 					setTimeout(function(){
@@ -866,13 +922,16 @@ VISH.Editor = (function(V,$,undefined){
 	 * Returns if the server has checked the presentation has a draft.
 	 */
 	var isPresentationDraft = function(){
+		return _isDraft;
+	};
+
+	var _initPresentationDraft = function(){
 		if(initialPresentation){
-			//Look for options["draft"]
 			if((initOptions.draft)&&(typeof initOptions.draft === "boolean")){
 				return initOptions.draft;
 			} else {
-				//Server must indicate explicity that this presentation is a draft with the "draft" option.
-				return false;
+				//Server must indicate explicity that this presentation is not a draft with the "draft" option.
+				return true;
 			}
 		} else {
 			//New presentation created, draft by default.
