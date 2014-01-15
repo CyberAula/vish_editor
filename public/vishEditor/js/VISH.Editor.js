@@ -42,10 +42,6 @@ VISH.Editor = (function(V,$,undefined){
 		$("body").addClass("ViSHEditorBody");
 
 		V.Debugging.init(options);
-		
-		if(presentation){
-			initialPresentation = true;
-		}
 
 		if(options){
 			initOptions = options;
@@ -55,6 +51,16 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		} else {
 			initOptions = {};
+		}
+
+		if(V.Debugging.isDevelopping()){
+			if ((options.configuration.mode==V.Constant.NOSERVER)&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
+				presentation = V.Debugging.getPresentationSamples();
+			}
+		}
+		
+		if(presentation){
+			initialPresentation = true;
 		}
 
 		_isDraft = _initPresentationDraft();
@@ -73,6 +79,7 @@ VISH.Editor = (function(V,$,undefined){
 			$("#waiting_overlay").hide();
 			return;
 		}
+
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
@@ -91,12 +98,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.User.init(options);
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
-
-		if(V.Debugging.isDevelopping()){
-			if ((options.configuration.mode==V.Constant.NOSERVER)&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
-				presentation = V.Debugging.getPresentationSamples();
-			}
-		}
 
 		//If we have to edit
 		if(initialPresentation){
@@ -556,33 +557,17 @@ VISH.Editor = (function(V,$,undefined){
 		switch(V.Configuration.getConfiguration().mode){
 			case V.Constant.VISH:
 			case V.Constant.NOSERVER:
-				//Look for Id and draft
-				presentation["vishMetadata"] = {};
-				presentation["vishMetadata"]["url"] = "http://vishub.org";
-
-				var options = V.Utils.getOptions();
 				var LORPresentation = getDraftPresentation();
-
-				// //Look for draft in options
-				// if(options){
-				// 	if(options.draft==false){
-				// 		presentation["vishMetadata"]["draft"] = false;
-				// 	} else {
-				// 		presentation["vishMetadata"]["draft"] = true;
-				// 	}
-				// }
-
-				// //Look for draft and id in LOR metadata
-				// if(LORPresentation && LORPresentation["vishMetadata"]){
-				// 	var LORMetadata = LORPresentation["vishMetadata"];
-				// 	if(!presentation["vishMetadata"]["draft"] && LORMetadata["draft"]){
-				// 		presentation["vishMetadata"]["draft"] = LORMetadata["draft"];
-				// 	}
-				// 	if(LORMetadata["id"]){
-				// 		presentation["vishMetadata"]["id"] = LORMetadata["id"];
-				// 	}
-				// }
+				var LORMetadata;
+				if(LORPresentation && LORPresentation["vishMetadata"]){
+					LORMetadata = LORPresentation["vishMetadata"];
+				} else {
+					LORMetadata = {};
+				}
 				
+				LORMetadata["draft"] = isPresentationDraft().toString();
+
+				presentation["vishMetadata"] = LORMetadata;
 				break;
 		};
 		return presentation;

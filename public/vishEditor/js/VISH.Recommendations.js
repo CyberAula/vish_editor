@@ -2,7 +2,7 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var url_to_get_recommendations;
 	var user_id;
-	var presentation_id;
+	var vishub_pres_id;
 	var _requesting;
 	var _generated;
 	var _isRecVisible;
@@ -11,11 +11,15 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * Function to initialize the Recommendations
 	 */
 	var init = function(options){
-		user_id = V.User.getId();
-		presentation_id = V.Viewer.getCurrentPresentation().id;
 		_isRecVisible = false;
 		_requesting = false;
 		_generated = false;
+
+		user_id = V.User.getId();
+		var presentation = V.Viewer.getCurrentPresentation();
+		if(presentation["vishMetadata"] && presentation["vishMetadata"]["id"]){
+			vishub_pres_id = presentation["vishMetadata"]["id"];
+		}
 
 		if(options){
 			if(typeof options["urlToGetRecommendations"] == "string"){
@@ -82,7 +86,7 @@ VISH.Recommendations = (function(V,$,undefined){
 				if(url_to_get_recommendations !== undefined){
 					var params_to_send = {
 						user_id: user_id,
-						excursion_id: presentation_id,
+						excursion_id: vishub_pres_id,
 						quantity: 6
 					};
 					$.ajax({
