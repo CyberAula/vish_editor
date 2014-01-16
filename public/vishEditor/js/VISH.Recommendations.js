@@ -142,7 +142,7 @@ VISH.Recommendations = (function(V,$,undefined){
         for (var i = data.length - 1; i >= 0; i--){
         	ex = data[i];
         	if(applyTargetBlank){
-        		result += '<a target="_blank" href="'+ex.url+'.full">';
+        		result += '<a target="_blank" href="'+ex.url+'">';
         	}
         	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+i+'">'+
                         '<ul class="rec-thumbnail">'+
@@ -244,7 +244,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(typeof pJSON["title"] != "undefined"){
 			searchTerms.push(pJSON["title"]);
 		}
-		
+
 		return searchTerms.join(",");
 	};
 
