@@ -912,8 +912,10 @@ VISH.Editor = (function(V,$,undefined){
 
 	var _initPresentationDraft = function(){
 		if(initialPresentation){
-			if((initOptions.draft)&&(typeof initOptions.draft === "boolean")){
+			if(typeof initOptions.draft === "boolean"){
 				return initOptions.draft;
+			} else if(typeof initOptions.draft === "string"){
+				return !(initOptions.draft=="false");
 			} else {
 				//Server must indicate explicity that this presentation is not a draft with the "draft" option.
 				return true;
