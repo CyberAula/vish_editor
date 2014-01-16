@@ -90,27 +90,46 @@
     <pre class="code prettyprint linenums">
 VISH.Recommendations = (function(V,$,undefined){
 
-	var url_to_get_recommendations;
-	var user_id;
-	var presentation_id;
+	&#x2F;&#x2F;Internals
+	var _enabled;
 	var _requesting;
 	var _generated;
 	var _isRecVisible;
+
+	&#x2F;&#x2F;Recommendations API
+	var _recommendationAPIUrl;
+
+	&#x2F;&#x2F;Vishub params
+	var user_id;
+	var vishub_pres_id;
+
+	&#x2F;&#x2F;Params to enhance recommendation
+	var _searchTerms;
+
 
 	&#x2F;**
 	 * Function to initialize the Recommendations
 	 *&#x2F;
 	var init = function(options){
-		user_id = V.User.getId();
-		presentation_id = V.Viewer.getCurrentPresentation().id;
+		_enabled = false;
 		_isRecVisible = false;
 		_requesting = false;
 		_generated = false;
 
-		if(options){
-			if(typeof options[&quot;urlToGetRecommendations&quot;] == &quot;string&quot;){
-				url_to_get_recommendations = options[&quot;urlToGetRecommendations&quot;];
+		if(V.Status.getIsInVishSite()){
+			user_id = V.User.getId();
+			var presentation = V.Viewer.getCurrentPresentation();
+			if(presentation[&quot;vishMetadata&quot;] &amp;&amp; presentation[&quot;vishMetadata&quot;][&quot;id&quot;]){
+				vishub_pres_id = presentation[&quot;vishMetadata&quot;][&quot;id&quot;];
 			}
+		}
+
+		_searchTerms = getCurrentSearchTerms();
+
+		var options = V.Utils.getOptions();
+		if((options)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;] == &quot;string&quot;)){
+			_recommendationAPIUrl = options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;];
+			_enabled = true;
 		}
 		
 		&#x2F;&#x2F;Redimension of fancybox is done in ViewerAdapter
@@ -162,32 +181,39 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * Function to call ViSH via AJAX to get recommendation of excursions
 	 *&#x2F;
 	var _requestRecommendations = function(){
-		if(!_generated){
+		if((typeof _recommendationAPIUrl != &quot;undefined&quot;)&amp;&amp;(!_generated)){
 			if(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH){
 				if(_requesting == true){
 					return;
 				} else {
 					_requesting = true;
 				}
-				if(url_to_get_recommendations !== undefined){
-					var params_to_send = {
-						user_id: user_id,
-						excursion_id: presentation_id,
-						quantity: 6
-					};
-					$.ajax({
-						type    : &quot;GET&quot;,
-						url     : url_to_get_recommendations,
-						data    : params_to_send,
-						success : function(data) {
-							_fillFancyboxWithData(data);
-						},
-						error: function(error){
-							_requesting = false;
-						}
-					});
+
+				var params = {};
+				params[&quot;quantity&quot;] = 6;
+				if(_searchTerms){
+					params[&quot;q&quot;] = _searchTerms;
 				}
-			} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==&quot;noserver&quot;){
+				if(user_id){
+					params[&quot;user_id&quot;] = user_id;
+				}
+				if(vishub_pres_id){
+					params[&quot;excursion_id&quot;] = vishub_pres_id;
+				}
+
+				$.ajax({
+					type    : &quot;GET&quot;,
+					url     : _recommendationAPIUrl,
+					data    : params,
+					success : function(data) {
+						_fillFancyboxWithData(data);
+					},
+					error: function(error){
+						_requesting = false;
+					}
+				});
+
+			} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
 				_fillFancyboxWithData(V.Samples.API.recommendationList);
 			}
 		}
@@ -199,11 +225,13 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
+		var applyTargetBlank = V.Status.getIsInExternalSite();
+
         var ex;
         var result = &quot;&quot;;
         for (var i = data.length - 1; i &gt;= 0; i--){
         	ex = data[i];
-        	if(V.Status.getIsEmbed()){
+        	if(applyTargetBlank){
         		result += &#x27;&lt;a target=&quot;_blank&quot; href=&quot;&#x27;+ex.url+&#x27;.full&quot;&gt;&#x27;;
         	}
         	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+i+&#x27;&quot;&gt;&#x27;+
@@ -220,7 +248,7 @@ VISH.Recommendations = (function(V,$,undefined){
                           &#x27;&lt;&#x2F;li&gt;&#x27;+
                         &#x27;&lt;&#x2F;ul&gt;&#x27;+
                     &#x27;&lt;&#x2F;div&gt;&#x27;;
-			if(V.Status.getIsEmbed()){
+			if(applyTargetBlank){
 				result += &#x27;&lt;&#x2F;a&gt;&#x27;;
 			}
 		};
@@ -228,17 +256,20 @@ VISH.Recommendations = (function(V,$,undefined){
         _generated = true;
         _requesting = false;
 
-        if(!V.Status.getIsEmbed()){
+        if(!applyTargetBlank){
         	&#x2F;&#x2F;we join the recom-X with sending the parent to the excursion url
         	 for (var i = data.length - 1; i &gt;= 0; i--){
         	 	$(&quot;#recom-&quot;+data[i].id).click(function(my_event){
         	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(&quot;.rec-excursion&quot;).attr(&quot;number&quot;)].url);
-        	 	});
+				});
         	 }
         };
 	};
 
 	var showFancybox = function(){
+		if(_enabled == false){
+			return;
+		}
 		if(V.Editing){
 			return;
 		}
@@ -251,7 +282,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		if((V.Utils.getOptions())&amp;&amp;(V.Utils.getOptions().preview)){
 			return;
 		}
-		if((V.Configuration.getConfiguration()[&quot;mode&quot;]!=V.Constant.NOSERVER)&amp;&amp;(typeof url_to_get_recommendations == &quot;undefined&quot;)){
+		if((V.Configuration.getConfiguration()[&quot;mode&quot;]!=V.Constant.NOSERVER)&amp;&amp;(typeof _recommendationAPIUrl == &quot;undefined&quot;)){
 			return;
 		}
 		if(isRecVisible()){
@@ -268,6 +299,10 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var isRecVisible = function(){
 		return _isRecVisible;
+	};
+
+	var isEnabled = function(){
+		return _enabled;
 	}
 
 	var aftersetupSize = function(increase){
@@ -278,7 +313,30 @@ VISH.Recommendations = (function(V,$,undefined){
 		} else {
 			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;36%&quot;);
 		}
-	}
+	};
+
+	var getCurrentSearchTerms = function(){
+		return getSearchTerms(V.Viewer.getCurrentPresentation());
+	};
+
+	var getSearchTerms = function(pJSON){
+		var searchTerms = [];
+		if(typeof pJSON[&quot;tags&quot;] != &quot;undefined&quot;){
+			$(pJSON[&quot;tags&quot;]).each(function(index,tag){
+				searchTerms.push(tag);
+			});
+		}
+		if(typeof pJSON[&quot;subject&quot;] != &quot;undefined&quot;){
+			$(pJSON[&quot;subject&quot;]).each(function(index,tag){
+				searchTerms.push(tag);
+			});
+		}
+		if(typeof pJSON[&quot;title&quot;] != &quot;undefined&quot;){
+			searchTerms.push(pJSON[&quot;title&quot;]);
+		}
+		
+		return searchTerms.join(&quot;,&quot;);
+	};
 
 	return {
 		init          			: init,

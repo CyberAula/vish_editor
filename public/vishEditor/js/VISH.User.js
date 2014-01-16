@@ -3,7 +3,7 @@ VISH.User = (function(V,$,undefined){
 	var user; //{username: "user_name", id: "id", token: "token"}
 
 	var init = function(options){
-		user = new Object();
+		user = {};
 		if(options['username']) {
 		 	user.username = options['username'];
 		}

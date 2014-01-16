@@ -102,6 +102,8 @@ VISH.Editor = (function(V,$,undefined){
 	var initialPresentation = false;
 	&#x2F;&#x2F;drafPresentation stores the initial presentation
 	var draftPresentation;
+	&#x2F;&#x2F;isDraft indicate if the presentation is a draft
+	var _isDraft;
 
 	&#x2F;&#x2F;last presentation stored in the server
 	var lastStoredPresentationStringify;
@@ -130,7 +132,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(&quot;body&quot;).addClass(&quot;ViSHEditorBody&quot;);
 
 		V.Debugging.init(options);
-		
+
 		if(options){
 			initOptions = options;
 			if((options.configuration)&amp;&amp;(V.Configuration)){
@@ -140,7 +142,19 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			initOptions = {};
 		}
+
+		if(V.Debugging.isDevelopping()){
+			if ((options.configuration.mode==V.Constant.NOSERVER)&amp;&amp;(V.Debugging.getActionInit() == &quot;loadSamples&quot;)&amp;&amp;(!presentation)) {
+				presentation = V.Debugging.getPresentationSamples();
+			}
+		}
 		
+		if(presentation){
+			initialPresentation = true;
+		}
+
+		_isDraft = _initPresentationDraft();
+
 		&#x2F;&#x2F; V.Storage.setTestingMode(true);
 		
 		V.Utils.init();
@@ -155,6 +169,7 @@ VISH.Editor = (function(V,$,undefined){
 			$(&quot;#waiting_overlay&quot;).hide();
 			return;
 		}
+
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
@@ -174,14 +189,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); &#x2F;&#x2F;Settings must be initialize before V.Editor.Renderer.init(presentation);
 
-		if(V.Debugging.isDevelopping()){
-			if ((options.configuration.mode==V.Constant.NOSERVER)&amp;&amp;(V.Debugging.getActionInit() == &quot;loadSamples&quot;)&amp;&amp;(!presentation)) {
-				presentation = V.Debugging.getPresentationSamples();
-			}
-		}
-
 		&#x2F;&#x2F;If we have to edit
-		if(presentation){
+		if(initialPresentation){
 			presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
 				$(&quot;#waiting_overlay&quot;).hide();
@@ -596,6 +605,8 @@ VISH.Editor = (function(V,$,undefined){
 		&#x2F;&#x2F;Save settings (metadata, theme, animation, ...)
 		presentation = V.Editor.Settings.saveSettings();
 
+		presentation = _saveLORData(presentation);
+
 		&#x2F;&#x2F;Slides of the presentation
 		presentation.slides = [];
 
@@ -629,6 +640,26 @@ VISH.Editor = (function(V,$,undefined){
 		&#x2F;&#x2F; V.Debugging.log(&quot;\n\nViSH Editor save the following presentation:\n&quot;);
 		&#x2F;&#x2F; V.Debugging.log(JSON.stringify(presentation));
 
+		return presentation;
+	};
+
+	var _saveLORData = function(presentation){
+		switch(V.Configuration.getConfiguration().mode){
+			case V.Constant.VISH:
+			case V.Constant.NOSERVER:
+				var LORPresentation = getDraftPresentation();
+				var LORMetadata;
+				if(LORPresentation &amp;&amp; LORPresentation[&quot;vishMetadata&quot;]){
+					LORMetadata = LORPresentation[&quot;vishMetadata&quot;];
+				} else {
+					LORMetadata = {};
+				}
+				
+				LORMetadata[&quot;draft&quot;] = isPresentationDraft().toString();
+
+				presentation[&quot;vishMetadata&quot;] = LORMetadata;
+				break;
+		};
 		return presentation;
 	};
 	
@@ -811,8 +842,12 @@ VISH.Editor = (function(V,$,undefined){
 									}
 								}
 							}
+							if(order==&quot;publish&quot;){
+								_isDraft = false;
+							}
 						} else {
 							&#x2F;&#x2F;Order == &quot;unpublish&quot;
+							_isDraft = true;
 							if((typeof data != &quot;undefined&quot;)&amp;&amp;(data.exitPath)){
 								&#x2F;&#x2F;Update exit path
 								V.exitPath = data.exitPath;
@@ -834,6 +869,12 @@ VISH.Editor = (function(V,$,undefined){
 
 					if(order != &quot;unpublish&quot;){
 						lastStoredPresentationStringify = JSON.stringify(presentation);
+						if(order==&quot;publish&quot;){
+							_isDraft = false;
+						}
+					} else {
+						&#x2F;&#x2F;Order == &quot;unpublish&quot;
+						_isDraft = true;
 					}
 
 					setTimeout(function(){
@@ -956,13 +997,16 @@ VISH.Editor = (function(V,$,undefined){
 	 * Returns if the server has checked the presentation has a draft.
 	 *&#x2F;
 	var isPresentationDraft = function(){
+		return _isDraft;
+	};
+
+	var _initPresentationDraft = function(){
 		if(initialPresentation){
-			&#x2F;&#x2F;Look for options[&quot;draft&quot;]
 			if((initOptions.draft)&amp;&amp;(typeof initOptions.draft === &quot;boolean&quot;)){
 				return initOptions.draft;
 			} else {
-				&#x2F;&#x2F;Server must indicate explicity that this presentation is a draft with the &quot;draft&quot; option.
-				return false;
+				&#x2F;&#x2F;Server must indicate explicity that this presentation is not a draft with the &quot;draft&quot; option.
+				return true;
 			}
 		} else {
 			&#x2F;&#x2F;New presentation created, draft by default.

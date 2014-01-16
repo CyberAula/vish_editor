@@ -1,30 +1,45 @@
 VISH.Recommendations = (function(V,$,undefined){
 
-	var url_to_get_recommendations;
-	var user_id;
-	var vishub_pres_id;
+	//Internals
+	var _enabled;
 	var _requesting;
 	var _generated;
 	var _isRecVisible;
+
+	//Recommendations API
+	var _recommendationAPIUrl;
+
+	//Vishub params
+	var user_id;
+	var vishub_pres_id;
+
+	//Params to enhance recommendation
+	var _searchTerms;
+
 
 	/**
 	 * Function to initialize the Recommendations
 	 */
 	var init = function(options){
+		_enabled = false;
 		_isRecVisible = false;
 		_requesting = false;
 		_generated = false;
 
-		user_id = V.User.getId();
-		var presentation = V.Viewer.getCurrentPresentation();
-		if(presentation["vishMetadata"] && presentation["vishMetadata"]["id"]){
-			vishub_pres_id = presentation["vishMetadata"]["id"];
+		if(V.Status.getIsInVishSite()){
+			user_id = V.User.getId();
+			var presentation = V.Viewer.getCurrentPresentation();
+			if(presentation["vishMetadata"] && presentation["vishMetadata"]["id"]){
+				vishub_pres_id = presentation["vishMetadata"]["id"];
+			}
 		}
 
-		if(options){
-			if(typeof options["urlToGetRecommendations"] == "string"){
-				url_to_get_recommendations = options["urlToGetRecommendations"];
-			}
+		_searchTerms = getCurrentSearchTerms();
+
+		var options = V.Utils.getOptions();
+		if((options)&&(typeof options["recommendationsAPI"] != "undefined")&&(typeof options["recommendationsAPI"]["rootURL"] == "string")){
+			_recommendationAPIUrl = options["recommendationsAPI"]["rootURL"];
+			_enabled = true;
 		}
 		
 		//Redimension of fancybox is done in ViewerAdapter
@@ -76,32 +91,39 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * Function to call ViSH via AJAX to get recommendation of excursions
 	 */
 	var _requestRecommendations = function(){
-		if(!_generated){
+		if((typeof _recommendationAPIUrl != "undefined")&&(!_generated)){
 			if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH){
 				if(_requesting == true){
 					return;
 				} else {
 					_requesting = true;
 				}
-				if(url_to_get_recommendations !== undefined){
-					var params_to_send = {
-						user_id: user_id,
-						excursion_id: vishub_pres_id,
-						quantity: 6
-					};
-					$.ajax({
-						type    : "GET",
-						url     : url_to_get_recommendations,
-						data    : params_to_send,
-						success : function(data) {
-							_fillFancyboxWithData(data);
-						},
-						error: function(error){
-							_requesting = false;
-						}
-					});
+
+				var params = {};
+				params["quantity"] = 6;
+				if(_searchTerms){
+					params["q"] = _searchTerms;
 				}
-			} else if(V.Configuration.getConfiguration()["mode"]=="noserver"){
+				if(user_id){
+					params["user_id"] = user_id;
+				}
+				if(vishub_pres_id){
+					params["excursion_id"] = vishub_pres_id;
+				}
+
+				$.ajax({
+					type    : "GET",
+					url     : _recommendationAPIUrl,
+					data    : params,
+					success : function(data) {
+						_fillFancyboxWithData(data);
+					},
+					error: function(error){
+						_requesting = false;
+					}
+				});
+
+			} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
 				_fillFancyboxWithData(V.Samples.API.recommendationList);
 			}
 		}
@@ -155,6 +177,9 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var showFancybox = function(){
+		if(_enabled == false){
+			return;
+		}
 		if(V.Editing){
 			return;
 		}
@@ -167,7 +192,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		if((V.Utils.getOptions())&&(V.Utils.getOptions().preview)){
 			return;
 		}
-		if((V.Configuration.getConfiguration()["mode"]!=V.Constant.NOSERVER)&&(typeof url_to_get_recommendations == "undefined")){
+		if((V.Configuration.getConfiguration()["mode"]!=V.Constant.NOSERVER)&&(typeof _recommendationAPIUrl == "undefined")){
 			return;
 		}
 		if(isRecVisible()){
@@ -184,6 +209,10 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var isRecVisible = function(){
 		return _isRecVisible;
+	};
+
+	var isEnabled = function(){
+		return _enabled;
 	}
 
 	var aftersetupSize = function(increase){
@@ -194,7 +223,30 @@ VISH.Recommendations = (function(V,$,undefined){
 		} else {
 			$(".rec-excursion").css("width","36%");
 		}
-	}
+	};
+
+	var getCurrentSearchTerms = function(){
+		return getSearchTerms(V.Viewer.getCurrentPresentation());
+	};
+
+	var getSearchTerms = function(pJSON){
+		var searchTerms = [];
+		if(typeof pJSON["tags"] != "undefined"){
+			$(pJSON["tags"]).each(function(index,tag){
+				searchTerms.push(tag);
+			});
+		}
+		if(typeof pJSON["subject"] != "undefined"){
+			$(pJSON["subject"]).each(function(index,tag){
+				searchTerms.push(tag);
+			});
+		}
+		if(typeof pJSON["title"] != "undefined"){
+			searchTerms.push(pJSON["title"]);
+		}
+		
+		return searchTerms.join(",");
+	};
 
 	return {
 		init          			: init,

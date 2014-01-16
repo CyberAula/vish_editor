@@ -261,8 +261,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			}
 		}
 
-		&#x2F;&#x2F;Recommendations
-		if(isInVishSite || V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER){
+		&#x2F;&#x2F;Evaluations (in recommendation window)
+		&#x2F;&#x2F;Only show evaluations in the ViSH Site
+		if(isInVishSite || (V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER &amp;&amp; !V.Status.getIsScorm() &amp;&amp; !V.Status.getIsEmbed())){
 			$(&quot;.rec-first-row&quot;).show();
 		} else {
 			$(&quot;.rec-first-row&quot;).hide();

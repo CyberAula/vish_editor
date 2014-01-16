@@ -87,6 +87,12 @@ var getOptions = function(){
 			options["username"] = "ebarra";
 			options["userId"] = "3456";
 			options["token"] = "12xfDgR345x6";
+
+			//URL to access to the Recommendation API
+			options["recommendationsAPI"] = {
+				rootURL: "/excursions/last_slide.js"
+				// rootURL: "http://vishub.org/excursions/last_slide.js"
+			};
 			
 			//URL to access to the Quiz Session API
 			options["quizSessionAPI"] = {
@@ -115,9 +121,6 @@ var getOptions = function(){
 
 			//And a default landguage
 			options["lang"] = "en";
-
-			//URL to get the recommendations to show in the last slide
-			//options["urlToGetRecommendations"] = "/excursions/last_slide.js"
 
 			//URL to call LRE search
 			options["urlToSearchLRE"] = "/lre/search";

@@ -860,7 +860,7 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 26,
+            "line": 28,
             "description": "VISH Editor initializer.\nAdds the listeners to the click events in the different images and buttons of the UI.\nCall submodule initializers.",
             "params": [
                 {
@@ -881,77 +881,77 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 192,
+            "line": 201,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 247,
+            "line": 256,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 290,
+            "line": 299,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 322,
+            "line": 331,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 361,
+            "line": 370,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 370,
+            "line": 379,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 436,
+            "line": 445,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 448,
+            "line": 457,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 474,
+            "line": 483,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 499,
+            "line": 508,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 799,
+            "line": 840,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1056,21 +1056,21 @@
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 10,
+            "line": 20,
             "description": "Function to initialize the Recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 57,
+            "line": 76,
             "description": "Function to check if this is the appropiate moment to request the recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 71,
+            "line": 90,
             "description": "Function to call ViSH via AJAX to get recommendation of excursions",
             "class": "",
             "namespace": "VISH"
@@ -1343,21 +1343,21 @@
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 203,
+            "line": 204,
             "description": "Function to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 281,
+            "line": 282,
             "description": "Function to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 405,
+            "line": 406,
             "description": "Fancybox resizing. If a fancybox is opened, resize it",
             "class": "",
             "namespace": "VISH"
@@ -1690,47 +1690,47 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:192"
+            "line": " VISH.Editor.js:201"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:247"
+            "line": " VISH.Editor.js:256"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:290"
+            "line": " VISH.Editor.js:299"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:322"
+            "line": " VISH.Editor.js:331"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:361"
-        },
-        {
-            "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
             "line": " VISH.Editor.js:370"
         },
         {
+            "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
+            "line": " VISH.Editor.js:379"
+        },
+        {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:436"
+            "line": " VISH.Editor.js:445"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:448"
+            "line": " VISH.Editor.js:457"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:474"
+            "line": " VISH.Editor.js:483"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:499"
+            "line": " VISH.Editor.js:508"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:799"
+            "line": " VISH.Editor.js:840"
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
@@ -1790,15 +1790,15 @@
         },
         {
             "message": "Missing item type\nFunction to initialize the Recommendations",
-            "line": " VISH.Recommendations.js:10"
+            "line": " VISH.Recommendations.js:20"
         },
         {
             "message": "Missing item type\nFunction to check if this is the appropiate moment to request the recommendations",
-            "line": " VISH.Recommendations.js:57"
+            "line": " VISH.Recommendations.js:76"
         },
         {
             "message": "Missing item type\nFunction to call ViSH via AJAX to get recommendation of excursions",
-            "line": " VISH.Recommendations.js:71"
+            "line": " VISH.Recommendations.js:90"
         },
         {
             "message": "Missing item type\nFunction to initialize the renderer\nOnly gets the section element from the html page",
@@ -1954,15 +1954,15 @@
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
-            "line": " VISH.ViewerAdapter.js:203"
+            "line": " VISH.ViewerAdapter.js:204"
         },
         {
             "message": "Missing item type\nFunction to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
-            "line": " VISH.ViewerAdapter.js:281"
+            "line": " VISH.ViewerAdapter.js:282"
         },
         {
             "message": "Missing item type\nFancybox resizing. If a fancybox is opened, resize it",
-            "line": " VISH.ViewerAdapter.js:405"
+            "line": " VISH.ViewerAdapter.js:406"
         }
     ]
 }
