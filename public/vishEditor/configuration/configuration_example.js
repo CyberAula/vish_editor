@@ -83,10 +83,12 @@ var getOptions = function(){
 
 			options["developmentSettings"] = developmentSettings;
 
-			//Also you can define a username and token for testing purposes
-			options["username"] = "ebarra";
-			options["userId"] = "3456";
-			options["token"] = "12xfDgR345x6";
+			//Also you can define a user
+			options["user"] = {
+				name: "agordillo",
+				id: "24",
+				token: "12xfDgR345x6"
+			}
 
 			//URL to access to the Recommendation API
 			options["recommendationsAPI"] = {

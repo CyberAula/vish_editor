@@ -140,16 +140,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//Author
-		var author;
-		var options = V.Utils.getOptions();
-		if(options && options.username){
-			author = options.username;
-		} else if(presentation.author){
-			author = presentation.author;
-		}
+		var author = _getAuthor(presentation);
 		if(author){
-			var authorDOM = $("#author_span_in_preview");
-			$(authorDOM).html(author);
+			var authorName = author.name;
+			if(typeof authorName == "string"){
+				var authorDOM = $("#author_span_in_preview");
+				$(authorDOM).html(authorName);
+			}
 		}
 
 		//Description
@@ -405,6 +402,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		settings.VEVersion = V.VERSION;
 		settings.type = V.Constant.PRESENTATION;
 
+		var draftPresentation = V.Editor.getDraftPresentation()
+
 		var title = $('#presentation_details_input_title').val();
 		if((typeof title == "string")&&(title.trim()!="")){
 			settings.title = title;
@@ -419,10 +418,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.avatar = presentationThumbnail;
 		}
 
-		var author = $("#author_span_in_preview").html();
-		if((typeof author == "string")&&(author.trim()!="")){
-			settings.author = author;
+		//Author
+		var author = _getAuthor(draftPresentation);
+		var authorName = $("#author_span_in_preview").html();
+		if((typeof authorName == "string")&&(authorName.trim()!="")){
+			author.name = authorName;
+		} else if(typeof author == "object"){
+			delete author["name"];
 		}
+		settings.author = author;
 
 		var tags = getTags();
 		if((tags)&&(tags.length > 0)){
@@ -542,7 +546,19 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				return draftPresentation.tags;
 			}
 		}
-	}
+	};
+
+	var _getAuthor = function(presentation){
+		var author;
+		if((presentation)&&(typeof presentation.author == "object")){
+			author = presentation.author;
+		}
+		if(V.User.isUser()){
+			//Overrides
+			author = $.extend({},author,V.User.getUser());
+		}
+		return author;
+	};
 
 	/**
 	 * function called when the user clicks on the pedagogical options button

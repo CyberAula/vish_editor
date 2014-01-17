@@ -1,22 +1,20 @@
 VISH.User = (function(V,$,undefined){
 
-	var user; //{username: "user_name", id: "id", token: "token"}
+	var _user; //{name: "user_name", id: "id", token: "token"}
 
 	var init = function(options){
-		user = {};
-		if(options['username']) {
-		 	user.username = options['username'];
-		}
-		if(options['userId']) {
-		 	user.id= options['userId'];
-		}
-		if(options['token']){
-			user.token = options['token'];
+		_user= {};
+		if(typeof options['user'] == "object") {
+			_user= options['user'];
 		}
 	};
 
+	var isUser = function(){
+		return !(JSON.stringify(_user) == '{}'); 
+	}
+
 	var isLogged = function(){
-		if((user)&&(typeof user.token == "string")&&(user.id)){
+		if((_user)&&(typeof _user.token == "string")&&(_user.id)){
 			return true;
 		} else {
 			return false;
@@ -24,32 +22,32 @@ VISH.User = (function(V,$,undefined){
 	};
 
 	var getUser = function(){
-		if(user){
-			return user;
+		if(_user){
+			return _user;
 		} else {
 			return null;
 		}
 	};
 
 	var getName = function(){
-		if((user)&&(user.username)){
-			return user.username;
+		if((_user)&&(_user.name)){
+			return _user.name;
 		} else {
 			return null;
 		}
 	};
 
 	var getId = function(){
-		if((user)&&(user.id)){
-			return user.id;
+		if((_user)&&(_user.id)){
+			return _user.id;
 		} else {
 			return null;
 		}
 	};
 
 	var getToken = function(){
-		if((user)&&(user.token)){
-			return user.token;
+		if((_user)&&(_user.token)){
+			return _user.token;
 		} else {
 			return null;
 		}
@@ -57,6 +55,7 @@ VISH.User = (function(V,$,undefined){
 
 	return {
 		init:           init,
+		isUser:			isUser,
 		isLogged: 		isLogged,
 		getUser: 		getUser,
 		getName:  		getName,
