@@ -66,7 +66,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			close_button = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&(options["comeBackUrl"]);
 			
 			//Full screen buttons
-			can_use_nativeFs = (V.Status.getDevice().features.fullscreen);
+			can_use_nativeFs = (V.Status.getDevice().features.fullscreen)&&(!embed);
 
 			enter_fs_button = (typeof options["fullscreen"] !== "undefined")&&(!can_use_nativeFs);
 			if(enter_fs_button){
