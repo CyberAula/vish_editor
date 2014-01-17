@@ -552,11 +552,24 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		var author;
 		if((presentation)&&(typeof presentation.author == "object")){
 			author = presentation.author;
+		} else {
+			author = {};
 		}
+
 		if(V.User.isUser()){
-			//Overrides
-			author = $.extend({},author,V.User.getUser());
+			//Override some params
+			var user = V.User.getUser();
+			if(V.User.getName()){
+				author.name = V.User.getName();
+			}
+			if(V.Configuration.getConfiguration().mode==V.Constant.VISH || V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
+				author.vishubMetadata = {};
+				if(V.User.getId()){
+					author.vishubMetadata.id = V.User.getId();
+				}
+			}
 		}
+
 		return author;
 	};
 

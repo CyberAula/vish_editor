@@ -10,7 +10,7 @@ VISH.User = (function(V,$,undefined){
 	};
 
 	var isUser = function(){
-		return !(JSON.stringify(_user) == '{}'); 
+		return !(JSON.stringify(_user) == '{}');
 	}
 
 	var isLogged = function(){
