@@ -19,6 +19,7 @@ VISH.Status = (function(V,$,undefined){
 	//External or Internal site
 	var _isInExternalSite;
 	var _isInVishSite;
+	var _isLocalFile;
 
 	//Mode
 	var _isSlave;
@@ -100,6 +101,12 @@ VISH.Status = (function(V,$,undefined){
 			_scorm = false;
 		}
 
+		if(!_isAnotherDomain){
+			_isLocalFile = (window.top.location.href.indexOf("file://")===0);
+		} else {
+			_isLocalFile = false;
+		}
+		
 		_isInExternalSite = ((_isAnotherDomain)||(_scorm));
 		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
 	};
@@ -126,7 +133,7 @@ VISH.Status = (function(V,$,undefined){
 	/*
 	 * This function is done like this because navigator.online lies
 	 */
-	var _checkOnline = function(){	
+	var _checkOnline = function(){
 		//uncomment when navigator.online works,
 		//even if it works in all browsers we can remove the ajax call
 		//but now (10-2012) it gives false positive and false negative and it can´t be used
@@ -134,6 +141,22 @@ VISH.Status = (function(V,$,undefined){
 		        // Check to see if we are really online by making a call for a static JSON resource on
 		        // the originating Web site. If we can get to it, we're online. If not, assume we're
 		        // offline.
+
+				if(_isLocalFile){
+					var img = $("<img style='display:none' src='"+ V.ImagesPath + "blank.gif" + "' />");
+					$(img).load(function(response){
+						_isOnline = true;
+					});
+					$(img).error(function(response){
+						_isOnline = false;
+					});
+					$("section.slides").append(img);
+
+					//By default assume online
+					_isOnline = true;
+					return;
+				};
+
 		        $.ajax({
 		            async: true,
 		            cache: false,
@@ -191,6 +214,10 @@ VISH.Status = (function(V,$,undefined){
 	var getIsScorm = function(){
 		return _scorm;
 	};
+
+	var getIsLocalFile = function(){
+		return _isLocalFile;
+	}
 
 	var getIsInExternalSite = function(){
 		return _isInExternalSite;

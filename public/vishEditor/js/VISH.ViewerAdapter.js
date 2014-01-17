@@ -164,7 +164,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Watermark
-		if(isInExternalSite){
+		if((isInExternalSite)&&(!V.Status.getIsPreviewInsertMode())){
 			if((options)&&(typeof options.watermarkURL == "string")){
 				$("#embedWatermark").parent().attr("href",options.watermarkURL);
 				$("#embedWatermark").show();
