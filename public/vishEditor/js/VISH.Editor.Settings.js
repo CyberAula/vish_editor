@@ -563,9 +563,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				author.name = V.User.getName();
 			}
 			if(V.Configuration.getConfiguration().mode==V.Constant.VISH || V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
-				author.vishubMetadata = {};
+				author.vishMetadata = {};
 				if(V.User.getId()){
-					author.vishubMetadata.id = V.User.getId();
+					author.vishMetadata.id = V.User.getId();
 				}
 			}
 		}
