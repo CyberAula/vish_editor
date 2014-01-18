@@ -73,6 +73,11 @@ VISH.SlidesSelector = (function(V,$,undefined){
 	};
 
 	_preloadImages = function(){
+		$("#SelectedSlidesToAdd").attr("src",V.ImagesPath + "templatesthumbs/addt.png");
+		$("#tutorialSelectAllImage").attr("src",V.ImagesPath + "tutorial/selectall.png");
+		$("tutorialUnselectAllImage").attr("src",V.ImagesPath + "tutorial/unselectall.png");
+		$("tutorialSelectSlidesImage").attr("src",V.ImagesPath + "tutorial/selectslides.png");
+
 		$("li.addslidestut img[srctoload]").each(function(index,img){
 			$(img).attr("src",$(img).attr("srctoload"));
 		});

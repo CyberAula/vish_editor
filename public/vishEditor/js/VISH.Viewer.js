@@ -64,6 +64,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Events.init();
 		V.EventsNotifier.init();
 		V.VideoPlayer.init();
+		V.FullScreen.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);
 		});
@@ -108,49 +109,6 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 	};
 
-
-	/**
-	 * Function to enter and exit fullscreen
-	 */
-	var toggleFullScreen = function () {
-		if(V.Status.isSlaveMode()){
-			return;
-		}
-
-		if(V.Status.getIsInIframe()){
-			var myDoc = parent.document;
-			var myElem = V.Status.getIframe();
-		} else {
-			var myDoc = document;
-			var myElem = myDoc.getElementById('presentation_iframe');
-		}
-		
-		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
-			if (myDoc.documentElement.requestFullScreen) {
-				myElem.requestFullScreen();
-			} else if (myDoc.documentElement.mozRequestFullScreen) {
-				myElem.mozRequestFullScreen();
-			} else if (myDoc.documentElement.webkitRequestFullScreen) {
-				myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-				setTimeout(function(){
-					if (!myDoc.webkitCurrentFullScreenElement){
-						// Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
-						//Fix known Safari bug
-						myElem.webkitRequestFullScreen();
-					}
-				},250);
-			}
-		} else {
-			if (myDoc.cancelFullScreen) {
-				myDoc.cancelFullScreen();
-			} else if (myDoc.mozCancelFullScreen) {
-				myDoc.mozCancelFullScreen();
-			} else if (myDoc.webkitCancelFullScreen) {
-				myDoc.webkitCancelFullScreen();
-			}
-		}
-	};
-	
 	
 	var getOptions = function(){	
 		return initOptions;
@@ -253,8 +211,7 @@ VISH.Viewer = (function(V,$,undefined){
 
 
 	return {
-		init 						: init,
-		toggleFullScreen 			: toggleFullScreen, 
+		init 						: init, 
 		getOptions					: getOptions,
 		updateSlideCounter			: updateSlideCounter,
 		getCurrentPresentation		: getCurrentPresentation,

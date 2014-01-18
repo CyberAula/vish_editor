@@ -154,6 +154,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Events.init();
 		V.EventsNotifier.init();
 		V.VideoPlayer.init();
+		V.FullScreen.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);
 		});
@@ -198,49 +199,6 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 	};
 
-
-	&#x2F;**
-	 * Function to enter and exit fullscreen
-	 *&#x2F;
-	var toggleFullScreen = function () {
-		if(V.Status.isSlaveMode()){
-			return;
-		}
-
-		if(V.Status.getIsInIframe()){
-			var myDoc = parent.document;
-			var myElem = V.Status.getIframe();
-		} else {
-			var myDoc = document;
-			var myElem = myDoc.getElementById(&#x27;presentation_iframe&#x27;);
-		}
-		
-		if ((myDoc.fullScreenElement &amp;&amp; myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen &amp;&amp; !myDoc.webkitIsFullScreen)) {
-			if (myDoc.documentElement.requestFullScreen) {
-				myElem.requestFullScreen();
-			} else if (myDoc.documentElement.mozRequestFullScreen) {
-				myElem.mozRequestFullScreen();
-			} else if (myDoc.documentElement.webkitRequestFullScreen) {
-				myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-				setTimeout(function(){
-					if (!myDoc.webkitCurrentFullScreenElement){
-						&#x2F;&#x2F; Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
-						&#x2F;&#x2F;Fix known Safari bug
-						myElem.webkitRequestFullScreen();
-					}
-				},250);
-			}
-		} else {
-			if (myDoc.cancelFullScreen) {
-				myDoc.cancelFullScreen();
-			} else if (myDoc.mozCancelFullScreen) {
-				myDoc.mozCancelFullScreen();
-			} else if (myDoc.webkitCancelFullScreen) {
-				myDoc.webkitCancelFullScreen();
-			}
-		}
-	};
-	
 	
 	var getOptions = function(){	
 		return initOptions;
@@ -343,8 +301,7 @@ VISH.Viewer = (function(V,$,undefined){
 
 
 	return {
-		init 						: init,
-		toggleFullScreen 			: toggleFullScreen, 
+		init 						: init, 
 		getOptions					: getOptions,
 		updateSlideCounter			: updateSlideCounter,
 		getCurrentPresentation		: getCurrentPresentation,

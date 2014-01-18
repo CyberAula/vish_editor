@@ -230,16 +230,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Author
-		var author;
-		var options = V.Utils.getOptions();
-		if(options &amp;&amp; options.username){
-			author = options.username;
-		} else if(presentation.author){
-			author = presentation.author;
-		}
+		var author = _getAuthor(presentation);
 		if(author){
-			var authorDOM = $(&quot;#author_span_in_preview&quot;);
-			$(authorDOM).html(author);
+			var authorName = author.name;
+			if(typeof authorName == &quot;string&quot;){
+				var authorDOM = $(&quot;#author_span_in_preview&quot;);
+				$(authorDOM).html(authorName);
+			}
 		}
 
 		&#x2F;&#x2F;Description
@@ -495,6 +492,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		settings.VEVersion = V.VERSION;
 		settings.type = V.Constant.PRESENTATION;
 
+		var draftPresentation = V.Editor.getDraftPresentation()
+
 		var title = $(&#x27;#presentation_details_input_title&#x27;).val();
 		if((typeof title == &quot;string&quot;)&amp;&amp;(title.trim()!=&quot;&quot;)){
 			settings.title = title;
@@ -509,10 +508,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.avatar = presentationThumbnail;
 		}
 
-		var author = $(&quot;#author_span_in_preview&quot;).html();
-		if((typeof author == &quot;string&quot;)&amp;&amp;(author.trim()!=&quot;&quot;)){
-			settings.author = author;
+		&#x2F;&#x2F;Author
+		var author = _getAuthor(draftPresentation);
+		var authorName = $(&quot;#author_span_in_preview&quot;).html();
+		if((typeof authorName == &quot;string&quot;)&amp;&amp;(authorName.trim()!=&quot;&quot;)){
+			author.name = authorName;
+		} else if(typeof author == &quot;object&quot;){
+			delete author[&quot;name&quot;];
 		}
+		settings.author = author;
 
 		var tags = getTags();
 		if((tags)&amp;&amp;(tags.length &gt; 0)){
@@ -632,7 +636,32 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				return draftPresentation.tags;
 			}
 		}
-	}
+	};
+
+	var _getAuthor = function(presentation){
+		var author;
+		if((presentation)&amp;&amp;(typeof presentation.author == &quot;object&quot;)){
+			author = presentation.author;
+		} else {
+			author = {};
+		}
+
+		if(V.User.isUser()){
+			&#x2F;&#x2F;Override some params
+			var user = V.User.getUser();
+			if(V.User.getName()){
+				author.name = V.User.getName();
+			}
+			if(V.Configuration.getConfiguration().mode==V.Constant.VISH || V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
+				author.vishMetadata = {};
+				if(V.User.getId()){
+					author.vishMetadata.id = V.User.getId();
+				}
+			}
+		}
+
+		return author;
+	};
 
 	&#x2F;**
 	 * function called when the user clicks on the pedagogical options button

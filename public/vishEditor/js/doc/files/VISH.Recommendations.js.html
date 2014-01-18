@@ -95,6 +95,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	var _requesting;
 	var _generated;
 	var _isRecVisible;
+	var _showFancyboxTimer;
 
 	&#x2F;&#x2F;Recommendations API
 	var _recommendationAPIUrl;
@@ -167,27 +168,29 @@ VISH.Recommendations = (function(V,$,undefined){
 	 * Function to check if this is the appropiate moment to request the recommendations
 	 *&#x2F;
 	var checkForRecommendations = function(){
+		if(!_enabled){
+			return;
+		}
+
 		var slidesQuantity = V.Slides.getSlidesQuantity();
 		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 
-		if(cSlideNumber &gt; slidesQuantity - 2){
+		if(cSlideNumber &gt; slidesQuantity - 3){
 			if(!_generated){
 				_requestRecommendations();
 			}
 		}
-	}
+	};
 
 	&#x2F;**
 	 * Function to call ViSH via AJAX to get recommendation of excursions
 	 *&#x2F;
 	var _requestRecommendations = function(){
-		if((typeof _recommendationAPIUrl != &quot;undefined&quot;)&amp;&amp;(!_generated)){
+		if((_enabled)&amp;&amp;(typeof _recommendationAPIUrl != &quot;undefined&quot;)&amp;&amp;(!_generated)&amp;&amp;(_requesting != true)){
+
+			_requesting = true;
+
 			if(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH){
-				if(_requesting == true){
-					return;
-				} else {
-					_requesting = true;
-				}
 
 				var params = {};
 				params[&quot;quantity&quot;] = 6;
@@ -209,18 +212,22 @@ VISH.Recommendations = (function(V,$,undefined){
 						_fillFancyboxWithData(data);
 					},
 					error: function(error){
+						_enabled = false; &#x2F;&#x2F;Disable recommendations when API fail
 						_requesting = false;
 					}
 				});
 
 			} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-				_fillFancyboxWithData(V.Samples.API.recommendationList);
+				setTimeout(function(){
+					_fillFancyboxWithData(V.Samples.API.recommendationList);
+				},1000);
 			}
 		}
 	};
 
 	var _fillFancyboxWithData = function(data){
 		if((!data)||(data.length===0)){
+			_enabled = false; &#x2F;&#x2F;Disable recommendations when API fail
 			_requesting = false;
 			return;
 		}
@@ -232,7 +239,7 @@ VISH.Recommendations = (function(V,$,undefined){
         for (var i = data.length - 1; i &gt;= 0; i--){
         	ex = data[i];
         	if(applyTargetBlank){
-        		result += &#x27;&lt;a target=&quot;_blank&quot; href=&quot;&#x27;+ex.url+&#x27;.full&quot;&gt;&#x27;;
+        		result += &#x27;&lt;a target=&quot;_blank&quot; href=&quot;&#x27;+ex.url+&#x27;&quot;&gt;&#x27;;
         	}
         	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+i+&#x27;&quot;&gt;&#x27;+
                         &#x27;&lt;ul class=&quot;rec-thumbnail&quot;&gt;&#x27;+
@@ -282,15 +289,28 @@ VISH.Recommendations = (function(V,$,undefined){
 		if((V.Utils.getOptions())&amp;&amp;(V.Utils.getOptions().preview)){
 			return;
 		}
-		if((V.Configuration.getConfiguration()[&quot;mode&quot;]!=V.Constant.NOSERVER)&amp;&amp;(typeof _recommendationAPIUrl == &quot;undefined&quot;)){
-			return;
-		}
 		if(isRecVisible()){
 			return;
 		}
-		if((!_generated)&amp;&amp;(!_requesting)){
-			&#x2F;&#x2F;Request recommendations
-			_requestRecommendations();
+		if(!V.Slides.isCurrentLastSlide()){
+			return;
+		}
+
+		if(!_generated){
+			if(!_requesting){
+				&#x2F;&#x2F;Request recommendations
+				_requestRecommendations();
+			}
+
+			if(typeof _showFancyboxTimer == &quot;undefined&quot;){
+				_showFancyboxTimer = setTimeout(function(){
+					clearTimeout(_showFancyboxTimer);
+					_showFancyboxTimer = undefined;
+					showFancybox();
+				},300);
+			}
+
+			return;
 		}
 
 		&#x2F;&#x2F;Show fancybox
@@ -303,7 +323,7 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var isEnabled = function(){
 		return _enabled;
-	}
+	};
 
 	var aftersetupSize = function(increase){
 		if(increase &gt; 0.82){
@@ -334,7 +354,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(typeof pJSON[&quot;title&quot;] != &quot;undefined&quot;){
 			searchTerms.push(pJSON[&quot;title&quot;]);
 		}
-		
+
 		return searchTerms.join(&quot;,&quot;);
 	};
 

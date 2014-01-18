@@ -757,19 +757,19 @@
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 386,
+            "line": 383,
             "description": "function called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 547,
+            "line": 576,
             "description": "function called when the user clicks on the pedagogical options button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 556,
+            "line": 585,
             "description": "function called when the user clicks on the done button in the pedagogical options panel",
             "class": "VISH.Editor"
         },
@@ -1056,21 +1056,21 @@
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 20,
+            "line": 21,
             "description": "Function to initialize the Recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 76,
+            "line": 77,
             "description": "Function to check if this is the appropiate moment to request the recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 90,
+            "line": 95,
             "description": "Function to call ViSH via AJAX to get recommendation of excursions",
             "class": "",
             "namespace": "VISH"
@@ -1315,49 +1315,42 @@
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 112,
-            "description": "Function to enter and exit fullscreen",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
-            "file": "VISH.Viewer.js",
-            "line": 159,
+            "line": 117,
             "description": "Function called when entering slide in viewer, we have to show the objects",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 202,
+            "line": 160,
             "description": "Function called when leaving a slide in viewer",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 227,
+            "line": 185,
             "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 204,
+            "line": 132,
             "description": "Function to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 282,
+            "line": 210,
             "description": "Function to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 406,
+            "line": 334,
             "description": "Fancybox resizing. If a fancybox is opened, resize it",
             "class": "",
             "namespace": "VISH"
@@ -1630,15 +1623,15 @@
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
-            "line": " VISH.Editor.Settings.js:386"
+            "line": " VISH.Editor.Settings.js:383"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the pedagogical options button",
-            "line": " VISH.Editor.Settings.js:547"
+            "line": " VISH.Editor.Settings.js:576"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the done button in the pedagogical options panel",
-            "line": " VISH.Editor.Settings.js:556"
+            "line": " VISH.Editor.Settings.js:585"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
@@ -1790,15 +1783,15 @@
         },
         {
             "message": "Missing item type\nFunction to initialize the Recommendations",
-            "line": " VISH.Recommendations.js:20"
+            "line": " VISH.Recommendations.js:21"
         },
         {
             "message": "Missing item type\nFunction to check if this is the appropiate moment to request the recommendations",
-            "line": " VISH.Recommendations.js:76"
+            "line": " VISH.Recommendations.js:77"
         },
         {
             "message": "Missing item type\nFunction to call ViSH via AJAX to get recommendation of excursions",
-            "line": " VISH.Recommendations.js:90"
+            "line": " VISH.Recommendations.js:95"
         },
         {
             "message": "Missing item type\nFunction to initialize the renderer\nOnly gets the section element from the html page",
@@ -1937,32 +1930,28 @@
             "line": " VISH.Viewer.js:9"
         },
         {
-            "message": "Missing item type\nFunction to enter and exit fullscreen",
-            "line": " VISH.Viewer.js:112"
-        },
-        {
             "message": "Missing item type\nFunction called when entering slide in viewer, we have to show the objects",
-            "line": " VISH.Viewer.js:159"
+            "line": " VISH.Viewer.js:117"
         },
         {
             "message": "Missing item type\nFunction called when leaving a slide in viewer",
-            "line": " VISH.Viewer.js:202"
+            "line": " VISH.Viewer.js:160"
         },
         {
             "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
-            "line": " VISH.Viewer.js:227"
+            "line": " VISH.Viewer.js:185"
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
-            "line": " VISH.ViewerAdapter.js:204"
+            "line": " VISH.ViewerAdapter.js:132"
         },
         {
             "message": "Missing item type\nFunction to adapt the slides to the screen size, in case the editor is shown in another iframe\nparam \"fullscreen\" indicates that the call comes from a fullscreen button",
-            "line": " VISH.ViewerAdapter.js:282"
+            "line": " VISH.ViewerAdapter.js:210"
         },
         {
             "message": "Missing item type\nFancybox resizing. If a fancybox is opened, resize it",
-            "line": " VISH.ViewerAdapter.js:406"
+            "line": " VISH.ViewerAdapter.js:334"
         }
     ]
 }
