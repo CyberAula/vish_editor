@@ -164,6 +164,9 @@ VISH.Editor = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
+		//Clean hash
+		// V.Utils.cleanHash();
+
 		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 

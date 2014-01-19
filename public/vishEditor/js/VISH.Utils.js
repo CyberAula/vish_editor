@@ -962,6 +962,23 @@ VISH.Utils = (function(V,undefined){
 		window.location.hash = newHash;
 	};
 
+	var cleanHash = function(){
+		window.location.hash = "";
+		if(getOptions()["readHashFromParent"]===true){
+			window.parent.location.hash = "";
+		}
+
+		//Try to remove # simbol
+		if(V.Status.getDevice().features.historypushState){
+			var locationWithoutHash = document.location.href.replace("#" + location.hash , "" );
+			window.history.replaceState("","",locationWithoutHash);
+			if(getOptions()["readHashFromParent"]===true){
+				var locationWithoutHash = window.parent.document.location.href.replace("#" + window.parent.location.hash , "" );
+				window.parent.history.replaceState("","",locationWithoutHash);
+			}
+		}
+	};
+
 	var getHashParams = function(){
 		var params = {};
 		var hash = window.location.hash;
@@ -1007,6 +1024,7 @@ VISH.Utils = (function(V,undefined){
 		showPNotValidDialog		: showPNotValidDialog,
 		isObseleteVersion		: isObseleteVersion,
 		updateHash				: updateHash,
+		cleanHash				: cleanHash,
 		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash
 	};

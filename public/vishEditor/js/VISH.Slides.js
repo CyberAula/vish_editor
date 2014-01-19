@@ -21,12 +21,21 @@ VISH.Slides = (function(V,$,undefined){
 	var updateSlides = function(){
 		setSlides(document.querySelectorAll('section.slides > article'));
 		_updateSlideClasses();
+
 		if(!V.Editing){
-			V.Utils.updateHash();
+			// Uncomment to enable hash propagation on ViSH Viewer
+			// V.Utils.updateHash();
 		}
 	};
 
 	var _updateSlideClasses = function(){
+
+		if(V.Status.getIsUniqMode()){
+			$("section.slides > article").removeClass("current");
+			updateSlideClass(curSlideIndex+1, 'current');
+			return;
+		};
+
 		for (var i = 0; i < slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:

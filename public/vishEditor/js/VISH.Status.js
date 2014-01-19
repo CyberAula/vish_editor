@@ -21,6 +21,9 @@ VISH.Status = (function(V,$,undefined){
 	var _isInVishSite;
 	var _isLocalFile;
 
+	//Uniq mode (to show only one slide of an excursion)
+	var _uniqMode;
+
 	//Mode
 	var _isSlave;
 	var _isPreventDefault;
@@ -35,6 +38,7 @@ VISH.Status = (function(V,$,undefined){
 		_checkDomain();
 		_checkSite();
 		_checkPreview();
+		_checkUniqMode();
 		_isVEFocused = false;
 		_isWindowFocused = false;
 		_isCKEditorInstanceFocused = false;
@@ -129,6 +133,14 @@ VISH.Status = (function(V,$,undefined){
 		}
 	};
 
+	var _checkUniqMode = function(){
+		var hashParams = V.Utils.getHashParams();
+		if(hashParams["uniq"] === "true"){
+			_uniqMode = true;
+		} else {
+			_uniqMode = false;
+		}
+	};
 
 	/*
 	 * This function is done like this because navigator.online lies
@@ -235,6 +247,10 @@ VISH.Status = (function(V,$,undefined){
 		return _is_preview_insertMode;
 	};
 
+	var getIsUniqMode = function(){
+		return _uniqMode;
+	};
+
 	var isSlaveMode = function(){
 		if(typeof _isSlave!=='undefined'){
 			return _isSlave;
@@ -322,6 +338,7 @@ VISH.Status = (function(V,$,undefined){
 		getIsInVishSite				: getIsInVishSite,
 		getIsPreview 				: getIsPreview,
 		getIsPreviewInsertMode		: getIsPreviewInsertMode,
+		getIsUniqMode				: getIsUniqMode,
 		isOnline 					: isOnline,
 		isSlaveMode 				: isSlaveMode,
 		setSlaveMode				: setSlaveMode,

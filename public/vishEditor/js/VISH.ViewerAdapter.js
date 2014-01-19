@@ -2,15 +2,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 	//Viewbar
 	var _showViewbar;
+	//Arrows
+	var _showArrows;
 
 	//Full Screen
 	var _fsButton;
 
 	//Close button
 	var _closeButton;
-
-	//Uniq mode (to show only one slide of an excursion)
-	var _uniqMode;
 
 	//Internals
 	var _initialized = false;
@@ -30,18 +29,12 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		_lastHeight = -1;
 
 		_showViewbar = _defaultViewbar();
+		_showArrows = true;
 		_fsButton = V.FullScreen.canFullScreen();
 
 		//Close button
 		_closeButton = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"]);
 
-		//Determine uniq mode
-		var hashParams = V.Utils.getHashParams();
-		if(hashParams["uniq"] === "true"){
-			_uniqMode = true;
-		} else {
-			_uniqMode = false;
-		}
 
 		//////////////
 		//Restrictions
@@ -56,8 +49,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Uniq mode
-		if(_uniqMode){
+		if(V.Status.getIsUniqMode()){
 			_showViewbar = false;
+			_showArrows = false;
 		}
 
 		////////////////
@@ -65,7 +59,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		///////////////
 
 		//Init viewbar
-		if(V.Status.getDevice().desktop){
+		if((V.Status.getDevice().desktop)&&(_showArrows)){
 			$("#back_arrow").html("");
 			$("#forward_arrow").html("");
 		}
@@ -76,6 +70,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			$("#viewbar").hide();
 		}
+
+		if(!_showArrows){
+			$("#back_arrow").hide();
+			$("#forward_arrow").hide();
+		};
 
 		if(V.Status.getIsPreview()){
 			$("div#viewerpreview").show();
@@ -127,37 +126,39 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	//////////////
 
 	/**
-	 * Function to hide/show the page-switchers buttons
+	 * Function to hide/show the page-switchers buttons and arrows
 	 * hide the left one if on first slide
 	 * hide the right one if on last slide -> always show it, it will show the recommendations if on last slide
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
 
-		// ViewBar
-		if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
-			if (V.Slides.getCurrentSubslide()!==null){
-				//Subslide active
-				$("#forward_arrow").hide();
-				$("#back_arrow").hide();
-			} else {
-				//No subslide
-				if(V.Slides.isCurrentFirstSlide()){
+		//Arrows
+		if(_showArrows){
+			if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
+				if (V.Slides.getCurrentSubslide()!==null){
+					//Subslide active
+					$("#forward_arrow").hide();
 					$("#back_arrow").hide();
 				} else {
-					$("#back_arrow").show();
-				} 
-				//Always show
-				$("#forward_arrow").show();
+					//No subslide
+					if(V.Slides.isCurrentFirstSlide()){
+						$("#back_arrow").hide();
+					} else {
+						$("#back_arrow").show();
+					} 
+					//Always show
+					$("#forward_arrow").show();
+				}
+			} else if (V.Viewer.getPresentationType()===V.Constant.QUIZ_SIMPLE){
+				//Remove arrow for simple quizs
+				$("#forward_arrow").hide();
 			}
-		} else if (V.Viewer.getPresentationType()===V.Constant.QUIZ_SIMPLE){
-			//Remove arrow for simple quizs
-			$("#forward_arrow").hide();
 		}
 
 		// Pager
 		if(V.Slides.isCurrentFirstSlide()){
-			$("#page-switcher-start").addClass("disabledarrow");			
+			$("#page-switcher-start").addClass("disabledarrow");
 		} else {
 			$("#page-switcher-start").removeClass("disabledarrow");
 		}
