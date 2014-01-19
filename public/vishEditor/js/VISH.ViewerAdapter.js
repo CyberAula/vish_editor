@@ -201,15 +201,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 		_lastWidth = cWidth;
 		_lastHeight = cHeight;
-		_setupSize(V.FullScreen.isFullScreen());
+		_setupSize();
 	};
 
 
 	/**
-	 * Function to adapt the slides to the screen size, in case the editor is shown in another iframe
-	 * param "fullscreen" indicates that the call comes from a fullscreen button
+	 * Function to adapt the slides to the screen size
 	 */
-	var _setupSize = function(fullscreen){
+	var _setupSize = function(){
 		var reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
 		var min_margin_height = 25;
 		var min_margin_width = 60;
@@ -224,11 +223,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			reserved_px_for_menubar = 120; //Constant because is displayed from ViSH Editor
 		}
 
-		if(fullscreen){
-			V.FullScreen.onFullscreenEvent(true);
-		} else {
-			V.FullScreen.onFullscreenEvent(false);
-		}
+		// V.FullScreen.updateFsButtons();
 		
 		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - menubar height
 		var width = _lastWidth;

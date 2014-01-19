@@ -42,6 +42,8 @@ VISH.FullScreen = (function(V,$,undefined){
 				}
 			}
 		}
+
+		_updateFsButtons();
 	};
 
 	var canFullScreen = function(){
@@ -68,24 +70,19 @@ VISH.FullScreen = (function(V,$,undefined){
 				//Give some time...
 				setTimeout(function(){
 					_pageIsFullScreen = !_pageIsFullScreen;
+					_updateFsButtons();
 					V.ViewerAdapter.updateInterface();
 				}, 400);
 			});
 		} else if(_fallbackFs) {
 			//Use FullScreen fallback
-
 			if((_pageIsFullScreen)&&(_exitFsButton)){
-				//we are in "simulated" fullscreen ,showing the .full version and we need a close fullscreen
-				$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreen.png")');
-				$("#page-fullscreen").css("background-position", "0px 0px");
-
 				$(document).on('click', '#page-fullscreen', function(){
 					window.location = V.Utils.removeHashFromUrlString(_exitFsUrl) + '#' + V.Slides.getCurrentSlideNumber();
 				});
-
 			} else if((!_pageIsFullScreen)&&(_enterFsButton)){
 				$(document).on('click', '#page-fullscreen', function(){
-					V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsUrl) + "?orgUrl=" + V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
+					V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsUrl) + "?orgUrl="+V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
 				});
 			}
 		}
@@ -106,18 +103,15 @@ VISH.FullScreen = (function(V,$,undefined){
 		}
 	};
 
-	var onFullscreenEvent = function(fullscreen){
-		if(typeof fullscreen != "boolean"){
-			fullscreen = _pageIsFullScreen;
-		}
-		if(fullscreen){
-			_onEnterFullScreen();
+	var _updateFsButtons = function(){
+		if(_pageIsFullScreen){
+			_enableFsEnterButon();
 		} else {
-			_onLeaveFullScreen();
+			_enableFsLeaveButon();
 		}
 	};
 
-	var _onEnterFullScreen = function(){
+	var _enableFsEnterButon = function(){
 		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreenback.png")');
 		$("#page-fullscreen").css("background-position", "0px 0px");
 		$("#page-fullscreen").hover(function(){
@@ -125,9 +119,9 @@ VISH.FullScreen = (function(V,$,undefined){
 		}, function() {
 			$("#page-fullscreen").css("background-position", "0px 0px");
 		});
-	}
+	};
 
-	var _onLeaveFullScreen = function(){
+	var _enableFsLeaveButon = function(){
 		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreen.png")');
 		$("#page-fullscreen").css("background-position", "0px 0px");
 		$("#page-fullscreen").hover(function(){
@@ -159,7 +153,7 @@ VISH.FullScreen = (function(V,$,undefined){
 
 	var _getFsEnabled = function(myDoc){
 		return myDoc.fullscreenEnabled || myDoc.mozFullScreenEnabled || myDoc.webkitFullscreenEnabled;
-	}
+	};
 
 	var _launchFullscreenForElement = function(myDoc,element){
 		if(element.requestFullscreen) {
@@ -209,8 +203,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		isFullScreenSupported	: isFullScreenSupported,
 		canFullScreen 			: canFullScreen,
 		enableFullScreen		: enableFullScreen,
-		isFullScreen 			: isFullScreen,
-		onFullscreenEvent		: onFullscreenEvent
+		isFullScreen 			: isFullScreen
 	};
     
 }) (VISH, jQuery);
