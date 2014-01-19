@@ -970,13 +970,17 @@ VISH.Utils = (function(V,undefined){
 
 		//Try to remove # simbol
 		if(V.Status.getDevice().features.historypushState){
-			var locationWithoutHash = document.location.href.replace("#" + location.hash , "" );
+			var locationWithoutHash = removeHashFromUrlString(document.location.href);
 			window.history.replaceState("","",locationWithoutHash);
 			if(getOptions()["readHashFromParent"]===true){
-				var locationWithoutHash = window.parent.document.location.href.replace("#" + window.parent.location.hash , "" );
+				var locationWithoutHash = removeHashFromUrlString(window.parent.document.location.href);
 				window.parent.history.replaceState("","",locationWithoutHash);
 			}
 		}
+	};
+
+	var removeHashFromUrlString = function(url){
+		return url.split("#")[0];
 	};
 
 	var getHashParams = function(){
@@ -1025,6 +1029,7 @@ VISH.Utils = (function(V,undefined){
 		isObseleteVersion		: isObseleteVersion,
 		updateHash				: updateHash,
 		cleanHash				: cleanHash,
+		removeHashFromUrlString	: removeHashFromUrlString,
 		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash
 	};

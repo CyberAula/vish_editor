@@ -80,22 +80,12 @@ VISH.FullScreen = (function(V,$,undefined){
 				$("#page-fullscreen").css("background-position", "0px 0px");
 
 				$(document).on('click', '#page-fullscreen', function(){
-					//Try fallback first
-					if((_exitFsUrl)&&(!V.Status.getIsEmbed())){
-							window.location = _exitFsUrl;
-					} else if(V.Status.getDevice().features.history){
-						//Use feature history if its allowed
-						history.back();
-					}
+					window.location = V.Utils.removeHashFromUrlString(_exitFsUrl) + '#' + V.Slides.getCurrentSlideNumber();
 				});
+
 			} else if((!_pageIsFullScreen)&&(_enterFsButton)){
 				$(document).on('click', '#page-fullscreen', function(){
-					if(typeof window.parent.location.href !== "undefined"){
-						V.Utils.sendParentToURL(_enterFsUrl+"?orgUrl="+window.parent.location.href);
-					} else {
-						//In embed mode, we dont have access to window.parent properties (like window.parent.location)
-						V.Utils.sendParentToURL(_enterFsUrl+"?embed=true");
-					}
+					V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsUrl) + "?orgUrl=" + V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
 				});
 			}
 		}
