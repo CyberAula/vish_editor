@@ -12,23 +12,32 @@ VISH.FullScreen = (function(V,$,undefined){
 
 
 	var init = function(){
+		_pageIsFullScreen = false;
+
 		var options = V.Utils.getOptions();
-		if(options){
-			_enterFsButton = (!_canUseNativeFs())&&(V.Status.getIsInIframe())&&(typeof options["enterFullscreenURL"] !== "undefined")&&(!V.Status.getIsEmbed());
+		if((options)&&(typeof options["fullScreenFallback"] == "object")){
+			_enterFsButton = (!_canUseNativeFs())&&(V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string")&&(!V.Status.getIsEmbed());
 			if(_enterFsButton){
-				// _enterFsUrl = options["fullscreen"];
-				_enterFsUrl = options["enterFullscreenURL"]
+				_enterFsUrl = options["fullScreenFallback"]["enterFullscreenURL"];
 			}
-			_exitFsButton = (!_canUseNativeFs())&&(!V.Status.getIsInIframe())&&(typeof options["exitFullscreenURL"] !== "undefined")&&(!V.Status.getIsEmbed());
+			_exitFsButton = (!_canUseNativeFs())&&(!V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["exitFullscreenURL"] == "string" !== "undefined")&&(!V.Status.getIsEmbed());
 			if(_exitFsButton){
-				_exitFsUrl = options["exitFullscreenURL"];
+				_exitFsUrl = options["fullScreenFallback"]["exitFullscreenURL"];
 			}
-			_fallbackFs = ((_enterFsButton)&&(_exitFsButton));
+
+			if(V.Status.getIsInIframe()){
+				_fallbackFs = _enterFsButton;
+			} else {			
+				_fallbackFs = _exitFsButton;
+				_pageIsFullScreen = true;
+			}
+
 		} else {
 			_enterFsButton = false;
 			_exitFsButton = false;
 			_fallbackFs = false;
 		}
+
 	};
 
 	var canFullScreen = function(){
@@ -43,7 +52,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		return _pageIsFullScreen;
 	};
 
-	var setFullScreen = function(page_is_fullscreen){
+	var _setFullScreen = function(page_is_fullscreen){
 		_pageIsFullScreen = page_is_fullscreen;
 	};
 
@@ -207,7 +216,6 @@ VISH.FullScreen = (function(V,$,undefined){
 		canFullScreen 			: canFullScreen,
 		enableFullScreen		: enableFullScreen,
 		isFullScreen 			: isFullScreen,
-		setFullScreen			: setFullScreen,
 		onFullscreenEvent		: onFullscreenEvent
 	};
     

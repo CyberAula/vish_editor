@@ -32,9 +32,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		_showViewbar = _defaultViewbar();
 		_fsButton = V.FullScreen.canFullScreen();
 
-		//Page is not fullscreen by default
-		V.FullScreen.setFullScreen(false);
-
 		//Close button
 		_closeButton = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"]);
 

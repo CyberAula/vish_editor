@@ -104,16 +104,16 @@ var getOptions = function(){
 			//QuizSessionId to answer the quiz
 			options["quizSessionId"] = "1";
 
-			options["full"] = true;
-			options["forcefull"] = false;
-			options["forceHideViewbar"] = false;
 			options["watermarkURL"] = "http://localhost/vishEditor/viewer.html";
 			
 			// options["preview"] = true;
         	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
-			options["fullscreen"]  = "http://trapo.dit.upm.es:3000/excursions/83.full";
-			options["exitFullscreen"]  = "http://localhost/vishEditor/framed_viewer.html";
+			options["fullScreenFallback"] = {
+				// enterFullscreenURL: "http://localhost:3000/excursions/83.full",
+				enterFullscreenURL: "http://localhost/vishEditor/viewer.html",
+				exitFullscreenURL: "http://localhost/vishEditor/framed_viewer.html"
+			};
 
         	//Draft presentations
         	options["draft"] = false;
