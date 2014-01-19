@@ -12,32 +12,36 @@ VISH.FullScreen = (function(V,$,undefined){
 
 
 	var init = function(){
+		//Defaults
 		_pageIsFullScreen = false;
+		_enterFsButton = false;
+		_exitFsButton = false;
+		_fallbackFs = false;
 
-		var options = V.Utils.getOptions();
-		if((options)&&(typeof options["fullScreenFallback"] == "object")){
-			_enterFsButton = (!_canUseNativeFs())&&(V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string")&&(!V.Status.getIsEmbed());
-			if(_enterFsButton){
-				_enterFsUrl = options["fullScreenFallback"]["enterFullscreenURL"];
-			}
-			_exitFsButton = (!_canUseNativeFs())&&(!V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["exitFullscreenURL"] == "string" !== "undefined")&&(!V.Status.getIsEmbed());
-			if(_exitFsButton){
-				_exitFsUrl = options["fullScreenFallback"]["exitFullscreenURL"];
-			}
+		// If FullScreen native support is not available try to use fallback options
+		// Fallback is not possible in embeds...
+		if((!_canUseNativeFs())&&(!V.Status.getIsEmbed())){
 
-			if(V.Status.getIsInIframe()){
-				_fallbackFs = _enterFsButton;
-			} else {			
-				_fallbackFs = _exitFsButton;
-				_pageIsFullScreen = true;
-			}
+			var options = V.Utils.getOptions();
+			if((options)&&(typeof options["fullScreenFallback"] == "object")){
+				
+				_enterFsButton = (V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string");
+				if(_enterFsButton){
+					_enterFsUrl = options["fullScreenFallback"]["enterFullscreenURL"];
+				}
+				_exitFsButton = (!V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["exitFullscreenURL"] == "string");
+				if(_exitFsButton){
+					_exitFsUrl = options["fullScreenFallback"]["exitFullscreenURL"];
+				}
 
-		} else {
-			_enterFsButton = false;
-			_exitFsButton = false;
-			_fallbackFs = false;
+				if(V.Status.getIsInIframe()){
+					_fallbackFs = _enterFsButton;
+				} else {			
+					_fallbackFs = _exitFsButton;
+					_pageIsFullScreen = true;
+				}
+			}
 		}
-
 	};
 
 	var canFullScreen = function(){
@@ -45,7 +49,7 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _canUseNativeFs = function(){
-		return (V.Status.getDevice().features.fullscreen);
+		return (V.Status.getDevice().features.fullscreen)&&(_getFsEnabled(document));
 	};
 
 	var isFullScreen  = function(){
