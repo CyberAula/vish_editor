@@ -11,6 +11,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	//Close button
 	var _closeButton;
 
+	//Recommendations
+	var _showRec;
+	var _showEval;
+
 	//Internals
 	var _initialized = false;
 	//Prevent updateInterface with same params (Make ViSH Viewer more efficient)
@@ -37,6 +41,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Close button false by default
 		_closeButton = false;
+
+		//Recommendations
+		_showRec = V.Recommendations.canShowRecommendations();
+		_showEval = V.Recommendations.canShowEvaluateButton();
 
 		//Mobiles
 		if(V.Status.getDevice().mobile){
@@ -103,8 +111,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Evaluations (in recommendation window)
-		//Only show evaluations in the ViSH Site
-		if(V.Status.getIsInVishSite() || (V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER && !V.Status.getIsScorm() && !V.Status.getIsEmbed())){
+		if(_showEval){
 			$(".rec-first-row").show();
 		} else {
 			$(".rec-first-row").hide();

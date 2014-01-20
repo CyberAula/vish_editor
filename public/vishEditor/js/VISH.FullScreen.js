@@ -103,6 +103,12 @@ VISH.FullScreen = (function(V,$,undefined){
 		}
 	};
 
+	var exitFromNativeFullScreen = function(){
+		if((_canUseNativeFs())&&(_isDocInFullScreen(document))){
+			_toggleFullScreen();
+		}
+	};
+
 	var _updateFsButtons = function(){
 		if(_pageIsFullScreen){
 			_enableFsEnterButon();
@@ -199,11 +205,12 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	return {
-		init					: init,
-		isFullScreenSupported	: isFullScreenSupported,
-		canFullScreen 			: canFullScreen,
-		enableFullScreen		: enableFullScreen,
-		isFullScreen 			: isFullScreen
+		init						: init,
+		isFullScreenSupported		: isFullScreenSupported,
+		canFullScreen 				: canFullScreen,
+		enableFullScreen			: enableFullScreen,
+		isFullScreen 				: isFullScreen,
+		exitFromNativeFullScreen	: exitFromNativeFullScreen
 	};
     
 }) (VISH, jQuery);

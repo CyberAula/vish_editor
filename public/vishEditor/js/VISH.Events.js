@@ -74,6 +74,11 @@ VISH.Events = (function(V,$,undefined){
 			}, false);
 		}
 
+		//Evaluate button in recommendations panel
+		$(document).on('click', '#evaluate_excursion', function(event){
+			V.Recommendations.onClickEvaluateButton(event);
+		});
+
 		//Focus
 		$(window).focus(function(){
 			V.Status.setWindowFocus(true);

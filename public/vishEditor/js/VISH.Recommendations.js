@@ -74,6 +74,17 @@ VISH.Recommendations = (function(V,$,undefined){
 		});
 	};
 
+	var canShowRecommendations = function(){
+		return true;
+	};
+
+	var canShowEvaluateButton = function(){
+		var _showEvaluateButton = V.Status.getIsInVishSite() || (V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER && !V.Status.getIsScorm() && !V.Status.getIsEmbed());
+		//Only available for desktop
+		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
+		return _showEvaluateButton;
+	};
+
 	/**
 	 * Function to check if this is the appropiate moment to request the recommendations
 	 */
@@ -276,12 +287,27 @@ VISH.Recommendations = (function(V,$,undefined){
 		return searchTerms.join(",");
 	};
 
+
+	//Evaluations in recommendation panel
+
+	var onClickEvaluateButton = function(){
+		if(V.Status.getIsInVishSite()){
+			V.FullScreen.exitFromNativeFullScreen();
+			window.parent.document.getElementById('evaluation-button-id').click();
+		} else if(V.Debugging.isDevelopping()){
+			window.alert("Evaluate!");
+		}	
+	};
+
 	return {
 		init          			: init,
+		canShowRecommendations	: canShowRecommendations,
+		canShowEvaluateButton	: canShowEvaluateButton,
 		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
 		isRecVisible 			: isRecVisible,
-		aftersetupSize			: aftersetupSize
+		aftersetupSize			: aftersetupSize,
+		onClickEvaluateButton	: onClickEvaluateButton
 	};
 
 }) (VISH,jQuery);
