@@ -82,6 +82,8 @@ VISH.Recommendations = (function(V,$,undefined){
 		var _showEvaluateButton = V.Status.getIsInVishSite() || (V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER && !V.Status.getIsScorm() && !V.Status.getIsEmbed());
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
+		//Not available in the .full
+		_showEvaluateButton = _showEvaluateButton && V.Status.getIsInIframe();
 		return _showEvaluateButton;
 	};
 
