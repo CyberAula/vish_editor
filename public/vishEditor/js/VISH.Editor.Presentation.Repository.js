@@ -15,7 +15,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 
 	var init = function(){
 		myInput = $("#" + containerDivId).find("input[type='search']");
-		$(myInput).watermark(V.I18n.getTrans("i.SearchContent"));
+		$(myInput).vewatermark(V.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event) {
 			if(event.keyCode == 13) {
 				_requestData($(myInput).val());

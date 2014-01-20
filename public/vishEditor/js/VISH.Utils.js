@@ -24,7 +24,16 @@ VISH.Utils = (function(V,undefined){
 			var str = this;
 			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 		};
-	}
+
+		//Disable watermark for IE
+		jQuery.fn.vewatermark = function(text){
+			if(V.Status.getDevice().browser.name != V.Constant.IE){
+				$(this).watermark(text);
+			} else {
+				$(this).attr("placeholder",text);
+			}
+		};
+	};
 
 	/*
 	 *

@@ -24,7 +24,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var init = function(){
-		$("#quizSessionNameInput").watermark((V.I18n.getTrans("i.QuizSessionName")));
+		$("#quizSessionNameInput").vewatermark((V.I18n.getTrans("i.QuizSessionName")));
 		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
@@ -262,7 +262,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(input).attr("id","quizSessionNameInput");
 		$(input).attr("title",V.I18n.getTrans("i.tooltip.QSInput"));
 		$(input).addClass("quizSessionNameInput");
-		$(input).watermark((V.I18n.getTrans("i.QuizSessionName")));
+		$(input).vewatermark((V.I18n.getTrans("i.QuizSessionName")));
 		options.middlerow = $(input);
 		options.middlerowExtraClass = "mr_quizSession";
 

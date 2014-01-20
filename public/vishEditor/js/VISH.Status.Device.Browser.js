@@ -55,7 +55,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 		}
 
 		return browser;
-	}
+	};
 
 	var _getInternetExplorerVersion = function() {
 		var rv = -1; //No explorer
@@ -65,9 +65,16 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 			if (re.exec(ua) != null){
 				rv = parseFloat(RegExp.$1);
 			} 
+		} else if(navigator.appName === V.Constant.UA_NETSCAPE){
+			//Try to detect IE11
+			var ua = navigator.userAgent;
+			var re  = new RegExp("Trident/.*rv:([0-9]{1,}[\.0-9]{0,})");
+			if (re.exec(ua) != null){
+				rv = parseFloat(RegExp.$1);
+			}
 		}
 		return rv;
-	}
+	};
 			
 	var _getFirefoxVersion = function() {
       var rv = -1; //No firefox
@@ -79,7 +86,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
           } 
       }
       return rv;
-    }
+    };
 
 	var _getGoogleChromeVersion = function() {
       var rv = -1; //No Google Chrome
@@ -91,7 +98,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
            }
       }
       return rv;
-    }
+    };
 
 	var _getSafariVersion = function() {
 		var rv = -1; //No Safari
@@ -108,7 +115,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 			}
 		}
 		return rv;
-	}
+	};
 	
 	return {
 		init            		: init,

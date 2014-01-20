@@ -14,7 +14,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.Snapshot.init();
 		
 		var urlInput = $("#"+urlDivId).find("input");
-		// $(urlInput).watermark(V.I18n.getTrans("i.pasteEmbedObject"));
+		// $(urlInput).vewatermark(V.I18n.getTrans("i.pasteEmbedObject"));
 		
 		//Load from URL (embed)
 		$("#" + urlDivId + " .previewButton").click(function(event) {

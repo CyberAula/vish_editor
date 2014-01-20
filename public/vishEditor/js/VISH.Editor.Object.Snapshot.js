@@ -6,7 +6,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		
 	var init = function(){
 		var urlInput = $("#"+urlDivId).find("input");
-		// $(urlInput).watermark(V.I18n.getTrans("i.pasteWeb"));
+		// $(urlInput).vewatermark(V.I18n.getTrans("i.pasteWeb"));
 
 		//Load from URL
 		$("#" + urlDivId + " .previewButton").click(function(event) {
