@@ -170,6 +170,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			}
 		};
         $("#fancy_recommendations .rec-grid").html(result);
+        aftersetupSize();
         _generated = true;
         _requesting = false;
 
@@ -190,9 +191,10 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(V.Editing){
 			return;
 		}
-		if(!V.Status.getDevice().desktop){
-			return;
-		}
+		// Disable recommendations for Mobiles and tablets
+		// if(!V.Status.getDevice().desktop){
+		// 	return;
+		// }
 		if(V.Viewer.getPresentationType()!= V.Constant.PRESENTATION){
 			return;
 		}
@@ -236,12 +238,18 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var aftersetupSize = function(increase){
+		var items = $(".rec-excursion");
+		if(items.length < 1){
+			return;
+		}
+
+		increase = (typeof increase == "number") ? increase : V.ViewerAdapter.getLastIncrease()[0];
 		if(increase > 0.82){
-			$(".rec-excursion").css("width","44%");
+			$(items).css("width","44%");
 		} else if(increase > 0.36){
-			$(".rec-excursion").css("width","40%");
+			$(items).css("width","40%");
 		} else {
-			$(".rec-excursion").css("width","36%");
+			$(items).css("width","36%");
 		}
 	};
 

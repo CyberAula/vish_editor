@@ -16,6 +16,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	//Prevent updateInterface with same params (Make ViSH Viewer more efficient)
 	var _lastWidth;
 	var _lastHeight;
+	//Store last increases
+	var _lastIncrease;
+	var _lastIncreaseW;
 
 
 	var init = function(options){
@@ -32,8 +35,22 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		_showArrows = true;
 		_fsButton = V.FullScreen.canFullScreen();
 
-		//Close button
-		_closeButton = (V.Status.getDevice().mobile)&&(!V.Status.getIsInIframe())&&(options)&&(options["comeBackUrl"]);
+		//Close button false by default
+		_closeButton = false;
+
+		//Mobiles
+		if(V.Status.getDevice().mobile){
+			if(!V.Status.getIsInIframe()){
+				_showViewbar = false;
+				_closeButton = (options)&&(options["comeBackUrl"]);
+			}
+		}
+
+		//Uniq mode
+		if(V.Status.getIsUniqMode()){
+			_showViewbar = false;
+			_showArrows = false;
+		}
 
 
 		//////////////
@@ -43,25 +60,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//No fs for preview
 		_fsButton = _fsButton && (!V.Status.getIsPreview());
 
-		//Mobiles
-		if(V.Status.getDevice().mobile){
-			_showViewbar = false;
-		}
-
-		//Uniq mode
-		if(V.Status.getIsUniqMode()){
-			_showViewbar = false;
-			_showArrows = false;
-		}
 
 		////////////////
 		//Init interface
 		///////////////
 
 		//Init viewbar
-		if((V.Status.getDevice().desktop)&&(_showArrows)){
-			$("#back_arrow").html("");
-			$("#forward_arrow").html("");
+		if((!V.Status.getDevice().desktop)&&(_showArrows)){
+			$("#back_arrow").html("<");
+			$("#forward_arrow").html(">");
 		}
 
 		if(_showViewbar){
@@ -119,7 +126,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Update interface and init texts
 		updateInterface();
 		V.Text.init();
-	}
+	};
 
 	///////////////
 	// PAGER
@@ -177,7 +184,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			$("#viewbar").hide();
 		}
-	}
+	};
 
 	var _defaultViewbar = function(){
 		var presentationType = V.Viewer.getPresentationType();
@@ -187,7 +194,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			return true;
 		}
-	}
+	};
 
 	///////////
 	// Setup
@@ -222,8 +229,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//Preview with insert images
 			reserved_px_for_menubar = 120; //Constant because is displayed from ViSH Editor
 		}
-
-		// V.FullScreen.updateFsButtons();
 		
 		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - menubar height
 		var width = _lastWidth;
@@ -280,7 +285,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		
 		var increase = finalH/600;
 		var increaseW = finalW/800;
-		
+
+		_lastIncrease = increase;
+		_lastIncreaseW = increaseW;
+
 		//Paddings
 		var paddingTopAndBottom = 3/100*finalW;	//3%
 		var paddingLeftAndRight = 5/100*finalW;	//5%
@@ -322,7 +330,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var viewBarHeight = 40;
 		//TODO: Make Viewbar responsive
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
-	}
+	};
 
 	/**
 	 * Fancybox resizing. If a fancybox is opened, resize it
@@ -357,7 +365,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(fcontent).height("100%");
 		$(fccontentDivs).width("100%");
 		$(fccontentDivs).height("100%");
-	}
+	};
 
 	/*
 	 * Show close button if is appropiate
@@ -366,14 +374,19 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		if(_closeButton){
 			$("#closeButton").show();
 		}
-	}
+	};
+
+	var getLastIncrease = function(){
+		return [_lastIncrease,_lastIncreaseW];
+	};
 	
 	return {
 		init 					: init,
 		updateInterface 		: updateInterface,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		decideIfCloseButton		: decideIfCloseButton,
-		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize
+		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
+		getLastIncrease			: getLastIncrease
 	};
 
 }) (VISH, jQuery);

@@ -1288,6 +1288,7 @@ a.button_advert:hover {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size:2rem;
 	color: #fff ;
+	white-space: nowrap;
 }
 
 .rec-first-row .textrec1 {
