@@ -148,12 +148,19 @@ section.slides > article > article.show_in_smartcard{
 
 /* buttons next and previous */
 .page-switcher {
-	position: absolute;
-	background: transparent;	
+	position: absolute;	
 	border: none;
 	outline: none;
-	max-width: 26px;
-	min-width: 26px;
+	min-width: 24px;
+	min-height: 24px;
+	height: 100%;
+	top: 0%;
+	padding: 0px !important;
+	cursor: pointer;
+	background: transparent;
+	background-image: url("/vishEditor/images/vicons/arrows.png");
+	background-repeat: no-repeat;
+	background-size: auto 1100%;
 }
 
 .page-switcher:hover,
@@ -162,48 +169,46 @@ section.slides > article > article.show_in_smartcard{
 	outline: none;
 }
 
-.disabledarrow {
-	background-position: -120px -120px !important;
-	cursor: auto !important; 
-}
-
-#page-switcher-end {
-	background-image: url("/vishEditor/images/vicons/arrows.png");
-	background-position: -160px -160px;
-	background-repeat: no-repeat;
-	right: 30%;
-	cursor: pointer;
-	height: 30px;
-	width: 20px;
-	top: 16%;
-}
-
-#page-switcher-end:hover {
-	background-position: -200px -200px;
-}
-
-#page-switcher-end:active{
-	background-position: -240px -240px;
+#page-switcher-start {
+	background-position: 0 0;
+	left: 31%;
 }
 
 #page-switcher-start:hover {
-	background-position: -40px -40px;
+	background-position: 0 10%;
 }
 
 #page-switcher-start:active {
-	background-position: -80px -80px;
+	background-position: 0 20%;
 }
 
-#page-switcher-start {
-	background-image: url("/vishEditor/images/vicons/arrows.png");
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	left: 31%;
-	cursor: pointer;
-	height: 30px;
-	width: 20px;
-	top: 16%;
+#page-switcher-end {
+	background-position: 0 40%;
+	right: 30%;
 }
+
+#page-switcher-end:hover {
+	background-position: 0 50%;
+}
+
+#page-switcher-end:active{
+	background-position: 0 60%;
+}
+
+.disabledarrow {
+	cursor: auto !important; 
+}
+
+#page-switcher-start.disabledarrow {
+	background-position: 0 30% !important;
+}
+
+#page-switcher-end.disabledarrow {
+	background-position: 0 70% !important;
+}
+
+
+/* Full screen */
 
 #page-fullscreen {
 	background-image: url("/vishEditor/images/vicons/fullscreen.png");

@@ -223,7 +223,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * Function to adapt the slides to the screen size
 	 */
 	var _setupSize = function(){
-		var reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
+		var reserved_px_for_menubar;
 		var min_margin_height = 25;
 		var min_margin_width = 60;
 
@@ -235,6 +235,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else if(V.Status.getIsPreviewInsertMode()){
 			//Preview with insert images
 			reserved_px_for_menubar = 120; //Constant because is displayed from ViSH Editor
+		} else {
+			reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
 		}
 		
 		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - menubar height
@@ -314,6 +316,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$("div.close_subslide").css("width",_closeButtonDimension+"px");
 		$("div.close_subslide").css("height",_closeButtonDimension+"px");
 
+		//Viewbar resizing
+		$("#page-switcher-start").width($("#page-switcher-start").height());
+		$("#page-switcher-end").width($("#page-switcher-end").height());
+
 
 		//and now the arrows have to be increased or decreased
 		// $("div.fc_poi").css("width", 50*increase + "px");
@@ -343,10 +349,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 	var _getDesiredVieweBarHeight = function(windowHeight){
-		var minimumViewBarHeight = 20;
+		var minimumViewBarHeight = 26;
 		var maxViewBarHeight = 40;
+
 		var viewBarHeight = 40;
-		//TODO: Make Viewbar responsive
+
+		// Uncomment to make viewbar responsive
+		// var estimatedIncrease = windowHeight/600;
+		// var viewBarHeight = 40 * estimatedIncrease;
+		
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
 	};
 
