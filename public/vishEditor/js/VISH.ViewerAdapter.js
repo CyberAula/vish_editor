@@ -223,23 +223,23 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * Function to adapt the slides to the screen size
 	 */
 	var _setupSize = function(){
-		var reserved_px_for_menubar;
+		var viewbarHeight;
 		var min_margin_height = 25;
 		var min_margin_width = 60;
 
 		if(!_showViewbar){
 			//Cases without viewbar (quiz_simple , etc)
-			reserved_px_for_menubar = 0;
+			viewbarHeight = 0;
 			min_margin_height = 0;
 			min_margin_width = 0;
 		} else if(V.Status.getIsPreviewInsertMode()){
 			//Preview with insert images
-			reserved_px_for_menubar = 120; //Constant because is displayed from ViSH Editor
+			viewbarHeight = 120; //Constant because is displayed from ViSH Editor
 		} else {
-			reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
+			viewbarHeight = _getDesiredVieweBarHeight(_lastHeight);
 		}
 		
-		var height = _lastHeight - reserved_px_for_menubar; //the height to use is the window height - menubar height
+		var height = _lastHeight - viewbarHeight;
 		var width = _lastWidth;
 		var finalW = 800;
 		var finalH = 600;
@@ -274,8 +274,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".vish_arrow").width(finalWidthMargin/2*0.9);
 
 		//Viewbar
-		if(!V.Status.getIsPreviewInsertMode()){
-			$("#viewbar").height(reserved_px_for_menubar);
+		if((_showViewbar)&&(!V.Status.getIsPreviewInsertMode())){
+			$("#viewbar").height(viewbarHeight);
 		}
 
 		//resize slides
@@ -286,7 +286,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(allSlides).css("width", finalW);
 
 		//margin-top and margin-left half of the height and width
-		var marginTop = finalH/2 + reserved_px_for_menubar/2;
+		var marginTop = finalH/2 + viewbarHeight/2;
 		var marginLeft = finalW/2;
 		$(topSlides).css("margin-top", "-" + marginTop + "px");
 		$(subSlides).css("margin-top", "-" + finalH/2 + "px");
@@ -316,26 +316,29 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$("div.close_subslide").css("width",_closeButtonDimension+"px");
 		$("div.close_subslide").css("height",_closeButtonDimension+"px");
 
-
 		//Viewbar resizing
+		if(_showViewbar){
+			//Page switchers
+			$("#page-switcher-start").width($("#page-switcher-start").height());
+			$("#page-switcher-end").width($("#page-switcher-end").height());
 
-		//Page switchers
-		$("#page-switcher-start").width($("#page-switcher-start").height());
-		$("#page-switcher-end").width($("#page-switcher-end").height());
+			//Fs button
+			$("#page-fullscreen").width($("#page-fullscreen").height());
 
-		//Fs button
-		$("#page-fullscreen").width($("#page-fullscreen").height());
+			//Slide counter
+			//Font size related to menubar
+			var menubarIncreaseFactor = viewbarHeight/40;
+			var slideCounterFontSize = 14*_getPonderatedIncrease(menubarIncreaseFactor,0.5);
+			$("#slide-counter-span, #slide-counter-input").css("font-size",slideCounterFontSize+"px");
+			$("#slide-counter-input").width(24*_getPonderatedIncrease(menubarIncreaseFactor,1));
+			var slideCounterMarginTop = (viewbarHeight - $("#slide-counter-div").height())/2;
+			$("#slide-counter-div").css("margin-top",slideCounterMarginTop+"px");
 
-		//Slide counter
-		//Font size related to menubar
-		var menubarIncreaseFactor = reserved_px_for_menubar/40;
-		var slideCounterFontSize = 14*_getPonderatedIncrease(menubarIncreaseFactor,0.5);
-		$("#slide-counter-span, #slide-counter-input").css("font-size",slideCounterFontSize+"px");
-		$("#slide-counter-input").width(24*_getPonderatedIncrease(menubarIncreaseFactor,1));
-		var slideCounterMarginTop = (reserved_px_for_menubar - $("#slide-counter-div").height())/2;
-		$("#slide-counter-div").css("margin-top",slideCounterMarginTop+"px");
+			//Watermark
+			$("#embedWatermark").width($("#embedWatermark").height()*2.7);
+		}
 
-		//and now the arrows have to be increased or decreased
+		// TODO: Make flashcard arrows responsive
 		// $("div.fc_poi").css("width", 50*increase + "px");
 		// $("div.fc_poi").css("height", 50*increase + "px");
 
@@ -366,8 +369,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var minimumViewBarHeight = 26;
 		var maxViewBarHeight = 40;
 		var viewBarHeight = 40; 
-		// var estimatedIncrease = windowHeight/600;
-		// var viewBarHeight = 40 * _getPonderatedIncrease(estimatedIncrease,0.5);
+		var estimatedIncrease = windowHeight/600;
+		var viewBarHeight = 40 * _getPonderatedIncrease(estimatedIncrease,0.5);
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
 	};
 

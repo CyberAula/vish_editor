@@ -171,7 +171,7 @@ section.slides > article > article.show_in_smartcard{
 
 #page-switcher-start {
 	background-position: center 0;
-	left: 31%;
+	left: 32%;
 }
 
 #page-switcher-start:hover {
@@ -184,7 +184,7 @@ section.slides > article > article.show_in_smartcard{
 
 #page-switcher-end {
 	background-position: center 40%;
-	right: 30%;
+	right: 31%;
 }
 
 #page-switcher-end:hover {
@@ -390,7 +390,6 @@ article > div a {
 }
 
 
-
 /* remove outline */
 *:focus { outline: none; }  
 :focus  { outline:none;  }
@@ -477,22 +476,6 @@ button#closeButton {
 	z-index: 2620;
 }
 
-.menubarcolor {
-	opacity: 0.5;
-	position: absolute;
-	bottom: 0;
-	width:100%;
-	height: 9%;
-	background: rgb(226,226,226); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
-}
-
 .close_subslide {
 	position: absolute;
 	top: 0.5%;
@@ -547,7 +530,6 @@ button#closeButton {
 	border: none;
 	outline: none;
 	font-size: 40px;
-	/*min-width: 40px; width is adjusted via javascript, including a min value */
 }
 
 #back_arrow, #forward_arrow {
@@ -568,17 +550,20 @@ button#closeButton {
 /* Watermark */
 
 #embedWatermark {
-	background-image:url("/vishEditor/images/vicons/watermark.png");
 	position: absolute;
-	bottom: 0;
+	top: 10%;
 	left: 2%;
+	background: transparent;
+	background-repeat: no-repeat;
+	background-image:url("/vishEditor/images/vicons/watermark.png");
+	background-size: auto 200%;
+	background-position: center 0;
 	width: 100px;
-	height: 31px;
-	background-size: 112%;
+	height: 80%;
 }
 
 #embedWatermark:hover {
-	background-position: -33px -33px;
+	background-position: center 100%;
 }
 
 
