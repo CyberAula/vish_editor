@@ -475,28 +475,29 @@ button#closeButton {
 
 .close_subslide {
 	position: absolute;
-	top: -11px;
-	right: -8px;
-	width: 22px;
-	height: 22px;
-	background: transparent url('/vishEditor/images/vicons/ve_close.png') no-repeat center;
-	background-size: 45%;
-	padding: 13px;
+	top: 0.5%;
+	right: 0.5%;
+	width: 23px;
+	height: 23px;
+	background-size: contain;
 	cursor: pointer;
 	z-index: 1103;
+	background-image: url('/vishEditor/images/vicons/ve_close.png');
+	background-repeat: no-repeat;
+	background-position-x: 100%;
+	background-position-y: 0%;
 }
 
 .close_subslide:hover {
-	background: transparent url('/vishEditor/images/vicons/ve_close_hover.png') no-repeat center;
-	background-size: 45%;
+	background-image: url('/vishEditor/images/vicons/ve_close_hover.png');
 }
 
 .fc_poi {
-       -webkit-transition: none !important;
-       -webkit-transition-delay: none !important;
-       -moz-transition: none !important;
-       -o-transition: none !important;
-       transition: none !important;
+	-webkit-transition: none !important;
+	-webkit-transition-delay: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
 	width: 50px;
 	height: 50px;
 	background: url(/vishEditor/images/vicons/animation_arrow.png);

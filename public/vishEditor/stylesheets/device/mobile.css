@@ -1,6 +1,3 @@
-/*done this way to remove the property in mobiles, because
- * the arrow remained focused after clicked */
-
 .slides > article {
   display: none;
 }
@@ -15,21 +12,6 @@
 }
 .slides > article.far-next {
   display: none;
-}
-
-.close_subslide{
-  top: -30px;
-  right: -30px;
-  background-repeat: no-repeat;
-  background-size: 32% 32% !important;
-  padding: 30px 30px 30px 30px;
-  min-width: 50px;
-  min-height: 50px;
-}
-
-.close_subslide:hover{
-  background: transparent url('/vishEditor/images/vicons/ve_close_hover.png') no-repeat center;
-  background-size: 32% 32% !important;
 }
 
 

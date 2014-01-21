@@ -304,9 +304,20 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(allSlides).css("padding-top",	paddingTopAndBottom);
 		$(allSlides).css("padding-bottom",paddingTopAndBottom);
 
+		//Close button for subslides
+		var _closeButtonDimension = 23;
+		if(increase <= 1){
+			_closeButtonDimension = _closeButtonDimension*_getPonderatedIncrease(increase,0.7);
+		} else {
+			_closeButtonDimension = _closeButtonDimension*_getPonderatedIncrease(increase,0.2);
+		}
+		$("div.close_subslide").css("width",_closeButtonDimension+"px");
+		$("div.close_subslide").css("height",_closeButtonDimension+"px");
+
+
 		//and now the arrows have to be increased or decreased
-		$(".fc_poi img").css("width", 50*increase + "px");
-		$(".fc_poi img").css("height", 50*increase + "px");
+		// $("div.fc_poi").css("width", 50*increase + "px");
+		// $("div.fc_poi").css("height", 50*increase + "px");
 
 		decideIfPageSwitcher();
 
@@ -385,6 +396,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 	var getLastIncrease = function(){
 		return [_lastIncrease,_lastIncreaseW];
+	};
+
+	var _getPonderatedIncrease = function(increase,pFactor){
+		var diff = (increase-1)*pFactor;
+		return 1+diff;
 	};
 	
 	return {
