@@ -247,23 +247,22 @@ section.slides > article > article.show_in_smartcard{
 	cursor: default;
 	z-index: 10;
 	text-align: center;
-	margin-top: 8px;
 }
 
 #slide-counter-span {
 	cursor: default;
 	text-align: center;
+	margin-left: 1px;
 }
 
 #slide-counter-span, #slide-counter-input {
 	font-family: 'Open Sans', arial, sans-serif;
-	/*font-size: 1.2rem;*/
 	font-size: 14px;
 }
 
 #slide-counter-input {
-	width: 24px;
-	height: 20px;
+	min-width: 18px;
+	min-height: 10px;
 	padding: 1px 1px 1px 0;
 	text-align: right;
 }

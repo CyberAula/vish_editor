@@ -326,6 +326,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Fs button
 		$("#page-fullscreen").width($("#page-fullscreen").height());
 
+		//Slide counter
+		//Font size related to menubar
+		var menubarIncreaseFactor = reserved_px_for_menubar/40;
+		var slideCounterFontSize = 14*_getPonderatedIncrease(menubarIncreaseFactor,0.5);
+		$("#slide-counter-span, #slide-counter-input").css("font-size",slideCounterFontSize+"px");
+		$("#slide-counter-input").width(24*_getPonderatedIncrease(menubarIncreaseFactor,1));
+		var slideCounterMarginTop = (reserved_px_for_menubar - $("#slide-counter-div").height())/2;
+		$("#slide-counter-div").css("margin-top",slideCounterMarginTop+"px");
+
 		//and now the arrows have to be increased or decreased
 		// $("div.fc_poi").css("width", 50*increase + "px");
 		// $("div.fc_poi").css("height", 50*increase + "px");
@@ -356,15 +365,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var _getDesiredVieweBarHeight = function(windowHeight){
 		var minimumViewBarHeight = 26;
 		var maxViewBarHeight = 40;
-
-		var viewBarHeight = 40;
-
-		// //Uncomment to make viewbar responsive
+		var viewBarHeight = 40; 
 		// var estimatedIncrease = windowHeight/600;
-		// var viewBarHeight = 40 * estimatedIncrease;
-		// console.log("viewbar height");
-		// console.log(Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight));
-		
+		// var viewBarHeight = 40 * _getPonderatedIncrease(estimatedIncrease,0.5);
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
 	};
 

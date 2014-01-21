@@ -38,8 +38,10 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 		$(document).on('keypress', '#slide-counter-input', function(e){
-			if(e.which == 13) { //pressed enter in the goToSlide input field
+			if(e.which == 13) {
+				//pressed enter in the goToSlide input field
 				V.Slides.goToSlide($("#slide-counter-input").val());
+				$("#slide-counter-input").blur();
 			}
 		});
 
