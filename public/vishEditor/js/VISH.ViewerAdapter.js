@@ -325,6 +325,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//Fs button
 			$("#page-fullscreen").width($("#page-fullscreen").height());
 
+			if(V.Status.getIsPreviewInsertMode()){
+				//Get the real viewbar height in insert mode
+				viewbarHeight = $("#viewbar").height();
+			}
+
 			//Slide counter
 			//Font size related to menubar
 			var menubarIncreaseFactor = viewbarHeight/40;
