@@ -316,10 +316,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$("div.close_subslide").css("width",_closeButtonDimension+"px");
 		$("div.close_subslide").css("height",_closeButtonDimension+"px");
 
+
 		//Viewbar resizing
+
+		//Page switchers
 		$("#page-switcher-start").width($("#page-switcher-start").height());
 		$("#page-switcher-end").width($("#page-switcher-end").height());
 
+		//Fs button
+		$("#page-fullscreen").width($("#page-fullscreen").height());
 
 		//and now the arrows have to be increased or decreased
 		// $("div.fc_poi").css("width", 50*increase + "px");
@@ -354,9 +359,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		var viewBarHeight = 40;
 
-		// Uncomment to make viewbar responsive
+		// //Uncomment to make viewbar responsive
 		// var estimatedIncrease = windowHeight/600;
 		// var viewBarHeight = 40 * estimatedIncrease;
+		// console.log("viewbar height");
+		// console.log(Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight));
 		
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
 	};

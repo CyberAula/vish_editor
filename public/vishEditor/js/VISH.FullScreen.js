@@ -118,23 +118,11 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _enableFsEnterButon = function(){
-		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreenback.png")');
-		$("#page-fullscreen").css("background-position", "0px 0px");
-		$("#page-fullscreen").hover(function(){
-			$("#page-fullscreen").css("background-position", "-30px -40px");
-		}, function() {
-			$("#page-fullscreen").css("background-position", "0px 0px");
-		});
+		$("#page-fullscreen").removeClass("fsoff").addClass("fson");
 	};
 
 	var _enableFsLeaveButon = function(){
-		$("#page-fullscreen").css("background-image", 'url("'+V.ImagesPath+'vicons/fullscreen.png")');
-		$("#page-fullscreen").css("background-position", "0px 0px");
-		$("#page-fullscreen").hover(function(){
-			$("#page-fullscreen").css("background-position", "-40px -40px");
-		}, function(){
-			$("#page-fullscreen").css("background-position", "0px 0px");
-		});
+		$("#page-fullscreen").removeClass("fson").addClass("fsoff");
 	};
 
 

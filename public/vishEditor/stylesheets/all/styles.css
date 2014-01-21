@@ -170,29 +170,29 @@ section.slides > article > article.show_in_smartcard{
 }
 
 #page-switcher-start {
-	background-position: 0 0;
+	background-position: center 0;
 	left: 31%;
 }
 
 #page-switcher-start:hover {
-	background-position: 0 10%;
+	background-position: center 10%;
 }
 
 #page-switcher-start:active {
-	background-position: 0 20%;
+	background-position: center 20%;
 }
 
 #page-switcher-end {
-	background-position: 0 40%;
+	background-position: center 40%;
 	right: 30%;
 }
 
 #page-switcher-end:hover {
-	background-position: 0 50%;
+	background-position: center 50%;
 }
 
 #page-switcher-end:active{
-	background-position: 0 60%;
+	background-position: center 60%;
 }
 
 .disabledarrow {
@@ -200,31 +200,47 @@ section.slides > article > article.show_in_smartcard{
 }
 
 #page-switcher-start.disabledarrow {
-	background-position: 0 30% !important;
+	background-position: center 30% !important;
 }
 
 #page-switcher-end.disabledarrow {
-	background-position: 0 70% !important;
+	background-position: center 70% !important;
 }
 
 
 /* Full screen */
 
 #page-fullscreen {
-	background-image: url("/vishEditor/images/vicons/fullscreen.png");
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	padding: 15px;
-	height: 15px;
-	width: 15px;
 	position: absolute;
 	right: 0;
 	bottom: 0;
+	height: 100%;
+	width: 30px;
+	background: transparent;
+	background-repeat: no-repeat;
+	background-image: url("/vishEditor/images/vicons/fullscreen.png");
+	background-size: auto 600%;
 	text-align: center;
 	border: medium none;
 	opacity: 1;
 	cursor: pointer;
 	z-index: 2;
+}
+
+#page-fullscreen.fson {
+	background-position: center 80%;
+}
+
+#page-fullscreen.fson:hover {
+	background-position: center 100%;
+}
+
+#page-fullscreen.fsoff {
+	background-position: center 0;
+}
+
+#page-fullscreen.fsoff:hover {
+	background-position: center 20%;
 }
 
 #slide-counter-div {
