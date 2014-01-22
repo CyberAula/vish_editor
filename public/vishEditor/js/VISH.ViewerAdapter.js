@@ -347,7 +347,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		decideIfPageSwitcher();
 
-		updateFancyboxAfterSetupSize();
+		updateFancyboxAfterSetupSize(increase,increaseW);
 
 		//Texts callbacks
 		V.Text.aftersetupSize(increase,increaseW);
@@ -379,11 +379,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	/**
 	 * Fancybox resizing. If a fancybox is opened, resize it
 	 */
-	var updateFancyboxAfterSetupSize = function(){
+	var updateFancyboxAfterSetupSize = function(increase,increaseW){
 		var fOverlay = $("#fancybox-overlay");
 		if(($(fOverlay).length<1)||(!$(fOverlay).is(":visible"))){
 			return;
 		}
+
+		increase = (typeof increase == "number") ? increase : V.ViewerAdapter.getLastIncrease()[0];
 
 		var fwrap = $("#fancybox-wrap");
 		var fcontent = $("#fancybox-content");
@@ -394,8 +396,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var paddingLeft = $(currentSlide).cssNumber("padding-left");
 		var offset = $(currentSlide).offset();
 		
+		var _closeButtonDimension = 23;
+		if(increase <= 1){
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.7);
+		} else {
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.2);
+		}
 		var fcClose = $("#fancybox-close");
-		$(fcClose).height("22px");
+		$(fcClose).width(_closeButtonDimension + "px");
+		$(fcClose).height(_closeButtonDimension + "px");
 		$(fcClose).css("padding","10px");
 		$(fcClose).css("padding-left","4px");
 		
