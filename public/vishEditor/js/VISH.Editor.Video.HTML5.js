@@ -13,9 +13,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			if($(video).attr("poster")){
 				options.poster = $(video).attr("poster");
 			}
-			if($(video).attr("autoplay")=="true"){
-				options.autoplay = "true";
-			}
+			// if($(video).attr("autoplay")=="true"){
+			// 	options.autoplay = "true";
+			// }
 			drawVideo(sources,options);
 		}
 	};
