@@ -373,9 +373,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	var _getDesiredVieweBarHeight = function(windowHeight){
 		var minimumViewBarHeight = 26;
 		var maxViewBarHeight = 40;
-		var viewBarHeight = 40; 
 		var estimatedIncrease = windowHeight/600;
-		var viewBarHeight = 40 * _getPonderatedIncrease(estimatedIncrease,0.5);
+		var viewBarHeight = 40 * _getPonderatedIncrease(estimatedIncrease,0.7);
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
 	};
 
