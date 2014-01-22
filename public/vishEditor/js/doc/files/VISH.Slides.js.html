@@ -111,12 +111,21 @@ VISH.Slides = (function(V,$,undefined){
 	var updateSlides = function(){
 		setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
 		_updateSlideClasses();
+
 		if(!V.Editing){
-			V.Utils.updateHash();
+			&#x2F;&#x2F; Uncomment to enable hash propagation on ViSH Viewer
+			&#x2F;&#x2F; V.Utils.updateHash();
 		}
 	};
 
 	var _updateSlideClasses = function(){
+
+		if(V.Status.getIsUniqMode()){
+			$(&quot;section.slides &gt; article&quot;).removeClass(&quot;current&quot;);
+			updateSlideClass(curSlideIndex+1, &#x27;current&#x27;);
+			return;
+		};
+
 		for (var i = 0; i &lt; slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:

@@ -128,8 +128,10 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 		$(document).on(&#x27;keypress&#x27;, &#x27;#slide-counter-input&#x27;, function(e){
-			if(e.which == 13) { &#x2F;&#x2F;pressed enter in the goToSlide input field
+			if(e.which == 13) {
+				&#x2F;&#x2F;pressed enter in the goToSlide input field
 				V.Slides.goToSlide($(&quot;#slide-counter-input&quot;).val());
+				$(&quot;#slide-counter-input&quot;).blur();
 			}
 		});
 
@@ -163,6 +165,11 @@ VISH.Events = (function(V,$,undefined){
 				V.Storage.addPresentation(presentation);
 			}, false);
 		}
+
+		&#x2F;&#x2F;Evaluate button in recommendations panel
+		$(document).on(&#x27;click&#x27;, &#x27;#evaluate_excursion&#x27;, function(event){
+			V.Recommendations.onClickEvaluateButton(event);
+		});
 
 		&#x2F;&#x2F;Focus
 		$(window).focus(function(){

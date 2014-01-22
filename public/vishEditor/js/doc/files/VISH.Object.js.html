@@ -91,23 +91,22 @@
 VISH.Object = (function(V,$,undefined){
 			
 	var init = function(){
-	}
-	
+	};
+
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; OBJECT INFO
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	
 	&#x2F;*
-	 * Wrapper can be: &quot;embed&quot;,&quot;object, &quot;iframe&quot; or null if the object is a source url without wrapper.
+	 * Wrapper can be: &quot;embed&quot;,&quot;object, &quot;iframe&quot;, &quot;video&quot; or null if the object is a source url without wrapper.
 	 * Type is the source type and can be: &quot;swf&quot; , &quot;youtube&quot; , etc.
-	 * 
 	 *&#x2F;
 	function objectInfo(wrapper,source,sourceType) {
 		this.wrapper=wrapper;
 		this.source = source;
 		this.type=sourceType;
-	} 
+	}; 
 	
 	&#x2F;*
 	 * Return object type
@@ -123,18 +122,26 @@ VISH.Object = (function(V,$,undefined){
 		
 		&#x2F;&#x2F;Determine source type
 		var source = _getSourceFromObject(object,wrapper);
-		var type = _getTypeFromSource(source);
+		
+		var type;
+		switch (wrapper){
+			case &quot;VIDEO&quot;:
+				type = V.Constant.MEDIA.HTML5_VIDEO;
+				break;
+			default:
+				type = _getTypeFromSource(source);
+		}
 
 		return new objectInfo(wrapper,source,type);
-	}
+	};
 	
-	var _getSourceFromObject = function (object,wrapper){
+	var _getSourceFromObject = function(object,wrapper){
 		switch (wrapper){
 			case null:
 				return object;
-			case &quot;EMBED&quot;:
+			case V.Constant.WRAPPER.EMBED:
 				return $(object).attr(&quot;src&quot;);
-			case &quot;OBJECT&quot;:
+			case V.Constant.WRAPPER.OBJECT:
 				if (typeof $(object).attr(&quot;src&quot;) != &#x27;undefined&#x27;){
 				  return $(object).attr(&quot;src&quot;);
 				}
@@ -142,14 +149,16 @@ VISH.Object = (function(V,$,undefined){
 				  return $(object).attr(&quot;data&quot;);
 				}
 				return &quot;source not founded&quot;;
-			case &quot;IFRAME&quot;: 
+			case V.Constant.WRAPPER.IFRAME:
 				return $(object).attr(&quot;src&quot;);
+			case V.Constant.WRAPPER.VIDEO:
+				return V.VideoPlayer.HTML5.getSources(object);
 			default:
 				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + wrapper);
 				return null;
 			break;
 		}
-	}
+	};
 	
 	
 	&#x2F;**
@@ -158,11 +167,15 @@ VISH.Object = (function(V,$,undefined){
 	
 	var _getTypeFromSource = function(source){
 
+		if((typeof source == &quot;object&quot;)&amp;&amp;(typeof source.length == &quot;number&quot;)&amp;&amp;(source.length &gt; 0)){
+			source = source[0];
+		};
+
 		var http_urls_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
 		var www_urls_pattern = &#x2F;(www[.])([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
 		var youtube_video_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)?(((youtu.be\&#x2F;)([aA-zZ0-9-]+))|((www.youtube.com\&#x2F;((watch\?v=)|(embed\&#x2F;)|(v\&#x2F;)))([aA-z0-9-Z&amp;=.])+))&#x2F;g
 		var html5VideoFormats = [&quot;mp4&quot;,&quot;webm&quot;,&quot;ogg&quot;];
-		var imageFormats = [&quot;jpg&quot;,&quot;jpeg&quot;,&quot;png&quot;,&quot;gif&quot;,&quot;bmp&quot;];
+		var imageFormats = [&quot;jpg&quot;,&quot;jpeg&quot;,&quot;png&quot;,&quot;gif&quot;,&quot;bmp&quot;,&quot;svg&quot;];
 
 		if(typeof source != &quot;string&quot;){
 			return null
@@ -210,11 +223,11 @@ VISH.Object = (function(V,$,undefined){
 		}
 
 		return extension;
-	}
+	};
 	
 	var getExtensionFromSrc = function(source){
 		return (source.split(&#x27;.&#x27;).pop().split(&#x27;&amp;&#x27;)[0]).toLowerCase();
-	}
+	};
 
 	return {
 		init							: init,

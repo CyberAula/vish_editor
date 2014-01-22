@@ -114,7 +114,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var init = function(){
-		$(&quot;#quizSessionNameInput&quot;).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
+		$(&quot;#quizSessionNameInput&quot;).vewatermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
 		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
@@ -352,7 +352,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(input).attr(&quot;id&quot;,&quot;quizSessionNameInput&quot;);
 		$(input).attr(&quot;title&quot;,V.I18n.getTrans(&quot;i.tooltip.QSInput&quot;));
 		$(input).addClass(&quot;quizSessionNameInput&quot;);
-		$(input).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
+		$(input).vewatermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
 		options.middlerow = $(input);
 		options.middlerowExtraClass = &quot;mr_quizSession&quot;;
 

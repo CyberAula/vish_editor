@@ -90,107 +90,137 @@
     <pre class="code prettyprint linenums">
 VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	
-  var init = function(){
-  }
-	
-  var drawVideoWithUrl = function (url){
-    drawVideo([[url,_getVideoType(url)]])
-  }
-	
-	var _getVideoType = function(url){
-		var source = (V.Object.getObjectInfo(url)).source;
-    return &quot;video&#x2F;&quot; + source.split(&#x27;.&#x27;).pop();
-	}
+	var init = function(){
+	};
 
-  &#x2F;**
-   * Returns a video object prepared to draw.
-   * Sources: array of arrays [[source src, source type],...] .
-   * Options: hash with additional data like poster url or autoplay
-   * param area: optional param indicating the area to add the video, used for editing presentations
-   * param style: optional param with the style, used in editing presentation
-   *&#x2F;
-  var drawVideo = function(sources,options, area, style){
-		
-		var current_area;
-  	if(area){
-  		current_area = area;
-  	}	else {
-  		current_area = V.Editor.getCurrentArea();
-  	}
-  	
-    &#x2F;&#x2F;Default options
-	  var posterUrl = V.ImagesPath + &quot;vicons&#x2F;example_poster_image.jpg&quot;;
-	  var autoplay = false;
-		
-	  &#x2F;&#x2F;Replace defeault options if options hash is defined
-		if(options){
-		  if(options[&#x27;poster&#x27;]){
-		    posterUrl = options[&#x27;poster&#x27;];
-		  }
-		  if(options[&#x27;autoplay&#x27;]){
-	        autoplay = options[&#x27;autoplay&#x27;];
-	    }
+	var drawVideoWithWrapper = function(videoTag){
+		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
+		if(sources.length &gt; 0){
+			var options = {};
+
+			&#x2F;&#x2F;Look for poster
+			var video = $(videoTag);
+			if($(video).attr(&quot;poster&quot;)){
+				options.poster = $(video).attr(&quot;poster&quot;);
+			}
+			if($(video).attr(&quot;autoplay&quot;)==&quot;true&quot;){
+				options.autoplay = &quot;true&quot;;
+			}
+			drawVideo(sources,options);
 		}
-		
-    var template = V.Editor.getTemplate(area);
+	};
 
-    var nextVideoId = V.Utils.getId();
-    var idToDragAndResize = &quot;draggable&quot; + nextVideoId;
-    current_area.attr(&#x27;type&#x27;,&#x27;video&#x27;);
-    
-    var videoTag = document.createElement(&#x27;video&#x27;);
-    videoTag.setAttribute(&#x27;id&#x27;, idToDragAndResize);
-    videoTag.setAttribute(&#x27;draggable&#x27;, true);
-    videoTag.setAttribute(&#x27;class&#x27;, template + &quot;_video&quot;);
-    videoTag.setAttribute(&#x27;title&#x27;, &quot;Click to drag&quot;);
-    videoTag.setAttribute(&#x27;controls&#x27;, &quot;controls&quot;);
-    videoTag.setAttribute(&#x27;preload&#x27;, &quot;metadata&quot;);
-    videoTag.setAttribute(&#x27;poster&#x27;, posterUrl);
+	var drawVideoWithUrl = function(url){
+		drawVideo([{src: url}]);
+	};
+	
+	&#x2F;**
+	* Returns a video object prepared to draw.
+	* Sources: array of arrays [[source src, source type],...] .
+	* Options: hash with additional data like poster url or autoplay
+	* param area: optional param indicating the area to add the video, used for editing presentations
+	* param style: optional param with the style, used in editing presentation
+	*&#x2F;
+	var drawVideo = function(sources,options,area,style){
+		var current_area;
+		if(area){
+			current_area = area;
+		}	else {
+			current_area = V.Editor.getCurrentArea();
+		}
+
+		&#x2F;&#x2F;Default options
+		var posterUrl = V.ImagesPath + &quot;vicons&#x2F;example_poster_image.jpg&quot;;
+		var autoplay = false;
+			
+		&#x2F;&#x2F;Replace defeault options if options hash is defined
+		if(options){
+			if(options[&#x27;poster&#x27;]){
+				posterUrl = options[&#x27;poster&#x27;];
+			}
+			if(options[&#x27;autoplay&#x27;]){
+				autoplay = options[&#x27;autoplay&#x27;];
+			}
+		}
+			
+		var template = V.Editor.getTemplate(area);
+
+		var nextVideoId = V.Utils.getId();
+		var idToDragAndResize = &quot;draggable&quot; + nextVideoId;
+		current_area.attr(&#x27;type&#x27;,&#x27;video&#x27;);
+
+		var videoTag = document.createElement(&#x27;video&#x27;);
+		videoTag.setAttribute(&#x27;id&#x27;, idToDragAndResize);
+		videoTag.setAttribute(&#x27;draggable&#x27;, true);
+		videoTag.setAttribute(&#x27;class&#x27;, template + &quot;_video&quot;);
+		videoTag.setAttribute(&#x27;title&#x27;, &quot;Click to drag&quot;);
+		videoTag.setAttribute(&#x27;controls&#x27;, &quot;controls&quot;);
+		videoTag.setAttribute(&#x27;preload&#x27;, &quot;metadata&quot;);
+		videoTag.setAttribute(&#x27;poster&#x27;, posterUrl);
 		videoTag.setAttribute(&#x27;autoplayonslideenter&#x27;,autoplay);
 		if(style){
 			videoTag.setAttribute(&#x27;style&#x27;, style);
 		}
-		
-	  $(sources).each(function(index, source) {
-      var videoSource = document.createElement(&#x27;source&#x27;);
-      videoSource.setAttribute(&#x27;src&#x27;, source[0]);
-		  if(source[1]){
-		    videoSource.setAttribute(&#x27;type&#x27;, source[1]);
-		  }
-		  $(videoTag).append(videoSource)
-    });
-    
-    var fallbackText = document.createElement(&#x27;p&#x27;);
-    $(fallbackText).html(&quot;Your browser does not support HTML5 video.&quot;);
-    $(videoTag).append(fallbackText);
-    
-    $(current_area).html(&quot;&quot;);
-    $(current_area).append(videoTag)
-    
-    V.Editor.addDeleteButton($(current_area));
+			
+		$(sources).each(function(index, source){
+			var videoSource = document.createElement(&#x27;source&#x27;);
+			videoSource.setAttribute(&#x27;src&#x27;, source.src);
+			if(source.mimeType){
+				videoSource.setAttribute(&#x27;type&#x27;, source.mimeType);
+			} else {
+				videoSource.setAttribute(&#x27;type&#x27;, V.VideoPlayer.HTML5.getVideoMimeType(source.src));
+			}
+			$(videoTag).append(videoSource);
+		});
 
-    $(&quot;#&quot; + idToDragAndResize).draggable({cursor: &quot;move&quot;});
+		var fallbackText = document.createElement(&#x27;p&#x27;);
+		$(fallbackText).html(&quot;Your browser does not support HTML5 video.&quot;);
+		$(videoTag).append(fallbackText);
 
-    V.Editor.Tools.loadToolsForZone(current_area);
-  }
+		$(current_area).html(&quot;&quot;);
+		$(current_area).append(videoTag);
 
-  var renderVideoFromSources = function(sources){
-    var posterUrl = V.ImagesPath + &quot;icons&#x2F;example_poster_image.jpg&quot;;
-    var rendered = &quot;&lt;video class=&#x27;objectPreview&#x27; preload=&#x27;metadata&#x27; controls=&#x27;controls&#x27; poster=&#x27;&quot; + posterUrl + &quot;&#x27; &gt;&quot;;
+		V.Editor.addDeleteButton($(current_area));
+
+		$(&quot;#&quot; + idToDragAndResize).draggable({cursor: &quot;move&quot;});
+
+		V.Editor.Tools.loadToolsForZone(current_area);
+	};
+
+
+	&#x2F;*
+	 * Renderer
+	 *&#x2F;
+	var renderVideoFromWrapper = function(videoTag){
+		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
+		if(sources.length &gt; 0){
+			return renderVideoFromSources(sources);
+		}
+	};
+
+	var renderVideoWithURL = function(url){
+		return renderVideoFromSources([{src: url}]);
+	};
+
+	var renderVideoFromSources = function(sources){
+		var posterUrl = V.ImagesPath + &quot;icons&#x2F;example_poster_image.jpg&quot;;
+		var rendered = &quot;&lt;video class=&#x27;objectPreview&#x27; preload=&#x27;metadata&#x27; controls=&#x27;controls&#x27; poster=&#x27;&quot; + posterUrl + &quot;&#x27; &gt;&quot;;
 		$.each(sources, function(index, source) {
-       rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source + &quot;&#x27; &quot; + _getVideoType(source) + &quot;&gt;&quot;;
-    });   
-    rendered = rendered + &quot;&lt;&#x2F;video&gt;&quot;;
-    return rendered;
-  };
-	
+			rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source.src + &quot;&#x27; &quot; + (typeof source.mimeType == &quot;string&quot; ? source.mimeType : V.VideoPlayer.HTML5.getVideoMimeType(source.src)) + &quot;&gt;&quot;;
+		});   
+		rendered = rendered + &quot;&lt;&#x2F;video&gt;&quot;;
+		return rendered;
+	};
 
-  return {
-    init             : init,
-	  drawVideoWithUrl : drawVideoWithUrl,
-	  drawVideo        : drawVideo,
-		renderVideoFromSources : renderVideoFromSources
-  };
+	return {
+		init 					: init,
+		drawVideoWithUrl 		: drawVideoWithUrl,
+		drawVideo 				: drawVideo,
+		drawVideoWithWrapper	: drawVideoWithWrapper,
+		renderVideoFromWrapper	: renderVideoFromWrapper,
+		renderVideoWithURL		: renderVideoWithURL,
+		renderVideoFromSources 	: renderVideoFromSources
+	};
 
 }) (VISH, jQuery);
 

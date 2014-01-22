@@ -114,7 +114,16 @@ VISH.Utils = (function(V,undefined){
 			var str = this;
 			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
 		};
-	}
+
+		&#x2F;&#x2F;Disable watermark for IE
+		jQuery.fn.vewatermark = function(text){
+			if(V.Status.getDevice().browser.name != V.Constant.IE){
+				$(this).watermark(text);
+			} else {
+				$(this).attr(&quot;placeholder&quot;,text);
+			}
+		};
+	};
 
 	&#x2F;*
 	 *
@@ -1052,6 +1061,27 @@ VISH.Utils = (function(V,undefined){
 		window.location.hash = newHash;
 	};
 
+	var cleanHash = function(){
+		window.location.hash = &quot;&quot;;
+		if(getOptions()[&quot;readHashFromParent&quot;]===true){
+			window.parent.location.hash = &quot;&quot;;
+		}
+
+		&#x2F;&#x2F;Try to remove # simbol
+		if(V.Status.getDevice().features.historypushState){
+			var locationWithoutHash = removeHashFromUrlString(document.location.href);
+			window.history.replaceState(&quot;&quot;,&quot;&quot;,locationWithoutHash);
+			if(getOptions()[&quot;readHashFromParent&quot;]===true){
+				var locationWithoutHash = removeHashFromUrlString(window.parent.document.location.href);
+				window.parent.history.replaceState(&quot;&quot;,&quot;&quot;,locationWithoutHash);
+			}
+		}
+	};
+
+	var removeHashFromUrlString = function(url){
+		return url.split(&quot;#&quot;)[0];
+	};
+
 	var getHashParams = function(){
 		var params = {};
 		var hash = window.location.hash;
@@ -1097,6 +1127,8 @@ VISH.Utils = (function(V,undefined){
 		showPNotValidDialog		: showPNotValidDialog,
 		isObseleteVersion		: isObseleteVersion,
 		updateHash				: updateHash,
+		cleanHash				: cleanHash,
+		removeHashFromUrlString	: removeHashFromUrlString,
 		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash
 	};

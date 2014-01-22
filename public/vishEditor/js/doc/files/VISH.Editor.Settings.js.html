@@ -102,6 +102,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	&#x2F;&#x2F;Metadata
 	var presentationThumbnail;
+	var _contributors;
 
 
 	var init = function(){
@@ -237,6 +238,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				var authorDOM = $(&quot;#author_span_in_preview&quot;);
 				$(authorDOM).html(authorName);
 			}
+		}
+
+		&#x2F;&#x2F;Contributors
+		if(typeof presentation.contributors == &quot;object&quot;){
+			_contributors = presentation.contributors;
+		} else {
+			_contributors = [];
 		}
 
 		&#x2F;&#x2F;Description
@@ -518,6 +526,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 		settings.author = author;
 
+		&#x2F;&#x2F;Contributors
+		if((typeof _contributors == &quot;object&quot;)&amp;&amp;(_contributors.length &gt; 0)){
+			settings.contributors = _contributors;
+		}
+		
 		var tags = getTags();
 		if((tags)&amp;&amp;(tags.length &gt; 0)){
 			settings.tags = tags;
@@ -681,6 +694,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$(&quot;#presentation_details_fields&quot;).slideDown();
 	 };
 
+
+	 &#x2F;*
+	  * Contributors Management
+	  *&#x2F;
+
+	 var addContributor = function(contributor){
+	 	if((typeof contributor == &quot;object&quot;)&amp;&amp;(typeof contributor.name == &quot;string&quot;)){
+	 		_contributors.push(contributor);
+	 	}
+	 };
+
+
 	return {
 		init									: init,
 		displaySettings							: displaySettings,
@@ -697,7 +722,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		saveSettings							: saveSettings,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked,
-		selectAnimation 						: selectAnimation
+		selectAnimation 						: selectAnimation,
+		addContributor							: addContributor
 	};
 
 }) (VISH, jQuery);

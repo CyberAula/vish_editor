@@ -81,7 +81,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				options['autoplay'] = slide.elements[el].autoplay;
 				var sourcesArray = [];
 				$.each(JSON.parse(slide.elements[el].sources), function(index, source){
-					sourcesArray.push([source.src, source.type]);
+					sourcesArray.push({"src":source.src, "mimeType": source.type});
 				});
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
