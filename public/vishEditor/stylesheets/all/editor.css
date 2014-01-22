@@ -2425,13 +2425,13 @@ div.draggable_sc_div {
 	margin-left: 12px;
 	opacity: 1;
 	cursor: pointer;
-	height: 50px;
-	width: 50px;
 }
 
 div.draggable_sc_div img.fc_draggable_arrow {
 	background-color: transparent;
 	opacity: 1.0 !important;
+	height: 40px;
+	width: 50px;
 }
 
 div.draggable_sc_div img.fc_draggable_arrow:active {
@@ -2448,7 +2448,7 @@ div.draggable_sc_div img.fc_draggable_arrow:hover {
 
 p.draggable_number {
 	position: relative;
-	top: -58px;
+	top: -45px;
 	left: 0px !important;
 	text-align: center;
 	font-family: 'Open Sans', arial, sans-serif;

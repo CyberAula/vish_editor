@@ -487,23 +487,25 @@ button#closeButton {
 	z-index: 1103;
 	background-image: url('/vishEditor/images/vicons/ve_close.png');
 	background-repeat: no-repeat;
-	background-position-x: 100%;
-	background-position-y: 0%;
+	background-position: 100% 0%;
 }
 
 .close_subslide:hover {
 	background-image: url('/vishEditor/images/vicons/ve_close_hover.png');
 }
 
-.fc_poi {
+div.fc_poi {
 	-webkit-transition: none !important;
 	-webkit-transition-delay: none !important;
 	-moz-transition: none !important;
 	-o-transition: none !important;
 	transition: none !important;
 	width: 50px;
-	height: 50px;
-	background: url(/vishEditor/images/vicons/animation_arrow.png);
+	height: 40px;
+	background: url("/vishEditor/images/vicons/animation_arrow.png");
+	background-size: 2100% auto;
+	background-position: 0 center;
+	background-repeat: no-repeat;
 	cursor: pointer;
 }
 

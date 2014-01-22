@@ -309,9 +309,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Close button for subslides
 		var _closeButtonDimension = 23;
 		if(increase <= 1){
-			_closeButtonDimension = _closeButtonDimension*_getPonderatedIncrease(increase,0.7);
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.7);
 		} else {
-			_closeButtonDimension = _closeButtonDimension*_getPonderatedIncrease(increase,0.2);
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.2);
 		}
 		$("div.close_subslide").css("width",_closeButtonDimension+"px");
 		$("div.close_subslide").css("height",_closeButtonDimension+"px");
@@ -333,9 +333,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//Slide counter
 			//Font size related to menubar
 			var menubarIncreaseFactor = viewbarHeight/40;
-			var slideCounterFontSize = 14*_getPonderatedIncrease(menubarIncreaseFactor,0.5);
+			var slideCounterFontSize = 14*getPonderatedIncrease(menubarIncreaseFactor,0.5);
 			$("#slide-counter-span, #slide-counter-input").css("font-size",slideCounterFontSize+"px");
-			$("#slide-counter-input").width(24*_getPonderatedIncrease(menubarIncreaseFactor,1));
+			$("#slide-counter-input").width(24*getPonderatedIncrease(menubarIncreaseFactor,1));
 			var slideCounterMarginTop = (viewbarHeight - $("#slide-counter-div").height())/2;
 			$("#slide-counter-div").css("margin-top",slideCounterMarginTop+"px");
 
@@ -343,9 +343,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#embedWatermark").width($("#embedWatermark").height()*2.7);
 		}
 
-		// TODO: Make flashcard arrows responsive
-		// $("div.fc_poi").css("width", 50*increase + "px");
-		// $("div.fc_poi").css("height", 50*increase + "px");
+		V.Flashcard.aftersetupSize(increase,increaseW);
 
 		decideIfPageSwitcher();
 
@@ -374,7 +372,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var minimumViewBarHeight = 26;
 		var maxViewBarHeight = 40;
 		var estimatedIncrease = windowHeight/600;
-		var viewBarHeight = 40 * _getPonderatedIncrease(estimatedIncrease,0.7);
+		var viewBarHeight = 40 * getPonderatedIncrease(estimatedIncrease,0.7);
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
 	};
 
@@ -426,7 +424,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		return [_lastIncrease,_lastIncreaseW];
 	};
 
-	var _getPonderatedIncrease = function(increase,pFactor){
+	var getPonderatedIncrease = function(increase,pFactor){
 		var diff = (increase-1)*pFactor;
 		return 1+diff;
 	};
@@ -437,6 +435,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		decideIfCloseButton		: decideIfCloseButton,
 		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
+		getPonderatedIncrease 	: getPonderatedIncrease,
 		getLastIncrease			: getLastIncrease
 	};
 
