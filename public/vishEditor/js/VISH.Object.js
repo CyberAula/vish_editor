@@ -1,8 +1,8 @@
 VISH.Object = (function(V,$,undefined){
 			
 	var init = function(){
-	}
-	
+	};
+
 
 	///////////////////////////////////////
 	/// OBJECT INFO
@@ -17,7 +17,7 @@ VISH.Object = (function(V,$,undefined){
 		this.wrapper=wrapper;
 		this.source = source;
 		this.type=sourceType;
-	} 
+	}; 
 	
 	/*
 	 * Return object type
@@ -33,12 +33,19 @@ VISH.Object = (function(V,$,undefined){
 		
 		//Determine source type
 		var source = _getSourceFromObject(object,wrapper);
-		var type = _getTypeFromSource(source);
+		
+		var type;
+		switch (wrapper){
+			case "VIDEO":
+				type = V.Constant.MEDIA.HTML5_VIDEO;
+			default:
+				type = _getTypeFromSource(source);
+		}
 
 		return new objectInfo(wrapper,source,type);
-	}
+	};
 	
-	var _getSourceFromObject = function (object,wrapper){
+	var _getSourceFromObject = function(object,wrapper){
 		switch (wrapper){
 			case null:
 				return object;
@@ -52,14 +59,16 @@ VISH.Object = (function(V,$,undefined){
 				  return $(object).attr("data");
 				}
 				return "source not founded";
-			case "IFRAME": 
+			case "IFRAME":
 				return $(object).attr("src");
+			case "VIDEO":
+				return _getSourcesFromHTML5Video(object);
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
 				return null;
 			break;
 		}
-	}
+	};
 	
 	
 	/**
@@ -67,6 +76,10 @@ VISH.Object = (function(V,$,undefined){
 	 */                                                         		
 	
 	var _getTypeFromSource = function(source){
+
+		if((typeof source == "object")&&(typeof source.length == "number")&&(source.length > 0)){
+			source = source[0];
+		};
 
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
@@ -120,11 +133,20 @@ VISH.Object = (function(V,$,undefined){
 		}
 
 		return extension;
-	}
+	};
 	
 	var getExtensionFromSrc = function(source){
 		return (source.split('.').pop().split('&')[0]).toLowerCase();
-	}
+	};
+
+	var _getSourcesFromHTML5Video = function(video){
+		try {
+			return $(video).find("source").map(function(){ return this.src });
+		} catch(e){
+			return [];
+		}
+		return [];
+	};
 
 	return {
 		init							: init,

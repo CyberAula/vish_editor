@@ -7,8 +7,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 
 
 	var init = function(){
-
-	}
+	};
 
 	var setVideoEvents = function(){
 		var videos = $("video")

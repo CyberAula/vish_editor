@@ -4,11 +4,11 @@ VISH.VideoPlayer = (function(V,$,undefined){
 		V.VideoPlayer.CustomPlayer.init();
 		V.VideoPlayer.HTML5.init();
 		V.VideoPlayer.Youtube.init();
-	}
+	};
 
 	var getTypeVideoWithId = function(videoId){
 		return getTypeVideo(document.getElementById(videoId));
-	}
+	};
 
 	var getTypeVideo = function(video){
 		if(!video){
@@ -20,7 +20,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			return V.Constant.Video.Youtube;
 		}
 		return V.Constant.UNKNOWN;
-	}
+	};
 
 	var playVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
@@ -33,7 +33,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
@@ -46,7 +46,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	var seekVideo = function(videoId,seekTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
@@ -59,7 +59,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 
 
@@ -77,7 +77,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 
 	var getCurrentTime = function(video){
@@ -91,7 +91,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	return {
 		init				: init,
