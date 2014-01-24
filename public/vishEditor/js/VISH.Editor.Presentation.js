@@ -9,7 +9,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	};
 
 	var _onConnect = function(origin){
-		// V.Debugging.log("Communication stablished with origin " + origin);
+		V.Debugging.log("Communication stablished with origin " + origin);
 		V.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
 			// V.Debugging.log("onMessage from " + origin);
 			// V.Debugging.log(VEMessage);
@@ -18,15 +18,15 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 				V.Messenger.Helper.processVEMessage(VEMessage);
 			}
 		});
-	}
+	};
 
 	/*
 	 * Preview a presentation to insert its slides into the current presentation
 	 */
 	var previewPresentation = function(presentation){
-		V.Editor.Preview.preview({insertMode: true, slideNumberToPreview: 1, presentationJSON: presentation});
 		V.IframeAPI.init({callback: _onConnect});
-	}
+		V.Editor.Preview.preview({insertMode: true, slideNumberToPreview: 1, presentationJSON: presentation});
+	};
 
 	/**
 	 * Insert the selected slides of a slide presentation in JSON
