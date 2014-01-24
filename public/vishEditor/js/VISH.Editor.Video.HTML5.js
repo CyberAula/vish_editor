@@ -104,7 +104,13 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	var renderVideoFromWrapper = function(videoTag){
 		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
 		if(sources.length > 0){
-			return renderVideoFromSources(sources);
+			var options = {};
+			//Look for poster
+			var video = $(videoTag);
+			if($(video).attr("poster")){
+				options.poster = $(video).attr("poster");
+			}
+			return renderVideoFromSources(sources,options);
 		}
 	};
 
@@ -112,8 +118,13 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		return renderVideoFromSources([{src: url}]);
 	};
 
-	var renderVideoFromSources = function(sources){
+	var renderVideoFromSources = function(sources,options){
 		var posterUrl = V.ImagesPath + "icons/example_poster_image.jpg";
+		if(options){
+			if(options['poster']){
+				posterUrl = options['poster'];
+			}
+		}
 		var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
 			rendered = rendered + "<source src='" + source.src + "' " + (typeof source.mimeType == "string" ? source.mimeType : V.VideoPlayer.HTML5.getVideoMimeType(source.src)) + ">";
