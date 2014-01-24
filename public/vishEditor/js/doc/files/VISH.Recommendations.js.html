@@ -164,6 +164,19 @@ VISH.Recommendations = (function(V,$,undefined){
 		});
 	};
 
+	var canShowRecommendations = function(){
+		return true;
+	};
+
+	var canShowEvaluateButton = function(){
+		var _showEvaluateButton = V.Status.getIsInVishSite() || (V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER &amp;&amp; !V.Status.getIsScorm() &amp;&amp; !V.Status.getIsEmbed());
+		&#x2F;&#x2F;Only available for desktop
+		_showEvaluateButton = _showEvaluateButton &amp;&amp; V.Status.getDevice().desktop;
+		&#x2F;&#x2F;Not available in the .full
+		_showEvaluateButton = _showEvaluateButton &amp;&amp; V.Status.getIsInIframe();
+		return _showEvaluateButton;
+	};
+
 	&#x2F;**
 	 * Function to check if this is the appropiate moment to request the recommendations
 	 *&#x2F;
@@ -251,7 +264,7 @@ VISH.Recommendations = (function(V,$,undefined){
                             &#x27;&lt;div class=&quot;rec-title-excursion&quot;&gt;&#x27;+ex.title+&#x27;&lt;&#x2F;div&gt;&#x27;+
                             &#x27;&lt;div class=&quot;rec-by&quot;&gt;by &lt;span class=&quot;rec-name&quot;&gt;&#x27;+ex.author+&#x27;&lt;&#x2F;span&gt;&lt;&#x2F;div&gt;&#x27;+
                             &#x27;&lt;span class=&quot;rec-visits&quot;&gt;&#x27;+ex.views+&#x27;&lt;&#x2F;span&gt; &lt;span class=&quot;rec-views&quot;&gt;&#x27;+V.I18n.getTrans(&quot;i.exviews&quot;)+&#x27;&lt;&#x2F;span&gt;&#x27;+
-                            &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&lt;span class=&quot;rec-likes-number&quot;&gt;&#x27;+333+&#x27;&lt;&#x2F;span&gt;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;http:&#x2F;&#x2F;vishub.org&#x2F;assets&#x2F;icons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
+                            &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&lt;span class=&quot;rec-likes-number&quot;&gt;&#x27;+ex.favourites+&#x27;&lt;&#x2F;span&gt;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;http:&#x2F;&#x2F;vishub.org&#x2F;assets&#x2F;icons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
                           &#x27;&lt;&#x2F;li&gt;&#x27;+
                         &#x27;&lt;&#x2F;ul&gt;&#x27;+
                     &#x27;&lt;&#x2F;div&gt;&#x27;;
@@ -260,6 +273,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			}
 		};
         $(&quot;#fancy_recommendations .rec-grid&quot;).html(result);
+        aftersetupSize();
         _generated = true;
         _requesting = false;
 
@@ -280,9 +294,10 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(V.Editing){
 			return;
 		}
-		if(!V.Status.getDevice().desktop){
-			return;
-		}
+		&#x2F;&#x2F; Disable recommendations for Mobiles and tablets
+		&#x2F;&#x2F; if(!V.Status.getDevice().desktop){
+		&#x2F;&#x2F; 	return;
+		&#x2F;&#x2F; }
 		if(V.Viewer.getPresentationType()!= V.Constant.PRESENTATION){
 			return;
 		}
@@ -326,12 +341,18 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var aftersetupSize = function(increase){
+		var items = $(&quot;.rec-excursion&quot;);
+		if(items.length &lt; 1){
+			return;
+		}
+
+		increase = (typeof increase == &quot;number&quot;) ? increase : V.ViewerAdapter.getLastIncrease()[0];
 		if(increase &gt; 0.82){
-			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;44%&quot;);
+			$(items).css(&quot;width&quot;,&quot;44%&quot;);
 		} else if(increase &gt; 0.36){
-			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;40%&quot;);
+			$(items).css(&quot;width&quot;,&quot;40%&quot;);
 		} else {
-			$(&quot;.rec-excursion&quot;).css(&quot;width&quot;,&quot;36%&quot;);
+			$(items).css(&quot;width&quot;,&quot;36%&quot;);
 		}
 	};
 
@@ -358,12 +379,27 @@ VISH.Recommendations = (function(V,$,undefined){
 		return searchTerms.join(&quot;,&quot;);
 	};
 
+
+	&#x2F;&#x2F;Evaluations in recommendation panel
+
+	var onClickEvaluateButton = function(){
+		if(V.Status.getIsInVishSite()){
+			V.FullScreen.exitFromNativeFullScreen();
+			window.parent.document.getElementById(&#x27;evaluation-button-id&#x27;).click();
+		} else if(V.Debugging.isDevelopping()){
+			window.alert(&quot;Evaluate!&quot;);
+		}	
+	};
+
 	return {
 		init          			: init,
+		canShowRecommendations	: canShowRecommendations,
+		canShowEvaluateButton	: canShowEvaluateButton,
 		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
 		isRecVisible 			: isRecVisible,
-		aftersetupSize			: aftersetupSize
+		aftersetupSize			: aftersetupSize,
+		onClickEvaluateButton	: onClickEvaluateButton
 	};
 
 }) (VISH,jQuery);

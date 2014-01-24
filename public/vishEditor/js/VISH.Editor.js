@@ -619,7 +619,7 @@ VISH.Editor = (function(V,$,undefined){
 					element.poster = $(video).attr("poster");
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
 					//Sources
-					var sources= '';				
+					var sources= '';		
 					$(video).find('source').each(function(index, source) {
 						if(index!==0){
 							sources = sources + ',';

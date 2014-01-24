@@ -91,7 +91,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				V.Debugging.log(error);
 			}
 		});	
-	}
+	};
 	
 	var onLoadTab = function(tab){
 		if(tab=="upload"){
@@ -100,13 +100,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(tab=="url"){
 			_onLoadURLTab();
 		}
-	}	
+	};
 	
 	var _onLoadURLTab = function(){
 		contentToAdd = null;
 		resetPreview(urlDivId);
 		$("#" + urlInputId).val("");
-	}
+	};
 	
 	var _onLoadUploadTab = function(){
 		contentToAdd = null;
@@ -120,7 +120,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		_resetUploadFields();
 			
 		V.Editor.API.requestTags(_onTagsReceived);
-	}
+	};
 	
 	var _resetUploadFields = function(){
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
@@ -134,7 +134,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if($(tagList)[0].children.length!==0){
 			$(tagList).tagit("reset");
 		}
-	}
+	};
    
 	var _onTagsReceived = function(data){
 		var tagList = $("#" + uploadDivId + " .tagList");
@@ -151,7 +151,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
-	}
+	};
 	
 	var processResponse = function(response){
 		try  {
@@ -165,7 +165,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		} catch(e) {
 			//No JSON response
 		}
-	}
+	};
 	
 	
 	//Preview generation for "load" and "upload" tabs
@@ -182,7 +182,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$("#" + divId + " .previewimgbox").append(wrapper);
 		$("#" + divId + " .previewimgbox button").show();
 		$("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
-	}
+	};
 	
 	var resetPreview = function(divId){
 		$("#" + divId + " .previewimgbox button").hide();
@@ -192,18 +192,18 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$("#" + divId + " .previewimgbox").css("background-image", previewBackground);
 		}
 		$("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
-	}
+	};
 	
 	var drawPreviewElement = function(){
 		drawPreviewObject(contentToAdd);
-	}
+	};
 	
 	var drawPreviewObject = function(content,options){
 		if(content){
 			drawObject(content,options);
 			$.fancybox.close();
 		}
-	}
+	};
 
 
 	///////////////////////////////////////
@@ -309,7 +309,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoFromSources([object]);
+						return V.Editor.Video.HTML5.renderVideoWithURL(object);
 						break;
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
@@ -328,6 +328,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 			case V.Constant.WRAPPER.IFRAME:
 				return _genericWrapperPreview(object);
+				break;
+			case V.Constant.WRAPPER.VIDEO:
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object);
 				break;
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
@@ -426,6 +429,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 			case V.Constant.WRAPPER.IFRAME:
 				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
+				break;
+
+			case V.Constant.WRAPPER.VIDEO:
+				V.Editor.Video.HTML5.drawVideoWithWrapper(object);
 				break;
 
 			default:

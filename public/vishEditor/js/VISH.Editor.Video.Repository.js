@@ -189,7 +189,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 				sources = JSON.parse(sources)
 			}
 			$.each(sources, function(index, source) {
-				sourcesArray.push([source.src, source.type]);
+				sourcesArray.push({"src":source.src, "mimeType": source.type});
 			});
 			V.Editor.Video.HTML5.drawVideo(sourcesArray, options);
 			$.fancybox.close();

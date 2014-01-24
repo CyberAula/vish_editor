@@ -254,6 +254,9 @@ VISH.Editor = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
+		&#x2F;&#x2F;Clean hash
+		&#x2F;&#x2F; V.Utils.cleanHash();
+
 		&#x2F;&#x2F;Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 
@@ -706,7 +709,7 @@ VISH.Editor = (function(V,$,undefined){
 					element.poster = $(video).attr(&quot;poster&quot;);
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
 					&#x2F;&#x2F;Sources
-					var sources= &#x27;&#x27;;				
+					var sources= &#x27;&#x27;;		
 					$(video).find(&#x27;source&#x27;).each(function(index, source) {
 						if(index!==0){
 							sources = sources + &#x27;,&#x27;;

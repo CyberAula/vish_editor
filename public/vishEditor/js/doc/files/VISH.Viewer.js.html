@@ -187,7 +187,9 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); &#x2F;&#x2F;Also init texts
-		
+
+		&#x2F;&#x2F;Clean hash
+		&#x2F;&#x2F; V.Utils.cleanHash();
 
 		if(V.Slides.getCurrentSlideNumber()&gt;0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));

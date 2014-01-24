@@ -9,9 +9,8 @@ VISH.Object = (function(V,$,undefined){
 	///////////////////////////////////////
 	
 	/*
-	 * Wrapper can be: "embed","object, "iframe" or null if the object is a source url without wrapper.
+	 * Wrapper can be: "embed","object, "iframe", "video" or null if the object is a source url without wrapper.
 	 * Type is the source type and can be: "swf" , "youtube" , etc.
-	 * 
 	 */
 	function objectInfo(wrapper,source,sourceType) {
 		this.wrapper=wrapper;
@@ -38,6 +37,7 @@ VISH.Object = (function(V,$,undefined){
 		switch (wrapper){
 			case "VIDEO":
 				type = V.Constant.MEDIA.HTML5_VIDEO;
+				break;
 			default:
 				type = _getTypeFromSource(source);
 		}
@@ -49,9 +49,9 @@ VISH.Object = (function(V,$,undefined){
 		switch (wrapper){
 			case null:
 				return object;
-			case "EMBED":
+			case V.Constant.WRAPPER.EMBED:
 				return $(object).attr("src");
-			case "OBJECT":
+			case V.Constant.WRAPPER.OBJECT:
 				if (typeof $(object).attr("src") != 'undefined'){
 				  return $(object).attr("src");
 				}
@@ -59,10 +59,10 @@ VISH.Object = (function(V,$,undefined){
 				  return $(object).attr("data");
 				}
 				return "source not founded";
-			case "IFRAME":
+			case V.Constant.WRAPPER.IFRAME:
 				return $(object).attr("src");
-			case "VIDEO":
-				return _getSourcesFromHTML5Video(object);
+			case V.Constant.WRAPPER.VIDEO:
+				return V.VideoPlayer.HTML5.getSources(object);
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
 				return null;
@@ -137,15 +137,6 @@ VISH.Object = (function(V,$,undefined){
 	
 	var getExtensionFromSrc = function(source){
 		return (source.split('.').pop().split('&')[0]).toLowerCase();
-	};
-
-	var _getSourcesFromHTML5Video = function(video){
-		try {
-			return $(video).find("source").map(function(){ return this.src });
-		} catch(e){
-			return [];
-		}
-		return [];
 	};
 
 	return {

@@ -92,6 +92,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 	&#x2F;&#x2F;Viewbar
 	var _showViewbar;
+	&#x2F;&#x2F;Arrows
+	var _showArrows;
 
 	&#x2F;&#x2F;Full Screen
 	var _fsButton;
@@ -99,14 +101,18 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	&#x2F;&#x2F;Close button
 	var _closeButton;
 
-	&#x2F;&#x2F;Uniq mode (to show only one slide of an excursion)
-	var _uniqMode;
+	&#x2F;&#x2F;Recommendations
+	var _showRec;
+	var _showEval;
 
 	&#x2F;&#x2F;Internals
 	var _initialized = false;
 	&#x2F;&#x2F;Prevent updateInterface with same params (Make ViSH Viewer more efficient)
 	var _lastWidth;
 	var _lastHeight;
+	&#x2F;&#x2F;Store last increases
+	var _lastIncrease;
+	var _lastIncreaseW;
 
 
 	var init = function(options){
@@ -120,21 +126,30 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		_lastHeight = -1;
 
 		_showViewbar = _defaultViewbar();
+		_showArrows = true;
 		_fsButton = V.FullScreen.canFullScreen();
 
-		&#x2F;&#x2F;Page is not fullscreen by default
-		V.FullScreen.setFullScreen(false);
+		&#x2F;&#x2F;Close button false by default
+		_closeButton = false;
 
-		&#x2F;&#x2F;Close button
-		_closeButton = (V.Status.getDevice().mobile)&amp;&amp;(!V.Status.getIsInIframe())&amp;&amp;(options)&amp;&amp;(options[&quot;comeBackUrl&quot;]);
+		&#x2F;&#x2F;Recommendations
+		_showRec = V.Recommendations.canShowRecommendations();
+		_showEval = V.Recommendations.canShowEvaluateButton();
 
-		&#x2F;&#x2F;Determine uniq mode
-		var hashParams = V.Utils.getHashParams();
-		if(hashParams[&quot;uniq&quot;] === &quot;true&quot;){
-			_uniqMode = true;
-		} else {
-			_uniqMode = false;
+		&#x2F;&#x2F;Mobiles
+		if(V.Status.getDevice().mobile){
+			if(!V.Status.getIsInIframe()){
+				_showViewbar = false;
+				_closeButton = (options)&amp;&amp;(options[&quot;comeBackUrl&quot;]);
+			}
 		}
+
+		&#x2F;&#x2F;Uniq mode
+		if(V.Status.getIsUniqMode()){
+			_showViewbar = false;
+			_showArrows = false;
+		}
+
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Restrictions
@@ -143,24 +158,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;No fs for preview
 		_fsButton = _fsButton &amp;&amp; (!V.Status.getIsPreview());
 
-		&#x2F;&#x2F;Mobiles
-		if(V.Status.getDevice().mobile){
-			_showViewbar = false;
-		}
-
-		&#x2F;&#x2F;Uniq mode
-		if(_uniqMode){
-			_showViewbar = false;
-		}
 
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Init interface
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 		&#x2F;&#x2F;Init viewbar
-		if(V.Status.getDevice().desktop){
-			$(&quot;#back_arrow&quot;).html(&quot;&quot;);
-			$(&quot;#forward_arrow&quot;).html(&quot;&quot;);
+		if((!V.Status.getDevice().desktop)&amp;&amp;(_showArrows)){
+			$(&quot;#back_arrow&quot;).html(&quot;&lt;&quot;);
+			$(&quot;#forward_arrow&quot;).html(&quot;&gt;&quot;);
 		}
 
 		if(_showViewbar){
@@ -169,6 +175,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			$(&quot;#viewbar&quot;).hide();
 		}
+
+		if(!_showArrows){
+			$(&quot;#back_arrow&quot;).hide();
+			$(&quot;#forward_arrow&quot;).hide();
+		};
 
 		if(V.Status.getIsPreview()){
 			$(&quot;div#viewerpreview&quot;).show();
@@ -190,8 +201,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Evaluations (in recommendation window)
-		&#x2F;&#x2F;Only show evaluations in the ViSH Site
-		if(V.Status.getIsInVishSite() || (V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER &amp;&amp; !V.Status.getIsScorm() &amp;&amp; !V.Status.getIsEmbed())){
+		if(_showEval){
 			$(&quot;.rec-first-row&quot;).show();
 		} else {
 			$(&quot;.rec-first-row&quot;).hide();
@@ -213,44 +223,46 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;Update interface and init texts
 		updateInterface();
 		V.Text.init();
-	}
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; PAGER
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 
 	&#x2F;**
-	 * Function to hide&#x2F;show the page-switchers buttons
+	 * Function to hide&#x2F;show the page-switchers buttons and arrows
 	 * hide the left one if on first slide
 	 * hide the right one if on last slide -&gt; always show it, it will show the recommendations if on last slide
 	 * show both otherwise
 	 *&#x2F;
 	var decideIfPageSwitcher = function(){
 
-		&#x2F;&#x2F; ViewBar
-		if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
-			if (V.Slides.getCurrentSubslide()!==null){
-				&#x2F;&#x2F;Subslide active
-				$(&quot;#forward_arrow&quot;).hide();
-				$(&quot;#back_arrow&quot;).hide();
-			} else {
-				&#x2F;&#x2F;No subslide
-				if(V.Slides.isCurrentFirstSlide()){
+		&#x2F;&#x2F;Arrows
+		if(_showArrows){
+			if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
+				if (V.Slides.getCurrentSubslide()!==null){
+					&#x2F;&#x2F;Subslide active
+					$(&quot;#forward_arrow&quot;).hide();
 					$(&quot;#back_arrow&quot;).hide();
 				} else {
-					$(&quot;#back_arrow&quot;).show();
-				} 
-				&#x2F;&#x2F;Always show
-				$(&quot;#forward_arrow&quot;).show();
+					&#x2F;&#x2F;No subslide
+					if(V.Slides.isCurrentFirstSlide()){
+						$(&quot;#back_arrow&quot;).hide();
+					} else {
+						$(&quot;#back_arrow&quot;).show();
+					} 
+					&#x2F;&#x2F;Always show
+					$(&quot;#forward_arrow&quot;).show();
+				}
+			} else if (V.Viewer.getPresentationType()===V.Constant.QUIZ_SIMPLE){
+				&#x2F;&#x2F;Remove arrow for simple quizs
+				$(&quot;#forward_arrow&quot;).hide();
 			}
-		} else if (V.Viewer.getPresentationType()===V.Constant.QUIZ_SIMPLE){
-			&#x2F;&#x2F;Remove arrow for simple quizs
-			$(&quot;#forward_arrow&quot;).hide();
 		}
 
 		&#x2F;&#x2F; Pager
 		if(V.Slides.isCurrentFirstSlide()){
-			$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);			
+			$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);
 		} else {
 			$(&quot;#page-switcher-start&quot;).removeClass(&quot;disabledarrow&quot;);
 		}
@@ -269,7 +281,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			$(&quot;#viewbar&quot;).hide();
 		}
-	}
+	};
 
 	var _defaultViewbar = function(){
 		var presentationType = V.Viewer.getPresentationType();
@@ -279,7 +291,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		} else {
 			return true;
 		}
-	}
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; Setup
@@ -293,36 +305,31 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 		_lastWidth = cWidth;
 		_lastHeight = cHeight;
-		_setupSize(V.FullScreen.isFullScreen());
+		_setupSize();
 	};
 
 
 	&#x2F;**
-	 * Function to adapt the slides to the screen size, in case the editor is shown in another iframe
-	 * param &quot;fullscreen&quot; indicates that the call comes from a fullscreen button
+	 * Function to adapt the slides to the screen size
 	 *&#x2F;
-	var _setupSize = function(fullscreen){
-		var reserved_px_for_menubar = _getDesiredVieweBarHeight(_lastHeight);
+	var _setupSize = function(){
+		var viewbarHeight;
 		var min_margin_height = 25;
 		var min_margin_width = 60;
 
 		if(!_showViewbar){
 			&#x2F;&#x2F;Cases without viewbar (quiz_simple , etc)
-			reserved_px_for_menubar = 0;
+			viewbarHeight = 0;
 			min_margin_height = 0;
 			min_margin_width = 0;
 		} else if(V.Status.getIsPreviewInsertMode()){
 			&#x2F;&#x2F;Preview with insert images
-			reserved_px_for_menubar = 120; &#x2F;&#x2F;Constant because is displayed from ViSH Editor
-		}
-
-		if(fullscreen){
-			V.FullScreen.onFullscreenEvent(true);
+			viewbarHeight = 120; &#x2F;&#x2F;Constant because is displayed from ViSH Editor
 		} else {
-			V.FullScreen.onFullscreenEvent(false);
+			viewbarHeight = _getDesiredVieweBarHeight(_lastHeight);
 		}
 		
-		var height = _lastHeight - reserved_px_for_menubar; &#x2F;&#x2F;the height to use is the window height - menubar height
+		var height = _lastHeight - viewbarHeight;
 		var width = _lastWidth;
 		var finalW = 800;
 		var finalH = 600;
@@ -357,8 +364,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(&quot;.vish_arrow&quot;).width(finalWidthMargin&#x2F;2*0.9);
 
 		&#x2F;&#x2F;Viewbar
-		if(!V.Status.getIsPreviewInsertMode()){
-			$(&quot;#viewbar&quot;).height(reserved_px_for_menubar);
+		if((_showViewbar)&amp;&amp;(!V.Status.getIsPreviewInsertMode())){
+			$(&quot;#viewbar&quot;).height(viewbarHeight);
 		}
 
 		&#x2F;&#x2F;resize slides
@@ -369,7 +376,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(allSlides).css(&quot;width&quot;, finalW);
 
 		&#x2F;&#x2F;margin-top and margin-left half of the height and width
-		var marginTop = finalH&#x2F;2 + reserved_px_for_menubar&#x2F;2;
+		var marginTop = finalH&#x2F;2 + viewbarHeight&#x2F;2;
 		var marginLeft = finalW&#x2F;2;
 		$(topSlides).css(&quot;margin-top&quot;, &quot;-&quot; + marginTop + &quot;px&quot;);
 		$(subSlides).css(&quot;margin-top&quot;, &quot;-&quot; + finalH&#x2F;2 + &quot;px&quot;);
@@ -377,7 +384,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		
 		var increase = finalH&#x2F;600;
 		var increaseW = finalW&#x2F;800;
-		
+
+		_lastIncrease = increase;
+		_lastIncreaseW = increaseW;
+
 		&#x2F;&#x2F;Paddings
 		var paddingTopAndBottom = 3&#x2F;100*finalW;	&#x2F;&#x2F;3%
 		var paddingLeftAndRight = 5&#x2F;100*finalW;	&#x2F;&#x2F;5%
@@ -386,13 +396,48 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(allSlides).css(&quot;padding-top&quot;,	paddingTopAndBottom);
 		$(allSlides).css(&quot;padding-bottom&quot;,paddingTopAndBottom);
 
-		&#x2F;&#x2F;and now the arrows have to be increased or decreased
-		$(&quot;.fc_poi img&quot;).css(&quot;width&quot;, 50*increase + &quot;px&quot;);
-		$(&quot;.fc_poi img&quot;).css(&quot;height&quot;, 50*increase + &quot;px&quot;);
+		&#x2F;&#x2F;Close button for subslides
+		var _closeButtonDimension = 23;
+		if(increase &lt;= 1){
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.7);
+		} else {
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.2);
+		}
+		$(&quot;div.close_subslide&quot;).css(&quot;width&quot;,_closeButtonDimension+&quot;px&quot;);
+		$(&quot;div.close_subslide&quot;).css(&quot;height&quot;,_closeButtonDimension+&quot;px&quot;);
+
+		&#x2F;&#x2F;Viewbar resizing
+		if(_showViewbar){
+			&#x2F;&#x2F;Page switchers
+			$(&quot;#page-switcher-start&quot;).width($(&quot;#page-switcher-start&quot;).height());
+			$(&quot;#page-switcher-end&quot;).width($(&quot;#page-switcher-end&quot;).height());
+
+			&#x2F;&#x2F;Fs button
+			$(&quot;#page-fullscreen&quot;).width($(&quot;#page-fullscreen&quot;).height());
+
+			if(V.Status.getIsPreviewInsertMode()){
+				&#x2F;&#x2F;Get the real viewbar height in insert mode
+				viewbarHeight = $(&quot;#viewbar&quot;).height();
+			}
+
+			&#x2F;&#x2F;Slide counter
+			&#x2F;&#x2F;Font size related to menubar
+			var menubarIncreaseFactor = viewbarHeight&#x2F;40;
+			var slideCounterFontSize = 14*getPonderatedIncrease(menubarIncreaseFactor,0.5);
+			$(&quot;#slide-counter-span, #slide-counter-input&quot;).css(&quot;font-size&quot;,slideCounterFontSize+&quot;px&quot;);
+			$(&quot;#slide-counter-input&quot;).width(24*getPonderatedIncrease(menubarIncreaseFactor,1));
+			var slideCounterMarginTop = (viewbarHeight - $(&quot;#slide-counter-div&quot;).height())&#x2F;2;
+			$(&quot;#slide-counter-div&quot;).css(&quot;margin-top&quot;,slideCounterMarginTop+&quot;px&quot;);
+
+			&#x2F;&#x2F;Watermark
+			$(&quot;#embedWatermark&quot;).width($(&quot;#embedWatermark&quot;).height()*2.7);
+		}
+
+		V.Flashcard.aftersetupSize(increase,increaseW);
 
 		decideIfPageSwitcher();
 
-		updateFancyboxAfterSetupSize();
+		updateFancyboxAfterSetupSize(increase,increaseW);
 
 		&#x2F;&#x2F;Texts callbacks
 		V.Text.aftersetupSize(increase,increaseW);
@@ -414,21 +459,23 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 
 	var _getDesiredVieweBarHeight = function(windowHeight){
-		var minimumViewBarHeight = 20;
+		var minimumViewBarHeight = 26;
 		var maxViewBarHeight = 40;
-		var viewBarHeight = 40;
-		&#x2F;&#x2F;TODO: Make Viewbar responsive
+		var estimatedIncrease = windowHeight&#x2F;600;
+		var viewBarHeight = 40 * getPonderatedIncrease(estimatedIncrease,0.7);
 		return Math.min(Math.max(viewBarHeight,minimumViewBarHeight),maxViewBarHeight);
-	}
+	};
 
 	&#x2F;**
 	 * Fancybox resizing. If a fancybox is opened, resize it
 	 *&#x2F;
-	var updateFancyboxAfterSetupSize = function(){
+	var updateFancyboxAfterSetupSize = function(increase,increaseW){
 		var fOverlay = $(&quot;#fancybox-overlay&quot;);
 		if(($(fOverlay).length&lt;1)||(!$(fOverlay).is(&quot;:visible&quot;))){
 			return;
 		}
+
+		increase = (typeof increase == &quot;number&quot;) ? increase : V.ViewerAdapter.getLastIncrease()[0];
 
 		var fwrap = $(&quot;#fancybox-wrap&quot;);
 		var fcontent = $(&quot;#fancybox-content&quot;);
@@ -439,8 +486,15 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var paddingLeft = $(currentSlide).cssNumber(&quot;padding-left&quot;);
 		var offset = $(currentSlide).offset();
 		
+		var _closeButtonDimension = 23;
+		if(increase &lt;= 1){
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.7);
+		} else {
+			_closeButtonDimension = _closeButtonDimension*getPonderatedIncrease(increase,0.2);
+		}
 		var fcClose = $(&quot;#fancybox-close&quot;);
-		$(fcClose).height(&quot;22px&quot;);
+		$(fcClose).width(_closeButtonDimension + &quot;px&quot;);
+		$(fcClose).height(_closeButtonDimension + &quot;px&quot;);
 		$(fcClose).css(&quot;padding&quot;,&quot;10px&quot;);
 		$(fcClose).css(&quot;padding-left&quot;,&quot;4px&quot;);
 		
@@ -454,7 +508,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(fcontent).height(&quot;100%&quot;);
 		$(fccontentDivs).width(&quot;100%&quot;);
 		$(fccontentDivs).height(&quot;100%&quot;);
-	}
+	};
 
 	&#x2F;*
 	 * Show close button if is appropiate
@@ -463,18 +517,28 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		if(_closeButton){
 			$(&quot;#closeButton&quot;).show();
 		}
-	}
+	};
+
+	var getLastIncrease = function(){
+		return [_lastIncrease,_lastIncreaseW];
+	};
+
+	var getPonderatedIncrease = function(increase,pFactor){
+		var diff = (increase-1)*pFactor;
+		return 1+diff;
+	};
 	
 	return {
 		init 					: init,
 		updateInterface 		: updateInterface,
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		decideIfCloseButton		: decideIfCloseButton,
-		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize
+		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
+		getPonderatedIncrease 	: getPonderatedIncrease,
+		getLastIncrease			: getLastIncrease
 	};
 
 }) (VISH, jQuery);
-
     </pre>
 </div>
 
