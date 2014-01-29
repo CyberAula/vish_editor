@@ -1,9 +1,9 @@
-VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
+VISH.Video.CustomPlayer = (function(V,$,undefined){
 
 	var progressBarTimer;
 
 	var init = function(){
-	}
+	};
 
 	var addCustomPlayerControls = function(videoId,loadEvents){
 		var video = document.getElementById(videoId);
@@ -25,7 +25,7 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 		if(loadEvents){
 			loadCustomPlayerControlEvents(video);
 		}
-	}
+	};
 
 	/*
 	 * Check that background-size param of player images is ok.
@@ -48,13 +48,13 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 				_applyBackgroundSize(customPlayerControls,originalBackgroundSize);
 			}
 		}
-	}
+	};
 
 	var _applyBackgroundSize = function(customPlayerControls,bs){
 		$(customPlayerControls).find("div.customPlayerButton").css("background-size",bs*100+"%");
-	}
+	};
 
-	var loadCustomPlayerControlEvents = function(video) {
+	var loadCustomPlayerControlEvents = function(video){
 		var customPlayerContainer = $(video).parent();
 		var customPlayerControls = $(customPlayerContainer).find("div.customPlayerControls");
 		var progressBar = $(customPlayerContainer).parent().find("div.customPlayerProgressBar");
@@ -62,13 +62,13 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 		$(customPlayerContainer).bind('mouseenter', _onEnterCustomPlayer);
 		$(customPlayerContainer).bind('mouseleave', _onLeaveCustomPlayer);
 		$(progressBar).bind('click', _onClickProgressBar);
-  	}
+  	};
 
 	var _onClickCustomPlayerControls = function(event){
 		event.preventDefault();
 		var video = $(this).parent().children()[0];
 		onClickVideo(video);
-	}
+	};
 
 	var _onEnterCustomPlayer = function(event){
 		var video = $(event.target).parent().children()[0];
@@ -76,18 +76,18 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 			var progressBar = $(video).parent().find("div.customPlayerProgressBar");
 			$(progressBar).show();
 		}
-	}
+	};
 
 	var _onLeaveCustomPlayer = function(event){
 		var progressBar = $(event.target).parent().find("div.customPlayerProgressBar");
 		$(progressBar).hide();
-	}
+	};
 
 	var _startProgressBar = function(video){
 		var progressBar = $(video).parent().find("div.progressBarElapsed");
 		var timer = progressBarTimer = setInterval(function(){
 			try {
-				var ratio = (V.VideoPlayer.getCurrentTime(video)/V.VideoPlayer.getDuration(video))*100;
+				var ratio = (V.Video.getCurrentTime(video)/V.Video.getDuration(video))*100;
 				$(progressBar).width(ratio+'%');
 				if(ratio===100){
 					clearTimeout(timer);
@@ -96,9 +96,9 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 				clearTimeout(timer);
 			}
 		},400);
-	}
+	};
 
-	var _onClickProgressBar = function(event){ 
+	var _onClickProgressBar = function(event){
 		if(V.Status.isSlaveMode()){
 			return;
 		}
@@ -123,9 +123,9 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 		// 	$(elapsed).width(ratio*100+'%');
 		// }
 
-		var seekToPos = Math.round(V.VideoPlayer.getDuration(video)*ratio);
-		V.VideoPlayer.seekVideo(video.id,seekToPos,true);
-	}
+		var seekToPos = Math.round(V.Video.getDuration(video)*ratio);
+		V.Video.seekVideo(video.id,seekToPos,true);
+	};
   
 
 	var onClickVideo = function(video){
@@ -138,18 +138,18 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 				if(!V.Status.isPreventDefaultMode()){
 					onPlayVideo(video);
 				}
-				V.VideoPlayer.playVideo(video.id,null,true);
+				V.Video.playVideo(video.id,null,true);
 				break;
 			case "playing":
 				if(!V.Status.isPreventDefaultMode()){
 					onPauseVideo(video);
 				}
-				V.VideoPlayer.pauseVideo(video.id,null,true);
+				V.Video.pauseVideo(video.id,null,true);
 				break;
 			default:
 				break;
 		}
-	}
+	};
 
 	//Callbacks
 
@@ -161,22 +161,21 @@ VISH.VideoPlayer.CustomPlayer = (function(V,$,undefined){
 		$(customPlayerControlsButton).hide();
 		$(video).attr("customPlayerStatus","playing");  
 		$(progressBar).show();
-	}
+	};
 
 	var onPauseVideo = function(video){
 		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
 		$(customPlayerControlsButton).removeClass().addClass("customPlayerButton customPlayerPlay");
 		$(customPlayerControlsButton).show();
 		$(video).attr("customPlayerStatus","pause");
-	}
-
+	};
 
 	var onEndVideo = function(video){
 		$(video).attr("customPlayerStatus","pause");
 		var customPlayerControlsButton = $(video).parent().find("div.customPlayerControls").find("div");
 		$(customPlayerControlsButton).removeClass().addClass("customPlayerButton customPlayerReplay");
 		$(customPlayerControlsButton).show();
-	}
+	};
 
 
 	return {

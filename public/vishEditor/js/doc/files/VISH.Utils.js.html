@@ -128,6 +128,24 @@ VISH.Utils = (function(V,undefined){
 	&#x2F;*
 	 *
 	 *&#x2F;
+
+	var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
+		var dimentions_for_drawing = {width:  w_content, height: h_content};
+		var aspect_ratio_zone = w_zone&#x2F;h_zone;
+		var aspect_ratio_content = w_content&#x2F;h_content;
+		
+		if (aspect_ratio_zone&gt;aspect_ratio_content) {
+			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
+			dimentions_for_drawing.height = h_zone;
+			return dimentions_for_drawing;
+		} else {
+			dimentions_for_drawing.width = w_zone;
+			dimentions_for_drawing.height = w_zone&#x2F;aspect_ratio_content;
+			return  dimentions_for_drawing;
+		}	
+	};
+
+
 	var getOptions = function(){
 		if(V.Editing){
 			return V.Editor.getOptions();
@@ -228,6 +246,7 @@ VISH.Utils = (function(V,undefined){
 					break;
 				case V.Constant.FLASHCARD:
 				case V.Constant.VTOUR:
+				case V.Constant.EVIDEO:
 					var subslides = slide.slides;
 					if(subslides){
 						var ssL = subslides.length;
@@ -1105,6 +1124,7 @@ VISH.Utils = (function(V,undefined){
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
+		dimentionToDraw			: dimentionToDraw,
 		getId					: getId,
 		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,

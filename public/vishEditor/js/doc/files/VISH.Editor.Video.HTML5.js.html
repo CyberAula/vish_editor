@@ -94,7 +94,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	};
 
 	var drawVideoWithWrapper = function(videoTag){
-		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
+		var sources = V.Video.HTML5.getSources(videoTag);
 		if(sources.length &gt; 0){
 			var options = {};
 
@@ -103,9 +103,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			if($(video).attr(&quot;poster&quot;)){
 				options.poster = $(video).attr(&quot;poster&quot;);
 			}
-			if($(video).attr(&quot;autoplay&quot;)==&quot;true&quot;){
-				options.autoplay = &quot;true&quot;;
-			}
+			&#x2F;&#x2F; if($(video).attr(&quot;autoplay&quot;)==&quot;true&quot;){
+			&#x2F;&#x2F; 	options.autoplay = &quot;true&quot;;
+			&#x2F;&#x2F; }
 			drawVideo(sources,options);
 		}
 	};
@@ -168,7 +168,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			if(source.mimeType){
 				videoSource.setAttribute(&#x27;type&#x27;, source.mimeType);
 			} else {
-				videoSource.setAttribute(&#x27;type&#x27;, V.VideoPlayer.HTML5.getVideoMimeType(source.src));
+				videoSource.setAttribute(&#x27;type&#x27;, V.Video.HTML5.getVideoMimeType(source.src));
 			}
 			$(videoTag).append(videoSource);
 		});
@@ -192,9 +192,15 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	 * Renderer
 	 *&#x2F;
 	var renderVideoFromWrapper = function(videoTag){
-		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
+		var sources = V.Video.HTML5.getSources(videoTag);
 		if(sources.length &gt; 0){
-			return renderVideoFromSources(sources);
+			var options = {};
+			&#x2F;&#x2F;Look for poster
+			var video = $(videoTag);
+			if($(video).attr(&quot;poster&quot;)){
+				options.poster = $(video).attr(&quot;poster&quot;);
+			}
+			return renderVideoFromSources(sources,options);
 		}
 	};
 
@@ -202,11 +208,16 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		return renderVideoFromSources([{src: url}]);
 	};
 
-	var renderVideoFromSources = function(sources){
+	var renderVideoFromSources = function(sources,options){
 		var posterUrl = V.ImagesPath + &quot;icons&#x2F;example_poster_image.jpg&quot;;
+		if(options){
+			if(options[&#x27;poster&#x27;]){
+				posterUrl = options[&#x27;poster&#x27;];
+			}
+		}
 		var rendered = &quot;&lt;video class=&#x27;objectPreview&#x27; preload=&#x27;metadata&#x27; controls=&#x27;controls&#x27; poster=&#x27;&quot; + posterUrl + &quot;&#x27; &gt;&quot;;
 		$.each(sources, function(index, source) {
-			rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source.src + &quot;&#x27; &quot; + (typeof source.mimeType == &quot;string&quot; ? source.mimeType : V.VideoPlayer.HTML5.getVideoMimeType(source.src)) + &quot;&gt;&quot;;
+			rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source.src + &quot;&#x27; &quot; + (typeof source.mimeType == &quot;string&quot; ? source.mimeType : V.Video.HTML5.getVideoMimeType(source.src)) + &quot;&gt;&quot;;
 		});   
 		rendered = rendered + &quot;&lt;&#x2F;video&gt;&quot;;
 		return rendered;

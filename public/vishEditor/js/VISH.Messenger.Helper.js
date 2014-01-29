@@ -84,7 +84,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 						if((VEMessageObject.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
 							V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 						}
-						V.VideoPlayer.playVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
+						V.Video.playVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
 			case V.Constant.Event.onPauseVideo:
@@ -92,7 +92,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 						if((VEMessageObject.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
 							V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 						}
-						V.VideoPlayer.pauseVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
+						V.Video.pauseVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
 			case V.Constant.Event.onSeekVideo:
@@ -100,7 +100,7 @@ VISH.Messenger.Helper = (function(V,undefined){
 						if((VEMessageObject.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=VEMessageObject.params.slideNumber)){
 							V.Slides.goToSlide(VEMessageObject.params.slideNumber,false);
 						}
-						V.VideoPlayer.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
+						V.Video.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
 			case V.Constant.Event.onFlashcardPointClicked:

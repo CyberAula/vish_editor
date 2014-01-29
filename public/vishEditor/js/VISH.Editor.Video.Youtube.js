@@ -220,7 +220,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	}
  
 	var generateWrapperForYoutubeVideoUrl = function (url){
-		var videoId = V.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		var videoId = V.Video.Youtube.getYoutubeIdFromURL(url);
 		if(videoId!=null){
 			return _generateWrapper(videoId);
 		} else {
@@ -235,7 +235,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	}
 
 	var generatePreviewWrapperForYoutubeVideoUrl = function(url){
-		var videoId = V.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		var videoId = V.Video.Youtube.getYoutubeIdFromURL(url);
 		if(videoId!=null){
 			return _generatePreviewWrapper(videoId);
 		} else {

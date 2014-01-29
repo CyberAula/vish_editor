@@ -27,9 +27,9 @@ js/VISH.Renderer.js
 js/VISH.Renderer.Filter.js
 js/VISH.Debugging.js  
 js/VISH.Presentation.js  
-js/VISH.VideoPlayer.js  
-js/VISH.VideoPlayer.HTML5.js  
-js/VISH.VideoPlayer.Youtube.js
+js/VISH.Video.js  
+js/VISH.Video.HTML5.js  
+js/VISH.Video.Youtube.js
 js/VISH.ObjectPlayer.js  
 js/VISH.SnapshotPlayer.js  
 js/VISH.AppletPlayer.js  

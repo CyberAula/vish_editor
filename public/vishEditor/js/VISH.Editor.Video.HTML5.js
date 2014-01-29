@@ -4,7 +4,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	};
 
 	var drawVideoWithWrapper = function(videoTag){
-		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
+		var sources = V.Video.HTML5.getSources(videoTag);
 		if(sources.length > 0){
 			var options = {};
 
@@ -78,7 +78,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			if(source.mimeType){
 				videoSource.setAttribute('type', source.mimeType);
 			} else {
-				videoSource.setAttribute('type', V.VideoPlayer.HTML5.getVideoMimeType(source.src));
+				videoSource.setAttribute('type', V.Video.HTML5.getVideoMimeType(source.src));
 			}
 			$(videoTag).append(videoSource);
 		});
@@ -102,7 +102,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	 * Renderer
 	 */
 	var renderVideoFromWrapper = function(videoTag){
-		var sources = V.VideoPlayer.HTML5.getSources(videoTag);
+		var sources = V.Video.HTML5.getSources(videoTag);
 		if(sources.length > 0){
 			var options = {};
 			//Look for poster
@@ -127,7 +127,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		}
 		var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
 		$.each(sources, function(index, source) {
-			rendered = rendered + "<source src='" + source.src + "' " + (typeof source.mimeType == "string" ? source.mimeType : V.VideoPlayer.HTML5.getVideoMimeType(source.src)) + ">";
+			rendered = rendered + "<source src='" + source.src + "' " + (typeof source.mimeType == "string" ? source.mimeType : V.Video.HTML5.getVideoMimeType(source.src)) + ">";
 		});   
 		rendered = rendered + "</video>";
 		return rendered;

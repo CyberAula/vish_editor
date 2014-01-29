@@ -1,9 +1,18 @@
-VISH.VideoPlayer = (function(V,$,undefined){
+VISH.Video = (function(V,$,undefined){
 	
+	var _enableCustomPlayer;
+
 	var init = function(){
-		V.VideoPlayer.CustomPlayer.init();
-		V.VideoPlayer.HTML5.init();
-		V.VideoPlayer.Youtube.init();
+		var options = V.Utils.getOptions();
+		if((options)&&(options.videoCustomPlayer===true)){
+			_enableCustomPlayer = true;
+			V.Video.CustomPlayer.init();
+		} else {
+			_enableCustomPlayer = false;
+		}
+
+		V.Video.HTML5.init(_enableCustomPlayer);
+		V.Video.Youtube.init(_enableCustomPlayer);
 	};
 
 	var getTypeVideoWithId = function(videoId){ // to know the type of video
@@ -23,13 +32,12 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	};
 
 	var playVideo = function(videoId,currentTime,triggeredByUser){
-		switch(getTypeVideoWithId(videoId)){ //play the video in a different way depending 
-											 // on the type.
+		switch(getTypeVideoWithId(videoId)){											 
 			case V.Constant.Video.HTML5:
-				V.VideoPlayer.HTML5.playVideo(videoId,currentTime,triggeredByUser);
+				V.Video.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
-				V.VideoPlayer.Youtube.playVideo(videoId,currentTime,triggeredByUser); //how 2 play a Youtube Video
+				V.Video.Youtube.playVideo(videoId,currentTime,triggeredByUser); //how 2 play a Youtube Video
 				break;
 			default:
 				break;
@@ -37,12 +45,12 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	};
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
-		switch(getTypeVideoWithId(videoId)){ // Same idea but pausing
+		switch(getTypeVideoWithId(videoId)){
 			case V.Constant.Video.HTML5:
-				V.VideoPlayer.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
+				V.Video.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
-				V.VideoPlayer.Youtube.pauseVideo(videoId,currentTime,triggeredByUser);
+				V.Video.Youtube.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
 				break;
@@ -50,12 +58,12 @@ VISH.VideoPlayer = (function(V,$,undefined){
 	};
 
 	var seekVideo = function(videoId,seekTime,triggeredByUser){
-		switch(getTypeVideoWithId(videoId)){ //same idea but seeking
+		switch(getTypeVideoWithId(videoId)){
 			case V.Constant.Video.HTML5:
-				V.VideoPlayer.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
+				V.Video.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
-				V.VideoPlayer.Youtube.seekVideo(videoId,seekTime,triggeredByUser);
+				V.Video.Youtube.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			default:
 				break;

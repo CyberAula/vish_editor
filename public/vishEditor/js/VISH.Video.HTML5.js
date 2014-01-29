@@ -1,4 +1,4 @@
-VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
+VISH.Video.HTML5 = (function(V,$,undefined){
 		
 	//Is the event trigger by the user or via code?
 	var playTriggeredByUser = true;

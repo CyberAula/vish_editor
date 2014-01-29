@@ -63,7 +63,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Storage.init();
 		V.Recommendations.init(options);
 		V.Events.init();
-		V.VideoPlayer.init();
+		V.Video.init();
 		V.FullScreen.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);
@@ -77,7 +77,7 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferRenderPresentation = function(options,presentation){
-		V.VideoPlayer.HTML5.setVideoEvents();
+		V.Video.HTML5.setVideoEvents();
 		V.Animations.loadAnimation(presentation.animation, function(){
 			_initAferAnimationLoaded(options,presentation);
 		})
@@ -148,7 +148,7 @@ VISH.Viewer = (function(V,$,undefined){
 		// 	V.ImagePlayer.reloadGifs($(slide));
 		// }
 		
-		V.VideoPlayer.HTML5.playVideos(slide);
+		V.Video.HTML5.playVideos(slide);
 
 		if(slideType===V.Constant.FLASHCARD){
 			V.Flashcard.startAnimation(slide.id);
@@ -177,7 +177,7 @@ VISH.Viewer = (function(V,$,undefined){
 			V.SnapshotPlayer.unloadSnapshot($(slide));
 		}
 
-		V.VideoPlayer.HTML5.stopVideos(slide);
+		V.Video.HTML5.stopVideos(slide);
 
 		if(slideType===V.Constant.FLASHCARD){
 			V.Flashcard.stopAnimation(slide.id);

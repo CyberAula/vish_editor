@@ -476,7 +476,7 @@ var _generateWrapper = function(videoId){
 }
  
 var generateWrapperForYoutubeVideoUrl = function (url){
-		var videoId = V.VideoPlayer.Youtube.getYoutubeIdFromURL(url);
+		var videoId = V.Video.Youtube.getYoutubeIdFromURL(url);
 		if(videoId!=null){
 			return _generateWrapper(videoId);
 		} else {

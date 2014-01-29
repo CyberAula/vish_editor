@@ -1560,7 +1560,33 @@ img.loading_presentation_carrousel {
 }
 
 
-/* Evideo style */
+/* Waiting overlay */
+#waiting_overlay{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	top: 0 !important;
+	z-index: 99999999;
+	background: white;
+	text-align: center;
+	cursor: wait !important;
+	opacity: 0.8;
+}
+
+
+/* QR Overlay */
+#qr_overlay{
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	z-index: 99999999;
+	background: white;
+	text-align: center;
+}
+
+
+
+/* Evideo CSS */
 
 .videoBox{
 	float: left;
@@ -1569,7 +1595,6 @@ img.loading_presentation_carrousel {
 	margin-top: 18%;
 	margin-left: 2%;
 }
-
 
 .videoDiv{
 	width: 85%;
@@ -1606,8 +1631,8 @@ img.loading_presentation_carrousel {
     height: 100%;
 }
 
-
-.transportbar {  /* duration*/
+/* duration*/
+.transportbar {  
 	height: 100%;
 	width: 100%;
 	position: relative;
@@ -1621,16 +1646,15 @@ img.loading_presentation_carrousel {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27292b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 }
 
-
-.transportbar_ul{
+.transportbar_ul {
 	list-style-type: none;
 	margin-top: 0;
 	position: relative;
 	z-index: 10;
 }
 
-.position { /* yellow bar, progress of the video*/
-	
+/* yellow bar, progress of the video*/
+.position { 
 	background: #cc0000; /* Old browsers */
 	background: -moz-linear-gradient(top, #cc0000 0%, #cc0000 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cc0000), color-stop(100%,#cc0000)); /* Chrome,Safari4+ */
@@ -1645,7 +1669,9 @@ img.loading_presentation_carrousel {
 	position: absolute;
 	z-index: 10;
 }
-.segments { /* segments in which the video is divided*/
+
+/* segments in which the video is divided*/
+.segments { 
 	width: 100%;
 	margin: 0;
 	padding: 0;
@@ -1718,9 +1744,6 @@ img.loading_presentation_carrousel {
     z-index: 10;
 }
 
-
-
-
 .hide_button{
   	background-color: #C9C9C9 !important;
     border-radius: 6px;
@@ -1734,7 +1757,7 @@ img.loading_presentation_carrousel {
     padding-right: 2%;
 }
 
-.inside_hide{
+.inside_hide {
 	width: 1%;
 	height: 80%;
 	word-spacing:2px;
@@ -1745,7 +1768,7 @@ img.loading_presentation_carrousel {
 	color: #636363;
 }
 
-.i_letter{
+.i_letter {
 	margin-left: 50%;
 	color: #636363;
 	font-size: 1.8rem;
@@ -1754,7 +1777,7 @@ img.loading_presentation_carrousel {
 	margin-top: 10%;
 }
 
-.eback_button{
+.eback_button {
     width:80%;
     margin-top: -50%;
     margin-left: 18%;
@@ -1771,6 +1794,7 @@ img.loading_presentation_carrousel {
     -webkit-border-radius: 50%;
     border-radius: 50%;
 }
+
 .eback_button div {
     float:left;
     width:100%;
@@ -1781,13 +1805,13 @@ img.loading_presentation_carrousel {
     color: #636363 ;
 }
 
-.back_symbol{
+.back_symbol {
 	margin-left: 50%;
 	position: relative;
 }
 
 
-.transcriptBox{
+.transcriptBox {
   	display: inline-block;
     text-align: right;
     width: 36%;
@@ -1796,17 +1820,18 @@ img.loading_presentation_carrousel {
     list-style: none outside none !important;
 }
 
-.videoBox{
+.videoBox {
 	float: left;
    	width: 62%;
    	height: 100% !important;
 }
 
-ul{
+/* TODO: CHANGE! */
+ul {
     list-style-type: none !important;
 }
 
-.chapters{
+.chapters {
 	background-color: #F7F7F7;
 	border-radius: 5px;
 	box-shadow: 0 0 6px 1px #575757 inset;
@@ -1815,7 +1840,7 @@ ul{
 	padding: 0 20px;
 }
 
-.chapters li{
+.chapters li {
 	padding: 10px;
 	padding-left: 0;
 	white-space: nowrap;
@@ -1838,31 +1863,3 @@ ul{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27292b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 	box-shadow: 40px 40px 5px #FFFFFF;
 }
-
-
-
-
-/* Waiting overlay */
-#waiting_overlay{
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	top: 0 !important;
-	z-index: 99999999;
-	background: white;
-	text-align: center;
-	cursor: wait !important;
-	opacity: 0.8;
-}
-
-
-/* QR Overlay */
-#qr_overlay{
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	z-index: 99999999;
-	background: white;
-	text-align: center;
-}
-

@@ -139,11 +139,12 @@ VISH.Viewer = (function(V,$,undefined){
 		});
 	};
 
-	var _initAferStatusLoaded = function(options,presentation){	
+	var _initAferStatusLoaded = function(options,presentation){
+		V.EventsNotifier.init();	
 		V.Flashcard.init();
 		V.VirtualTour.init();
+		V.EVideo.init();
 		V.Quiz.initBeforeRender(presentation);
-		V.Renderer.init();
 		V.Slides.init();
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
@@ -152,8 +153,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Storage.init();
 		V.Recommendations.init(options);
 		V.Events.init();
-		V.EventsNotifier.init();
-		V.VideoPlayer.init();
+		V.Video.init();
 		V.FullScreen.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);
@@ -167,7 +167,7 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferRenderPresentation = function(options,presentation){
-		V.VideoPlayer.HTML5.setVideoEvents();
+		V.Video.HTML5.setVideoEvents();
 		V.Animations.loadAnimation(presentation.animation, function(){
 			_initAferAnimationLoaded(options,presentation);
 		})
@@ -238,12 +238,14 @@ VISH.Viewer = (function(V,$,undefined){
 		&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
 		&#x2F;&#x2F; }
 		
-		V.VideoPlayer.HTML5.playVideos(slide);
+		V.Video.HTML5.playVideos(slide);
 
 		if(slideType===V.Constant.FLASHCARD){
 			V.Flashcard.startAnimation(slide.id);
 		} else if(slideType===V.Constant.VTOUR){
 			V.VirtualTour.loadVirtualTour(slide.id);
+		} else if(slideType===V.Constant.EVIDEO){
+			V.EVideo.loadEVideo(slide.id);
 		}
 
 		V.Recommendations.checkForRecommendations();
@@ -265,13 +267,16 @@ VISH.Viewer = (function(V,$,undefined){
 			V.SnapshotPlayer.unloadSnapshot($(slide));
 		}
 
-		V.VideoPlayer.HTML5.stopVideos(slide);
+		V.Video.HTML5.stopVideos(slide);
 
 		if(slideType===V.Constant.FLASHCARD){
 			V.Flashcard.stopAnimation(slide.id);
 		} else if(slideType===V.Constant.VTOUR){
 			V.VirtualTour.unloadVirtualTour(slide.id);
+		} else if(slideType===V.Constant.EVIDEO){
+			V.EVideo.unloadEVideo(slide.id);
 		}
+
 	};
 	
 	&#x2F;**

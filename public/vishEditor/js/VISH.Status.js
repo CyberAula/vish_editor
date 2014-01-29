@@ -263,11 +263,11 @@ VISH.Status = (function(V,$,undefined){
 		if(slaveMode!==_isSlave){
 			if(slaveMode===true){
 				V.Events.unbindViewerEventListeners();
-				V.VideoPlayer.HTML5.showControls(false);
+				V.Video.HTML5.showControls(false);
 				_isSlave=true;
 			} else {
 				V.Events.bindViewerEventListeners();
-				V.VideoPlayer.HTML5.showControls(true);
+				V.Video.HTML5.showControls(true);
 				_isSlave=false;
 			}
 		}

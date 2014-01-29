@@ -124,8 +124,8 @@ var getOptions = function(){
 			//And a default landguage
 			options["lang"] = "en";
 
-			//URL to call LRE search
-			options["urlToSearchLRE"] = "/lre/search";
+			//Custom player for videos (needed for video synchronization)
+			// options["videoCustomPlayer"]  = true;
 
 			//Addons
 			options.addons = [];

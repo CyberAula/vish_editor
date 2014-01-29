@@ -62,7 +62,7 @@ VISH.Object = (function(V,$,undefined){
 			case V.Constant.WRAPPER.IFRAME:
 				return $(object).attr("src");
 			case V.Constant.WRAPPER.VIDEO:
-				return V.VideoPlayer.HTML5.getSources(object);
+				return V.Video.HTML5.getSources(object);
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
 				return null;

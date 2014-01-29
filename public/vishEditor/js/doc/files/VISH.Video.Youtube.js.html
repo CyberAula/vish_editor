@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>VISH.VideoPlayer.Youtube.js</title>
+    <title>VISH.Video.Youtube.js</title>
     <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
@@ -84,7 +84,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.VideoPlayer.Youtube.js</h1>
+                        <h1 class="file-heading">File: VISH.Video.Youtube.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -97,6 +97,8 @@
 var youtubePlayers = {}; 
 &#x2F;&#x2F;Youtube Constants (also accesible in window[&#x27;YT&#x27;].PlayerState when API is loaded)
 var YT = YT || {};
+
+&#x2F;* WE DEFINE CONSTANTS*&#x2F;
 YT.PlayerState = YT.PlayerState || {};
 YT.PlayerState.UNSTARTED = -1;
 YT.PlayerState.ENDED = 0;
@@ -109,7 +111,7 @@ YT.PlayerState.CUED = 5;
 function onYouTubeIframeAPIReady() { }
 
 
-VISH.VideoPlayer.Youtube = (function(V,$,undefined){
+VISH.Video.Youtube = (function(V,$,undefined){
 
 	var init = function(){
 	}
@@ -122,18 +124,19 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 		}
 	}
 
-	var loadYoutubeObject = function(article,zone){
+	var loadYoutubeObject = function(article,zone){ &#x2F;&#x2F;load YoutubeVideo
 
 		if(V.Status.isOnline()===false){
 			$(zone).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
 			return;
 		}
 
-		if(!_isYouTubeIframeAPIReady()){
+		if(!_isYouTubeIframeAPIReady()){ &#x2F;&#x2F; if Youtube Iframe isn&#x27;t ready, load nothing
 		 	return;
 		}
 
-		var youtubeVideoId = getYoutubeIdFromURL($(zone).attr(&quot;source&quot;));
+		var youtubeVideoId = getYoutubeIdFromURL($(zone).attr(&quot;source&quot;)); 
+		&#x2F;&#x2F; the user gives us an URL, we have to extract the id of the video
 		if(youtubeVideoId===null){
 			return;
 		}
@@ -156,7 +159,7 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
         $(&quot;#&quot;+iframeId).attr(&quot;wmode&quot;,&quot;transparent&quot;);
 
         &#x2F;&#x2F;In current version player control events are loaded in onPlayerReady event
-        V.VideoPlayer.CustomPlayer.addCustomPlayerControls(iframeId,false);
+        V.Video.CustomPlayer.addCustomPlayerControls(iframeId,false);
 	}
 
 
@@ -164,7 +167,7 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 		var iframe = event.target.getIframe();
 		&#x2F;&#x2F; var iframeId = iframe.id;
 		&#x2F;&#x2F; V.Debugging.log(&quot;onPlayerReady &quot; + iframe.id);
-		V.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+		V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 	}
 
 	var onPlayerStateChange = function(event) {
@@ -175,19 +178,19 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 		switch(newState){
 			case -1:
 				&#x2F;&#x2F; V.Debugging.log(&quot;Not initialized&quot;);
-				&#x2F;&#x2F; V.VideoPlayer.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+				&#x2F;&#x2F; V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 				break;
 			case 0:
 				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Ended&quot;);
-				V.VideoPlayer.CustomPlayer.onEndVideo(iframe);
+				V.Video.CustomPlayer.onEndVideo(iframe);
 				break;
 			case 1:
 				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Reproducing at &quot; + $(&quot;#&quot;+playerId)[0].getCurrentTime());
-				V.VideoPlayer.CustomPlayer.onPlayVideo(iframe);
+				V.Video.CustomPlayer.onPlayVideo(iframe);
 				break;
 			case 2:
 				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Pause at &quot; + $(&quot;#&quot;+playerId)[0].getCurrentTime());
-				V.VideoPlayer.CustomPlayer.onPauseVideo(iframe);
+				V.Video.CustomPlayer.onPauseVideo(iframe);
 				break;
 			case 3:
 				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Buffer Store&quot;);
@@ -210,6 +213,8 @@ VISH.VideoPlayer.Youtube = (function(V,$,undefined){
 
 	var playVideo = function(iframeId,currentTime,triggeredByUser){
 		var ytPlayer = youtubePlayers[iframeId];
+		console.log(&quot;ytPlayer&quot;);
+		console.log(ytPlayer);
 
 		&#x2F;&#x2F;ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
 		if((ytPlayer)&amp;&amp;(ytPlayer.getPlayerState)){
