@@ -113,8 +113,11 @@ function onYouTubeIframeAPIReady() { }
 
 VISH.Video.Youtube = (function(V,$,undefined){
 
-	var init = function(){
-	}
+	var _enableCustomPlayer;
+
+	var init = function(enableCustomPlayer){
+		_enableCustomPlayer = enableCustomPlayer;
+	};
 
 	var _isYouTubeIframeAPIReady = function(){
 		if(window[&#x27;YT&#x27;]){
@@ -122,9 +125,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		} else {
 			return false;
 		}
-	}
+	};
 
-	var loadYoutubeObject = function(article,zone){ &#x2F;&#x2F;load YoutubeVideo
+	var loadYoutubeObject = function(article,zone){
 
 		if(V.Status.isOnline()===false){
 			$(zone).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
@@ -132,7 +135,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 
 		if(!_isYouTubeIframeAPIReady()){ &#x2F;&#x2F; if Youtube Iframe isn&#x27;t ready, load nothing
-		 	return;
+			return;
 		}
 
 		var youtubeVideoId = getYoutubeIdFromURL($(zone).attr(&quot;source&quot;)); 
@@ -143,34 +146,44 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		
 		var iframeId = $(zone).attr(&quot;ytContainerId&quot;);
 		$(zone).html(&quot;&lt;div id=&#x27;&quot; + iframeId + &quot;&#x27; style=&#x27;&quot; + $(zone).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		var controls = _enableCustomPlayer ? 0 : 1;
 
 		youtubePlayers[iframeId] = new YT.Player(iframeId, {
-          height: &#x27;100%&#x27;,
-          width: &#x27;100%&#x27;,
-          videoId: youtubeVideoId,
-          playerVars: { &#x27;autoplay&#x27;: 0, &#x27;controls&#x27;: 0, &#x27;enablejsapi&#x27;: 1, &#x27;showinfo&#x27;: 0, wmode: &quot;transparent&quot;, &#x27;rel&#x27;: 0 },
-          events: {
-             &#x27;onReady&#x27;: onPlayerReady,
-             &#x27;onStateChange&#x27;: onPlayerStateChange,
-             &#x27;onError&#x27; : onPlayerError
-          }
-        });
+		  height: &#x27;100%&#x27;,
+		  width: &#x27;100%&#x27;,
+		  videoId: youtubeVideoId,
+		  playerVars: { &#x27;autoplay&#x27;: 0, &#x27;controls&#x27;: controls, &#x27;enablejsapi&#x27;: 1, &#x27;showinfo&#x27;: 0, wmode: &quot;transparent&quot;, &#x27;rel&#x27;: 0 },
+		  events: {
+			 &#x27;onReady&#x27;: onPlayerReady,
+			 &#x27;onStateChange&#x27;: onPlayerStateChange,
+			 &#x27;onError&#x27; : onPlayerError
+		  }
+		});
 
-        $(&quot;#&quot;+iframeId).attr(&quot;wmode&quot;,&quot;transparent&quot;);
+		$(&quot;#&quot;+iframeId).attr(&quot;wmode&quot;,&quot;transparent&quot;);
 
-        &#x2F;&#x2F;In current version player control events are loaded in onPlayerReady event
-        V.Video.CustomPlayer.addCustomPlayerControls(iframeId,false);
-	}
+		&#x2F;&#x2F;Enable custom player only if its specified by options
+		if(_enableCustomPlayer){
+			&#x2F;&#x2F;In current version player control events are loaded in onPlayerReady event
+			V.Video.CustomPlayer.addCustomPlayerControls(iframeId,false);
+		}
 
+	};
 
-	var onPlayerReady = function(event) {
-		var iframe = event.target.getIframe();
-		&#x2F;&#x2F; var iframeId = iframe.id;
-		&#x2F;&#x2F; V.Debugging.log(&quot;onPlayerReady &quot; + iframe.id);
-		V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
-	}
+	var onPlayerReady = function(event){
+		if(_enableCustomPlayer){
+			var iframe = event.target.getIframe();
+			&#x2F;&#x2F; var iframeId = iframe.id;
+			&#x2F;&#x2F; V.Debugging.log(&quot;onPlayerReady &quot; + iframe.id);
+			V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+		}
+	};
 
-	var onPlayerStateChange = function(event) {
+	var onPlayerStateChange = function(event){
+		if(!_enableCustomPlayer){
+			return;
+		}
+
 		var newState = event.data;
 		var iframe = event.target.getIframe();
 		&#x2F;&#x2F; var player = youtubePlayers[iframe.id];
@@ -204,17 +217,14 @@ VISH.Video.Youtube = (function(V,$,undefined){
 				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Unknown state: &quot; + newState);
 				break;
 		}
-	}
+	};
 
-
-	var onPlayerError = function(event) {
+	var onPlayerError = function(event){
 		V.Debugging.log(&quot;onPlayerError with error type &quot; + event.data);
-	}
+	};
 
 	var playVideo = function(iframeId,currentTime,triggeredByUser){
 		var ytPlayer = youtubePlayers[iframeId];
-		console.log(&quot;ytPlayer&quot;);
-		console.log(ytPlayer);
 
 		&#x2F;&#x2F;ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
 		if((ytPlayer)&amp;&amp;(ytPlayer.getPlayerState)){
@@ -236,7 +246,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 				ytPlayer.playVideo();
 			}
 		}
-	}
+	};
 
 	&#x2F;**
 	 * Function to pause a specific video
@@ -263,7 +273,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			}
 			_seekVideo(ytPlayer,iframeId,currentTime,false);
 		}
-	}
+	};
 
 	&#x2F;**
 	 * Function to pause a specific video
@@ -273,7 +283,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		if((ytPlayer)&amp;&amp;(ytPlayer.getPlayerState)){
 			_seekVideo(ytPlayer,iframeId,seekTime,triggeredByUser);
 		}
-	}
+	};
 
 	var _seekVideo = function(ytPlayer,iframeId,seekTime,triggeredByUser){
 		var changeCurrentTime = (typeof seekTime === &#x27;number&#x27;)&amp;&amp;(ytPlayer.getCurrentTime()!==seekTime);
@@ -292,7 +302,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			
 			ytPlayer.seekTo(seekTime);
 		}
-	}
+	};
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -349,7 +359,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 
 		return id;
-	}
+	};
 
 	return {
 		init 				: init,

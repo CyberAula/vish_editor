@@ -283,33 +283,10 @@ VISH.Renderer = (function(V,$,undefined){
 	&#x2F;**
 	 * Function to render a video inside an article (a slide)
 	 *&#x2F;
-	var renderVideo = function(element, template){
-		var rendered = &quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+template+&quot;_&quot;+element[&#x27;areaid&#x27;]+&quot;&#x27;&gt;&quot;;
-		var style = (element[&#x27;style&#x27;])?&quot;style=&#x27;&quot; + element[&#x27;style&#x27;] + &quot;&#x27;&quot;:&quot;&quot;;
-		var controls= (element[&#x27;controls&#x27;])?&quot;controls=&#x27;&quot; + element[&#x27;controls&#x27;] + &quot;&#x27; &quot;:&quot;controls=&#x27;controls&#x27; &quot;;
-		var autoplay= (element[&#x27;autoplay&#x27;])?&quot;autoplayonslideenter=&#x27;&quot; + element[&#x27;autoplay&#x27;] + &quot;&#x27; &quot;:&quot;&quot;;
-		var poster=(element[&#x27;poster&#x27;])?&quot;poster=&#x27;&quot; + element[&#x27;poster&#x27;] + &quot;&#x27; &quot;:&quot;&quot;;
-		var loop=(element[&#x27;loop&#x27;])?&quot;loop=&#x27;loop&#x27; &quot;:&quot;&quot;;
-		var sources = element[&#x27;sources&#x27;];
-		var videoId = V.Utils.getId();
-
-		if(typeof sources == &quot;string&quot;){
-			sources = JSON.parse(sources)
-		}
-		
-		rendered = rendered + &quot;&lt;video id=&#x27;&quot; + videoId + &quot;&#x27; class=&#x27;&quot; + template + &quot;_video&#x27; preload=&#x27;metadata&#x27; &quot; + style + controls + autoplay + poster + loop + &quot;&gt;&quot;;
-		
-		$.each(sources, function(index, source) {
-			var type = (source.type)?&quot;type=&#x27;&quot; + source.type + &quot;&#x27; &quot;:&quot;&quot;;
-			rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source.src + &quot;&#x27; &quot; + type + &quot;&gt;&quot;;
-		});
-		
-		if(sources.length&gt;0){
-			rendered = rendered + &quot;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&quot;;
-		}
-		
-		rendered = rendered + &quot;&lt;&#x2F;video&gt;&quot;;
-		
+	var renderVideo = function(videoJSON, template){
+		var rendered = &quot;&lt;div id=&#x27;&quot;+videoJSON[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+template+&quot;_&quot;+videoJSON[&#x27;areaid&#x27;]+&quot;&#x27;&gt;&quot;;
+		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{videoClass: template + &quot;_video&quot;});
+		rendered = rendered + video + &quot;&lt;&#x2F;div&gt;&quot;;
 		return rendered;
 	};
 

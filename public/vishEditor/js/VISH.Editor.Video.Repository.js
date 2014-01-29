@@ -134,7 +134,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
 	var _onClickCarrouselElement = function(event) {
 		var videoId = $(event.target).attr("videoId");
-		var renderedVideo = V.Renderer.renderVideo(currentVideos[videoId], "preview");
+		var renderedVideo = "<div>" + V.Video.HTML5.renderVideoFromJSON(currentVideos[videoId],{videoClass: "preview_video"}) + "</div>";
 		_renderVideoPreview(renderedVideo, currentVideos[videoId]);
 		selectedVideo = currentVideos[videoId];
 	};

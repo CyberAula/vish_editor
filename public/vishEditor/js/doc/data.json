@@ -1119,21 +1119,21 @@
         },
         {
             "file": "VISH.Renderer.js",
-            "line": 227,
+            "line": 204,
             "description": "Function to render an object inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Renderer.js",
-            "line": 253,
+            "line": 230,
             "description": "Function to render an snapshot inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Renderer.js",
-            "line": 264,
+            "line": 241,
             "description": "Function to render an applet inside an article (a slide)\nthe applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div\nwhen entering a slide with an applet class we call V.AppletPlayer.loadSWF",
             "class": "",
             "namespace": "VISH"
@@ -1259,49 +1259,28 @@
         },
         {
             "file": "VISH.Video.HTML5.js",
-            "line": 59,
+            "line": 147,
             "description": "Function to start all videos of a slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.HTML5.js",
-            "line": 82,
+            "line": 169,
             "description": "Function to stop all videos of a slide",
             "class": "",
             "namespace": "VISH"
         },
         {
-            "file": "VISH.Video.HTML5.js",
-            "line": 96,
-            "description": "Function to start a specific video",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
-            "file": "VISH.Video.HTML5.js",
-            "line": 111,
-            "description": "Function to pause a specific video",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
-            "file": "VISH.Video.HTML5.js",
-            "line": 127,
-            "description": "Function to seek a specific video",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
             "file": "VISH.Video.Youtube.js",
-            "line": 151,
+            "line": 161,
             "description": "Function to pause a specific video",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.Youtube.js",
-            "line": 178,
+            "line": 188,
             "description": "Function to pause a specific video",
             "class": "",
             "namespace": "VISH"
@@ -1819,15 +1798,15 @@
         },
         {
             "message": "Missing item type\nFunction to render an object inside an article (a slide)",
-            "line": " VISH.Renderer.js:227"
+            "line": " VISH.Renderer.js:204"
         },
         {
             "message": "Missing item type\nFunction to render an snapshot inside an article (a slide)",
-            "line": " VISH.Renderer.js:253"
+            "line": " VISH.Renderer.js:230"
         },
         {
             "message": "Missing item type\nFunction to render an applet inside an article (a slide)\nthe applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div\nwhen entering a slide with an applet class we call V.AppletPlayer.loadSWF",
-            "line": " VISH.Renderer.js:264"
+            "line": " VISH.Renderer.js:241"
         },
         {
             "message": "Missing item type\nFunction to go to next slide",
@@ -1899,31 +1878,19 @@
         },
         {
             "message": "Missing item type\nFunction to start all videos of a slide",
-            "line": " VISH.Video.HTML5.js:59"
+            "line": " VISH.Video.HTML5.js:147"
         },
         {
             "message": "Missing item type\nFunction to stop all videos of a slide",
-            "line": " VISH.Video.HTML5.js:82"
-        },
-        {
-            "message": "Missing item type\nFunction to start a specific video",
-            "line": " VISH.Video.HTML5.js:96"
+            "line": " VISH.Video.HTML5.js:169"
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.HTML5.js:111"
-        },
-        {
-            "message": "Missing item type\nFunction to seek a specific video",
-            "line": " VISH.Video.HTML5.js:127"
+            "line": " VISH.Video.Youtube.js:161"
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.Youtube.js:151"
-        },
-        {
-            "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.Youtube.js:178"
+            "line": " VISH.Video.Youtube.js:188"
         },
         {
             "message": "Missing item type\nFunction to initialize the Viewer, saves the slides object and init the presentation with it\noptions is a hash with params and options from the server.",

@@ -72,7 +72,7 @@ VISH.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === V.Constant.IMAGE){
 				content += _renderImage(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.VIDEO){
-				content += renderVideo(slide.elements[el],slide.template);
+				content += _renderHTML5Video(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
@@ -190,36 +190,10 @@ VISH.Renderer = (function(V,$,undefined){
 		return V.Utils.getOuterHTML(div);
 	};
 	
-	/**
-	 * Function to render a video inside an article (a slide)
-	 */
-	var renderVideo = function(element, template){
-		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>";
-		var style = (element['style'])?"style='" + element['style'] + "'":"";
-		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' ";
-		var autoplay= (element['autoplay'])?"autoplayonslideenter='" + element['autoplay'] + "' ":"";
-		var poster=(element['poster'])?"poster='" + element['poster'] + "' ":"";
-		var loop=(element['loop'])?"loop='loop' ":"";
-		var sources = element['sources'];
-		var videoId = V.Utils.getId();
-
-		if(typeof sources == "string"){
-			sources = JSON.parse(sources)
-		}
-		
-		rendered = rendered + "<video id='" + videoId + "' class='" + template + "_video' preload='metadata' " + style + controls + autoplay + poster + loop + ">";
-		
-		$.each(sources, function(index, source) {
-			var type = (source.type)?"type='" + source.type + "' ":"";
-			rendered = rendered + "<source src='" + source.src + "' " + type + ">";
-		});
-		
-		if(sources.length>0){
-			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>";
-		}
-		
-		rendered = rendered + "</video>";
-		
+	var _renderHTML5Video = function(videoJSON, template){
+		var rendered = "<div id='"+videoJSON['id']+"' class='"+template+"_"+videoJSON['areaid']+"'>";
+		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{videoClass: template + "_video"});
+		rendered = rendered + video + "</div>";
 		return rendered;
 	};
 
@@ -227,11 +201,11 @@ VISH.Renderer = (function(V,$,undefined){
 	/**
 	 * Function to render an object inside an article (a slide)
 	 */
-	var _renderObject = function(element, template){
+	var _renderObject = function(element,template){
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				return _renderYoutubeVideo(element,template,objectInfo.source);
+				return V.Video.Youtube.renderVideoFromJSON(element,{videoClass: template+"_"+ element['areaid']});
 				break;
 			default:
 				var style = (element['style'])? element['style'] : "";
@@ -241,14 +215,6 @@ VISH.Renderer = (function(V,$,undefined){
 				break;
 		}
 	};
-
-	var _renderYoutubeVideo = function(element,template,source){
-		var ytContainerId = V.Utils.getId();
-		var style = (element['style'])? element['style'] : "";
-		var body = element['body'];
-		var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
-		return "<div id='"+element['id']+"' class='objectelement youtubeelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + source + "' ytContainerId='" + ytContainerId + "'>" + "</div>";
-	}
 	
 	/**
    * Function to render an snapshot inside an article (a slide)
@@ -272,9 +238,8 @@ VISH.Renderer = (function(V,$,undefined){
 
 
 	return {
-		init        	: init,
-		renderVideo 	: renderVideo,
-		renderSlide 	: renderSlide
+		init        		: init,
+		renderSlide 		: renderSlide
 	};
 
 }) (VISH,jQuery);

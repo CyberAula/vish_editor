@@ -27,7 +27,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 	var beforeLoadTab = function(){
 		_cleanSearch();
-	}
+	};
 	
 	var onLoadTab = function(){
 		
@@ -44,7 +44,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).attr("disabled","true");
 		timestampLastSearch = Date.now();
-	}
+	};
 	
 	var _cleanSearch = function(){
 		timestampLastSearch = undefined;
@@ -52,12 +52,12 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		$(myInput).removeAttr("disabled");
 		_cleanVideoPreview();
 		_cleanCarrousel();
-	}
+	};
 
 	var _cleanCarrousel = function(){
 		$("#" + carrouselDivId).hide();
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-	}
+	};
 
 	var _searchInYoutube = function(text){
 		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+text+"&alt=json-in-script&callback=?&max-results="+MAX_VIDEOS+"&start-index=1";	 
@@ -110,12 +110,12 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	var _onImagesLoaded = function(){
 		_onSearchFinished();
 		_drawData();
-	}
+	};
 	
 	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).removeAttr("disabled");
-	}
+	};
 
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
@@ -148,7 +148,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			}
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 		}
-	}
+	};
 
 	var addSelectedVideo = function() {
 		if(selectedVideo != null){
@@ -183,7 +183,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		}
 
 		return true;
-	}
+	};
 
 
 	/* Video Preview */
@@ -217,7 +217,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		var width_height = V.Editor.Utils.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
 		var wrapper = "<iframe src='"+video_embedded+"?wmode=opaque' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
 		return wrapper;
-	}
+	};
  
 	var generateWrapperForYoutubeVideoUrl = function (url){
 		var videoId = V.Video.Youtube.getYoutubeIdFromURL(url);
@@ -226,13 +226,13 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		} else {
 			return "Youtube Video ID can't be founded."
 		}
-	}
+	};
 
 	var _generatePreviewWrapper = function(videoId){
 		var video_embedded = "http://www.youtube.com/embed/"+videoId;
 		var wrapper = '<iframe class="objectPreview" type="text/html" src="'+video_embedded+'?wmode=opaque" frameborder="0"></iframe>';
 		return wrapper;
-	}
+	};
 
 	var generatePreviewWrapperForYoutubeVideoUrl = function(url){
 		var videoId = V.Video.Youtube.getYoutubeIdFromURL(url);
@@ -241,7 +241,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		} else {
 			return "<p class='objectPreview'>Youtube Video ID can't be founded.</p>"
 		}
-	}
+	};
 
   return {
 		init		  								: init,
