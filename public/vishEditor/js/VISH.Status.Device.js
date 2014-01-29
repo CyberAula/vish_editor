@@ -9,6 +9,8 @@ VISH.Status.Device = (function(V,$,undefined){
 	var _fillDevice = function(callback){
 		//Look device in the cache
 		var storedDevice = V.Storage.get(V.Constant.Storage.Device);
+		// var storedDevice = undefined;
+		
 		if(typeof storedDevice !== "undefined"){
 			device = storedDevice;
 			_loadViewportForDevice(device,function(){

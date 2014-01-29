@@ -153,11 +153,33 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Recommendations.init(options);
 		V.Events.init();
 		V.EventsNotifier.init();
-	  	V.VideoPlayer.init();
-		V.Themes.loadTheme(presentation.theme);
-		V.Animations.loadAnimation(presentation.animation);
-		V.Presentation.init(presentation.slides);
-		V.Quiz.init();
+		V.VideoPlayer.init();
+		V.FullScreen.init();
+		V.Themes.loadTheme(presentation.theme, function(){
+			_initAferThemeLoaded(options,presentation);
+		});
+	};
+
+	var _initAferThemeLoaded = function(options,presentation){
+		V.Presentation.init(presentation.slides, function(){
+			_initAferRenderPresentation(options,presentation);
+		});
+	};
+
+	var _initAferRenderPresentation = function(options,presentation){
+		V.VideoPlayer.HTML5.setVideoEvents();
+		V.Animations.loadAnimation(presentation.animation, function(){
+			_initAferAnimationLoaded(options,presentation);
+		})
+	};
+
+	var _initAferAnimationLoaded = function(options,presentation){
+		V.Slides.updateCurrentSlideFromHash();
+		&#x2F;&#x2F;we have to update slides AFTER load theme and before anything
+		&#x2F;&#x2F;This way we prevent undesired behaviours 
+		V.Slides.updateSlides();
+
+		V.Quiz.init(); &#x2F;&#x2F;initQuizAfterRender
 
 		&#x2F;&#x2F;Init ViSH Editor Addons
 		if(options.addons){
@@ -165,6 +187,9 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); &#x2F;&#x2F;Also init texts
+
+		&#x2F;&#x2F;Clean hash
+		&#x2F;&#x2F; V.Utils.cleanHash();
 
 		if(V.Slides.getCurrentSlideNumber()&gt;0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
@@ -174,44 +199,8 @@ VISH.Viewer = (function(V,$,undefined){
 			&#x2F;&#x2F;Try to win focus
 			window.focus();
 		}
-	}
-
-
-	&#x2F;**
-	 * Function to enter and exit fullscreen
-	 *&#x2F;
-	var toggleFullScreen = function () {
-		if(V.Status.isSlaveMode()){
-			return;
-		}
-
-		if(V.Status.getIsInIframe()){
-			var myDoc = parent.document;
-			var myElem = V.Status.getIframe();
-		} else {
-			var myDoc = document;
-			var myElem = myDoc.getElementById(&#x27;presentation_iframe&#x27;);
-		}
-		
-		if ((myDoc.fullScreenElement &amp;&amp; myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen &amp;&amp; !myDoc.webkitIsFullScreen)) {
-			if (myDoc.documentElement.requestFullScreen) {
-				myElem.requestFullScreen();
-			} else if (myDoc.documentElement.mozRequestFullScreen) {
-				myElem.mozRequestFullScreen();
-			} else if (myDoc.documentElement.webkitRequestFullScreen) {
-				myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
-			}	    
-		} else {
-			if (myDoc.cancelFullScreen) {
-				myDoc.cancelFullScreen();
-			} else if (myDoc.mozCancelFullScreen) {
-				myDoc.mozCancelFullScreen();
-			} else if (myDoc.webkitCancelFullScreen) {
-				myDoc.webkitCancelFullScreen();
-			}
-		}
 	};
-	
+
 	
 	var getOptions = function(){	
 		return initOptions;
@@ -257,9 +246,7 @@ VISH.Viewer = (function(V,$,undefined){
 			V.VirtualTour.loadVirtualTour(slide.id);
 		}
 
-		if(_isRecommendationMoment()){
-			V.Recommendations.generateFancybox();
-		}
+		V.Recommendations.checkForRecommendations();
 	};	
 
 	&#x2F;**
@@ -286,21 +273,6 @@ VISH.Viewer = (function(V,$,undefined){
 			V.VirtualTour.unloadVirtualTour(slide.id);
 		}
 	};
-
-	&#x2F;**
-	 * function to check if this is the penultimate Slide (or the only one) and call to get the recommendations
-	 *&#x2F;
-	var _isRecommendationMoment = function(){
-		var number_of_slides = V.Slides.getSlides().length;
-		var slide_number = V.Slides.getCurrentSlideNumber();
-
-		if(number_of_slides===1 || slide_number===(number_of_slides-1)){
-			return true;
-		} else {
-			return false;
-		}
-	};
-	
 	
 	&#x2F;**
 	 * function to update the number that indicates what slide is diplayed
@@ -329,15 +301,15 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 	};
 
+
 	return {
-		init 					: init,
-		toggleFullScreen 		: toggleFullScreen, 
-		getOptions				: getOptions,
-		updateSlideCounter		: updateSlideCounter,
-		getCurrentPresentation	: getCurrentPresentation,
-		getPresentationType		: getPresentationType,
-		onSlideEnterViewer		: onSlideEnterViewer,
-		onSlideLeaveViewer		: onSlideLeaveViewer
+		init 						: init, 
+		getOptions					: getOptions,
+		updateSlideCounter			: updateSlideCounter,
+		getCurrentPresentation		: getCurrentPresentation,
+		getPresentationType			: getPresentationType,
+		onSlideEnterViewer			: onSlideEnterViewer,
+		onSlideLeaveViewer			: onSlideLeaveViewer
 	};
 
 }) (VISH,jQuery);

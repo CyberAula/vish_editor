@@ -1,9 +1,8 @@
 VISH.Editor.Object.Flash = (function(V,$,undefined){
 	
-	
 	var drawFlashObjectWithSource = function(src){
 	  var current_area = V.Editor.getCurrentArea();
-	  var template = V.Editor.getTemplate();
+	  var template = V.Editor.getTemplate(current_area);
 
 	  var nextFlashId = V.Utils.getId();
 	  var idToDrag = "draggable" + nextFlashId;
@@ -18,6 +17,7 @@ VISH.Editor.Object.Flash = (function(V,$,undefined){
 	  var embedTag = document.createElement('embed');
 	  embedTag.setAttribute('id', idToResize );
 	  embedTag.setAttribute('class', template + "_object");
+	  src = V.Utils.addParamToUrl(src,"wmode","opaque");
 	  embedTag.setAttribute('src', src);
 	  embedTag.setAttribute('wmode', 'opaque');
 	  $(embedDiv).append(embedTag); 

@@ -7,8 +7,7 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 
 
 	var init = function(){
-
-	}
+	};
 
 	var setVideoEvents = function(){
 		var videos = $("video")
@@ -147,6 +146,25 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 		});
 	};
 
+
+	/*
+	 * Utils
+	 */
+
+	var getSources = function(video){
+		try {
+			return $(video).find("source").map(function(){ return {"src": this.src, "mimeType": getVideoMimeType(this.src)}});
+		} catch(e){
+			return [];
+		}
+		return [];
+	};
+
+	var getVideoMimeType = function(url){
+		var source = (V.Object.getObjectInfo(url)).source;
+		return "video/" + source.split('.').pop();
+	};
+
 	return {
 		init 				: init,
 		setVideoEvents 		: setVideoEvents,
@@ -155,7 +173,9 @@ VISH.VideoPlayer.HTML5 = (function(V,$,undefined){
 		playVideo 			: playVideo,
 		pauseVideo 			: pauseVideo,
 		seekVideo			: seekVideo,
-		showControls 		: showControls
+		showControls 		: showControls,
+		getSources 			: getSources,
+		getVideoMimeType	: getVideoMimeType
 	};
 
 })(VISH,jQuery);

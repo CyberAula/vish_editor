@@ -12,6 +12,8 @@ VISH.Editor = (function(V,$,undefined){
 	var initialPresentation = false;
 	//drafPresentation stores the initial presentation
 	var draftPresentation;
+	//isDraft indicate if the presentation is a draft
+	var _isDraft;
 
 	//last presentation stored in the server
 	var lastStoredPresentationStringify;
@@ -40,7 +42,7 @@ VISH.Editor = (function(V,$,undefined){
 		$("body").addClass("ViSHEditorBody");
 
 		V.Debugging.init(options);
-		
+
 		if(options){
 			initOptions = options;
 			if((options.configuration)&&(V.Configuration)){
@@ -50,7 +52,19 @@ VISH.Editor = (function(V,$,undefined){
 		} else {
 			initOptions = {};
 		}
+
+		if(V.Debugging.isDevelopping()){
+			if ((options.configuration.mode==V.Constant.NOSERVER)&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
+				presentation = V.Debugging.getPresentationSamples();
+			}
+		}
 		
+		if(presentation){
+			initialPresentation = true;
+		}
+
+		_isDraft = _initPresentationDraft();
+
 		// V.Storage.setTestingMode(true);
 		
 		V.Utils.init();
@@ -65,6 +79,7 @@ VISH.Editor = (function(V,$,undefined){
 			$("#waiting_overlay").hide();
 			return;
 		}
+
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
@@ -84,14 +99,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 
-		if(V.Debugging.isDevelopping()){
-			if ((options.configuration.mode==V.Constant.NOSERVER)&&(V.Debugging.getActionInit() == "loadSamples")&&(!presentation)) {
-				presentation = V.Debugging.getPresentationSamples();
-			}
-		}
-
 		//If we have to edit
-		if(presentation){
+		if(initialPresentation){
 			presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
 				$("#waiting_overlay").hide();
@@ -120,9 +129,13 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	var _initAferPresentationLoaded = function(options,presentation){
+		if(initialPresentation){
+			V.Editor.Slides.updateCurrentSlideFromHash();
+		}
 		V.Slides.updateSlides();
 		V.Editor.Thumbnails.redrawThumbnails(function(){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+			V.Editor.Thumbnails.moveThumbnailsToSlide(V.Slides.getCurrentSlideNumber());
 		});
 		
 		if(initialPresentation){
@@ -137,7 +150,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Object.init();
 		V.Editor.PDFex.init();
 		V.Editor.Presentation.Repository.init();
-		V.Editor.Slideset.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
 		V.Editor.Preview.init();
@@ -152,6 +164,9 @@ VISH.Editor = (function(V,$,undefined){
 			V.Addons.init(options.addons);
 		}
 
+		//Clean hash
+		// V.Utils.cleanHash();
+
 		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 
@@ -164,6 +179,7 @@ VISH.Editor = (function(V,$,undefined){
 		if(!initialPresentation){
 			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:"1", slideNumber:1});
 			V.Editor.Slides.addSlide(slide);
+			V.Slides.goToSlide(1);
 		}
 
 		//Init settings
@@ -184,15 +200,22 @@ VISH.Editor = (function(V,$,undefined){
 	////////////
 	// UI EVENTS
 	////////////
-  
+
 	/**
 	 * function called when user clicks on template
 	 * Includes a new slide following the template selected
 	 */
 	var onSlideThumbClicked = function(event){
-		var type = $(event.currentTarget).attr('type');
+		var slideThumb;
+		if(event.currentTarget.tagName === "P"){
+			slideThumb = $(event.currentTarget).parent().find(".stthumb");
+		} else {
+			slideThumb = event.currentTarget;
+		}
+
+		var type = $(slideThumb).attr('type');
 		if(!type){
-			type=V.Constant.STANDARD;
+			type = V.Constant.STANDARD;
 		}
 
 		//Get slideMode before close fancybox!
@@ -203,7 +226,7 @@ VISH.Editor = (function(V,$,undefined){
 
 			var options = {};
 			if(type===V.Constant.STANDARD){
-				options.template = $(event.currentTarget).attr('template');
+				options.template = $(slideThumb).attr('template');
 			}
 			options.slideNumber = V.Slides.getSlidesQuantity()+1;
 			var slide = V.Editor.Dummies.getDummy(type, options);
@@ -218,7 +241,7 @@ VISH.Editor = (function(V,$,undefined){
 			if((type === V.Constant.STANDARD)&&(V.Editor.Slideset.isSlideset(slideset))){
 				var options = {};
 				options.subslide = true;
-				options.template = $(event.currentTarget).attr('template');
+				options.template = $(slideThumb).attr('template');
 				options.slideset = slideset;
 				var subslide = V.Editor.Dummies.getDummy(type, options);
 				V.Editor.Slides.addSubslide(slideset,subslide);
@@ -227,7 +250,11 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		$.fancybox.close();
-	}
+	};
+
+	var onAnimationThumbClicked = function(){
+		$.fancybox.close();
+	};
 
 	/**
 	 * Function called when user clicks on an editable element
@@ -297,6 +324,7 @@ VISH.Editor = (function(V,$,undefined){
 			area.addClass("editable");
 			V.Editor.Tools.addTooltipToZone(area);
 			selectArea(null);
+			V.Editor.Slides.updateThumbnail(V.Slides.getTargetSlide());
 			$.fancybox.close();
 		}
 		options.buttons = [button1,button2];
@@ -334,6 +362,14 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
+
+	/*
+	 * Selectable elements are zones which can be selected.
+	 * Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
+	 * Add class 'preventNoselectable' to a element to never call _onNoSelectableClicked
+	 * Add class 'selectable' to a element to call onSelectableClicked and never call _onNoSelectableClicked
+	*/
+
 	/**
 	* function called when user clicks on template zone with class selectable
 	*/
@@ -347,17 +383,19 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on any element without class selectable
 	*/
 	var onNoSelectableClicked = function(event){
-		
-		//Add class 'noSelectableElement' to a element to call _onNoSelectableClicked without restrictions
-		if(!$(event.target).hasClass("noSelectableElement")){
+
+		var target = $(event.target);
+		var targetParent = $(target).parent();
+
+		if(!$(target).hasClass("noSelectableElement")){
 
 			//No hide toolbar when we are working in a fancybox
 			if($("#fancybox-content").is(":visible")){
 				return;
 			}
 
-			//No hide toolbar for selectable childrens
-			if($(event.target).parent().hasClass("selectable")){
+			//No hide toolbar for selectable or preventNoselectable childrens
+			if($(targetParent).hasClass("selectable") || $(targetParent).hasClass("preventNoselectable")){
 				return;
 			}
 
@@ -383,10 +421,14 @@ VISH.Editor = (function(V,$,undefined){
 
 		}
 
+		cleanArea();
+	};
+
+	var cleanArea = function(){
 		V.Editor.Tools.cleanZoneTools(getCurrentArea());
 		setCurrentArea(null);
 		_removeSelectableProperties();
-	};
+	}
 	
 	var _addSelectableProperties = function(zone){
 		$(zone).removeClass("zoneUnselected");
@@ -436,6 +478,8 @@ VISH.Editor = (function(V,$,undefined){
 			},500);
 		}
 
+		V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
+		cleanArea();
 		V.Editor.Tools.loadToolsForSlide(slide);
 	};
   
@@ -474,6 +518,8 @@ VISH.Editor = (function(V,$,undefined){
 		//Save settings (metadata, theme, animation, ...)
 		presentation = V.Editor.Settings.saveSettings();
 
+		presentation = _saveLORData(presentation);
+
 		//Slides of the presentation
 		presentation.slides = [];
 
@@ -507,6 +553,26 @@ VISH.Editor = (function(V,$,undefined){
 		// V.Debugging.log("\n\nViSH Editor save the following presentation:\n");
 		// V.Debugging.log(JSON.stringify(presentation));
 
+		return presentation;
+	};
+
+	var _saveLORData = function(presentation){
+		switch(V.Configuration.getConfiguration().mode){
+			case V.Constant.VISH:
+			case V.Constant.NOSERVER:
+				var LORPresentation = getDraftPresentation();
+				var LORMetadata;
+				if(LORPresentation && LORPresentation["vishMetadata"]){
+					LORMetadata = LORPresentation["vishMetadata"];
+				} else {
+					LORMetadata = {};
+				}
+				
+				LORMetadata["draft"] = isPresentationDraft().toString();
+
+				presentation["vishMetadata"] = LORMetadata;
+				break;
+		};
 		return presentation;
 	};
 	
@@ -544,12 +610,16 @@ VISH.Editor = (function(V,$,undefined){
 					if($(div).attr("hyperlink")){
 						element.hyperlink = $(div).attr("hyperlink");
 					}
+					if($(div).attr("vishubpdfexid")){
+						element.options = {};
+						element.options["vishubPdfexId"] = $(div).attr("vishubpdfexid");
+					}
 				} else if(element.type==V.Constant.VIDEO){
 					var video = $(div).find("video");
 					element.poster = $(video).attr("poster");
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
 					//Sources
-					var sources= '';				
+					var sources= '';		
 					$(video).find('source').each(function(index, source) {
 						if(index!==0){
 							sources = sources + ',';
@@ -634,7 +704,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(slideDOM).removeClass("temp_shown");
 		
 		return slide;
-	}
+	};
 
 	var sendPresentation = function(presentation,order,successCallback,failCallback){
 		switch(V.Configuration.getConfiguration().mode){
@@ -685,6 +755,16 @@ VISH.Editor = (function(V,$,undefined){
 									}
 								}
 							}
+							if(order=="publish"){
+								_isDraft = false;
+							}
+						} else {
+							//Order == "unpublish"
+							_isDraft = true;
+							if((typeof data != "undefined")&&(data.exitPath)){
+								//Update exit path
+								V.exitPath = data.exitPath;
+							}
 						}
 						if(typeof successCallback == "function"){
 							successCallback(data);
@@ -702,6 +782,12 @@ VISH.Editor = (function(V,$,undefined){
 
 					if(order != "unpublish"){
 						lastStoredPresentationStringify = JSON.stringify(presentation);
+						if(order=="publish"){
+							_isDraft = false;
+						}
+					} else {
+						//Order == "unpublish"
+						_isDraft = true;
 					}
 
 					setTimeout(function(){
@@ -761,7 +847,7 @@ VISH.Editor = (function(V,$,undefined){
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr('template');
-		}	else if(getCurrentArea()){
+		} else if(getCurrentArea()){
 			return getCurrentArea().parent().attr('template');
 		}
 		return null;
@@ -824,13 +910,18 @@ VISH.Editor = (function(V,$,undefined){
 	 * Returns if the server has checked the presentation has a draft.
 	 */
 	var isPresentationDraft = function(){
+		return _isDraft;
+	};
+
+	var _initPresentationDraft = function(){
 		if(initialPresentation){
-			//Look for options["draft"]
-			if((initOptions.draft)&&(typeof initOptions.draft === "boolean")){
+			if(typeof initOptions.draft === "boolean"){
 				return initOptions.draft;
+			} else if(typeof initOptions.draft === "string"){
+				return !(initOptions.draft=="false");
 			} else {
-				//Server must indicate explicity that this presentation is a draft with the "draft" option.
-				return false;
+				//Server must indicate explicity that this presentation is not a draft with the "draft" option.
+				return true;
 			}
 		} else {
 			//New presentation created, draft by default.
@@ -863,6 +954,7 @@ VISH.Editor = (function(V,$,undefined){
 		getTemplate				: getTemplate,
 		getCurrentArea			: getCurrentArea,
 		getLastArea				: getLastArea,
+		cleanArea				: cleanArea,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
@@ -877,6 +969,7 @@ VISH.Editor = (function(V,$,undefined){
 		onSlideEnterEditor 		: onSlideEnterEditor,
 		onSlideLeaveEditor		: onSlideLeaveEditor,
 		onSlideThumbClicked		: onSlideThumbClicked,
+		onAnimationThumbClicked	: onAnimationThumbClicked,
 		onEditableClicked		: onEditableClicked,
 		onSelectableClicked 	: onSelectableClicked,
 		onNoSelectableClicked 	: onNoSelectableClicked,

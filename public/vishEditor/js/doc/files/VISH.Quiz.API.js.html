@@ -93,6 +93,9 @@ VISH.Quiz.API = (function(V,$,undefined){
 	&#x2F;&#x2F; URL in the form: &quot;http:&#x2F;&#x2F;localhost:3000&#x2F;quiz_sessions&#x2F;&quot;
 	var quizSessionAPIrootURL;
 
+	&#x2F;&#x2F; Just for developping
+	var getResultsCount = 0;
+
 	var init = function(quizSessionAPI){
 		if((typeof quizSessionAPI == &quot;object&quot;)&amp;&amp;(typeof quizSessionAPI.rootURL == &quot;string&quot;)){
 			quizSessionAPIrootURL = quizSessionAPI.rootURL;
@@ -265,19 +268,31 @@ VISH.Quiz.API = (function(V,$,undefined){
 		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
 			&#x2F;&#x2F;Test
 
-			&#x2F;&#x2F; For MCChoice
-			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:03Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:26},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:19Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:26},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:28Z&quot;,&quot;id&quot;:35,&quot;quiz_session_id&quot;:26},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T11:59:43Z&quot;,&quot;id&quot;:36,&quot;quiz_session_id&quot;:26}];
+			&#x2F;&#x2F;Empty
+			var data;
+			if(getResultsCount&lt;1){
+				&#x2F;&#x2F;Empty data
+				data = [];
+			} else if(getResultsCount&lt;3){
+				data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-30T12:35:05Z&quot;,&quot;id&quot;:82,&quot;quiz_session_id&quot;:59}];
+			} else {
+				data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:49:59Z&quot;,&quot;id&quot;:74,&quot;quiz_session_id&quot;:56},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:50:03Z&quot;,&quot;id&quot;:75,&quot;quiz_session_id&quot;:56},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:50:07Z&quot;,&quot;id&quot;:76,&quot;quiz_session_id&quot;:56},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:50:12Z&quot;,&quot;id&quot;:77,&quot;quiz_session_id&quot;:56},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:50:15Z&quot;,&quot;id&quot;:78,&quot;quiz_session_id&quot;:56},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:50:19Z&quot;,&quot;id&quot;:79,&quot;quiz_session_id&quot;:56},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-29T17:50:23Z&quot;,&quot;id&quot;:80,&quot;quiz_session_id&quot;:56}];
+			}
+			getResultsCount++;
 
 
-			&#x2F;&#x2F; For MCChoice with only one answer
-			var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:47,&quot;quiz_session_id&quot;:31}];
+			&#x2F;&#x2F;MC (Multiple Choice)
+			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:62,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:22Z&quot;,&quot;id&quot;:63,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:25:13Z&quot;,&quot;id&quot;:64,&quot;quiz_session_id&quot;:50}];
 
-			&#x2F;&#x2F; MC Multiple answer result data
+			&#x2F;&#x2F; MC with only one result
+			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:47,&quot;quiz_session_id&quot;:31}];
+
+			&#x2F;&#x2F; MC Multiple answer
 			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:20Z&quot;,&quot;id&quot;:37,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:29Z&quot;,&quot;id&quot;:38,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:35Z&quot;,&quot;id&quot;:39,&quot;quiz_session_id&quot;:27}];
 
-			&#x2F;&#x2F;For TF quizzes
+			&#x2F;&#x2F; TF Quizz (True&#x2F;False)
 			&#x2F;&#x2F; var data = [{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:23Z&quot;,&quot;id&quot;:30,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:37Z&quot;,&quot;id&quot;:31,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:52Z&quot;,&quot;id&quot;:32,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:09Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;no\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;no\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;no\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:41Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:19}];
-
+			
 			if(typeof successCallback==&quot;function&quot;){
 				setTimeout(function(){
 					successCallback(data);

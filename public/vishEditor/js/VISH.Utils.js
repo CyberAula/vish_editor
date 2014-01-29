@@ -24,7 +24,16 @@ VISH.Utils = (function(V,undefined){
 			var str = this;
 			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 		};
-	}
+
+		//Disable watermark for IE
+		jQuery.fn.vewatermark = function(text){
+			if(V.Status.getDevice().browser.name != V.Constant.IE){
+				$(this).watermark(text);
+			} else {
+				$(this).attr("placeholder",text);
+			}
+		};
+	};
 
 	/*
 	 *
@@ -114,7 +123,7 @@ VISH.Utils = (function(V,undefined){
 		presentation = _fixTypes(presentation);
 
 		//Fix old slidesets
-		if(V.Slides.isSlideset(presentation.type)){
+		if(V.Slides.isSlidesetType(presentation.type)){
 			//Force presentation standard
 			presentation.type = V.Constant.PRESENTATION;
 		}
@@ -381,10 +390,58 @@ VISH.Utils = (function(V,undefined){
 		window.top.location = the_url;
 	};
 
+	var removeParamFromUrl = function(url,paramName){
+		if((typeof url !== "string")||(typeof paramName !== "string")){
+			return url;
+		}
+
+		//Remove hash
+		var splitHash = url.split("#");
+		url = splitHash[0];
+
+		var splitParams = url.split("?");
+		if (splitParams.length === 2){
+			url = splitParams[0];
+			var params = splitParams[1];
+
+			var validParams = [];
+			var splitParams = params.split("&");
+			var sPL = splitParams.length;
+			for(var i=0; i<sPL; i++){
+				var splitParam = splitParams[i].split("=");
+				if(splitParam[0]!=paramName){
+					validParams.push({key: splitParam[0], value: splitParam[1]}); 
+				}
+			}
+			//Add valid params
+			var vPL = validParams.length;
+			for(var j=0; j<vPL; j++){
+				var param = validParams[j];
+				if(j===0){
+					url = url + "?";
+				} else {
+					url = url + "&";
+				}
+				url = url + param.key + "=" + param.value;
+			}
+		}
+
+		//Add hash (if present)
+		if(splitHash.length>1){
+			url = url + "#" + splitHash[1];
+		}
+
+		return url;
+	};
+
 	var addParamToUrl = function(url,paramName,paramValue){
 		if((typeof url !== "string")||(typeof paramName !== "string")||(typeof paramValue !== "string")){
 			return url;
 		}
+
+		//Remove param (to overwrite it in case if exists)
+		url = removeParamFromUrl(url,paramName);
+
 		//Remove hash
 		var splitHash = url.split("#");
 		url = splitHash[0];
@@ -402,7 +459,7 @@ VISH.Utils = (function(V,undefined){
 		}
 		
 		return url;
-	}
+	};
 
 	var getParamsFromUrl = function(url){
 		var params = {};
@@ -892,6 +949,88 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
+	/* Hash Management */
+
+	var getSlideNumberFromHash = function(){
+		try {
+			if(getOptions()["readHashFromParent"]===true){
+				var location = window.parent.location;
+			} else {
+				var location = window.location;
+			}
+
+			if(typeof location == "undefined"){
+				return;
+			}
+
+			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.split("?")[0].split("#").pop())));
+			if(isNaN(sNumber)){
+				return undefined;
+			} else {
+				return sNumber;
+			}
+		} catch(err){
+			return undefined;
+		}
+	};
+
+	var updateHash = function(){
+		var newHash = '#' + V.Slides.getCurrentSlideNumber();
+
+		//Propagate hash (slidenumber without params)
+		if(getOptions()["readHashFromParent"]===true){
+			window.parent.location.hash = newHash;
+		}
+
+		var splitedHash = location.hash.split("?");
+		if(splitedHash.length > 1){
+			newHash = newHash + "?" + splitedHash[1];
+		}
+
+		window.location.hash = newHash;
+	};
+
+	var cleanHash = function(){
+		window.location.hash = "";
+		if(getOptions()["readHashFromParent"]===true){
+			window.parent.location.hash = "";
+		}
+
+		//Try to remove # simbol
+		if(V.Status.getDevice().features.historypushState){
+			var locationWithoutHash = removeHashFromUrlString(document.location.href);
+			window.history.replaceState("","",locationWithoutHash);
+			if(getOptions()["readHashFromParent"]===true){
+				var locationWithoutHash = removeHashFromUrlString(window.parent.document.location.href);
+				window.parent.history.replaceState("","",locationWithoutHash);
+			}
+		}
+	};
+
+	var removeHashFromUrlString = function(url){
+		return url.split("#")[0];
+	};
+
+	var getHashParams = function(){
+		var params = {};
+		var hash = window.location.hash;
+		var splitHash = hash.split("?");
+		if (splitHash.length > 1) {
+			var hashParams = splitHash[1];
+			var splitParams = hashParams.split("&");
+			var sPL = splitParams.length;
+			for(var i=0; i<sPL; i++){
+				var paramInHash = splitParams[i];
+				var splitParamInHash = paramInHash.split("=");
+				if(splitParamInHash.length === 2){
+					params[splitParamInHash[0]] = splitParamInHash[1];
+				}
+			}
+		}
+		return params;
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -911,11 +1050,17 @@ VISH.Utils = (function(V,undefined){
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
+		removeParamFromUrl		: removeParamFromUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog,
-		isObseleteVersion		: isObseleteVersion
+		isObseleteVersion		: isObseleteVersion,
+		updateHash				: updateHash,
+		cleanHash				: cleanHash,
+		removeHashFromUrlString	: removeHashFromUrlString,
+		getHashParams			: getHashParams,
+		getSlideNumberFromHash	: getSlideNumberFromHash
 	};
 
 }) (VISH);

@@ -254,7 +254,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 			$(fc).find("div.change_bg_button").hide();
 
 			//Update thumbnails
-			V.Editor.Slideset.updateThumbnails(fc);
+			V.Editor.Slides.updateThumbnail(fc);
 		}
 
 		$.fancybox.close();
@@ -281,7 +281,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$(fc).find("div.change_bg_button").show();
 
 		if(V.Slides.getCurrentSlide()==fc){
-			$("#subslide_selected > img").attr("src",thumbnailURL);
+			$("#slideset_selected > img").attr("src",thumbnailURL);
 		}
 		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(fc);
 		$(slideThumbnail).attr("src",thumbnailURL);

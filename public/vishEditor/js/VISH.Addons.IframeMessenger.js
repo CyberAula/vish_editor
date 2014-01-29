@@ -1,30 +1,30 @@
 VISH.Addons.IframeMessenger = (function(V,undefined){
 
-	var listenerInitialized = false;
+	var _listenerInitialized = false;
 
 	var init = function(config){
 		if((!config)||(!config.enable)){
 			return;
 		}
 
-		if (window.addEventListener){
-			window.addEventListener("message", _onWebAppMessage, false);
-		} else if (el.attachEvent){
-			window.attachEvent("message", _onWebAppMessage);
-		}
-
 		//Add Addon constant
 		V.Constant.Event.onIframeMessengerHello = "onIframeMessengerHello";
-	}
+
+		if (window.addEventListener){
+			window.addEventListener("message", _onWebAppMessage, false);
+		} else if (window.attachEvent){
+			window.attachEvent("message", _onWebAppMessage);
+		}
+	};
 
 	var _initListener = function(){
 		V.EventsNotifier.registerCallback(V.Constant.Event.onMessage,_onVishEditorMessage);
-		listenerInitialized = true;
-	}
+		_listenerInitialized = true;
+	};
 
 	var _onVishEditorMessage = function(VEMessage){
 		_sendMessage(VEMessage);
-	}
+	};
 
 	var _onWebAppMessage = function(webAppMessage){
 		// V.Debugging.log("_onWebAppMessage");
@@ -35,35 +35,38 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 			var processSelfMessages = V.Status.isPreventDefaultMode();
 			if(V.Messenger.Helper.validateVEMessage(VEMessage,{allowSelfMessages: processSelfMessages})){
 				if(_isVEHelloMessage(VEMessage)){
-					if(!listenerInitialized){
+					if(!_listenerInitialized){
 						_initListener();
-						if(V.Status.getIsInIframe()){
-							var helloEcho = JSON.parse(VEMessage);
-							if(V.Status.getIframe()!=null){
-								helloEcho.origin = V.Status.getIframe().id;
-							}
-							VEMessage = JSON.stringify(helloEcho);
-						}
-						_sendMessage(VEMessage);
 					}
+
+					//Reply Hello
+					if(V.Status.getIsInIframe()){
+						var helloEcho = JSON.parse(VEMessage);
+						if(V.Status.getIframe()!=null){
+							helloEcho.origin = V.Status.getIframe().id;
+						}
+						VEMessage = JSON.stringify(helloEcho);
+					}
+					_sendMessage(VEMessage);
+
 				} else {
 					V.Messenger.Helper.processVEMessage(VEMessage);
 				}
 			}
 		}
-	}
+	};
 
 	var _isVEHelloMessage = function(VEMessage){
 		var message = JSON.parse(VEMessage);
 		return (message.VEevent===V.Constant.Event.onIframeMessengerHello);
-	}
+	};
 
 	var _validateWebAppMessage = function(webAppMessage){
 		if(!webAppMessage){
 			return false;
 		}
 		return V.Messenger.Helper.validateVEMessage(webAppMessage.data);
-	}
+	};
 
 
 	///////////////
@@ -76,7 +79,7 @@ VISH.Addons.IframeMessenger = (function(V,undefined){
 
 
 	return {
-			init 			: init
+			init 	: init
 	};
 
 }) (VISH, jQuery);

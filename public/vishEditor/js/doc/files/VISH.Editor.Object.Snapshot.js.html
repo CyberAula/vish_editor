@@ -96,7 +96,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		
 	var init = function(){
 		var urlInput = $(&quot;#&quot;+urlDivId).find(&quot;input&quot;);
-		&#x2F;&#x2F; $(urlInput).watermark(V.I18n.getTrans(&quot;i.pasteWeb&quot;));
+		&#x2F;&#x2F; $(urlInput).vewatermark(V.I18n.getTrans(&quot;i.pasteWeb&quot;));
 
 		&#x2F;&#x2F;Load from URL
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
@@ -152,8 +152,9 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	
 	var _wrapperSnapShot = function(content){
 		var objectInfo = V.Object.getObjectInfo(content);
+		content = V.Utils.addParamToUrl(content,&quot;wmode&quot;,&quot;opaque&quot;);
 		if(objectInfo.wrapper===null){
-			return &quot;&lt;iframe src=&#x27;&quot; + content + &quot;&#x27;&gt;&lt;&#x2F;iframe&gt;&quot;;
+			return &quot;&lt;iframe src=&#x27;&quot; + content + &quot;&#x27; wmode=&#x27;opaque&#x27;&gt;&lt;&#x2F;iframe&gt;&quot;;
 		} else {
 			return content;
 		}
@@ -162,7 +163,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 	&#x2F;**
 	* Param style: optional param with the style, used in editing presentation
 	*&#x2F;
-	var drawSnapShot = function(wrapper, area, style,scrollTop,scrollLeft){
+	var drawSnapShot = function(wrapper,area,style,scrollTop,scrollLeft){
 		var current_area;
 		var object_style = &quot;&quot;;
 		if(area){

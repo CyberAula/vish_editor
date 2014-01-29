@@ -2,8 +2,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _hoverMenu = false;
-	var _competitionsModalShown = false;
-
+	
 	/*
 	 * Init singleton
 	 * Perform actions that must be executed only once
@@ -50,6 +49,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			//Check exit option in menu
 			if(typeof options.exitURL != "string"){
 				$(".menu_option.menu_action[action='exit']").parent().hide();
+			} else {
+				V.exitPath = options.exitURL;
 			}
 			
 			_initialized = true;
@@ -136,42 +137,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			V.Utils.showDialog(options);
 			return;
 		}
-
-		//Competitions (deprecated)
-		if(!V.Editor.Competitions.isValidCandidate() && !_competitionsModalShown){
-			_competitionsModalShown = true;
-			var options = {};
-			options.width = 650;
-			options.height = 190;
-			options.text = V.I18n.getTrans("i.NoCompetitions1");
-			options.textWrapperClass = "competitions_paragraph";
-
-			options.onClosedCallback = function(){
-				setTimeout(function(){
-						V.Editor.Tools.Menu.onPublishButtonClicked();
-				}, 500);
-			};
-			
-			options.notificationIconSrc = V.ImagesPath + "zonethumbs/content_fail.png";
-			options.middlerow = V.Editor.Competitions.generateForm();		
-			options.middlerowExtraClass = "competitions_options";
-
-			var button1 = {};
-			button1.text = V.I18n.getTrans("i.Done");
-			button1.extraclass = "competi_disabled";
-			button1.callback = function(){
-				$.fancybox.close();	
-			}
-			var button2 = {};
-			button2.text = V.I18n.getTrans("i.NoThanks");
-			button2.callback = function(){
-				$.fancybox.close();			
-			}
-			options.buttons = [button1, button2];
-			V.Utils.showDialog(options);
-			return;
-		}
-
 
 		var options = {};
 		options.width = 600;
@@ -336,7 +301,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var _exitFromVE = function(){
 		V.Editor.Events.allowExitWithoutConfirmation();
-		window.top.location.href = V.Utils.getOptions().exitURL;
+		window.top.location.href = V.exitPath;
 	}
 
 	var insertSmartcard = function(){
@@ -373,30 +338,44 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		return false; //Prevent iframe to move
 	};
 
-	var exportToJSON = function(){
+	var _exportTo = function(format){
 		var t1 = Date.now();
 		V.Utils.Loader.startLoading();
-		V.Editor.Presentation.File.exportToJSON(function(){
+		V.Editor.Presentation.File.exportTo(format,function(){
 			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
-			var diff = t1 - Date.now();
+			var diff = Date.now() - t1;
 			setTimeout(function(){
 				//on error
 				var options = {};
 				options.width = 600;
 				options.height = 185;
-				options.text = V.I18n.getTrans("i.exportPresToJSONerrorNotification");
+
+				if(format=="scorm"){
+					options.text = V.I18n.getTrans("i.exportPresToSCORMerrorNotification");
+				} else {
+					//JSON
+					options.text = V.I18n.getTrans("i.exportPresToJSONerrorNotification");
+				}
+				
 				var button1 = {};
 				button1.text = V.I18n.getTrans("i.Ok");
 				button1.callback = function(){
 					$.fancybox.close();
 				}
 				options.buttons = [button1];
-				V.Utils.Loader.onCloseLoading();
 				V.Utils.showDialog(options);
 			},Math.max(1250-diff,0));
 		});
+	};
+
+	var exportToJSON = function(){
+		_exportTo("json");
+	};
+
+	var exportToSCORM = function(){
+		_exportTo("scorm");
 	};
 
 	var displaySettings = function(){
@@ -423,6 +402,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
 		exportToJSON 					: exportToJSON,
+		exportToSCORM					: exportToSCORM,
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onUnpublishButtonClicked		: onUnpublishButtonClicked,

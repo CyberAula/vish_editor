@@ -161,6 +161,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 	var drawQuizChart = function(canvas,quizJSON,results,options){
 		var quizParams = _getQuizParams(quizJSON);
 		var answersList = _getAnswers(results);
+
 		switch (quizParams.quizType) {
 			case V.Constant.QZ_TYPE.OPEN:
 			break;
@@ -425,16 +426,22 @@ VISH.QuizCharts = (function(V,$,undefined){
 		var params = {};
 		params.extras = {};
 		try {
-			var quizEl = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0];
-			params.quizType = quizEl[&quot;quiztype&quot;];
-			if(params.quizType==V.Constant.QZ_TYPE.MCHOICE){
-				&#x2F;&#x2F;Check for multiple answer
-				if ((quizEl.extras) &amp;&amp; (quizEl.extras.multipleAnswer==true)){
-					params.extras.multipleAnswer = true;
+			var quizEls = quiz[&quot;slides&quot;][0][&quot;elements&quot;];
+			var quizElsL = quizEls.length;
+			for(var i=0; i&lt;quizElsL; i++){
+				if (quizEls[i][&quot;type&quot;]===&quot;quiz&quot;){
+					var quizEl = quizEls[i];
+					params.quizType = quizEl[&quot;quiztype&quot;];
+					if(params.quizType==V.Constant.QZ_TYPE.MCHOICE){
+						&#x2F;&#x2F;Check for multiple answer
+						if ((quizEl.extras) &amp;&amp; (quizEl.extras.multipleAnswer==true)){
+							params.extras.multipleAnswer = true;
+						}
+					}
+					params.choices = quizEl[&quot;choices&quot;];
+					params.nAnswers = params.choices.length;
 				}
 			}
-			params.choices = quiz[&quot;slides&quot;][0][&quot;elements&quot;][0][&quot;choices&quot;];
-			params.nAnswers = params.choices.length;
 		} catch (e){}
 		return params;
 	}
@@ -443,6 +450,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		if(typeof str != &quot;string&quot;){
 			return str;
 		}
+		str = str.replace(&#x2F;â€‹&#x2F;g, &#x27;&#x27;);
 		return str.replace(&#x2F;Â&#x2F;g, &#x27;&#x27;);
 	}
 

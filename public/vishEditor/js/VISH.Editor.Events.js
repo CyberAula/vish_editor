@@ -17,7 +17,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
 
-			$(document).on('click', '#subslide_selected_img', V.Editor.Slideset.onClickOpenSlideset);
+			$(document).on('click', '#slideset_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			
 			//Settings events
 			$(document).on('click', '#presentation_details_preview_thumbnail', V.Editor.Settings.onChangeThumbnailClicked);
@@ -45,11 +45,14 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('change', '#tlt_seconds', V.Editor.Settings.onTLTchange);
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 			
-			
-			$(document).on('click','div.slidethumb', V.Editor.onSlideThumbClicked);
+			$(document).on('click','div.templatethumb', V.Editor.onSlideThumbClicked);
+			$(document).on('click','div.stthumb', V.Editor.onSlideThumbClicked);
+			$(document).on('click','#animation_fancybox div.slidethumb', V.Editor.onAnimationThumbClicked); //animations thumb
+
+			$(document).on('click','.stthumb_wrapper p', V.Editor.onSlideThumbClicked);
 			$(document).on('click','.editable', V.Editor.onEditableClicked);
 			$(document).on('click','.selectable', V.Editor.onSelectableClicked);
-			$(document).on('click',':not(".selectable")', V.Editor.onNoSelectableClicked);
+			$(document).on('click',':not(".selectable"):not(".preventNoselectable")', V.Editor.onNoSelectableClicked);
 			
 			$(document).on('click','.delete_content', V.Editor.onDeleteItemClicked);
 			$(document).on('click','.delete_slide', V.Editor.onDeleteSlideClicked);
@@ -59,10 +62,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click','#theme_fancybox img[theme]', V.Editor.Themes.onThemeSelected);
 
 			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
-
-
-			//create the functions to add the tags when click on fancybox
-			$(document).on("click", ".comp_checkbox input", V.Editor.Competitions.specialTagSelected);
 
 			$(document).bind('keydown', handleBodyKeyDown);
 			$(document).bind('keyup', handleBodyKeyUp);
@@ -106,7 +105,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 						//Show slides only
 						$("#tab_pdfex").parent().hide();
 						$("#tab_presentations_repo").parent().hide();
-						$("#tab_smartcards_repo").parent().hide();
 						$("#tab_json_file").parent().hide();
 
 						//Inside slides, show templates only
@@ -122,7 +120,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 					$("#tab_pdfex").parent().show();
 					$("#tab_presentations_repo").parent().show();
-					$("#tab_smartcards_repo").parent().show();
 					$("#tab_json_file").parent().show();
 
 					V.Editor.setContentAddMode(V.Constant.NONE);
@@ -161,12 +158,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'overlayColor' : "#fff",
 				'showCloseButton'	: false,
 				'onComplete'  : function(data) {
-						$("#fancybox-outer").css("background", "rgba(255,255,255,0.9)");
-						$("#fancybox-wrap").css("margin-top", "20px");
-						$("#fancybox-wrap").css("margin-left", "20px");
+						V.Utils.Loader.prepareFancyboxForFullLoading();
 				},
 				'onClosed' : function(data) {
-						$("#fancybox-outer").css("background", "white");
 				}
 			});
 
@@ -193,13 +187,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'scrolling': 'no',
 				'height': 600,
 				'padding' : 0,
-				"onStart"  : function(data) {						
+				"onStart"  : function(data) {		
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
-					$("#tab_pic_thumbnails").show();
 					V.Editor.Utils.loadTab('tab_pic_thumbnails');
 				},
 				"onClosed" : function(data){
-					$("#tab_pic_thumbnails").hide();
 					if(V.Editor.Image.getAddContentMode()===V.Constant.THUMBNAIL){
 						setTimeout(function(){
 							V.Editor.Settings.displaySettings();
@@ -279,11 +271,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
 		});	
 
-		//Help in smartcards carrousel
-		$(document).on('click','#tab_smartcards_repo_help', function(){
-			V.Tour.startTourWithId('help_smartcard_selection_help', 'bottom');
-		});
-
 		//Help in themes templates
 		$(document).on('click','#help_themes_selection', function(){			
 			V.Tour.startTourWithId('themes_help', 'bottom');
@@ -299,10 +286,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
 		});
 
-		//Help in Competitions
-		$(document).on('click','#help_in_competitions', function(){
-			V.Tour.startTourWithId('help_in_competitions_help', 'bottom');
-		})
 
 		//Help in pedagogical options settings	
 		$(document).on('click','#help_pedagogical_selection', function(){
@@ -453,6 +436,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
 		case 39: // right arrow
+			if(V.Editor.Slides.isSlideFocused()){
+				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
+					V.Editor.Slides.forwardOneSubslide();
+				}
+				event.preventDefault();
+			}
+			break;
 		case 40: //down arrow	    
 			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){
@@ -464,6 +454,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;
 		case 37: // left arrow
+			if(V.Editor.Slides.isSlideFocused()){
+				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
+					V.Editor.Slides.backwardOneSubslide();
+				}
+				event.preventDefault();
+			}
+			break;
 		case 38: //up arrow	
 			if(V.Editor.Slides.isSlideFocused()){
 				if(!ctrlDown){

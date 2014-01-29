@@ -73,6 +73,7 @@ VISH.Constant.WRAPPER = {};
 VISH.Constant.WRAPPER.EMBED = "EMBED";
 VISH.Constant.WRAPPER.OBJECT = "OBJECT";
 VISH.Constant.WRAPPER.IFRAME = "IFRAME";
+VISH.Constant.WRAPPER.VIDEO = "VIDEO";
 
 //Subtypes
 VISH.Constant.QZ_TYPE = {};

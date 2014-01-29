@@ -226,7 +226,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 			}
 
 			//Close subslide if is open
-			var subslide = V.Slides.getCurrentSubSlide();
+			var subslide = V.Slides.getCurrentSubslide();
 			if(subslide!==null){
 				V.Slides.closeSubslide($(subslide).attr("id"));
 			}

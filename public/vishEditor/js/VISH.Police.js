@@ -27,10 +27,19 @@ VISH.Police = (function(V,$,undefined){
 			return [false,"Can't recognize object source"];
 		}
 		
-		if(objectInfo.source.trim()==""){
-			return [false,"Object source is an empty string"];
+		if(typeof objectInfo.source == "string"){
+			if(objectInfo.source.trim()==""){
+				return [false,"Object source is an empty string"];
+			}
+		} else if(typeof objectInfo.source == "object"){
+			if(objectInfo.source.length<1){
+				return [false,"Object source is an empty object"];
+			}
+		} else {
+			return [false,"Invalid object source"];
 		}
-				
+
+
 //		if(objectInfo.source.match(valid_url_pattern)==null){
 //      	return [false,"Not valid URL"];
 //    	}

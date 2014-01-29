@@ -136,7 +136,7 @@ VISH.Utils.Loader = (function(V,undefined){
 						options.callback();
 					}
 				}
-			})
+			});
 			$(image).error(function(response){
 				if((options)&amp;&amp;(options.defaultOnError)){
 					&#x2F;&#x2F;Try to load the default image
@@ -150,7 +150,7 @@ VISH.Utils.Loader = (function(V,undefined){
 						}
 
 						&#x2F;&#x2F;Only return when the first time we load a default source
-						&#x2F;&#x2F;The same image will call load o error callback again.
+						&#x2F;&#x2F;The same image will call load or error callback again.
 						return;
 					}
 				}
@@ -164,7 +164,7 @@ VISH.Utils.Loader = (function(V,undefined){
 					}
 				}
 				
-			})
+			});
 		});
 	}
 
@@ -192,25 +192,37 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 
 		var head = document.getElementsByTagName(&#x27;head&#x27;)[0];
-		if(head) {
+		if(head){
 			var script = document.createElement(&#x27;script&#x27;);
 			script.setAttribute(&#x27;src&#x27;,scriptSrc);
 			script.setAttribute(&#x27;type&#x27;,&#x27;text&#x2F;javascript&#x27;);
 
+			&#x2F;&#x2F;Only call callback once
+			var callbackCalled = false;
+
+			var callCallback = function(){
+				if(!callbackCalled){
+					if(typeof callback == &quot;function&quot;){
+						callbackCalled = true;
+						callback();
+					}
+				}
+			};
+
 			var loadFunction = function(){
 				if((this.readyState == &#x27;complete&#x27;)||(this.readyState == &#x27;loaded&#x27;)){
-					callback();
+					callCallback();
 				}
 			};
 			&#x2F;&#x2F;calling a function after the js is loaded (IE)
 			script.onreadystatechange = loadFunction;
 
 			&#x2F;&#x2F;calling a function after the js is loaded (Firefox &amp; GChrome)
-			script.onload = callback;
+			script.onload = callCallback;
 
 			head.appendChild(script);
 		}
-	}
+	};
 
 	var loadGoogleLibrary = function(scriptSrc,callback){
 		if(typeof callback === &quot;function&quot;){
@@ -225,14 +237,14 @@ VISH.Utils.Loader = (function(V,undefined){
 			&#x2F;&#x2F; We can not use this callback, because the loaded script would load more scripts internally
 			&#x2F;&#x2F; So, despite the script is loaded, the full library may be not
 		});
-	}
+	};
 
 	var onGoogleLibraryLoaded = function(){
 		if(typeof _loadGoogleLibraryCallback === &quot;function&quot;){
 			_loadGoogleLibraryCallback();
 		}
 		_loadGoogleLibraryCallback = undefined;
-	}
+	};
 
 	&#x2F;**
 	* Function to dinamically add a css
@@ -248,19 +260,28 @@ VISH.Utils.Loader = (function(V,undefined){
 		&#x2F;&#x2F;Callback
 		if(typeof callback == &quot;function&quot;){
 
-			&#x2F;&#x2F;calling a function after the css is loaded (Firefox &amp; Google Chrome)
-			link.onload = function () {
-				callback();
+			&#x2F;&#x2F;Only call callback once
+			var callbackCalled = false;
+
+			var callCallback = function(){
+				if(!callbackCalled){
+					callbackCalled = true;
+					callback();
+				}
 			}
+
+			&#x2F;&#x2F;calling a function after the css is loaded (Firefox &amp; Google Chrome)
+			link.onload = callCallback;
+			link.onerror = callCallback;
 
 			var loadFunction = function(){
 				if((this.readyState == &#x27;complete&#x27;)||(this.readyState == &#x27;loaded&#x27;)){
-					callback();
+					callCallback();
 				}
 			};
 			&#x2F;&#x2F;calling a function after the css is loaded (IE)
 			link.onreadystatechange = loadFunction;
-		}
+		};
 
 		head.appendChild(link);
 	};
@@ -303,6 +324,10 @@ VISH.Utils.Loader = (function(V,undefined){
 	* Loading dialogs
 	*&#x2F;
 
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; Full Loading
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
 	var t1Loading;
 
 	var startLoading = function(){
@@ -310,51 +335,61 @@ VISH.Utils.Loader = (function(V,undefined){
 			t1Loading = Date.now();
 			$(&quot;#fancyLoad&quot;).trigger(&#x27;click&#x27;);
 		}
-	}
+	};
 
 	var stopLoading = function(callback){
 		var diff = Date.now()-t1Loading;
-		if(diff &lt; 800){
+
+		if(diff &lt; 1250){
 			setTimeout(function(){
 				stopLoading(callback);
-			},800);
+			},Math.max(0,Math.min(1250-diff,1250)));
 		} else {
 			var closed = false;
+			var tWClose = 0;
 			if(_isFullLoadingActive()){
 				$.fancybox.close();
 				closed = true;
+				tWClose = 800;
 			}
 			if(typeof callback == &quot;function&quot;){
-				callback(closed);
+				setTimeout(function(){
+					callback(closed);
+				},tWClose);
 			}
 		}
-	}
+	};
 
-	&#x2F;*
-	* Called when loading panel is going to be closed by another fancybox
-	* Keep original fancybox CSS
-	*&#x2F;
-	var onCloseLoading = function(){
-		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
+	var prepareFancyboxForFullLoading = function(){
+		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(255,255,255,0.9)&quot;);
+		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
+       	$(&quot;#fancybox-wrap&quot;).css(&quot;margin-left&quot;, &quot;20px&quot;);
 	}
 
 	var _isFullLoadingActive = function(){
 		return $(&quot;#loading_fancy&quot;).is(&quot;:visible&quot;);
-	}
+	};
 
 	var startLoadingInContainer = function(container,options){
-		$(container).html($(&quot;#loading_fancy_wrapper&quot;).html());
-		$(container).addClass(&quot;loadingtmpShown&quot;);
-
+		var loadImg = document.createElement(&quot;img&quot;);
+		$(loadImg).addClass(&quot;loading_fancy_img&quot;);
+		$(loadImg).attr(&quot;src&quot;, V.ImagesPath + &quot;lightbox-ico-loading.gif&quot;);
 		if((options)&amp;&amp;(options.style)){
-			$(container).find(&quot;.loading_fancy_img&quot;).addClass(options.style);
+			$(loadImg).addClass(options.style);
 		}
-	}
+		var loadingBody = document.createElement(&quot;div&quot;);
+		$(loadingBody).addClass(&quot;loading_fancy&quot;);
+		$(loadingBody).append(loadImg);
+
+		$(container).html(&quot;&quot;);
+		$(container).append(loadingBody);
+		$(container).addClass(&quot;loadingtmpShown&quot;);
+	};
 
 	var stopLoadingInContainer = function(container){
 		$(container).find(&quot;.loading_fancy_img&quot;).parent().remove();
 		$(container).removeClass(&quot;loadingtmpShown&quot;);
-	}
+	};
 
 	return {
 		loadImagesOnContainer		: loadImagesOnContainer,
@@ -364,9 +399,9 @@ VISH.Utils.Loader = (function(V,undefined){
 		loadDeviceCSS				: loadDeviceCSS,
 		loadLanguageCSS				: loadLanguageCSS,
 		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
+		prepareFancyboxForFullLoading	: prepareFancyboxForFullLoading,
 		startLoading				: startLoading,
 		stopLoading					: stopLoading,
-		onCloseLoading				: onCloseLoading,
 		startLoadingInContainer		: startLoadingInContainer,
 		stopLoadingInContainer		: stopLoadingInContainer
 	};

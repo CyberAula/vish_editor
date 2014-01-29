@@ -13,7 +13,6 @@ VISH.Slides = (function(V,$,undefined){
 
 	/* Initialization Method */
 	var init = function(){
-		_getcurSlideIndexFromHash();
 	};
 
 	/* 
@@ -22,16 +21,21 @@ VISH.Slides = (function(V,$,undefined){
 	var updateSlides = function(){
 		setSlides(document.querySelectorAll('section.slides > article'));
 		_updateSlideClasses();
-		_updateHash();
-	};
 
-	var _updateHash = function(){
 		if(!V.Editing){
-			location.replace('#' + (curSlideIndex + 1));
+			// Uncomment to enable hash propagation on ViSH Viewer
+			// V.Utils.updateHash();
 		}
 	};
 
 	var _updateSlideClasses = function(){
+
+		if(V.Status.getIsUniqMode()){
+			$("section.slides > article").removeClass("current");
+			updateSlideClass(curSlideIndex+1, 'current');
+			return;
+		};
+
 		for (var i = 0; i < slideEls.length; i++) {
 			switch (i) {
 				case curSlideIndex - 2:
@@ -54,7 +58,7 @@ VISH.Slides = (function(V,$,undefined){
 					break;
 			}
 		}
-	}
+	};
 
 	var updateSlideClass = function(slideNumber, className) {
 		var el = getSlideWithNumber(slideNumber);
@@ -74,27 +78,12 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var _getcurSlideIndexFromHash = function() {
-		if(V.Editing){
-			//Start in 0 (no slides), if there are slides, this param will be updated
-			setCurrentSlideNumber(0);
-		} else {
-			var slideNo = parseInt(location.hash.substr(1));
-			if (slideNo) {
-				setCurrentSlideNumber(slideNo);
-			} else {
-				//Start in 1 (first slide)
-				setCurrentSlideNumber(1);
-			}
-		}
-	};
-
 
 	/* API Methods */
 
 	var getSlides = function(){
 		return slideEls;
-	}
+	};
 
 	var setSlides = function(newSlideEls){
 		slideEls = newSlideEls;
@@ -103,31 +92,68 @@ VISH.Slides = (function(V,$,undefined){
 		$.each(slideEls, function(index, value) {
 			$(value).attr("slidenumber",index+1);
 		});
-	}
+	};
 
 	var getCurrentSlide = function(){
 		return slideEls[curSlideIndex];
-	}
+	};
 
-	var getCurrentSubSlide = function(){
-		if (curSubSlideId === null){
+	var getCurrentSubslide = function(){
+		if(V.Editing){
+			return V.Editor.Slideset.getCurrentSubslide();
+		}
+
+		if(curSubSlideId === null){
 			return null;
 		} else {
 			return $("#"+curSubSlideId);
 		}
-	}
+	};
+
+	var getTargetSlide = function(){
+		var cSubslide = getCurrentSubslide();
+		if((typeof cSubslide == "undefined") || (cSubslide === null)){
+			return getCurrentSlide();
+		} else {
+			return cSubslide;
+		}
+	};
 
 	var getCurrentSlideNumber = function(){
 		return curSlideIndex+1;
-	}
+	};
+
+	var getCurrentSubslideNumber = function(){
+		var cSubslide = getCurrentSubslide();
+		if((typeof cSubslide == "undefined") || (cSubslide === null)){
+			return undefined;
+		}
+		var cSubslideNumber = $(cSubslide).attr("slidenumber");
+		if(typeof cSubslideNumber == "string"){
+			try {
+				return parseInt(cSubslideNumber);
+			} catch(err) {
+				return undefined;
+			}
+		}
+	};
+
+	var getTargetSlideNumber = function(){
+		var cSubslide = getCurrentSubslide();
+		if((typeof cSubslide == "undefined") || (cSubslide === null)){
+			return getCurrentSubslideNumber();
+		} else {
+			return getCurrentSlideNumber();
+		}
+	};
 
 	var setCurrentSlideNumber = function(currentSlideNumber){
 		_setCurrentSlideIndex(currentSlideNumber-1);
-	}
+	};
 
 	var _setCurrentSlideIndex = function(newCurSlideIndex){
 		curSlideIndex = newCurSlideIndex;
-	}
+	};
 
 	var getSlideWithNumber = function(slideNumber){
 		var no = slideNumber-1;
@@ -136,6 +162,10 @@ VISH.Slides = (function(V,$,undefined){
 		} else {
 			return slideEls[no];
 		}
+	};
+
+	var getSubslideWithNumber = function(slideset,subslideNumber){
+		return $(slideset).children("article[slidenumber='" + subslideNumber + "']");
 	};
 
 	var getNumberOfSlide = function(slide){
@@ -151,16 +181,11 @@ VISH.Slides = (function(V,$,undefined){
 		} else {
 			return 0;
 		}
-	}
+	};
 
 	var getSlidesQuantity = function(){
-		var slides = getSlides();
-		if((typeof slides != "undefined")&&(slides.length)){
-			return slides.length;
-		} else {
-			return 0;
-		}	
-	}
+		return document.querySelectorAll('section.slides > article').length;
+	};
 
 	var getSlideType = function(slideEl){
 		if ((slideEl)&&(slideEl.tagName==="ARTICLE")){
@@ -176,15 +201,27 @@ VISH.Slides = (function(V,$,undefined){
 			//slideEl is not a slide
 			return null;
 		}
-	}
+	};
 
 	var isCurrentFirstSlide = function(){
 		return curSlideIndex===0;
-	}
+	};
 
 	var isCurrentLastSlide = function(){
 		return curSlideIndex===slideEls.length-1;
-	}
+	};
+
+
+	/* Hash Management */
+	var updateCurrentSlideFromHash = function() {
+		var slideNo = V.Utils.getSlideNumberFromHash();
+		if (slideNo) {
+			setCurrentSlideNumber(slideNo);
+		} else {
+			//Start in 1 (first slide)
+			setCurrentSlideNumber(1);
+		}
+	};
 
 
 	/* Slide events */
@@ -242,7 +279,7 @@ VISH.Slides = (function(V,$,undefined){
 	* n < 0 (go back)
 	*/
 	var moveSlides = function(n){
-		if((n>0)&&(!V.Editing)&&((isCurrentLastSlide() && V.Status.getDevice().desktop))&&(V.Viewer.getPresentationType()===V.Constant.PRESENTATION)){
+		if((n>0)&&(!V.Editing)&&(isCurrentLastSlide())){
 			V.Recommendations.showFancybox();
 			return;
 		}
@@ -278,12 +315,7 @@ VISH.Slides = (function(V,$,undefined){
 
 		_goToSlide(no);
 
-		if(V.Editing){
-			V.Editor.Tools.cleanZoneTools();
-			//finally add a background color to thumbnail of the selected slide
-			V.Editor.Thumbnails.selectThumbnail(no);
-		}	else {
-			//update slide counter
+		if(!V.Editing){
 			V.Viewer.updateSlideCounter();
 		}
 
@@ -300,7 +332,7 @@ VISH.Slides = (function(V,$,undefined){
 			updateSlides();
 			triggerEnterEvent(curSlideIndex+1);
 		}
-	}
+	};
   
    /**
 	* Go to the last slide
@@ -368,7 +400,7 @@ VISH.Slides = (function(V,$,undefined){
 		curSubSlideId = subSlideId;
 		$("#closeButton").hide();
 		//Open subslide will call V.ViewerAdapter.decideIfPageSwitcher();
-	}
+	};
 
 	var _onCloseSubslide = function(){
 		curSubSlideId = null;
@@ -381,9 +413,9 @@ VISH.Slides = (function(V,$,undefined){
 		} else {
 			V.ViewerAdapter.decideIfPageSwitcher();
 		}
-	}
+	};
 
-	var isSlideset = function(type){
+	var isSlidesetType = function(type){
 		switch(type){
 			case V.Constant.FLASHCARD:
 			case V.Constant.VTOUR:
@@ -391,18 +423,23 @@ VISH.Slides = (function(V,$,undefined){
 			default:
 				return false;
 		}
-	}
+	};
 
 	return {	
 			init          			: init,
 			updateSlides			: updateSlides,
+			updateCurrentSlideFromHash	: updateCurrentSlideFromHash,
 			getSlides 				: getSlides,
 			setSlides				: setSlides,
 			getCurrentSlide 		: getCurrentSlide,
-			getCurrentSubSlide 		: getCurrentSubSlide,
+			getCurrentSubslide 		: getCurrentSubslide,
+			getTargetSlide			: getTargetSlide,
 			getCurrentSlideNumber	: getCurrentSlideNumber,
+			getCurrentSubslideNumber	: getCurrentSubslideNumber,
+			getTargetSlideNumber	: getTargetSlideNumber,
 			setCurrentSlideNumber	: setCurrentSlideNumber,
 			getSlideWithNumber		: getSlideWithNumber,
+			getSubslideWithNumber	: getSubslideWithNumber,
 			getNumberOfSlide		: getNumberOfSlide,
 			getSlidesQuantity		: getSlidesQuantity,
 			getSlideType 			: getSlideType,
@@ -415,7 +452,7 @@ VISH.Slides = (function(V,$,undefined){
 			lastSlide				: lastSlide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			isSlideset				: isSlideset,
+			isSlidesetType			: isSlidesetType,
 			triggerEnterEvent 		: triggerEnterEvent,
 			triggerEnterEventById	: triggerEnterEventById,
 			triggerLeaveEvent 		: triggerLeaveEvent,

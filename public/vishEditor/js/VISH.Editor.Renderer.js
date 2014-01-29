@@ -74,14 +74,14 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			if(slide.elements[el].type === V.Constant.TEXT){
 				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
 			} else if(slide.elements[el].type === V.Constant.IMAGE){
-				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].hyperlink);
+				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].hyperlink, slide.elements[el].options);
 			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				var options = [];
 				options['poster'] = slide.elements[el].poster;
 				options['autoplay'] = slide.elements[el].autoplay;
 				var sourcesArray = [];
 				$.each(JSON.parse(slide.elements[el].sources), function(index, source){
-					sourcesArray.push([source.src, source.type]);
+					sourcesArray.push({"src":source.src, "mimeType": source.type});
 				});
 				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){

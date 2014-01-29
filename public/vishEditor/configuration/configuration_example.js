@@ -83,10 +83,18 @@ var getOptions = function(){
 
 			options["developmentSettings"] = developmentSettings;
 
-			//Also you can define a username and token for testing purposes
-			options["username"] = "ebarra";
-			options["userId"] = "3456";
-			options["token"] = "12xfDgR345x6";
+			//Also you can define a user
+			options["user"] = {
+				name: "agordillo",
+				id: "24",
+				token: "12xfDgR345x6"
+			}
+
+			//URL to access to the Recommendation API
+			options["recommendationsAPI"] = {
+				rootURL: "/excursions/last_slide.js"
+				// rootURL: "http://vishub.org/excursions/last_slide.js"
+			};
 			
 			//URL to access to the Quiz Session API
 			options["quizSessionAPI"] = {
@@ -96,16 +104,16 @@ var getOptions = function(){
 			//QuizSessionId to answer the quiz
 			options["quizSessionId"] = "1";
 
-			options["full"] = true;
-			options["forcefull"] = false;
-			options["forceHideViewbar"] = false;
 			options["watermarkURL"] = "http://localhost/vishEditor/viewer.html";
 			
 			// options["preview"] = true;
         	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
-			options["fullscreen"]  = "http://trapo.dit.upm.es:3000/excursions/83.full";
-			options["exitFullscreen"]  = "http://localhost/vishEditor/framed_viewer.html";
+			options["fullScreenFallback"] = {
+				// enterFullscreenURL: "http://localhost:3000/excursions/83.full",
+				enterFullscreenURL: "http://localhost/vishEditor/viewer.html",
+				exitFullscreenURL: "http://localhost/vishEditor/framed_viewer.html"
+			};
 
         	//Draft presentations
         	options["draft"] = false;
@@ -115,9 +123,6 @@ var getOptions = function(){
 
 			//And a default landguage
 			options["lang"] = "en";
-
-			//URL to get the recommendations to show in the last slide
-			//options["urlToGetRecommendations"] = "/excursions/last_slide.js"
 
 			//URL to call LRE search
 			options["urlToSearchLRE"] = "/lre/search";

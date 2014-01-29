@@ -87,13 +87,21 @@ ul.menu_option_main ul {
 	margin-left: 12px !important;
 }
 
-#menu a.menu_option_main{
+#menu a.menu_option_main {
 	margin-top: -11px;
 	width: 155px;
 	margin-left: -21px;
 	padding-left: 15px;
-	padding-bottom: 12px;
+	padding-bottom: 0px;
 	padding-top: 16px;
+}
+
+#menu a.menu_option_main:hover {
+	padding-bottom: 12px;
+}
+
+#menu:hover a.menu_option_main {
+	padding-bottom: 12px;
 }
 
 #menu ul li {

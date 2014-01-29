@@ -1,23 +1,22 @@
 VISH.Object = (function(V,$,undefined){
 			
 	var init = function(){
-	}
-	
+	};
+
 
 	///////////////////////////////////////
 	/// OBJECT INFO
 	///////////////////////////////////////
 	
 	/*
-	 * Wrapper can be: "embed","object, "iframe" or null if the object is a source url without wrapper.
+	 * Wrapper can be: "embed","object, "iframe", "video" or null if the object is a source url without wrapper.
 	 * Type is the source type and can be: "swf" , "youtube" , etc.
-	 * 
 	 */
 	function objectInfo(wrapper,source,sourceType) {
 		this.wrapper=wrapper;
 		this.source = source;
 		this.type=sourceType;
-	} 
+	}; 
 	
 	/*
 	 * Return object type
@@ -33,18 +32,26 @@ VISH.Object = (function(V,$,undefined){
 		
 		//Determine source type
 		var source = _getSourceFromObject(object,wrapper);
-		var type = _getTypeFromSource(source);
+		
+		var type;
+		switch (wrapper){
+			case "VIDEO":
+				type = V.Constant.MEDIA.HTML5_VIDEO;
+				break;
+			default:
+				type = _getTypeFromSource(source);
+		}
 
 		return new objectInfo(wrapper,source,type);
-	}
+	};
 	
-	var _getSourceFromObject = function (object,wrapper){
+	var _getSourceFromObject = function(object,wrapper){
 		switch (wrapper){
 			case null:
 				return object;
-			case "EMBED":
+			case V.Constant.WRAPPER.EMBED:
 				return $(object).attr("src");
-			case "OBJECT":
+			case V.Constant.WRAPPER.OBJECT:
 				if (typeof $(object).attr("src") != 'undefined'){
 				  return $(object).attr("src");
 				}
@@ -52,14 +59,16 @@ VISH.Object = (function(V,$,undefined){
 				  return $(object).attr("data");
 				}
 				return "source not founded";
-			case "IFRAME": 
+			case V.Constant.WRAPPER.IFRAME:
 				return $(object).attr("src");
+			case V.Constant.WRAPPER.VIDEO:
+				return V.VideoPlayer.HTML5.getSources(object);
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
 				return null;
 			break;
 		}
-	}
+	};
 	
 	
 	/**
@@ -68,11 +77,15 @@ VISH.Object = (function(V,$,undefined){
 	
 	var _getTypeFromSource = function(source){
 
+		if((typeof source == "object")&&(typeof source.length == "number")&&(source.length > 0)){
+			source = source[0];
+		};
+
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9-]+))|((www.youtube.com\/((watch\?v=)|(embed\/)|(v\/)))([aA-z0-9-Z&=.])+))/g
 		var html5VideoFormats = ["mp4","webm","ogg"];
-		var imageFormats = ["jpg","jpeg","png","gif","bmp"];
+		var imageFormats = ["jpg","jpeg","png","gif","bmp","svg"];
 
 		if(typeof source != "string"){
 			return null
@@ -120,11 +133,11 @@ VISH.Object = (function(V,$,undefined){
 		}
 
 		return extension;
-	}
+	};
 	
 	var getExtensionFromSrc = function(source){
 		return (source.split('.').pop().split('&')[0]).toLowerCase();
-	}
+	};
 
 	return {
 		init							: init,

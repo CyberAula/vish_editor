@@ -4,11 +4,11 @@ VISH.VideoPlayer = (function(V,$,undefined){
 		V.VideoPlayer.CustomPlayer.init();
 		V.VideoPlayer.HTML5.init();
 		V.VideoPlayer.Youtube.init();
-	}
+	};
 
 	var getTypeVideoWithId = function(videoId){ // to know the type of video
 		return getTypeVideo(document.getElementById(videoId));
-	}
+	};
 
 	var getTypeVideo = function(video){
 		if(!video){
@@ -20,7 +20,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			return V.Constant.Video.Youtube;
 		}
 		return V.Constant.UNKNOWN;
-	}
+	};
 
 	var playVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){ //play the video in a different way depending 
@@ -34,7 +34,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){ // Same idea but pausing
@@ -47,7 +47,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	var seekVideo = function(videoId,seekTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){ //same idea but seeking
@@ -60,7 +60,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 
 
@@ -78,7 +78,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 
 	var getCurrentTime = function(video){ //getCurrentTime method depending on the type
@@ -93,7 +93,7 @@ VISH.VideoPlayer = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	return {
 		init				: init,

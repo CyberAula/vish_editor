@@ -452,9 +452,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_presentations_repo":
 				V.Editor.Presentation.Repository.beforeLoadTab();
 				break;
-			case "tab_smartcards_repo":
-				V.Editor.Slideset.Repository.beforeLoadTab();
-				break;
 			//Image
 			case "tab_pic_thumbnails":
 				V.Editor.Image.Thumbnails.beforeLoadTab();
@@ -503,9 +500,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case "tab_presentations_repo":
 				V.Editor.Presentation.Repository.onLoadTab();
-				break;
-			case "tab_smartcards_repo":
-				V.Editor.Slideset.Repository.onLoadTab();
 				break;
 			//Image
 			case "tab_pic_thumbnails":
@@ -577,13 +571,13 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(els).each(function(index,el){
 			$(el).addClass("temp_shown");
 		});
-	}
+	};
 
 	var removeTmpShown = function(els){
 		$(els).each(function(index,el){
 			$(el).removeClass("temp_shown");
 		});
-	}
+	};
 
 	return {
 		setStyleInPixels  			: setStyleInPixels,		

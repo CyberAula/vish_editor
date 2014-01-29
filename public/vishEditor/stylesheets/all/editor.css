@@ -203,9 +203,6 @@ input.presentation_details_input {
 	display: block;
 }
 
-#competitions_in_presentation_details{
-	margin-bottom: 10px;
-}
 
 textarea#presentation_details_textarea {
 	margin-top: 7px;
@@ -578,20 +575,6 @@ input.slider_range_input {
 	cursor: pointer;
 }
 
-.help_in_competitions{
-	background-image: url(/vishEditor/images/vicons/helptutorial_circle.png);
-	position: absolute;
-	margin-top: -2px;
-	margin-left: -46px;
-}
-
-.help_in_competitions:hover{
-	background-image:url(/vishEditor/images/vicons/helptutorial_circle_hover_tp.png);
-	cursor: pointer;
-}
-
-
-
 #presentation_details_logo {
 	width: 107%;
 	margin-top: -33px;
@@ -632,7 +615,7 @@ input.slider_range_input {
 	z-index: 1100;
 }
 
-#subslide_selected {
+#slideset_selected {
 	height: 100%;
 	width: 15%;
 	float: left;
@@ -826,7 +809,7 @@ button.downimport {
 	pointer-events: none;
 }
 
-#subslide_selected img.image_barbutton {
+#slideset_selected img.image_barbutton {
 	width: 85px;
 	height: 64px;
 	margin-top: 3px;
@@ -834,7 +817,7 @@ button.downimport {
 	opacity: 0.8;
 }
 
-#subslide_selected img.image_barbutton:hover {
+#slideset_selected img.image_barbutton:hover {
 	width: 84px;
 	height: 63px;
 	opacity: 1;
@@ -844,6 +827,7 @@ button.downimport {
 
 #subslides_list img.image_barbutton {
 	height: 55px;
+	width: 71px;
 	border-radius: 5px;
 	border: 1px solid white;
 }
@@ -1342,6 +1326,62 @@ div.addUrlButtons{
 	border: 1px solid #000;
 }
 
+.stthumb{
+	float: none;
+}
+
+.stthumb_wrapper {
+	overflow: hidden;
+	width: 101px;
+	height: 110px;
+	float: left;
+	margin: 16px 11px 6px 16px;
+	text-align: center;
+}
+
+.stthumb {
+	border-radius: 10px;
+	border: 1px solid #ccc;
+	width: 99px;
+	height: 75px;
+	overflow: hidden;
+}
+
+.stthumb:hover {
+	cursor: pointer;
+	opacity: 1;
+	border: 1px solid #357ebd;
+}
+
+.stthumb:active {
+	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
+	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.0);
+	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.0);
+	border-radius: 9px;
+	-webkit-border-radius: 9px;
+	-moz-border-radius: 9px;
+	opacity: 1.0;
+	border: 1px solid #000;
+}
+
+.stthumb_wrapper p {
+	text-align: center;
+	font-size: 1.1em;
+	font-weight: 400;
+	font-family: 'Open Sans', arial, sans-serif;
+	padding: 0px;
+	margin-top: 4px;
+	margin-bottom: 4px;
+	color: #666;
+	cursor: pointer;
+}
+
+.stthumb_wrapper img {
+	width: 100%;
+	height: 100%;
+}
+
+
 div.vezone {
 	border: 1px dotted #666;
 }
@@ -1434,7 +1474,7 @@ div.vezone {
 }
 
 .tab_slides_content {
-	margin-top: 30px;
+	margin-top: 25px;
 	margin-left: 73px;
 }
 
@@ -2385,13 +2425,13 @@ div.draggable_sc_div {
 	margin-left: 12px;
 	opacity: 1;
 	cursor: pointer;
-	height: 50px;
-	width: 50px;
 }
 
 div.draggable_sc_div img.fc_draggable_arrow {
 	background-color: transparent;
 	opacity: 1.0 !important;
+	height: 40px;
+	width: 50px;
 }
 
 div.draggable_sc_div img.fc_draggable_arrow:active {
@@ -2408,7 +2448,7 @@ div.draggable_sc_div img.fc_draggable_arrow:hover {
 
 p.draggable_number {
 	position: relative;
-	top: -58px;
+	top: -45px;
 	left: 0px !important;
 	text-align: center;
 	font-family: 'Open Sans', arial, sans-serif;
@@ -2662,7 +2702,7 @@ div.poi_label_container {
 .templateselectlist2 {
 	border: 1px solid #ccc;
 	width: 642px;
-	height: 102px;
+	height: 125px;
 	margin-bottom: -24px;
 	border-radius: 6px;
 }

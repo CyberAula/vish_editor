@@ -8,7 +8,7 @@
 
 /*
  * Dependencies
- * JQuery $().watermark library is needed to allow input watermarks
+ * JQuery $().vewatermark library is needed to allow input watermarks
  */
 
 (function ($) {
@@ -95,10 +95,10 @@
 
             this.input = this.element.find(".tagit-input");
 						
-						//Add watermark
-						if(typeof $().watermark == "function"){
-							this.input.watermark(this.options.watermarkAllowMessage)
-						}					
+			//Add watermark
+			if(typeof $().vewatermark == "function"){
+				this.input.vewatermark(this.options.watermarkAllowMessage);
+			}
 
             //setup click handler
             $(this.element).click(function (e) {
@@ -266,8 +266,8 @@
 						}
             
 						//Restart watermark    
-            if(typeof $().watermark == "function"){
-              this.input.watermark(this.options.watermarkAllowMessage)
+            if(typeof $().vewatermark == "function"){
+              this.input.vewatermark(this.options.watermarkAllowMessage)
             } 
 
             //maintain the indexes
@@ -311,8 +311,8 @@
 						
 						if(this.tagsArray.length == (this.options.maxTags-1)){
               //Last tag (or try to add more tags than maxTags)
-              if(typeof $().watermark == "function"){
-                this.input.watermark(this.options.watermarkDenyMessage)
+              if(typeof $().vewatermark == "function"){
+                this.input.vewatermark(this.options.watermarkDenyMessage)
               }
               $(this.input).blur();
             }
@@ -475,8 +475,8 @@
             if (this.options.tagsChanged){
 							this.options.tagsChanged(null, 'reset', null);
 						}
-            if(typeof $().watermark == "function"){
-              this.input.watermark(this.options.watermarkAllowMessage)
+            if(typeof $().vewatermark == "function"){
+              this.input.vewatermark(this.options.watermarkAllowMessage)
             }   
         },
 

@@ -1,5 +1,13 @@
 VISH.Editor.Slides = (function(V,$,undefined){
 
+	/* Hash Management */
+	var updateCurrentSlideFromHash = function(){
+		var slideNo = V.Utils.getSlideNumberFromHash();
+		if(slideNo){
+			V.Slides.setCurrentSlideNumber(slideNo);
+		}
+	};
+
 	var showSlides = function(){
 		$(".slides > article").removeClass("temp_hidden");
 	};
@@ -35,6 +43,59 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		}
 
 		return true;
+	};
+
+
+	/* Subslide Movement (with keyboard) */
+
+	/**
+	 * Function to go to next subslide in a slideset
+	 */
+	var forwardOneSubslide = function(event){
+		moveSubslides(1);
+	};
+
+   /**
+	* Function to go to previous subslide in a slideset
+	*/
+	var backwardOneSubslide = function(){
+		moveSubslides(-1);
+	};
+
+   /**
+	* Function to move n subslides and change the thumbnails and focus
+	* n > 0 (advance subslides)
+	* n < 0 (go back)
+	*/
+	var moveSubslides = function(n){
+		var cSlide = V.Slides.getCurrentSlide();
+		if(!V.Editor.Slideset.isSlideset(cSlide)){
+			return;
+		}
+		var cSubslideNumber = V.Slides.getCurrentSubslideNumber();
+		if(typeof cSubslideNumber == "undefined"){
+			cSubslideNumber = 0;
+		}
+		//Get subslides quantity
+		var subslidesQuantity = V.Editor.Slideset.getSubslidesQuantity(cSlide);
+
+		var no = cSubslideNumber+n;
+		var cno = Math.min(Math.max(0,no),subslidesQuantity);
+		if(no===cno){
+			goToSubslide(no);
+		}
+	};
+
+   /**
+	* Go to the subslide no
+	*/
+	var goToSubslide = function(no){
+		if(no===0){
+			//Select slideset
+			V.Editor.Slideset.onClickOpenSlideset();
+		} else {
+			V.Editor.Slideset.openSubslideWithNumber(no);
+		}
 	};
 
 
@@ -394,9 +455,30 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		} else {
 			removeSlide(V.Slides.getCurrentSlide());
 		}
-	}
+	};
+
+	var updateThumbnail = function(slide){
+		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(slide);
+		var thumbnailURL = V.Editor.Thumbnails.getThumbnailURL(slide);
+
+		//Capure load img error
+		$(slideThumbnail).error(function(response){
+			//Load the default image
+			_updateThumbnail(slide,slideThumbnail,V.Editor.Thumbnails.getDefaultThumbnailURL(slide));
+		});
+
+		_updateThumbnail(slide,slideThumbnail,thumbnailURL);
+	};
+
+	var _updateThumbnail = function(slide,slideThumbnail,thumbnailURL){
+		if(V.Editor.Slideset.isSlideset(slide)){
+			$("#slideset_selected > img").attr("src",thumbnailURL);
+		}
+		$(slideThumbnail).attr("src",thumbnailURL);
+	};
 
 	return {
+		updateCurrentSlideFromHash	: updateCurrentSlideFromHash,
 		showSlides				: showSlides,
 		hideSlides				: hideSlides,
 		isSlideFocused			: isSlideFocused,
@@ -411,7 +493,12 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		removeSubslide			: removeSubslide,
 		removeSlideKeyboard		: removeSlideKeyboard,
 		isSubslide				: isSubslide,
-		copyTextAreasOfSlide	: copyTextAreasOfSlide
-	};
+		updateThumbnail			: updateThumbnail,
+		copyTextAreasOfSlide	: copyTextAreasOfSlide,
+		forwardOneSubslide		: forwardOneSubslide,
+		backwardOneSubslide		: backwardOneSubslide,
+		moveSubslides			: moveSubslides,
+		goToSubslide			: goToSubslide
+	}; 
 
 }) (VISH, jQuery);

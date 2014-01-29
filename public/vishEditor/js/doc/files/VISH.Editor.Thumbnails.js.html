@@ -99,8 +99,12 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	&#x2F;&#x2F;Tmp vars
 	var redrawThumbnailsCallback;
 	var drawSlidesetThumbnailsCallback;
+
+	&#x2F;&#x2F;State vars
+	var lastSelectedSlideThumbnail = undefined;
+	var lastSelectedSubslideThumbnail = undefined;
 	
-	var init = function(){ 
+	var init = function(){
 	}
 	 
 	var redrawThumbnails = function(successCallback){
@@ -152,6 +156,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			&#x2F;&#x2F;Add class to title
 			var imgContainer = $(img).parent();
 			$(imgContainer).addClass(&quot;wrapper_barbutton&quot;);
+			$(imgContainer).addClass(&quot;preventNoselectable&quot;);
 			var p = $(imgContainer).find(&quot;p&quot;);
 			$(p).addClass(&quot;ptext_barbutton&quot;);
 
@@ -233,23 +238,38 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var selectThumbnail = function(no){
 		$(&quot;#slides_list img.image_barbutton&quot;).removeClass(&quot;selectedSlideThumbnail&quot;);
 		$(&quot;#slides_list img.image_barbutton[slideNumber=&quot; + no + &quot;]&quot;).addClass(&quot;selectedSlideThumbnail&quot;);
+
+		var advance = ((lastSelectedSlideThumbnail===undefined)||(no &gt; lastSelectedSlideThumbnail));
+		lastSelectedSlideThumbnail = no;
+		var slide = V.Slides.getSlideWithNumber(no);
+		if(!isThumbnailVisible(slide)){
+			if(advance){
+				moveThumbnailsToSlide(Math.max(no-5,1));
+			} else {
+				moveThumbnailsToSlide(no);
+			}
+		};
 	};
 
-
-    &#x2F;*
-     * SlideNumber can be also the slide element itself
-     *&#x2F;
 	var moveThumbnailsToSlide = function(slideNumber){
 		var element = $(&quot;img.image_barbutton[slideNumber=&quot; + slideNumber + &quot;]&quot;);
 		V.Editor.Scrollbar.goToElement(thumbnailsDivId,element);
 	}
+
+	var moveThumbnailsToSubslide = function(slideNumber){
+		var element = $(&quot;#subslides_list img.image_barbutton[slideNumber=&quot; + slideNumber + &quot;]&quot;).parent();
+		V.Editor.Scrollbar.goToElement(slidesetThumbnailsDivId,element);
+	}
   
 	var getThumbnailForSlide = function(slide){
+		if(V.Editor.Slides.isSubslide(slide)){
+			return _getThumbnailForSubslide(slide);
+		}
 		var slidenumber = $(slide).attr(&quot;slidenumber&quot;);
 		return $(&quot;#slides_list img.image_barbutton[slideNumber=&quot; + slidenumber + &quot;]&quot;);
 	}
 
-	var getThumbnailForSubslide = function(subslide){
+	var _getThumbnailForSubslide = function(subslide){
 		var slidenumber = $(subslide).attr(&quot;slidenumber&quot;);
 		return $(&quot;#subslides_list img.image_barbutton[slideNumber=&quot; + slidenumber + &quot;]&quot;);
 	}
@@ -262,18 +282,28 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		if(isSlideset){
 			thumbnailURL = V.Editor.Slideset.getCreatorModule(slideType).getThumbnailURL(slide);
 		} else if(slideType==V.Constant.STANDARD){
-			var template = $(slide).attr(&#x27;template&#x27;);
-			thumbnailURL = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
+
+			&#x2F;&#x2F;If the slide only contains one element, and it&#x27;s an image, use it as thumbnail.
+			var zone = $(slide).children(&quot;div.vezone&quot;);
+			if(($(zone).length === 1)&amp;&amp;(!V.Editor.isZoneEmpty(zone))&amp;&amp;($(zone).attr(&quot;type&quot;)==&quot;image&quot;)){
+				&#x2F;&#x2F;The slide contains only one image in the zone &#x27;zone&#x27;
+				var img = $(zone).find(&quot;img&quot;);
+				if(($(img).length === 1)&amp;&amp;(typeof $(img).attr(&quot;src&quot;) == &quot;string&quot;)){
+					thumbnailURL = $(img).attr(&quot;src&quot;);
+				}
+			} else {
+				thumbnailURL = _getDefaultThumbnailURLForStandardSlide(slide);
+			}
 		}
 
 		return thumbnailURL;
-	}
+	};
 
 	var getDefaultThumbnailURL = function(slide){
 		var slideType = $(slide).attr(&#x27;type&#x27;);
 
 		if(slideType==V.Constant.STANDARD){
-			return getThumbnailURL(slide);
+			return _getDefaultThumbnailURLForStandardSlide(slide);
 		} else if(V.Editor.Slideset.isSlideset(slideType)){
 			var creatorModule = V.Editor.Slideset.getCreatorModule(slideType);
 			if(typeof creatorModule.getDefaultThumbnailURL == &quot;function&quot;){
@@ -282,7 +312,13 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				return creatorModule.getThumbnailURL(slide);
 			}
 		}
-	}
+	};
+
+	var _getDefaultThumbnailURLForStandardSlide = function(slide){
+		&#x2F;&#x2F;Use template as thumbnail
+		var template = $(slide).attr(&#x27;template&#x27;);
+		return V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; Slideset Thumbnails
@@ -308,10 +344,10 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				return true; &#x2F;&#x2F;Continue
 			}
 
-			var template = $(s).attr(&#x27;template&#x27;);
-			var srcURL = V.ImagesPath + &quot;templatesthumbs&#x2F;&quot;+ template + &quot;.png&quot;;
+			var srcURL = getThumbnailURL(s);
+			var defaultURL = getDefaultThumbnailURL(s);
 			slideElements += 1;
-			imagesArray.push($(&quot;&lt;img id=&#x27;subslideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; &#x2F;&gt;&quot;));
+			imagesArray.push($(&quot;&lt;img id=&#x27;subslideThumbnail&quot; + slideElements + &quot;&#x27; class=&#x27;image_barbutton&#x27; slideNumber=&#x27;&quot; + slideElements + &quot;&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; defaultsrc=&#x27;&quot; + defaultURL + &quot;&#x27;&#x2F;&gt;&quot;));
 			imagesArrayTitles.push(String.fromCharCode(64+slideElements));
     	});
 
@@ -319,6 +355,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		options.order = true;
 		options.titleArray = imagesArrayTitles;
 		options.callback = _onSlidesetThumbnailsImagesLoaded;
+		options.defaultOnError = true;
 		V.Utils.Loader.loadImagesOnContainer(imagesArray,slidesetThumbnailsDivId,options);
 	};
 
@@ -401,19 +438,53 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 	var selectSubslideThumbnail = function(no){
 		$(&quot;#subslides_list img.image_barbutton&quot;).removeClass(&quot;selectedSubslideThumbnail&quot;);
+		if(no===null){
+			&#x2F;&#x2F;Used to unselect all subslide thumbnails
+			return;
+		}
 		$(&quot;#subslides_list img.image_barbutton[slideNumber=&quot; + no + &quot;]&quot;).addClass(&quot;selectedSubslideThumbnail&quot;);
+
+		var advance = ((lastSelectedSubslideThumbnail===undefined)||(no &gt; lastSelectedSubslideThumbnail));
+		lastSelectedSubslideThumbnail = no;
+		var subslide = V.Slides.getSubslideWithNumber(V.Slides.getCurrentSlide(),no);
+		if(!isThumbnailVisible(subslide)){
+			if(advance){
+				moveThumbnailsToSubslide(Math.max(no-7,1));
+			} else {
+				moveThumbnailsToSubslide(no);
+			}
+		};
+	};
+
+	var isThumbnailVisible = function(slide){
+		var slideThumbnail = getThumbnailForSlide(slide);
+		var offset = $(slideThumbnail).offset();
+		if((typeof offset == &quot;undefined&quot;)||(offset===null)){
+			&#x2F;&#x2F;Transitory states...
+			return true;
+		}
+		if(V.Editor.Slides.isSubslide(slide)){
+			var offsetLeft = offset.left;
+			return ((offsetLeft &gt; 466) &amp;&amp; (offsetLeft &lt; 1119));
+		} else {
+			&#x2F;&#x2F;Standard slide
+			var offsetTop = offset.top;
+			return ((offsetTop &gt; 132) &amp;&amp; (offsetTop &lt; 667));
+		}
 	};
 
 	return {
-		init              		: init,
-		redrawThumbnails  		: redrawThumbnails,
-		selectThumbnail	  		: selectThumbnail,
-		moveThumbnailsToSlide	: moveThumbnailsToSlide,
-		drawSlidesetThumbnails  : drawSlidesetThumbnails,
-		selectSubslideThumbnail	: selectSubslideThumbnail,
-		getThumbnailURL			: getThumbnailURL,
-		getThumbnailForSlide 	: getThumbnailForSlide,
-		getThumbnailForSubslide : getThumbnailForSubslide
+		init              			: init,
+		redrawThumbnails  			: redrawThumbnails,
+		drawSlidesetThumbnails  	: drawSlidesetThumbnails,
+		selectThumbnail	  			: selectThumbnail,
+		selectSubslideThumbnail		: selectSubslideThumbnail,
+		moveThumbnailsToSlide		: moveThumbnailsToSlide,
+		moveThumbnailsToSubslide	: moveThumbnailsToSubslide,
+		getThumbnailURL				: getThumbnailURL,
+		getDefaultThumbnailURL 		: getDefaultThumbnailURL,
+		getThumbnailForSlide 		: getThumbnailForSlide,
+		isThumbnailVisible			: isThumbnailVisible
 	}
 
 }) (VISH, jQuery);

@@ -114,7 +114,7 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 	var init = function(){
-		$(&quot;#quizSessionNameInput&quot;).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
+		$(&quot;#quizSessionNameInput&quot;).vewatermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
 		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
@@ -352,7 +352,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(input).attr(&quot;id&quot;,&quot;quizSessionNameInput&quot;);
 		$(input).attr(&quot;title&quot;,V.I18n.getTrans(&quot;i.tooltip.QSInput&quot;));
 		$(input).addClass(&quot;quizSessionNameInput&quot;);
-		$(input).watermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
+		$(input).vewatermark((V.I18n.getTrans(&quot;i.QuizSessionName&quot;)));
 		options.middlerow = $(input);
 		options.middlerowExtraClass = &quot;mr_quizSession&quot;;
 
@@ -657,8 +657,10 @@ VISH.Quiz = (function(V,$,undefined){
 			if((typeof currentQuizSession.lastDrawedResults != &quot;undefined&quot;)&amp;&amp;(results.length === currentQuizSession.lastDrawedResults.length)){
 				&#x2F;&#x2F;No new results, redraw is not needed
 				return;
-			} else {
-				currentQuizSession.lastDrawedResults = results;
+			}
+			&#x2F;&#x2F;Empty results, redraw is not needed
+			if(results.length===0){
+				return;
 			}
 		} else {
 			&#x2F;&#x2F;No quiz session...
@@ -682,6 +684,9 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F;Draw
+
+		&#x2F;&#x2F;Store drawed results
+		currentQuizSession.lastDrawedResults = results;
 
 		&#x2F;&#x2F;Prepare canvas
 		_cleanResults();

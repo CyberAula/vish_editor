@@ -368,43 +368,6 @@ VISH.Editor.API = (function(V,$,undefined){
 
 
 	&#x2F;**
-	* function to call VISH and request smartcards (flashcards and virtual tours) in json format
-	* The request is:
-	* GET &#x2F;excursions&#x2F;search.json?type=smartcard&amp;q=text
-	*&#x2F;
-	var requestSmartcards = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == &quot;function&quot;){
-				var result = V.Samples.API.smartcardList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType(&quot;smartcard&quot;, text, successCallback, failCallback);   
-	};
-
-	&#x2F;**
-	* function to call VISH and request recommended smartcards
-	*&#x2F;
-	var requestRecomendedSmartcards = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == &quot;function&quot;){
-				var result = V.Samples.API.smartcardList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType(&quot;smartcard&quot;, &quot;&quot;, successCallback, failCallback);
-	};
-
-
-	&#x2F;**
 	* generic function to call VISH and request by query and type
 	* The request is:
 	* GET &#x2F;search.json?type=type&amp;q=query
@@ -413,7 +376,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		if((type===&quot;live&quot;)||(type===&quot;object&quot;)){
 			_requestResourceType(type,query, successCallback, failCallback);
 			return;
-		}else if((type===&quot;excursion&quot;)||(type===&quot;smartcard&quot;)){
+		} else if(type===&quot;excursion&quot;){
 			_requestExcursionType(type,query, successCallback, failCallback);
 			return;
 		}
@@ -537,13 +500,12 @@ VISH.Editor.API = (function(V,$,undefined){
 			if(typeof successCallback == &quot;function&quot;){
 				setTimeout(function(){
 					successCallback(V.Samples.API.thumbnailsList);
-				}, 2000);
+				}, 1000);
 			};
 			return;
 		};
 
 		$.ajax({
-			async: false,
 			type: &#x27;GET&#x27;,
 			url: &#x27;&#x2F;excursion_thumbnails.json&#x27;,
 			dataType: &#x27;json&#x27;,
@@ -558,32 +520,34 @@ VISH.Editor.API = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
-	var uploadTmpJSON = function(json, successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == &quot;function&quot;){
+	var uploadTmpJSON = function(json, responseFormat, successCallback, failCallback){
+		responseFormat = (typeof responseFormat==&quot;string&quot;) ? responseFormat : &quot;json&quot;
+
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+			if(typeof failCallback == &quot;function&quot;){
 				setTimeout(function(){
 					&#x2F;&#x2F; var iframe = $(&quot;#hiddenIframeForAjaxDownloads&quot;);
 					&#x2F;&#x2F; $(iframe).attr(&quot;src&quot;,&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;excursions&#x2F;tmpJson.json?fileId=1&#x27;);
 					failCallback();
-				},2000);
+				},100);
 			}
 			return;
 		}
 
 		$.ajax({
-			async: false,
 			type: &#x27;POST&#x27;,
 			url: &#x27;&#x2F;excursions&#x2F;tmpJson.json&#x27;,
 			dataType: &#x27;json&#x27;,
 			data: { 
 				&quot;authenticity_token&quot; : V.User.getToken(),
-				&quot;json&quot;: JSON.stringify(json)
+				&quot;json&quot;: JSON.stringify(json),
+				&quot;responseFormat&quot;: responseFormat
 			},
-			success: function(data) {
-				if((data)&amp;&amp;(data.fileId)){
-					V.Editor.API.downloadTmpJSON(data.fileId);
+			success: function(data){
+				if((data)&amp;&amp;(data.url)){
+					_downloadFile(data.url);
 					if(typeof successCallback == &quot;function&quot;){
 						successCallback();
 					}
@@ -597,21 +561,18 @@ VISH.Editor.API = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
-	var downloadTmpJSON = function(fileId){
-		var filename = fileId
+	var _downloadFile = function(fileURL){
 		var iframe = $(&quot;#hiddenIframeForAjaxDownloads&quot;);
-		$(iframe).attr(&quot;src&quot;,&#x27;&#x2F;excursions&#x2F;tmpJson.json?fileId=&#x27;+fileId+&#x27;&amp;filename=&#x27;+filename);
-	}
+		$(iframe).attr(&quot;src&quot;,fileURL);
+	};
 
 	
 	return {
 		init						: init,
 		requestExcursions           : requestExcursions,
 		requestRecomendedExcursions : requestRecomendedExcursions,
-		requestSmartcards           : requestSmartcards,
-		requestRecomendedSmartcards : requestRecomendedSmartcards,
 		requestVideos               : requestVideos,
 		requestRecomendedVideos     : requestRecomendedVideos,
 		requestImages               : requestImages,
@@ -622,8 +583,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
 		requestThumbnails           : requestThumbnails,
-		uploadTmpJSON               : uploadTmpJSON,
-		downloadTmpJSON             : downloadTmpJSON
+		uploadTmpJSON               : uploadTmpJSON
 	};
 
 }) (VISH, jQuery);

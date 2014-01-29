@@ -64,6 +64,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Recommendations.init(options);
 		V.Events.init();
 		V.VideoPlayer.init();
+		V.FullScreen.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);
 		});
@@ -83,9 +84,10 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferAnimationLoaded = function(options,presentation){
+		V.Slides.updateCurrentSlideFromHash();
 		//we have to update slides AFTER load theme and before anything
 		//This way we prevent undesired behaviours 
-		V.Slides.updateSlides(); 
+		V.Slides.updateSlides();
 
 		V.Quiz.init(); //initQuizAfterRender
 
@@ -95,7 +97,9 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 		V.ViewerAdapter.init(options); //Also init texts
-		
+
+		//Clean hash
+		// V.Utils.cleanHash();
 
 		if(V.Slides.getCurrentSlideNumber()>0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
@@ -105,44 +109,8 @@ VISH.Viewer = (function(V,$,undefined){
 			//Try to win focus
 			window.focus();
 		}
-	}
-
-
-	/**
-	 * Function to enter and exit fullscreen
-	 */
-	var toggleFullScreen = function () {
-		if(V.Status.isSlaveMode()){
-			return;
-		}
-
-		if(V.Status.getIsInIframe()){
-			var myDoc = parent.document;
-			var myElem = V.Status.getIframe();
-		} else {
-			var myDoc = document;
-			var myElem = myDoc.getElementById('presentation_iframe');
-		}
-		
-		if ((myDoc.fullScreenElement && myDoc.fullScreenElement !== null) || (!myDoc.mozFullScreen && !myDoc.webkitIsFullScreen)) {
-			if (myDoc.documentElement.requestFullScreen) {
-				myElem.requestFullScreen();
-			} else if (myDoc.documentElement.mozRequestFullScreen) {
-				myElem.mozRequestFullScreen();
-			} else if (myDoc.documentElement.webkitRequestFullScreen) {
-				myElem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);			    	
-			}	    
-		} else {
-			if (myDoc.cancelFullScreen) {
-				myDoc.cancelFullScreen();
-			} else if (myDoc.mozCancelFullScreen) {
-				myDoc.mozCancelFullScreen();
-			} else if (myDoc.webkitCancelFullScreen) {
-				myDoc.webkitCancelFullScreen();
-			}
-		}
 	};
-	
+
 	
 	var getOptions = function(){	
 		return initOptions;
@@ -190,9 +158,7 @@ VISH.Viewer = (function(V,$,undefined){
 			V.EVideo.loadEVideo(slide.id);
 		}
 
-		if(_isRecommendationMoment()){
-			V.Recommendations.generateFancybox();
-		}
+		V.Recommendations.checkForRecommendations();
 	};	
 
 	/**
@@ -222,21 +188,6 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 	};
-
-	/**
-	 * function to check if this is the penultimate Slide (or the only one) and call to get the recommendations
-	 */
-	var _isRecommendationMoment = function(){
-		var number_of_slides = V.Slides.getSlides().length;
-		var slide_number = V.Slides.getCurrentSlideNumber();
-
-		if(number_of_slides===1 || slide_number===(number_of_slides-1)){
-			return true;
-		} else {
-			return false;
-		}
-	};
-	
 	
 	/**
 	 * function to update the number that indicates what slide is diplayed
@@ -265,15 +216,15 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 	};
 
+
 	return {
-		init 					: init,
-		toggleFullScreen 		: toggleFullScreen, 
-		getOptions				: getOptions,
-		updateSlideCounter		: updateSlideCounter,
-		getCurrentPresentation	: getCurrentPresentation,
-		getPresentationType		: getPresentationType,
-		onSlideEnterViewer		: onSlideEnterViewer,
-		onSlideLeaveViewer		: onSlideLeaveViewer
+		init 						: init, 
+		getOptions					: getOptions,
+		updateSlideCounter			: updateSlideCounter,
+		getCurrentPresentation		: getCurrentPresentation,
+		getPresentationType			: getPresentationType,
+		onSlideEnterViewer			: onSlideEnterViewer,
+		onSlideLeaveViewer			: onSlideLeaveViewer
 	};
 
 }) (VISH,jQuery);

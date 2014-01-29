@@ -101,7 +101,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		V.Editor.Image.Repository.init();
 		V.Editor.Image.LRE.init();
 
-		&#x2F;&#x2F; $(&quot;#&quot; + urlInputId).watermark(V.I18n.getTrans(&quot;i.pasteImageURL&quot;));
+		&#x2F;&#x2F; $(&quot;#&quot; + urlInputId).vewatermark(V.I18n.getTrans(&quot;i.pasteImageURL&quot;));
 
 		&#x2F;&#x2F;Load from URL
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
@@ -280,15 +280,13 @@ VISH.Editor.Image = (function(V,$,undefined){
 	* param area: optional param indicating the area to add the image, used for editing presentations
 	* param style: optional param with the style, used in editing presentation
 	*&#x2F;
-	var drawImage = function(image_url, area, style, hyperlink){
-		_drawImageInArea(image_url, area, style, hyperlink);
-	};
-
-	var _drawImageInArea = function(image_url, area, style, hyperlink){
+	var drawImage = function(image_url, area, style, hyperlink, options){
 		var current_area;
+		var renderOnInit = false;
 
 		if(area){
 			current_area = area;
+			renderOnInit = true;
 		}	else {
 			current_area = V.Editor.getCurrentArea();
 		}
@@ -301,13 +299,18 @@ VISH.Editor.Image = (function(V,$,undefined){
 			newStyle = &quot;width:&quot;+image_width+&quot;px;&quot;;
 		}
 
-		var template = V.Editor.getTemplate(); 
+		var template = V.Editor.getTemplate(current_area);
 		var nextImageId = V.Utils.getId();
 		var idToDragAndResize = &quot;draggable&quot; + nextImageId;
 		current_area.attr(&#x27;type&#x27;,&#x27;image&#x27;);
 		if(hyperlink){
 			current_area.attr(&#x27;hyperlink&#x27;,hyperlink);
 		}
+		if(typeof options != &quot;undefined&quot;){
+			if (typeof options[&quot;vishubPdfexId&quot;] != &quot;undefined&quot;){
+				current_area.attr(&#x27;vishubpdfexid&#x27;,options[&quot;vishubPdfexId&quot;]);
+			}
+		};
 		current_area.html(&quot;&lt;img class=&#x27;&quot;+template+&quot;_image&#x27; id=&#x27;&quot;+idToDragAndResize+&quot;&#x27; draggable=&#x27;true&#x27; title=&#x27;Click to drag&#x27; src=&#x27;&quot;+image_url+&quot;&#x27; style=&#x27;&quot;+newStyle+&quot;&#x27;&#x2F;&gt;&quot;);
 
 		if(!style){
@@ -330,7 +333,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 					$(theImg).height(dimentionsToDraw.height);
 				}
 			});
-		}
+		};
 
 		V.Editor.addDeleteButton(current_area);
 		
@@ -341,6 +344,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 			}
 		});
 
+		if(renderOnInit === false){
+			V.Editor.Slides.updateThumbnail(V.Slides.getTargetSlide());
+		};
 	};
 
 	var getAddContentMode = function(){
@@ -348,7 +354,22 @@ VISH.Editor.Image = (function(V,$,undefined){
 	}
 
 	var setAddContentMode = function(mode){
+		_cleanTabs();
+		switch(mode){
+			case V.Constant.NONE:
+				break;
+			case V.Constant.THUMBNAIL:
+				$(&quot;#tab_pic_thumbnails&quot;).show();
+				break;
+			case V.Constant.FLASHCARD:
+				break;	
+		}
 		contentAddMode = mode;
+	}
+
+	var _cleanTabs = function(){
+		&#x2F;&#x2F;Hide thumbnails tab
+		$(&quot;#tab_pic_thumbnails&quot;).hide();
 	}
 
 	return {

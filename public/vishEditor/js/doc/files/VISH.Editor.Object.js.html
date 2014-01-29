@@ -104,7 +104,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.Snapshot.init();
 		
 		var urlInput = $(&quot;#&quot;+urlDivId).find(&quot;input&quot;);
-		&#x2F;&#x2F; $(urlInput).watermark(V.I18n.getTrans(&quot;i.pasteEmbedObject&quot;));
+		&#x2F;&#x2F; $(urlInput).vewatermark(V.I18n.getTrans(&quot;i.pasteEmbedObject&quot;));
 		
 		&#x2F;&#x2F;Load from URL (embed)
 		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
@@ -181,7 +181,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				V.Debugging.log(error);
 			}
 		});	
-	}
+	};
 	
 	var onLoadTab = function(tab){
 		if(tab==&quot;upload&quot;){
@@ -190,13 +190,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(tab==&quot;url&quot;){
 			_onLoadURLTab();
 		}
-	}	
+	};
 	
 	var _onLoadURLTab = function(){
 		contentToAdd = null;
 		resetPreview(urlDivId);
 		$(&quot;#&quot; + urlInputId).val(&quot;&quot;);
-	}
+	};
 	
 	var _onLoadUploadTab = function(){
 		contentToAdd = null;
@@ -210,7 +210,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		_resetUploadFields();
 			
 		V.Editor.API.requestTags(_onTagsReceived);
-	}
+	};
 	
 	var _resetUploadFields = function(){
 		var bar = $(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar&quot;);
@@ -224,7 +224,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if($(tagList)[0].children.length!==0){
 			$(tagList).tagit(&quot;reset&quot;);
 		}
-	}
+	};
    
 	var _onTagsReceived = function(data){
 		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
@@ -241,7 +241,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
-	}
+	};
 	
 	var processResponse = function(response){
 		try  {
@@ -255,7 +255,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		} catch(e) {
 			&#x2F;&#x2F;No JSON response
 		}
-	}
+	};
 	
 	
 	&#x2F;&#x2F;Preview generation for &quot;load&quot; and &quot;upload&quot; tabs
@@ -272,7 +272,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).append(wrapper);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).show();
 		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).addClass(&quot;documentblank_extraMargin&quot;);
-	}
+	};
 	
 	var resetPreview = function(divId){
 		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).hide();
@@ -282,18 +282,18 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;, previewBackground);
 		}
 		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).removeClass(&quot;documentblank_extraMargin&quot;);
-	}
+	};
 	
 	var drawPreviewElement = function(){
 		drawPreviewObject(contentToAdd);
-	}
+	};
 	
 	var drawPreviewObject = function(content,options){
 		if(content){
 			drawObject(content,options);
 			$.fancybox.close();
 		}
-	}
+	};
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -387,7 +387,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return &quot;&lt;img class=&#x27;imagePreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;img&gt;&quot;;
 						break;
 					case V.Constant.MEDIA.FLASH:
-						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27; wmode=&#x27;opaque&#x27; &gt;&lt;&#x2F;embed&gt;&quot;;
+						object = V.Utils.addParamToUrl(object,&quot;wmode&quot;,&quot;opaque&quot;);
+						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;embed&gt;&quot;;
 						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:
@@ -398,7 +399,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoFromSources([object]);
+						return V.Editor.Video.HTML5.renderVideoWithURL(object);
 						break;
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
@@ -418,6 +419,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 			case V.Constant.WRAPPER.IFRAME:
 				return _genericWrapperPreview(object);
 				break;
+			case V.Constant.WRAPPER.VIDEO:
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object);
+				break;
 			default:
 				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + objectInfo.wrapper);
 				break;
@@ -430,6 +434,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperPreview).attr(&#x27;wmode&#x27;,&#x27;opaque&#x27;);
 		$(wrapperPreview).removeAttr(&#x27;width&#x27;);
 		$(wrapperPreview).removeAttr(&#x27;height&#x27;);
+		&#x2F;&#x2F;Force scrolling auto if the wrapper has specified the scrolling param
+		if(typeof $(wrapperPreview).attr(&quot;scrolling&quot;) != &quot;undefined&quot;){
+			$(wrapperPreview).attr(&quot;scrolling&quot;,&quot;auto&quot;);
+		}
 		return wrapperPreview;
 	}
 	
@@ -513,6 +521,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 
+			case V.Constant.WRAPPER.VIDEO:
+				V.Editor.Video.HTML5.drawVideoWithWrapper(object);
+				break;
+
 			default:
 				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + objectInfo.wrapper);
 				break;
@@ -544,6 +556,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperTag).css(&#x27;pointer-events&#x27;, &quot;none&quot;);
 		$(wrapperTag).attr(&#x27;class&#x27;, template + &quot;_object&quot;);
 		$(wrapperTag).attr(&#x27;wmode&#x27;, &quot;opaque&quot;);
+		&#x2F;&#x2F;Force scrolling auto if the wrapper has specified the scrolling param
+		if(typeof $(wrapperTag).attr(&quot;scrolling&quot;) != &quot;undefined&quot;){
+			$(wrapperTag).attr(&quot;scrolling&quot;,&quot;auto&quot;);
+		}
 
 		$(current_area).html(&quot;&quot;);
 		$(current_area).append(wrapperDiv);

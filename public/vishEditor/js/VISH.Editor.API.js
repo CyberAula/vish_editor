@@ -278,43 +278,6 @@ VISH.Editor.API = (function(V,$,undefined){
 
 
 	/**
-	* function to call VISH and request smartcards (flashcards and virtual tours) in json format
-	* The request is:
-	* GET /excursions/search.json?type=smartcard&q=text
-	*/
-	var requestSmartcards = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.smartcardList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("smartcard", text, successCallback, failCallback);   
-	};
-
-	/**
-	* function to call VISH and request recommended smartcards
-	*/
-	var requestRecomendedSmartcards = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.smartcardList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("smartcard", "", successCallback, failCallback);
-	};
-
-
-	/**
 	* generic function to call VISH and request by query and type
 	* The request is:
 	* GET /search.json?type=type&q=query
@@ -323,7 +286,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		if((type==="live")||(type==="object")){
 			_requestResourceType(type,query, successCallback, failCallback);
 			return;
-		}else if((type==="excursion")||(type==="smartcard")){
+		} else if(type==="excursion"){
 			_requestExcursionType(type,query, successCallback, failCallback);
 			return;
 		}
@@ -453,7 +416,6 @@ VISH.Editor.API = (function(V,$,undefined){
 		};
 
 		$.ajax({
-			async: false,
 			type: 'GET',
 			url: '/excursion_thumbnails.json',
 			dataType: 'json',
@@ -470,30 +432,32 @@ VISH.Editor.API = (function(V,$,undefined){
 		});
 	};
 
-	var uploadTmpJSON = function(json, successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
+	var uploadTmpJSON = function(json, responseFormat, successCallback, failCallback){
+		responseFormat = (typeof responseFormat=="string") ? responseFormat : "json"
+
+		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
 			if(typeof failCallback == "function"){
 				setTimeout(function(){
 					// var iframe = $("#hiddenIframeForAjaxDownloads");
 					// $(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
 					failCallback();
-				},800);
+				},100);
 			}
 			return;
 		}
 
 		$.ajax({
-			async: false,
 			type: 'POST',
 			url: '/excursions/tmpJson.json',
 			dataType: 'json',
 			data: { 
 				"authenticity_token" : V.User.getToken(),
-				"json": JSON.stringify(json)
+				"json": JSON.stringify(json),
+				"responseFormat": responseFormat
 			},
-			success: function(data) {
-				if((data)&&(data.fileId)){
-					V.Editor.API.downloadTmpJSON(data.fileId);
+			success: function(data){
+				if((data)&&(data.url)){
+					_downloadFile(data.url);
 					if(typeof successCallback == "function"){
 						successCallback();
 					}
@@ -507,21 +471,18 @@ VISH.Editor.API = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
-	var downloadTmpJSON = function(fileId){
-		var filename = fileId
+	var _downloadFile = function(fileURL){
 		var iframe = $("#hiddenIframeForAjaxDownloads");
-		$(iframe).attr("src",'/excursions/tmpJson.json?fileId='+fileId+'&filename='+filename);
-	}
+		$(iframe).attr("src",fileURL);
+	};
 
 	
 	return {
 		init						: init,
 		requestExcursions           : requestExcursions,
 		requestRecomendedExcursions : requestRecomendedExcursions,
-		requestSmartcards           : requestSmartcards,
-		requestRecomendedSmartcards : requestRecomendedSmartcards,
 		requestVideos               : requestVideos,
 		requestRecomendedVideos     : requestRecomendedVideos,
 		requestImages               : requestImages,
@@ -532,8 +493,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
 		requestThumbnails           : requestThumbnails,
-		uploadTmpJSON               : uploadTmpJSON,
-		downloadTmpJSON             : downloadTmpJSON
+		uploadTmpJSON               : uploadTmpJSON
 	};
 
 }) (VISH, jQuery);

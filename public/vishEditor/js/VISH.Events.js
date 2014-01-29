@@ -38,8 +38,10 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 		$(document).on('keypress', '#slide-counter-input', function(e){
-			if(e.which == 13) { //pressed enter in the goToSlide input field
+			if(e.which == 13) {
+				//pressed enter in the goToSlide input field
 				V.Slides.goToSlide($("#slide-counter-input").val());
+				$("#slide-counter-input").blur();
 			}
 		});
 
@@ -73,6 +75,11 @@ VISH.Events = (function(V,$,undefined){
 				V.Storage.addPresentation(presentation);
 			}, false);
 		}
+
+		//Evaluate button in recommendations panel
+		$(document).on('click', '#evaluate_excursion', function(event){
+			V.Recommendations.onClickEvaluateButton(event);
+		});
 
 		//Focus
 		$(window).focus(function(){

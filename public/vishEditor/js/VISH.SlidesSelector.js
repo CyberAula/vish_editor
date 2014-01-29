@@ -11,6 +11,7 @@ VISH.SlidesSelector = (function(V,$,undefined){
 	 */
 	var init = function(){
 		if(!initialized){
+			_preloadImages();
 			countIndex = $("#ssbsp");
 			acceptButton = $("#ssbaccept");
 			nSlides = V.Slides.getSlidesQuantity();
@@ -71,18 +72,28 @@ VISH.SlidesSelector = (function(V,$,undefined){
 		}
 	};
 
+	_preloadImages = function(){
+		$("#SelectedSlidesToAdd").attr("src",V.ImagesPath + "templatesthumbs/addt.png");
+		$("#tutorialSelectAllImage").attr("src",V.ImagesPath + "tutorial/selectall.png");
+		$("tutorialUnselectAllImage").attr("src",V.ImagesPath + "tutorial/unselectall.png");
+		$("tutorialSelectSlidesImage").attr("src",V.ImagesPath + "tutorial/selectslides.png");
+
+		$("li.addslidestut img[srctoload]").each(function(index,img){
+			$(img).attr("src",$(img).attr("srctoload"));
+		});
+	};
 
 	_acceptAll = function(){
 		for(var i=0; i<nSlides; i++){
 			slides[i] = true;
 		}
-	}
+	};
 
 	_denyAll = function(){
 		for(var i=0; i<nSlides; i++){
 			slides[i] = false;
 		}
-	}
+	};
 
 	_updateIndex = function(){
 		var nAcceptedSlides = _getAcceptedSlides().length;
@@ -101,7 +112,7 @@ VISH.SlidesSelector = (function(V,$,undefined){
 			$(countIndex).removeClass("addslidetrans");
 			$(countIndex).removeClass("addslidetrans2");
 		},800);
-	}	
+	};
 
 	_getAcceptedSlides = function(){
 		var aSlides = [];

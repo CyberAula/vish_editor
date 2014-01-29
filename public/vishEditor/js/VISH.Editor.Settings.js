@@ -4,11 +4,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var tagsLoaded = false;
 	var themeScrollbarCreated = false;
 
+	//Timers
+	var t1;
+
 	//LOM
 	var LOM_Difficulty;
 
 	//Metadata
 	var presentationThumbnail;
+	var _contributors;
 
 
 	var init = function(){
@@ -104,6 +108,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			options.order = true;
 			options.titleArray = imagesArrayTitles;
 			options.callback = _onThemeImagesLoaded;
+			t1 = Date.now();
 			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
 		} else {
 			//Select and move to current theme
@@ -136,16 +141,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//Author
-		var author;
-		var options = V.Utils.getOptions();
-		if(options && options.username){
-			author = options.username;
-		} else if(presentation.author){
-			author = presentation.author;
-		}
+		var author = _getAuthor(presentation);
 		if(author){
-			var authorDOM = $("#author_span_in_preview");
-			$(authorDOM).html(author);
+			var authorName = author.name;
+			if(typeof authorName == "string"){
+				var authorDOM = $("#author_span_in_preview");
+				$(authorDOM).html(authorName);
+			}
+		}
+
+		//Contributors
+		if(typeof presentation.contributors == "object"){
+			_contributors = presentation.contributors;
+		} else {
+			_contributors = [];
 		}
 
 		//Description
@@ -206,6 +215,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	}
 
 	var _onThemeImagesLoaded = function(){
+
+		var diff = Date.now()-t1;
+		if(diff<1500){
+			setTimeout(function(){
+				_onThemeImagesLoaded();
+			},1500-diff);
+			return;
+		}
+
 		//Add class to title elements and events
 		$("#" + themeScrollbarDivId).find("img.image_barbutton").each(function(index,img){
 			//Add class to title
@@ -254,8 +272,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onInitialTagsReceived = function(data){
 		tagsLoaded = true;
-
-		data = V.Editor.Competitions.addCompetitionTags(data);
 
 		V.Utils.Loader.stopLoadingInContainer($("#tagBoxIntro"));
 		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
@@ -394,6 +410,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		settings.VEVersion = V.VERSION;
 		settings.type = V.Constant.PRESENTATION;
 
+		var draftPresentation = V.Editor.getDraftPresentation()
+
 		var title = $('#presentation_details_input_title').val();
 		if((typeof title == "string")&&(title.trim()!="")){
 			settings.title = title;
@@ -408,11 +426,21 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.avatar = presentationThumbnail;
 		}
 
-		var author = $("#author_span_in_preview").html();
-		if((typeof author == "string")&&(author.trim()!="")){
-			settings.author = author;
+		//Author
+		var author = _getAuthor(draftPresentation);
+		var authorName = $("#author_span_in_preview").html();
+		if((typeof authorName == "string")&&(authorName.trim()!="")){
+			author.name = authorName;
+		} else if(typeof author == "object"){
+			delete author["name"];
 		}
+		settings.author = author;
 
+		//Contributors
+		if((typeof _contributors == "object")&&(_contributors.length > 0)){
+			settings.contributors = _contributors;
+		}
+		
 		var tags = getTags();
 		if((tags)&&(tags.length > 0)){
 			settings.tags = tags;
@@ -531,7 +559,32 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				return draftPresentation.tags;
 			}
 		}
-	}
+	};
+
+	var _getAuthor = function(presentation){
+		var author;
+		if((presentation)&&(typeof presentation.author == "object")){
+			author = presentation.author;
+		} else {
+			author = {};
+		}
+
+		if(V.User.isUser()){
+			//Override some params
+			var user = V.User.getUser();
+			if(V.User.getName()){
+				author.name = V.User.getName();
+			}
+			if(V.Configuration.getConfiguration().mode==V.Constant.VISH || V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
+				author.vishMetadata = {};
+				if(V.User.getId()){
+					author.vishMetadata.id = V.User.getId();
+				}
+			}
+		}
+
+		return author;
+	};
 
 	/**
 	 * function called when the user clicks on the pedagogical options button
@@ -551,6 +604,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#presentation_details_fields").slideDown();
 	 };
 
+
+	 /*
+	  * Contributors Management
+	  */
+
+	 var addContributor = function(contributor){
+	 	if((typeof contributor == "object")&&(typeof contributor.name == "string")){
+	 		_contributors.push(contributor);
+	 	}
+	 };
+
+
 	return {
 		init									: init,
 		displaySettings							: displaySettings,
@@ -567,7 +632,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		saveSettings							: saveSettings,
 		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
 		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked,
-		selectAnimation 						: selectAnimation
+		selectAnimation 						: selectAnimation,
+		addContributor							: addContributor
 	};
 
 }) (VISH, jQuery);

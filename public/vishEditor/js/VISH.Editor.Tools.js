@@ -13,7 +13,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var init = function(){
 		cleanToolbar();
-		cleanZoneTools();
 
 		var presentationType = V.Editor.getPresentationType();
 		if(presentationType !== V.Constant.PRESENTATION){
@@ -44,8 +43,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	}
 	 
 	var cleanToolbar = function(){
-		loadToolsForSlide(V.Slides.getCurrentSlide());
-		_cleanElementToolbar();
+		var cSlide = V.Slides.getCurrentSlide();
+		if(typeof cSlide != "undefined"){
+			loadToolsForSlide(cSlide);
+		}
 	}
 
 	var enableToolbar = function(){
@@ -77,6 +78,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		switch(type){
 			case V.Constant.STANDARD:
 				$("#toolbar_background").parent().addClass("toolbar_presentation_wrapper_disabled");
+
+				//If the slide contains only one element, automatically select the zone that contains it
+				// var zone = $(slide).children("div.vezone:has('.delete_content')");
+				// if($(zone).length === 1){
+				// 	//The slide contains only one element in the zone: zone
+				// 	V.Editor.selectArea($(zone));
+				// }
+
 				break;
 			case V.Constant.FLASHCARD:
 				break;
@@ -91,8 +100,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var _cleanPresentationToolbar = function(){
 		//Enable all buttons
 		$(".toolbar_presentation_wrapper_slideTools").removeClass("toolbar_presentation_wrapper_disabled");
+		cleanZoneTools();
 	}
-
 
 	/*
 	 * Draft Mode: change publish button status
@@ -282,7 +291,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		cleanZoneTools(V.Editor.getLastArea());
 		
 		var type = $(zone).clone().attr("type");
-
 		switch(type){
 			case "text":  
 				_loadToolbarForElement(type);

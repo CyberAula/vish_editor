@@ -152,12 +152,19 @@ section.slides > article > article.show_in_smartcard{
 
 /* buttons next and previous */
 .page-switcher {
-	position: absolute;
-	background: transparent;	
+	position: absolute;	
 	border: none;
 	outline: none;
-	max-width: 26px;
-	min-width: 26px;
+	min-width: 24px;
+	min-height: 24px;
+	height: 100%;
+	top: 0%;
+	padding: 0px !important;
+	cursor: pointer;
+	background: transparent;
+	background-image: url("/vishEditor/images/vicons/arrows.png");
+	background-repeat: no-repeat;
+	background-size: auto 1100%;
 }
 
 .page-switcher:hover,
@@ -166,59 +173,57 @@ section.slides > article > article.show_in_smartcard{
 	outline: none;
 }
 
-.disabledarrow {
-	background-position: -120px -120px !important;
-	cursor: auto !important; 
-}
-
-#page-switcher-end {
-	background-image: url("/vishEditor/images/vicons/arrows.png");
-	background-position: -160px -160px;
-	background-repeat: no-repeat;
-	right: 30%;
-	cursor: pointer;
-	height: 30px;
-	width: 20px;
-	top: 16%;
-}
-
-#page-switcher-end:hover {
-	background-position: -200px -200px;
-}
-
-#page-switcher-end:active{
-	background-position: -240px -240px;
+#page-switcher-start {
+	background-position: center 0;
+	left: 32%;
 }
 
 #page-switcher-start:hover {
-	background-position: -40px -40px;
+	background-position: center 10%;
 }
 
 #page-switcher-start:active {
-	background-position: -80px -80px;
+	background-position: center 20%;
 }
 
-#page-switcher-start {
-	background-image: url("/vishEditor/images/vicons/arrows.png");
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	left: 31%;
-	cursor: pointer;
-	height: 30px;
-	width: 20px;
-	top: 16%;
+#page-switcher-end {
+	background-position: center 40%;
+	right: 31%;
 }
+
+#page-switcher-end:hover {
+	background-position: center 50%;
+}
+
+#page-switcher-end:active{
+	background-position: center 60%;
+}
+
+.disabledarrow {
+	cursor: auto !important; 
+}
+
+#page-switcher-start.disabledarrow {
+	background-position: center 30% !important;
+}
+
+#page-switcher-end.disabledarrow {
+	background-position: center 70% !important;
+}
+
+
+/* Full screen */
 
 #page-fullscreen {
-	background-image: url("/vishEditor/images/vicons/fullscreen.png");
-	background-position: 0 0;
-	background-repeat: no-repeat;
-	padding: 15px;
-	height: 15px;
-	width: 15px;
 	position: absolute;
 	right: 0;
 	bottom: 0;
+	height: 100%;
+	width: 30px;
+	background: transparent;
+	background-repeat: no-repeat;
+	background-image: url("/vishEditor/images/vicons/fullscreen.png");
+	background-size: auto 600%;
 	text-align: center;
 	border: medium none;
 	opacity: 1;
@@ -226,27 +231,42 @@ section.slides > article > article.show_in_smartcard{
 	z-index: 2;
 }
 
+#page-fullscreen.fson {
+	background-position: center 80%;
+}
+
+#page-fullscreen.fson:hover {
+	background-position: center 100%;
+}
+
+#page-fullscreen.fsoff {
+	background-position: center 0;
+}
+
+#page-fullscreen.fsoff:hover {
+	background-position: center 20%;
+}
+
 #slide-counter-div {
 	cursor: default;
 	z-index: 10;
 	text-align: center;
-	margin-top: 8px;
 }
 
 #slide-counter-span {
 	cursor: default;
 	text-align: center;
+	margin-left: 1px;
 }
 
 #slide-counter-span, #slide-counter-input {
 	font-family: 'Open Sans', arial, sans-serif;
-	/*font-size: 1.2rem;*/
 	font-size: 14px;
 }
 
 #slide-counter-input {
-	width: 24px;
-	height: 20px;
+	min-width: 18px;
+	min-height: 10px;
 	padding: 1px 1px 1px 0;
 	text-align: right;
 }
@@ -374,7 +394,6 @@ article > div a {
 }
 
 
-
 /* remove outline */
 *:focus { outline: none; }  
 :focus  { outline:none;  }
@@ -461,49 +480,36 @@ button#closeButton {
 	z-index: 2620;
 }
 
-.menubarcolor {
-	opacity: 0.5;
-	position: absolute;
-	bottom: 0;
-	width:100%;
-	height: 9%;
-	background: rgb(226,226,226); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(226,226,226,1) 0%, rgba(219,219,219,1) 50%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(226,226,226,1)), color-stop(50%,rgba(219,219,219,1)), color-stop(51%,rgba(209,209,209,1)), color-stop(100%,rgba(254,254,254,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(226,226,226,1) 0%,rgba(219,219,219,1) 50%,rgba(209,209,209,1) 51%,rgba(254,254,254,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe',GradientType=0 ); /* IE6-9 */
-}
-
 .close_subslide {
 	position: absolute;
-	top: -11px;
-	right: -8px;
-	width: 22px;
-	height: 22px;
-	background: transparent url('/vishEditor/images/vicons/ve_close.png') no-repeat center;
-	background-size: 45%;
-	padding: 13px;
+	top: 0.5%;
+	right: 0.5%;
+	width: 23px;
+	height: 23px;
+	background-size: contain;
 	cursor: pointer;
 	z-index: 1103;
+	background-image: url('/vishEditor/images/vicons/ve_close.png');
+	background-repeat: no-repeat;
+	background-position: 100% 0%;
 }
 
 .close_subslide:hover {
-	background: transparent url('/vishEditor/images/vicons/ve_close_hover.png') no-repeat center;
-	background-size: 45%;
+	background-image: url('/vishEditor/images/vicons/ve_close_hover.png');
 }
 
-.fc_poi {
-       -webkit-transition: none !important;
-       -webkit-transition-delay: none !important;
-       -moz-transition: none !important;
-       -o-transition: none !important;
-       transition: none !important;
+div.fc_poi {
+	-webkit-transition: none !important;
+	-webkit-transition-delay: none !important;
+	-moz-transition: none !important;
+	-o-transition: none !important;
+	transition: none !important;
 	width: 50px;
-	height: 50px;
-	background: url(/vishEditor/images/vicons/animation_arrow.png);
+	height: 40px;
+	background: url("/vishEditor/images/vicons/animation_arrow.png");
+	background-size: 2100% auto;
+	background-position: 0 center;
+	background-repeat: no-repeat;
 	cursor: pointer;
 }
 
@@ -530,7 +536,6 @@ button#closeButton {
 	border: none;
 	outline: none;
 	font-size: 40px;
-	/*min-width: 40px; width is adjusted via javascript, including a min value */
 }
 
 #back_arrow, #forward_arrow {
@@ -551,17 +556,20 @@ button#closeButton {
 /* Watermark */
 
 #embedWatermark {
-	background-image:url("/vishEditor/images/vicons/watermark.png");
 	position: absolute;
-	bottom: 0;
+	top: 10%;
 	left: 2%;
+	background: transparent;
+	background-repeat: no-repeat;
+	background-image:url("/vishEditor/images/vicons/watermark.png");
+	background-size: auto 200%;
+	background-position: center 0;
 	width: 100px;
-	height: 31px;
-	background-size: 112%;
+	height: 80%;
 }
 
 #embedWatermark:hover {
-	background-position: -33px -33px;
+	background-position: center 100%;
 }
 
 
@@ -976,7 +984,7 @@ img#SelectedSlidesToAdd {
 #ssbaccept {
 	max-width: 160px !important;
 	width: 160px !important;
-	margin-left: -353px !important;
+	margin-left: -355px !important;
 	margin-top: -73px !important;
 	position: absolute;
 }
@@ -1122,14 +1130,6 @@ img.selectSlidesimgbutton {
 
 .notification_middlerow {
 	padding-top: 4%;
-}
-
-.competitions_paragraph, .competitions_options {
-	color: #666;
-	font-family: 'Open Sans', arial, sans-serif;
-	/*font-size: 1.2rem;*/
-	font-size: 14px;
-	padding: 40px;
 }
 
 .check_boxer {
@@ -1300,6 +1300,7 @@ a.button_advert:hover {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size:2rem;
 	color: #fff ;
+	white-space: nowrap;
 }
 
 .rec-first-row .textrec1 {
@@ -1466,6 +1467,7 @@ a.button_advert:hover {
 	font-size: 1.1rem;
 	display: inline-block;
 	color: #40cc7f;
+	white-space: nowrap;
 }
 
 .recbutton {
@@ -1491,6 +1493,10 @@ a.button_advert:hover {
 	text-shadow: 1px 1px #666;
 }
 
+img.rec-menu_icon {
+	margin-left: 5%;
+}
+
 .viewer_button {
 	padding: 5px 10px;
 	display: inline;
@@ -1513,7 +1519,7 @@ a.button_advert:hover {
 
 /* Loading */
 
-#loading_fancy {
+.loading_fancy {
 	text-align: center;
 	height: 100%;
 	width: 100%;

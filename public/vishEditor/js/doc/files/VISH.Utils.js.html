@@ -114,7 +114,16 @@ VISH.Utils = (function(V,undefined){
 			var str = this;
 			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
 		};
-	}
+
+		&#x2F;&#x2F;Disable watermark for IE
+		jQuery.fn.vewatermark = function(text){
+			if(V.Status.getDevice().browser.name != V.Constant.IE){
+				$(this).watermark(text);
+			} else {
+				$(this).attr(&quot;placeholder&quot;,text);
+			}
+		};
+	};
 
 	&#x2F;*
 	 *
@@ -186,7 +195,7 @@ VISH.Utils = (function(V,undefined){
 		presentation = _fixTypes(presentation);
 
 		&#x2F;&#x2F;Fix old slidesets
-		if(V.Slides.isSlideset(presentation.type)){
+		if(V.Slides.isSlidesetType(presentation.type)){
 			&#x2F;&#x2F;Force presentation standard
 			presentation.type = V.Constant.PRESENTATION;
 		}
@@ -452,10 +461,58 @@ VISH.Utils = (function(V,undefined){
 		window.top.location = the_url;
 	};
 
+	var removeParamFromUrl = function(url,paramName){
+		if((typeof url !== &quot;string&quot;)||(typeof paramName !== &quot;string&quot;)){
+			return url;
+		}
+
+		&#x2F;&#x2F;Remove hash
+		var splitHash = url.split(&quot;#&quot;);
+		url = splitHash[0];
+
+		var splitParams = url.split(&quot;?&quot;);
+		if (splitParams.length === 2){
+			url = splitParams[0];
+			var params = splitParams[1];
+
+			var validParams = [];
+			var splitParams = params.split(&quot;&amp;&quot;);
+			var sPL = splitParams.length;
+			for(var i=0; i&lt;sPL; i++){
+				var splitParam = splitParams[i].split(&quot;=&quot;);
+				if(splitParam[0]!=paramName){
+					validParams.push({key: splitParam[0], value: splitParam[1]}); 
+				}
+			}
+			&#x2F;&#x2F;Add valid params
+			var vPL = validParams.length;
+			for(var j=0; j&lt;vPL; j++){
+				var param = validParams[j];
+				if(j===0){
+					url = url + &quot;?&quot;;
+				} else {
+					url = url + &quot;&amp;&quot;;
+				}
+				url = url + param.key + &quot;=&quot; + param.value;
+			}
+		}
+
+		&#x2F;&#x2F;Add hash (if present)
+		if(splitHash.length&gt;1){
+			url = url + &quot;#&quot; + splitHash[1];
+		}
+
+		return url;
+	};
+
 	var addParamToUrl = function(url,paramName,paramValue){
 		if((typeof url !== &quot;string&quot;)||(typeof paramName !== &quot;string&quot;)||(typeof paramValue !== &quot;string&quot;)){
 			return url;
 		}
+
+		&#x2F;&#x2F;Remove param (to overwrite it in case if exists)
+		url = removeParamFromUrl(url,paramName);
+
 		&#x2F;&#x2F;Remove hash
 		var splitHash = url.split(&quot;#&quot;);
 		url = splitHash[0];
@@ -473,7 +530,7 @@ VISH.Utils = (function(V,undefined){
 		}
 		
 		return url;
-	}
+	};
 
 	var getParamsFromUrl = function(url){
 		var params = {};
@@ -940,6 +997,111 @@ VISH.Utils = (function(V,undefined){
 		$(notificationWrapper).append(notificationTemplate);
 	};
 
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	&#x2F;&#x2F; VERSION MANAGEMENT
+	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+
+	var isObseleteVersion = function(version){
+		return _getVersionValue(V.VERSION) &gt; _getVersionValue(version);
+	};
+
+	var _getVersionValue = function(version){
+		var vValue = 0;
+		var coef = [100,10,1];
+		try {
+			var digits = version.split(&quot;.&quot;);
+			for(var i=0; i&lt;digits.length; i++){
+				vValue += parseFloat(digits[i])*coef[i];
+			}
+		} catch (e){
+			return 0;
+		}
+		return vValue;
+	};
+
+
+	&#x2F;* Hash Management *&#x2F;
+
+	var getSlideNumberFromHash = function(){
+		try {
+			if(getOptions()[&quot;readHashFromParent&quot;]===true){
+				var location = window.parent.location;
+			} else {
+				var location = window.location;
+			}
+
+			if(typeof location == &quot;undefined&quot;){
+				return;
+			}
+
+			var sNumber = Math.max(1,Math.min(V.Slides.getSlidesQuantity(),parseInt(location.hash.split(&quot;?&quot;)[0].split(&quot;#&quot;).pop())));
+			if(isNaN(sNumber)){
+				return undefined;
+			} else {
+				return sNumber;
+			}
+		} catch(err){
+			return undefined;
+		}
+	};
+
+	var updateHash = function(){
+		var newHash = &#x27;#&#x27; + V.Slides.getCurrentSlideNumber();
+
+		&#x2F;&#x2F;Propagate hash (slidenumber without params)
+		if(getOptions()[&quot;readHashFromParent&quot;]===true){
+			window.parent.location.hash = newHash;
+		}
+
+		var splitedHash = location.hash.split(&quot;?&quot;);
+		if(splitedHash.length &gt; 1){
+			newHash = newHash + &quot;?&quot; + splitedHash[1];
+		}
+
+		window.location.hash = newHash;
+	};
+
+	var cleanHash = function(){
+		window.location.hash = &quot;&quot;;
+		if(getOptions()[&quot;readHashFromParent&quot;]===true){
+			window.parent.location.hash = &quot;&quot;;
+		}
+
+		&#x2F;&#x2F;Try to remove # simbol
+		if(V.Status.getDevice().features.historypushState){
+			var locationWithoutHash = removeHashFromUrlString(document.location.href);
+			window.history.replaceState(&quot;&quot;,&quot;&quot;,locationWithoutHash);
+			if(getOptions()[&quot;readHashFromParent&quot;]===true){
+				var locationWithoutHash = removeHashFromUrlString(window.parent.document.location.href);
+				window.parent.history.replaceState(&quot;&quot;,&quot;&quot;,locationWithoutHash);
+			}
+		}
+	};
+
+	var removeHashFromUrlString = function(url){
+		return url.split(&quot;#&quot;)[0];
+	};
+
+	var getHashParams = function(){
+		var params = {};
+		var hash = window.location.hash;
+		var splitHash = hash.split(&quot;?&quot;);
+		if (splitHash.length &gt; 1) {
+			var hashParams = splitHash[1];
+			var splitParams = hashParams.split(&quot;&amp;&quot;);
+			var sPL = splitParams.length;
+			for(var i=0; i&lt;sPL; i++){
+				var paramInHash = splitParams[i];
+				var splitParamInHash = paramInHash.split(&quot;=&quot;);
+				if(splitParamInHash.length === 2){
+					params[splitParamInHash[0]] = splitParamInHash[1];
+				}
+			}
+		}
+		return params;
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -958,10 +1120,17 @@ VISH.Utils = (function(V,undefined){
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
+		removeParamFromUrl		: removeParamFromUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
 		showDialog 				: showDialog,
-		showPNotValidDialog		: showPNotValidDialog
+		showPNotValidDialog		: showPNotValidDialog,
+		isObseleteVersion		: isObseleteVersion,
+		updateHash				: updateHash,
+		cleanHash				: cleanHash,
+		removeHashFromUrlString	: removeHashFromUrlString,
+		getHashParams			: getHashParams,
+		getSlideNumberFromHash	: getSlideNumberFromHash
 	};
 
 }) (VISH);

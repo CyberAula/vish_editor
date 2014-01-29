@@ -1,8 +1,30 @@
 VISH.Status = (function(V,$,undefined){
 	var _device;
+
+	//In an iframe or not
 	var _isInIframe;
+	//In the same domain (no iframe or embed in the same domain) or not
 	var _isAnotherDomain;
+
+	//Online or offline
 	var _isOnline;
+
+	//Preview
+	var _is_preview;
+	var _is_preview_insertMode;
+
+	//SCORM Package (same domain but external site)
+	var _scorm;
+
+	//External or Internal site
+	var _isInExternalSite;
+	var _isInVishSite;
+	var _isLocalFile;
+
+	//Uniq mode (to show only one slide of an excursion)
+	var _uniqMode;
+
+	//Mode
 	var _isSlave;
 	var _isPreventDefault;
 
@@ -14,6 +36,9 @@ VISH.Status = (function(V,$,undefined){
 	var init = function(callback){
 		_checkIframe();
 		_checkDomain();
+		_checkSite();
+		_checkPreview();
+		_checkUniqMode();
 		_isVEFocused = false;
 		_isWindowFocused = false;
 		_isCKEditorInstanceFocused = false;
@@ -36,7 +61,7 @@ VISH.Status = (function(V,$,undefined){
 	var _checkIframe = function(){
 		_isInIframe = ((window.location != window.parent.location) ? true : false);
 		return _isInIframe;
-	}
+	};
 
    /*
 	* Use to see if we are embeded in another domain
@@ -65,13 +90,62 @@ VISH.Status = (function(V,$,undefined){
 		}
 
 		return _isAnotherDomain;
-	}
+	};
 
+   /*
+	* Use to see if we are inside an iframe
+	*/
+	var _checkSite = function(){
+		var options = V.Utils.getOptions();
+
+		//SCORM package
+		if(typeof options["scorm"] == "boolean"){
+			_scorm = options["scorm"];
+		} else {
+			_scorm = false;
+		}
+
+		if(!_isAnotherDomain){
+			_isLocalFile = (window.top.location.href.indexOf("file://")===0);
+		} else {
+			_isLocalFile = false;
+		}
+		
+		_isInExternalSite = ((_isAnotherDomain)||(_scorm));
+		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
+	};
+
+	var _checkPreview = function(){
+		var options = V.Utils.getOptions();
+
+		if(typeof options["preview"] == "boolean"){
+			_is_preview = options["preview"];
+		} else {
+			_is_preview = false;
+		}
+
+		_is_preview_insertMode = false;
+		if(_is_preview){
+			var presentation = V.Viewer.getCurrentPresentation();
+			if(presentation.insertMode===true){
+				_is_preview_insertMode = true;
+			}
+		}
+	};
+
+	var _checkUniqMode = function(){
+		var hashParams = V.Utils.getHashParams();
+		if(hashParams["uniq"] === "true"){
+			_uniqMode = true;
+		} else {
+			_uniqMode = false;
+		}
+	};
 
 	/*
 	 * This function is done like this because navigator.online lies
 	 */
-	var _checkOnline = function(){	
+	var _checkOnline = function(){
 		//uncomment when navigator.online works,
 		//even if it works in all browsers we can remove the ajax call
 		//but now (10-2012) it gives false positive and false negative and it can´t be used
@@ -79,6 +153,22 @@ VISH.Status = (function(V,$,undefined){
 		        // Check to see if we are really online by making a call for a static JSON resource on
 		        // the originating Web site. If we can get to it, we're online. If not, assume we're
 		        // offline.
+
+				if(_isLocalFile){
+					var img = $("<img style='display:none' src='"+ V.ImagesPath + "blank.gif" + "' />");
+					$(img).load(function(response){
+						_isOnline = true;
+					});
+					$(img).error(function(response){
+						_isOnline = false;
+					});
+					$("section.slides").append(img);
+
+					//By default assume online
+					_isOnline = true;
+					return;
+				};
+
 		        $.ajax({
 		            async: true,
 		            cache: false,
@@ -131,6 +221,34 @@ VISH.Status = (function(V,$,undefined){
 
 	var isOnline = function(){
 		return _isOnline;
+	};
+
+	var getIsScorm = function(){
+		return _scorm;
+	};
+
+	var getIsLocalFile = function(){
+		return _isLocalFile;
+	}
+
+	var getIsInExternalSite = function(){
+		return _isInExternalSite;
+	};
+
+	var getIsInVishSite = function(){
+		return _isInVishSite;
+	};
+
+	var getIsPreview = function(){
+		return _is_preview;
+	};
+
+	var getIsPreviewInsertMode = function(){
+		return _is_preview_insertMode;
+	};
+
+	var getIsUniqMode = function(){
+		return _uniqMode;
 	};
 
 	var isSlaveMode = function(){
@@ -215,6 +333,12 @@ VISH.Status = (function(V,$,undefined){
 		getIsEmbed 					: getIsEmbed,
 		getIsInIframe				: getIsInIframe,
 		getIframe					: getIframe,
+		getIsScorm					: getIsScorm,
+		getIsInExternalSite			: getIsInExternalSite,
+		getIsInVishSite				: getIsInVishSite,
+		getIsPreview 				: getIsPreview,
+		getIsPreviewInsertMode		: getIsPreviewInsertMode,
+		getIsUniqMode				: getIsUniqMode,
 		isOnline 					: isOnline,
 		isSlaveMode 				: isSlaveMode,
 		setSlaveMode				: setSlaveMode,

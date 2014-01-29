@@ -9,7 +9,7 @@ VISH.Editor.Video = (function(V,$,undefined){
 		V.Editor.Video.Vimeo.init();
 
 		var urlInput = $("#"+urlDivId).find("input");
-		// $(urlInput).watermark(V.I18n.getTrans("i.pasteVideoURL"));
+		// $(urlInput).vewatermark(V.I18n.getTrans("i.pasteVideoURL"));
 
 		$("#tab_video_from_url_content .previewButton").click(function(event) {
 			if(V.Police.validateObject($(urlInput).val())[0]){

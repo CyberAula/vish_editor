@@ -11,14 +11,12 @@ VISH.Flashcard = (function(V,$,undefined){
 
 	//Arrow rendering information
 	//Arrow frames per second
-	var FPS = 25;
-	var TOTAL_FRAMES = 20;
-	var FRAME_WIDTH = 50; //in pixels
+	var FPS = 20;
 
 	var init = function(presentation){
 		if(!flashcards){
-			flashcards = new Array();
-			pois = new Array();
+			flashcards = {};
+			pois = {};
 		}
 	};
 
@@ -38,7 +36,7 @@ VISH.Flashcard = (function(V,$,undefined){
 	/*  Sync can be true if you want the arrows to be synchronized 
 	*   (moving at the same time and at the same position) or false if not
 	*/
-	var addArrow = function(fcId, poi, sync){
+	var addArrow = function(fcId, poi){
 
 		if((!poi)||(!poi.x)||(!poi.y)||(poi.x > 100)||(poi.y > 100)){
 			//Corrupted poi
@@ -58,12 +56,6 @@ VISH.Flashcard = (function(V,$,undefined){
 		//Add arrow
 		var arrow = new Object();
 		arrow.id = poiId;
-		if(sync){
-			arrow.position = 0;
-		} else {
-			var rand_pos = Math.floor(Math.random()*TOTAL_FRAMES+1)*FRAME_WIDTH;  //position in pixels
-			arrow.position = rand_pos;
-		}
 		arrow.slide_id = poi.slide_id;
 		arrow.x = poi.x;
 		arrow.y = poi.y;
@@ -82,10 +74,13 @@ VISH.Flashcard = (function(V,$,undefined){
 			return;
 		}
 		$(flashcards[slideId].arrows).each(function(index,value){
-			var new_pos = (value.position + FRAME_WIDTH)%(TOTAL_FRAMES*FRAME_WIDTH);
-			var arrow_dom_el = $("#"+value.id);
-			$(arrow_dom_el).css("background-position", new_pos + "px" + " 0px");
-			flashcards[slideId].arrows[index].position = new_pos;
+			var arrowDOM = $("#"+value.id);
+			var backgroundPosX = $(arrowDOM).cssNumber("background-position-x")+5;
+			//backgroundPosX should be a number between 0 and 95
+			if(backgroundPosX>95){
+				backgroundPosX = 0; //bucle
+			}
+			$(arrowDOM).css("background-position",backgroundPosX + "%" + " center");
 		});
 	};
 
@@ -94,7 +89,43 @@ VISH.Flashcard = (function(V,$,undefined){
 			return pois[poiId];
 		}
 		return null; 
-	}
+	};
+
+	var aftersetupSize = function(increase,increaseW){
+		var fcArrowIncrease;
+		if(increase >= 1){
+			fcArrowIncrease = V.ViewerAdapter.getPonderatedIncrease(increase,0.1);
+		} else {
+			fcArrowIncrease = V.ViewerAdapter.getPonderatedIncrease(increase,0.8);
+		}
+
+		//Update arrows
+		//Use geometric formulas to properly allocate the arrows after setup size
+		//This way, arrows always point to the same spot
+		for(var fckey in flashcards) {
+			var fc = flashcards[fckey];
+			var arrows = fc.arrows;
+			$(arrows).each(function(index,arrow){
+				var orgX = arrow.x * 8;
+				var newWidth = 50*fcArrowIncrease;
+				var newLeft = increase * orgX + 25 *(increase - fcArrowIncrease);
+
+				var orgY = arrow.y * 6;
+				var newHeight = 40*fcArrowIncrease;
+				var newTop = increase * orgY + 40 * 0.8 * (increase - fcArrowIncrease);
+
+				var arrowDom = $("#"+arrow.id);
+				$(arrowDom).css("left",newLeft+"px");
+				$(arrowDom).width(newWidth+"px");
+				$(arrowDom).css("top",newTop+"px");
+				$(arrowDom).height(newHeight+"px");
+			});
+		}
+	};
+
+	var getFlashcards = function(){
+		return flashcards;
+	};
 
 	return {
 		init			: init,
@@ -102,7 +133,10 @@ VISH.Flashcard = (function(V,$,undefined){
 		startAnimation	: startAnimation,
 		stopAnimation	: stopAnimation,
 		animateArrows	: animateArrows,
-		getPoiData		: getPoiData
+		getPoiData		: getPoiData,
+		aftersetupSize	: aftersetupSize,
+		getFlashcards	: getFlashcards
 	};
 
 }) (VISH, jQuery);
+
