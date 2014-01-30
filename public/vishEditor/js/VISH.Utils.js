@@ -35,26 +35,28 @@ VISH.Utils = (function(V,undefined){
 		};
 	};
 
-	/*
-	 *
-	 */
-
-	var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
-		var dimentions_for_drawing = {width:  w_content, height: h_content};
+	var dimentionsToDraw = function(w_zone, h_zone, w_content, h_content){
+		var dimentions = {width:  w_content, height: h_content};
 		var aspect_ratio_zone = w_zone/h_zone;
 		var aspect_ratio_content = w_content/h_content;
 		
 		if (aspect_ratio_zone>aspect_ratio_content) {
-			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
-			dimentions_for_drawing.height = h_zone;
-			return dimentions_for_drawing;
+			dimentions.width = aspect_ratio_content*h_zone;
+			dimentions.height = h_zone;
+			return dimentions;
 		} else {
-			dimentions_for_drawing.width = w_zone;
-			dimentions_for_drawing.height = w_zone/aspect_ratio_content;
-			return  dimentions_for_drawing;
-		}	
+			dimentions.width = w_zone;
+			dimentions.height = w_zone/aspect_ratio_content;
+			return  dimentions;
+		}
 	};
 
+	var fitChildInParent = function(child){
+		var parent = $(child).parent();
+		var dimensions = V.Utils.dimentionsToDraw($(parent).width(),$(parent).height(),$(child).width(),$(child).height());
+		$(child).width(dimensions.width);
+		$(child).height(dimensions.height);
+	};
 
 	var getOptions = function(){
 		if(V.Editing){
@@ -1034,7 +1036,8 @@ VISH.Utils = (function(V,undefined){
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
-		dimentionToDraw			: dimentionToDraw,
+		dimentionsToDraw		: dimentionsToDraw,
+		fitChildInParent		: fitChildInParent,
 		getId					: getId,
 		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,

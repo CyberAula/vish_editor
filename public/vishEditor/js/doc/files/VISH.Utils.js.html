@@ -125,11 +125,7 @@ VISH.Utils = (function(V,undefined){
 		};
 	};
 
-	&#x2F;*
-	 *
-	 *&#x2F;
-
-	var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
+	var dimentionsToDraw = function (w_zone, h_zone, w_content, h_content) {
 		var dimentions_for_drawing = {width:  w_content, height: h_content};
 		var aspect_ratio_zone = w_zone&#x2F;h_zone;
 		var aspect_ratio_content = w_content&#x2F;h_content;
@@ -142,7 +138,7 @@ VISH.Utils = (function(V,undefined){
 			dimentions_for_drawing.width = w_zone;
 			dimentions_for_drawing.height = w_zone&#x2F;aspect_ratio_content;
 			return  dimentions_for_drawing;
-		}	
+		}
 	};
 
 
@@ -1124,7 +1120,7 @@ VISH.Utils = (function(V,undefined){
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
-		dimentionToDraw			: dimentionToDraw,
+		dimentionsToDraw		: dimentionsToDraw,
 		getId					: getId,
 		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,

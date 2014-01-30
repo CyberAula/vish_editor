@@ -321,7 +321,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 				$(current_area).addClass(&quot;temp_shown&quot;);
 				$(theImg).addClass(&quot;temp_shown&quot;);
 				
-				var dimentionsToDraw = V.Editor.Utils.dimentionToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
+				var dimentionsToDraw = V.Utils.dimentionsToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
 				
 				$(current_area).parent().removeClass(&quot;temp_shown&quot;);
 				$(current_area).removeClass(&quot;temp_shown&quot;);

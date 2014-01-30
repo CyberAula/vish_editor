@@ -214,7 +214,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	var _generateWrapper = function(videoId){
 		var video_embedded = "http://www.youtube.com/embed/"+videoId;
 		current_area=  V.Editor.getCurrentArea();
-		var width_height = V.Editor.Utils.dimentionToDraw(current_area.width(), current_area.height(), 325, 243 );    
+		var width_height = V.Utils.dimentionsToDraw(current_area.width(), current_area.height(), 325, 243 ); 
 		var wrapper = "<iframe src='"+video_embedded+"?wmode=opaque' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
 		return wrapper;
 	};

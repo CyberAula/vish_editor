@@ -1590,53 +1590,95 @@ img.loading_presentation_carrousel {
 
 .evideoBox{
 	float: left;
-	width: 62%;
-	height: 100% !important;
-	margin-top: 18%;
-	margin-left: 2%;
+	width: 70%;
+	height: 100%;
 }
 
-.evideoDiv{
-	width: 85%;
-	height: 40%; 
+.evideoIndexBox {
+	height: 100%;
+	width: 28%;
+	margin-left: 2%;
+  	display: inline-block;
+    text-align: right;
+    float: right;
+    list-style: none outside none !important;
+}
+
+/* evideoBox */
+
+.evideoHeader {
+	height: 3%;
+	width: 100%;
 	overflow: hidden;
+	text-align: right;
+}
+
+.evideoBody{
+	height: 85%;
+	width: 100%;
+	overflow: hidden;
+}
+
+.evideoFooter {
+	height: 12%;
+	width: 100%;
+}
+
+/* evideoHeader */
+
+.evideoTime {
+	height: 100%;
+	width: auto;
+	font-size: 1.2rem;
+	color: #808080; 
+}
+
+/* evideoBody */
+
+/* evideoFooter */
+
+.evideoControls {
+	height: 50%;
+	width: 100%;
+	overflow: visible;
+}
+
+.evideoPlayButtonWrapper {
+	width: 10%;
+	height: 100%;
+	float: left;
+	display: block;
+	overflow: hidden;
+	text-align: center;
+	background: #27292b;
+	background: -moz-linear-gradient(top, #27292b 0%, #000000 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#27292b), color-stop(100%,#000000)); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #27292b 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #27292b 0%,#000000 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top, #27292b 0%,#000000 100%); /* IE10+ */
+	background: linear-gradient(to bottom, #27292b 0%,#000000 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27292b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
+	box-shadow: 40px 40px 5px #FFFFFF;
+}
+
+.evideoPlayButton {
+	border: none;
+	height: 80%;
+	max-width: 80%;
 	margin-top: 5%;
 }
 
-.evideoControls {
-	height: 3% !important;
-	width: 85%;
-}
-
-.evideoButton {
- 	display: inline;
-    float: left;
-    max-width: 10%;
-    overflow: hidden;
-    width: 10%;
-    height: 100%;
-}
-
-.evideoPlay {
-	border:none;
-	max-height: 80%;
-	margin-left: 20%;
-	margin-top: 3%;
-}
-
-.evideoPositionview {
+.evideoProgressBarWrapper {
 	display: inline;
-    float: left;
     width: 90%;
     height: 100%;
+    float: right;
 }
 
-/* duration*/
-.evideoTransportbar {  
+.evideoProgressBar {
 	height: 100%;
 	width: 100%;
-	position: relative;
-	background: #27292b; /* Old browsers */
+    background: #27292b;
 	background: -moz-linear-gradient(top, #27292b 0%, #000000 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#27292b), color-stop(100%,#000000)); /* Chrome,Safari4+ */
 	background: -webkit-linear-gradient(top, #27292b 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
@@ -1646,15 +1688,7 @@ img.loading_presentation_carrousel {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27292b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
 }
 
-.evideoTransportbar_ul {
-	list-style-type: none;
-	margin-top: 0;
-	position: relative;
-	z-index: 10;
-}
-
-/* yellow bar, progress of the video*/
-.evideoPosition { 
+.evideoPosition {
 	background: #cc0000; /* Old browsers */
 	background: -moz-linear-gradient(top, #cc0000 0%, #cc0000 100%); /* FF3.6+ */
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cc0000), color-stop(100%,#cc0000)); /* Chrome,Safari4+ */
@@ -1666,12 +1700,12 @@ img.loading_presentation_carrousel {
 	height: 100%;
 	width: 0px;
 	display: block;
-	position: absolute;
 	z-index: 10;
 }
 
-/* segments in which the video is divided*/
-.evideoSegments { 
+/* Segments and balls */
+
+.evideoSegments {
 	width: 100%;
 	margin: 0;
 	padding: 0;
@@ -1681,33 +1715,6 @@ img.loading_presentation_carrousel {
 	background: none;
 	height: 10px;
 	list-style-type: none;
-}
-
-.evideoSelector {
-	width: 100%;
-	height: 100%;
-}
-
-.evideoTime {
- 	display: inline;
-    float: right;
-    font-size: 1rem;
-    max-width: 18%;
-    overflow: hidden;
-    position: relative;
-    margin-top: 1%;
-    margin-bottom: auto;
-   	color: #808080 !important; 
-   	margin-right: 15%;
-
-}
-
-.evideoKeys {
-	list-style-type: none;
-}
-
-.evideoKeys span {
-	text-transform: uppercase;
 }
 
 .evideoBall {
@@ -1734,100 +1741,48 @@ img.loading_presentation_carrousel {
 	pointer-events: none;
 }
 
-.evideoNavigation{
-	background-color: #C9C9C9 !important;
-    display: inline-block;
-    float: right;
-    width: 58%;
-    height: 100%;
-    list-style: none outside none;
-    overflow-y: auto;
-    padding-left: 5%;
+
+/* EVideo Index */
+
+.evideoIndexBody {
+	height: 100%;
+	width: 78%;
+	padding-left: 5%;
     padding-right: 5%;
+    float: right;
+    display: inline-block;
+    overflow-y: auto;
+	background-color: #C9C9C9 !important;
+    list-style: none outside none;
     z-index: 10;
 }
 
-.evideoHideButton {
+.evideoIndexSide {
+	width: 12%;
+	height: 15%;
+	display: inline-block;
   	background-color: #C9C9C9 !important;
-    border-radius: 6px;
-    display: inline-block;
-    height: 30%;
-    margin-left: -14%;
-    margin-top: -2%;
-    padding-top: 2%;
-    width: 14%;
+    border-radius: 6px 0px 0px 6px;
     z-index: 20;
-    padding-right: 2%;
-}
-
-.evideoInsideHide {
-	width: 1%;
-	height: 80%;
-	word-spacing:2px;
-	margin-left: 50% !important;
-	font-size: 1.8rem;
-	text-align: center;
-	padding-top: 30%;
-	color: #636363;
-}
-
-.evideoi_letter {
-	margin-left: 50%;
-	color: #636363;
-	font-size: 1.8rem;
-	float:right;
-	margin-right: 16%;
-	margin-top: 10%;
 }
 
 .evideoBackButton {
     width:80%;
-    margin-top: -50%;
-    margin-left: 18%;
-}
-
-.evideoBackButton:after {
-    content: "";
-    display: block;
-    width: 100%;
-    height:0;
-    padding-bottom: 100%;
-    background: #FFFFFF;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-}
-
-.evideoBackButton div {
-    float:left;
-    width:100%;
-    padding-top:50%;
-    line-height:1em;
-    margin-top:-0.5em;
-    text-align:center;
-    color: #636363 ;
-}
-
-.evideoBackSymbol {
-	margin-left: 50%;
-	position: relative;
-}
-
-
-.evideoTranscriptBox {
-  	display: inline-block;
+    margin-left: 10%;
+    margin-top: 100%;
     text-align: right;
-    width: 36%;
-    float: right;
-    height: 100%;
-    list-style: none outside none !important;
+}
+
+.evideoBackButton img {
+	width: 100%;
+	height: auto;
 }
 
 
 /* TODO: CHANGE! */
-/*ul {
+ul {
     list-style-type: none !important;
-}*/
+}
 
 .evideoChapters {
 	background-color: #F7F7F7;
@@ -1844,20 +1799,4 @@ img.loading_presentation_carrousel {
 	white-space: nowrap;
 }
 
-.evideoButtonB {
- 	display: inline;
-    float: left;
-    max-width: 10%;
-    overflow: hidden;
-    width: 10%;
-    height: 100%;
-    background: #27292b; /* Old browsers */
-	background: -moz-linear-gradient(top, #27292b 0%, #000000 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#27292b), color-stop(100%,#000000)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #27292b 0%,#000000 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #27292b 0%,#000000 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #27292b 0%,#000000 100%); /* IE10+ */
-	background: linear-gradient(to bottom, #27292b 0%,#000000 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#27292b', endColorstr='#000000',GradientType=0 ); /* IE6-9 */
-	box-shadow: 40px 40px 5px #FFFFFF;
-}
+

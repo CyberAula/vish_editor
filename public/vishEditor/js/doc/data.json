@@ -842,13 +842,13 @@
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 82,
+            "line": 62,
             "description": "function to get the styles in percentages",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 432,
+            "line": 412,
             "description": "Function to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
             "class": "VISH.Editor"
         },
@@ -1112,28 +1112,21 @@
         },
         {
             "file": "VISH.Renderer.js",
-            "line": 193,
-            "description": "Function to render a video inside an article (a slide)",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
-            "file": "VISH.Renderer.js",
-            "line": 204,
+            "line": 201,
             "description": "Function to render an object inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Renderer.js",
-            "line": 230,
+            "line": 219,
             "description": "Function to render an snapshot inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Renderer.js",
-            "line": 241,
+            "line": 230,
             "description": "Function to render an applet inside an article (a slide)\nthe applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div\nwhen entering a slide with an applet class we call V.AppletPlayer.loadSWF",
             "class": "",
             "namespace": "VISH"
@@ -1217,70 +1210,70 @@
         },
         {
             "file": "VISH.Utils.js",
-            "line": 67,
+            "line": 63,
             "description": "Return a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 109,
+            "line": 105,
             "description": "Fix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 139,
+            "line": 135,
             "description": "Check slide types and fix it",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 615,
+            "line": 611,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 623,
+            "line": 619,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 632,
+            "line": 628,
             "description": "Function to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.HTML5.js",
-            "line": 147,
+            "line": 155,
             "description": "Function to start all videos of a slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.HTML5.js",
-            "line": 169,
+            "line": 177,
             "description": "Function to stop all videos of a slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.Youtube.js",
-            "line": 161,
+            "line": 176,
             "description": "Function to pause a specific video",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.Youtube.js",
-            "line": 188,
+            "line": 203,
             "description": "Function to pause a specific video",
             "class": "",
             "namespace": "VISH"
@@ -1650,11 +1643,11 @@
         },
         {
             "message": "Missing item type\nfunction to get the styles in percentages",
-            "line": " VISH.Editor.Utils.js:82"
+            "line": " VISH.Editor.Utils.js:62"
         },
         {
             "message": "Missing item type\nFunction to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
-            "line": " VISH.Editor.Utils.js:432"
+            "line": " VISH.Editor.Utils.js:412"
         },
         {
             "message": "Missing item type\nReturns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -1793,20 +1786,16 @@
             "line": " VISH.Renderer.js:169"
         },
         {
-            "message": "Missing item type\nFunction to render a video inside an article (a slide)",
-            "line": " VISH.Renderer.js:193"
-        },
-        {
             "message": "Missing item type\nFunction to render an object inside an article (a slide)",
-            "line": " VISH.Renderer.js:204"
+            "line": " VISH.Renderer.js:201"
         },
         {
             "message": "Missing item type\nFunction to render an snapshot inside an article (a slide)",
-            "line": " VISH.Renderer.js:230"
+            "line": " VISH.Renderer.js:219"
         },
         {
             "message": "Missing item type\nFunction to render an applet inside an article (a slide)\nthe applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div\nwhen entering a slide with an applet class we call V.AppletPlayer.loadSWF",
-            "line": " VISH.Renderer.js:241"
+            "line": " VISH.Renderer.js:230"
         },
         {
             "message": "Missing item type\nFunction to go to next slide",
@@ -1854,43 +1843,43 @@
         },
         {
             "message": "Missing item type\nReturn a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
-            "line": " VISH.Utils.js:67"
+            "line": " VISH.Utils.js:63"
         },
         {
             "message": "Missing item type\nFix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
-            "line": " VISH.Utils.js:109"
+            "line": " VISH.Utils.js:105"
         },
         {
             "message": "Missing item type\nCheck slide types and fix it",
-            "line": " VISH.Utils.js:139"
+            "line": " VISH.Utils.js:135"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:615"
+            "line": " VISH.Utils.js:611"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:623"
+            "line": " VISH.Utils.js:619"
         },
         {
             "message": "Missing item type\nFunction to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
-            "line": " VISH.Utils.js:632"
+            "line": " VISH.Utils.js:628"
         },
         {
             "message": "Missing item type\nFunction to start all videos of a slide",
-            "line": " VISH.Video.HTML5.js:147"
+            "line": " VISH.Video.HTML5.js:155"
         },
         {
             "message": "Missing item type\nFunction to stop all videos of a slide",
-            "line": " VISH.Video.HTML5.js:169"
+            "line": " VISH.Video.HTML5.js:177"
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.Youtube.js:161"
+            "line": " VISH.Video.Youtube.js:176"
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.Youtube.js:188"
+            "line": " VISH.Video.Youtube.js:203"
         },
         {
             "message": "Missing item type\nFunction to initialize the Viewer, saves the slides object and init the presentation with it\noptions is a hash with params and options from the server.",

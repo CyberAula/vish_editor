@@ -64,19 +64,34 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 */
 
 	var renderVideoFromJSON = function(videoJSON, options){
-		var videoClass = "";
-		if(options){
-			if(options.videoClass){
-				videoClass = "class='"+options.videoClass+"'";
-			}
-		};
-
 		var videoId = V.Utils.getId();
 		var style = (videoJSON['style'])?"style='" + videoJSON['style'] + "'":"";
 		var controls= (videoJSON['controls'])?"controls='" + videoJSON['controls'] + "' ":"controls='controls' ";
 		var autoplay= (videoJSON['autoplay'])?"autoplayonslideenter='" + videoJSON['autoplay'] + "' ":"";
 		var poster=(videoJSON['poster'])?"poster='" + videoJSON['poster'] + "' ":"";
 		var loop=(videoJSON['loop'])?"loop='loop' ":"";
+
+		//Params forced by options
+		var videoClass = "";
+		if(options){
+			if(options.videoClass){
+				videoClass = "class='"+options.videoClass+"'";
+			}
+			if(typeof options.controls != "undefined"){
+				if(options.controls === false){
+					controls = "";
+				} else {
+					controls = "controls='" + options.controls + "' ";
+				}
+			}
+			if(typeof options.poster != "undefined"){
+				if(options.poster === false){
+					poster = "";
+				} else {
+					poster="poster='" + options.poster + "' ";
+				}
+			}
+		};
 
 		var video = "<video id='" + videoId + "' " + videoClass + " preload='metadata' " + style + controls + autoplay + poster + loop + ">";
 		

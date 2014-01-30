@@ -1,25 +1,5 @@
 VISH.Editor.Utils = (function(V,$,undefined){
 
-	/*
-	 * Function to draw elements in an area, try to fit in the drawable area 
-	 */
-	var dimentionToDraw = function (w_zone, h_zone, w_content, h_content) {
-		var dimentions_for_drawing = {width:  w_content, height: h_content};
-		var aspect_ratio_zone = w_zone/h_zone;
-		var aspect_ratio_content = w_content/h_content;
-		
-		if (aspect_ratio_zone>aspect_ratio_content) {
-			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
-			dimentions_for_drawing.height = h_zone;
-			return dimentions_for_drawing;
-		} else {
-			dimentions_for_drawing.width = w_zone;
-			dimentions_for_drawing.height = w_zone/aspect_ratio_content;
-			return  dimentions_for_drawing;
-		}	
-	};
-	
-	
 	var setStyleInPixels = function(style,area){
 		var filterStyle = "";
 		$.each(style.split(";"), function(index, property){
@@ -583,7 +563,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		setStyleInPixels  			: setStyleInPixels,		
 		addZoomToStyle  			: addZoomToStyle,	
 		getStylesInPercentages 		: getStylesInPercentages,
-		dimentionToDraw		 		: dimentionToDraw,
 		refreshDraggables			: refreshDraggables,
 		replaceIdsForSlide 			: replaceIdsForSlide,
 		replaceIdsForSlideJSON		: replaceIdsForSlideJSON,

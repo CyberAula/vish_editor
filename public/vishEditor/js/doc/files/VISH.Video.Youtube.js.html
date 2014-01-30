@@ -127,6 +127,21 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 	};
 
+	var renderVideoFromJSON = function(videoJSON, options){
+		var videoClass = &quot;&quot;;
+		if(options){
+			if(options.videoClass){
+				videoClass = &quot;class=&#x27;objectelement youtubeelement &quot;+options.videoClass+&quot;&#x27;&quot;;
+			}
+		};
+
+		var ytContainerId = V.Utils.getId();
+		var style = (videoJSON[&#x27;style&#x27;])? videoJSON[&#x27;style&#x27;] : &quot;&quot;;
+		var zoomInStyle = (videoJSON[&#x27;zoomInStyle&#x27;])? videoJSON[&#x27;zoomInStyle&#x27;] : &quot;&quot;;
+		var video = &quot;&lt;div id=&#x27;&quot;+videoJSON[&#x27;id&#x27;] + &quot;&#x27; &quot; + videoClass + &quot; objectStyle=&#x27;&quot; + style + &quot;&#x27; zoomInStyle=&#x27;&quot; + zoomInStyle + &quot;&#x27; source=&#x27;&quot; + videoJSON[&#x27;body&#x27;] + &quot;&#x27; ytContainerId=&#x27;&quot; + ytContainerId + &quot;&#x27;&gt;&quot; + &quot;&lt;&#x2F;div&gt;&quot;;
+		return video;
+	};
+
 	var loadYoutubeObject = function(article,zone){
 
 		if(V.Status.isOnline()===false){
@@ -363,6 +378,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 	return {
 		init 				: init,
+		renderVideoFromJSON	: renderVideoFromJSON,
 		loadYoutubeObject	: loadYoutubeObject,
 		onPlayerReady 		: onPlayerReady,
 		onPlayerStateChange : onPlayerStateChange,

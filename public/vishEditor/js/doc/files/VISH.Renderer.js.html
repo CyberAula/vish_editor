@@ -162,7 +162,7 @@ VISH.Renderer = (function(V,$,undefined){
 			} else if(slide.elements[el].type === V.Constant.IMAGE){
 				content += _renderImage(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.VIDEO){
-				content += renderVideo(slide.elements[el],slide.template);
+				content += _renderHTML5Video(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += &quot;object &quot;;
@@ -280,10 +280,7 @@ VISH.Renderer = (function(V,$,undefined){
 		return V.Utils.getOuterHTML(div);
 	};
 	
-	&#x2F;**
-	 * Function to render a video inside an article (a slide)
-	 *&#x2F;
-	var renderVideo = function(videoJSON, template){
+	var _renderHTML5Video = function(videoJSON, template){
 		var rendered = &quot;&lt;div id=&#x27;&quot;+videoJSON[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+template+&quot;_&quot;+videoJSON[&#x27;areaid&#x27;]+&quot;&#x27;&gt;&quot;;
 		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{videoClass: template + &quot;_video&quot;});
 		rendered = rendered + video + &quot;&lt;&#x2F;div&gt;&quot;;
@@ -294,11 +291,11 @@ VISH.Renderer = (function(V,$,undefined){
 	&#x2F;**
 	 * Function to render an object inside an article (a slide)
 	 *&#x2F;
-	var _renderObject = function(element, template){
+	var _renderObject = function(element,template){
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				return _renderYoutubeVideo(element,template,objectInfo.source);
+				return V.Video.Youtube.renderVideoFromJSON(element,{videoClass: template+&quot;_&quot;+ element[&#x27;areaid&#x27;]});
 				break;
 			default:
 				var style = (element[&#x27;style&#x27;])? element[&#x27;style&#x27;] : &quot;&quot;;
@@ -308,14 +305,6 @@ VISH.Renderer = (function(V,$,undefined){
 				break;
 		}
 	};
-
-	var _renderYoutubeVideo = function(element,template,source){
-		var ytContainerId = V.Utils.getId();
-		var style = (element[&#x27;style&#x27;])? element[&#x27;style&#x27;] : &quot;&quot;;
-		var body = element[&#x27;body&#x27;];
-		var zoomInStyle = (element[&#x27;zoomInStyle&#x27;])? element[&#x27;zoomInStyle&#x27;] : &quot;&quot;;
-		return &quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;objectelement youtubeelement &quot;+template+&quot;_&quot;+ element[&#x27;areaid&#x27;] + &quot;&#x27; objectStyle=&#x27;&quot; + style + &quot;&#x27; zoomInStyle=&#x27;&quot; + zoomInStyle + &quot;&#x27; source=&#x27;&quot; + source + &quot;&#x27; ytContainerId=&#x27;&quot; + ytContainerId + &quot;&#x27;&gt;&quot; + &quot;&lt;&#x2F;div&gt;&quot;;
-	}
 	
 	&#x2F;**
    * Function to render an snapshot inside an article (a slide)
@@ -339,9 +328,8 @@ VISH.Renderer = (function(V,$,undefined){
 
 
 	return {
-		init        	: init,
-		renderVideo 	: renderVideo,
-		renderSlide 	: renderSlide
+		init        		: init,
+		renderSlide 		: renderSlide
 	};
 
 }) (VISH,jQuery);

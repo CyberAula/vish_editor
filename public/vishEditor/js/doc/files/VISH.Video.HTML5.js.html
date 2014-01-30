@@ -154,19 +154,27 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 *&#x2F;
 
 	var renderVideoFromJSON = function(videoJSON, options){
-		var videoClass = &quot;&quot;;
-		if(options){
-			if(options.videoClass){
-				videoClass = &quot;class=&#x27;&quot;+options.videoClass+&quot;&#x27;&quot;;
-			}
-		};
-
 		var videoId = V.Utils.getId();
 		var style = (videoJSON[&#x27;style&#x27;])?&quot;style=&#x27;&quot; + videoJSON[&#x27;style&#x27;] + &quot;&#x27;&quot;:&quot;&quot;;
 		var controls= (videoJSON[&#x27;controls&#x27;])?&quot;controls=&#x27;&quot; + videoJSON[&#x27;controls&#x27;] + &quot;&#x27; &quot;:&quot;controls=&#x27;controls&#x27; &quot;;
 		var autoplay= (videoJSON[&#x27;autoplay&#x27;])?&quot;autoplayonslideenter=&#x27;&quot; + videoJSON[&#x27;autoplay&#x27;] + &quot;&#x27; &quot;:&quot;&quot;;
 		var poster=(videoJSON[&#x27;poster&#x27;])?&quot;poster=&#x27;&quot; + videoJSON[&#x27;poster&#x27;] + &quot;&#x27; &quot;:&quot;&quot;;
 		var loop=(videoJSON[&#x27;loop&#x27;])?&quot;loop=&#x27;loop&#x27; &quot;:&quot;&quot;;
+
+		&#x2F;&#x2F;Params forced by options
+		var videoClass = &quot;&quot;;
+		if(options){
+			if(options.videoClass){
+				videoClass = &quot;class=&#x27;&quot;+options.videoClass+&quot;&#x27;&quot;;
+			}
+			if(typeof options.controls != &quot;undefined&quot;){
+				if(options.controls === false){
+					controls = &quot;&quot;;
+				} else {
+					controls = &quot;controls=&#x27;&quot; + options.controls + &quot;&#x27; &quot;;
+				}
+			}
+		};
 
 		var video = &quot;&lt;video id=&#x27;&quot; + videoId + &quot;&#x27; &quot; + videoClass + &quot; preload=&#x27;metadata&#x27; &quot; + style + controls + autoplay + poster + loop + &quot;&gt;&quot;;
 		

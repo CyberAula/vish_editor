@@ -15,7 +15,7 @@ VISH.Video = (function(V,$,undefined){
 		V.Video.Youtube.init(_enableCustomPlayer);
 	};
 
-	var getTypeVideoWithId = function(videoId){ // to know the type of video
+	var getTypeVideoWithId = function(videoId){
 		return getTypeVideo(document.getElementById(videoId));
 	};
 
@@ -37,7 +37,7 @@ VISH.Video = (function(V,$,undefined){
 				V.Video.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
-				V.Video.Youtube.playVideo(videoId,currentTime,triggeredByUser); //how 2 play a Youtube Video
+				V.Video.Youtube.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
 				break;
@@ -71,14 +71,13 @@ VISH.Video = (function(V,$,undefined){
 	};
 
 
-
 	//Wrapper
 	//Get parameters regardless of video type
 
 	var getDuration = function(video){
-		switch(getTypeVideo(video)){ //get duration of the video (returns a number)
+		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
-				return video.getDuration();
+				return $(video)[0].duration;
 				break;
 			case V.Constant.Video.Youtube:
 				return youtubePlayers[video.id].getDuration();
@@ -88,12 +87,10 @@ VISH.Video = (function(V,$,undefined){
 		}
 	};
 
-
-	var getCurrentTime = function(video){ //getCurrentTime method depending on the type
-										  // of video
+	var getCurrentTime = function(video){	  
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
-				return video.getCurrentTime();
+				return video.currentTime;
 				break;
 			case V.Constant.Video.Youtube:
 				return youtubePlayers[video.id].getCurrentTime();
