@@ -36,7 +36,8 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(document).on("click", '.evideoPlayButtonWrapper' , _onClickPlayVideo);
 		$(document).on("click", '.evideoProgressBar', _onClickProgressBar);
-		$(document).on("click", '.evideoBackButton', _toggle);
+		$(document).on("click", '.evideoToggleIndex.maximized', _minimizeIndex);
+		$(document).on("click", '.evideoToggleIndex.minimized', _maximizeIndex);
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
 			var subslideId = params.slideNumber;
@@ -69,7 +70,7 @@ VISH.EVideo = (function(V,$,undefined){
 		
 		var controls = $("<div class='evideoControls'>");
 		//Play button
-		$(controls).append("<div class='evideoPlayButtonWrapper'><img class='evideoPlayButton' src='images/evideo/play.png'></img></div>");
+		$(controls).append("<div class='evideoPlayButtonWrapper'><img class='evideoPlayButton' src='"+V.ImagesPath + "customPlayer/eVideoPlay.png'></img></div>");
 		//Progress bar
 		var progressBarWrapper = $("<div class='evideoProgressBarWrapper'></div>");
 		var progressBar = $("<div class='evideoProgressBar'><div class='evideoPosition'></div></div>");
@@ -83,7 +84,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		//2. INDEX
 		var indexBox = $("<div class='evideoIndexBox'></div>");
-		var indexSide = $("<div class='evideoIndexSide'><div class='evideoBackButton'><img src='images/evideo/evideoArrows.jpg'/></div></div>");
+		var indexSide = $("<div class='evideoIndexSide'><div class='evideoToggleIndex maximized'></div></div>");
 		var indexBody = $("<div class='evideoIndexBody'><ul class='evideoChapters'></ul></div>");
 		$(indexBox).append(indexBody);
 		$(indexBox).append(indexSide);
@@ -138,17 +139,10 @@ VISH.EVideo = (function(V,$,undefined){
 		var significativeNumbers = duration.split(":").join("").length;
 		$(video).attr("sN",significativeNumbers);
 
-		$(video).removeClass("temp_hidden");
-		V.Utils.fitChildInParent(video);
-		var videoHeight = $(video).height();
-		$(videoBody).height(videoHeight);
+		_fitVideoInVideoBox(videoBox,video);
 
 		$(videoHeader).show();
 		$(videoFooter).show();
-		
-		var totalVideoBoxHeight = $(videoHeader).height() + videoHeight + $(videoFooter).height();
-		var freeHeight = $(videoBox).height() - totalVideoBoxHeight;
-		$(videoHeader).css("margin-top",freeHeight/2+"px");
 
 		//video events
 		V.Video.onTimeUpdate(video,_onTimeUpdate);
@@ -157,6 +151,30 @@ VISH.EVideo = (function(V,$,undefined){
 		// _getNextBall(0);
 		// _paintBalls();
 		// _paintIndex();
+	};
+
+	var _fitVideoInVideoBox = function(videoBox,video){
+		$(video).removeClass("temp_hidden");
+		V.Utils.fitChildInParent(video);
+		var videoHeight = $(video).height();
+		var videoBody = $(video).parent();
+		$(videoBody).height(videoHeight);
+
+		var videoHeader = $(videoBox).find(".evideoHeader");
+		var videoFooter = $(videoBox).find(".evideoFooter");
+		var videoHeight = $(video).height();
+		var videoWidth = $(video).width();
+
+		$(videoHeader).addClass("temp_shown");
+		$(videoFooter).addClass("temp_shown");
+		var totalVideoBoxHeight = $(videoHeader).height() + videoHeight + $(videoFooter).height();
+		$(videoHeader).removeClass("temp_shown");
+		$(videoFooter).removeClass("temp_shown");
+
+		var freeHeight = $(videoBox).height() - totalVideoBoxHeight;
+		$(videoHeader).css("margin-top",freeHeight/2+"px");
+		$(videoHeader).width(videoWidth);
+		$(videoFooter).width(videoWidth);
 	};
 
 	var _onTimeUpdate = function(video){
@@ -195,7 +213,6 @@ VISH.EVideo = (function(V,$,undefined){
 		_updatePlayButton(vStatus);
 	};
 
-
 	var _onClickProgressBar = function(event){
 		//Seek Video		
 		var progressBar = $(event.target).hasClass("evideoPosition") ? $(event.target).parent() : event.target;
@@ -231,78 +248,82 @@ VISH.EVideo = (function(V,$,undefined){
 	var _updatePlayButton = function(vStatus){
 		var eVideoPlayButton = $(V.Slides.getCurrentSlide()).find(".evideoPlayButton");
 		if(vStatus.paused == false){
-			$(eVideoPlayButton).attr("src", V.ImagesPath + "evideo/play.png");
+			$(eVideoPlayButton).attr("src", V.ImagesPath + "customPlayer/eVideoPlay.png");
 		} else {
-			$(eVideoPlayButton).attr("src", V.ImagesPath + "evideo/pause.png");
+			$(eVideoPlayButton).attr("src", V.ImagesPath + "customPlayer/eVideoPause.png");
 		}
 	};
 
+	var _minimizeIndex = function(){
+		var eVideoIndexBox = _getCurrentEVideoIndexBox();
+		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
 
+		var indexBodyWidth = $(eVideoIndexBox).width()*0.05;
+		$(eVideoIndexBox).animate({width: "5%"}, 1000, function(){ _checkAnimationFinish(2,_onFinishMinimizeIndex)});
+		$(indexBody).animate({width: indexBodyWidth + ""}, 1000, function(){ _checkAnimationFinish(2,_onFinishMinimizeIndex)});
+	};
 
+	var _onFinishMinimizeIndex = function(){
+		var eVideoBox = _getCurrentEVideoBox();
+		$(eVideoBox).css("width","93%");
 
+		var eVideoIndexBox = _getCurrentEVideoIndexBox();
+		var button = $(eVideoIndexBox).find(".evideoToggleIndex");
+		$(button).removeClass("maximized").addClass("minimized");
 
+		_redimensionateVideoAfterIndex();
+	};
 
+	var _maximizeIndex = function(){
+		var eVideoIndexBox = _getCurrentEVideoIndexBox();
+		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
 
+		$(eVideoIndexBox).animate({width: "28%"}, 1000, function(){ _checkAnimationFinish(2,_onFinishMaximizeIndex)});
+		$(indexBody).animate({width: "78%"}, 1000, function(){ _checkAnimationFinish(2,_onFinishMaximizeIndex)});
 
+		_redimensionateVideoAfterIndex();
+	};
 
-	var _toggle = function(){
-		var currentSlide = $(V.Slides.getCurrentSlide());
-		var indexBox = $(currentSlide).find(".evideoIndexBox");
-		var navigation =  $(indexBox).find(".evideoIndexBody");
-		var hide_button = $(indexBox).find(".evideoIndexSide");
-		var hide_buttonW = $(hide_button).css("width");
-		var hide_buttonPR = $(hide_button).css("padding-right");
-		var hide_buttonPT = $(hide_button).css("padding-top");
-		var videoBox = $(currentSlide).find(".evideoBox");
-		var timeDiv = $(videoBox).find(".evideoHeader");
+	var _onFinishMaximizeIndex = function(){
+		var eVideoBox = _getCurrentEVideoBox();
+		// $(eVideoBox).css("width","70%");
+		// $(eVideoBox).find(".evideoBody").css("width","100%");
 
-		if(eback == true){
-			var animationTime = 1000;
-			
-			$(currentSlide).find(".segmentDiv").hide();
-			$(currentSlide).find(".evideoSegments").hide();
-			$(timeDiv).hide();
+		var eVideoIndexBox = _getCurrentEVideoIndexBox();
+		var button = $(eVideoIndexBox).find(".evideoToggleIndex");
+		$(button).removeClass("minimized").addClass("maximized");
 
-			$(hide_button).css("width", hide_buttonW);
-			$(hide_button).css("padding-right", hide_buttonPR);
-			$(hide_button).css("padding-top", hide_buttonPT);
+		// _redimensionateVideoAfterIndex();
+	};
+
+	var _redimensionateVideoAfterIndex = function(){
+		var eVideoBox = _getCurrentEVideoBox();
+		var eVideoBody = $(eVideoBox).find(".evideoBody");
+		$(eVideoBody).css("height","85%");
 		
-			nAnimations = 4;
-			$(navigation).animate({width: "0%"}, animationTime, function(){ _checkAnimationFinish(); });
-			$(navigation).animate({"padding-right": "0%"},animationTime, function(){ _checkAnimationFinish(); });
-			$(indexBox).animate({width: "5%"}, animationTime, function(){ _checkAnimationFinish(); });
-			$(videoBox).animate({width: "92%", "margin-top": "8%"}, animationTime, function(){ _checkAnimationFinish(); });
+		var video = _getCurrentEVideo();
+		V.Utils.fitChildInParent(video);
+		var videoHeight = $(video).height();
+		$(eVideoBody).height(videoHeight);
 
-		}else{
-			$(currentSlide).find(".segmentDiv").hide();
-			$(currentSlide).find(".evideoSegments").hide();
-			$(timeDiv).hide();
-			nAnimations = 4;
-			$(navigation).animate({width: "58%"}, animationTime, function(){ _checkAnimationFinish() });
-			$(navigation).animate({"padding-right": "5%"}, animationTime, function(){ _checkAnimationFinish(); });
-			$(indexBox).animate({width: "36%"}, animationTime, function(){ _checkAnimationFinish(); });
-			$(videoBox).animate({width: "62%", "margin-top": "18%"}, animationTime, function(){ _checkAnimationFinish(); });
-		}
+		//Center and adjust widths
+		_fitVideoInVideoBox(eVideoBox,video);
 	};
 
 	var nAnimationsFinished = 0;
-	var nAnimations;
-
-	var _checkAnimationFinish = function(){
+	var _checkAnimationFinish = function(nAnimations,callback){
 		nAnimationsFinished = nAnimationsFinished +1;
 		if(nAnimationsFinished===nAnimations){
-			_onAnimationsFinish();
 			nAnimationsFinished = 0;
+			if(typeof callback == "function"){
+				callback();
+			}
 		}
 	};
 
-	var _onAnimationsFinish = function(){
-		if(eback==true){
-			_hide();
-		} else {
-			_show()
-		}
-	};
+
+
+
 
 
 
@@ -401,7 +422,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(V.Slides.getCurrentSlide()).find(".evideoChapters li a").on("click", function(event){
 		video.currentTime = $(event.target).attr("time");
-		$(V.Slides.getCurrentSlide()).find(".evideoPlayButton").attr("src","images/evideo/play.png");
+		$(V.Slides.getCurrentSlide()).find(".evideoPlayButton").attr("src",V.ImagesPath + "customPlayer/eVideoPlay.png");
 		_popUp(_onCloseSubslide,balls[parseInt($(event.target).attr("ident"))]); //migrated to JQuery working
 		});
 	};
@@ -454,34 +475,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(V.Slides.getCurrentSlide()).find(".evideoSegments").html('');
 	};
 
-	var _hide = function() {
-		currentSlide = $(V.Slides.getCurrentSlide());
-		$(currentSlide).find(".evideoHeader").show();
-		$(currentSlide).find(".evideoHeader").css("font-size", '1.6rem');
-		$(currentSlide).find(".segmentDiv").show();
-		$(currentSlide).find(".evideoSegments").show();
-		_eraseBalls();
-		_paintBalls();
-		$(V.Slides.getCurrentSlide()).find(".evideoBall").css("margin-top", '4%');
-		eback = false;
-	};
 
-	/*
-	 * shows the indexBox in which the ball index is defined
-	 *
-	*/
-	var _show = function(){
-		currentSlide = $(V.Slides.getCurrentSlide());
-		$(currentSlide).find(".evideoHeader").show();
-		$(currentSlide).find(".evideoHeader").css("font-size", '1rem');
-		$(currentSlide).find(".evideoHeader").css("margin-bottom", 'auto');
-		$(currentSlide).find(".segmentDiv").show();
-		$(currentSlide).find(".evideoSegments").show();
-		_eraseBalls();
-		_paintBalls();
-		$(V.Slides.getCurrentSlide()).find(".evideoBall").css("margin-top", '5%');
-		eback = true;
-	}
 
 	var _generateWrapper = function(videoId){
 			var video_embedded = "http://www.youtube.com/embed/"+videoId;
@@ -509,6 +503,10 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _getCurrentEVideoBox = function(){
 		return $(V.Slides.getCurrentSlide()).find(".evideoBox");
+	};
+
+	var _getCurrentEVideoIndexBox = function(){
+		return $(V.Slides.getCurrentSlide()).find(".evideoIndexBox");
 	};
 
 	var _fomatTime = function(s,sN){

@@ -152,7 +152,7 @@ section.slides > article > article.show_in_smartcard{
 
 /* buttons next and previous */
 .page-switcher {
-	position: absolute;	
+	position: absolute;
 	border: none;
 	outline: none;
 	min-width: 24px;
@@ -1592,6 +1592,10 @@ img.loading_presentation_carrousel {
 	float: left;
 	width: 70%;
 	height: 100%;
+	text-align: center;
+	font-size: 0px;
+  	letter-spacing: 0px;
+  	word-spacing: 0px;
 }
 
 .evideoIndexBox {
@@ -1602,6 +1606,8 @@ img.loading_presentation_carrousel {
     text-align: right;
     float: right;
     list-style: none outside none !important;
+    position: absolute;
+    right: 0;
 }
 
 /* evideoBox */
@@ -1611,17 +1617,21 @@ img.loading_presentation_carrousel {
 	width: 100%;
 	overflow: hidden;
 	text-align: right;
+	display: inline-block;
 }
 
 .evideoBody{
 	height: 85%;
 	width: 100%;
 	overflow: hidden;
+	text-align: center;
+	display: inline-block;
 }
 
 .evideoFooter {
 	height: 12%;
 	width: 100%;
+	display: inline-block;
 }
 
 /* evideoHeader */
@@ -1672,7 +1682,7 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoPlayButton {
 	border: none;
-	height: 80%;
+	height: 75%;
 	max-width: 80%;
 	margin-top: 4%;
 }
@@ -1747,44 +1757,68 @@ span.evideoTimeSlash, span.evideoDuration {
 /* EVideo Index */
 
 .evideoIndexBody {
+	position: relative;
 	height: 100%;
 	width: 78%;
 	padding-left: 5%;
     padding-right: 5%;
     float: right;
     display: inline-block;
+    overflow-x: hidden;
     overflow-y: auto;
-	background-color: #C9C9C9 !important;
+	background-color: #C9C9C9;
     list-style: none outside none;
-    z-index: 10;
+    z-index: 2;
 }
 
 .evideoIndexSide {
-	width: 12%;
+	width: 98%;
+	position: absolute;
+	right: 0;
 	height: 15%;
 	display: inline-block;
-  	background-color: #C9C9C9 !important;
+  	background-color: #C9C9C9;
     border-radius: 6px 0px 0px 6px;
-    z-index: 20;
+    z-index: 1;
 }
 
-.evideoBackButton {
-    width:80%;
-    margin-left: 10%;
-    margin-top: 100%;
-    text-align: right;
+.evideoToggleIndex {
+	min-width: 24px;
+	min-height: 24px;
+	position: relative;
+	display: inline-block;
+	top: 30px;
+	left: 5px;
+	float: left;
+	text-align: right;
+	cursor: pointer;
+	background: transparent;
+	background-image: url("/vishEditor/images/vicons/arrows_eVideo.png");
+	background-repeat: no-repeat;
+	background-size: auto 1100%;
+	z-index: 1;
 }
 
-.evideoBackButton img {
-	width: 100%;
-	height: auto;
+.evideoToggleIndex .minimized {
+	background-position: 0 0%;
 }
 
+.evideoToggleIndex.maximized {
+	background-position: 0 40%;
+}
+
+.evideoToggleIndex.maximized:hover {
+	background-position: 0 50%;
+}
+
+.evideoToggleIndex.maximized:active {
+	background-position: 0 60%;
+}
 
 /* TODO: CHANGE! */
-ul {
+/*ul {
     list-style-type: none !important;
-}
+}*/
 
 .evideoChapters {
 	background-color: #F7F7F7;
