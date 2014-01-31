@@ -1,6 +1,6 @@
 VISH.Video.HTML5 = (function(V,$,undefined){
 		
-	//Is the event trigger by the user or via code?
+	//Is the event trigger by the user or via code
 	var playTriggeredByUser = true;
 	var pauseTriggeredByUser = true;
 	var seekTriggeredByUser = true;

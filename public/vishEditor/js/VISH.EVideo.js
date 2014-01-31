@@ -34,8 +34,8 @@ VISH.EVideo = (function(V,$,undefined){
 	var _loadEvents = function(){
 		V.Debugging.log("Load Events");
 
-		$(document).on("click", '.evideoPlayButton' , _onClickPlayVideo);
-		$(document).on("click", '.evideoTransportbar', _onClickTransportBar);
+		$(document).on("click", '.evideoPlayButtonWrapper' , _onClickPlayVideo);
+		$(document).on("click", '.evideoProgressBar', _onClickProgressBar);
 		$(document).on("click", '.evideoBackButton', _toggle);
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
@@ -59,13 +59,13 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBox =  $("<div class='evideoBox'></div>");
 		$(slidesetDOM).append(videoBox);
 
-		var videoHeader =  $("<div class='evideoHeader'><div class='evideoTime'><span class='evideoCurTime'>00:00</span>/<span class='duration'>00:00</span></div></div>");
+		var videoHeader =  $("<div class='evideoHeader' style='display:none'><div class='evideoTime'><span class='evideoCurTime'>00:00</span><span class='evideoTimeSlash'>/</span><span class='evideoDuration'>00:00</span></div></div>");
 		$(videoBox).append(videoHeader);
 
 		var videoBody =  $("<div class = 'evideoBody'></div>");
 		$(videoBox).append(videoBody);
 
-		var footer = $("<div class='evideoFooter'></div>");
+		var footer = $("<div class='evideoFooter' style='display:none'></div>");
 		
 		var controls = $("<div class='evideoControls'>");
 		//Play button
@@ -90,25 +90,6 @@ VISH.EVideo = (function(V,$,undefined){
 		$(slidesetDOM).append(indexBox);
 	};
 
-	// var _init = function(video,evideoJSON){
-	// 	$(video).on("timeupdate", function(){
-	// 		_curTimeUpdate();
-	// 		var time = video.currentTime;
-
-	// 		if(typeof nextBall == "object"){
-	// 			if(Math.abs(time - nextBall.time) < RANGE){
-	// 				if(nextBall.showed == false){
-	// 					_popUp(_onCloseSubslide,nextBall);
-	// 				}
-	// 			}
-	// 		}
-	// 	});
-	// 	_getBalls(evideoJSON);
-	// 	_getNextBall(0);
-	// 	_paintBalls();
-	// 	_paintIndex();
-	// };
-
 
 	/* Load Methods */
 	var loadEVideo = function(evideoId){
@@ -128,7 +109,7 @@ VISH.EVideo = (function(V,$,undefined){
 		switch(evideoJSON.video.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var video = $(V.Video.HTML5.renderVideoFromJSON(evideoJSON.video,{controls: false, poster: false}));
-				$(video).on("loadeddata", _onVideoLoadedMetadata);
+				V.Video.onVideoReady(video,_onVideoReady);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var video;
@@ -144,37 +125,121 @@ VISH.EVideo = (function(V,$,undefined){
 		$(videoBody).append(video);
 	};
 
-
-	var _onVideoLoadedMetadata = function(event){
-		var video = event.target;
-		//Check state (based on http://www.w3schools.com/tags/av_prop_readystate.asp)
-		if((video.readyState == 4)||(video.readyState == 3)){
-			_onVideoReady(video);
-		} else {
-			// V.Debugging.log("Video not loaded appropriately");
-		}
-	};
-
 	var _onVideoReady = function(video){
-		$(video).removeClass("temp_hidden");
-		V.Utils.fitChildInParent(video);
-		
-		//Center Vertically
 		var videoBody = $(video).parent();
-		var videoHeight = $(video).height();
-		$(videoBody).height(videoHeight);
-
 		var videoBox = _getCurrentEVideoBox();
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
+
+		var durationDOM = $(videoHeader).find(".evideoDuration");
+		var duration = _fomatTime(V.Video.getDuration(video));
+		$(durationDOM).html(duration);
+
+		var significativeNumbers = duration.split(":").join("").length;
+		$(video).attr("sN",significativeNumbers);
+
+		$(video).removeClass("temp_hidden");
+		V.Utils.fitChildInParent(video);
+		var videoHeight = $(video).height();
+		$(videoBody).height(videoHeight);
+
+		$(videoHeader).show();
+		$(videoFooter).show();
+		
 		var totalVideoBoxHeight = $(videoHeader).height() + videoHeight + $(videoFooter).height();
 		var freeHeight = $(videoBox).height() - totalVideoBoxHeight;
 		$(videoHeader).css("margin-top",freeHeight/2+"px");
 
-		var duration = _secondsTimeSpanToHMS(V.Video.getDuration(video));
-		$(videoHeader).find(".duration").html(duration);
-		// _init(video,evideoJSON);
+		//video events
+		V.Video.onTimeUpdate(video,_onTimeUpdate);
+
+		// _getBalls(evideoJSON);
+		// _getNextBall(0);
+		// _paintBalls();
+		// _paintIndex();
 	};
+
+	var _onTimeUpdate = function(video){
+		var currentTime = V.Video.getCurrentTime(video);
+		_updateCurrentTime(video,currentTime);
+		
+		// if(typeof nextBall == "object"){
+		// 	if(Math.abs(time - nextBall.time) < RANGE){
+		// 		if(nextBall.showed == false){
+		// 			_popUp(_onCloseSubslide,nextBall);
+		// 		}
+		// 	}
+		// }
+	};
+
+
+	/* Unload methods */
+	var unloadEVideo = function(evideoId){
+	};
+
+
+	/* Events */
+
+	var _onClickPlayVideo = function(event){
+		var video = _getCurrentEVideo();
+		_togglePlay(video);
+	};
+
+	var _togglePlay = function(video){
+		var vStatus = V.Video.getStatus(video);
+		if (vStatus.paused == false) {
+			V.Video.pause(video);
+		} else {
+			V.Video.play(video);
+		}
+		_updatePlayButton(vStatus);
+	};
+
+
+	var _onClickProgressBar = function(event){
+		//Seek Video		
+		var progressBar = $(event.target).hasClass("evideoPosition") ? $(event.target).parent() : event.target;
+		var distanceDifference = Math.max(0,event.pageX - $(progressBar).offset().left);
+		var percentage = distanceDifference/$(progressBar).width();
+		var video = _getCurrentEVideo();
+		var duration = V.Video.getDuration(video);
+		var timeToSeek = duration * percentage;
+		V.Video.seekTo(video,timeToSeek);
+
+		// nextBall = null;
+		// _getNextBall(video.currentTime);
+		// _resetShowParams();
+	};
+
+
+	/* UI methods */
+
+	var _updateCurrentTime = function(video,currentTime){
+		var videoBox = _getCurrentEVideoBox();
+		var currentTime = (typeof currentTime != "undefined") ? currentTime : V.Video.getCurrentTime(video);
+
+		//Update progress bar
+		var progressBar = $(videoBox).find("div.evideoPosition");
+		var percentWidth = (100*currentTime)/V.Video.getDuration(video);
+		$(progressBar).css("width", percentWidth + "%");
+
+		//Update current time field
+		var currentTimeField = $(videoBox).find(".evideoCurTime");
+		$(currentTimeField).html(_fomatTime(currentTime,parseInt($(video).attr("sN"))));
+	};
+
+	var _updatePlayButton = function(vStatus){
+		var eVideoPlayButton = $(V.Slides.getCurrentSlide()).find(".evideoPlayButton");
+		if(vStatus.paused == false){
+			$(eVideoPlayButton).attr("src", V.ImagesPath + "evideo/play.png");
+		} else {
+			$(eVideoPlayButton).attr("src", V.ImagesPath + "evideo/pause.png");
+		}
+	};
+
+
+
+
 
 
 
@@ -239,36 +304,7 @@ VISH.EVideo = (function(V,$,undefined){
 		}
 	};
 
-	var _onClickPlayVideo = function(evt){
-		video= _getCurrentEVideo();
-		_togglePlay(video);
-	};
 
-	var _togglePlay = function(video){
-		video = _getCurrentEVideo();
-		if (video.paused == false) {
-			video.pause();
-				$(V.Slides.getCurrentSlide()).find(".evideoPlayButton").attr("src","images/evideo/play.png");
-			} else {
-				video.play();
-				$(V.Slides.getCurrentSlide()).find(".evideoPlayButton").attr("src","images/evideo/pause.png");
-			}
-	};
-
-	var _onClickTransportBar = function(evt){
-
-		var video = _getCurrentEVideo();
-
-		var bar_width = $('.evideoProgressBar').outerWidth();
-		var offset = $(evt.target).offset();//this ahora es evt.target
-		var distanceDifference = evt.pageX - offset.left; //eliminar número mágico
-		var percentWidth = ((distanceDifference*100) / bar_width)*0.99;
-		video.currentTime = (percentWidth * video.duration) / 100;
-
-		nextBall = null;
-		_getNextBall(video.currentTime);
-		_resetShowParams();
-	};
 
 	var _getNextBall = function(time){
 		if(typeof time != "number"){
@@ -395,7 +431,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var ball = document.createElement('li');
 		var marker = document.createElement('div');
 		var segments = 	$(V.Slides.getCurrentSlide()).find(".evideoSegments");
-		var position = $(V.Slides.getCurrentSlide()).find(".evideoTransportbar");
+		var position = $(V.Slides.getCurrentSlide()).find(".evideoProgressBar");
 		$(segmentDiv).append(marker);
 		$(segments).append(ball);
 		marker.className = 'evideoMarker';
@@ -416,17 +452,6 @@ VISH.EVideo = (function(V,$,undefined){
 	var _eraseBalls = function(){
 		$(V.Slides.getCurrentSlide()).find(".segmentDiv").html('');
 		$(V.Slides.getCurrentSlide()).find(".evideoSegments").html('');
-	};
-
-	var _curTimeUpdate = function(evt) {
-		var video = _getCurrentEVideo();
-		var bar_width = $(V.Slides.getCurrentSlide()).find(".evideoProgressBar").outerWidth();;
-		var tiemp = video.currentTime.toFixed(0);
-		var tiemph= _secondsTimeSpanToHMS(tiemp);
-		$(V.Slides.getCurrentSlide()).find(".evideoCurTime").html(tiemph);
-		
-		var percentWidth = (100*video.currentTime)/video.duration;
-		$(V.Slides.getCurrentSlide()).find(".evideoPosition").css("width", percentWidth + "%"); //for the html to draw
 	};
 
 	var _hide = function() {
@@ -458,23 +483,6 @@ VISH.EVideo = (function(V,$,undefined){
 		eback = true;
 	}
 
-	var _secondsTimeSpanToHMS = function(s) {
-		var display;
-		var h = Math.floor(s/3600); //Get whole hours
-
-		s -= h*3600;
-		var m = Math.floor(s/60); //Get remaining minutes
-		s -= m*60;
-
-		if(h <1){ // if h'd be > 1, we have space to that.
-			display = (m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and seconds
-		}else{
-			display =  h+":"+(m < 10 ? '0'+m : m)+":"+(s < 10 ? '0'+s : s); //zero padding on minutes and seconds
-		}
-
-		return display;
-	};
-
 	var _generateWrapper = function(videoId){
 			var video_embedded = "http://www.youtube.com/embed/"+videoId;
 			current_area=  $(V.Slides.getCurrentSlide()).find(".evideoBody");
@@ -496,17 +504,33 @@ VISH.EVideo = (function(V,$,undefined){
 	// Utils
 
 	var _getCurrentEVideo = function(){
-		return $(V.Slides.getCurrentSlide()).find("video")[0];
+		return $(V.Slides.getCurrentSlide()).find(".evideoBody").children()[0];
 	};
 
 	var _getCurrentEVideoBox = function(){
 		return $(V.Slides.getCurrentSlide()).find(".evideoBox");
 	};
 
+	var _fomatTime = function(s,sN){
+		sN = (typeof sN == "number" ? sN : -1);
+
+		//Get whole hours
+		var h = Math.floor(s/3600);
+		s -= h*3600;
+
+		//Get remaining minutes
+		var m = Math.floor(s/60); 
+		s -= m*60;
+		s = Math.round(s);
+
+		return ((h<1 && sN<5) ? '' : h + ":") + ((sN>3) ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
+	};
+
 	return {
 		init			: init,
 		drawEVideo		: drawEVideo,
-		loadEVideo		: loadEVideo
+		loadEVideo		: loadEVideo,
+		unloadEVideo	: unloadEVideo
 	};
 
 }) (VISH, jQuery);
