@@ -38,40 +38,58 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var renderVideoFromJSON = function(videoJSON, options){
-		var videoClass = "";
+		var videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+		var videoSource = videoJSON['body'] || videoJSON['source'];
+		var videoClass = "objectelement youtubeelement";
 		if(options){
 			if(options.videoClass){
-				videoClass = "class='objectelement youtubeelement "+options.videoClass+"'";
+				videoClass = videoClass + " " + options.videoClass;
 			}
 		};
+		videoClass = "class='" + videoClass + "'";
 
 		var ytContainerId = V.Utils.getId();
 		var style = (videoJSON['style'])? videoJSON['style'] : "";
 		var zoomInStyle = (videoJSON['zoomInStyle'])? videoJSON['zoomInStyle'] : "";
-		var video = "<div id='"+videoJSON['id'] + "' " + videoClass + " objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + videoJSON['body'] + "' ytContainerId='" + ytContainerId + "'>" + "</div>";
+		var video = "<div id='"+ videoId + "' " + videoClass + " objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + videoSource + "' ytContainerId='" + ytContainerId + "'>" + "</div>";
 		return video;
 	};
 
-	var loadYoutubeObject = function(article,zone){
-
+	var loadYoutubeObject = function(container,options){
 		if(V.Status.isOnline()===false){
-			$(zone).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
+			$(container).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 			return;
 		}
 
-		if(!_isYouTubeIframeAPIReady()){ // if Youtube Iframe isn't ready, load nothing
+		// If Youtube Iframe isn't ready, load nothing
+		if(!_isYouTubeIframeAPIReady()){
 			return;
 		}
 
-		var youtubeVideoId = getYoutubeIdFromURL($(zone).attr("source")); 
-		// the user gives us an URL, we have to extract the id of the video
+		var youtubeVideoId = getYoutubeIdFromURL($(container).attr("source")); 
 		if(youtubeVideoId===null){
 			return;
 		}
 		
-		var iframeId = $(zone).attr("ytContainerId");
-		$(zone).html("<div id='" + iframeId + "' style='" + $(zone).attr("objectStyle") + "'></div>");
-		var controls = _enableCustomPlayer ? 0 : 1;
+		var iframeId = $(container).attr("ytContainerId");
+		$(container).html("<div id='" + iframeId + "' videotype='"+ V.Constant.MEDIA.YOUTUBE_VIDEO +"' style='" + $(container).attr("objectStyle") + "'></div>");
+
+		var enableCustomPlayer = _enableCustomPlayer;
+		var controls = enableCustomPlayer ? 0 : 1;
+		var _onReadyCallback = onPlayerReady;
+
+		if(options){
+			if(typeof options.enableCustomPlayer == "boolean"){
+				enableCustomPlayer = options.enableCustomPlayer;
+				controls = enableCustomPlayer ? 0 : 1;
+			}
+			if(typeof options.controls == "boolean"){
+				controls = (options.controls===true) ? 1 : 0;
+			}
+			if(typeof options.onReadyCallback == "function"){
+				_onReadyCallback = options.onReadyCallback;
+			}
+		}
 
 		youtubePlayers[iframeId] = new YT.Player(iframeId, {
 		  height: '100%',
@@ -79,8 +97,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		  videoId: youtubeVideoId,
 		  playerVars: { 'autoplay': 0, 'controls': controls, 'enablejsapi': 1, 'showinfo': 0, wmode: "transparent", 'rel': 0 },
 		  events: {
-			 'onReady': onPlayerReady,
-			 'onStateChange': onPlayerStateChange,
+			 'onReady': _onReadyCallback,
+			 // 'onStateChange': onPlayerStateChange,
 			 'onError' : onPlayerError
 		  }
 		});
@@ -229,6 +247,10 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 	};
 
+	var getYouTubePlayer = function(id){
+		return youtubePlayers[id];
+	};
+
 
 	/////////
 	//Youtube Utils both from Viewer and Editor
@@ -295,7 +317,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		playVideo 			: playVideo,
 		pauseVideo 			: pauseVideo,
 		seekVideo 			: seekVideo,
-		getYoutubeIdFromURL	: getYoutubeIdFromURL
+		getYoutubeIdFromURL	: getYoutubeIdFromURL,
+		getYouTubePlayer	: getYouTubePlayer
 	};
 
 })(VISH,jQuery);

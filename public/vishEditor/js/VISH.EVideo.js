@@ -99,22 +99,29 @@ VISH.EVideo = (function(V,$,undefined){
 		// V.Debugging.log("loadEVideo " + evideoId);
 		// V.Debugging.log(evideoJSON);
 		var videoBody = $(V.Slides.getCurrentSlide()).find(".evideoBody");
+		$(videoBody).attr("videoType",evideoJSON.video.type);
 
 		switch(evideoJSON.video.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var video = $(V.Video.HTML5.renderVideoFromJSON(evideoJSON.video,{controls: false, poster: false}));
+				$(video).addClass("temp_hidden");
+				$(video).attr("videoType",evideoJSON.video.type);
+				$(videoBody).append(video);
 				V.Video.onVideoReady(video,_onVideoReady);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				var video;
+				var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(evideoJSON.video));
+				$(videoBody).attr("source", $(videoWrapper).attr("source"));
+				$(videoBody).attr("ytcontainerid", $(videoWrapper).attr("ytcontainerid"));
+				V.Video.Youtube.loadYoutubeObject($(videoBody),{controls: false, onReadyCallback: function(event){
+					var iframe = event.target.getIframe();
+					var video = $("#"+iframe.id);
+					_onVideoReady(video);
+				}});
 				break;
 			default:
 				return;
 		}
-
-		$(video).addClass("temp_hidden");
-		$(videoBody).attr("videoType",evideoJSON.video.type);
-		$(videoBody).append(video);
 	};
 
 	var _onVideoReady = function(video){
@@ -131,6 +138,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(video).attr("sN",significativeNumbers);
 
 		$(video).removeClass("temp_hidden");
+
 		_fitVideoInVideoBox(videoBox,video);
 
 		$(videoHeader).show();
@@ -138,6 +146,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		//video events
 		V.Video.onTimeUpdate(video,_onTimeUpdate);
+		V.Video.onStatusChange(video,_onStatusChange);
 
 		// _getBalls(evideoJSON);
 		// _getNextBall(0);
@@ -153,7 +162,17 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(video).css("max-height","none");
 		$(video).css("max-width","none");
-		V.Utils.fitChildInParent(video);
+
+		switch($(video).attr("videoType")){
+			case V.Constant.MEDIA.HTML5_VIDEO:
+				V.Utils.fitChildInParent(video);
+				break;
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
+				break;
+			default:
+				break;
+		}
+		
 		var videoHeight = $(video).height();
 		var videoBody = $(video).parent();
 		$(videoBody).height(videoHeight);
@@ -181,8 +200,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(video).css("max-width","100%");
 	};
 
-	var _onTimeUpdate = function(video){
-		var currentTime = V.Video.getCurrentTime(video);
+	var _onTimeUpdate = function(video,currentTime){
 		_updateCurrentTime(video,currentTime);
 		
 		// if(typeof nextBall == "object"){
@@ -192,6 +210,10 @@ VISH.EVideo = (function(V,$,undefined){
 		// 		}
 		// 	}
 		// }
+	};
+
+	var _onStatusChange = function(video,status){
+		_updatePlayButton(status);
 	};
 
 
@@ -214,7 +236,6 @@ VISH.EVideo = (function(V,$,undefined){
 		} else {
 			V.Video.play(video);
 		}
-		_updatePlayButton(vStatus);
 	};
 
 	var _onClickProgressBar = function(event){
@@ -251,7 +272,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _updatePlayButton = function(vStatus){
 		var eVideoPlayButton = $(V.Slides.getCurrentSlide()).find(".evideoPlayButton");
-		if(vStatus.paused == false){
+		if(vStatus.paused === true){
 			$(eVideoPlayButton).attr("src", V.ImagesPath + "customPlayer/eVideoPlay.png");
 		} else {
 			$(eVideoPlayButton).attr("src", V.ImagesPath + "customPlayer/eVideoPause.png");

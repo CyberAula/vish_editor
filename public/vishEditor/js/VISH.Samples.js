@@ -1004,8 +1004,8 @@ VISH.Samples = (function(V,undefined){
 				"id":"article1",
 				"type":"enrichedvideo",
 				"video": {
-					"type":"HTML5",
-					// "type":"youtube",
+					// "type":"HTML5",
+					"type":"Youtube",
 					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/325.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/325.mp4\"}]",
 					// "sources":"[{ \"type\": \"video/webm\", \"src\": \"https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm\"}]",
 					"poster":"images/videos/webvtt_talk.png",

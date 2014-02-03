@@ -94,6 +94,7 @@ VISH.Video = (function(V,$,undefined){
 				$(video)[0].play();
 				break;
 			case V.Constant.Video.Youtube:
+				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).playVideo();
 				break;
 			default:
 				break;
@@ -106,6 +107,7 @@ VISH.Video = (function(V,$,undefined){
 				$(video)[0].pause();
 				break;
 			case V.Constant.Video.Youtube:
+				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).pauseVideo();
 				break;
 			default:
 				break;
@@ -118,6 +120,7 @@ VISH.Video = (function(V,$,undefined){
 				$(video)[0].currentTime = seekTime;
 				break;
 			case V.Constant.Video.Youtube:
+				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).seekTo(seekTime);
 				break;
 			default:
 				break;
@@ -146,11 +149,15 @@ VISH.Video = (function(V,$,undefined){
 				});
 				break;
 			case V.Constant.Video.Youtube:
+				// onVideoReady callback must be specified when loading the YouTube video.
+				// After load the YouTube video, its possible to add events on fly.
 				break;
 			default:
 				break;
 		}
 	};
+
+	var youtubePlayerTUTimers = {};
 
 	var onTimeUpdate = function(video,timeUpdateCallback){
 		if(typeof timeUpdateCallback != "function"){
@@ -160,10 +167,46 @@ VISH.Video = (function(V,$,undefined){
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
 				$(video).on("timeupdate", function(){
-					timeUpdateCallback(video);
+					var cTime = video.currentTime;
+					timeUpdateCallback(video,cTime);
 				});
 				break;
 			case V.Constant.Video.Youtube:
+				var videoId = $(video).attr("id");
+				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+				if(typeof youtubePlayerTUTimers[videoId] == "undefined"){
+					youtubePlayerTUTimers[videoId] = setInterval(function(){
+						var cTime = ytplayer.getCurrentTime();
+						timeUpdateCallback(video,cTime);
+					},200);
+				};
+				break;
+			default:
+				break;
+		}
+	};
+
+	var onStatusChange = function(video,statusCallback){
+		if(typeof statusCallback != "function"){
+			return;
+		}
+
+		switch(getTypeVideo(video)){
+			case V.Constant.Video.HTML5:
+				video.addEventListener('play', function(){
+					statusCallback(video,{playing: true, paused: false});
+				}, false);
+				video.addEventListener('pause', function(){
+					statusCallback(video,{playing: false, paused: true});
+				}, false);
+				break;
+			case V.Constant.Video.Youtube:
+				var videoId = $(video).attr("id");
+				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+				ytplayer.addEventListener("onStateChange", function(event){
+					var vStatus = _getVEStatusFromYouTubeStatus(event.data);
+					statusCallback(video,vStatus);
+				});
 				break;
 			default:
 				break;
@@ -181,6 +224,10 @@ VISH.Video = (function(V,$,undefined){
 				vStatus.paused = !vStatus.playing;
 				break;
 			case V.Constant.Video.Youtube:
+				var ytplayer =  V.Video.Youtube.getYouTubePlayer($(video).attr("id"));
+				//Returns the state of the player. Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).
+				var ytStatus = ytplayer.getPlayerState();
+				vStatus = _getVEStatusFromYouTubeStatus(ytStatus);
 				break;
 			default:
 				break;
@@ -188,26 +235,33 @@ VISH.Video = (function(V,$,undefined){
 		return vStatus;
 	};
 
+	var _getVEStatusFromYouTubeStatus = function(ytStatus){
+		var vStatus = {playing: false, paused: false};
+		vStatus.playing = (ytStatus===1);
+		vStatus.paused = !vStatus.playing;
+		return vStatus;
+	}
+
 	var getDuration = function(video){
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
 				return $(video)[0].duration;
 				break;
 			case V.Constant.Video.Youtube:
-				return youtubePlayers[video.id].getDuration();
+				return V.Video.Youtube.getYouTubePlayer($(video).attr("id")).getDuration();
 				break;
 			default:
 				break;
 		}
 	};
 
-	var getCurrentTime = function(video){	  
+	var getCurrentTime = function(video){  
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
 				return video.currentTime;
 				break;
 			case V.Constant.Video.Youtube:
-				return youtubePlayers[video.id].getCurrentTime();
+				return V.Video.Youtube.getYouTubePlayer($(video).attr("id")).getCurrentTime();
 				break;
 			default:
 				break;
@@ -226,6 +280,7 @@ VISH.Video = (function(V,$,undefined){
 		seekTo				: seekTo,
 		onVideoReady		: onVideoReady,
 		onTimeUpdate		: onTimeUpdate,
+		onStatusChange		: onStatusChange,
 		getDuration 		: getDuration,
 		getCurrentTime 		: getCurrentTime,
 		getStatus			: getStatus

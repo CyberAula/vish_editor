@@ -64,7 +64,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 */
 
 	var renderVideoFromJSON = function(videoJSON, options){
-		var videoId = V.Utils.getId();
+		var videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
 		var style = (videoJSON['style'])?"style='" + videoJSON['style'] + "'":"";
 		var controls= (videoJSON['controls'])?"controls='" + videoJSON['controls'] + "' ":"controls='controls' ";
 		var autoplay= (videoJSON['autoplay'])?"autoplayonslideenter='" + videoJSON['autoplay'] + "' ":"";

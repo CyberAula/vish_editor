@@ -7,7 +7,7 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 	var loadObject = function(slide){
 		$.each(slide.children('.objectelement'),function(index,value){
 			if($(value).hasClass('youtubeelement')){
-				V.Video.Youtube.loadYoutubeObject(slide,value);
+				V.Video.Youtube.loadYoutubeObject(value);
 				return;
 			}
 

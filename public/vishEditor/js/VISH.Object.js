@@ -92,7 +92,7 @@ VISH.Object = (function(V,$,undefined){
 		}
 
 		if(source.match(youtube_video_pattern)!=null){
-			return "youtube";
+			return V.Constant.MEDIA.YOUTUBE_VIDEO;
 		}
 			
 		//Purge options
