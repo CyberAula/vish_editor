@@ -1783,8 +1783,8 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoToggleIndex {
-	min-width: 24px;
-	min-height: 24px;
+	min-width: 9px;
+	min-height: 12px;
 	position: relative;
 	display: inline-block;
 	top: 30px;

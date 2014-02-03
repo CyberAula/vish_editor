@@ -292,8 +292,7 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _updateIndexButtonUI = function(maximized){
-		var eVideoIndexBox = _getCurrentEVideoIndexBox();
-		var button = $(eVideoIndexBox).find(".evideoToggleIndex");
+		var button = $(_getCurrentEVideoIndexBox()).find(".evideoToggleIndex");
 		if(maximized===true){
 			$(button).removeClass("minimized").addClass("maximized");
 		} else {
@@ -307,6 +306,23 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var aftersetupSize = function(increase,increaseW){
 		_fitVideoInVideoBox();
+
+		//Resize and center index button
+		var videoIndexBox = _getCurrentEVideoIndexBox();
+		var indexBody = $(videoIndexBox).find(".evideoIndexBody");
+		var indexSide = $(videoIndexBox).find(".evideoIndexSide");
+		
+		var button = $(videoIndexBox).find(".evideoToggleIndex");
+		//Resize it
+		var buttonDimensions = V.ViewerAdapter.getDimensionsForResizedButton(increase,18,0.75);
+		$(button).width(buttonDimensions.width);
+		$(button).height(buttonDimensions.height);
+
+		//Center vertically
+		$(button).css("top",($(indexSide).height() - $(button).height())/2 + "px");
+		//Relocate it horizontally
+		var indexSideWidth = $(indexSide).width() - ($(indexBody).width()+$(indexBody).cssNumber("padding-right"));
+		$(button).css("left", Math.max(0,(indexSideWidth - $(button).width())/2.5) + "px");
 	};
 
 

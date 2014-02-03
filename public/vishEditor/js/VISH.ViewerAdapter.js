@@ -432,6 +432,20 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 	};
 
+	var getDimensionsForResizedButton = function(increase,originalWidth,aspectRatio){
+		var originalWidth = originalWidth || 23;
+		var aspectRatio = aspectRatio || 1;
+
+		var _buttonWidth = originalWidth;
+		if(increase <= 1){
+			_buttonWidth = _buttonWidth*getPonderatedIncrease(increase,0.7);
+		} else {
+			_buttonWidth = _buttonWidth*getPonderatedIncrease(increase,0.2);
+		}
+
+		return {width: _buttonWidth, height: _buttonWidth/aspectRatio};
+	}
+
 	var getLastIncrease = function(){
 		return [_lastIncrease,_lastIncreaseW];
 	};
@@ -447,6 +461,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		decideIfCloseButton		: decideIfCloseButton,
 		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
+		getDimensionsForResizedButton	: getDimensionsForResizedButton,
 		getPonderatedIncrease 	: getPonderatedIncrease,
 		getLastIncrease			: getLastIncrease
 	};
