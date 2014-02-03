@@ -119,8 +119,6 @@ VISH.EVideo = (function(V,$,undefined){
 				return;
 		}
 
-		$(video).css("max-height","100%");
-		$(video).css("max-width","100%");
 		$(video).addClass("temp_hidden");
 		$(videoBody).attr("videoType",evideoJSON.video.type);
 		$(videoBody).append(video);
@@ -154,6 +152,8 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _fitVideoInVideoBox = function(videoBox,video){
+		$(video).css("max-height","none");
+		$(video).css("max-width","none");
 		$(video).removeClass("temp_hidden");
 		V.Utils.fitChildInParent(video);
 		var videoHeight = $(video).height();
@@ -171,10 +171,16 @@ VISH.EVideo = (function(V,$,undefined){
 		$(videoHeader).removeClass("temp_shown");
 		$(videoFooter).removeClass("temp_shown");
 
+		//Remove margin from videoHeader to get videoBox height appropiattely
+		$(videoHeader).css("margin-top","0px");
 		var freeHeight = $(videoBox).height() - totalVideoBoxHeight;
+
 		$(videoHeader).css("margin-top",freeHeight/2+"px");
 		$(videoHeader).width(videoWidth);
 		$(videoFooter).width(videoWidth);
+
+		$(video).css("max-height","100%");
+		$(video).css("max-width","100%");
 	};
 
 	var _onTimeUpdate = function(video){
@@ -258,19 +264,16 @@ VISH.EVideo = (function(V,$,undefined){
 		var eVideoIndexBox = _getCurrentEVideoIndexBox();
 		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
 
+		var animationId = V.Utils.getId("animation");	
+		$(eVideoIndexBox).animate({width: "5%"}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMinimizeIndex)});
 		var indexBodyWidth = $(eVideoIndexBox).width()*0.05;
-		$(eVideoIndexBox).animate({width: "5%"}, 1000, function(){ _checkAnimationFinish(2,_onFinishMinimizeIndex)});
-		$(indexBody).animate({width: indexBodyWidth + ""}, 1000, function(){ _checkAnimationFinish(2,_onFinishMinimizeIndex)});
+		$(indexBody).animate({width: indexBodyWidth + ""}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMinimizeIndex)});
 	};
 
 	var _onFinishMinimizeIndex = function(){
 		var eVideoBox = _getCurrentEVideoBox();
 		$(eVideoBox).css("width","93%");
-
-		var eVideoIndexBox = _getCurrentEVideoIndexBox();
-		var button = $(eVideoIndexBox).find(".evideoToggleIndex");
-		$(button).removeClass("maximized").addClass("minimized");
-
+		_updateIndexButtonUI(false);
 		_redimensionateVideoAfterIndex();
 	};
 
@@ -278,22 +281,26 @@ VISH.EVideo = (function(V,$,undefined){
 		var eVideoIndexBox = _getCurrentEVideoIndexBox();
 		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
 
-		$(eVideoIndexBox).animate({width: "28%"}, 1000, function(){ _checkAnimationFinish(2,_onFinishMaximizeIndex)});
-		$(indexBody).animate({width: "78%"}, 1000, function(){ _checkAnimationFinish(2,_onFinishMaximizeIndex)});
-
-		_redimensionateVideoAfterIndex();
+		var animationId = V.Utils.getId("animation");
+		$(eVideoIndexBox).animate({width: "28%"}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMaximizeIndex)});
+		$(indexBody).animate({width: "78%"}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMaximizeIndex)});
 	};
 
 	var _onFinishMaximizeIndex = function(){
 		var eVideoBox = _getCurrentEVideoBox();
-		// $(eVideoBox).css("width","70%");
-		// $(eVideoBox).find(".evideoBody").css("width","100%");
+		$(eVideoBox).css("width","70%");
+		_updateIndexButtonUI(true);
+		_redimensionateVideoAfterIndex();
+	};
 
+	var _updateIndexButtonUI = function(maximized){
 		var eVideoIndexBox = _getCurrentEVideoIndexBox();
 		var button = $(eVideoIndexBox).find(".evideoToggleIndex");
-		$(button).removeClass("minimized").addClass("maximized");
-
-		// _redimensionateVideoAfterIndex();
+		if(maximized===true){
+			$(button).removeClass("minimized").addClass("maximized");
+		} else {
+			$(button).removeClass("maximized").addClass("minimized");
+		}
 	};
 
 	var _redimensionateVideoAfterIndex = function(){
@@ -301,25 +308,9 @@ VISH.EVideo = (function(V,$,undefined){
 		var eVideoBody = $(eVideoBox).find(".evideoBody");
 		$(eVideoBody).css("height","85%");
 		
-		var video = _getCurrentEVideo();
-		V.Utils.fitChildInParent(video);
-		var videoHeight = $(video).height();
-		$(eVideoBody).height(videoHeight);
-
-		//Center and adjust widths
-		_fitVideoInVideoBox(eVideoBox,video);
+		_fitVideoInVideoBox(eVideoBox,_getCurrentEVideo());
 	};
 
-	var nAnimationsFinished = 0;
-	var _checkAnimationFinish = function(nAnimations,callback){
-		nAnimationsFinished = nAnimationsFinished +1;
-		if(nAnimationsFinished===nAnimations){
-			nAnimationsFinished = 0;
-			if(typeof callback == "function"){
-				callback();
-			}
-		}
-	};
 
 
 

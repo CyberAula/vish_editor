@@ -1033,6 +1033,27 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
+	/* 
+	 * Multiple animation callback
+	 */
+	var nAnimationsFinishedList = {};
+	var checkAnimationsFinish = function(animationId,nAnimations,callback){
+		if(typeof nAnimationsFinishedList[animationId] == "undefined"){
+			nAnimationsFinishedList[animationId] = 0;
+		}
+		var nAnimationsFinished = nAnimationsFinishedList[animationId];
+
+		nAnimationsFinished = nAnimationsFinished +1;
+		if(nAnimationsFinished===nAnimations){
+			nAnimationsFinished = 0;
+			if(typeof callback == "function"){
+				callback();
+			}
+		}
+		nAnimationsFinishedList[animationId] = nAnimationsFinished;
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -1063,7 +1084,8 @@ VISH.Utils = (function(V,undefined){
 		cleanHash				: cleanHash,
 		removeHashFromUrlString	: removeHashFromUrlString,
 		getHashParams			: getHashParams,
-		getSlideNumberFromHash	: getSlideNumberFromHash
+		getSlideNumberFromHash	: getSlideNumberFromHash,
+		checkAnimationsFinish	: checkAnimationsFinish
 	};
 
 }) (VISH);
