@@ -2,16 +2,9 @@ VISH.EVideo = (function(V,$,undefined){
 
 	//Old
 	var state_vid;
-	var video; 
-	var myvideoId;
-	var duracion;
-	var balls = []; // Ball array time-ordered
 	var nextBall; 
 	var prevNextBall; 
-	var eback = true;
 	var RANGE = 0.300; //seconds around the ball where we should stop
-
-
 
 
 	//Internals
@@ -137,6 +130,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var significativeNumbers = duration.split(":").join("").length;
 		$(video).attr("sN",significativeNumbers);
 
+		$(video).removeClass("temp_hidden");
 		_fitVideoInVideoBox(videoBox,video);
 
 		$(videoHeader).show();
@@ -152,9 +146,13 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _fitVideoInVideoBox = function(videoBox,video){
+		var videoBox = videoBox || _getCurrentEVideoBox();
+		var video = video || _getCurrentEVideo();
+		var eVideoBody = $(videoBox).find(".evideoBody");
+		$(eVideoBody).css("height","85%");
+
 		$(video).css("max-height","none");
 		$(video).css("max-width","none");
-		$(video).removeClass("temp_hidden");
 		V.Utils.fitChildInParent(video);
 		var videoHeight = $(video).height();
 		var videoBody = $(video).parent();
@@ -304,18 +302,12 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _redimensionateVideoAfterIndex = function(){
-		var eVideoBox = _getCurrentEVideoBox();
-		var eVideoBody = $(eVideoBox).find(".evideoBody");
-		$(eVideoBody).css("height","85%");
-		
-		_fitVideoInVideoBox(eVideoBox,_getCurrentEVideo());
+		_fitVideoInVideoBox();
 	};
 
-
-
-
-
-
+	var aftersetupSize = function(increase,increaseW){
+		_fitVideoInVideoBox();
+	};
 
 
 	var _getNextBall = function(time){
@@ -519,7 +511,8 @@ VISH.EVideo = (function(V,$,undefined){
 		init			: init,
 		drawEVideo		: drawEVideo,
 		loadEVideo		: loadEVideo,
-		unloadEVideo	: unloadEVideo
+		unloadEVideo	: unloadEVideo,
+		aftersetupSize	: aftersetupSize
 	};
 
 }) (VISH, jQuery);

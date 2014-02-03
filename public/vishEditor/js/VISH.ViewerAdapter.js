@@ -361,6 +361,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Maps callbacks
 		V.VirtualTour.aftersetupSize(increase,increaseW);
 
+		//Evideo
+		V.EVideo.aftersetupSize(increase,increaseW);
+
 		//Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);
 
