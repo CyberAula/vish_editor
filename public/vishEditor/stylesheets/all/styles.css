@@ -1700,7 +1700,8 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolButtonWrapper {
-	width: 6%;
+	width: 5%;
+	padding-right: 1%;
 	overflow: visible;
 	position: relative;
 }
@@ -1723,8 +1724,8 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoVolSlider {
 	position: absolute;
-	height: 90%;
-	top: 5%;
+	height: 78%;
+	bottom: 5%;
 	width: 50%;
 	left: 25%;
 	background: #535353;
@@ -1755,26 +1756,40 @@ span.evideoTimeSlash, span.evideoDuration {
 	float: right;
 }
 
-.evideoProgressBar {
+.evideoProgressBarSliderWrapper {
+	position: relative;
 	height: 100%;
 	width: 100%;
 	background: #535353;
 }
 
-.evideoPosition {
-	background: #cc0000; /* Old browsers */
-	background: -moz-linear-gradient(top, #cc0000 0%, #cc0000 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#cc0000), color-stop(100%,#cc0000)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #cc0000 0%,#cc0000 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #cc0000 0%,#cc0000 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #cc0000 0%,#cc0000 100%); /* IE10+ */
-	background: linear-gradient(to bottom, #cc0000 0%,#cc0000 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cc0000', endColorstr='#cc0000',GradientType=0 ); /* IE6-9 */
+.evideoProgressBarSlider {
+	position: absolute;
+	background: #535353;
 	height: 100%;
-	width: 0px;
+	width: 100%;
 	display: block;
 	z-index: 10;
+	border: none;
 }
+
+.evideoProgressBarSlider .ui-widget-header {
+	background: #cc0000;
+}
+
+.evideoProgressBarSlider .ui-slider-handle {
+	position: absolute;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
+	width: 7%;
+	height: 160%;
+	left: -50%;
+	margin-top: -1%;
+	margin-left: -1.7%;
+	background-size: contain;
+	border: none;
+	cursor: pointer;
+}
+
 
 /* Segments and balls */
 

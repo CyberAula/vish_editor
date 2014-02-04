@@ -12,7 +12,7 @@ VISH.EVideo = (function(V,$,undefined){
 	// myEvideo = evideos['evideoId'] has:
 	// myEvideo.balls = [ball1,ball2,...,ball3];
 	// Each ball has id, time and an associated slide id
-
+	var _seeking = false;
 	var initialized = false;
 
 	var init = function(presentation){
@@ -28,7 +28,6 @@ VISH.EVideo = (function(V,$,undefined){
 		V.Debugging.log("Load Events");
 
 		$(document).on("click", '.evideoPlayButtonWrapper' , _onClickPlayVideo);
-		$(document).on("click", '.evideoProgressBar', _onClickProgressBar);
 		$(document).on("click", '.evideoToggleIndex.maximized', _minimizeIndex);
 		$(document).on("click", '.evideoToggleIndex.minimized', _maximizeIndex);
 
@@ -70,7 +69,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(controls).append(volButton);
 		//Progress bar
 		var progressBarWrapper = $("<div class='evideoProgressBarWrapper'></div>");
-		var progressBar = $("<div class='evideoProgressBar'><div class='evideoPosition'></div></div>");
+		var progressBar = $("<div class='evideoProgressBarSliderWrapper'><div class='evideoProgressBarSlider'></div></div>");
 		var videoSegments = $("<div class='segmentDiv'></div><ul class='evideoSegments'></ul>");
 		$(progressBarWrapper).append(progressBar);
 		$(progressBarWrapper).append(videoSegments);
@@ -79,7 +78,31 @@ VISH.EVideo = (function(V,$,undefined){
 		$(footer).append(controls);
 		$(videoBox).append(footer);
 
-		//1.1 Volume Slider
+		//1.1 Position Slider
+		var posSlider = $(controls).find(".evideoProgressBarSlider");
+		$(posSlider).slider({
+			orientation: "horizontal",
+			range: "min",
+			min: 0,
+			max: 100,
+			value: 0,
+			step: 0.1,
+			slide: function(event, ui){
+				var posSlider = $(controls).find(".evideoProgressBarSlider");
+				var headPosSlider = $(posSlider).find(".ui-slider-handle");
+				_adjustPosProgressBarHeader(headPosSlider,ui.value);
+			}, start: function(event,ui){
+				_seeking = true;
+			}, stop: function(event, ui){
+				var video = $(".evideoBox").has(event.target).find(".evideoBody").children()[0];
+				_onSlideProgressBar(video,ui.value);
+				setTimeout(function(){
+					_seeking = false;
+				},600);
+			}
+		});
+
+		//1.2 Volume Slider
 		var volSlider = $(controls).find(".evideoVolSlider");
 		$(volSlider).slider({
 			orientation: "vertical",
@@ -95,8 +118,10 @@ VISH.EVideo = (function(V,$,undefined){
 
 
 		$(volButton).hover(function(event){
-			var sliderWrapper = $(".evideoControls").has(event.target).find(".evideoVolSliderWrapper");
-			$(sliderWrapper).show();
+			if(!_seeking){
+				var sliderWrapper = $(".evideoControls").has(event.target).find(".evideoVolSliderWrapper");
+				$(sliderWrapper).show();
+			}
 		}, function(event){
 			var sliderWrapper = $(".evideoControls").has(event.target).find(".evideoVolSliderWrapper");
 			$(sliderWrapper).hide();
@@ -110,7 +135,6 @@ VISH.EVideo = (function(V,$,undefined){
 		$(indexBox).append(indexSide);
 		$(slidesetDOM).append(indexBox);
 	};
-
 
 	/* Load Methods */
 	var loadEVideo = function(evideoId){
@@ -270,20 +294,23 @@ VISH.EVideo = (function(V,$,undefined){
 		}
 	};
 
-	var _onClickProgressBar = function(event){
-		//Seek Video		
-		var progressBar = $(event.target).hasClass("evideoPosition") ? $(event.target).parent() : event.target;
-		var distanceDifference = Math.max(0,event.pageX - $(progressBar).offset().left);
-		var percentage = distanceDifference/$(progressBar).width();
-		var video = _getCurrentEVideo();
+	var _onSlideProgressBar = function(video,value){
 		var duration = V.Video.getDuration(video);
-		var timeToSeek = duration * percentage;
+		var timeToSeek = duration * value/100;
 		V.Video.seekTo(video,timeToSeek);
-
-		// nextBall = null;
-		// _getNextBall(video.currentTime);
-		// _resetShowParams();
 	};
+
+	// Old implementation (before slider)
+	// var _onClickProgressBar = function(event){
+	// 	//Seek Video
+	// 	var progressBar = $(event.target).hasClass("evideoPosition") ? $(event.target).parent() : event.target;
+	// 	var distanceDifference = Math.max(0,event.pageX - $(progressBar).offset().left);
+	// 	var percentage = distanceDifference/$(progressBar).width();
+	// 	var video = _getCurrentEVideo();
+	// 	var duration = V.Video.getDuration(video);
+	// 	var timeToSeek = duration * percentage;
+	// 	V.Video.seekTo(video,timeToSeek);
+	// };
 
 
 	/* UI methods */
@@ -292,14 +319,27 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBox = _getCurrentEVideoBox();
 		var currentTime = (typeof currentTime != "undefined") ? currentTime : V.Video.getCurrentTime(video);
 
-		//Update progress bar
-		var progressBar = $(videoBox).find("div.evideoPosition");
-		var percentWidth = (100*currentTime)/V.Video.getDuration(video);
-		$(progressBar).css("width", percentWidth + "%");
+		if(!_seeking){
+			//Update progress bar
+			var progressBar = $(videoBox).find("div.evideoProgressBarSlider");
+			var headPosSlider = $(progressBar).find(".ui-slider-handle");
+			var percentage = (100*currentTime)/V.Video.getDuration(video);
+			$(progressBar).slider("value",percentage);
+			_adjustPosProgressBarHeader(headPosSlider,percentage);
+		}
 
 		//Update current time field
 		var currentTimeField = $(videoBox).find(".evideoCurTime");
 		$(currentTimeField).html(_fomatTime(currentTime,parseInt($(video).attr("sN"))));
+	};
+
+	var _adjustPosProgressBarHeader = function(headPosSlider,value){
+		var evideoProgressBarSlider = $(headPosSlider).parent();
+		var width = $(evideoProgressBarSlider).width();
+		var minWidth = width*1.7/100;
+		var maxWidth = width*5.8/100;
+		var marginLeft = (-1) * (minWidth + value*(maxWidth-minWidth)/100);
+		$(headPosSlider).css("margin-left",marginLeft+"px");
 	};
 
 	var _updatePlayButton = function(vStatus){

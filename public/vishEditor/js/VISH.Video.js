@@ -139,12 +139,25 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.Video.Youtube:
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+				var ytStatus = ytplayer.getPlayerState();
+				var videoPaused = (ytStatus==2);
+				// var videoUnstarted = (ytStatus==-1);
+				// if(videoUnstarted){
+				// 	ytplayer.pauseVideo();
+				// }
+
 				ytplayer.seekTo(seekTime);
 
 				//Restart timeupdate event
 				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer == "undefined")){
-					youtubePlayerTimeUpdate[videoId].timeUpdateCallback(video,seekTime);
-				};
+					if(videoPaused===true){
+						//Then, the video will remain paused
+						youtubePlayerTimeUpdate[videoId].timeUpdateCallback(video,seekTime);
+					} else {
+						//The video will start playing
+						youtubePlayerTimeUpdate[videoId].timer = _createYouTubeTimer(video,ytplayer,youtubePlayerTimeUpdate[videoId].timeUpdateCallback);
+					} 	
+				};		
 
 				break;
 			default:
