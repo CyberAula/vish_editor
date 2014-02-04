@@ -93,8 +93,16 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.Video.HTML5:
 				$(video)[0].play();
 				break;
-			case V.Constant.Video.Youtube:
-				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).playVideo();
+			case V.Constant.Video.Youtube:		
+				var videoId = $(video).attr("id");
+				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+				ytplayer.playVideo();
+
+				//Restart timeupdate event
+				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer == "undefined")){
+					youtubePlayerTimeUpdate[videoId].timer = _createYouTubeTimer(video,ytplayer,youtubePlayerTimeUpdate[videoId].timeUpdateCallback);
+				};
+
 				break;
 			default:
 				break;
@@ -107,7 +115,16 @@ VISH.Video = (function(V,$,undefined){
 				$(video)[0].pause();
 				break;
 			case V.Constant.Video.Youtube:
-				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).pauseVideo();
+				var videoId = $(video).attr("id");
+				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+				ytplayer.pauseVideo();
+
+				//Stop timeupdate event
+				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer != "undefined")){
+					clearTimeout(youtubePlayerTimeUpdate[videoId].timer);
+					youtubePlayerTimeUpdate[videoId].timer = undefined;
+				};
+
 				break;
 			default:
 				break;
@@ -120,7 +137,15 @@ VISH.Video = (function(V,$,undefined){
 				$(video)[0].currentTime = seekTime;
 				break;
 			case V.Constant.Video.Youtube:
-				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).seekTo(seekTime);
+				var videoId = $(video).attr("id");
+				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+				ytplayer.seekTo(seekTime);
+
+				//Restart timeupdate event
+				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer == "undefined")){
+					youtubePlayerTimeUpdate[videoId].timeUpdateCallback(video,seekTime);
+				};
+
 				break;
 			default:
 				break;
@@ -173,7 +198,7 @@ VISH.Video = (function(V,$,undefined){
 		}
 	};
 
-	var youtubePlayerTUTimers = {};
+	var youtubePlayerTimeUpdate = {};
 
 	var onTimeUpdate = function(video,timeUpdateCallback){
 		if(typeof timeUpdateCallback != "function"){
@@ -190,16 +215,25 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.Video.Youtube:
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
-				if(typeof youtubePlayerTUTimers[videoId] == "undefined"){
-					youtubePlayerTUTimers[videoId] = setInterval(function(){
-						var cTime = ytplayer.getCurrentTime();
-						// timeUpdateCallback(video,cTime);
-					},200);
+				if(typeof youtubePlayerTimeUpdate[videoId] == "undefined"){
+					youtubePlayerTimeUpdate[videoId] = {};
+					youtubePlayerTimeUpdate[videoId].timeUpdateCallback = timeUpdateCallback;
+					if(_getVEStatusFromYouTubeStatus(ytplayer.getPlayerState()).playing === true){
+						//Start timer
+						youtubePlayerTimeUpdate[videoId].timer = _createYouTubeTimer(video,ytplayer,timeUpdateCallback);
+					}
 				};
 				break;
 			default:
 				break;
 		}
+	};
+
+	var _createYouTubeTimer = function(video,ytplayer,timeUpdateCallback){
+		return setInterval(function(){
+			var cTime = ytplayer.getCurrentTime();
+			timeUpdateCallback(video,cTime);
+		},200);
 	};
 
 	var onStatusChange = function(video,statusCallback){

@@ -1737,7 +1737,7 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSlider .ui-slider-handle {
-	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat left top;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
 	width: 200%;
 	height: 25%;
 	left: -50%;
