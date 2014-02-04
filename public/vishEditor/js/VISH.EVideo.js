@@ -63,7 +63,11 @@ VISH.EVideo = (function(V,$,undefined){
 		
 		var controls = $("<div class='evideoControls'>");
 		//Play button
-		$(controls).append("<div class='evideoPlayButtonWrapper'><img class='evideoPlayButton' src='"+V.ImagesPath + "customPlayer/eVideoPlay.png'></img></div>");
+		$(controls).append("<div class='evideoControlButtonWrapper evideoPlayButtonWrapper'><img class='evideoControlButton evideoPlayButton' src='"+V.ImagesPath + "customPlayer/eVideoPlay.png'></img></div>");
+		//Volume button
+		var volButton = $("<div class='evideoControlButtonWrapper evideoVolButtonWrapper'><img class='evideoControlButton evideoVolButton' src='"+V.ImagesPath + "customPlayer/eVideoSound.png'></img></div>");
+		$(volButton).append("<div class='evideoVolSliderWrapper'><div class='evideoVolSlider'></div></div>");
+		$(controls).append(volButton);
 		//Progress bar
 		var progressBarWrapper = $("<div class='evideoProgressBarWrapper'></div>");
 		var progressBar = $("<div class='evideoProgressBar'><div class='evideoPosition'></div></div>");
@@ -74,6 +78,29 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(footer).append(controls);
 		$(videoBox).append(footer);
+
+		//1.1 Volume Slider
+		var volSlider = $(controls).find(".evideoVolSlider");
+		$(volSlider).slider({
+			orientation: "vertical",
+			range: "min",
+			min: 0,
+			max: 100,
+			value: 100,
+			slide: function( event, ui ) {
+				var video = $(".evideoBox").has(event.target).find(".evideoBody").children()[0];
+				_onVolumeChange(video,ui.value);
+			}
+		});
+
+
+		$(volButton).hover(function(event){
+			var sliderWrapper = $(".evideoControls").has(event.target).find(".evideoVolSliderWrapper");
+			$(sliderWrapper).show();
+		}, function(event){
+			var sliderWrapper = $(".evideoControls").has(event.target).find(".evideoVolSliderWrapper");
+			$(sliderWrapper).hide();
+		});
 
 		//2. INDEX
 		var indexBox = $("<div class='evideoIndexBox'></div>");
@@ -214,6 +241,11 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _onStatusChange = function(video,status){
 		_updatePlayButton(status);
+	};
+
+
+	var _onVolumeChange = function(video,volume){
+		V.Video.setVolume(video,volume);
 	};
 
 

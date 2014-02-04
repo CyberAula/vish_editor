@@ -1665,8 +1665,7 @@ span.evideoTimeSlash, span.evideoDuration {
 	overflow: visible;
 }
 
-.evideoPlayButtonWrapper {
-	width: 10%;
+.evideoControlButtonWrapper {
 	height: 100%;
 	float: left;
 	display: block;
@@ -1684,6 +1683,15 @@ span.evideoTimeSlash, span.evideoDuration {
 	cursor: pointer;
 }
 
+.evideoControlButton {
+	border: none;
+	max-width: 80%;
+}
+
+.evideoPlayButtonWrapper {
+	width: 8%;
+}
+
 .evideoPlayButton {
 	border: none;
 	height: 75%;
@@ -1691,17 +1699,66 @@ span.evideoTimeSlash, span.evideoDuration {
 	margin-top: 4%;
 }
 
+.evideoVolButtonWrapper {
+	width: 6%;
+	overflow: visible;
+	position: relative;
+}
+
+.evideoVolButton {
+	height: 98%;
+	max-width: 80%;
+	margin-top: 1%;
+}
+
+.evideoVolSliderWrapper {
+	height: 800%;
+	width: 100%;
+	position: absolute;
+	bottom: 100%;
+	text-align: center;
+	background-color: rgba(0,0,0,0.5);
+	display: none;
+}
+
+.evideoVolSlider {
+	position: absolute;
+	height: 90%;
+	top: 5%;
+	width: 50%;
+	left: 25%;
+	background: #535353;
+	border: none;
+	border-radius: 5px 5px 5px 5px;
+}
+
+.evideoVolSlider .ui-widget-header {
+	background: #cc0000;
+}
+
+.evideoVolSlider .ui-slider-handle {
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat left top;
+	width: 200%;
+	height: 25%;
+	left: -50%;
+	margin-bottom: -110%;
+	background-size: contain;
+	position: absolute;
+	border: none;
+	cursor: pointer;
+}
+
 .evideoProgressBarWrapper {
 	display: inline;
-    width: 90%;
-    height: 100%;
-    float: right;
+	width: 86%;
+	height: 100%;
+	float: right;
 }
 
 .evideoProgressBar {
 	height: 100%;
 	width: 100%;
-    background: #535353;
+	background: #535353;
 }
 
 .evideoPosition {

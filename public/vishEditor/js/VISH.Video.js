@@ -127,6 +127,22 @@ VISH.Video = (function(V,$,undefined){
 		}		
 	};
 
+	var setVolume = function(video,volume){
+		//Volume is a number between 0 and 100
+		switch(getTypeVideo(video)){
+			case V.Constant.Video.HTML5:
+				//Volume should be a number between 0.0 and 1.0
+				$(video)[0].volume = (volume/100);
+				break;
+			case V.Constant.Video.Youtube:
+				//Volume should be a number between 0 and 100
+				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).setVolume(volume);
+				break;
+			default:
+				break;
+		}
+	};
+
 	//Events
 	var onVideoReady = function(video,successCallback,failCallback){
 		if(typeof successCallback != "function"){
@@ -177,7 +193,7 @@ VISH.Video = (function(V,$,undefined){
 				if(typeof youtubePlayerTUTimers[videoId] == "undefined"){
 					youtubePlayerTUTimers[videoId] = setInterval(function(){
 						var cTime = ytplayer.getCurrentTime();
-						timeUpdateCallback(video,cTime);
+						// timeUpdateCallback(video,cTime);
 					},200);
 				};
 				break;
@@ -255,7 +271,7 @@ VISH.Video = (function(V,$,undefined){
 		}
 	};
 
-	var getCurrentTime = function(video){  
+	var getCurrentTime = function(video){
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
 				return video.currentTime;
@@ -278,6 +294,7 @@ VISH.Video = (function(V,$,undefined){
 		play 				: play,
 		pause 				: pause,
 		seekTo				: seekTo,
+		setVolume			: setVolume,
 		onVideoReady		: onVideoReady,
 		onTimeUpdate		: onTimeUpdate,
 		onStatusChange		: onStatusChange,
