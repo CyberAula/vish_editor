@@ -71,6 +71,9 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var poster=(videoJSON['poster'])?"poster='" + videoJSON['poster'] + "' ":"";
 		var loop=(videoJSON['loop'])?"loop='loop' ":"";
 
+		console.log("videoJSON");
+		console.log(videoJSON);
+
 		//Params forced by options
 		var videoClass = "";
 		if(options){

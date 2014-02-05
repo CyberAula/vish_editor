@@ -201,16 +201,16 @@ VISH.Renderer = (function(V,$,undefined){
 
 	var renderAudio = function(element, template){
 		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>";
-			var style = (element['style'])?"style='" + element['style'] + "'":"";
+		var style = (element['style'])?"style='" + element['style'] + "'":"";
 		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' ";
 		var sources = element['sources'];
-		console.log(sources);
+
 
 		if(typeof sources == "string"){
 			sources = JSON.parse(sources)
 		}
 		
-		rendered = rendered + "<audio class='" + template + "_audio' preload='metadata' "  + controls  + ">";
+		rendered = rendered + "<audio class='" + template + "_audio' preload='metadata' "  + style + controls  + ">";
 		
 		$.each(sources, function(index, source) {
 			var type = (source.type)?"type='" + source.type + "' ":"";
@@ -223,6 +223,9 @@ VISH.Renderer = (function(V,$,undefined){
 		
 		rendered = rendered + "</audio>";
 		
+		console.log("RENDEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED!!!!!");
+		console.log(rendered);
+
 		return rendered;
 	};
 	
