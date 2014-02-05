@@ -13,6 +13,7 @@ VISH.EVideo = (function(V,$,undefined){
 	// myEvideo.balls = [ball1,ball2,...,ball3];
 	// Each ball has id, time and an associated slide id
 	var _seeking = false;
+	var _displayVol = true;
 	var initialized = false;
 
 	var init = function(presentation){
@@ -85,15 +86,18 @@ VISH.EVideo = (function(V,$,undefined){
 			value: 0,
 			step: 0.1,
 			slide: function(event, ui){
-
 			}, start: function(event,ui){
 				_seeking = true;
+				_displayVol = false;
 			}, stop: function(event, ui){
 				var video = $(videoBody).children()[0];
 				_onSlideProgressBar(video,ui.value);
 				setTimeout(function(){
 					_seeking = false;
-				},600);
+				},700);
+				setTimeout(function(){
+					_displayVol = true;
+				},100);
 			}, create: function(event,ui){
 			}
 		});
@@ -114,7 +118,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		var hoverTimeout;
 		$(volButton).hover(function(event){
-			if(!_seeking){
+			if(_displayVol){
 				hoverTimeout = setTimeout(function(){
 					var sliderWrapper = $(".evideoControls").has(event.target).find(".evideoVolSliderWrapper");
 					$(sliderWrapper).show();
@@ -371,6 +375,20 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _redimensionateVideoAfterIndex = function(){
 		_fitVideoInVideoBox();
+	};
+
+	var _fixForWrongProgressBarRendering = function(videoBox){
+		var progressBar = $(videoBox).find("div.evideoProgressBarSlider");
+		$(progressBar).css("overflow","hidden");
+		var progressBarMarker = $(progressBar).find(".ui-slider-handle");
+		$(progressBarMarker).css("height","122%");
+		$(progressBarMarker).css("margin-top","0%");
+
+		var eVideoVolSlider = $(videoBox).find(".evideoVolSlider");
+		$(eVideoVolSlider).css("overflow","hidden");
+		var eVideoVolSliderMarker = $(eVideoVolSlider).find(".ui-slider-handle");
+		$(eVideoVolSliderMarker).css("width","125%");
+		$(eVideoVolSliderMarker).css("left","-20%");
 	};
 
 	var aftersetupSize = function(increase,increaseW){

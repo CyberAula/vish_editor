@@ -258,6 +258,9 @@ VISH.Video = (function(V,$,undefined){
 				video.addEventListener('pause', function(){
 					statusCallback(video,{playing: false, paused: true});
 				}, false);
+				video.addEventListener('ended', function(){
+					statusCallback(video,{playing: false, paused: true});
+				}, false);
 				break;
 			case V.Constant.Video.Youtube:
 				var videoId = $(video).attr("id");
