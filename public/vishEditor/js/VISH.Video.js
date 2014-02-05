@@ -97,12 +97,6 @@ VISH.Video = (function(V,$,undefined){
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				ytplayer.playVideo();
-
-				//Restart timeupdate event
-				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer == "undefined")){
-					youtubePlayerTimeUpdate[videoId].timer = _createYouTubeTimer(video,ytplayer,youtubePlayerTimeUpdate[videoId].timeUpdateCallback);
-				};
-
 				break;
 			default:
 				break;
@@ -118,13 +112,6 @@ VISH.Video = (function(V,$,undefined){
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				ytplayer.pauseVideo();
-
-				//Stop timeupdate event
-				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer != "undefined")){
-					clearTimeout(youtubePlayerTimeUpdate[videoId].timer);
-					youtubePlayerTimeUpdate[videoId].timer = undefined;
-				};
-
 				break;
 			default:
 				break;
@@ -150,10 +137,10 @@ VISH.Video = (function(V,$,undefined){
 					ytplayer.pauseVideo();
 				}
 
-				//Restart timeupdate event
+				//Notify time update
 				if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer == "undefined")){
 					youtubePlayerTimeUpdate[videoId].timeUpdateCallback(video,seekTime);
-				};		
+				};
 
 				break;
 			default:
@@ -266,7 +253,45 @@ VISH.Video = (function(V,$,undefined){
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				ytplayer.addEventListener("onStateChange", function(event){
-					var vStatus = _getVEStatusFromYouTubeStatus(event.data);
+					var newState = event.data;
+					// var iframe = event.target.getIframe();
+					// $(video).attr("id") == iframe.id
+
+					switch(newState){
+						case -1:
+							//Unstarted
+							break;
+						case 0:
+							//Ended
+							break;
+						case 1:
+							//Playing
+							//Restart timeupdate event
+							if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer == "undefined")){
+								youtubePlayerTimeUpdate[videoId].timer = _createYouTubeTimer(video,ytplayer,youtubePlayerTimeUpdate[videoId].timeUpdateCallback);
+							};
+							break;
+						case 2:
+							//Paused
+							//Stop timeupdate event
+							if((typeof youtubePlayerTimeUpdate[videoId] != "undefined")&&(typeof youtubePlayerTimeUpdate[videoId].timer != "undefined")){
+								clearTimeout(youtubePlayerTimeUpdate[videoId].timer);
+								youtubePlayerTimeUpdate[videoId].timer = undefined;
+							};
+							break;
+						case 3:
+							//Buffering
+							break;
+						case 4:
+							break;
+						case 5:
+							//Video cued
+							break;
+						default:
+							break;
+					}
+
+					var vStatus = _getVEStatusFromYouTubeStatus(newState);
 					statusCallback(video,vStatus);
 				});
 				break;
