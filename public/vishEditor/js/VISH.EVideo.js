@@ -25,7 +25,17 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _loadEvents = function(){
-		$(document).on("click", '.evideoPlayButtonWrapper, .evideoPlayButton' , _onClickToggleVideo);
+		if(V.Status.getDevice().desktop){
+			$(document).on("click", '.evideoPlayButtonWrapper' , _onClickToggleVideo);
+		} else {
+			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
+				var target = params.target;
+				if($(target).hasClass("evideoPlayButtonWrapper") || $(target).hasClass("evideoPlayButton")){
+					_onClickToggleVideo();
+				};
+			});
+		}
+
 		$(document).on("click", '.evideoToggleIndex.maximized, .evideoIndexSide.maximized', _minimizeIndex);
 		$(document).on("click", '.evideoToggleIndex.minimized, .evideoIndexSide.minimized', _maximizeIndex);
 
@@ -283,9 +293,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Events */
 
-	var _onClickToggleVideo = function(event){
-		event.preventDefault();
-		event.stopPropagation();
+	var _onClickToggleVideo = function(){
 		var video = _getCurrentEVideo();
 		_togglePlay(video);
 	};

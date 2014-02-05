@@ -519,6 +519,7 @@ var i18n =
 				"i.VirtualTour"				: "Tour Virtual",
 				"i.yes"						: "si",
 				"i.Yes"						: "Si",
+				"i.YouTubePlayAlert"		: "Haz click sobre el video para empezar la reproducción",
 				"i.ZoneTooltip"				: "Haz click aquí para añadir contenido",
 
 				//Images (V.ImagesPath is omitted here)
@@ -635,6 +636,7 @@ var i18n =
 				"i.veryeasy"				: "very easy",
 				"i.yes"						: "yes",
 				"i.Yes"						: "Yes",
+				"i.YouTubePlayAlert"		: "Click on the video to start playing",
 				"i.ZoneTooltip"				: "Click here to add content",
 
 				//Survey

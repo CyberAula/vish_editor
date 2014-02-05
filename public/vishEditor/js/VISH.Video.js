@@ -96,6 +96,25 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.Video.Youtube:		
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+
+				if(!V.Status.getDevice().desktop){
+					var ytStatus = ytplayer.getPlayerState();
+					if(ytStatus===-1 || ytStatus===5){
+						//Prevent YouTube Videos to crash on mobile devices
+						var options = {};
+						options.width = '80%';
+						options.text = V.I18n.getTrans("i.YouTubePlayAlert");
+						var button1 = {};
+						button1.text = V.I18n.getTrans("i.Ok");
+						button1.callback = function(){
+							$.fancybox.close();
+						}
+						options.buttons = [button1];
+						V.Utils.showDialog(options);
+						return;
+					}
+				};
+
 				ytplayer.playVideo();
 				break;
 			default:

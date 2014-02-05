@@ -302,7 +302,7 @@ VISH.Slides = (function(V,$,undefined){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
-			var params = new Object();
+			var params = {};
 			params.slideNumber = no;
 			V.Messenger.notifyEventByMessage(V.Constant.Event.onGoToSlide,params);
 			return;
@@ -319,7 +319,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Viewer.updateSlideCounter();
 		}
 
-		var params = new Object();
+		var params = {};
 		params.slideNumber = no;
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onGoToSlide,params,triggeredByUser);
 	};

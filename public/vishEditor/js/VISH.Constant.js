@@ -124,6 +124,7 @@ VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";
 VISH.Constant.Event.onSelectedSlides = "onSelectedSlides";
 VISH.Constant.Event.onVEFocusChange = "onVEFocusChange";
+VISH.Constant.Event.onSimpleClick = "onSimpleClick";
 
 //Storage
 VISH.Constant.Storage = {};
