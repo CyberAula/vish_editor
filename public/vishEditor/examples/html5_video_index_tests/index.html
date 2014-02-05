@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Navigation using WebVTT</title>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<link href="css/navigation.css" type="text/css" rel="stylesheet"/>
+	<link href="css/editor.css" type="text/css" rel="stylesheet"/>
+</head>
+<body>
+	<div role="application" id="application">    
+		<div id="videoBox" style="float:left;">
+			<div id = "hide_button2" onClick= "show()">x</div>
+			<div id = "videoDiv">
+				 <video id="myvideo" poster="videos/webvtt_talk.png" style="width:100%" preload="metadata">	
+					<source src="https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm"></source>
+					<source src="videos/webvtt_talk.mp4"></source> --> <!-- No video... search in http://www.html5videoguide.net/demos/google_io/3_navigation/ -->
+					<track id="nav" src="videos/webvtt_talk_navigation.vtt" kind="chapters" srclang="en"></track>
+				 	 <track id="cc" src="videos/webvtt_talk_captions.vtt" kind="captions" label="captions" srclang="en" default></track>
+				</video>
+			</div>
+			<div id="controls">
+				<div id="button"><img id="play" src="images/play.png"></img></div>
+				<div id="positionview">
+					<div id="transportbar">
+						<div id="position">
+
+<!-- 							<div class = "marker" style="left:12px"></div>
+							<div class = "marker" style="left:120px"></div> -->
+						</div>
+						<div id= "segmentDiv">
+						</div>
+
+
+					</div>
+					<ul id="segments" title="chapter navigation" aria-describedby="keys">
+					</ul>
+				</div>
+				<div id="time">
+					<span id="curTime">00:00</span>/<span id="duration">00:00</span>
+				</div>
+			</div>
+			<div style="display: block; clear: both;"></div>
+
+		</div>
+
+		<div id="transcriptBox">
+
+			<div id = "hide_button" onClick= "hide()">x</div>
+			<div id="navigation"
+			style= " background-color:#FAF9F8; border:2px black solid;">
+
+			<ul id="chapters">
+			</ul>
+		</div>
+
+	</div>
+</div>
+<div id="drag"><div id="box_drag"></div></div>
+
+  <script type="text/javascript" src="js/sample_json.js"></script>
+  <script type="text/javascript" src="js/navigation.js"></script>
+	<script>
+	$(function() {
+	$( "#box_drag" ).draggable({ revert: "invalid" });
+	$( "#transportbar" ).droppable({
+	activeClass: "ui-state-hover",
+	hoverClass: "ui-state-active",
+	drop: function( event, ui ) { //the function executed when the item is dragged in the droppable area
+
+	}
+	});
+	});
+	</script>
+</body>
+</html>

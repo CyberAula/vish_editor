@@ -59,6 +59,7 @@ VISH.Constant.QUIZ = "quiz";
 //Media types
 VISH.Constant.MEDIA = {};
 VISH.Constant.MEDIA.IMAGE = "image";
+VISH.Constant.MEDIA.AUDIO = "audio";
 VISH.Constant.MEDIA.FLASH = "swf";
 VISH.Constant.MEDIA.PDF = "pdf";
 VISH.Constant.MEDIA.YOUTUBE_VIDEO = "Youtube";

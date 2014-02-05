@@ -73,6 +73,8 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderImage(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				content += _renderHTML5Video(slide.elements[el],slide.template);
+			} else if(slide.elements[el].type === V.Constant.MEDIA.AUDIO){
+				content += renderAudio(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
@@ -197,6 +199,32 @@ VISH.Renderer = (function(V,$,undefined){
 		return rendered;
 	};
 
+	var renderAudio = function(element, template){
+		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>";
+			var style = (element['style'])?"style='" + element['style'] + "'":"";
+		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' ";
+		var sources = element['sources'];
+		console.log(sources);
+
+		if(typeof sources == "string"){
+			sources = JSON.parse(sources)
+		}
+		
+		rendered = rendered + "<audio class='" + template + "_audio' preload='metadata' "  + controls  + ">";
+		
+		$.each(sources, function(index, source) {
+			var type = (source.type)?"type='" + source.type + "' ":"";
+			rendered = rendered + "<source src='" + source.src + "' " + type + ">";
+		});
+		
+		if(sources.length>0){
+			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>";
+		}
+		
+		rendered = rendered + "</audio>";
+		
+		return rendered;
+	};
 	
 	/**
 	 * Function to render an object inside an article (a slide)

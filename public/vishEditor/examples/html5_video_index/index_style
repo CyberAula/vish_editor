@@ -1,0 +1,37 @@
+<div id="videoBox" style="float:left;">
+			<div id = "hide_button2" onClick= "show()">x</div>
+			<div id = "videoDiv">
+				 <video id="myvideo" poster="videos/webvtt_talk.png" style="width:100%" preload="metadata">	
+					<source src="https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm"></source>
+					<source src="videos/webvtt_talk.mp4"></source> --> <!-- No video... search in http://www.html5videoguide.net/demos/google_io/3_navigation/ -->
+					<track id="nav" src="videos/webvtt_talk_navigation.vtt" kind="chapters" srclang="en"></track>
+				 	 <track id="cc" src="videos/webvtt_talk_captions.vtt" kind="captions" label="captions" srclang="en" default></track>
+				</video>
+			</div>
+			<div id="controls">
+
+
+
+
+				<div id="button"><img id="play" src="images/play.png"></img></div>
+
+				
+				<div id="positionview">
+					<div id="transportbar">
+						<div id="position"></div>
+						<div id= "segmentDiv"></div>
+					</div>
+					<ul id="segments" title="chapter navigation" aria-describedby="keys"></ul>
+				</div>
+				<div id="time">
+					<span id="curTime">00:00</span>/<span id="duration">00:00</span>
+				</div>
+			</div>
+			<div style="display: block; clear: both;"></div>
+		</div>
+		<div id="transcriptBox">
+			<div id = "hide_button" onClick= "hide()">x</div>
+			<div id="navigation" style= " background-color:#FAF9F8; border:2px black solid;">
+			<ul id="chapters"></ul>
+		</div>
+</div>

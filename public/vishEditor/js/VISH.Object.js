@@ -3,7 +3,6 @@ VISH.Object = (function(V,$,undefined){
 	var init = function(){
 	};
 
-
 	///////////////////////////////////////
 	/// OBJECT INFO
 	///////////////////////////////////////
@@ -86,6 +85,7 @@ VISH.Object = (function(V,$,undefined){
 		var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9-]+))|((www.youtube.com\/((watch\?v=)|(embed\/)|(v\/)))([aA-z0-9-Z&=.])+))/g
 		var html5VideoFormats = ["mp4","webm","ogg"];
 		var imageFormats = ["jpg","jpeg","png","gif","bmp","svg"];
+		var audioFormats = ["mp3", "wav"];
 
 		if(typeof source != "string"){
 			return null
@@ -102,6 +102,10 @@ VISH.Object = (function(V,$,undefined){
 
 		if(imageFormats.indexOf(extension)!="-1"){
 			return V.Constant.MEDIA.IMAGE;
+		}
+
+		if(audioFormats.indexOf(extension)!="-1"){
+			return V.Constant.MEDIA.AUDIO;
 		}
 
 		if(extension=="swf"){

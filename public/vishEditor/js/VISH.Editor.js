@@ -629,6 +629,20 @@ VISH.Editor = (function(V,$,undefined){
 					});
 					sources = '[' + sources + ']';
 					element.sources = sources;
+				} else if(element.type==V.Constant.MEDIA.AUDIO){
+					var audio = $(div).find("audio");
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(audio));
+					//Sources
+					var sources= '';				
+					$(audio).find('source').each(function(index, source) {
+						if(index!==0){
+							sources = sources + ',';
+						}
+						var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':'';
+						sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}';
+					});
+					sources = '[' + sources + ']';
+					element.sources = sources;
 				} else if(element.type===V.Constant.OBJECT){
 					var wrapper = $(div).find(".object_wrapper")[0];
 					var object = $(wrapper).children()[0];
