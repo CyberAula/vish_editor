@@ -23,21 +23,18 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 		});
 	};
 
-	/**
-	 * Function to remove the flash objects from the slides
-	 */
 	var unloadObject= function(slide){
 		$.each($(slide).children('.objectelement'),function(index,value){
 			$(value).html("");
 		});
-	}
+	};
 	
 	
 	var aftersetupSize = function(){
 		if($(".current").hasClass("object")){
 			loadObject($(".current"));
 		}
-	}
+	};
 	
 	var adjustDimensionsAfterZoom = function(objectWithZoom){
 		var parent = $(objectWithZoom).parent();
@@ -48,13 +45,13 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 		var percentWidth = (parentWidth/zoom)/parentWidth*100;
 		$(objectWithZoom).height(percentHeight+"%");
 		$(objectWithZoom).width(percentWidth+"%");
-	}
+	};
 
 	return {
-		loadObject:loadObject,
-		unloadObject:unloadObject,
-		aftersetupSize : aftersetupSize,
-		adjustDimensionsAfterZoom : adjustDimensionsAfterZoom
+		loadObject 					: loadObject,
+		unloadObject 				: unloadObject,
+		aftersetupSize 				: aftersetupSize,
+		adjustDimensionsAfterZoom 	: adjustDimensionsAfterZoom
 	};
 
 })(VISH,jQuery);

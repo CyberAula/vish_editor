@@ -40,7 +40,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	var renderVideoFromJSON = function(videoJSON, options){
 		var videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
 		var videoSource = videoJSON['body'] || videoJSON['source'];
-		var videoClass = "objectelement youtubeelement";
+		var videoClass = "";
 		if(options){
 			if(options.videoClass){
 				videoClass = videoClass + " " + options.videoClass;

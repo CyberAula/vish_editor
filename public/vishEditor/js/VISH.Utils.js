@@ -1037,20 +1037,18 @@ VISH.Utils = (function(V,undefined){
 	 * Multiple animation callback
 	 */
 	var nAnimationsFinishedList = {};
-	var checkAnimationsFinish = function(animationId,nAnimations,callback){
+	var checkAnimationsFinish = function(animationId,nAnimations,callback,callbackParams){
 		if(typeof nAnimationsFinishedList[animationId] == "undefined"){
 			nAnimationsFinishedList[animationId] = 0;
 		}
-		var nAnimationsFinished = nAnimationsFinishedList[animationId];
+		nAnimationsFinishedList[animationId] = nAnimationsFinishedList[animationId] + 1;
 
-		nAnimationsFinished = nAnimationsFinished +1;
-		if(nAnimationsFinished===nAnimations){
-			nAnimationsFinished = 0;
+		if(nAnimationsFinishedList[animationId]===nAnimations){
+			nAnimationsFinishedList[animationId] = 0;
 			if(typeof callback == "function"){
-				callback();
+				callback(callbackParams);
 			}
 		}
-		nAnimationsFinishedList[animationId] = nAnimationsFinished;
 	};
 
 
