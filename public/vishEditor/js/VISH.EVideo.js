@@ -25,9 +25,9 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _loadEvents = function(){
-		$(document).on("click", '.evideoPlayButtonWrapper' , _onClickPlayVideo);
-		$(document).on("click", '.evideoToggleIndex.maximized', _minimizeIndex);
-		$(document).on("click", '.evideoToggleIndex.minimized', _maximizeIndex);
+		$(document).on("click", '.evideoPlayButtonWrapper, .evideoPlayButton' , _onClickToggleVideo);
+		$(document).on("click", '.evideoToggleIndex.maximized, .evideoIndexSide.maximized', _minimizeIndex);
+		$(document).on("click", '.evideoToggleIndex.minimized, .evideoIndexSide.minimized', _maximizeIndex);
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
 			var subslideId = params.slideNumber;
@@ -132,7 +132,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		//2. INDEX
 		var indexBox = $("<div class='evideoIndexBox'></div>");
-		var indexSide = $("<div class='evideoIndexSide'><div class='evideoToggleIndex maximized'></div></div>");
+		var indexSide = $("<div class='evideoIndexSide maximized'><div class='evideoToggleIndex maximized'></div></div>");
 		var indexBody = $("<div class='evideoIndexBody'><ul class='evideoChapters'></ul></div>");
 		$(indexBox).append(indexBody);
 		$(indexBox).append(indexSide);
@@ -283,7 +283,9 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Events */
 
-	var _onClickPlayVideo = function(event){
+	var _onClickToggleVideo = function(event){
+		event.preventDefault();
+		event.stopPropagation();
 		var video = _getCurrentEVideo();
 		_togglePlay(video);
 	};
@@ -365,10 +367,13 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _updateIndexButtonUI = function(maximized){
-		var button = $(_getCurrentEVideoIndexBox()).find(".evideoToggleIndex");
+		var eVideoIndexSide =  $(_getCurrentEVideoIndexBox()).find(".evideoIndexSide");
+		var button = $(eVideoIndexSide).find(".evideoToggleIndex");
 		if(maximized===true){
+			$(eVideoIndexSide).removeClass("minimized").addClass("maximized");
 			$(button).removeClass("minimized").addClass("maximized");
 		} else {
+			$(eVideoIndexSide).removeClass("maximized").addClass("minimized");
 			$(button).removeClass("maximized").addClass("minimized");
 		}
 	};
