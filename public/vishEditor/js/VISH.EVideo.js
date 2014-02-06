@@ -1,25 +1,29 @@
 VISH.EVideo = (function(V,$,undefined){
 
-	//Old
-	var state_vid;
-	var nextBall; 
-	var prevNextBall; 
-	var RANGE = 0.300; //seconds around the ball where we should stop
-
-
-	//Internals
-	var evideos;
-	// myEvideo = evideos['evideoId'] has:
+	//Internal vars
+	var eVideos;
+	// myEvideo = eVideos['eVideoId'] has:
 	// myEvideo.balls = [ball1,ball2,...,ball3];
 	// Each ball has id, time and an associated slide id
+	// myEvideo.nextBall points to the next ball that can be displayed
+	// myEvideo.prevBalls store all the displayed balls
+	// myEvideo.displayedBall ball that is currently displayed
+	// myEvideo.status stores the status of the eVideo
+
 	var _seeking = false;
 	var _displayVol = true;
 	var initialized = false;
 
+	//Time range around the ball, in which we will show its associated slide. Currently 300ms
+	var RANGE = 0.3;
+
+
+	/* Init methods */
+
 	var init = function(presentation){
 		if(!initialized){
 			initialized = true;
-			evideos = new Array();
+			eVideos = new Array();
 			_loadEvents();
 		}
 	};
@@ -38,26 +42,53 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(document).on("click", '.evideoToggleIndex.maximized, .evideoIndexSide.maximized', _minimizeIndex);
 		$(document).on("click", '.evideoToggleIndex.minimized, .evideoIndexSide.minimized', _maximizeIndex);
+		$(document).on("click", '.evideoChapters li', _onClickChapter);
 
-		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
+		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){
 			var subslideId = params.slideNumber;
-			V.Debugging.log("Se ha cerrado la slide: " + subslideId);
-			//TODO: check if the subslide belongs to some EVideo..
-			// _onCloseSubslide(subslideId);
+			var eVideoId = $($("#" + subslideId).parent()).attr("id");
+			_onClosedBall(eVideoId);
 		});
+	};
+
+	var _prepareJSON = function(eVideoJSON){
+		eVideoJSON.balls = [];
+
+		if(eVideoJSON.pois){
+			$(eVideoJSON.pois).each(function(index,value){
+				eVideoJSON.balls.push(value);
+			});
+			eVideoJSON.balls = ((eVideoJSON.balls.filter(function(ball){
+				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>0));
+			})).map(function(ball){
+				ball.etime = parseFloat(ball.etime);
+				ball.minTime = ball.etime - RANGE;
+				ball.maxTime = ball.etime + RANGE;
+				ball.eVideoId = eVideoJSON.id;
+				return ball;
+			})).sort(function(A,B){
+				return parseFloat(A.etime)>parseFloat(B.etime);
+			});
+		};
+
+		return eVideoJSON;
 	};
 
 
 	/* Draw Methods */
 
-	var drawEVideo = function(evideoJSON){
-		var evideoId = evideoJSON.id;
-		var slidesetDOM = $("#"+evideoId);
+	var drawEVideo = function(eVideoJSON){
+		var eVideoId = eVideoJSON.id;
+		var slidesetDOM = $("#"+eVideoId);
 
-		//0. Store videoJSON
-		evideos[evideoId] = evideoJSON;
 
-		//1. VIDEO
+		//0. Prepare JSON (order balls, etc)
+		eVideoJSON = _prepareJSON(eVideoJSON);
+
+		//1. Store videoJSON
+		eVideos[eVideoId] = eVideoJSON;
+
+		//2. VIDEO
 		var videoBox =  $("<div class='evideoBox'></div>");
 		$(slidesetDOM).append(videoBox);
 
@@ -87,7 +118,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(footer).append(controls);
 		$(videoBox).append(footer);
 
-		//1.1 Position Slider
+		//2.1 Position Slider
 		var posSlider = $(controls).find(".evideoProgressBarSlider");
 		$(posSlider).slider({
 			orientation: "horizontal",
@@ -97,12 +128,13 @@ VISH.EVideo = (function(V,$,undefined){
 			value: 0,
 			step: 0.1,
 			slide: function(event, ui){
+				//Keep the handler inside the gutter. JQuery UI modification is needed: http://stackoverflow.com/questions/1273428/how-do-i-stop-the-jquery-ui-slider-from-sliding-beyond-the-gutter
 			}, start: function(event,ui){
 				_seeking = true;
 				_displayVol = false;
 			}, stop: function(event, ui){
 				var video = $(videoBody).children()[0];
-				_onSlideProgressBar(video,ui.value);
+				_updateProgressBar(video,ui.value);
 				setTimeout(function(){
 					_seeking = false;
 				},700);
@@ -113,7 +145,7 @@ VISH.EVideo = (function(V,$,undefined){
 			}
 		});
 
-		//1.2 Volume Slider
+		//2.2 Volume Slider
 		var volSlider = $(controls).find(".evideoVolSlider");
 		$(volSlider).slider({
 			orientation: "vertical",
@@ -141,7 +173,7 @@ VISH.EVideo = (function(V,$,undefined){
 			$(sliderWrapper).hide();
 		});
 
-		//2. INDEX
+		//3. INDEX
 		var indexBox = $("<div class='evideoIndexBox'></div>");
 		var indexSide = $("<div class='evideoIndexSide maximized'><div class='evideoToggleIndex maximized'></div></div>");
 		var indexBody = $("<div class='evideoIndexBody'><ul class='evideoChapters'></ul></div>");
@@ -149,33 +181,37 @@ VISH.EVideo = (function(V,$,undefined){
 		$(indexBox).append(indexSide);
 		$(slidesetDOM).append(indexBox);
 
-		_renderVideo(evideoId);
+		//4. Render video and wait for video to load
+		_renderVideo(eVideoId);
 	};
 
-	var _renderVideo = function(evideoId){
-		var evideoJSON = evideos[evideoId];
-		if((typeof evideoJSON != "object")||(typeof evideoJSON.video != "object")){
+	var _renderVideo = function(eVideoId){
+		var eVideoJSON = eVideos[eVideoId];
+		if((typeof eVideoJSON != "object")||(typeof eVideoJSON.video != "object")){
 			return;
 		}
 
-		var videoBody = $("#"+evideoId).find(".evideoBody");
-		$(videoBody).attr("videoType",evideoJSON.video.type);
+		var videoBody = $("#"+eVideoId).find(".evideoBody");
+		$(videoBody).attr("videoType",eVideoJSON.video.type);
 
-		switch(evideoJSON.video.type){
+		switch(eVideoJSON.video.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
-				var video = $(V.Video.HTML5.renderVideoFromJSON(evideoJSON.video,{controls: false, poster: false}));
+				var video = $(V.Video.HTML5.renderVideoFromJSON(eVideoJSON.video,{controls: false, poster: false}));
 				$(video).addClass("temp_hidden");
-				$(video).attr("videoType",evideoJSON.video.type);
+				$(video).attr("videoType",eVideoJSON.video.type);
+				$(video).attr("eVideoId",eVideoJSON.id);
 				$(videoBody).append(video);
 				V.Video.onVideoReady(video,_onVideoReady);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(evideoJSON.video));
+				var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(eVideoJSON.video));
 				$(videoBody).attr("source", $(videoWrapper).attr("source"));
 				$(videoBody).attr("ytcontainerid", $(videoWrapper).attr("ytcontainerid"));
 				V.Video.Youtube.loadYoutubeObject($(videoBody),{controls: false, onReadyCallback: function(event){
 					var iframe = event.target.getIframe();
 					var video = $("#"+iframe.id);
+					$(video).attr("videoType",eVideoJSON.video.type);
+					$(video).attr("eVideoId",eVideoJSON.id);
 					_onVideoReady(video);
 				}});
 				break;
@@ -185,6 +221,8 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _onVideoReady = function(video){
+		//5. When video is ready, fit it, load events and continue to render index and balls
+
 		var videoBody = $(video).parent();
 		var videoBox = $(videoBody).parent();
 		var videoHeader = $(videoBox).find(".evideoHeader");
@@ -208,8 +246,23 @@ VISH.EVideo = (function(V,$,undefined){
 		V.Video.onTimeUpdate(video,_onTimeUpdate);
 		V.Video.onStatusChange(video,_onStatusChange);
 
-		//Paint index
-		//Paint balls
+		//Init vars
+		var eVideoDOM = $(videoBox).parent();
+		var eVideoId = $(eVideoDOM).attr("id");
+		eVideos[eVideoId].prevBalls = [];
+		_updateNextBall(video,0);
+
+		//6. Render index
+		_renderIndex(eVideoDOM,eVideos[eVideoId]);
+
+		//7. Render balls
+		// _renderBalls(eVideoDOM,eVideos[eVideoId]);
+
+		//Fire initial onTimeUpdate event for YouTube videos. (The same as HTML5 videos)
+		if($(video).attr("videotype")===V.Constant.Video.Youtube){
+			_onTimeUpdate(video,0);
+		};
+		
 	};
 
 	var _fitVideoInVideoBox = function(videoBox){
@@ -257,16 +310,32 @@ VISH.EVideo = (function(V,$,undefined){
 		$(video).css("max-width","100%");
 	};
 
+	/* Index */
+
+	var _renderIndex = function(eVideoDOM,eVideoJSON){
+		var indexBody = $(eVideoDOM).find(".evideoIndexBox");
+		var eVideoChapters = $(indexBody).find(".evideoChapters");
+
+		$(eVideoJSON.balls).each(function(index,ball){
+			var item = document.createElement('li');
+			$(item).html("Ball at " + ball.etime);
+			$(item).attr("ballid",ball.id);
+			$(item).attr("etime",ball.etime);
+			$(eVideoChapters).append(item);
+		});
+	};
+
+	/* Events */
+
 	var _onTimeUpdate = function(video,currentTime){
 		_updateCurrentTime(video,currentTime);
 		
-		// if(typeof nextBall == "object"){
-		// 	if(Math.abs(time - nextBall.time) < RANGE){
-		// 		if(nextBall.showed == false){
-		// 			_popUp(_onCloseSubslide,nextBall);
-		// 		}
-		// 	}
-		// }
+		var nextBall = _getJSONFromVideo(video).nextBall;
+		if(typeof nextBall != "undefined"){
+			if(Math.abs(currentTime - nextBall.etime) < RANGE){
+				_triggerBall(nextBall,video);
+			}
+		}
 	};
 
 	var _onStatusChange = function(video,status){
@@ -281,10 +350,10 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Load methods */
 
-	var loadEVideo = function(evideoId){
+	var loadEVideo = function(eVideoId){
 	};
 
-	var unloadEVideo = function(evideoId){
+	var unloadEVideo = function(eVideoId){
 	};
 
 
@@ -305,10 +374,33 @@ VISH.EVideo = (function(V,$,undefined){
 		}
 	};
 
-	var _onSlideProgressBar = function(video,value){
+	var _updateProgressBar = function(video,value){
 		var duration = V.Video.getDuration(video);
 		var timeToSeek = duration * value/100;
+		_beforeSeek(video,timeToSeek);
 		V.Video.seekTo(video,timeToSeek);
+	};
+
+	var _onClickChapter = function(event){
+		var chapterTime = parseFloat($(event.target).attr("etime"));
+		var eVideoIndexBox = $(".evideoIndexBox").has(event.target);
+		var videoBox = $(eVideoIndexBox).parent().find(".evideoBox");
+		var video = _getVideoFromVideoBox(videoBox);
+		_onChapterSelected(video,chapterTime);
+	};
+
+	var _onChapterSelected = function(video,chapterTime){
+		var timeToSeek = chapterTime-(RANGE*0.5);
+		var duration = V.Video.getDuration(video);
+		if(timeToSeek <= duration){
+			_beforeSeek(video,timeToSeek);
+			V.Video.seekTo(video,timeToSeek);
+		}
+	};
+
+	var _beforeSeek = function(videoDOM,timeToSeek){
+		_resetBallParams(videoDOM);
+		_updateNextBall(videoDOM,timeToSeek);
 	};
 
 
@@ -406,8 +498,8 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var aftersetupSize = function(increase,increaseW){
-		var eVideos = $("section.slides > article[type='enrichedvideo'");
-		$(eVideos).each(function(index,eVideoDOM){
+		var eVideosDOM = $("section.slides > article[type='enrichedvideo'");
+		$(eVideosDOM).each(function(index,eVideoDOM){
 			resizeEVideoAfterSetupSize(eVideoDOM,increase,increaseW);
 		});
 	};
@@ -436,37 +528,78 @@ VISH.EVideo = (function(V,$,undefined){
 
 
 
+	/* Ball Management */
 
-
-
-
-
-	var _getNextBall = function(time){
-		if(typeof time != "number"){
-			return null;
+	var _updateNextBall = function(videoDOM,cTime){
+		if(typeof cTime != "number"){
+			return;
 		}
 
-		var myNextball;
-		var pTime = video.duration;
+		var eVideoId = $(videoDOM).attr("evideoid");
 		
-		for (i = 0; i < balls.length; i++) {
-			var ball = balls[i];
-			var ballTime = parseFloat(ball.time);
-			if((ballTime < pTime)&&(ballTime > 0)&&(ballTime > time)){
-				if(ball != nextBall){
-					myNextball = ball;
-					break;
-				}
-			}
+		if(typeof eVideos[eVideoId].nextBall != "undefined"){
+			eVideos[eVideoId].prevBalls.push(eVideos[eVideoId].nextBall);
 		}
-				
-		if(myNextball){
-			nextBall = myNextball;
-			}else{
-			nextBall = undefined;
+		
+		var nextBall = undefined;
+		$(eVideos[eVideoId].balls).each(function(index,ball){
+			if((ball.etime > cTime)&&(eVideos[eVideoId].prevBalls.indexOf(ball)==-1)){
+				nextBall = ball;
+				return false;
 			}
-				return nextBall;
+		});
+
+		//No more balls on this eVideo
+		eVideos[eVideoId].nextBall = nextBall;
+
+		// V.Debugging.log("_updateNextBall");
+		// V.Debugging.log(_fomatTime(nextBall.etime));
 	};
+
+	var _triggerBall = function(ball,videoDOM){
+		var eVideoJSON = eVideos[ball.eVideoId];
+		if(typeof eVideoJSON.displayedBall != "undefined"){
+			//Prevent several balls to be displayed at the same time.
+			return;
+		}
+
+		eVideoJSON.estatus = V.Video.getStatus(videoDOM);
+		if(eVideoJSON.estatus.paused == false) {
+			V.Video.pause(videoDOM);
+		}
+		eVideoJSON.displayedBall = ball;
+		eVideos[ball.eVideoId] = eVideoJSON;
+		V.Slides.openSubslide(ball.slide_id);
+	};
+
+	var _onClosedBall = function(eVideoId){
+		var eVideoJSON = eVideos[eVideoId];
+		var videoDOM = _getVideoFromVideoBox($("#"+eVideoId).find(".evideoBox"));
+		var cTime = V.Video.getCurrentTime(videoDOM);
+
+		_updateNextBall(videoDOM,cTime);
+		eVideoJSON.displayedBall = undefined;
+
+		// if(Math.abs(cTime - eVideos[eVideoId].nextBall.etime) < RANGE){
+		// 	//TODO: Several balls very close... dont change state and show new ball instead.
+		// };
+
+		if(eVideoJSON.estatus.playing == true){
+			V.Video.play(videoDOM);
+		}
+	};
+
+	var _resetBallParams = function(videoDOM){
+		var eVideoId = $(videoDOM).attr("evideoid");
+		eVideos[eVideoId].displayedBall = undefined;
+		eVideos[eVideoId].nextBall = undefined;
+		eVideos[eVideoId].estatus = undefined;
+		eVideos[eVideoId].prevBalls = [];
+	};
+
+
+
+
 
 	var _resetShowParams = function(){
 		$(balls).each(function(index,ball){
@@ -474,19 +607,6 @@ VISH.EVideo = (function(V,$,undefined){
 		});	
 	};
 
-	var _popUp = function(callback, ball){
-		var video = _getCurrentEVideo();
-		if (video.paused == false) {
-			state_vid = true;
-		}else{
-			state_vid = false;
-		}
-			video.pause();
-			var slide_id = ball.slide_id;
-			ball.showed = true;
-
-			V.Slides.openSubslide(slide_id,true);
-	};
 
 	var _onCloseSubslide = function(subslide_id){
 		var video = $('#' + myvideoId)[0];
@@ -504,42 +624,6 @@ VISH.EVideo = (function(V,$,undefined){
 		}
 	};
 
-	var _getBalls = function(evideoJSON){
-		for (i = 0; i < evideoJSON.pois.length; i++) {
-			var ball = {};
-			ball.id = evideoJSON.pois[i].id;
-			ball.time = parseFloat(evideoJSON.pois[i].time);
-			ball.slide_id = evideoJSON.pois[i].slide_id;
-			ball.showed = false;
-			ball.minTime = ball.time - RANGE;
-			ball.maxTime = ball.time + RANGE;
-			balls.push(ball);
-		}
-
-		balls.sort(function(A,B){
-			return A.time>B.time;
-		});
-	};
-
-	var _paintIndex = function(){
-		var video = _getCurrentEVideo();
-		for (i = 0; i < balls.length; i++) {
-			var item = document.createElement('li');
-			item.id = balls[i].id;
-			var link = document.createElement('a');
-			link.setAttribute('ident', i);
-			link.setAttribute('time', balls[i].time);
-			link.innerHTML = (i+1) + '.'+ '    ' + balls[i].slide_id;
-			$(item).append(link);
-			$(V.Slides.getCurrentSlide()).find(".evideoChapters").append(item);
-		}
-
-		$(V.Slides.getCurrentSlide()).find(".evideoChapters li a").on("click", function(event){
-		video.currentTime = $(event.target).attr("time");
-		$(V.Slides.getCurrentSlide()).find(".evideoPlayButton").attr("src",V.ImagesPath + "customPlayer/eVideoPlay.png");
-		_popUp(_onCloseSubslide,balls[parseInt($(event.target).attr("ident"))]); //migrated to JQuery working
-		});
-	};
 
 	var _videoPlayPause = function(evt) {
 		var video = _getCurrentEVideo();
@@ -571,7 +655,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(segments).append(ball);
 		marker.className = 'evideoMarker';
 		ball.className = 'evideoBall';
-		var time = parseFloat(ballJSON.time);
+		var time = parseFloat(ballJSON.etime);
 	   	var duration = parseFloat(video.duration);
 	   	var bar_width = $(V.Slides.getCurrentSlide()).find(".evideoProgressBar").width();
 
@@ -617,6 +701,10 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _getVideoBoxFromVideo = function(video){
 		return $(".evideoBox").has(video);
+	};
+
+	var _getJSONFromVideo = function(video){
+		return eVideos[$(video).attr("evideoid")];
 	};
 
 	var _fomatTime = function(s,sN){

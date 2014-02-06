@@ -25,6 +25,72 @@ VISH.Utils = (function(V,undefined){
 			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 		};
 
+		Array.prototype.select = function(selectFunction){
+			for(var n = 0; n < this.length; n++) {
+				if(selectFunction(this[n])){
+					return this[n];
+				}
+			}
+			return null;
+		};
+
+		// if(!Array.prototype.filter){
+			Array.prototype.filter = function(fun /*, thisp */){
+				"use strict";
+
+				if (this == null)
+					throw new TypeError();
+
+				var t = Object(this);
+				var len = t.length >>> 0;
+				if (typeof fun != "function")
+					throw new TypeError();
+
+				var res = [];
+				var thisp = arguments[1];
+				for (var i = 0; i < len; i++)
+				{
+					if (i in t)
+					{
+						var val = t[i]; // in case fun mutates this
+						if (fun.call(thisp, val, i, t))
+							res.push(val);
+					}
+				}
+				return res;
+			};
+		// };
+
+		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+		// if (!Array.prototype.map){
+			Array.prototype.map = function(fun /*, thisArg */){
+				"use strict";
+
+				if (this === void 0 || this === null)
+					throw new TypeError();
+
+				var t = Object(this);
+				var len = t.length >>> 0;
+				if (typeof fun !== "function")
+					throw new TypeError();
+
+				var res = new Array(len);
+				var thisArg = arguments.length >= 2 ? arguments[1] : void 0;
+				for (var i = 0; i < len; i++)
+				{
+					// NOTE: Absolute correctness would demand Object.defineProperty
+					//       be used.  But this method is fairly new, and failure is
+					//       possible only if Object.prototype or Array.prototype
+					//       has a property |i| (very unlikely), so use a less-correct
+					//       but more portable alternative.
+					if (i in t)
+						res[i] = fun.call(thisArg, t[i], i, t);
+				}
+
+				return res;
+			};
+		// }
+
 		//Disable watermark for IE
 		jQuery.fn.vewatermark = function(text){
 			if(V.Status.getDevice().browser.name != V.Constant.IE){

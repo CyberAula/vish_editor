@@ -1890,24 +1890,24 @@ span.evideoTimeSlash, span.evideoDuration {
 	background-position: 0 60%;
 }
 
-/* TODO: CHANGE! */
-/*ul {
-    list-style-type: none !important;
-}*/
-
 .evideoChapters {
+	position: relative;
+	height: 90%;
+	width: auto;
+	overflow: hidden;
+	padding: 10% 10%;
+	list-style-type: none;
 	background-color: #F7F7F7;
 	border-radius: 5px;
 	box-shadow: 0 0 6px 1px #575757 inset;
-	height: 94%;
-	overflow: hidden;
-	padding: 0 20px;
 }
 
 .evideoChapters li {
+	text-align: center;
 	padding: 10px;
 	padding-left: 0;
 	white-space: nowrap;
+	cursor: pointer;
 }
 
 

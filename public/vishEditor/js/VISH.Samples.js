@@ -1015,19 +1015,19 @@ VISH.Samples = (function(V,undefined){
 				"pois":[
 					{
 						"id":"article1_poi1",
-						"time":"67.3",
+						"etime":"67.3",
 						"slide_id":"article1_article1"
 					},{
 						"id":"article1_poi2",
-						"time": "127",
+						"etime": "127",
 						"slide_id":"article1_article2"
 					},{
 						"id":"article1_poi3",
-						"time": "300",
+						"etime": "300",
 						"slide_id":"article1_article3"
 					},{
 						"id":"article1_poi4",
-						"time": "1400",
+						"etime": "1400",
 						"slide_id":"article1_article4"
 					}
 				],
@@ -1111,19 +1111,20 @@ VISH.Samples = (function(V,undefined){
 				"pois":[
 					{
 						"id":"article2_poi1",
-						"time":"67.3",
-						"slide_id":"article2_article1"
+						"etime":"67.3",
+						"slide_id":"article2_article1",
+						"name":"Puntero a 67.3"
 					},{
 						"id":"article2_poi2",
-						"time": "127",
+						"etime": "400",
 						"slide_id":"article2_article2"
 					},{
 						"id":"article2_poi3",
-						"time": "300",
+						"etime": "1400",
 						"slide_id":"article2_article3"
 					},{
 						"id":"article2_poi4",
-						"time": "1400",
+						"etime": "127",
 						"slide_id":"article2_article4"
 					}
 				],
