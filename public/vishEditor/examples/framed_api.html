@@ -23,11 +23,11 @@
 				function(videoId,currentTime,slideNumber,origin){
 					console.log("onSeekVideo: " + videoId + " from " + origin);
 			});
-			VISH.IframeAPI.registerCallback("onFlashcardPointClicked",function(slideNumber,origin){
-			 	console.log("onFlashcardPointClicked to open slide " + slideNumber + " from " + origin);
+			VISH.IframeAPI.registerCallback("onSubslideOpen",function(slideId,origin){
+			 	console.log("onSubslideOpen to open slide " + slideId + " from " + origin);
 			});
-			VISH.IframeAPI.registerCallback("onFlashcardSlideClosed",function(slideNumber,origin){
-			 	console.log("onFlashcardSlideClosed to close slide " + slideNumber + " from " + origin);
+			VISH.IframeAPI.registerCallback("onSubslideClosed",function(slideId,origin){
+			 	console.log("onSubslideClosed to close slide " + slideId + " from " + origin);
 			});
 			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
 				console.log("onMessage from " + origin);

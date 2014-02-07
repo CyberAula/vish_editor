@@ -19,12 +19,12 @@ VISH.Messenger = (function(V,undefined){
 			notifyEventByMessage(V.Constant.Event.onSeekVideo,params);
 		});
 
-		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardPointClicked, function(params){ 
-			notifyEventByMessage(V.Constant.Event.onFlashcardPointClicked,params);
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideOpen, function(params){ 
+			notifyEventByMessage(V.Constant.Event.onSubslideOpen,params);
 		});
 
-		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){ 
-			notifyEventByMessage(V.Constant.Event.onFlashcardSlideClosed,params);
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideClosed, function(params){
+			notifyEventByMessage(V.Constant.Event.onSubslideClosed,params);
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onVEFocusChange, function(params){ 

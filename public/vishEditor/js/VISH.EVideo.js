@@ -45,10 +45,13 @@ VISH.EVideo = (function(V,$,undefined){
 		$(document).on("click", '.evideoToggleIndex.minimized, .evideoIndexSide.minimized', _maximizeIndex);
 		$(document).on("click", '.evideoChapters li', _onClickChapter);
 
-		V.EventsNotifier.registerCallback(V.Constant.Event.onFlashcardSlideClosed, function(params){
-			var subslideId = params.slideNumber;
-			var eVideoId = $($("#" + subslideId).parent()).attr("id");
-			_onClosedBall(eVideoId);
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideClosed, function(params){
+			var subslideId = params.slideId;
+			var slideset =$($("#" + subslideId).parent());
+			if($(slideset).attr("type")==V.Constant.EVIDEO){
+				var eVideoId = $(slideset).attr("id");
+				_onCloseBall(eVideoId);
+			}
 		});
 	};
 
@@ -625,7 +628,7 @@ VISH.EVideo = (function(V,$,undefined){
 		V.Slides.openSubslide(ball.slide_id);
 	};
 
-	var _onClosedBall = function(eVideoId){
+	var _onCloseBall = function(eVideoId){
 		var eVideoJSON = eVideos[eVideoId];
 		var videoDOM = _getVideoFromVideoBox($("#"+eVideoId).find(".evideoBox"));
 		var cTime = V.Video.getCurrentTime(videoDOM);

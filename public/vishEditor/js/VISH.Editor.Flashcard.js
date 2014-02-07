@@ -320,12 +320,10 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	// Clipboard
 	/////////////////
 	var preCopyActions = function(fcJSON,fcDOM){
-		//TODO
-	}
+	};
 
 	var postCopyActions = function(fcJSON,fcDOM){
-		//TODO
-	}
+	};
 
 
 	return {

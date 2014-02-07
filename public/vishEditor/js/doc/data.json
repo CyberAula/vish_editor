@@ -835,13 +835,13 @@
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 62,
+            "line": 60,
             "description": "function to get the styles in percentages",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 412,
+            "line": 364,
             "description": "Function to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
             "class": "VISH.Editor"
         },
@@ -1573,11 +1573,11 @@
         },
         {
             "message": "Missing item type\nfunction to get the styles in percentages",
-            "line": " VISH.Editor.Utils.js:62"
+            "line": " VISH.Editor.Utils.js:60"
         },
         {
             "message": "Missing item type\nFunction to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
-            "line": " VISH.Editor.Utils.js:412"
+            "line": " VISH.Editor.Utils.js:364"
         },
         {
             "message": "Missing item type\nReturns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",

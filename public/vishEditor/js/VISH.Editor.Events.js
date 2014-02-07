@@ -538,8 +538,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			});
 
 			bindedEventListeners = false;
-
-			//TODO...
 		}
 	};
 	

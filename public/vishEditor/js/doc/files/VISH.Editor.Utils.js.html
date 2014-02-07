@@ -107,10 +107,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			}
 		}
 		return filterStyle;
-	}
+	};
 	
-	
-	 
 	var addZoomToStyle = function(style,zoom){
 		if(!style){
 			return null;
@@ -147,7 +145,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 
 		return filterStyle;
-	}
+	};
 	 
 	&#x2F;**
 	 * function to get the styles in percentages
@@ -169,7 +167,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				$(this).parent().click();  &#x2F;&#x2F;call parent click to select it in case it was unselected	
 			}
 		});
-	}
+	};
 
 
 	&#x2F;* Generate table for carrousels *&#x2F;
@@ -218,7 +216,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		   &quot;&lt;td colspan=\&quot;2\&quot; class=\&quot;info_description\&quot;&gt;&lt;div class=\&quot;height_wrapper_description\&quot;&gt;&quot; + description + &quot;&lt;&#x2F;div&gt;&lt;&#x2F;td&gt;&quot; + 
 		 &quot;&lt;&#x2F;tr&gt;&quot; + 
 		&quot;&lt;&#x2F;table&gt;&quot;;
-	}
+	};
 
 
 	var convertToTagsArray = function(tags){
@@ -233,7 +231,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 
 		return tagsArray;
-	}
+	};
 
 
 	&#x2F;&#x2F;Help function to autocomplete user inputs.
@@ -247,58 +245,12 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		} else {
 			return input;
 		}
-	}
+	};
 
 
 	var filterFilePath = function(path){
 		return path.replace(&quot;C:\\fakepath\\&quot;,&quot;&quot;);
-	}
-
-
-   &#x2F;*
-	* Modify slide ids to nest in a parent slide.
-	*&#x2F;
-	var prepareSlideToNest = function(parentId,slide){
-		if(typeof parentId !== &quot;string&quot;){
-			return slide;
-		}
-
-		if((slide.type===V.Constant.FLASHCARD)||(slide.type===V.Constant.VTOUR)){
-			&#x2F;&#x2F;Only one slide nested level are currently supported
-			&#x2F;&#x2F;TODO: Make it recursive
-			return;
-		}
-
-		slide.id = parentId + &quot;_&quot; + slide.id;
-		if(slide.elements){
-			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = parentId + &quot;_&quot; + slide.elements[index].id;
-			});
-		}
-		return slide;
-	}
-
-	var undoNestedSlide = function(parentId,slide){
-		if(typeof parentId !== &quot;string&quot;){
-			return slide;
-		}
-
-		if((slide.type===V.Constant.FLASHCARD)||(slide.type===V.Constant.VTOUR)){
-			&#x2F;&#x2F;Only one slide nested level are currently supported
-			&#x2F;&#x2F;TODO: Make it recursive
-			return;
-		}
-
-		slide.id = slide.id.replace(parentId+&quot;_&quot;,&quot;&quot;);
-
-		if(slide.elements){
-			$.each(slide.elements, function(index, element) {
-				slide.elements[index].id = slide.elements[index].id.replace(parentId+&quot;_&quot;,&quot;&quot;);
-			});
-		}
-
-		return slide;	
-	}
+	};
 
 	var replaceIdsForSlide = function(slide){
 		var slideId = V.Utils.getId(&quot;article&quot;);
@@ -320,7 +272,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 
 		return slide;
-	}
+	};
 
 	var _replaceIdsForStandardSlide = function(slide,slideId){
 		&#x2F;&#x2F;Replace zone Ids
@@ -346,7 +298,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return flashcard;
 	};
 
-	var _replaceIdsForVirtualTourSlide = function(vt,vtId){	
+	var _replaceIdsForVirtualTourSlide = function(vt,vtId){
 		var canvas = $(vt).find(&quot;.map_canvas&quot;);
 		var canvasId = V.Utils.getId(vtId + &quot;_canvas&quot;);
 		$(canvas).attr(&quot;id&quot;,canvasId);
@@ -372,7 +324,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(zones).each(function(index, zone) {
 			zone = _replaceIdsForZone(zone,slideId);
 		});
-	}
+	};
 
 	var _replaceIdsForZone = function(zone,slideId){
 		var zoneId = V.Utils.getId(slideId + &quot;_zone&quot;);
@@ -383,14 +335,14 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 
 		return zone;
-	}
+	};
 
 	var _replaceIdsForEl = function(el,zoneId){
 		var elName = _getNameOfEl(el);
 		var elId = V.Utils.getId(zoneId + &quot;_&quot; + elName);
 		$(el).attr(&quot;id&quot;,elId);
 		return el;
-	}
+	};
 
 	var _getNameOfEl = function(el){
 		var elName = $($(el).attr(&quot;id&quot;).split(&quot;_&quot;)).last()[0];
@@ -399,7 +351,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		} else {
 			return elName;
 		}
-	}
+	};
 
 	&#x2F;*
 	 *	Ensure that forceId is&#x2F;will be really unic in the DOM before call.
@@ -431,7 +383,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 
 		return slide;
-	}
+	};
 
 	var _replaceIdsForStandardSlideJSON = function(slide,slideId){
 		var s = jQuery.extend(true, {}, slide);
@@ -450,7 +402,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 
 		return s;
-	}
+	};
 
 	var _replaceIdsForFlashcardJSON = function(flashcard,fcId){
 		var hash_subslide_new_ids = {};
@@ -480,8 +432,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		var old_id;
 
 		var vt = jQuery.extend(true, {}, vTour);
-
 		vt.id = vTourId;
+
 		for(var ind in vt.slides){	
 			old_id = vt.slides[ind].id;
 			vt.slides[ind] = _replaceIdsForStandardSlideJSON(vt.slides[ind],vt.id + &quot;_article&quot; + (parseInt(ind)+1));
@@ -493,7 +445,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		}
 
 		return vt;
-	}
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; Fancy Box Functions
@@ -656,8 +608,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		refreshDraggables			: refreshDraggables,
 		replaceIdsForSlide 			: replaceIdsForSlide,
 		replaceIdsForSlideJSON		: replaceIdsForSlideJSON,
-		prepareSlideToNest			: prepareSlideToNest,
-		undoNestedSlide 			: undoNestedSlide,
 		generateTable 				: generateTable,
 		convertToTagsArray 			: convertToTagsArray,
 		autocompleteUrls 			: autocompleteUrls,

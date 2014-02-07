@@ -103,21 +103,21 @@ VISH.Messenger.Helper = (function(V,undefined){
 						V.Video.seekVideo(VEMessageObject.params.videoId,VEMessageObject.params.currentTime,false);
 				}
 				break;
-			case V.Constant.Event.onFlashcardPointClicked:
-				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						V.Slides.openSubslide(VEMessageObject.params.slideNumber,false);
+			case V.Constant.Event.onSubslideOpen:
+				if((VEMessageObject.params)&&(VEMessageObject.params.slideId)){
+						V.Slides.openSubslide(VEMessageObject.params.slideId,false);
 				}
 				break;
-			case V.Constant.Event.onFlashcardSlideClosed:
-				if((VEMessageObject.params)&&(VEMessageObject.params.slideNumber)){
-						V.Slides.closeSubslide(VEMessageObject.params.slideNumber,false);
+			case V.Constant.Event.onSubslideClosed:
+				if((VEMessageObject.params)&&(VEMessageObject.params.slideId)){
+						V.Slides.closeSubslide(VEMessageObject.params.slideId,false);
 				}
 				break;
 			case V.Constant.Event.onSetSlave:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.slave != "undefined")){
 					V.Status.setSlaveMode(VEMessageObject.params.slave);
 				}
-				break;	
+				break;
 			case V.Constant.Event.onPreventDefault:
 				if((VEMessageObject.params)&&(typeof VEMessageObject.params.preventDefaults != "undefined")){
 					V.Status.setPreventDefaultMode(VEMessageObject.params.preventDefaults);
@@ -128,6 +128,8 @@ VISH.Messenger.Helper = (function(V,undefined){
 				break;
 			case V.Constant.Event.onSelectedSlides:
 					V.EventsNotifier.notifyEvent(V.Constant.Event.onSelectedSlides,VEMessageObject.params,true);
+				break;
+			case V.Constant.Event.onVEFocusChange:
 				break;
 			default:
 					V.Debugging.log("V.Messenger.Proceesor Error: Unrecognized event: " + VEMessageObject.VEevent);

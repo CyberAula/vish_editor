@@ -44,7 +44,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		document.body.addEventListener('touchend', handleTouchEnd, true);
 		document.body.addEventListener('touchcancel', handleTouchCancel, true);
 
-		window.addEventListener("load",  function(){ _hideAddressBar(); } );
+		window.addEventListener("load",  function(){ _hideAddressBar(); });
 		$(window).on('orientationchange',function(){
 			_hideAddressBar();
 			$(window).trigger('resize'); //Will call V.ViewerAdapter.updateInterface();
@@ -139,9 +139,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		_resetTouchVars();
 	};
 
-
 	var _hideAddressBar = function(){
-		//TODO
 		/*
 		if(document.body.style.height < window.outerHeight) {
 			document.body.style.height = (window.outerHeight + 50) + 'px';

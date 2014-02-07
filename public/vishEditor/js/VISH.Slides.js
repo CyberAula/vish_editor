@@ -362,8 +362,8 @@ VISH.Slides = (function(V,$,undefined){
 
 		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
 			var params = new Object();
-			params.slideNumber = slide_id;
-			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardPointClicked,params);
+			params.slideId = slide_id;
+			V.Messenger.notifyEventByMessage(V.Constant.Event.onSubslideOpen,params);
 			return;
   		}
 
@@ -378,8 +378,8 @@ VISH.Slides = (function(V,$,undefined){
 
 		//Notify
 		var params = new Object();
-		params.slideNumber = slide_id;
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onFlashcardPointClicked,params,triggeredByUser);	
+		params.slideId = slide_id;
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onSubslideOpen,params,triggeredByUser);	
 	};
 
 
@@ -391,8 +391,8 @@ VISH.Slides = (function(V,$,undefined){
 
 		if((triggeredByUser)&&(V.Status.isPreventDefaultMode())&&(V.Messenger)){
 			var params = new Object();
-			params.slideNumber = slide_id;
-			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardSlideClosed,params);
+			params.slideId = slide_id;
+			V.Messenger.notifyEventByMessage(V.Constant.Event.onSubslideClosed,params);
 			return;
 		}
 
@@ -404,8 +404,8 @@ VISH.Slides = (function(V,$,undefined){
 
 		//Notify
 		var params = new Object();
-		params.slideNumber = slide_id;
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onFlashcardSlideClosed,params,triggeredByUser);	
+		params.slideId = slide_id;
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onSubslideClosed,params,triggeredByUser);	
 	};
 
 	var _onOpenSubslide = function(subSlideId){

@@ -656,12 +656,10 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	// Clipboard
 	/////////////////
 	var preCopyActions = function(vtJSON,vtDOM){
-		//TODO
-	}
+	};
 
 	var postCopyActions = function(vtJSON,vtDOM){
-		//TODO
-	}
+	};
 
 
 	return {
