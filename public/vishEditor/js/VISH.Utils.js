@@ -130,7 +130,7 @@ VISH.Utils = (function(V,undefined){
 		} else {
 			return V.Viewer.getOptions();
 		}
-	}
+	};
 
    /**
 	* Return a unic id.
@@ -172,7 +172,7 @@ VISH.Utils = (function(V,undefined){
 		if (ids.indexOf(id)===-1){
 			ids.push(id);
 		}
-	}
+	};
 
 	/**
 	 * Fix presentations with old JSON format
@@ -191,7 +191,7 @@ VISH.Utils = (function(V,undefined){
 		presentation = _fixTypes(presentation);
 
 		//Fix old slidesets
-		if(V.Slides.isSlidesetType(presentation.type)){
+		if(V.Slideset.isSlideset(presentation.type)){
 			//Force presentation standard
 			presentation.type = V.Constant.PRESENTATION;
 		}
@@ -202,7 +202,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return presentation;
-	}
+	};
 
 	/**
 	 * Check slide types and fix it
@@ -244,7 +244,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return presentation;
-    }
+    };
 
 	/*
 	 * Look for errors in the presentation ids
@@ -285,7 +285,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return true;
-	}
+	};
 
 	var _checkIdsStandardSlide = function(slide){
 		var elements = slide.elements;
@@ -296,15 +296,15 @@ VISH.Utils = (function(V,undefined){
 			}
 		}
 		return true;
-	}
+	};
 
 	var _checkIdsFlashcardSlide = function(slide){
 		return _checkSlideset(slide);
-	}
+	};
 
 	var _checkIdsVTourSlide = function(slide){
 		return _checkSlideset(slide);
-	}
+	};
 
 	var _checkSlideset = function(slideset){
 		var subslides = slideset.slides;
@@ -343,7 +343,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return true;
-	}
+	};
 
 	var _overwriteIds = function(presentation){
 		var slides = presentation.slides;
@@ -371,7 +371,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return presentation;
-	}
+	};
 
 	var _overwriteIdsStandardSlide = function(slide){
 		var elements = slide.elements;
@@ -380,15 +380,15 @@ VISH.Utils = (function(V,undefined){
 			elements[j].id = slide.id + "_zone"+(j+1).toString();
 		}
 		return slide;
-	}
+	};
 
 	var _overwriteIdsFlashcardSlide = function(slide){
 		return _overwriteIdsSlideset(slide);
-	}
+	};
 
 	var _overwriteIdsVTourSlide = function(slide){
 		return _overwriteIdsSlideset(slide);
-	}
+	};
 
 	var _overwriteIdsSlideset = function(slideset){
 		var subslides = slideset.slides;
@@ -422,8 +422,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return slideset;
-	}
-
+	};
 
 	var showPNotValidDialog = function(){
 		var options = {};
@@ -549,7 +548,7 @@ VISH.Utils = (function(V,undefined){
 			}
 			return params;
 		}
-	}
+	};
 
 		
 	//Check minium requirements to init vish editor
@@ -596,7 +595,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return true;
-	}
+	};
 		
 
 	/*
@@ -616,7 +615,7 @@ VISH.Utils = (function(V,undefined){
 		} catch(e){}
 		
 		return css;
-	}
+	};
 
 	var getZoomInStyle = function(zoom){
 		var style = "";
@@ -629,7 +628,7 @@ VISH.Utils = (function(V,undefined){
 		style = style + "-webkit-transform: scale(" + zoom + "); ";
 		style = style + "-webkit-transform-origin: 0 0; ";
 		return style;
-	}
+	};
 
 	var getZoomFromStyle = function(style){
 		var zoom = 1; //Initial or default zoom
@@ -776,7 +775,7 @@ VISH.Utils = (function(V,undefined){
 			 }
 		});
 		return ft;
-	}
+	};
 
 	var addFontSizeToStyle = function(style,fontSize){
 		if(typeof style !== "string"){
@@ -795,7 +794,7 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return filterStyle;
-	}
+	};
 
 	var removeFontSizeInStyle = function(style){
 		if(typeof style !== "string"){
@@ -810,7 +809,26 @@ VISH.Utils = (function(V,undefined){
 		});
 
 		return filterStyle;
-	}
+	};
+
+	var getBackgroundPosition = function(elem){
+		var bp = {x:0, y:0}
+		var ebp = $(elem).css('background-position').split(' ');
+		var ebpL = ebp.length;
+
+		if(ebpL === 2){
+			bp.x = parseInt(ebp[0],10);
+			bp.y = parseInt(ebp[1],10);
+		} else if((ebp.length === 4)&&(ebp[0] === 'left')){
+			bp.x = parseInt(ebp[1],10);
+			bp.y = parseInt(ebp[3],10);
+		}
+
+		bp.x = isNaN(bp.x) ? 0 : bp.x;
+		bp.y = isNaN(bp.y) ? 0 : bp.y;
+
+		return bp;
+	};
 
 
 	/*
@@ -1116,7 +1134,7 @@ VISH.Utils = (function(V,undefined){
 			}
 		}
 	};
-
+	
 
 	return {
 		init 					: init,
@@ -1136,6 +1154,7 @@ VISH.Utils = (function(V,undefined){
 		getWidthFromStyle   	: getWidthFromStyle,
 		getHeightFromStyle  	: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
+		getBackgroundPosition	: getBackgroundPosition,
 		sendParentToURL			: sendParentToURL,
 		addParamToUrl			: addParamToUrl,
 		removeParamFromUrl		: removeParamFromUrl,

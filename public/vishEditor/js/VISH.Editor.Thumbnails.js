@@ -51,7 +51,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var _onImageError = function(image){
 		var slideNumber = $(image).attr("slidenumber");
 		var slide = V.Slides.getSlideWithNumber(slideNumber);
-		var isSlideset = V.Editor.Slideset.isSlideset(slide);
+		var isSlideset = V.Slideset.isSlideset(slide);
 		if(isSlideset){
 			var creator = V.Editor.Slideset.getCreatorModule(slide);
 			if(typeof creator.onThumbnailLoadFail == "function"){
@@ -187,7 +187,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var getThumbnailURL = function(slide){
 		var thumbnailURL;
 		var slideType = $(slide).attr('type');
-		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		var isSlideset = V.Slideset.isSlideset(slideType);
 
 		if(isSlideset){
 			thumbnailURL = V.Editor.Slideset.getCreatorModule(slideType).getThumbnailURL(slide);
@@ -214,7 +214,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 
 		if(slideType==V.Constant.STANDARD){
 			return _getDefaultThumbnailURLForStandardSlide(slide);
-		} else if(V.Editor.Slideset.isSlideset(slideType)){
+		} else if(V.Slideset.isSlideset(slideType)){
 			var creatorModule = V.Editor.Slideset.getCreatorModule(slideType);
 			if(typeof creatorModule.getDefaultThumbnailURL == "function"){
 				return creatorModule.getDefaultThumbnailURL(slide);

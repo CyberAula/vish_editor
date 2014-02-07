@@ -28,7 +28,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			if(type===V.Constant.STANDARD){
 				_renderSlide(slides[i], {slideNumber: slideNumber });
 			} else {
-				var isSlideset = V.Editor.Slideset.isSlideset(type);
+				var isSlideset = V.Slideset.isSlideset(type);
 				if(isSlideset){
 					_renderSlideset(slides[i], slideNumber);
 				}

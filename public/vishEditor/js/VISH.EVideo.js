@@ -21,7 +21,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Init methods */
 
-	var init = function(presentation){
+	var init = function(){
 		if(!initialized){
 			initialized = true;
 			eVideos = new Array();
@@ -63,8 +63,6 @@ VISH.EVideo = (function(V,$,undefined){
 				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>0));
 			})).map(function(ball){
 				ball.etime = parseFloat(ball.etime);
-				ball.minTime = ball.etime - RANGE;
-				ball.maxTime = ball.etime + RANGE;
 				ball.eVideoId = eVideoJSON.id;
 				return ball;
 			})).sort(function(A,B){
@@ -78,7 +76,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Draw Methods */
 
-	var drawEVideo = function(eVideoJSON){
+	var draw = function(eVideoJSON){
 		var eVideoId = eVideoJSON.id;
 		var slidesetDOM = $("#"+eVideoId);
 
@@ -340,9 +338,14 @@ VISH.EVideo = (function(V,$,undefined){
 
 		$(eVideoJSON.balls).each(function(index,ball){
 			var item = document.createElement('li');
-			$(item).html("Ball at " + ball.etime);
 			$(item).attr("ballid",ball.id);
 			$(item).attr("etime",ball.etime);
+			if(typeof ball.name != "string"){
+				var video = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+				ball.name = "" + _fomatTime(ball.etime,parseInt($(video).attr("sN")));
+			}
+
+			$(item).html("<span class='eVideoIndexEntryNumber'>"+ (index+1) + ". " + "</span><span class='eVideoIndexEntryBody'>" + ball.name + "</span>");
 			$(eVideoChapters).append(item);
 		});
 	};
@@ -382,6 +385,7 @@ VISH.EVideo = (function(V,$,undefined){
 		_lastVideoEndedCall = Date.now();
 
 		//OnVideoEnded
+		_updateCurrentTime(video,V.Video.getDuration(video));
 	};
 
 	var _onVolumeChange = function(video,volume){
@@ -391,10 +395,12 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Load methods */
 
-	var loadEVideo = function(eVideoId){
+	var onEnterSlideset = function(slideset){
+		var eVideoId = $(slideset).attr("id");
 	};
 
-	var unloadEVideo = function(eVideoId){
+	var onLeaveSlideset = function(slideset){
+		var eVideoId = $(slideset).attr("id");
 	};
 
 
@@ -423,8 +429,12 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _onClickChapter = function(event){
-		var chapterTime = parseFloat($(event.target).attr("etime"));
-		var eVideoIndexBox = $(".evideoIndexBox").has(event.target);
+		var chapter = event.target;
+		if($(event.target).tagName != "LI"){
+			chapter = $(event.target).parent();
+		}
+		var chapterTime = parseFloat($(chapter).attr("etime"));
+		var eVideoIndexBox = $(".evideoIndexBox").has(chapter);
 		var videoBox = $(eVideoIndexBox).parent().find(".evideoBox");
 		var video = _getVideoFromVideoBox(videoBox);
 		_onChapterSelected(video,chapterTime);
@@ -540,7 +550,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(eVideoVolSliderMarker).css("left","-20%");
 	};
 
-	var aftersetupSize = function(increase,increaseW){
+	var afterSetupSize = function(increase,increaseW){
 		var eVideosDOM = $("section.slides > article[type='enrichedvideo'");
 		$(eVideosDOM).each(function(index,eVideoDOM){
 			resizeEVideoAfterSetupSize(eVideoDOM,increase,increaseW);
@@ -712,11 +722,11 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	return {
-		init			: init,
-		drawEVideo		: drawEVideo,
-		loadEVideo		: loadEVideo,
-		unloadEVideo	: unloadEVideo,
-		aftersetupSize	: aftersetupSize
+		init				: init,
+		draw				: draw,
+		onEnterSlideset		: onEnterSlideset,
+		onLeaveSlideset		: onLeaveSlideset,
+		afterSetupSize		: afterSetupSize
 	};
 
 }) (VISH, jQuery);

@@ -1896,13 +1896,27 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoChapters li {
 	font-size: 1.4rem;
-	padding: 10% 7%;
-	text-align: center;
+	padding: 5% 7%;
+	text-align: left;
 	cursor: pointer;
 }
 
 .evideoChapters li:hover {
-	color: #075b77;
 	background-color: #E9E9E9;
 }
 
+.evideoChapters li span.eVideoIndexEntryNumber {
+	color: #7C7C7C;
+}
+
+.evideoChapters li span.eVideoIndexEntryBody {
+	color: black;
+}
+
+.evideoChapters li:hover span.eVideoIndexEntryNumber {
+	color: #075b77 !important;
+}
+
+.evideoChapters li:hover span.eVideoIndexEntryBody {
+	color: #075b77 !important;
+}

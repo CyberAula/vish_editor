@@ -1,9 +1,3 @@
-/*
- * Utils for Slideset
- * Common functionalities for:
- * -> Flashcards
- * -> Virtual Tours
- */
 VISH.Editor.Slideset = (function(V,$,undefined){
 
 	var initialized = false;
@@ -25,7 +19,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	 * Obj: slide or slide type
 	 */
 	var getCreatorModule = function(obj){
-		type = _getTypeIfPresent(obj);
+		type = V.Slideset.getSlidesetType(obj);
 		switch(type){
 			case V.Constant.FLASHCARD:
 				return V.Editor.Flashcard;
@@ -36,11 +30,8 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			default:
 				return null;
 		}
-	}
+	};
 
-	/*
-	 * slideset can be the object itself or its type
-	 */
 	var getDummy = function(slideset,options){
 		var slidesetCreator = getCreatorModule(slideset);
 		if(typeof slidesetCreator.getDummy == "function"){
@@ -52,23 +43,6 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			return slidesetCreator.getDummy(slidesetId,options);
 		}
 	};
-
-	/*
-	 * Obj: slide or slide type
-	 */
-	var isSlideset = function(obj){
-		type = _getTypeIfPresent(obj);
-		return V.Slides.isSlidesetType(type);
-	}
-
-	var _getTypeIfPresent = function(obj){
-		if(typeof obj == "string"){
-			return obj;
-		} else if(typeof obj == "object"){
-			return $(obj).attr("type");
-		}
-		return undefined;
-	}
 
 	var getCurrentSubslide = function(){
 		return currentSubslide;
@@ -106,7 +80,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		V.Editor.Thumbnails.drawSlidesetThumbnails(subslides,function(){
 			//Subslides Thumbnails drawed succesfully
 		});
-	}
+	};
 
 	/*
 	 * Update UI when leave from a slideset
@@ -126,7 +100,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		if(typeof slidesetCreator.onLeaveSlideset == "function"){
 			slidesetCreator.onLeaveSlideset(slideset);
 		}
-	}
+	};
 
 	var openSlideset = function(slideset){
 		//Show slideset delete and help buttons
@@ -147,7 +121,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		if(typeof slidesetCreator.loadSlideset == "function"){
 			slidesetCreator.loadSlideset(slideset);
 		}
-	}
+	};
 
 	var closeSlideset = function(slideset){
 		//Hide slideset delete and help buttons
@@ -162,17 +136,17 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		if(typeof slidesetCreator.unloadSlideset == "function"){
 			slidesetCreator.unloadSlideset(slideset);
 		}
-	}
+	};
 
 	var beforeCreateSlidesetThumbnails = function(){
 		var slideset = V.Slides.getCurrentSlide();
-		if(isSlideset(slideset)){
+		if(V.Slideset.isSlideset(slideset)){
 			var slidesetCreator = getCreatorModule(slideset);
 			if(typeof slidesetCreator.beforeCreateSlidesetThumbnails == "function"){
 				slidesetCreator.beforeCreateSlidesetThumbnails(slideset);
 			}
 		}
-	}
+	};
 
 	var beforeRemoveSlideset = function(slideset){
 		onLeaveSlideset(slideset);
@@ -180,7 +154,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		if(typeof slidesetCreator.beforeRemoveSlideset == "function"){
 			slidesetCreator.beforeRemoveSlideset(slideset);
 		}
-	}
+	};
 
 	var beforeRemoveSubslide = function(slideset,subslide){
 		closeSubslide(subslide);
@@ -188,7 +162,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		if(typeof slidesetCreator.beforeRemoveSubslide == "function"){
 			slidesetCreator.beforeRemoveSubslide(slideset,subslide);
 		}
-	}
+	};
 
 
 	/////////////////
@@ -200,7 +174,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		var subslides = $(slideset).find("article");
 		var subslide = subslides[subslideNumber-1];
 		openSubslide(subslide);
-	}
+	};
 
 	var openSubslide = function(subslide){
 		var currentSubslide = getCurrentSubslide();
@@ -216,39 +190,39 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		_showSubslide(subslide);
 		V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr("slidenumber"));
 		V.Slides.triggerEnterEventById($(subslide).attr("id"));
-	}
+	};
 
 	var _showSubslide = function(subslide){
 		$(subslide).css("display","block");
-	}
+	};
 
 	var _hideSubslide = function(subslide){
 		$(subslide).css("display","none");
-	}
+	};
 
 	var closeSubslideWithNumber = function(subslideNumber){
 		var slideset = V.Slides.getCurrentSlide();
 		var subslides = $(slideset).find("article");
 		var subslide = subslides[subslideNumber-1];
 		closeSubslide(subslide);
-	}
+	};
 
 	var closeSubslide = function(subslide){
 		setCurrentSubslide(null);
 		V.Editor.Thumbnails.selectSubslideThumbnail(null);
 		_hideSubslide(subslide);
 		V.Slides.triggerLeaveEventById($(subslide).attr("id"));
-	}
+	};
 
 	var _showSlideButtons = function(slide){
 		$(slide).find("div.delete_slide:first").show();
 		$(slide).find("img.help_in_slide:first").show();
-	}
+	};
 
 	var _hideSlideButtons = function(slide){
 		$(slide).find("div.delete_slide:first").hide();
 		$(slide).find("img.help_in_slide:first").hide();
-	}
+	};
 
 
 	/////////////////
@@ -258,11 +232,10 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 	var onClickOpenSlideset = function(){
 		var slideset = V.Slides.getCurrentSlide();
 		openSlideset(slideset);
-	}
+	};
 
 	return {
 		init 							: init,
-		isSlideset						: isSlideset,
 		getCreatorModule				: getCreatorModule,
 		getDummy						: getDummy,
 		onEnterSlideset					: onEnterSlideset,
@@ -280,7 +253,5 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		onClickOpenSlideset				: onClickOpenSlideset,
 		getSubslidesQuantity			: getSubslidesQuantity
 	};
-
-
 
 }) (VISH, jQuery);

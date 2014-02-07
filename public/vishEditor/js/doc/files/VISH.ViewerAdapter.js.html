@@ -433,8 +433,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$(&quot;#embedWatermark&quot;).width($(&quot;#embedWatermark&quot;).height()*2.7);
 		}
 
-		V.Flashcard.aftersetupSize(increase,increaseW);
-
 		decideIfPageSwitcher();
 
 		updateFancyboxAfterSetupSize(increase,increaseW);
@@ -448,11 +446,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;Object callbacks
 		V.ObjectPlayer.aftersetupSize(increase,increaseW);
 
-		&#x2F;&#x2F;Maps callbacks
-		V.VirtualTour.aftersetupSize(increase,increaseW);
-
-		&#x2F;&#x2F;Evideo
-		V.EVideo.aftersetupSize(increase,increaseW);
+		&#x2F;&#x2F;Slidesets
+		V.Slideset.afterSetupSize(increase,increaseW);
 
 		&#x2F;&#x2F;Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);

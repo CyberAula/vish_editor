@@ -69,7 +69,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	*/
 	var moveSubslides = function(n){
 		var cSlide = V.Slides.getCurrentSlide();
-		if(!V.Editor.Slideset.isSlideset(cSlide)){
+		if(!V.Slideset.isSlideset(cSlide)){
 			return;
 		}
 		var cSubslideNumber = V.Slides.getCurrentSubslideNumber();
@@ -348,7 +348,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Slides.updateSlides();
 		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
 
-		if(V.Editor.Slideset.isSlideset(slideType)){
+		if(V.Slideset.isSlideset(slideType)){
 			// Create/Load dummy slideset
 			var slidesetCreator = V.Editor.Slideset.getCreatorModule(slideType);
 			slidesetCreator.draw(null,slide);
@@ -369,7 +369,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			return;
 		}
 
-		if(V.Editor.Slideset.isSlideset(slide)){
+		if(V.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.beforeRemoveSlideset(slide);
 		}
 
@@ -462,7 +462,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	};
 
 	var _updateThumbnail = function(slide,slideThumbnail,thumbnailURL){
-		if(V.Editor.Slideset.isSlideset(slide)){
+		if(V.Slideset.isSlideset(slide)){
 			$("#slideset_selected > img").attr("src",thumbnailURL);
 		}
 		$(slideThumbnail).attr("src",thumbnailURL);

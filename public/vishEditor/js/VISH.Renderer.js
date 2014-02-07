@@ -1,22 +1,10 @@
 VISH.Renderer = (function(V,$,undefined){
 	
-	var SLIDE_CONTAINER = null;
-	
-
-	/**
-	 * Function to initialize the renderer
-	 * Only gets the section element from the html page
-	 */
 	var init  = function(){
-		SLIDE_CONTAINER = $('.slides');
 		V.Renderer.Filter.init();
 	}
 
-	/**
-	 * slides.html only have a section element and in this function we add an article element
-	 * with the proper content for the slide
-	 */	
-	var renderSlide = function(slide, extra_classes, extra_buttons, slidenumber){
+	var renderSlide = function(slide){
 		var article;
 
 		if(!extra_classes){
@@ -26,42 +14,37 @@ VISH.Renderer = (function(V,$,undefined){
 			var extra_buttons = "";
 		}
 
-		switch(slide.type){
-			case undefined:
-			case V.Constant.STANDARD:
-			case V.Constant.QUIZ_SIMPLE:
-				article = _renderStandardSlide(slide, extra_classes, extra_buttons,slidenumber);
-				break;
-			case V.Constant.FLASHCARD:
-				article = _renderFlashcardSlide(slide, extra_classes, extra_buttons,slidenumber);
-				break;
-			case V.Constant.VTOUR:
-				article = _renderVirtualTourSlide(slide, extra_classes, extra_buttons,slidenumber);
-				break;
-			case V.Constant.EVIDEO:
-				article = _renderEVideoSlide(slide, extra_classes, extra_buttons,slidenumber);
-				break;
-			default:
-				article = null;
-				break;
+		var isSlideset = V.Slideset.isSlideset(slide.type);
+
+		if(isSlideset){
+			article = _renderSlideset(slide);
+		} else {
+			article = _renderStandardSlide(slide);
 		}
 
 		if(article){
-			SLIDE_CONTAINER.append($(article));
-			_afterDrawSlide(slide);
+			$('section.slides').append($(article));
+
+			//For slidesets, we have to draw it after render its scaffolding
+			if(isSlideset){
+				V.Slideset.draw(slide);
+			}
 		}
 	};
 
-
-	//////////
-	/// RENDERERS
-	//////////
-
-	var _renderStandardSlide = function(slide, extra_classes, extra_buttons){
+	var _renderStandardSlide = function(slide,options){
 		var content = "";
 		var classes = "";
-		if((typeof extra_classes == "undefined")||(extra_classes===null)){
-			extra_classes = "";
+		var extraClasses = "";
+		var extraButtons = "";
+
+		if(typeof options != "undefined"){
+			if(typeof options.extraClasses == "string"){
+				extraClasses = options.extraClasses;
+			}
+			if(typeof options.extraButtons == "string"){
+				extraButtons = options.extraButtons;
+			}
 		}
 
 		for(el in slide.elements){
@@ -92,85 +75,31 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		return "<article class='"+ extra_classes + " " +classes+"' type='"+V.Constant.STANDARD+"' id='"+slide.id+"'>"+ extra_buttons + content+"</article>";
+		return "<article class='"+ extraClasses + " " +classes+"' type='"+V.Constant.STANDARD+"' id='"+slide.id+"'>"+ extraButtons + content+"</article>";
 	};
 
-	var _renderFlashcardSlide = function(slide, extra_classes, extra_buttons, slidenumber){
-		var all_slides = "";
-		//The flashcard has its own slides
-		for(index in slide.slides){
-			//Subslide id its a composition of parent id and its own id.
-			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, "hide_in_smartcard", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
+	var _renderSlideset = function(slidesetJSON){
+		var allSubslides = "";
+		for(index in slidesetJSON.slides){
+			var subslide = slidesetJSON.slides[index];
+			allSubslides += _renderStandardSlide(subslide, {extraClasses: "hide_in_smartcard", extraButtons: "<div class='close_subslide' id='close"+subslide.id+"'></div>"});
 		}
-		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.FLASHCARD+"' avatar='"+slide.background+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
-	};
-
-	var _renderVirtualTourSlide = function(slide, extra_classes, extra_buttons, slidenumber){
-		var all_slides = "";
-		for(index in slide.slides){
-			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, "hide_in_smartcard", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
-		}
-		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.VTOUR+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
-	};
-
-	var _renderEVideoSlide = function(slide, extra_classes, extra_buttons, slidenumber){
-		var all_slides = "";
-		for(index in slide.slides){
-			var subslide = slide.slides[index];
-			all_slides += _renderStandardSlide(subslide, "hide_in_smartcard", "<div class='close_subslide' id='close"+subslide.id+"'></div>");
-		}
-		return $("<article class='"+ extra_classes + "' slidenumber='"+slidenumber+"' type='"+V.Constant.EVIDEO+"' id='"+slide.id+"'>"+ extra_buttons + all_slides + "</article>");
+		return $("<article type='"+slidesetJSON.type+"' id='"+slidesetJSON.id+"'>"+allSubslides+"</article>");
 	};
 
 
-	////////////
-	//After Render Slide Actions
-	////////////
-	var _afterDrawSlide = function(slide){
-		switch(slide.type){
-			case undefined:
-			case V.Constant.STANDARD:
-				break;
-			case V.Constant.FLASHCARD:
-				//Add the background and pois
-				$("#"+ slide.id).css("background-image", slide.background);
-				
-				//And now we add the points of interest with their click events to show the slides
-		  		for(index in slide.pois){
-		  			var poi = slide.pois[index];
-		        	V.Flashcard.addArrow(slide.id, poi);
-		  		}
-				break;
-			case V.Constant.VTOUR:
-				V.VirtualTour.drawMap(slide);
-				break;
-			case V.Constant.EVIDEO:
-				V.EVideo.drawEVideo(slide);
-				break;
-			default:
-				break;
-		}
-	}
-
-	/**
-	 * Function to render text inside an article (a slide)
+	/*
+	 * Render elements
 	 */
-	var _renderText = function(element, template){
-		return "<div id='"+element['id']+"' class='VEtextArea "+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
-	};
-	
-	/**
-	 * Function to render empty inside an article (a slide)
-	 */
+
 	var _renderEmpty = function(element, template){
 		return "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+" "+template+"_text"+"'></div>";
 	};
 
-	/**
-	 * Function to render an image inside an article (a slide)
-	 */
+	var _renderText = function(element, template){
+		return "<div id='"+element['id']+"' class='VEtextArea "+template+"_"+element['areaid']+" "+template+"_text"+"'>"+element['body']+"</div>";
+	};
+	
 	var _renderImage = function(element, template){
 		if(typeof element['style'] == "undefined"){
 			style = "max-height: 100%; max-width: 100%;";
@@ -222,16 +151,10 @@ VISH.Renderer = (function(V,$,undefined){
 		}
 		
 		rendered = rendered + "</audio>";
-		
-		console.log("RENDEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED!!!!!");
-		console.log(rendered);
 
 		return rendered;
 	};
 	
-	/**
-	 * Function to render an object inside an article (a slide)
-	 */
 	var _renderObject = function(element,template){
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
@@ -247,9 +170,6 @@ VISH.Renderer = (function(V,$,undefined){
 		}
 	};
 	
-	/**
-   * Function to render an snapshot inside an article (a slide)
-   */
 	var _renderSnapshot = function(element, template){
 		var style = (element['style'])? element['style'] : "";
 		var body = element['body'];
@@ -258,15 +178,9 @@ VISH.Renderer = (function(V,$,undefined){
 		return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollTopOrigin='" + scrollTop + "' scrollLeft='" + scrollLeft + "' scrollLeftOrigin='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";
 	};
 	
-	/**
-	 * Function to render an applet inside an article (a slide)
-	 * the applet object and its params are not really inside the article but in the archive attribute, width, height and params of the div
-	 * when entering a slide with an applet class we call V.AppletPlayer.loadSWF
-	 */
 	var _renderApplet = function(element, template){
 		return "<div id='"+element['id']+"' class='appletelement "+template+"_"+element['areaid']+"' code='"+element['code']+"' width='"+element['width']+"' height='"+element['height']+"' archive='"+element['archive']+"' params='"+element['params']+"' ></div>";
 	};
-
 
 	return {
 		init        		: init,

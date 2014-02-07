@@ -328,7 +328,7 @@ VISH.Editor = (function(V,$,undefined){
 			var slideset = V.Slides.getCurrentSlide();
 
 			&#x2F;&#x2F;Add a subslide (slide[type=&#x27;standard&#x27;]) to a slideset
-			if((type === V.Constant.STANDARD)&amp;&amp;(V.Editor.Slideset.isSlideset(slideset))){
+			if((type === V.Constant.STANDARD)&amp;&amp;(V.Slideset.isSlideset(slideset))){
 				var options = {};
 				options.subslide = true;
 				options.template = $(slideThumb).attr(&#x27;template&#x27;);
@@ -557,7 +557,7 @@ VISH.Editor = (function(V,$,undefined){
 		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
 		e.stopPropagation();
 
-		if(V.Editor.Slideset.isSlideset(slide)){
+		if(V.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onEnterSlideset(slide);
 		} else {
 			&#x2F;&#x2F;Standard slide
@@ -581,7 +581,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		e.stopPropagation();
 
-		if(V.Editor.Slideset.isSlideset(slide)){
+		if(V.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onLeaveSlideset(slide);
 		} else {
 			&#x2F;&#x2F;Standard slide
@@ -620,7 +620,7 @@ VISH.Editor = (function(V,$,undefined){
 		$(&#x27;section.slides &gt; article&#x27;).each(function(index,slideDOM){
 			var slide = {};
 
-			if(!V.Editor.Slideset.isSlideset(slideDOM)){
+			if(!V.Slideset.isSlideset(slideDOM)){
 				slide = _saveStandardSlide(slideDOM,presentation,false);
 			} else {
 				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);

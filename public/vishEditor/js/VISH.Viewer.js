@@ -51,9 +51,7 @@ VISH.Viewer = (function(V,$,undefined){
 
 	var _initAferStatusLoaded = function(options,presentation){
 		V.EventsNotifier.init();	
-		V.Flashcard.init();
-		V.VirtualTour.init();
-		V.EVideo.init();
+		V.Slideset.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();
 		V.Utils.Loader.loadDeviceCSS();
@@ -158,13 +156,8 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Video.HTML5.playVideos(slide);
 
 		if(!isSubslide){
-			var slideType = $(e.target).attr("type");
-			if(slideType===V.Constant.FLASHCARD){
-				V.Flashcard.startAnimation(slide.id);
-			} else if(slideType===V.Constant.VTOUR){
-				V.VirtualTour.loadVirtualTour(slide.id);
-			} else if(slideType===V.Constant.EVIDEO){
-				V.EVideo.loadEVideo(slide.id);
+			if(V.Slideset.isSlideset(slide)){
+				V.Slideset.onEnterSlideset(slide);
 			}
 			V.Recommendations.checkForRecommendations();
 		}
@@ -189,13 +182,8 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Video.HTML5.stopVideos(slide);
 
 		if(!isSubslide){
-			var slideType = $(e.target).attr("type");
-			if(slideType===V.Constant.FLASHCARD){
-				V.Flashcard.stopAnimation(slide.id);
-			} else if(slideType===V.Constant.VTOUR){
-				V.VirtualTour.unloadVirtualTour(slide.id);
-			} else if(slideType===V.Constant.EVIDEO){
-				V.EVideo.unloadEVideo(slide.id);
+			if(V.Slideset.isSlideset(slide)){
+				V.Slideset.onLeaveSlideset(slide);
 			}
 		}
 	};

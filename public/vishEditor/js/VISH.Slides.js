@@ -427,16 +427,6 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var isSlidesetType = function(type){
-		switch(type){
-			case V.Constant.FLASHCARD:
-			case V.Constant.VTOUR:
-				return true;
-			default:
-				return false;
-		}
-	};
-
 	return {	
 			init          			: init,
 			updateSlides			: updateSlides,
@@ -465,7 +455,6 @@ VISH.Slides = (function(V,$,undefined){
 			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			isSlidesetType			: isSlidesetType,
 			triggerEnterEvent 		: triggerEnterEvent,
 			triggerEnterEventById	: triggerEnterEventById,
 			triggerLeaveEvent 		: triggerLeaveEvent,

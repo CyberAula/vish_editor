@@ -484,13 +484,13 @@ VISH.Slides = (function(V,$,undefined){
 			params.slideNumber = slide_id;
 			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardSlideClosed,params);
 			return;
-  		}
+		}
 
   		_onCloseSubslide(slide_id);
   		$(&quot;#&quot; + slide_id).removeClass(&quot;show_in_smartcard&quot;);
   		$(&quot;#&quot; + slide_id).addClass(&quot;hide_in_smartcard&quot;);
 		&#x2F;&#x2F;$(&quot;#&quot;+slide_id).hide();
-		triggerLeaveEventById(slide_id);	
+		triggerLeaveEventById(slide_id);
 
 		&#x2F;&#x2F;Notify
 		var params = new Object();
@@ -514,16 +514,6 @@ VISH.Slides = (function(V,$,undefined){
 			},800);
 		} else {
 			V.ViewerAdapter.decideIfPageSwitcher();
-		}
-	};
-
-	var isSlidesetType = function(type){
-		switch(type){
-			case V.Constant.FLASHCARD:
-			case V.Constant.VTOUR:
-				return true;
-			default:
-				return false;
 		}
 	};
 
@@ -555,7 +545,6 @@ VISH.Slides = (function(V,$,undefined){
 			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
-			isSlidesetType			: isSlidesetType,
 			triggerEnterEvent 		: triggerEnterEvent,
 			triggerEnterEventById	: triggerEnterEventById,
 			triggerLeaveEvent 		: triggerLeaveEvent,

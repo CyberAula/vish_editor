@@ -78,7 +78,7 @@ VISH.Editor.Clipboard = (function(V,$,undefined){
 				// Prevent slidesets to be copied with keyboard shortcuts.
 				// This feature is not well implemented yet.
 				// TODO: Implement slideset copy feature
-				if(V.Editor.Slideset.isSlideset(slideToCopy)){
+				if(V.Slideset.isSlideset(slideToCopy)){
 					return;
 				}
 

@@ -13,31 +13,24 @@ VISH.Flashcard = (function(V,$,undefined){
 	//Arrow frames per second
 	var FPS = 20;
 
-	var init = function(presentation){
+	var init = function(){
 		if(!flashcards){
 			flashcards = {};
 			pois = {};
 		}
 	};
 
-	var startAnimation = function(slideId){
-		if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer == "undefined")){
-			flashcards[slideId].timer = setInterval( function() { animateArrows(slideId); }, 1000/FPS );      
+	var draw = function(flashcardJSON){
+		//Add the background and pois
+		$("#"+ flashcardJSON.id).css("background-image", flashcardJSON.background);
+		
+		for(index in flashcardJSON.pois){
+			var poi = flashcardJSON.pois[index];
+			_addArrow(flashcardJSON.id, poi);
 		}
 	};
 
-	var stopAnimation = function(slideId){
-		if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer !== "undefined")){
-			clearTimeout(flashcards[slideId].timer);
-			flashcards[slideId].timer = undefined;
-		}
-	};
-
-	/*  Sync can be true if you want the arrows to be synchronized 
-	*   (moving at the same time and at the same position) or false if not
-	*/
-	var addArrow = function(fcId, poi){
-
+	var _addArrow = function(fcId, poi){
 		if((!poi)||(!poi.x)||(!poi.y)||(poi.x > 100)||(poi.y > 100)){
 			//Corrupted poi
 			return;
@@ -69,19 +62,57 @@ VISH.Flashcard = (function(V,$,undefined){
 		});
 	};
 
-	var animateArrows = function(slideId){
-		if((!slideId)||(typeof flashcards[slideId] === "undefined")){
+	var onEnterSlideset = function(slideset){
+		_startAnimation($(slideset).attr("id"));
+	};
+
+	var onLeaveSlideset = function(slideset){
+		_stopAnimation($(slideset).attr("id"));
+	};
+
+
+	/* Arrow animations */
+
+	var _startAnimation = function(slideId){
+		if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer == "undefined")){
+			flashcards[slideId].timer = setInterval( function() { _animateArrows(slideId); }, 1000/FPS );      
+		}
+	};
+
+	var _animateArrows = function(slideId){
+		if((!slideId)||(typeof flashcards[slideId] == "undefined")){
 			return;
 		}
+
+		var cacheBackgroundPosX = undefined;
+
 		$(flashcards[slideId].arrows).each(function(index,value){
 			var arrowDOM = $("#"+value.id);
-			var backgroundPosX = $(arrowDOM).cssNumber("background-position-x")+5;
-			//backgroundPosX should be a number between 0 and 95
-			if(backgroundPosX>95){
-				backgroundPosX = 0; //bucle
+
+			if(typeof cacheBackgroundPosX == "undefined"){
+				var backgroundPosX = $(arrowDOM).cssNumber("background-position-x")+5;
+				//Fix for browsers that not support background-position-x
+				if(backgroundPosX==5){
+					backgroundPosX = V.Utils.getBackgroundPosition(arrowDOM).x+5;
+				}
+
+				//backgroundPosX should be a number between 0 and 95
+				if(backgroundPosX>95){
+					backgroundPosX = 0; //bucle
+				}
+				
+				cacheBackgroundPosX = backgroundPosX;
 			}
-			$(arrowDOM).css("background-position",backgroundPosX + "%" + " center");
+
+			$(arrowDOM).css("background-position",cacheBackgroundPosX + "%" + " center");
 		});
+	};
+
+	var _stopAnimation = function(slideId){
+		if((typeof flashcards !== "undefined")&&(typeof flashcards[slideId] !== "undefined")&&(typeof flashcards[slideId].timer !== "undefined")){
+			clearTimeout(flashcards[slideId].timer);
+			flashcards[slideId].timer = undefined;
+		}
 	};
 
 	var getPoiData = function(poiId){
@@ -91,7 +122,7 @@ VISH.Flashcard = (function(V,$,undefined){
 		return null; 
 	};
 
-	var aftersetupSize = function(increase,increaseW){
+	var afterSetupSize = function(increase,increaseW){
 		var fcArrowIncrease;
 		if(increase >= 1){
 			fcArrowIncrease = V.ViewerAdapter.getPonderatedIncrease(increase,0.1);
@@ -123,19 +154,13 @@ VISH.Flashcard = (function(V,$,undefined){
 		}
 	};
 
-	var getFlashcards = function(){
-		return flashcards;
-	};
-
 	return {
 		init			: init,
-		addArrow 		: addArrow,
-		startAnimation	: startAnimation,
-		stopAnimation	: stopAnimation,
-		animateArrows	: animateArrows,
+		draw			: draw,
+		onEnterSlideset	: onEnterSlideset,
+		onLeaveSlideset	: onLeaveSlideset,
 		getPoiData		: getPoiData,
-		aftersetupSize	: aftersetupSize,
-		getFlashcards	: getFlashcards
+		afterSetupSize	: afterSetupSize
 	};
 
 }) (VISH, jQuery);

@@ -11,14 +11,14 @@ VISH.VirtualTour = (function(V,$,undefined){
 	var lastIncrease;
 
 
-	var init = function(presentation){
+	var init = function(){
 		virtualTours = new Array();
 	};
 
 	/*
 	* vtJSON is a JSON slide of VirtualTour type
 	*/
-	var drawMap = function(vtJSON){
+	var draw = function(vtJSON){
 		if((!gMlLoaded)&&(!gMlLoading)){
 			//Load GM library
 			gMlLoading = true;
@@ -37,7 +37,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 		if(!gMlLoaded){
 			//Wait for GMap library to load
 			$(document).on('googleMapsLibraryLoadedinVV', function(){
-				drawMap(vtJSON);
+				draw(vtJSON);
 			});
 			return;
 		}
@@ -93,21 +93,23 @@ VISH.VirtualTour = (function(V,$,undefined){
 		});
 		google.maps.event.addDomListener(window, 'resize', function() {
 		});
-	}
+	};
 
-	var loadVirtualTour = function(vtId){
+	var onEnterSlideset = function(slideset){
+		var vtId = $(slideset).attr("id");
 		var canvas = $("#"+vtId).find(".map_canvas");
 		$(canvas).show();
-	}
+	};
 
-	var unloadVirtualTour = function(vtId){
+	var onLeaveSlideset = function(slideset){
+		var vtId = $(slideset).attr("id");
 		var canvas = $("#"+vtId).find(".map_canvas");
 		$(canvas).hide();
-	}
+	};
 
 	var _addMarkerToCoordinates = function(map,lat,lng,slide_id){
 		return _addMarkerToPosition(map,new google.maps.LatLng(lat,lng),slide_id);
-	}
+	};
 
 	var _addMarkerToPosition = function(map,myLatlng,slide_id){
 		var pinImage = new google.maps.MarkerImage(V.ImagesPath + "vicons/marker.png",
@@ -128,10 +130,10 @@ VISH.VirtualTour = (function(V,$,undefined){
 		});
 
 		return marker;
-	}
+	};
 
 
-	var aftersetupSize = function(increase){
+	var afterSetupSize = function(increase){
 		// if(typeof lastIncrease == "undefined"){
 		// 	lastIncrease = increase;
 		// 	return;
@@ -147,7 +149,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 		// 		lastIncrease = increase;
 		// 	}
 		// }
-	}
+	};
 
 	var _getZoomForIncreaseDiff = function(zoom, increaseDiff){
 		//+-1 zoom for each 30%
@@ -160,15 +162,15 @@ VISH.VirtualTour = (function(V,$,undefined){
 		}
 		//Zoom always between 1 and 20
 		return Math.max(Math.min(newZoom,20),1);
-	}
+	};
 
 
 	return {
 		init				: init,
-		drawMap				: drawMap,
-		loadVirtualTour		: loadVirtualTour,
-		unloadVirtualTour	: unloadVirtualTour,
-		aftersetupSize		: aftersetupSize
+		draw				: draw,
+		onEnterSlideset		: onEnterSlideset,
+		onLeaveSlideset		: onLeaveSlideset,
+		afterSetupSize		: afterSetupSize
 	};
 
 }) (VISH, jQuery);

@@ -31,7 +31,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 	 * Function to get the dummy of a new slide
 	 */
 	var getDummy = function(slideType, options){
-		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		var isSlideset = V.Slideset.isSlideset(slideType);
 		if(isSlideset){
 			return V.Editor.Slideset.getDummy(slideType, options);
 		} else if(slideType==V.Constant.STANDARD){
@@ -69,7 +69,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 
 	var getScaffoldForSlide = function(slide,options){
 		var slideType = V.Slides.getSlideType(slide);
-		var isSlideset = V.Editor.Slideset.isSlideset(slideType);
+		var isSlideset = V.Slideset.isSlideset(slideType);
 		if(isSlideset){
 			var dummy = V.Editor.Slideset.getDummy(slideType, options);
 			if(dummy){

@@ -141,9 +141,7 @@ VISH.Viewer = (function(V,$,undefined){
 
 	var _initAferStatusLoaded = function(options,presentation){
 		V.EventsNotifier.init();	
-		V.Flashcard.init();
-		V.VirtualTour.init();
-		V.EVideo.init();
+		V.Slideset.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();
 		V.Utils.Loader.loadDeviceCSS();
@@ -211,24 +209,27 @@ VISH.Viewer = (function(V,$,undefined){
 	*&#x2F;
 	var onSlideEnterViewer = function(e){
 		var slide = e.target;
-		var slideType = $(e.target).attr(&quot;type&quot;);
-		var cSlideNumber = V.Slides.getCurrentSlideNumber();
+		var isSubslide = V.Slides.isSubslide(slide);
 
 		&#x2F;&#x2F;Prevent parent to trigger onSlideEnterViewer
 		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
 		e.stopPropagation();
 
-		console.log(&quot;onSlideEnter&quot;);
-		console.log(e.target);
+		var timeToLoadObjects = 500;
 
-		&#x2F;&#x2F;Hide&#x2F;show page-switcher buttons if neccessary
-		V.ViewerAdapter.decideIfPageSwitcher();
-		
+		if(!isSubslide){
+			V.ViewerAdapter.decideIfPageSwitcher();
+			var cSlideNumber = V.Slides.getCurrentSlideNumber();
+		} else {
+			timeToLoadObjects = 1000;
+		}
+
 		setTimeout(function(){
-			if(cSlideNumber!==V.Slides.getCurrentSlideNumber()){
-				console.log(&quot;Prevented&quot;);
-				&#x2F;&#x2F;Prevent objects to load when the slide isn&#x27;t focused
-				return;
+			if(!isSubslide){
+				if(cSlideNumber!==V.Slides.getCurrentSlideNumber()){
+					&#x2F;&#x2F;Prevent objects to load when the slide isn&#x27;t focused
+					return;
+				}
 			}
 			if($(slide).hasClass(V.Constant.OBJECT)){
 				V.ObjectPlayer.loadObject($(slide));
@@ -236,7 +237,7 @@ VISH.Viewer = (function(V,$,undefined){
 			if($(slide).hasClass(V.Constant.SNAPSHOT)){
 				V.SnapshotPlayer.loadSnapshot($(slide));
 			}
-		},500);
+		},timeToLoadObjects);
 
 		&#x2F;&#x2F; if(V.Status.getDevice().mobile){
 		&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
@@ -244,23 +245,20 @@ VISH.Viewer = (function(V,$,undefined){
 		
 		V.Video.HTML5.playVideos(slide);
 
-		if(slideType===V.Constant.FLASHCARD){
-			V.Flashcard.startAnimation(slide.id);
-		} else if(slideType===V.Constant.VTOUR){
-			V.VirtualTour.loadVirtualTour(slide.id);
-		} else if(slideType===V.Constant.EVIDEO){
-			V.EVideo.loadEVideo(slide.id);
+		if(!isSubslide){
+			if(V.Slideset.isSlideset(slide)){
+				V.Slideset.onEnterSlideset(slide);
+			}
+			V.Recommendations.checkForRecommendations();
 		}
-
-		V.Recommendations.checkForRecommendations();
-	};	
+	};
 
 	&#x2F;**
 	* Function called when leaving a slide in viewer
 	*&#x2F;
 	var onSlideLeaveViewer = function(e){
 		var slide = e.target;
-		var slideType = $(e.target).attr(&quot;type&quot;);
+		var isSubslide = V.Slides.isSubslide(slide);
 
 		e.stopPropagation();
 
@@ -273,14 +271,11 @@ VISH.Viewer = (function(V,$,undefined){
 
 		V.Video.HTML5.stopVideos(slide);
 
-		if(slideType===V.Constant.FLASHCARD){
-			V.Flashcard.stopAnimation(slide.id);
-		} else if(slideType===V.Constant.VTOUR){
-			V.VirtualTour.unloadVirtualTour(slide.id);
-		} else if(slideType===V.Constant.EVIDEO){
-			V.EVideo.unloadEVideo(slide.id);
+		if(!isSubslide){
+			if(V.Slideset.isSlideset(slide)){
+				V.Slideset.onLeaveSlideset(slide);
+			}
 		}
-
 	};
 	
 	&#x2F;**
