@@ -394,13 +394,13 @@ VISH.Slides = (function(V,$,undefined){
 			params.slideNumber = slide_id;
 			V.Messenger.notifyEventByMessage(V.Constant.Event.onFlashcardSlideClosed,params);
 			return;
-  		}
+		}
 
   		_onCloseSubslide(slide_id);
   		$("#" + slide_id).removeClass("show_in_smartcard");
   		$("#" + slide_id).addClass("hide_in_smartcard");
 		//$("#"+slide_id).hide();
-		triggerLeaveEventById(slide_id);	
+		triggerLeaveEventById(slide_id);
 
 		//Notify
 		var params = new Object();

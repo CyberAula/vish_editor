@@ -513,14 +513,6 @@ div.fc_poi {
 	cursor: pointer;
 }
 
-.flashcard_slide {
-	display: block;
-}
-
-.virtualTour_slide {
-	display: block;
-}
-
 
 /** Arrows **/
 
@@ -1895,7 +1887,7 @@ span.evideoTimeSlash, span.evideoDuration {
 	height: 90%;
 	width: auto;
 	overflow: hidden;
-	padding: 10% 10%;
+	padding: 10% 3%;
 	list-style-type: none;
 	background-color: #F7F7F7;
 	border-radius: 5px;
@@ -1903,11 +1895,14 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoChapters li {
+	font-size: 1.4rem;
+	padding: 10% 7%;
 	text-align: center;
-	padding: 10px;
-	padding-left: 0;
-	white-space: nowrap;
 	cursor: pointer;
 }
 
+.evideoChapters li:hover {
+	color: #075b77;
+	background-color: #E9E9E9;
+}
 

@@ -259,14 +259,26 @@ VISH.Video = (function(V,$,undefined){
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
 				video.addEventListener('play', function(){
-					statusCallback(video,{playing: true, paused: false});
+					statusCallback(video,V.Constant.EVideo.Status.Playing);
 				}, false);
 				video.addEventListener('pause', function(){
-					statusCallback(video,{playing: false, paused: true});
+					statusCallback(video,V.Constant.EVideo.Status.Paused);
 				}, false);
-				video.addEventListener('ended', function(){
-					statusCallback(video,{playing: false, paused: true});
-				}, false);
+
+				// video.addEventListener('ended', function(){
+				// 	statusCallback(video,V.Constant.EVideo.Status.Ended);
+				// }, false);
+
+				//ended listener fallback
+				$(video).on("timeupdate", function(){
+					var cTime = $(video)[0].currentTime;
+					var duration = $(video)[0].duration;
+					if(cTime==duration){
+						$(video).trigger("pause");
+						statusCallback(video,V.Constant.EVideo.Status.Ended);
+					}
+				});
+
 				break;
 			case V.Constant.Video.Youtube:
 				var videoId = $(video).attr("id");
@@ -323,11 +335,14 @@ VISH.Video = (function(V,$,undefined){
 	//Getters
 
 	var getStatus = function(video){
-		var vStatus = {playing: false, paused: false};
+		var vStatus;
 		switch(getTypeVideo(video)){
 			case V.Constant.Video.HTML5:
-				vStatus.playing = (video.paused == false);
-				vStatus.paused = !vStatus.playing;
+				if(video.paused == false){
+					vStatus = V.Constant.EVideo.Status.Playing;
+				} else {
+					vStatus = V.Constant.EVideo.Status.Paused;
+				}
 				break;
 			case V.Constant.Video.Youtube:
 				var ytplayer =  V.Video.Youtube.getYouTubePlayer($(video).attr("id"));
@@ -342,11 +357,31 @@ VISH.Video = (function(V,$,undefined){
 	};
 
 	var _getVEStatusFromYouTubeStatus = function(ytStatus){
-		var vStatus = {playing: false, paused: false};
-		vStatus.playing = (ytStatus===1);
-		vStatus.paused = !vStatus.playing;
-		return vStatus;
-	}
+		switch(ytStatus){
+			case -1:
+				//Unstarted
+				return V.Constant.EVideo.Status.Paused;
+			case 0:
+				//Ended
+				return V.Constant.EVideo.Status.Ended;
+			case 1:
+				//Playing
+				return V.Constant.EVideo.Status.Playing;
+			case 2:
+				//Paused
+				return V.Constant.EVideo.Status.Paused;
+			case 3:
+				//Buffering
+				return V.Constant.EVideo.Status.Paused;
+			case 4:
+				return V.Constant.EVideo.Status.Paused;
+			case 5:
+				//Video cued
+				return V.Constant.EVideo.Status.Paused;
+			default:
+				return V.Constant.EVideo.Status.Paused;
+		}
+	};
 
 	var getDuration = function(video){
 		switch(getTypeVideo(video)){

@@ -5,9 +5,6 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 	 * the object is in the wrapper attribute of the div
 	 */
 	var loadObject = function(slide){
-		console.log("loadObject");
-		console.log($(slide).attr("id"));
-
 		$.each(slide.children('.objectelement'),function(index,value){
 			if($(value).hasClass('youtubeelement')){
 				V.Video.Youtube.loadYoutubeObject(value);

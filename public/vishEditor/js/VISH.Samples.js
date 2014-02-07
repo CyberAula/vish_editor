@@ -1005,30 +1005,30 @@ VISH.Samples = (function(V,undefined){
 				"type":"enrichedvideo",
 				"video": {
 					"type":"HTML5",
-					// "type":"Youtube",
-					// http://vishub.org/videos/325.webm
 					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/1342.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/325.mp4\"}]",
-					// "sources":"[{ \"type\": \"video/webm\", \"src\": \"https://dl.dropboxusercontent.com/u/16070658/html5_video_index/videos/webvtt_talk.webm\"}]",
-					"poster":"images/videos/webvtt_talk.png",
-					"source": "http://www.youtube.com/embed/8t29CZcGAbs"
+					"poster":"images/videos/webvtt_talk.png"
 				},
 				"pois":[
 					{
 						"id":"article1_poi1",
-						"etime":"67.3",
-						"slide_id":"article1_article1"
+						"etime":"15.3",
+						"slide_id":"article1_article1",
+						"name": "Curiosity YouTube video at 15.3"
 					},{
 						"id":"article1_poi2",
-						"etime": "127",
-						"slide_id":"article1_article2"
+						"etime": "61.5",
+						"slide_id":"article1_article2",
+						"name": "Curiosity Wikipedia at 61.5"
 					},{
 						"id":"article1_poi3",
-						"etime": "300",
-						"slide_id":"article1_article3"
+						"etime": "120",
+						"slide_id":"article1_article3",
+						"name": "3 at 120"
 					},{
 						"id":"article1_poi4",
-						"etime": "1400",
-						"slide_id":"article1_article4"
+						"etime": "174",
+						"slide_id":"article1_article4",
+						"name": "4 at the end of the Video"
 					}
 				],
 				"slides":[
@@ -1111,21 +1111,24 @@ VISH.Samples = (function(V,undefined){
 				"pois":[
 					{
 						"id":"article2_poi1",
-						"etime":"67.3",
+						"etime":"15.3",
 						"slide_id":"article2_article1",
-						"name":"Puntero a 67.3"
+						"name": "Curiosity YouTube video at 15.3"
 					},{
 						"id":"article2_poi2",
-						"etime": "400",
-						"slide_id":"article2_article2"
+						"etime": "61.5",
+						"slide_id":"article2_article2",
+						"name": "Curiosity Wikipedia at 61.5"
 					},{
 						"id":"article2_poi3",
-						"etime": "1400",
-						"slide_id":"article2_article3"
+						"etime": "120",
+						"slide_id":"article2_article3",
+						"name": "3 at 120"
 					},{
 						"id":"article2_poi4",
-						"etime": "127",
-						"slide_id":"article2_article4"
+						"etime": "174",
+						"slide_id":"article2_article4",
+						"name": "4 at the end of the Video"
 					}
 				],
 				"slides":[

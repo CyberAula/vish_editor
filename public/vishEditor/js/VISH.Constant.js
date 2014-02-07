@@ -137,5 +137,12 @@ VISH.Constant.VTour.ROADMAP = "roadmap";
 VISH.Constant.VTour.SERVICES = {};
 VISH.Constant.VTour.SERVICES.GMaps = "Google Maps";
 
+//EVideo
+VISH.Constant.EVideo = {};
+VISH.Constant.EVideo.Status = {};
+VISH.Constant.EVideo.Status.Ended = 0;
+VISH.Constant.EVideo.Status.Playing = 1;
+VISH.Constant.EVideo.Status.Paused = 2;
+
 //Keys
 VISH.Constant.INTRO = 13;
