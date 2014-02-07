@@ -200,7 +200,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 		
 		var subslides = $(flashcard).find(".subslides > article.subslide");
-
 		$(subslides).each(function(index, subSlide) {
 			subSlide = _replaceIdsForSubSlide(subSlide,flashcardId);
 		});
@@ -214,7 +213,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(canvas).attr("id",canvasId);
 		
 		var subslides = $(vt).find(".subslides > article.subslide");
-
 		$(subslides).each(function(index, subSlide) {
 			subSlide = _replaceIdsForSubSlide(subSlide,vtId);
 		});
@@ -265,31 +263,22 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 	/*
 	 *	Ensure that forceId is/will be really unic in the DOM before call.
-	 *  ForceId is used to clone a flashcard JSON when you copy it with the clipboard.
 	 *	Replace Ids for a slide in JSON
 	 */
 	var replaceIdsForSlideJSON = function(slide,forceId){
 		var slideType = slide.type;
+		
 		var slideId;
-
 		if(forceId){
 			slideId = forceId;
 		} else {
 			slideId = V.Utils.getId("article");
 		}
 		
-		switch(slideType){
-			case V.Constant.STANDARD:
-				slide = _replaceIdsForStandardSlideJSON(slide,slideId);
-				break;
-			case V.Constant.FLASHCARD:
-				slide = _replaceIdsForFlashcardJSON(slide,slideId);
-				break;
-			case V.Constant.VTOUR:
-				slide = _replaceIdsForVTourJSON(slide,slideId);
-				break;
-			default:
-				return;
+		if(V.Slideset.isSlideset(slideType)){
+			slide = _replaceIdsForSlidesetJSON(slide,slideId);
+		} else {
+			slide = _replaceIdsForStandardSlideJSON(slide,slideId);
 		}
 
 		return slide;
@@ -314,48 +303,29 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return s;
 	};
 
-	var _replaceIdsForFlashcardJSON = function(flashcard,fcId){
-		var hash_subslide_new_ids = {};
-		var old_id;
+	var _replaceIdsForSlidesetJSON = function(slidesetJSON,slidesetId){
+		var newSubslideIds = {};
+		//newSubslideIds[oldSubslideId] = newSubslideId;
 
-		var fc = jQuery.extend(true, {}, flashcard);
-		fc.id = fcId;
+		var slideset = jQuery.extend(true, {}, slidesetJSON);
+		slideset.id = slidesetId;
 
-		for(var ind in fc.slides){	
-			old_id = fc.slides[ind].id;
-			fc.slides[ind] = _replaceIdsForStandardSlideJSON(fc.slides[ind],fc.id + "_article" + (parseInt(ind)+1));
-			if(fc.slides[ind]===null){
+		for(var index in slideset.slides){	
+			var oldSubslideId = slideset.slides[index].id;
+			slideset.slides[index] = _replaceIdsForStandardSlideJSON(slideset.slides[index],slideset.id + "_article" + (parseInt(index)+1));
+			if(slideset.slides[index]===null){
 				return null;
 			}
-			hash_subslide_new_ids[old_id] = fc.slides[ind].id;
+			newSubslideIds[oldSubslideId] = slideset.slides[index].id;
 		}
-		for(var num in fc.pois){
-			fc.pois[num].id = fc.id + "_poi" + (parseInt(num)+1);
-			fc.pois[num].slide_id = hash_subslide_new_ids[fc.pois[num].slide_id];
+		for(var pindex in slideset.pois){
+			slideset.pois[pindex].id = slideset.id + "_poi" + (parseInt(pindex)+1);
+			slideset.pois[pindex].slide_id = newSubslideIds[slideset.pois[pindex].slide_id];
 		}
 
-		return fc;
+		return slideset;
 	};
 
-	var _replaceIdsForVTourJSON = function(vTour,vTourId){
-		var hash_subslide_new_ids = {};
-		var old_id;
-
-		var vt = jQuery.extend(true, {}, vTour);
-		vt.id = vTourId;
-
-		for(var ind in vt.slides){	
-			old_id = vt.slides[ind].id;
-			vt.slides[ind] = _replaceIdsForStandardSlideJSON(vt.slides[ind],vt.id + "_article" + (parseInt(ind)+1));
-			hash_subslide_new_ids[old_id] = vt.slides[ind].id;
-		}
-		for(var num in vt.pois){
-			vt.pois[num].id = vt.id + "_poi" + (parseInt(num)+1);
-			vt.pois[num].slide_id = hash_subslide_new_ids[vt.pois[num].slide_id];
-		}
-
-		return vt;
-	};
 
 	/////////////////////////
 	/// Fancy Box Functions
