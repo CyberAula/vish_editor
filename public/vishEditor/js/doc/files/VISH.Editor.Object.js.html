@@ -390,6 +390,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						object = V.Utils.addParamToUrl(object,&quot;wmode&quot;,&quot;opaque&quot;);
 						return &quot;&lt;embed class=&#x27;objectPreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;embed&gt;&quot;;
 						break;
+					 case V.Constant.MEDIA.AUDIO:
+						return V.Editor.Object.Audio.renderAudioFromSources([object]);
+						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:
 					case V.Constant.MEDIA.PPT:
@@ -488,6 +491,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						break;
 					case V.Constant.MEDIA.FLASH:
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
+						break;
+					case V.Constant.MEDIA.AUDIO:
+						V.Editor.Object.Audio.drawAudioWithUrl(object);
 						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:

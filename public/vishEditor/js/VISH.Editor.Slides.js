@@ -400,15 +400,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 	// Subslides
 	//////////////
 
-	var isSubslide = function(slide){
-		var parent = $(slide).parent()[0];
-		if(parent){
-			return (parent.tagName==="ARTICLE");
-		} else {
-			return false;
-		}
-	};
-
 	var addSubslide = function(slideset,subslide){ 
 		var subslide = $(subslide).css("display","none");
 		appendSubslide(slideset,subslide);
@@ -492,7 +483,6 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		appendSubslide			: appendSubslide,
 		removeSubslide			: removeSubslide,
 		removeSlideKeyboard		: removeSlideKeyboard,
-		isSubslide				: isSubslide,
 		updateThumbnail			: updateThumbnail,
 		copyTextAreasOfSlide	: copyTextAreasOfSlide,
 		forwardOneSubslide		: forwardOneSubslide,

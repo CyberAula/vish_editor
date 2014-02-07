@@ -441,7 +441,7 @@ VISH.Editor = (function(V,$,undefined){
 		var button2 = {};
 		button2.text = V.I18n.getTrans(&quot;i.delete&quot;);
 		button2.callback = function(){
-			if(V.Editor.Slides.isSubslide(article_to_delete)){
+			if(V.Slides.isSubslide(article_to_delete)){
 				V.Editor.Slides.removeSubslide(article_to_delete);
 			} else {
 				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());
@@ -711,6 +711,20 @@ VISH.Editor = (function(V,$,undefined){
 					&#x2F;&#x2F;Sources
 					var sources= &#x27;&#x27;;		
 					$(video).find(&#x27;source&#x27;).each(function(index, source) {
+						if(index!==0){
+							sources = sources + &#x27;,&#x27;;
+						}
+						var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;;
+						sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;;
+					});
+					sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
+					element.sources = sources;
+				} else if(element.type==V.Constant.MEDIA.AUDIO){
+					var audio = $(div).find(&quot;audio&quot;);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(audio));
+					&#x2F;&#x2F;Sources
+					var sources= &#x27;&#x27;;				
+					$(audio).find(&#x27;source&#x27;).each(function(index, source) {
 						if(index!==0){
 							sources = sources + &#x27;,&#x27;;
 						}

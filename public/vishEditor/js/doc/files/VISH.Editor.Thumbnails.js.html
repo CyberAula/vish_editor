@@ -262,7 +262,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	}
   
 	var getThumbnailForSlide = function(slide){
-		if(V.Editor.Slides.isSubslide(slide)){
+		if(V.Slides.isSubslide(slide)){
 			return _getThumbnailForSubslide(slide);
 		}
 		var slidenumber = $(slide).attr(&quot;slidenumber&quot;);
@@ -463,7 +463,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			&#x2F;&#x2F;Transitory states...
 			return true;
 		}
-		if(V.Editor.Slides.isSubslide(slide)){
+		if(V.Slides.isSubslide(slide)){
 			var offsetLeft = offset.left;
 			return ((offsetLeft &gt; 466) &amp;&amp; (offsetLeft &lt; 1119));
 		} else {

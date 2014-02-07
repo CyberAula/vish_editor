@@ -351,7 +351,7 @@ VISH.Editor = (function(V,$,undefined){
 		var button2 = {};
 		button2.text = V.I18n.getTrans("i.delete");
 		button2.callback = function(){
-			if(V.Editor.Slides.isSubslide(article_to_delete)){
+			if(V.Slides.isSubslide(article_to_delete)){
 				V.Editor.Slides.removeSubslide(article_to_delete);
 			} else {
 				V.Editor.Slides.removeSlide(V.Slides.getCurrentSlide());

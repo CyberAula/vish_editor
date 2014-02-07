@@ -163,6 +163,8 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderImage(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				content += _renderHTML5Video(slide.elements[el],slide.template);
+			} else if(slide.elements[el].type === V.Constant.MEDIA.AUDIO){
+				content += renderAudio(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += &quot;object &quot;;
@@ -287,6 +289,35 @@ VISH.Renderer = (function(V,$,undefined){
 		return rendered;
 	};
 
+	var renderAudio = function(element, template){
+		var rendered = &quot;&lt;div id=&#x27;&quot;+element[&#x27;id&#x27;]+&quot;&#x27; class=&#x27;&quot;+template+&quot;_&quot;+element[&#x27;areaid&#x27;]+&quot;&#x27;&gt;&quot;;
+		var style = (element[&#x27;style&#x27;])?&quot;style=&#x27;&quot; + element[&#x27;style&#x27;] + &quot;&#x27;&quot;:&quot;&quot;;
+		var controls= (element[&#x27;controls&#x27;])?&quot;controls=&#x27;&quot; + element[&#x27;controls&#x27;] + &quot;&#x27; &quot;:&quot;controls=&#x27;controls&#x27; &quot;;
+		var sources = element[&#x27;sources&#x27;];
+
+
+		if(typeof sources == &quot;string&quot;){
+			sources = JSON.parse(sources)
+		}
+		
+		rendered = rendered + &quot;&lt;audio class=&#x27;&quot; + template + &quot;_audio&#x27; preload=&#x27;metadata&#x27; &quot;  + style + controls  + &quot;&gt;&quot;;
+		
+		$.each(sources, function(index, source) {
+			var type = (source.type)?&quot;type=&#x27;&quot; + source.type + &quot;&#x27; &quot;:&quot;&quot;;
+			rendered = rendered + &quot;&lt;source src=&#x27;&quot; + source.src + &quot;&#x27; &quot; + type + &quot;&gt;&quot;;
+		});
+		
+		if(sources.length&gt;0){
+			rendered = rendered + &quot;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&quot;;
+		}
+		
+		rendered = rendered + &quot;&lt;&#x2F;audio&gt;&quot;;
+		
+		console.log(&quot;RENDEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEED!!!!!&quot;);
+		console.log(rendered);
+
+		return rendered;
+	};
 	
 	&#x2F;**
 	 * Function to render an object inside an article (a slide)
@@ -295,7 +326,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				return V.Video.Youtube.renderVideoFromJSON(element,{videoClass: template+&quot;_&quot;+ element[&#x27;areaid&#x27;]});
+				return V.Video.Youtube.renderVideoFromJSON(element,{videoClass: &quot;objectelement youtubeelement &quot; + template+&quot;_&quot;+ element[&#x27;areaid&#x27;]});
 				break;
 			default:
 				var style = (element[&#x27;style&#x27;])? element[&#x27;style&#x27;] : &quot;&quot;;

@@ -93,7 +93,6 @@ VISH.Object = (function(V,$,undefined){
 	var init = function(){
 	};
 
-
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; OBJECT INFO
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -176,13 +175,14 @@ VISH.Object = (function(V,$,undefined){
 		var youtube_video_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)?(((youtu.be\&#x2F;)([aA-zZ0-9-]+))|((www.youtube.com\&#x2F;((watch\?v=)|(embed\&#x2F;)|(v\&#x2F;)))([aA-z0-9-Z&amp;=.])+))&#x2F;g
 		var html5VideoFormats = [&quot;mp4&quot;,&quot;webm&quot;,&quot;ogg&quot;];
 		var imageFormats = [&quot;jpg&quot;,&quot;jpeg&quot;,&quot;png&quot;,&quot;gif&quot;,&quot;bmp&quot;,&quot;svg&quot;];
+		var audioFormats = [&quot;mp3&quot;, &quot;wav&quot;];
 
 		if(typeof source != &quot;string&quot;){
 			return null
 		}
 
 		if(source.match(youtube_video_pattern)!=null){
-			return &quot;youtube&quot;;
+			return V.Constant.MEDIA.YOUTUBE_VIDEO;
 		}
 			
 		&#x2F;&#x2F;Purge options
@@ -192,6 +192,10 @@ VISH.Object = (function(V,$,undefined){
 
 		if(imageFormats.indexOf(extension)!=&quot;-1&quot;){
 			return V.Constant.MEDIA.IMAGE;
+		}
+
+		if(audioFormats.indexOf(extension)!=&quot;-1&quot;){
+			return V.Constant.MEDIA.AUDIO;
 		}
 
 		if(extension==&quot;swf&quot;){

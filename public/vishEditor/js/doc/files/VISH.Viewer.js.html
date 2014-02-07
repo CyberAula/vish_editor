@@ -218,11 +218,15 @@ VISH.Viewer = (function(V,$,undefined){
 		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
 		e.stopPropagation();
 
+		console.log(&quot;onSlideEnter&quot;);
+		console.log(e.target);
+
 		&#x2F;&#x2F;Hide&#x2F;show page-switcher buttons if neccessary
 		V.ViewerAdapter.decideIfPageSwitcher();
 		
 		setTimeout(function(){
 			if(cSlideNumber!==V.Slides.getCurrentSlideNumber()){
+				console.log(&quot;Prevented&quot;);
 				&#x2F;&#x2F;Prevent objects to load when the slide isn&#x27;t focused
 				return;
 			}

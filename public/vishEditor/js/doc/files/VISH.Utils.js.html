@@ -115,6 +115,72 @@ VISH.Utils = (function(V,undefined){
 			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
 		};
 
+		Array.prototype.select = function(selectFunction){
+			for(var n = 0; n &lt; this.length; n++) {
+				if(selectFunction(this[n])){
+					return this[n];
+				}
+			}
+			return null;
+		};
+
+		&#x2F;&#x2F; if(!Array.prototype.filter){
+			Array.prototype.filter = function(fun &#x2F;*, thisp *&#x2F;){
+				&quot;use strict&quot;;
+
+				if (this == null)
+					throw new TypeError();
+
+				var t = Object(this);
+				var len = t.length &gt;&gt;&gt; 0;
+				if (typeof fun != &quot;function&quot;)
+					throw new TypeError();
+
+				var res = [];
+				var thisp = arguments[1];
+				for (var i = 0; i &lt; len; i++)
+				{
+					if (i in t)
+					{
+						var val = t[i]; &#x2F;&#x2F; in case fun mutates this
+						if (fun.call(thisp, val, i, t))
+							res.push(val);
+					}
+				}
+				return res;
+			};
+		&#x2F;&#x2F; };
+
+		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;map
+		&#x2F;&#x2F; if (!Array.prototype.map){
+			Array.prototype.map = function(fun &#x2F;*, thisArg *&#x2F;){
+				&quot;use strict&quot;;
+
+				if (this === void 0 || this === null)
+					throw new TypeError();
+
+				var t = Object(this);
+				var len = t.length &gt;&gt;&gt; 0;
+				if (typeof fun !== &quot;function&quot;)
+					throw new TypeError();
+
+				var res = new Array(len);
+				var thisArg = arguments.length &gt;= 2 ? arguments[1] : void 0;
+				for (var i = 0; i &lt; len; i++)
+				{
+					&#x2F;&#x2F; NOTE: Absolute correctness would demand Object.defineProperty
+					&#x2F;&#x2F;       be used.  But this method is fairly new, and failure is
+					&#x2F;&#x2F;       possible only if Object.prototype or Array.prototype
+					&#x2F;&#x2F;       has a property |i| (very unlikely), so use a less-correct
+					&#x2F;&#x2F;       but more portable alternative.
+					if (i in t)
+						res[i] = fun.call(thisArg, t[i], i, t);
+				}
+
+				return res;
+			};
+		&#x2F;&#x2F; }
+
 		&#x2F;&#x2F;Disable watermark for IE
 		jQuery.fn.vewatermark = function(text){
 			if(V.Status.getDevice().browser.name != V.Constant.IE){
@@ -125,22 +191,28 @@ VISH.Utils = (function(V,undefined){
 		};
 	};
 
-	var dimentionsToDraw = function (w_zone, h_zone, w_content, h_content) {
-		var dimentions_for_drawing = {width:  w_content, height: h_content};
+	var dimentionsToDraw = function(w_zone, h_zone, w_content, h_content){
+		var dimentions = {width:  w_content, height: h_content};
 		var aspect_ratio_zone = w_zone&#x2F;h_zone;
 		var aspect_ratio_content = w_content&#x2F;h_content;
 		
 		if (aspect_ratio_zone&gt;aspect_ratio_content) {
-			dimentions_for_drawing.width = aspect_ratio_content*h_zone;
-			dimentions_for_drawing.height = h_zone;
-			return dimentions_for_drawing;
+			dimentions.width = aspect_ratio_content*h_zone;
+			dimentions.height = h_zone;
+			return dimentions;
 		} else {
-			dimentions_for_drawing.width = w_zone;
-			dimentions_for_drawing.height = w_zone&#x2F;aspect_ratio_content;
-			return  dimentions_for_drawing;
+			dimentions.width = w_zone;
+			dimentions.height = w_zone&#x2F;aspect_ratio_content;
+			return  dimentions;
 		}
 	};
 
+	var fitChildInParent = function(child){
+		var parent = $(child).parent();
+		var dimensions = V.Utils.dimentionsToDraw($(parent).width(),$(parent).height(),$(child).width(),$(child).height());
+		$(child).width(dimensions.width);
+		$(child).height(dimensions.height);
+	};
 
 	var getOptions = function(){
 		if(V.Editing){
@@ -1117,10 +1189,30 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
+	&#x2F;* 
+	 * Multiple animation callback
+	 *&#x2F;
+	var nAnimationsFinishedList = {};
+	var checkAnimationsFinish = function(animationId,nAnimations,callback,callbackParams){
+		if(typeof nAnimationsFinishedList[animationId] == &quot;undefined&quot;){
+			nAnimationsFinishedList[animationId] = 0;
+		}
+		nAnimationsFinishedList[animationId] = nAnimationsFinishedList[animationId] + 1;
+
+		if(nAnimationsFinishedList[animationId]===nAnimations){
+			nAnimationsFinishedList[animationId] = 0;
+			if(typeof callback == &quot;function&quot;){
+				callback(callbackParams);
+			}
+		}
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
 		dimentionsToDraw		: dimentionsToDraw,
+		fitChildInParent		: fitChildInParent,
 		getId					: getId,
 		registerId				: registerId,
 		getOuterHTML 			: getOuterHTML,
@@ -1146,7 +1238,8 @@ VISH.Utils = (function(V,undefined){
 		cleanHash				: cleanHash,
 		removeHashFromUrlString	: removeHashFromUrlString,
 		getHashParams			: getHashParams,
-		getSlideNumberFromHash	: getSlideNumberFromHash
+		getSlideNumberFromHash	: getSlideNumberFromHash,
+		checkAnimationsFinish	: checkAnimationsFinish
 	};
 
 }) (VISH);

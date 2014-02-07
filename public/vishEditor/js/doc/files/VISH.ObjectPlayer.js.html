@@ -97,7 +97,7 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 	var loadObject = function(slide){
 		$.each(slide.children(&#x27;.objectelement&#x27;),function(index,value){
 			if($(value).hasClass(&#x27;youtubeelement&#x27;)){
-				V.Video.Youtube.loadYoutubeObject(slide,value);
+				V.Video.Youtube.loadYoutubeObject(value);
 				return;
 			}
 
@@ -113,21 +113,18 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 		});
 	};
 
-	&#x2F;**
-	 * Function to remove the flash objects from the slides
-	 *&#x2F;
 	var unloadObject= function(slide){
 		$.each($(slide).children(&#x27;.objectelement&#x27;),function(index,value){
 			$(value).html(&quot;&quot;);
 		});
-	}
+	};
 	
 	
 	var aftersetupSize = function(){
 		if($(&quot;.current&quot;).hasClass(&quot;object&quot;)){
 			loadObject($(&quot;.current&quot;));
 		}
-	}
+	};
 	
 	var adjustDimensionsAfterZoom = function(objectWithZoom){
 		var parent = $(objectWithZoom).parent();
@@ -138,13 +135,13 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 		var percentWidth = (parentWidth&#x2F;zoom)&#x2F;parentWidth*100;
 		$(objectWithZoom).height(percentHeight+&quot;%&quot;);
 		$(objectWithZoom).width(percentWidth+&quot;%&quot;);
-	}
+	};
 
 	return {
-		loadObject:loadObject,
-		unloadObject:unloadObject,
-		aftersetupSize : aftersetupSize,
-		adjustDimensionsAfterZoom : adjustDimensionsAfterZoom
+		loadObject 					: loadObject,
+		unloadObject 				: unloadObject,
+		aftersetupSize 				: aftersetupSize,
+		adjustDimensionsAfterZoom 	: adjustDimensionsAfterZoom
 	};
 
 })(VISH,jQuery);

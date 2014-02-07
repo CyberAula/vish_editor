@@ -29,7 +29,6 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	var _updateSlideClasses = function(){
-
 		if(V.Status.getIsUniqMode()){
 			$("section.slides > article").removeClass("current");
 			updateSlideClass(curSlideIndex+1, 'current');
@@ -60,7 +59,7 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var updateSlideClass = function(slideNumber, className) {
+	var updateSlideClass = function(slideNumber, className){
 		var el = getSlideWithNumber(slideNumber);
 
 		if (!el) {
@@ -342,6 +341,19 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 
+	/* 
+	 * Subslides management
+	 */
+
+	var isSubslide = function(slide){
+		var parent = $(slide).parent()[0];
+		if(parent){
+			return (parent.tagName==="ARTICLE");
+		} else {
+			return false;
+		}
+	};
+
 	/**
 	 * Function to open a subslide
 	 */
@@ -450,6 +462,7 @@ VISH.Slides = (function(V,$,undefined){
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
+			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
 			isSlidesetType			: isSlidesetType,

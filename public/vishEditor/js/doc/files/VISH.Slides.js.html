@@ -119,7 +119,6 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	var _updateSlideClasses = function(){
-
 		if(V.Status.getIsUniqMode()){
 			$(&quot;section.slides &gt; article&quot;).removeClass(&quot;current&quot;);
 			updateSlideClass(curSlideIndex+1, &#x27;current&#x27;);
@@ -150,7 +149,7 @@ VISH.Slides = (function(V,$,undefined){
 		}
 	};
 
-	var updateSlideClass = function(slideNumber, className) {
+	var updateSlideClass = function(slideNumber, className){
 		var el = getSlideWithNumber(slideNumber);
 
 		if (!el) {
@@ -392,7 +391,7 @@ VISH.Slides = (function(V,$,undefined){
 		triggeredByUser = !(triggeredByUser===false);
 
 		if((triggeredByUser)&amp;&amp;(V.Status.isPreventDefaultMode())&amp;&amp;(V.Messenger)){
-			var params = new Object();
+			var params = {};
 			params.slideNumber = no;
 			V.Messenger.notifyEventByMessage(V.Constant.Event.onGoToSlide,params);
 			return;
@@ -409,7 +408,7 @@ VISH.Slides = (function(V,$,undefined){
 			V.Viewer.updateSlideCounter();
 		}
 
-		var params = new Object();
+		var params = {};
 		params.slideNumber = no;
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onGoToSlide,params,triggeredByUser);
 	};
@@ -431,6 +430,19 @@ VISH.Slides = (function(V,$,undefined){
 		goToSlide(slideEls.length);
 	};
 
+
+	&#x2F;* 
+	 * Subslides management
+	 *&#x2F;
+
+	var isSubslide = function(slide){
+		var parent = $(slide).parent()[0];
+		if(parent){
+			return (parent.tagName===&quot;ARTICLE&quot;);
+		} else {
+			return false;
+		}
+	};
 
 	&#x2F;**
 	 * Function to open a subslide
@@ -540,6 +552,7 @@ VISH.Slides = (function(V,$,undefined){
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
+			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
 			isSlidesetType			: isSlidesetType,

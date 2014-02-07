@@ -451,6 +451,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;Maps callbacks
 		V.VirtualTour.aftersetupSize(increase,increaseW);
 
+		&#x2F;&#x2F;Evideo
+		V.EVideo.aftersetupSize(increase,increaseW);
+
 		&#x2F;&#x2F;Quiz callbacks
 		V.Quiz.aftersetupSize(increase,increaseW);
 
@@ -519,6 +522,20 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 	};
 
+	var getDimensionsForResizedButton = function(increase,originalWidth,aspectRatio){
+		var originalWidth = originalWidth || 23;
+		var aspectRatio = aspectRatio || 1;
+
+		var _buttonWidth = originalWidth;
+		if(increase &lt;= 1){
+			_buttonWidth = _buttonWidth*getPonderatedIncrease(increase,0.7);
+		} else {
+			_buttonWidth = _buttonWidth*getPonderatedIncrease(increase,0.2);
+		}
+
+		return {width: _buttonWidth, height: _buttonWidth&#x2F;aspectRatio};
+	}
+
 	var getLastIncrease = function(){
 		return [_lastIncrease,_lastIncreaseW];
 	};
@@ -534,6 +551,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		decideIfPageSwitcher	: decideIfPageSwitcher,
 		decideIfCloseButton		: decideIfCloseButton,
 		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
+		getDimensionsForResizedButton	: getDimensionsForResizedButton,
 		getPonderatedIncrease 	: getPonderatedIncrease,
 		getLastIncrease			: getLastIncrease
 	};

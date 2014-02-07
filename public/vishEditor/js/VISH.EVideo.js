@@ -436,6 +436,7 @@ VISH.EVideo = (function(V,$,undefined){
 		event.stopPropagation();
 		var eVideoIndexBox = $(".evideoIndexBox").has(event.target);
 		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
+		$(eVideoIndexBox).find(".evideoChapters li").hide();
 
 		var animationId = V.Utils.getId("animation");	
 		$(eVideoIndexBox).animate({width: "5%"}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMinimizeIndex,eVideoIndexBox)});
@@ -454,7 +455,6 @@ VISH.EVideo = (function(V,$,undefined){
 		event.stopPropagation();
 		var eVideoIndexBox = $(".evideoIndexBox").has(event.target);
 		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
-
 		var animationId = V.Utils.getId("animation");
 		$(eVideoIndexBox).animate({width: "28%"}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMaximizeIndex,eVideoIndexBox)});
 		$(indexBody).animate({width: "78%"}, 1000, function(){ V.Utils.checkAnimationsFinish(animationId,2,_onFinishMaximizeIndex,eVideoIndexBox)});
@@ -463,6 +463,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var _onFinishMaximizeIndex = function(eVideoIndexBox){
 		var eVideoBox =  $(eVideoIndexBox).parent().find(".evideoBox");
 		$(eVideoBox).css("width","70%");
+		$(eVideoIndexBox).find(".evideoChapters li").show();
 		_updateIndexButtonUI(eVideoIndexBox,true);
 		_redimensionateVideoAfterIndex(eVideoBox);
 	};
