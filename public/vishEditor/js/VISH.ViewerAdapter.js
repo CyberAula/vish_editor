@@ -49,9 +49,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		//Mobiles
 		if(V.Status.getDevice().mobile){
 			if(!V.Status.getIsInIframe()){
-				_showViewbar = false;
 				_closeButton = (options)&&(options["comeBackUrl"]);
 			}
+		}
+
+		//Mobile and Tablets
+		if(!V.Status.getDevice().desktop){
+			_showArrows = false;
 		}
 
 		//Uniq mode
@@ -72,12 +76,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		////////////////
 		//Init interface
 		///////////////
-
-		//Init viewbar
-		if((!V.Status.getDevice().desktop)&&(_showArrows)){
-			$("#back_arrow").html("<");
-			$("#forward_arrow").html(">");
-		}
 
 		if(_showViewbar){
 			V.Viewer.updateSlideCounter();
@@ -451,14 +449,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 	
 	return {
-		init 					: init,
-		updateInterface 		: updateInterface,
-		decideIfPageSwitcher	: decideIfPageSwitcher,
-		decideIfCloseButton		: decideIfCloseButton,
+		init 							: init,
+		updateInterface 				: updateInterface,
+		decideIfPageSwitcher			: decideIfPageSwitcher,
+		decideIfCloseButton				: decideIfCloseButton,
 		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
 		getDimensionsForResizedButton	: getDimensionsForResizedButton,
-		getPonderatedIncrease 	: getPonderatedIncrease,
-		getLastIncrease			: getLastIncrease
+		getPonderatedIncrease 			: getPonderatedIncrease,
+		getLastIncrease					: getLastIncrease
 	};
 
 }) (VISH, jQuery);

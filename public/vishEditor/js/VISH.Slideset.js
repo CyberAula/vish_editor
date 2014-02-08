@@ -93,6 +93,15 @@ VISH.Slideset = (function(V,$,undefined){
 		}
 	};
 
+	///////////////
+	// Events
+	///////////////
+
+	var onCloseSubslideClicked = function(event){
+		var close_slide_id = event.target.id.substring(5); //the id is close3
+		V.Slides.closeSubslide(close_slide_id,true);
+	};
+
 	return {
 		init 					: init,
 		getViewerModule			: getViewerModule,
@@ -101,6 +110,7 @@ VISH.Slideset = (function(V,$,undefined){
 		draw					: draw,
 		onEnterSlideset			: onEnterSlideset,
 		onLeaveSlideset			: onLeaveSlideset,
+		onCloseSubslideClicked	: onCloseSubslideClicked,
 		afterSetupSize			: afterSetupSize
 	};
 

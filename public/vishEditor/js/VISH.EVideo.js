@@ -34,9 +34,9 @@ VISH.EVideo = (function(V,$,undefined){
 			$(document).on("click", '.evideoPlayButtonWrapper', _onClickToggleVideo);
 		} else {
 			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
-				var target = params.target;
+				var target = params.event.target;
 				if($(target).hasClass("evideoPlayButtonWrapper") || $(target).hasClass("evideoPlayButton")){
-					_onClickToggleVideo();
+					_onClickToggleVideo(params.event);
 				};
 			});
 		}
@@ -389,6 +389,9 @@ VISH.EVideo = (function(V,$,undefined){
 
 		//OnVideoEnded
 		_updateCurrentTime(video,V.Video.getDuration(video));
+
+		//Prepare balls for a posible restarting
+		_beforeSeek(video,0);
 	};
 
 	var _onVolumeChange = function(video,volume){

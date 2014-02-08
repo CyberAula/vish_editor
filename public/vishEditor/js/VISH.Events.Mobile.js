@@ -1,8 +1,9 @@
 /*
  * Events for mobile devices (mobile phones and tablets)
- * Touch and orientation events
+ * Touch, orientation events and fixes
  */
 VISH.Events.Mobile = (function(V,$,undefined){
+
 	//Touch params
 	var PM_TOUCH_SENSITIVITY = 20;
 	var PM_TOUCH_DESVIATION = 60;
@@ -10,58 +11,93 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	var PM_TOUCH_SENSITIVITY_FOR_PAGER_FALLBACK = 15;
 	var LONG_TOUCH_DURATION = 1000;
 
-	//Own vars
-	var bindedEventListeners = false;
-
+	//Internal vars
+	var _bindedEventListeners = false;
 
 	var init = function(){
-		var device = V.Status.getDevice();
-		var isIphoneAndSafari = ((device.iPhone)&&(device.browser.name===V.Constant.SAFARI));
-		
-		////////////////////
-		//Configure handlers
-
-		//Iphone fixes
-		if(isIphoneAndSafari){
-			_simpleClick = _simpleClickForIphoneAndSafari;
-		}
-
-		//Tablet handlers
-		if(device.tablet){
-			_longClick = _longClickForTablets;
-		}
 	};
 
 	var bindViewerMobileEventListeners = function(){
-		if(bindedEventListeners){
+		if(_bindedEventListeners){
 			return;
 		} else {
-			bindedEventListeners = true;
+			_bindedEventListeners = true;
 		}
 
-		$(document).bind('touchstart', handleTouchStart);
-		document.body.addEventListener('touchmove', handleTouchMove, true);
-		document.body.addEventListener('touchend', handleTouchEnd, true);
-		document.body.addEventListener('touchcancel', handleTouchCancel, true);
+		//Touch events
+		$(document).bind('touchstart', _handleTouchStart);
+		document.body.addEventListener('touchmove', _handleTouchMove, true);
+		document.body.addEventListener('touchend', _handleTouchEnd, true);
+		document.body.addEventListener('touchcancel', _handleTouchCancel, true);
 
+		//Other mobile events
 		window.addEventListener("load",  function(){ _hideAddressBar(); });
 		$(window).on('orientationchange',function(){
 			_hideAddressBar();
 			$(window).trigger('resize'); //Will call V.ViewerAdapter.updateInterface();
 		});
+
+
+		//Additional events for mobile devices: Close subslide, ...
+		var device = V.Status.getDevice();
+		var isIphoneAndSafari = ((device.iPhone)&&(device.browser.name===V.Constant.SAFARI));
+
+		var clickDelegationBug = (isIphoneAndSafari);
+
+		if(!clickDelegationBug){
+			$(document).on('click','.close_subslide', V.Slideset.onCloseSubslideClicked);
+		} else {
+			// Fix for devices that don't support click delegation appropriately
+			// Fix Click Delegation bug on Iphone devices with Safari
+			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
+				var event = params.event;
+				var target = event.target;
+				if($(target).hasClass("close_subslide")){
+					event.preventDefault();
+					V.Slideset.onCloseSubslideClicked(event);
+				}
+			});
+		}
+
+		if(device.tablet){
+			//Enhancement for tablets
+			V.EventsNotifier.registerCallback(V.Constant.Event.onLongClick, function(params){
+				var event = params.event;
+				var target = event.target;
+				if(_checkPaginatorClick(event.target.id)){
+					event.preventDefault();
+					event.stopPropagation();
+					_applyPaginatorClick(event.target.id);
+				}
+			});
+
+			V.EventsNotifier.registerCallback(V.Constant.Event.onUnknownTouchMovement, function(params){
+				var event = params.event;
+				var id = event.target.id;
+				var touchParams = params.touchParams;
+
+				//Paginator fallback (treat minor movements as simple clicks)
+				if(_checkPaginatorClick(id)){
+					if(((touchParams.absTouchDX)+(touchParams.absTouchDY))/2<PM_TOUCH_SENSITIVITY_FOR_PAGER_FALLBACK){
+						event.preventDefault();
+						_applyPaginatorClick(id);
+					}
+				}
+			});
+		};
 	};
 
 	var unbindViewerMobileEventListeners = function(){
-		if(!bindedEventListeners){
+		if(!_bindedEventListeners){
 			return;
 		} else {
-			bindedEventListeners = false;
+			_bindedEventListeners = false;
 		}
 
-		$(document).unbind('touchstart', handleTouchStart);
-		document.body.removeEventListener('touchmove', handleTouchMove, true);
-	  	document.body.removeEventListener('touchend', handleTouchEnd, true);
-	  	document.body.removeEventListener('touchcancel', handleTouchCancel, true);
+		$(document).unbind('touchstart', _handleTouchStart);
+		document.body.removeEventListener('touchmove', _handleTouchMove, true);
+	  	document.body.removeEventListener('touchend', _handleTouchEnd, true);
+	  	document.body.removeEventListener('touchcancel', _handleTouchCancel, true);
 
 	  	window.removeEventListener("load",  function(){ _hideAddressBar(); } );
 		$(window).off('orientationchange',function(){
@@ -76,38 +112,48 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	////////////////
 
 	//Touch vars
-	var touchStartX = 0; //starting x coordinate
-	var touchStartY = 0; //starting y coordinate
-	var touchCX = 0; //current x
-	var touchCY = 0; //current y
-	var touchesLength = 0; //Fingers quantity
-	var touchStartTime = 0;
+	var _touchStartX = 0; //starting x coordinate
+	var _touchStartY = 0; //starting y coordinate
+	var _touchCX = 0; //current x
+	var _touchCY = 0; //current y
+	var _touchDX = 0; //x movement
+	var _touchDY = 0; //y movement
+	var _absTouchDX = 0; //x abs movement
+	var _absTouchDY = 0; //y abs movement
+	var _touchesLength = 0; //Fingers quantity
+	var _touchStartTime = 0;
+	var _touchDuration = 0;
 
-	var handleTouchStart = function(event){
+	var _handleTouchStart = function(event){
 		_resetTouchVars();
 		var touches = _getTouches(event);
-		touchesLength = touches.length;
-		if (touchesLength === 1) {
-			touchStartX = touches[0].pageX;
-			touchStartY = touches[0].pageY;
+		_touchesLength = touches.length;
+		if (_touchesLength === 1) {
+			_touchStartX = touches[0].pageX;
+			_touchStartY = touches[0].pageY;
 		}
-     	touchStartTime = new Date().getTime();
+		_touchStartTime = new Date().getTime();
 	};
 
 	var _resetTouchVars = function(){
-		touchStartX = -1;
-		touchStartY = -1;
-		touchCX = -1; //current x
-		touchCY = -1; //current y
-		touchesLength = -1;
-		touchStart = -1;
+		_touchStartX = -1;
+		_touchStartY = -1;
+		_touchCX = -1;
+		_touchCY = -1;
+		_touchDX = -1;
+	 	_touchDY = -1;
+	 	_absTouchDX = -1;
+		_absTouchDY = -1;
+		_touchesLength = -1;
+		_touchStartTime = -1;
+		_touchDuration = -1;
 	};
 
-	var handleTouchMove = function(event){
+	var _handleTouchMove = function(event){
 		var touches = _getTouches(event);
 		if(touches.length===1){
-			touchCX = touches[0].pageX;
-			touchCY = touches[0].pageY;
+			_touchCX = touches[0].pageX;
+			_touchCY = touches[0].pageY;
 			
 			//Only allow zoom movement
 			var zoom = document.documentElement.clientWidth / window.innerWidth;
@@ -118,24 +164,19 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		}
 	};
 
-	var handleTouchEnd = function(event){
-		if(touchesLength===1){
-			if(_checkClickTouches(event)){
-				return;
-			}
-
-			if(_checkAdvanceSlidesTouches(event)){
-				return;
-			}
-
-			if(_checkOtherTouches(event)){
-				return;
-			}
+	var _handleTouchEnd = function(event){
+		if(_checkClickTouches(event)){
+			return;
 		}
-		_resetTouchVars();
+
+		if(_checkAdvanceSlidesTouches(event)){
+			return;
+		}
+
+		_checkOtherTouches(event);
 	};
 
-	var handleTouchCancel = function(){
+	var _handleTouchCancel = function(){
 		_resetTouchVars();
 	};
 
@@ -158,11 +199,15 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	///////////////
 
 	var _checkClickTouches = function(event){
-		var click = (touchCX==-1) && (touchCY==-1);
+		if(_touchesLength!=1){
+			return false;
+		}
+
+		var click = (_touchCX==-1) && (_touchCY==-1);
 		if(click){
 			//Get click duration
-			var duration = new Date().getTime() - touchStartTime;
-			if(duration<LONG_TOUCH_DURATION){
+			_touchDuration = new Date().getTime() - _touchStartTime;
+			if(_touchDuration<LONG_TOUCH_DURATION){
 				_simpleClick(event);
 			} else {
 				_longClick(event);
@@ -172,46 +217,28 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _simpleClick = function(event){
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onSimpleClick,{target: event.target},true);
-		return true;
-	};
-
-	var _simpleClickForIphoneAndSafari = function(event){
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onSimpleClick,{target: event.target},true);
-
-		// Fix for Iphone devices due to Click Delegation bug
-		if($(event.target).hasClass("fc_poi")){
-			event.preventDefault();
-			var poiId = event.target.id;
-			V.Events.onFlashcardPoiClicked(poiId);
-		} else if($(event.target).hasClass("close_subslide")){
-			event.preventDefault();
-			V.Events.onCloseSubslideClicked(event);
-		}
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onSimpleClick,{event: event},true);
 		return true;
 	};
 
 	var _longClick = function(event){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onLongClick,{event: event},true);
 		return true;
 	};
 
-	var _longClickForTablets = function(event){
-		if(_checkPaginatorClick(event.target.id)){
-			event.preventDefault();
-			event.stopPropagation();
-			_applyPaginatorClick(event.target.id);
-		}
-	};
-
 	var _checkAdvanceSlidesTouches = function(event){
-		var touchDX = touchCX - touchStartX;
-		var touchDY = touchCY - touchStartY;
-		var absTouchDX = Math.abs(touchDX);
-		var absTouchDY = Math.abs(touchDY);
+		if(_touchesLength!=1){
+			return false;
+		}
 
-		var move_slide = ((absTouchDX > PM_TOUCH_SENSITIVITY)&&(absTouchDY < PM_TOUCH_DESVIATION));
+		_touchDX = _touchCX - _touchStartX;
+		_touchDY = _touchCY - _touchStartY;
+		_absTouchDX = Math.abs(_touchDX);
+		_absTouchDY = Math.abs(_touchDY);
+
+		var move_slide = ((_absTouchDX > PM_TOUCH_SENSITIVITY)&&(_absTouchDY < PM_TOUCH_DESVIATION));
 		//Prevent no handleTouchMove touchs
-		move_slide = move_slide && (touchCX!==-1);
+		move_slide = move_slide && (_touchCX!==-1);
 
 		if(move_slide){
 			event.preventDefault();
@@ -228,7 +255,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 				V.Slides.closeSubslide($(subslide).attr("id"));
 			}
 			
-			if (touchDX > 0) {
+			if(_touchDX > 0){
 				V.Slides.backwardOneSlide();
 			} else {
 				V.Slides.forwardOneSlide();
@@ -239,22 +266,13 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _checkOtherTouches = function(event){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onUnknownTouchMovement,{event: event, touchParams: _getTouchParams()},true);
 		return false;
 	};
 
-	var _checkOtherTouchesForTablets = function(event){
-		var id = event.target.id;
-
-		////////////////////////////////////
-		//Paginator fallback (treat minor movements as simple clicks)
-		if(_checkPaginatorClick(id)){
-			if(((absTouchDX)+(absTouchDY))/2<PM_TOUCH_SENSITIVITY_FOR_PAGER_FALLBACK){
-				event.preventDefault();
-				_applyPaginatorClick(id);
-				return true;
-			}
-		}
-	};
+	/////////////////
+	// Paginator Utils
+	/////////////////
 
 	var _checkPaginatorClick = function(targetId){
 		return ((targetId==="page-switcher-end")||(targetId==="page-switcher-start"));
@@ -284,6 +302,10 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		} else {
 			return null;
 		}
+	};
+
+	var _getTouchParams = function(){
+		return {touchStartX:_touchStartX, touchStartY:_touchStartY, touchCX:_touchCX, touchCY:_touchCY, touchDX:_touchDX, touchDY:_touchDY, absTouchDX:_absTouchDX, absTouchDY:_absTouchDY, touchesLength:_touchesLength};
 	};
 
 	return {

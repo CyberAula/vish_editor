@@ -1,5 +1,7 @@
 VISH.Flashcard = (function(V,$,undefined){
 
+	var initialized = false;
+
 	var flashcards;
 	// myFlashcard = flashcards['flashcardId'] has:
 	// myFlashcard.arrows = [arrow1,arrow2,...,arrow3];
@@ -14,9 +16,30 @@ VISH.Flashcard = (function(V,$,undefined){
 	var FPS = 20;
 
 	var init = function(){
-		if(!flashcards){
+		if(!initialized){
+			initialized = true;
 			flashcards = {};
 			pois = {};
+			_loadEvents();
+		}
+	};
+
+	var _loadEvents = function(){
+		var device = V.Status.getDevice();
+		var isIphoneAndSafari = ((device.iPhone)&&(device.browser.name===V.Constant.SAFARI));
+		if(isIphoneAndSafari){
+			//Fix for Iphone With Safari
+			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
+				var event = params.event;
+				var target = event.target;
+				if($(target).hasClass("fc_poi")){
+					event.preventDefault();
+					var poiId = target.id;
+					_onFlashcardPoiSelected(poiId);
+				}
+			});	
+		} else {
+			$(document).on("click", '.fc_poi', _onFlashcardPoiClicked);
 		}
 	};
 
@@ -55,11 +78,6 @@ VISH.Flashcard = (function(V,$,undefined){
 		
 		flashcards[fcId].arrows.push(arrow);
 		pois[arrow.id] = arrow;
-
-		//Add event to the arrow
-		$("#" + poiId).click(function(event){
-			V.Events.onFlashcardPoiClicked(poiId);
-		});
 	};
 
 	var onEnterSlideset = function(slideset){
@@ -115,11 +133,20 @@ VISH.Flashcard = (function(V,$,undefined){
 		}
 	};
 
-	var getPoiData = function(poiId){
-		if((typeof pois !== "undefined")&&(typeof pois[poiId] !== "undefined")){
-			return pois[poiId];
+	/*
+	 * Events
+	 */
+	var _onFlashcardPoiClicked = function(event){
+		_onFlashcardPoiSelected($(event.target).attr("id"));
+	};
+
+	var _onFlashcardPoiSelected = function(poiId){
+		if((typeof pois != "undefined")&&(typeof pois[poiId] != "undefined")){
+			var poiJSON = pois[poiId];
+			if(typeof poiJSON != "undefined"){
+				V.Slides.openSubslide(poiJSON.slide_id,true);
+			}
 		}
-		return null; 
 	};
 
 	var afterSetupSize = function(increase,increaseW){
@@ -159,7 +186,6 @@ VISH.Flashcard = (function(V,$,undefined){
 		draw			: draw,
 		onEnterSlideset	: onEnterSlideset,
 		onLeaveSlideset	: onLeaveSlideset,
-		getPoiData		: getPoiData,
 		afterSetupSize	: afterSetupSize
 	};
 

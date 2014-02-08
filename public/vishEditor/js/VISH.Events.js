@@ -1,24 +1,24 @@
 VISH.Events = (function(V,$,undefined){
 
 	//Dependencies
-	var eMobile;
+	var _eMobile;
 
-	//Own vars
-	var bindedEventListeners = false;
-	var mobile;
+	//Internal vars
+	var _bindedEventListeners = false;
+	var _mobile;
 
 
-	var init = function() {
-		mobile = (!V.Status.getDevice().desktop);
-		eMobile = V.Events.Mobile;
-		if(!V.Editing){
-			eMobile.init();
-			bindViewerEventListeners();
+	var init = function(){
+		_mobile = (!V.Status.getDevice().desktop);
+		if(_mobile){
+			_eMobile = V.Events.Mobile;
+			_eMobile.init();
 		}
+		bindViewerEventListeners();
 	};
 
 	var bindViewerEventListeners = function(){
-		if(bindedEventListeners){
+		if(_bindedEventListeners){
 			return;
 		}
 
@@ -29,7 +29,7 @@ VISH.Events = (function(V,$,undefined){
 		//Add tutorial events
 		_addTutorialEvents();
 
-		$(document).bind('keydown', handleBodyKeyDown); 
+		$(document).bind('keydown', handleBodyKeyDown);
 
 		$(document).on('click', '#page-switcher-start', function(){
 			V.Slides.backwardOneSlide();
@@ -64,7 +64,9 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 
-		$(document).on('click','.close_subslide', onCloseSubslideClicked);
+		if(!_mobile){
+			$(document).on('click','.close_subslide', V.Slideset.onCloseSubslideClicked);
+		}
 
 		//when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== "undefined"){
@@ -108,11 +110,11 @@ VISH.Events = (function(V,$,undefined){
 			}
 		};
 
-		if (mobile){
-			eMobile.bindViewerMobileEventListeners();
+		if(_mobile){
+			_eMobile.bindViewerMobileEventListeners();
 		}
 
-		bindedEventListeners = true;
+		_bindedEventListeners = true;
 	}
 
 	/**
@@ -133,7 +135,7 @@ VISH.Events = (function(V,$,undefined){
 	};
 
 	var unbindViewerEventListeners = function(){
-		if(!bindedEventListeners){
+		if(!_bindedEventListeners){
 			return;
 		}
 
@@ -147,7 +149,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off('click', '#closeButton');
 
-		$(document).off('click','.close_subslide', onCloseSubslideClicked);
+		$(document).off('click','.close_subslide', V.Slideset.onCloseSubslideClicked);
 
 		if(typeof applicationCache !== "undefined"){
 			applicationCache.removeEventListener('cached', function() {
@@ -158,11 +160,11 @@ VISH.Events = (function(V,$,undefined){
 			}, false);
 		}
 
-		if (mobile){
-			eMobile.unbindViewerMobileEventListeners();
+		if (_mobile){
+			_eMobile.unbindViewerMobileEventListeners();
 		}
 
-		bindedEventListeners = false;
+		_bindedEventListeners = false;
 	};
 
 
@@ -186,34 +188,11 @@ VISH.Events = (function(V,$,undefined){
 				break;
 		}
 	};
-
-
-	/////////////////
-	// Subslide events
-	//////////////////
-
-	/**
-	 * Function called when a poi is clicked
-	 * 'event' can be a delegate click event or a number
-	 */
-	var onFlashcardPoiClicked = function(poiId){
-		var poi = V.Flashcard.getPoiData(poiId);
-		if(poi!==null){
-			V.Slides.openSubslide(poi.slide_id,true);
-		}
-	};
-
-	var onCloseSubslideClicked = function(event){
-		var close_slide_id = event.target.id.substring(5); //the id is close3
-		V.Slides.closeSubslide(close_slide_id,true);
-	};
 	
 	return {
 			init 							: init,
 			bindViewerEventListeners		: bindViewerEventListeners,
-			unbindViewerEventListeners		: unbindViewerEventListeners,
-			onFlashcardPoiClicked 			: onFlashcardPoiClicked,
-			onCloseSubslideClicked 			: onCloseSubslideClicked
+			unbindViewerEventListeners		: unbindViewerEventListeners
 	};
 
 }) (VISH,jQuery);
