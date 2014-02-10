@@ -531,10 +531,7 @@ var i18n =
 
 				//Tooltips
 				"i.tooltip.QSInput"			: "Introduce un nombre para el cuestionario en vivo",
-				"i.tooltip.addslide"		: "Añade una nueva slide a tu presentación",
-				"i.tooltip.addslide"		: "Añade una nueva slide a tu flashcard o virtual tour",
-				"i.tooltip.importslide"		: "Importar slides a tu presentación desde un otras excursiones, Pdf o formato Json",
-
+				"i.tooltip.help"			: "Ayuda",
 				//Last
 				"i.last"					: "último"
 			},
