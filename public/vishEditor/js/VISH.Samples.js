@@ -1118,12 +1118,12 @@ VISH.Samples = (function(V,undefined){
 						"id":"article2_poi2",
 						"etime": "61.5",
 						"slide_id":"article2_article2",
-						"name": "Curiosity Wikipedia at 61.5"
+						"name": "Alpha Particle X-Ray  at 61.5"
 					},{
 						"id":"article2_poi3",
-						"etime": "120",
+						"etime": "62",
 						"slide_id":"article2_article3",
-						"name": "3 at 120"
+						"name": "Curiosity Wikipedia at 62"
 					},{
 						"id":"article2_poi4",
 						"etime": "174",

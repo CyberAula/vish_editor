@@ -21,7 +21,8 @@ VISH.EVideo = (function(V,$,undefined){
 	//Time range around the ball, in which we will show its associated slide. Currently 300ms
 	var RANGE = 0.3;
 	var BOTTOM_RANGE = RANGE/2;
-	var TOP_RANGE = RANGE/2;
+	var TOP_RANGE = RANGE;
+	var RANGE_BETWEEN_BALLS = BOTTOM_RANGE + 2*TOP_RANGE;
 
 	var SEEK_WAIT = 700;
 
@@ -467,14 +468,25 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _onClickChapter = function(event){
 		var chapter = event.target;
-		if($(event.target).tagName != "LI"){
+		if(event.target.tagName != "LI"){
 			chapter = $(event.target).parent();
 		}
+
 		var chapterTime = parseFloat($(chapter).attr("etime"));
 		var eVideoIndexBox = $(".evideoIndexBox").has(chapter);
 		var videoBox = $(eVideoIndexBox).parent().find(".evideoBox");
 		var video = _getVideoFromVideoBox(videoBox);
-		_onChapterSelected(video,chapterTime);
+
+		var options;
+		var ballId = $(chapter).attr("ballid");
+		if(typeof ballId == "string"){
+			//The chapter points to a ball
+			options = {
+				"nextBallId" : ballId
+			};
+		}
+
+		_onChapterSelected(video,chapterTime,options);
 	};
 
 	var _onClickBall = function(event){
@@ -485,12 +497,12 @@ VISH.EVideo = (function(V,$,undefined){
 		_onChapterSelected(video,ballTime);
 	};
 
-	var _onChapterSelected = function(video,chapterTime){
+	var _onChapterSelected = function(video,chapterTime,options){
 		var timeToSeek = chapterTime;
 		var duration = V.Video.getDuration(video);
 
 		if(timeToSeek <= duration){
-			_beforeSeek(video,timeToSeek);
+			_beforeSeek(video,timeToSeek,options);
 			V.Video.seekTo(video,timeToSeek);
 			//Force _onTimeUpdate
 			_onTimeUpdate(video,timeToSeek);
@@ -501,9 +513,9 @@ VISH.EVideo = (function(V,$,undefined){
 		}
 	};
 
-	var _beforeSeek = function(videoDOM,timeToSeek){
+	var _beforeSeek = function(videoDOM,timeToSeek,options){
 		_resetBallParams(videoDOM);
-		_updateNextBall(videoDOM,timeToSeek);
+		_updateNextBall(videoDOM,timeToSeek,options);
 	};
 
 
@@ -644,16 +656,26 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoDOM = _getVideoFromVideoBox(videoBox);
 		var duration = V.Video.getDuration(videoDOM);
 
+		_lastLeft = undefined;
 		$(eVideoJSON.balls).each(function(value,ball){
-			 _drawBall(ball,progressBarWrapper,duration);
+			_drawBall(ball,progressBarWrapper,duration);
 		});
 
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		$(videoBox).find(".ballWrapper").height($(videoFooter).height());
 	};
 
+	var _lastLeft;
 	var _drawBall = function(ball,progressBarWrapper,duration){
 		var left = (ball.etime*100/duration);
+
+		if(typeof _lastLeft != "undefined"){
+			if(left - _lastLeft < RANGE_BETWEEN_BALLS){
+				return;
+			}
+		}
+		_lastLeft = left;
+
 		var ballWrapper = $("<div class='ballWrapper'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'></div></div>");
 		$(ballWrapper).css("left",left+"%");
 		$(progressBarWrapper).append(ballWrapper);
@@ -674,10 +696,18 @@ VISH.EVideo = (function(V,$,undefined){
 		}
 		
 		var nextBall = undefined;
+		var lookForNextBallId = ((options)&&(options.nextBallId));
 		$(eVideos[eVideoId].balls).each(function(index,ball){
-			if((ball.etime >= cTime)&&(eVideos[eVideoId].prevBalls.indexOf(ball)==-1)){
-				nextBall = ball;
-				return false;
+			if(lookForNextBallId){
+				if(ball.id === options.nextBallId){
+					nextBall = ball;
+					return false;
+				}
+			} else {
+				if((ball.etime >= cTime)&&(eVideos[eVideoId].prevBalls.indexOf(ball)==-1)){
+					nextBall = ball;
+					return false;
+				}
 			}
 		});
 
@@ -727,27 +757,33 @@ VISH.EVideo = (function(V,$,undefined){
 		$(videoBox).removeClass("temp_hidden");
 		var videoDOM = _getVideoFromVideoBox(videoBox);
 		var cTime = V.Video.getCurrentTime(videoDOM);
-
-		_updateNextBall(videoDOM,cTime);
+		var prevBall = jQuery.extend({}, eVideoJSON.displayedBall); //displayedBall points to the ball we are closing
+		_updateNextBall(videoDOM,prevBall.etime);
 		eVideoJSON.displayedBall = undefined;
 
 		var nextBall = eVideos[eVideoId].nextBall;
 		var showNextBall = false;
 		if(nextBall){
-			if((cTime + TOP_RANGE) < nextBall.etime){
+			if((nextBall.etime - prevBall.etime) < RANGE_BETWEEN_BALLS){
 				showNextBall = true;
 			};
 		}
 
-		if(showNextBall){
+		if(showNextBall===true){
 			_displayBall(nextBall,videoDOM);
 			return;
 		};
 
+
+		var videoStatus = V.Video.getStatus(videoDOM);
 		if(eVideoJSON.estatusBeforeTriggerBall === V.Constant.EVideo.Status.Playing){
-			if(V.Video.getStatus(videoDOM) == V.Constant.EVideo.Status.Paused){
+			if(videoStatus == V.Constant.EVideo.Status.Paused){
 				V.Video.play(videoDOM);
 			}
+		}
+		if(videoStatus == V.Constant.EVideo.Status.Ended){
+			//Prepare video for a possible restarting
+			_beforeSeek(videoDOM,0);
 		}
 	};
 
