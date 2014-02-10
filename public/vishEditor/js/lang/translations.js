@@ -531,7 +531,8 @@ var i18n =
 
 				//Tooltips
 				"i.tooltip.QSInput"			: "Introduce un nombre para el cuestionario en vivo",
-				"i.tooltip.help"			: "Ayuda",
+				"i.tooltip.Help"			: "Ayuda",
+
 				//Last
 				"i.last"					: "último"
 			},
