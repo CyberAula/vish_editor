@@ -120,11 +120,6 @@ VISH.EVideo = (function(V,$,undefined){
 		//Progress bar
 		var progressBarWrapper = $("<div class='evideoProgressBarWrapper'></div>");
 		var progressBar = $("<div class='evideoProgressBarSliderWrapper'><div class='evideoProgressBarSlider'></div></div>");
-		
-		// // TESTING. Draw a ball
-		// var ballWrapper = $("<div class='ballWrapper'><div class='ballLine'></div><div class='ballImg'></div></div>");
-		// $(progressBarWrapper).append(ballWrapper);
-
 		$(progressBarWrapper).append(progressBar);
 		$(controls).append(progressBarWrapper);
 
@@ -637,6 +632,10 @@ VISH.EVideo = (function(V,$,undefined){
 		//Relocate it horizontally
 		var indexSideWidth = $(indexSide).width() - ($(indexBody).width()+$(indexBody).cssNumber("padding-right"));
 		$(button).css("left", Math.max(0,(indexSideWidth - $(button).width())/2.5) + "px");
+
+		//Balls
+		var videoFooter = $(videoBox).find(".evideoFooter");
+		$(videoBox).find(".ballWrapper").height($(videoFooter).height());
 	};
 
 	var _renderBalls = function(eVideoDOM,eVideoJSON){
@@ -696,8 +695,7 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _triggerBall = function(ball,videoDOM){
-		var eVideoJSON = eVideos[ball.eVideoId];
-		if(typeof eVideoJSON.displayedBall != "undefined"){
+		if(typeof eVideos[ball.eVideoId].displayedBall != "undefined"){
 			//Prevent several balls to be displayed at the same time.
 			return;
 		}
@@ -706,19 +704,22 @@ VISH.EVideo = (function(V,$,undefined){
 		if(currentStatus == V.Constant.EVideo.Status.Playing){
 			V.Video.pause(videoDOM);
 		}
-		eVideoJSON.estatusBeforeTriggerBall = currentStatus;
-		eVideoJSON.displayedBall = ball;
-		eVideos[ball.eVideoId] = eVideoJSON;
+		eVideos[ball.eVideoId].estatusBeforeTriggerBall = currentStatus;
 
+		_displayBall(ball,videoDOM);
+	};
+
+	var _displayBall = function(ball,videoDOM){
+		eVideos[ball.eVideoId].displayedBall = ball;
 		setTimeout(function(){
 			var videoBox = _getVideoBoxFromVideo(videoDOM);
 			var subslideDOM = $("#"+ball.slide_id);
 			if($(subslideDOM).hasClass("show_in_smartcard")){
 				$(videoBox).addClass("temp_hidden");
-			}	
+			}
 		},1500);
 		V.Slides.openSubslide(ball.slide_id);
-	};
+	}
 
 	var _onCloseBall = function(eVideoId){
 		var eVideoJSON = eVideos[eVideoId];
@@ -730,9 +731,18 @@ VISH.EVideo = (function(V,$,undefined){
 		_updateNextBall(videoDOM,cTime);
 		eVideoJSON.displayedBall = undefined;
 
-		// if(Math.abs(cTime - eVideos[eVideoId].nextBall.etime) < RANGE){
-		// 	//TODO: Several balls very close... dont change state and show new ball instead.
-		// };
+		var nextBall = eVideos[eVideoId].nextBall;
+		var showNextBall = false;
+		if(nextBall){
+			if((cTime + TOP_RANGE) < nextBall.etime){
+				showNextBall = true;
+			};
+		}
+
+		if(showNextBall){
+			_displayBall(nextBall,videoDOM);
+			return;
+		};
 
 		if(eVideoJSON.estatusBeforeTriggerBall === V.Constant.EVideo.Status.Playing){
 			if(V.Video.getStatus(videoDOM) == V.Constant.EVideo.Status.Paused){
