@@ -162,10 +162,9 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	/**
 	 * Function to start all videos of a slide
 	 */
-	var playVideos = function(element){
-		var currentVideos = $(element).find("video");
-		$.each(currentVideos, function(index, video) {
-			
+	var playVideos = function(slide){
+		var currentVideos = $(slide).find("video");
+		$.each(currentVideos, function(index, video){
 			if ($(video).attr("wasplayingonslideleave")=="true"){
 			  video.play();
 			} else if ($(video).attr("wasplayingonslideleave")=="false"){
@@ -184,8 +183,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	/**
 	 * Function to stop all videos of a slide
 	 */
-	var stopVideos = function(element){
-		var currentVideos = $(element).find("video");
+	var stopVideos = function(slide){
+		var currentVideos = $(slide).find("video");
 		$.each(currentVideos, function(index, video) {
 			var playing = ! video.paused;
 			$(video).attr("wasplayingonslideleave",playing);

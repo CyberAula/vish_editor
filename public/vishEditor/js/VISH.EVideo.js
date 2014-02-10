@@ -401,12 +401,37 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Load methods */
 
-	var onEnterSlideset = function(slideset){
-		var eVideoId = $(slideset).attr("id");
+	var onEnterSlideset = function(eVideoDOM){
+		var eVideoId = $(eVideoDOM).attr("id");
+		var videoDOM = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+		var eVideoJSON = eVideos[eVideoId];
+
+		switch(eVideoJSON.estatusBeforeLeave){
+			case V.Constant.EVideo.Status.Playing:
+				V.Video.play(videoDOM);
+				break;
+			case V.Constant.EVideo.Status.Paused:
+			case V.Constant.EVideo.Status.Ended:
+			default:
+				break;
+		};
 	};
 
-	var onLeaveSlideset = function(slideset){
-		var eVideoId = $(slideset).attr("id");
+	var onLeaveSlideset = function(eVideoDOM){
+		var eVideoId = $(eVideoDOM).attr("id");
+		var videoDOM = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+		var eVideoJSON = eVideos[eVideoId];
+		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
+
+		switch(eVideoJSON.estatusBeforeLeave){
+			case V.Constant.EVideo.Status.Playing:
+				V.Video.pause(videoDOM);
+				break;
+			case V.Constant.EVideo.Status.Paused:
+			case V.Constant.EVideo.Status.Ended:
+			default:
+				break;
+		};
 	};
 
 
@@ -622,10 +647,11 @@ VISH.EVideo = (function(V,$,undefined){
 			return;
 		}
 
-		eVideoJSON.estatus = V.Video.getStatus(videoDOM);
-		if(eVideoJSON.estatus == V.Constant.EVideo.Status.Playing){
+		var currentStatus = V.Video.getStatus(videoDOM);
+		if(currentStatus == V.Constant.EVideo.Status.Playing){
 			V.Video.pause(videoDOM);
 		}
+		eVideoJSON.estatusBeforeTriggerBall = currentStatus;
 		eVideoJSON.displayedBall = ball;
 		eVideos[ball.eVideoId] = eVideoJSON;
 		V.Slides.openSubslide(ball.slide_id);
@@ -643,7 +669,7 @@ VISH.EVideo = (function(V,$,undefined){
 		// 	//TODO: Several balls very close... dont change state and show new ball instead.
 		// };
 
-		if(eVideoJSON.estatus == V.Constant.EVideo.Status.Playing){
+		if(eVideoJSON.estatusBeforeTriggerBall === V.Constant.EVideo.Status.Playing){
 			V.Video.play(videoDOM);
 		}
 	};

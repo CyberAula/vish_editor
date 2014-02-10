@@ -153,11 +153,11 @@ VISH.Viewer = (function(V,$,undefined){
 		// 	V.ImagePlayer.reloadGifs($(slide));
 		// }
 		
-		V.Video.HTML5.playVideos(slide);
-
 		if(!isSubslide){
 			if(V.Slideset.isSlideset(slide)){
 				V.Slideset.onEnterSlideset(slide);
+			} else {
+				V.Video.HTML5.playVideos(slide);
 			}
 			V.Recommendations.checkForRecommendations();
 		}
@@ -179,11 +179,11 @@ VISH.Viewer = (function(V,$,undefined){
 			V.SnapshotPlayer.unloadSnapshot($(slide));
 		}
 
-		V.Video.HTML5.stopVideos(slide);
-
 		if(!isSubslide){
 			if(V.Slideset.isSlideset(slide)){
 				V.Slideset.onLeaveSlideset(slide);
+			} else {
+				V.Video.HTML5.stopVideos(slide);
 			}
 		}
 	};
