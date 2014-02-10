@@ -1006,7 +1006,8 @@ VISH.Samples = (function(V,undefined){
 				"video": {
 					"type":"HTML5",
 					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/1342.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/325.mp4\"}]",
-					"poster":"images/videos/webvtt_talk.png"
+					"poster":"images/videos/webvtt_talk.png",
+					"duration": 24.066
 				},
 				"pois":[
 					{
@@ -1106,7 +1107,8 @@ VISH.Samples = (function(V,undefined){
 				"type":"enrichedvideo",
 				"video": {
 					"type":"Youtube",
-					"source": "http://www.youtube.com/embed/8t29CZcGAbs"
+					"source": "http://www.youtube.com/embed/8t29CZcGAbs",
+					"duration": 174
 				},
 				"pois":[
 					{

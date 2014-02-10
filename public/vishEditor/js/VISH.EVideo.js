@@ -233,12 +233,19 @@ VISH.EVideo = (function(V,$,undefined){
 		//5. When video is ready, fit it, load events and continue to render index and balls
 		var videoBody = $(video).parent();
 		var videoBox = $(videoBody).parent();
+		var eVideoDOM = $(videoBox).parent();
+		var eVideoId = $(eVideoDOM).attr("id");
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		var videoType = $(video).attr("videotype");
 
 		var durationDOM = $(videoHeader).find(".evideoDuration");
 		var videoDuration = V.Video.getDuration(video);
+		if(videoDuration===0){
+			//Some mobile devices can't get the video duration on YouTube videos due to a YouTube Iframe API bug
+			//Get duration from JSON
+			videoDuration = parseFloat(eVideos[eVideoId].video.duration);
+		}
 		var formatedDuration = _fomatTime(videoDuration);
 		$(durationDOM).html(formatedDuration);
 
@@ -255,10 +262,6 @@ VISH.EVideo = (function(V,$,undefined){
 		//video events
 		V.Video.onTimeUpdate(video,_onTimeUpdate);
 		V.Video.onStatusChange(video,_onStatusChange);
-
-		//Init vars
-		var eVideoDOM = $(videoBox).parent();
-		var eVideoId = $(eVideoDOM).attr("id");
 
 		//Filter corrupted balls
 		eVideos[eVideoId].balls = (eVideos[eVideoId].balls.filter(function(ball){
@@ -655,6 +658,11 @@ VISH.EVideo = (function(V,$,undefined){
 		var progressBarWrapper = $(videoBox).find("div.evideoProgressBarWrapper");
 		var videoDOM = _getVideoFromVideoBox(videoBox);
 		var duration = V.Video.getDuration(videoDOM);
+		if(duration===0){
+			//Patch to fix YouTube Iframe API bug
+			var eVideoId = $(eVideoDOM).attr("id");
+			duration = parseFloat(eVideos[eVideoId].video.duration);
+		}
 
 		_lastLeft = undefined;
 		$(eVideoJSON.balls).each(function(value,ball){
