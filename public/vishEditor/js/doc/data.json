@@ -841,7 +841,7 @@
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 364,
+            "line": 334,
             "description": "Function to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
             "class": "VISH.Editor"
         },
@@ -951,15 +951,8 @@
         },
         {
             "file": "VISH.Events.js",
-            "line": 118,
+            "line": 120,
             "description": "function to add the events to the help buttons to launch joy ride bubbles",
-            "class": "",
-            "namespace": "VISH"
-        },
-        {
-            "file": "VISH.Events.js",
-            "line": 195,
-            "description": "Function called when a poi is clicked\n'event' can be a delegate click event or a number",
             "class": "",
             "namespace": "VISH"
         },
@@ -1189,7 +1182,7 @@
         },
         {
             "file": "VISH.Video.HTML5.js",
-            "line": 184,
+            "line": 183,
             "description": "Function to stop all videos of a slide",
             "class": "",
             "namespace": "VISH"
@@ -1238,21 +1231,21 @@
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 142,
+            "line": 140,
             "description": "Function to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 222,
+            "line": 220,
             "description": "Function to adapt the slides to the screen size",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 377,
+            "line": 375,
             "description": "Fancybox resizing. If a fancybox is opened, resize it",
             "class": "",
             "namespace": "VISH"
@@ -1577,7 +1570,7 @@
         },
         {
             "message": "Missing item type\nFunction to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
-            "line": " VISH.Editor.Utils.js:364"
+            "line": " VISH.Editor.Utils.js:334"
         },
         {
             "message": "Missing item type\nReturns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -1629,11 +1622,7 @@
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Events.js:118"
-        },
-        {
-            "message": "Missing item type\nFunction called when a poi is clicked\n'event' can be a delegate click event or a number",
-            "line": " VISH.Events.js:195"
+            "line": " VISH.Events.js:120"
         },
         {
             "message": "Missing item type\nFunction to do the language translation",
@@ -1765,7 +1754,7 @@
         },
         {
             "message": "Missing item type\nFunction to stop all videos of a slide",
-            "line": " VISH.Video.HTML5.js:184"
+            "line": " VISH.Video.HTML5.js:183"
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
@@ -1793,15 +1782,15 @@
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
-            "line": " VISH.ViewerAdapter.js:142"
+            "line": " VISH.ViewerAdapter.js:140"
         },
         {
             "message": "Missing item type\nFunction to adapt the slides to the screen size",
-            "line": " VISH.ViewerAdapter.js:222"
+            "line": " VISH.ViewerAdapter.js:220"
         },
         {
             "message": "Missing item type\nFancybox resizing. If a fancybox is opened, resize it",
-            "line": " VISH.ViewerAdapter.js:377"
+            "line": " VISH.ViewerAdapter.js:375"
         }
     ]
 }

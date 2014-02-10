@@ -390,6 +390,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var currentSlide = $(".current");
 		var paddingTop = $(currentSlide).cssNumber("padding-top");
 		var paddingLeft = $(currentSlide).cssNumber("padding-left");
+		var paddingRight = $(currentSlide).cssNumber("padding-right");
 		var offset = $(currentSlide).offset();
 		
 		var _closeButtonDimension = 23;
@@ -405,7 +406,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(fcClose).css("padding-left","4px");
 		
 		$(fwrap).css("margin-top", "0px");
-		$(fwrap).width($(currentSlide).width()+paddingLeft);
+		$(fwrap).css("margin-left", "0px");
+		$(fwrap).width($(currentSlide).width()+paddingLeft+paddingRight);
 		$(fwrap).height($(currentSlide).height()+2*paddingTop);
 		$(fwrap).css("top", offset.top + "px");  
 		$(fwrap).css("left", offset.left + "px");

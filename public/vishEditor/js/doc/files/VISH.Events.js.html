@@ -91,24 +91,24 @@
 VISH.Events = (function(V,$,undefined){
 
 	&#x2F;&#x2F;Dependencies
-	var eMobile;
+	var _eMobile;
 
-	&#x2F;&#x2F;Own vars
-	var bindedEventListeners = false;
-	var mobile;
+	&#x2F;&#x2F;Internal vars
+	var _bindedEventListeners = false;
+	var _mobile;
 
 
-	var init = function() {
-		mobile = (!V.Status.getDevice().desktop);
-		eMobile = V.Events.Mobile;
-		if(!V.Editing){
-			eMobile.init();
-			bindViewerEventListeners();
+	var init = function(){
+		_mobile = (!V.Status.getDevice().desktop);
+		if(_mobile){
+			_eMobile = V.Events.Mobile;
+			_eMobile.init();
 		}
+		bindViewerEventListeners();
 	};
 
 	var bindViewerEventListeners = function(){
-		if(bindedEventListeners){
+		if(_bindedEventListeners){
 			return;
 		}
 
@@ -119,7 +119,7 @@ VISH.Events = (function(V,$,undefined){
 		&#x2F;&#x2F;Add tutorial events
 		_addTutorialEvents();
 
-		$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown); 
+		$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
 
 		$(document).on(&#x27;click&#x27;, &#x27;#page-switcher-start&#x27;, function(){
 			V.Slides.backwardOneSlide();
@@ -154,7 +154,9 @@ VISH.Events = (function(V,$,undefined){
 			V.Slides.forwardOneSlide();
 		});
 
-		$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, onCloseSubslideClicked);
+		if(!_mobile){
+			$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, V.Slideset.onCloseSubslideClicked);
+		}
 
 		&#x2F;&#x2F;when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== &quot;undefined&quot;){
@@ -198,11 +200,11 @@ VISH.Events = (function(V,$,undefined){
 			}
 		};
 
-		if (mobile){
-			eMobile.bindViewerMobileEventListeners();
+		if(_mobile){
+			_eMobile.bindViewerMobileEventListeners();
 		}
 
-		bindedEventListeners = true;
+		_bindedEventListeners = true;
 	}
 
 	&#x2F;**
@@ -223,7 +225,7 @@ VISH.Events = (function(V,$,undefined){
 	};
 
 	var unbindViewerEventListeners = function(){
-		if(!bindedEventListeners){
+		if(!_bindedEventListeners){
 			return;
 		}
 
@@ -237,7 +239,7 @@ VISH.Events = (function(V,$,undefined){
 
 		$(document).off(&#x27;click&#x27;, &#x27;#closeButton&#x27;);
 
-		$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, onCloseSubslideClicked);
+		$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, V.Slideset.onCloseSubslideClicked);
 
 		if(typeof applicationCache !== &quot;undefined&quot;){
 			applicationCache.removeEventListener(&#x27;cached&#x27;, function() {
@@ -248,11 +250,11 @@ VISH.Events = (function(V,$,undefined){
 			}, false);
 		}
 
-		if (mobile){
-			eMobile.unbindViewerMobileEventListeners();
+		if (_mobile){
+			_eMobile.unbindViewerMobileEventListeners();
 		}
 
-		bindedEventListeners = false;
+		_bindedEventListeners = false;
 	};
 
 
@@ -276,34 +278,11 @@ VISH.Events = (function(V,$,undefined){
 				break;
 		}
 	};
-
-
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; Subslide events
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-
-	&#x2F;**
-	 * Function called when a poi is clicked
-	 * &#x27;event&#x27; can be a delegate click event or a number
-	 *&#x2F;
-	var onFlashcardPoiClicked = function(poiId){
-		var poi = V.Flashcard.getPoiData(poiId);
-		if(poi!==null){
-			V.Slides.openSubslide(poi.slide_id,true);
-		}
-	};
-
-	var onCloseSubslideClicked = function(event){
-		var close_slide_id = event.target.id.substring(5); &#x2F;&#x2F;the id is close3
-		V.Slides.closeSubslide(close_slide_id,true);
-	};
 	
 	return {
 			init 							: init,
 			bindViewerEventListeners		: bindViewerEventListeners,
-			unbindViewerEventListeners		: unbindViewerEventListeners,
-			onFlashcardPoiClicked 			: onFlashcardPoiClicked,
-			onCloseSubslideClicked 			: onCloseSubslideClicked
+			unbindViewerEventListeners		: unbindViewerEventListeners
 	};
 
 }) (VISH,jQuery);

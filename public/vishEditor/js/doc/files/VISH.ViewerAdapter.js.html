@@ -139,9 +139,13 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;Mobiles
 		if(V.Status.getDevice().mobile){
 			if(!V.Status.getIsInIframe()){
-				_showViewbar = false;
 				_closeButton = (options)&amp;&amp;(options[&quot;comeBackUrl&quot;]);
 			}
+		}
+
+		&#x2F;&#x2F;Mobile and Tablets
+		if(!V.Status.getDevice().desktop){
+			_showArrows = false;
 		}
 
 		&#x2F;&#x2F;Uniq mode
@@ -162,12 +166,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 		&#x2F;&#x2F;Init interface
 		&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-
-		&#x2F;&#x2F;Init viewbar
-		if((!V.Status.getDevice().desktop)&amp;&amp;(_showArrows)){
-			$(&quot;#back_arrow&quot;).html(&quot;&lt;&quot;);
-			$(&quot;#forward_arrow&quot;).html(&quot;&gt;&quot;);
-		}
 
 		if(_showViewbar){
 			V.Viewer.updateSlideCounter();
@@ -482,6 +480,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		var currentSlide = $(&quot;.current&quot;);
 		var paddingTop = $(currentSlide).cssNumber(&quot;padding-top&quot;);
 		var paddingLeft = $(currentSlide).cssNumber(&quot;padding-left&quot;);
+		var paddingRight = $(currentSlide).cssNumber(&quot;padding-right&quot;);
 		var offset = $(currentSlide).offset();
 		
 		var _closeButtonDimension = 23;
@@ -497,7 +496,8 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(fcClose).css(&quot;padding-left&quot;,&quot;4px&quot;);
 		
 		$(fwrap).css(&quot;margin-top&quot;, &quot;0px&quot;);
-		$(fwrap).width($(currentSlide).width()+paddingLeft);
+		$(fwrap).css(&quot;margin-left&quot;, &quot;0px&quot;);
+		$(fwrap).width($(currentSlide).width()+paddingLeft+paddingRight);
 		$(fwrap).height($(currentSlide).height()+2*paddingTop);
 		$(fwrap).css(&quot;top&quot;, offset.top + &quot;px&quot;);  
 		$(fwrap).css(&quot;left&quot;, offset.left + &quot;px&quot;);
@@ -541,14 +541,14 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	};
 	
 	return {
-		init 					: init,
-		updateInterface 		: updateInterface,
-		decideIfPageSwitcher	: decideIfPageSwitcher,
-		decideIfCloseButton		: decideIfCloseButton,
+		init 							: init,
+		updateInterface 				: updateInterface,
+		decideIfPageSwitcher			: decideIfPageSwitcher,
+		decideIfCloseButton				: decideIfCloseButton,
 		updateFancyboxAfterSetupSize	: updateFancyboxAfterSetupSize,
 		getDimensionsForResizedButton	: getDimensionsForResizedButton,
-		getPonderatedIncrease 	: getPonderatedIncrease,
-		getLastIncrease			: getLastIncrease
+		getPonderatedIncrease 			: getPonderatedIncrease,
+		getLastIncrease					: getLastIncrease
 	};
 
 }) (VISH, jQuery);

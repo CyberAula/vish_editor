@@ -76,8 +76,7 @@ $(sources).each(function(index, source) {
 
 	
 var generateAudioPreviewWrapper = function(url){
-		return "<audio class='objectPreview' controls><source src='"+ url +"'>Your browser does not support the audio element.</audio>";	
-		console.log("entro aquí");
+	return "<audio class='objectPreview' controls><source src='"+ url +"'>Your browser does not support the audio element.</audio>";
 }
 		
   var renderAudioFromSources = function(sources){
