@@ -662,12 +662,22 @@ VISH.EVideo = (function(V,$,undefined){
 		eVideoJSON.estatusBeforeTriggerBall = currentStatus;
 		eVideoJSON.displayedBall = ball;
 		eVideos[ball.eVideoId] = eVideoJSON;
+
+		setTimeout(function(){
+			var videoBox = _getVideoBoxFromVideo(videoDOM);
+			var subslideDOM = $("#"+ball.slide_id);
+			if($(subslideDOM).hasClass("show_in_smartcard")){
+				$(videoBox).addClass("temp_hidden");
+			}	
+		},1500);
 		V.Slides.openSubslide(ball.slide_id);
 	};
 
 	var _onCloseBall = function(eVideoId){
 		var eVideoJSON = eVideos[eVideoId];
-		var videoDOM = _getVideoFromVideoBox($("#"+eVideoId).find(".evideoBox"));
+		var videoBox = $("#"+eVideoId).find(".evideoBox");
+		$(videoBox).removeClass("temp_hidden");
+		var videoDOM = _getVideoFromVideoBox(videoBox);
 		var cTime = V.Video.getCurrentTime(videoDOM);
 
 		_updateNextBall(videoDOM,cTime);

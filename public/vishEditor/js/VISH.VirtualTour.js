@@ -1,5 +1,7 @@
 VISH.VirtualTour = (function(V,$,undefined){
 
+	var initialized = false;
+
 	var virtualTours;
 	// myVT = virtualTours['virtualTourId']
 
@@ -12,7 +14,27 @@ VISH.VirtualTour = (function(V,$,undefined){
 
 
 	var init = function(){
-		virtualTours = new Array();
+		if(!initialized){
+			initialized = true;
+			virtualTours = new Array();
+			_loadEvents();
+		}
+	};
+
+	var _loadEvents = function(){
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideClosed, function(params){
+			var subslideId = params.slideId;
+			var slideset =$($("#" + subslideId).parent());
+			if($(slideset).attr("type")==V.Constant.VTOUR){
+				var vTourId = $(slideset).attr("id");
+				_onCloseSubslide(vTourId);
+			}
+		});
+	};
+
+	var _onCloseSubslide = function(vTourId){
+		var canvas = $("#"+vTourId).find(".map_canvas");
+		$(canvas).removeClass("temp_hidden");
 	};
 
 	/*
@@ -77,7 +99,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 
 		//Add markers
 		$(vtJSON.pois).each(function(index,poi){
-			_addMarkerToCoordinates(map,poi.lat,poi.lng,poi.slide_id);
+			_addMarkerToCoordinates(canvasId,map,poi.lat,poi.lng,poi.slide_id);
 		});
 
 		//Map events
@@ -107,11 +129,11 @@ VISH.VirtualTour = (function(V,$,undefined){
 		$(canvas).hide();
 	};
 
-	var _addMarkerToCoordinates = function(map,lat,lng,slide_id){
-		return _addMarkerToPosition(map,new google.maps.LatLng(lat,lng),slide_id);
+	var _addMarkerToCoordinates = function(canvasId,map,lat,lng,slide_id){
+		return _addMarkerToPosition(canvasId,map,new google.maps.LatLng(lat,lng),slide_id);
 	};
 
-	var _addMarkerToPosition = function(map,myLatlng,slide_id){
+	var _addMarkerToPosition = function(canvasId,map,myLatlng,slide_id){
 		var pinImage = new google.maps.MarkerImage(V.ImagesPath + "vicons/marker.png",
 		new google.maps.Size(25, 40),
 		new google.maps.Point(0,0),
@@ -125,7 +147,14 @@ VISH.VirtualTour = (function(V,$,undefined){
 			title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
 		});
 
-		google.maps.event.addListener(marker, 'click', function(event) {
+		google.maps.event.addListener(marker, 'click', function(event){
+			setTimeout(function(){
+				var canvasDOM = $("#"+canvasId);
+				var subslideDOM = $("#"+slide_id);
+				if($(subslideDOM).hasClass("show_in_smartcard")){
+					$(canvasDOM).addClass("temp_hidden");
+				}
+			},1500);
 			V.Slides.openSubslide(slide_id,true);
 		});
 
