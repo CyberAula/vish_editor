@@ -1743,6 +1743,7 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoProgressBarWrapper {
+	position: relative;
 	display: inline;
 	width: 84%;
 	height: 100%;
@@ -1780,6 +1781,48 @@ span.evideoTimeSlash, span.evideoDuration {
 	border: none;
 	cursor: pointer;
 }
+
+/* Balls */
+
+div.ballWrapper{
+	height: 600%;
+	position: absolute;
+	top: 0%;
+	width: 3%;
+	margin-left: -1.5%;
+	text-align: center;
+}
+
+div.ballWrapper div.ballLine{
+	width: 25%; /* Line width */
+  	background-color: black; /* Line color */
+  	height: 75%;
+	margin-left: 35%;
+}
+
+div.ballWrapper div.ballImg{
+	width: 99%;
+	height: 35%;
+	position: absolute;
+	top: 60%;
+	background: transparent;
+	background-image: url("/vishEditor/images/vicons/balls_evideo.png");
+	background-repeat: no-repeat;
+	background-size: 100% 1100%;
+	background-position: center 0;
+	border: none;
+	z-index: 1;
+	cursor: pointer;
+}
+
+div.ballWrapper div.ballImg:hover {
+	background-position: center 10%;
+}
+
+div.ballWrapper div.ballImg:active {
+	background-position: center 20%;
+}
+
 
 
 /* Segments and balls */
