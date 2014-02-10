@@ -249,12 +249,6 @@ VISH.Events.Mobile = (function(V,$,undefined){
 				return;
 			}
 
-			//Close subslide if is open
-			var subslide = V.Slides.getCurrentSubslide();
-			if(subslide!==null){
-				V.Slides.closeSubslide($(subslide).attr("id"));
-			}
-			
 			if(_touchDX > 0){
 				V.Slides.backwardOneSlide();
 			} else {

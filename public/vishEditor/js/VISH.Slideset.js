@@ -71,6 +71,14 @@ VISH.Slideset = (function(V,$,undefined){
 	};
 
 	var onEnterSlideset = function(slideset){
+		//Look for opened subslides
+		var openSubslides = $(slideset).children("article.show_in_smartcard");
+		if(openSubslides.length===1){
+			var openSubslide = openSubslides[0];
+			var subSlideId = $(openSubslide).attr("id");
+			V.Slides.triggerEnterEventById(subSlideId);
+		}
+
 		var slidesetViewer = getViewerModule($(slideset).attr("type"));
 		if(typeof slidesetViewer.onEnterSlideset == "function"){
 			slidesetViewer.onEnterSlideset(slideset);
@@ -78,6 +86,14 @@ VISH.Slideset = (function(V,$,undefined){
 	};
 
 	var onLeaveSlideset = function(slideset){
+		//Look for opened subslides
+		var openSubslides = $(slideset).children("article.show_in_smartcard");
+		if(openSubslides.length===1){
+			var openSubslide = openSubslides[0];
+			var subSlideId = $(openSubslide).attr("id");
+			V.Slides.triggerLeaveEventById(subSlideId);
+		}
+		
 		var slidesetViewer = getViewerModule($(slideset).attr("type"));
 		if(typeof slidesetViewer.onLeaveSlideset == "function"){
 			slidesetViewer.onLeaveSlideset(slideset);

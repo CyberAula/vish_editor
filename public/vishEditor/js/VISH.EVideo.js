@@ -478,6 +478,8 @@ VISH.EVideo = (function(V,$,undefined){
 		if(timeToSeek <= duration){
 			_beforeSeek(video,timeToSeek);
 			V.Video.seekTo(video,timeToSeek);
+			//Force _onTimeUpdate
+			_onTimeUpdate(video,timeToSeek);
 		}
 	};
 
@@ -637,7 +639,13 @@ VISH.EVideo = (function(V,$,undefined){
 		eVideos[eVideoId].nextBall = nextBall;
 
 		// V.Debugging.log("_updateNextBall");
-		// V.Debugging.log(_fomatTime(nextBall.etime));
+		// if(nextBall){
+		// 	V.Debugging.log(_fomatTime(nextBall.etime));
+		// 	V.Debugging.log(nextBall.name);
+		// } else {
+		// 	V.Debugging.log("There are no next ball");
+		// }
+
 	};
 
 	var _triggerBall = function(ball,videoDOM){
