@@ -1913,7 +1913,7 @@ div.ballWrapper div.ballImg:active {
     display: inline-block;
     overflow-x: hidden;
     overflow-y: auto;
-	background-color: #C9C9C9;
+	background-color: #DDDDDD;
     list-style: none outside none;
     z-index: 2;
 }
@@ -1924,7 +1924,7 @@ div.ballWrapper div.ballImg:active {
 	right: 0;
 	height: 7%;
 	display: inline-block;
-  	background-color: #C9C9C9;
+  	background-color: #DDDDDD;
     border-radius: 6px 0px 0px 6px;
     z-index: 1;
 }
