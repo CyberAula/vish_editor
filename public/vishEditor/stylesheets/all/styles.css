@@ -1832,7 +1832,7 @@ div.ballWrapper{
 
 div.ballWrapper div.ballLine{
 	width: 25%; /* Line width */
-  	background-color: black; /* Line color */
+  	background-color: rgb(156, 156, 156); /* Line color */
   	height: 75%;
 	margin-left: 35%;
 }
