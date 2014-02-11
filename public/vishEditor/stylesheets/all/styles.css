@@ -1841,8 +1841,7 @@ div.ballWrapper div.ballImg{
 	width: 99%;
 	height: 35%;
 	position: absolute;
-	top: 65%;
-	right: 5%;
+	top: 60%;
 	background: transparent;
 	background-image: url("/vishEditor/images/vicons/balls_evideo.png");
 	background-repeat: no-repeat;
