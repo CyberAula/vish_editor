@@ -1581,6 +1581,7 @@ img.loading_presentation_carrousel {
 /* Evideo CSS */
 
 .evideoBox{
+	padding-left: 1.5%;
 	float: left;
 	width: 70%;
 	height: 100%;
@@ -1683,6 +1684,11 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoPlayButtonWrapper {
 	width: 8%;
+	opacity: 1;
+}
+
+.evideoPlayButtonWrapper:hover {
+	opacity: 0.8;
 }
 
 .evideoPlayButton {
@@ -1697,6 +1703,11 @@ span.evideoTimeSlash, span.evideoDuration {
 	padding-right: 3%;
 	overflow: visible;
 	position: relative;
+	opacity: 1;
+}
+
+.evideoVolButtonWrapper:hover {
+	opacity: 0.8;
 }
 
 .evideoVolButton {
@@ -1706,8 +1717,8 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSliderWrapper {
-	height: 800%;
-	width: 76%;
+	height: 630%;
+	width: 63%;
 	position: absolute;
 	bottom: 100%;
 	text-align: center;
@@ -1717,11 +1728,11 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoVolSlider {
 	position: absolute;
-	height: 78%;
+	height: 77%;
 	bottom: 5%;
-	width: 40%;
+	width: 36%;
 	left: 30%;
-	background: #535353;
+	background: #868686;
 	border: none;
 	border-radius: 5px 5px 5px 5px;
 }
@@ -1731,7 +1742,19 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSlider .ui-slider-handle {
-	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_2.png") no-repeat center center;
+	width: 200%;
+	height: 25%;
+	left: -50%;
+	margin-bottom: -110%;
+	background-size: contain;
+	position: absolute;
+	border: none;
+	cursor: pointer;
+}
+
+.evideoVolSlider .ui-slider-handle:active {
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_2_hover.png") no-repeat center center;
 	width: 200%;
 	height: 25%;
 	left: -50%;
@@ -1772,15 +1795,29 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoProgressBarSlider .ui-slider-handle {
 	position: absolute;
-	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_2.png") no-repeat center center;
 	width: 7%;
 	height: 160%;
 	margin-left: -3.5%;
-	margin-top: -1%;
+	margin-top: -0.6%;
 	background-size: contain;
 	border: none;
 	cursor: pointer;
 }
+
+.evideoProgressBarSlider .ui-slider-handle:active {
+	position: absolute;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_2_hover.png") no-repeat center center;
+	width: 7%;
+	height: 160%;
+	margin-left: -3.5%;
+	margin-top: -0.6%;
+	background-size: contain;
+	border: none;
+	cursor: pointer;
+}
+
+
 
 /* Balls */
 
@@ -1795,7 +1832,7 @@ div.ballWrapper{
 
 div.ballWrapper div.ballLine{
 	width: 25%; /* Line width */
-  	background-color: black; /* Line color */
+  	background-color: rgb(156, 156, 156); /* Line color */
   	height: 75%;
 	margin-left: 35%;
 }
@@ -1876,7 +1913,7 @@ div.ballWrapper div.ballImg:active {
     display: inline-block;
     overflow-x: hidden;
     overflow-y: auto;
-	background-color: #C9C9C9;
+	background-color: #DDDDDD;
     list-style: none outside none;
     z-index: 2;
 }
@@ -1885,9 +1922,9 @@ div.ballWrapper div.ballImg:active {
 	width: 98%;
 	position: absolute;
 	right: 0;
-	height: 15%;
+	height: 7%;
 	display: inline-block;
-  	background-color: #C9C9C9;
+  	background-color: #DDDDDD;
     border-radius: 6px 0px 0px 6px;
     z-index: 1;
 }
@@ -1897,7 +1934,7 @@ div.ballWrapper div.ballImg:active {
 	min-height: 12px;
 	position: relative;
 	display: inline-block;
-	top: 30px;
+	top: 19px;
 	left: 5px;
 	float: left;
 	text-align: right;
@@ -1938,7 +1975,7 @@ div.ballWrapper div.ballImg:active {
 }
 
 .evideoChapters li {
-	font-size: 1.4rem;
+	font-size: 1.2rem;
 	padding: 5% 7%;
 	text-align: left;
 	cursor: pointer;
