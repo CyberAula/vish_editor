@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SandBox Content</title>
+</head>
+<body>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script>
+		$(document).ready(function(){
+			// alert("I am ready");
+			var sandBoxed = false;
+			try {
+				var iframes = $(window.top.document).find("iframe");
+			} catch (e){
+				console.log(e);
+				sandBoxed = true;
+			}
+
+			var pmsg = (sandBoxed === true) ? "Sandboxed: " : "Nosanboxed: ";
+			
+			console.log(pmsg + "Iframes :" + iframes);
+			try {
+				console.log(pmsg + "Location: " + window.parent.location.href);
+			} catch (e){
+				console.log(pmsg + "Location: " + "Can't be accesed");
+			}
+			
+			try {
+				if(sandBoxed){
+					$(window.top.document).find("iframe#withsandbox").removeAttr("sandbox").attr("modify","true");
+					console.log(pmsg + "Achieved to modify its iframe");
+				} else {
+					$(window.top.document).find("iframe#withoutsandbox").removeAttr("sandbox").attr("modify","true");
+					console.log(pmsg + "Achieved to modify its iframe");
+				}
+			} catch (e){
+				console.log(pmsg + "Didn't achieve to modify its iframe");
+			}
+			
+		});
+	</script>
+
+	<p>This is the sandbox content.</p>
+
+</body>
+</html>
