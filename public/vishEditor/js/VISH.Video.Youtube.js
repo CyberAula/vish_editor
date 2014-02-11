@@ -18,7 +18,8 @@ YT.PlayerState.BUFFERING = 3;
 YT.PlayerState.CUED = 5;
 
 //Callback from Youtube Iframe API
-function onYouTubeIframeAPIReady() { }
+var _youTubeIframeApiReady = false;
+function onYouTubeIframeAPIReady(){ _youTubeIframeApiReady = true; }
 
 
 VISH.Video.Youtube = (function(V,$,undefined){
@@ -26,11 +27,19 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	var _enableCustomPlayer;
 
 	var init = function(enableCustomPlayer){
+		_loadYouTubeIframeAPILibrary();
 		_enableCustomPlayer = enableCustomPlayer;
 	};
 
+	var _loadYouTubeIframeAPILibrary = function(){
+		var tag = document.createElement('script');
+		tag.src = "https://www.youtube.com/iframe_api";
+		var firstScriptTag = document.getElementsByTagName('script')[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+	};
+
 	var _isYouTubeIframeAPIReady = function(){
-		if(window['YT']){
+		if((window['YT'])&&(_youTubeIframeApiReady===true)){
 			return true;
 		} else {
 			return false;
@@ -63,6 +72,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 		// If Youtube Iframe isn't ready, load nothing
 		if(!_isYouTubeIframeAPIReady()){
+			setTimeout(function(){
+				loadYoutubeObject(container,options);
+			},1000);
 			return;
 		}
 

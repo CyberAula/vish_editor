@@ -1,1 +1,0 @@
-if (!window['YT']) {var YT = {};}if (!YT.Player) {(function(){var a = document.createElement('script');a.src = 'https:' + '//s.ytimg.com/yts/jsbin/www-widgetapi-vflop0WbJ.js';a.async = true;var b = document.getElementsByTagName('script')[0];b.parentNode.insertBefore(a, b);})();}
