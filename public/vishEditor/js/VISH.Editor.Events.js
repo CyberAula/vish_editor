@@ -246,6 +246,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('vt_help', 'top');
 		});
 
+		//Help in Enriched Videos
+		$(document).on('click','.help_in_evideo', function(){
+			V.Tour.startTourWithId('evideo_help', 'top');
+		});
+
 		//Help in slide templates selection
 		$(document).on('click','#tab_slides_help', function(){
 			V.Tour.startTourWithId('help_template_selection_help', 'bottom');

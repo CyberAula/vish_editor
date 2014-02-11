@@ -2564,6 +2564,24 @@ div.poi_label_container {
 	padding: 4px 4px;
 }
 
+/* Enriched Video */
+
+div.change_evideo_button {
+	position: relative;
+	left: 50%;
+	top: 50%;
+	width: 150px;
+	height: 150px;
+	margin-left: -75px;
+	margin-top: -75px;
+	background: url(/vishEditor/images/icons/evideo_add_button.png);
+	cursor: pointer;
+}
+
+div.change_evideo_button:hover {
+	background: url(/vishEditor/images/icons/evideo_add_button_hover.png);
+}
+
 
 /* Toolbar Button styles */
 

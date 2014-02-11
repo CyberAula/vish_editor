@@ -126,7 +126,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			// do something only the first time the map is loaded
 			$(vtDOM).removeClass("temp_shown");
 		});
-	}
+	};
 
 
 	//////////////////
@@ -137,7 +137,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	/*
 	 * Label Constructor
 	 */
-	function Label(opt_options) {
+	function Label(opt_options){
 		// Initialization
 		this.setValues(opt_options);
 
@@ -264,7 +264,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 	var _addMarkerToCoordinates = function(lat,lng,slide_id,slideNumber,vtJSON){
 		return _addMarkerToPosition(new google.maps.LatLng(lat,lng),slide_id,slideNumber,vtJSON);
-	}
+	};
 
 	var _addMarkerToPosition = function(myLatlng,slide_id,slideNumber,vtJSON){
 		var vt;
@@ -340,7 +340,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		new google.maps.Point(0,0),
 		new google.maps.Point(10, 34));
 		return pinImage;
-	}
+	};
 
 	var _onClick = function(marker){
 		// Return the arrow to original position.
@@ -424,7 +424,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 	var _getCurrentTour = function(){
 		return vts[$(V.Slides.getCurrentSlide()).attr("id")];
-	}
+	};
 
 	////////////////
 	// Slideset Callbacks
@@ -453,14 +453,14 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 	var beforeCreateSlidesetThumbnails = function(vt){
 		_drawPois(vt);
-	}
+	};
 
 	var beforeRemoveSlideset = function(vt){
 		var vtId = $(vt).attr("id");
 		if(typeof vts[vtId] !== "undefined"){
 			delete vts[vtId];
 		}
-	}
+	};
 
 	var beforeRemoveSubslide = function(vt,subslide){
 		var subslideId = $(subslide).attr("id");
@@ -496,7 +496,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		// 	});
 		// }
 
-	}
+	};
 
 	/*
 	 * Redraw the pois of the virtual tour
@@ -600,7 +600,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 
 	var getThumbnailURL = function(vt){
 		return (V.ImagesPath + "templatesthumbs/tVTour.png");
-	}
+	};
 
 
 	////////////////////
@@ -641,7 +641,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		slide.slides = [];
 
 		return slide;
-	}
+	};
 
 	var _getMapType = function(map){
 		if((map)&&(map.mapTypeId)){

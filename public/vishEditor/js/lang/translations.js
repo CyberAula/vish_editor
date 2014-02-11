@@ -339,6 +339,7 @@ var i18n =
 				"i.Electronics"				: "Electrónica",
 				"i.embedwebsite"			: "embeber web",
 				"i.embedWebSnapshot"		: "embeber Web Snapshot",
+				"i.EnrichedVideo"			: "Vídeo Enriquecido",
 				"i.EnvironmentalEducation"	: "Educación Ambiental",
 				"i.errorFlickrConnection"	: "Error conectando con Flickr",
 				"i.errorLREConnection"		: "Error al conectarse con el repositorio del LRE",

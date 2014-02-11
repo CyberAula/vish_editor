@@ -22,7 +22,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var getDummy = function(slidesetId,options){
-		return "<article id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div class='vt_canvas'></div><div class='vt_search'><input class='vt_search_input' type='text' placeholder='" + V.I18n.getTrans("i.Searchplaces") + "'></input><button class='vt_search_button'><img class='vt_search_button_img' src='"+V.ImagesPath+"icons/gsearch.png'/></button></div></article>";
+		var videoBox = V.EVideo.renderVideoBoxDummy();
+		//Modify videoBox renderized from Viewer
+		var eVideoBody = $(videoBox).find(".evideoBody");
+		$(eVideoBody).css("margin-top","7.5%");
+		$(eVideoBody).html('<div class="change_evideo_button"></div>');
+		
+		var indexBox = V.EVideo.renderIndexBoxDummy();
+		//Modify indexBox renderized from Viewer
+		$(indexBox).find(".evideoIndexSide").html("");
+		return "<article id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/>" + V.Utils.getOuterHTML(videoBox) + V.Utils.getOuterHTML(indexBox) + "</article>";
 	};
 
 
@@ -51,6 +60,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(eVideoDOM).removeClass("temp_shown");
 	};
 
+	var _getCurrentEVideo = function(){
+		return eVideos[$(V.Slides.getCurrentSlide()).attr("id")];
+	};
 
 	////////////////
 	// Slideset Callbacks
@@ -129,10 +141,15 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var _drawPois = function(eVideoDOM){
-		var eVideo = _getCurrentTour();
+		var eVideo = _getCurrentEVideo();
 		if(!eVideo){
 			return;
 		}
+
+
+		return;
+
+
 		var markers = eVideo.markers;
 		
 		//Create arrows for existing subslides
@@ -225,7 +242,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 
 	var getThumbnailURL = function(eVideo){
-		return (V.ImagesPath + "templatesthumbs/tVTour.png");
+		return (V.ImagesPath + "templatesthumbs/tEVideo.png");
 	};
 
 

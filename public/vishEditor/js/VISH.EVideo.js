@@ -92,7 +92,6 @@ VISH.EVideo = (function(V,$,undefined){
 		var eVideoId = eVideoJSON.id;
 		var slidesetDOM = $("#"+eVideoId);
 
-
 		//0. Prepare JSON (order balls, etc)
 		eVideoJSON = _prepareJSON(eVideoJSON);
 
@@ -100,34 +99,11 @@ VISH.EVideo = (function(V,$,undefined){
 		eVideos[eVideoId] = eVideoJSON;
 
 		//2. VIDEO
-		var videoBox =  $("<div class='evideoBox'></div>");
+		var videoBox = renderVideoBoxDummy();
 		$(slidesetDOM).append(videoBox);
 
-		var videoHeader =  $("<div class='evideoHeader' style='display:none'><div class='evideoTime'><span class='evideoCurTime'>00:00</span><span class='evideoTimeSlash'>/</span><span class='evideoDuration'>00:00</span></div></div>");
-		$(videoBox).append(videoHeader);
-
-		var videoBody =  $("<div class = 'evideoBody'></div>");
-		$(videoBox).append(videoBody);
-
-		var footer = $("<div class='evideoFooter' style='display:none'></div>");
-		
-		var controls = $("<div class='evideoControls'>");
-		//Play button
-		$(controls).append("<div class='evideoControlButtonWrapper evideoPlayButtonWrapper'><img class='evideoControlButton evideoPlayButton' src='"+V.ImagesPath + "customPlayer/eVideoPlay.png'></img></div>");
-		//Volume button
-		var volButton = $("<div class='evideoControlButtonWrapper evideoVolButtonWrapper'><img class='evideoControlButton evideoVolButton' src='"+V.ImagesPath + "customPlayer/eVideoSound.png'></img></div>");
-		$(volButton).append("<div class='evideoVolSliderWrapper'><div class='evideoVolSlider'></div></div>");
-		$(controls).append(volButton);
-		//Progress bar
-		var progressBarWrapper = $("<div class='evideoProgressBarWrapper'></div>");
-		var progressBar = $("<div class='evideoProgressBarSliderWrapper'><div class='evideoProgressBarSlider'></div></div>");
-		$(progressBarWrapper).append(progressBar);
-		$(controls).append(progressBarWrapper);
-
-		$(footer).append(controls);
-		$(videoBox).append(footer);
-
 		//2.1 Position Slider
+		var controls = $(videoBox).find(".evideoControls");
 		var posSlider = $(controls).find(".evideoProgressBarSlider");
 		$(posSlider).slider({
 			orientation: "horizontal",
@@ -142,7 +118,7 @@ VISH.EVideo = (function(V,$,undefined){
 				_seeking = true;
 				_displayVol = false;
 			}, stop: function(event, ui){
-				var video = $(videoBody).children()[0];
+				var video = _getVideoFromVideoBox(videoBox);
 				_updateProgressBar(video,ui.value);
 				setTimeout(function(){
 					_seeking = false;
@@ -163,12 +139,13 @@ VISH.EVideo = (function(V,$,undefined){
 			max: 100,
 			value: 100,
 			slide: function( event, ui ) {
-				var video = $(".evideoBox").has(event.target).find(".evideoBody").children()[0];
+				var video = _getVideoFromVideoBox($(".evideoBox").has(event.target));
 				_onVolumeChange(video,ui.value);
 			}
 		});
 
 		var hoverTimeout;
+		var volButton = $(controls).find(".evideoVolButtonWrapper");
 		$(volButton).hover(function(event){
 			if(_displayVol){
 				hoverTimeout = setTimeout(function(){
@@ -183,15 +160,50 @@ VISH.EVideo = (function(V,$,undefined){
 		});
 
 		//3. INDEX
+		var indexBox = renderIndexBoxDummy();
+		$(slidesetDOM).append(indexBox);
+
+		//4. Render video and wait for video to load
+		_renderVideo(eVideoId);
+	};
+
+	var renderVideoBoxDummy = function(){
+		var videoBox =  $("<div class='evideoBox'></div>");
+		
+		var videoHeader =  $("<div class='evideoHeader' style='display:none'><div class='evideoTime'><span class='evideoCurTime'>00:00</span><span class='evideoTimeSlash'>/</span><span class='evideoDuration'>00:00</span></div></div>");
+		
+		var videoBody =  $("<div class = 'evideoBody'></div>");
+
+		var footer = $("<div class='evideoFooter' style='display:none'></div>");
+		var controls = $("<div class='evideoControls'>");
+		//Play button
+		var playButton = $("<div class='evideoControlButtonWrapper evideoPlayButtonWrapper'><img class='evideoControlButton evideoPlayButton' src='"+V.ImagesPath + "customPlayer/eVideoPlay.png'></img></div>");
+		//Volume Button
+		var volButton = $("<div class='evideoControlButtonWrapper evideoVolButtonWrapper'><img class='evideoControlButton evideoVolButton' src='"+V.ImagesPath + "customPlayer/eVideoSound.png'></img></div>");
+		$(volButton).append("<div class='evideoVolSliderWrapper'><div class='evideoVolSlider'></div></div>");
+		//Progress bar
+		var progressBarWrapper = $("<div class='evideoProgressBarWrapper'></div>");
+		var progressBar = $("<div class='evideoProgressBarSliderWrapper'><div class='evideoProgressBarSlider'></div></div>");
+		$(progressBarWrapper).append(progressBar);
+		$(controls).append(playButton);
+		$(controls).append(volButton);
+		$(controls).append(progressBarWrapper);
+		$(footer).append(controls);
+		
+		$(videoBox).append(videoHeader);
+		$(videoBox).append(videoBody);
+		$(videoBox).append(footer);
+
+		return videoBox;
+	};
+
+	var renderIndexBoxDummy = function(){
 		var indexBox = $("<div class='evideoIndexBox'></div>");
 		var indexSide = $("<div class='evideoIndexSide maximized'><div class='evideoToggleIndex maximized'></div></div>");
 		var indexBody = $("<div class='evideoIndexBody'><ul class='evideoChapters'></ul></div>");
 		$(indexBox).append(indexBody);
 		$(indexBox).append(indexSide);
-		$(slidesetDOM).append(indexBox);
-
-		//4. Render video and wait for video to load
-		_renderVideo(eVideoId);
+		return indexBox;
 	};
 
 	var _renderVideo = function(eVideoId){
@@ -837,6 +849,8 @@ VISH.EVideo = (function(V,$,undefined){
 		draw				: draw,
 		onEnterSlideset		: onEnterSlideset,
 		onLeaveSlideset		: onLeaveSlideset,
+		renderVideoBoxDummy	: renderVideoBoxDummy,
+		renderIndexBoxDummy	: renderIndexBoxDummy,
 		afterSetupSize		: afterSetupSize
 	};
 
