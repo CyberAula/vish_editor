@@ -1581,7 +1581,6 @@ img.loading_presentation_carrousel {
 /* Evideo CSS */
 
 .evideoBox{
-	padding-left: 1.5%;
 	float: left;
 	width: 70%;
 	height: 100%;
@@ -1612,6 +1611,7 @@ img.loading_presentation_carrousel {
 	text-align: right;
 	display: inline-block;
 	position: relative;
+	z-index: 1;
 }
 
 .evideoBody{
@@ -1620,12 +1620,14 @@ img.loading_presentation_carrousel {
 	overflow: hidden;
 	text-align: center;
 	display: inline-block;
+	z-index: 1;
 }
 
 .evideoFooter {
 	height: 11%;
 	width: 100%;
 	display: inline-block;
+	z-index: 2;
 }
 
 /* evideoHeader */

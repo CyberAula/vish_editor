@@ -425,7 +425,8 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var onEnterSlideset = function(eVideoDOM){
 		var eVideoId = $(eVideoDOM).attr("id");
-		var videoDOM = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+		var videoBox = $(eVideoDOM).find(".evideoBox");
+		var videoDOM = _getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
 
 		switch(eVideoJSON.estatusBeforeLeave){
@@ -434,6 +435,16 @@ VISH.EVideo = (function(V,$,undefined){
 				break;
 			case V.Constant.EVideo.Status.Paused:
 			case V.Constant.EVideo.Status.Ended:
+				//Fix hidden handler on HTML5 Videos (due to z-index bug in video tags)
+				var videoBody = $(videoBox).find(".evideoBody");
+				if($(videoBody).attr("videotype")==V.Constant.Video.HTML5){
+					var posSlider = $(videoBox).find(".evideoProgressBarSlider");
+					$(posSlider).css("opacity",0.9);
+					setTimeout(function(){
+						$(posSlider).css("opacity",1);
+					},500);
+				}
+				break;
 			default:
 				break;
 		};
