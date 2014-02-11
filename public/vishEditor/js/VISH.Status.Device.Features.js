@@ -31,6 +31,9 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 			features.reader = false;
 		}
 
+		//Iframe sandbox
+		features.sandbox = "sandbox" in document.createElement("iframe");
+
 		return features;
 	};
 	
