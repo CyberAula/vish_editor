@@ -91,8 +91,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.VirtualTour.init();
 		V.Editor.Slideset.init();
 		V.Editor.Presentation.init();
-		V.Editor.Flashcard.init();
-		V.Editor.VirtualTour.init();
 		V.Renderer.init();
 		V.Slides.init();
 		V.User.init(options);

@@ -34,7 +34,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				}
 			}
 		}
-	}
+	};
 
 	
 	/**

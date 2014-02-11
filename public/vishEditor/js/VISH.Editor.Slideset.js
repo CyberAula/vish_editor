@@ -11,6 +11,10 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 		//Initialize module
 
+		V.Editor.Flashcard.init();
+		V.Editor.VirtualTour.init();
+		V.Editor.EVideo.init();
+
 		initialized = true;
 	};
 
@@ -27,6 +31,9 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 			case V.Constant.VTOUR:
 				return V.Editor.VirtualTour;
 				break;
+			case V.Constant.EVIDEO:
+				return V.Editor.EVideo;
+				break;
 			default:
 				return null;
 		}
@@ -34,7 +41,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 
 	var getDummy = function(slideset,options){
 		var slidesetCreator = getCreatorModule(slideset);
-		if(typeof slidesetCreator.getDummy == "function"){
+		if((typeof slidesetCreator != "undefined")&&(typeof slidesetCreator.getDummy == "function")){
 			if((!options)||(typeof options.slidesetId != "string")){
 				var slidesetId = V.Utils.getId("article");
 			} else {

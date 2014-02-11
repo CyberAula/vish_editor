@@ -598,7 +598,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 	};
 
 
-	var getThumbnailURL = function(fc){
+	var getThumbnailURL = function(vt){
 		return (V.ImagesPath + "templatesthumbs/tVTour.png");
 	}
 

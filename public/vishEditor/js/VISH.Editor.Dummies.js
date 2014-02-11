@@ -20,7 +20,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		"<article id='article_id_to_change' type='standard' template='t14' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_slide help_in_sslide' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div id='div_id_to_change' 	areaid='circle1' size='small' class='t14_circle1 editable vezone selectable'></div><div id='div_id_to_change' areaid='right1' size='medium' class='t14_right1 editable vezone selectable'></div><div id='div_id_to_change' areaid='circle2' size='small' class='t14_circle2 editable vezone selectable'></div><div id='div_id_to_change' areaid='right2' size='medium' class='t14_right2 editable vezone selectable'></div><div id='div_id_to_change' areaid='circle3' size='small' class='t14_circle3 editable vezone selectable'></div><div id='div_id_to_change' areaid='right3' size='medium' class='t14_right3 editable vezone selectable'></div></article>",
 		"<article id='article_id_to_change' type='standard' template='t15' slidenumber='slidenumber_to_change'><div class='delete_slide'></div><img class='help_in_slide help_in_sslide' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/><div id='div_id_to_change' 	areaid='left' 	 size='medium' class='t15_left editable vezone selectable'></div><div id='div_id_to_change' areaid='center' size='medium' class='t15_center editable vezone selectable'></div><div id='div_id_to_change' areaid='right' size='medium' class='t15_right editable vezone selectable'></div><div id='div_id_to_change' areaid='center2' size='large' class='t15_center2 editable vezone selectable'></div></article>"
 		];
-	}
+	};
 
 
 	////////////
@@ -78,7 +78,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		} else if(slideType==V.Constant.STANDARD){
 			return _getScaffoldForStandardSlide(slide,options);
 		}
-	}
+	};
 
 	var _getScaffoldForStandardSlide = function(slide,options){
 		var zoneIds = [];
@@ -87,7 +87,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		}
 		var dummy = dummies[parseInt(options.template,10)-1];
 		return _removeEditable(_replaceIds(dummy, options.slideNumber, slide.id, zoneIds));
-	}
+	};
 
 	/**
 	 * Function to replace dummy ids
@@ -126,7 +126,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 
 	var _removeEditable = function(dummy){
 		return dummy.replace(/editable /g,"");
-	}
+	};
 
 	return {
 		init				: init,

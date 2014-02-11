@@ -192,7 +192,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		if(isSlideset){
 			thumbnailURL = V.Editor.Slideset.getCreatorModule(slideType).getThumbnailURL(slide);
 		} else if(slideType==V.Constant.STANDARD){
-
 			//If the slide only contains one element, and it's an image, use it as thumbnail.
 			var zone = $(slide).children("div.vezone");
 			if(($(zone).length === 1)&&(!V.Editor.isZoneEmpty(zone))&&($(zone).attr("type")=="image")){
