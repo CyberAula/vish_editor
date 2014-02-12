@@ -212,9 +212,9 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 	var _generateWrapper = function(videoId){
 		var videoURL = "http://www.youtube.com/embed/"+videoId;
-		var videoWContainer = (typeof V.Editor.getCurrentArea() != "undefined") ? V.Editor.getCurrentArea() : V.Editor.getCurrentContainer();
+		var videoWContainer = ((typeof V.Editor.getCurrentArea() != "undefined")&&(V.Editor.getCurrentArea() != null)) ? V.Editor.getCurrentArea() : V.Editor.getCurrentContainer();
 		var dimensionsToDraw = V.Utils.dimentionsToDraw($(videoWContainer).width(), $(videoWContainer).height(),325,243);
-		var wrapper = "<iframe src='"+videoURL+"?wmode=opaque' frameborder='0' style='width:"+dimensionsToDraw.width+"px; height:"+dimensionsToDraw+"px;'></iframe>";
+		var wrapper = "<iframe src='"+videoURL+"?wmode=opaque' frameborder='0' style='width:"+dimensionsToDraw.width+"px; height:"+dimensionsToDraw.height+"px;'></iframe>";
 		return wrapper;
 	};
  
