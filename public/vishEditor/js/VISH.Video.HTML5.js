@@ -9,8 +9,6 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	var init = function(){
 	};
 
-
-
 	/* 
 	 * HTML5 Video API
 	 */
@@ -62,55 +60,6 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	/* 
 	 * ViSH Viewer features
 	 */
-
-	var renderVideoFromJSON = function(videoJSON, options){
-		var videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
-		var style = (videoJSON['style'])?"style='" + videoJSON['style'] + "'":"";
-		var controls= (videoJSON['controls'])?"controls='" + videoJSON['controls'] + "' ":"controls='controls' ";
-		var autoplay= (videoJSON['autoplay'])?"autoplayonslideenter='" + videoJSON['autoplay'] + "' ":"";
-		var poster=(videoJSON['poster'])?"poster='" + videoJSON['poster'] + "' ":"";
-		var loop=(videoJSON['loop'])?"loop='loop' ":"";
-
-		//Params forced by options
-		var videoClass = "";
-		if(options){
-			if(options.videoClass){
-				videoClass = "class='"+options.videoClass+"'";
-			}
-			if(typeof options.controls != "undefined"){
-				if(options.controls === false){
-					controls = "";
-				} else {
-					controls = "controls='" + options.controls + "' ";
-				}
-			}
-			if(typeof options.poster != "undefined"){
-				if(options.poster === false){
-					poster = "";
-				} else {
-					poster="poster='" + options.poster + "' ";
-				}
-			}
-		};
-
-		var video = "<video id='" + videoId + "' " + videoClass + " preload='metadata' " + style + controls + autoplay + poster + loop + ">";
-		
-		var sources = getSourcesFromJSON(videoJSON);
-		$.each(sources, function(index, source){
-			if(typeof source.src == "string"){
-				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
-				video = video + "<source src='" + source.src + "' " + mimeType + ">";
-			}			
-		});
-		
-		if(sources.length>0){
-			video = video + "<p>Your browser does not support HTML5 video.</p>";
-		}
-		
-		video = video + "</video>";
-		
-		return video;
-	};
 
 	var setVideoEvents = function(){
 		var videos = $("video");
@@ -196,6 +145,87 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 
 
 	/*
+	 * Rendering
+	 */
+
+	 var renderVideoFromJSON = function(videoJSON, options){
+		var renderOptions = {};
+
+		renderOptions.videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+		renderOptions.style = videoJSON['style'];
+		renderOptions.controls = videoJSON['controls'];
+		renderOptions.autoplay = videoJSON['autoplay'];
+		renderOptions.poster = videoJSON['poster'];
+		renderOptions.loop = videoJSON['loop'];
+		
+		//Params forced by options
+		if(options){
+			if(options.videoClass){
+				renderOptions.extraClasses = options.videoClass;
+			}
+			if(options.controls === false){
+				renderOptions.controls = options.controls;
+			}
+			if(typeof options.poster != "undefined"){
+				renderOptions.poster = options.poster;
+			}
+		};
+
+		return renderVideoFromSources(getSourcesFromJSON(videoJSON),renderOptions);
+	};
+
+	var renderVideoFromSources = function(sources,options){
+		var videoId = "";
+		var videoClasses = "";
+		var controls = "controls='controls' ";
+		var autoplay = "";
+		var poster = "";
+		var loop = "";
+		var style = "";
+		
+		if(options){
+			if(options['videoId']){
+				videoId = "id='"+options['videoId']+"'";
+			}
+			if(options['extraClasses']){
+				videoClasses = videoClasses + options['extraClasses'];
+			}
+			if(options.controls === false){
+				controls = "";
+			}
+			if(typeof options.autoplay != "undefined"){
+				autoplay = "autoplayonslideenter='" + options.autoplay + "' ";
+			}
+			if(typeof options['poster'] == "string"){
+				poster = "poster='"+options['poster']+"' ";
+			}
+			if(options['loop'] === true){
+				loop = "loop='loop' ";
+			}
+			if(options['style']){
+				style = "style='" + options['style'] + "' ";
+			}
+		}
+
+		var video = "<video " + videoId + " class='" + videoClasses + "' preload='metadata' " + controls + autoplay + poster + loop + style + ">";
+		$.each(sources, function(index, source){
+			if(typeof source.src == "string"){
+				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
+				video = video + "<source src='" + source.src + "' " + mimeType + ">";
+			}	
+		});
+
+		if(sources.length>0){
+			video = video + "<p>Your browser does not support HTML5 video.</p>";
+		}
+
+		video = video + "</video>";
+
+		return video;
+	};
+
+
+	/*
 	 * Utils
 	 */
 
@@ -208,14 +238,9 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return [];
 	};
 
-	var getVideoMimeType = function(url){
-		var source = (V.Object.getObjectInfo(url)).source;
-		return "video/" + source.split('.').pop();
-	};
-
 	var getSourcesFromJSON = function(videoJSON){
 		try {
-			var sources = JSON.parse(videoJSON['sources']);
+			var sources = JSON.parse(videoJSON.sources);
 
 			//Compatibility with old VE versions (now the attr type is called mimeType)
 			$.each(sources, function(index, source) {
@@ -228,9 +253,15 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		}
 	};
 
+	var getVideoMimeType = function(url){
+		var source = (V.Object.getObjectInfo(url)).source;
+		return "video/" + source.split('.').pop();
+	};
+
 	return {
 		init 				: init,
 		renderVideoFromJSON	: renderVideoFromJSON,
+		renderVideoFromSources	: renderVideoFromSources,
 		setVideoEvents 		: setVideoEvents,
 		playVideos 			: playVideos,
 		stopVideos 			: stopVideos,
@@ -239,6 +270,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		seekVideo			: seekVideo,
 		showControls 		: showControls,
 		getSources 			: getSources,
+		getSourcesFromJSON	: getSourcesFromJSON,
 		getVideoMimeType	: getVideoMimeType
 	};
 

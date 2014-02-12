@@ -22,6 +22,9 @@ VISH.Editor = (function(V,$,undefined){
 	var currentZone;
 	var lastZone;
 
+	//Pointer to the current draw container (it can not be an area)
+	var currentContainer;
+
 	//Content mode to add slides
 	var contentAddModeForSlides = V.Constant.NONE;
 
@@ -426,7 +429,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.cleanZoneTools(getCurrentArea());
 		setCurrentArea(null);
 		_removeSelectableProperties();
-	}
+	};
 	
 	var _addSelectableProperties = function(zone){
 		$(zone).removeClass("zoneUnselected");
@@ -874,7 +877,7 @@ VISH.Editor = (function(V,$,undefined){
 	
 	var setCurrentArea = function(area){
 		if($(area).attr("id")!=$(currentZone).attr("id")){
-			lastZone = currentZone
+			lastZone = currentZone;
 			currentZone = area;
 		}
 	};
@@ -884,6 +887,14 @@ VISH.Editor = (function(V,$,undefined){
 			return lastZone;
 		}
 		return null;
+	};
+
+	var getCurrentContainer = function(){
+		return currentContainer;
+	};
+
+	var setCurrentContainer = function(container){
+		currentContainer = container;
 	};
 
 	var getDraftPresentation = function(){
@@ -967,6 +978,8 @@ VISH.Editor = (function(V,$,undefined){
 		getCurrentArea			: getCurrentArea,
 		getLastArea				: getLastArea,
 		cleanArea				: cleanArea,
+		getCurrentContainer		: getCurrentContainer,
+		setCurrentContainer		: setCurrentContainer,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,

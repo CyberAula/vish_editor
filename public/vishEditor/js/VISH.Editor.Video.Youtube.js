@@ -150,10 +150,9 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		}
 	};
 
-	var addSelectedVideo = function() {
+	var addSelectedVideo = function(){
 		if(selectedVideo != null){
-			V.Editor.Object.drawObject(_generateWrapper(selectedVideo.id));
-			$.fancybox.close();
+			V.Editor.Video.addContent(_generateWrapper(selectedVideo.id));
 		}
 	};
 
@@ -212,10 +211,10 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _generateWrapper = function(videoId){
-		var video_embedded = "http://www.youtube.com/embed/"+videoId;
-		current_area=  V.Editor.getCurrentArea();
-		var width_height = V.Utils.dimentionsToDraw(current_area.width(), current_area.height(), 325, 243 ); 
-		var wrapper = "<iframe src='"+video_embedded+"?wmode=opaque' frameborder='0' style='width:"+width_height.width+ "px; height:"+ width_height.height+ "px;'></iframe>";
+		var videoURL = "http://www.youtube.com/embed/"+videoId;
+		var videoWContainer = (typeof V.Editor.getCurrentArea() != "undefined") ? V.Editor.getCurrentArea() : V.Editor.getCurrentContainer();
+		var dimensionsToDraw = V.Utils.dimentionsToDraw($(videoWContainer).width(), $(videoWContainer).height(),325,243);
+		var wrapper = "<iframe src='"+videoURL+"?wmode=opaque' frameborder='0' style='width:"+dimensionsToDraw.width+"px; height:"+dimensionsToDraw+"px;'></iframe>";
 		return wrapper;
 	};
  
@@ -229,8 +228,8 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _generatePreviewWrapper = function(videoId){
-		var video_embedded = "http://www.youtube.com/embed/"+videoId;
-		var wrapper = '<iframe class="objectPreview" type="text/html" src="'+video_embedded+'?wmode=opaque" frameborder="0"></iframe>';
+		var videoURL = "http://www.youtube.com/embed/"+videoId;
+		var wrapper = '<iframe class="objectPreview" type="text/html" src="'+videoURL+'?wmode=opaque" frameborder="0"></iframe>';
 		return wrapper;
 	};
 

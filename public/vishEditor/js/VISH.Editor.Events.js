@@ -187,7 +187,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'scrolling': 'no',
 				'height': 600,
 				'padding' : 0,
-				"onStart"  : function(data) {		
+				"onStart"  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
 					V.Editor.Utils.loadTab('tab_pic_thumbnails');
 				},

@@ -2,6 +2,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var contentToAdd = null;
 	var contentAddMode = V.Constant.NONE;
+
 	var uploadDivId = "tab_pic_upload_content";
 	var urlDivId = "tab_pic_from_url_content";
 	var urlInputId = "picture_url";
@@ -14,10 +15,10 @@ VISH.Editor.Image = (function(V,$,undefined){
 		// $("#" + urlInputId).vewatermark(V.I18n.getTrans("i.pasteImageURL"));
 
 		//Load from URL
-		$("#" + urlDivId + " .previewButton").click(function(event) {
+		$("#" + urlDivId + " .previewButton").click(function(event){
 			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
-				V.Editor.Object.drawPreview(urlDivId, contentToAdd)
+				V.Editor.Object.drawPreview(urlDivId, contentToAdd);
 			}
 		});
 
@@ -102,7 +103,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		contentToAdd = null;
 		V.Editor.Object.resetPreview(urlDivId);
 		$("#" + urlInputId).val("");
-	}
+	};
 	
 	var _onLoadUploadTab = function(){
 		contentToAdd = null;
@@ -116,7 +117,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		_resetUploadFields();
 
 		V.Editor.API.requestTags(_onTagsReceived)
-	}
+	};
 	
 	var _resetUploadFields = function(){
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
@@ -130,7 +131,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if($(tagList)[0].children.length!==0){
 			$(tagList).tagit("reset")
 		}
-	}
+	};
 	 
 	var _onTagsReceived = function(data){
 		var tagList = $("#" + uploadDivId + " .tagList");
@@ -147,7 +148,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
-	}
+	};
 	
 	
 	var processResponse = function(response){
@@ -162,7 +163,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		} catch(e) {
 			//No JSON response
 		}
-	}
+	};
 	
 	var addContent = function(content,options){
 		if(content){
@@ -181,7 +182,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		}
 		//Reset contentAddMode
 		contentAddMode = V.Constant.NONE;
-	}
+	};
 	
    /**
 	* Function to draw an image in a zone of the template
@@ -261,26 +262,20 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 	var getAddContentMode = function(){
 		return contentAddMode;
-	}
+	};
 
 	var setAddContentMode = function(mode){
-		_cleanTabs();
+		V.Editor.Utils.hideNonDefaultTabs();
 		switch(mode){
-			case V.Constant.NONE:
-				break;
 			case V.Constant.THUMBNAIL:
 				$("#tab_pic_thumbnails").show();
 				break;
+			case V.Constant.NONE:
 			case V.Constant.FLASHCARD:
 				break;	
 		}
 		contentAddMode = mode;
-	}
-
-	var _cleanTabs = function(){
-		//Hide thumbnails tab
-		$("#tab_pic_thumbnails").hide();
-	}
+	};
 
 	return {
 		init 				: init,

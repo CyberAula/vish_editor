@@ -181,18 +181,13 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
 	var addSelectedVideo = function(){
 		if(selectedVideo != null){
-			var sourcesArray = [];
-			var options = new Array();
-			options['poster'] = selectedVideo.poster;
-			var sources = selectedVideo.sources;
-			if(typeof sources == "string"){
-				sources = JSON.parse(sources)
-			}
-			$.each(sources, function(index, source) {
-				sourcesArray.push({"src":source.src, "mimeType": source.type});
-			});
-			V.Editor.Video.HTML5.drawVideo(sourcesArray, options);
-			$.fancybox.close();
+			var options = {};
+			if(selectedVideo.poster){
+				options['poster'] = selectedVideo.poster;
+			} else {
+				options['poster'] = V.Editor.Video.HTML5.getDefaultPoster();
+			}		
+			V.Editor.Video.addContent($(V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(selectedVideo),options)));
 		}
 	};
 	

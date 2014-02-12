@@ -110,28 +110,19 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			if($(video).attr("poster")){
 				options.poster = $(video).attr("poster");
 			}
-			return renderVideoFromSources(sources,options);
+			return V.Video.HTML5.renderVideoFromSources(sources,options);
 		}
 	};
 
-	var renderVideoWithURL = function(url){
-		return renderVideoFromSources([{src: url}]);
+	var renderVideoWithURL = function(url,options){
+		return V.Video.HTML5.renderVideoFromSources([{src: url}],options);
 	};
 
-	var renderVideoFromSources = function(sources,options){
-		var posterUrl = V.ImagesPath + "icons/example_poster_image.jpg";
-		if(options){
-			if(options['poster']){
-				posterUrl = options['poster'];
-			}
-		}
-		var rendered = "<video class='objectPreview' preload='metadata' controls='controls' poster='" + posterUrl + "' >";
-		$.each(sources, function(index, source) {
-			rendered = rendered + "<source src='" + source.src + "' " + (typeof source.mimeType == "string" ? source.mimeType : V.Video.HTML5.getVideoMimeType(source.src)) + ">";
-		});   
-		rendered = rendered + "</video>";
-		return rendered;
+	/* More Utils */
+	var getDefaultPoster = function(){
+		return V.ImagesPath + "icons/example_poster_image.jpg";
 	};
+
 
 	return {
 		init 					: init,
@@ -140,7 +131,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		drawVideoWithWrapper	: drawVideoWithWrapper,
 		renderVideoFromWrapper	: renderVideoFromWrapper,
 		renderVideoWithURL		: renderVideoWithURL,
-		renderVideoFromSources 	: renderVideoFromSources
+		getDefaultPoster		: getDefaultPoster
 	};
 
 }) (VISH, jQuery);

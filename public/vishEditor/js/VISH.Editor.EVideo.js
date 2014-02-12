@@ -15,10 +15,26 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _loadEvents = function(){
-		// $(document).on('click','button.vt_search_button', function(event){
-		// 	event.preventDefault();
-		// 	_onSearchAddress();
-		// });
+		//Select Video Event
+		var hiddenLinkToAddVideos = $('<a id="hidden_button_to_selectVideoSourceForEVideo" href="#video_fancybox" style="display:none"></a>');
+		$(hiddenLinkToAddVideos).fancybox({
+			'autoDimensions' : false,
+			'width': 800,
+			'scrolling': 'no',
+			'height': 600,
+			'padding' : 0,
+			"onStart"  : function(data) {
+				V.Editor.Video.setAddContentMode(V.Constant.EVIDEO);
+				V.Editor.Utils.loadTab('tab_video_youtube');
+			},
+			"onClosed"  : function(data) {
+				V.Editor.Video.setAddContentMode(V.Constant.NONE);
+			}
+		});
+		$(document).on("click", 'div.change_evideo_button', function(){
+			V.Editor.setCurrentContainer($(V.Slides.getCurrentSlide()).find(".evideoBody"));
+			$(hiddenLinkToAddVideos).trigger("click");
+		});
 	};
 
 	var getDummy = function(slidesetId,options){
@@ -65,8 +81,27 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(eVideoDOM).removeClass("temp_shown");
 	};
 
-	var _getCurrentEVideo = function(){
+	var _getCurrentEVideoJSON = function(){
 		return eVideos[$(V.Slides.getCurrentSlide()).attr("id")];
+	};
+
+	/*
+	 * Callback from the V.Editor.Video module to add the video
+	 */
+	var onVideoSelected = function(contentToAdd,eVideo){
+		if(!eVideo){
+			eVideo = V.Slides.getCurrentSlide();
+		}
+
+		if($(eVideo).attr("type")===V.Constant.EVIDEO){
+			$(eVideo).find("div.change_evideo_button").hide();
+			//Draw video...
+			console.log("Draw video");
+			console.log(contentToAdd);
+			console.log(eVideo);
+		}
+
+		$.fancybox.close();
 	};
 
 	////////////////
@@ -146,8 +181,8 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var _drawPois = function(eVideoDOM){
-		var eVideo = _getCurrentEVideo();
-		if(!eVideo){
+		var eVideoJSON = _getCurrentEVideoJSON();
+		if(!eVideoJSON){
 			return;
 		}
 
@@ -301,6 +336,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		init 				 			: init,
 		getDummy						: getDummy,
 		draw 							: draw,
+		onVideoSelected					: onVideoSelected,
 		onEnterSlideset					: onEnterSlideset,
 		onLeaveSlideset					: onLeaveSlideset,
 		loadSlideset					: loadSlideset,

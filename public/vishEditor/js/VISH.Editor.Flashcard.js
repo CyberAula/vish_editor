@@ -219,17 +219,17 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		$(fc).removeClass("temp_shown");
 
 		return pois;
-	}
+	};
 
 	var _savePoisToDom = function(fc){
 		var poisJSON = _savePoisToJson(fc);
 		_savePoisJSONToDom(fc,poisJSON);
 		return poisJSON;
-	}
+	};
 
 	var _savePoisJSONToDom = function(fc,poisJSON){
 		$(fc).attr("poisData",JSON.stringify(poisJSON));
-	}
+	};
 
 	var _getPoisFromDoom = function(fc){
 		var poisData = $(fc).attr("poisData");
@@ -238,7 +238,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		} else {
 			return [];
 		}
-	}
+	};
 
 	/*
 	 * Callback from the V.Editor.Image module to add the background
@@ -258,7 +258,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		}
 
 		$.fancybox.close();
-	}
+	};
 
 	var getThumbnailURL = function(fc){
 		var avatar = $(fc).attr('avatar');
@@ -267,11 +267,11 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		} else {
 			return getDefaultThumbnailURL();
 		}
-	}
+	};
 
 	var getDefaultThumbnailURL = function(){
 		return (V.ImagesPath + "templatesthumbs/flashcard_template.png");
-	}
+	};
 
 	var onThumbnailLoadFail = function(fc){
 		var thumbnailURL = getDefaultThumbnailURL();
@@ -285,7 +285,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		}
 		var slideThumbnail = V.Editor.Thumbnails.getThumbnailForSlide(fc);
 		$(slideThumbnail).attr("src",thumbnailURL);
-	}
+	};
 
 
 	////////////////////
@@ -314,7 +314,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		slide.pois = _getPoisFromDoom(fc);
 		slide.slides = [];
 		return slide;
-	}
+	};
 
 	/////////////////
 	// Clipboard
