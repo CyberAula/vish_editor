@@ -333,7 +333,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return _genericWrapperPreview(object);
 				break;
 			case V.Constant.WRAPPER.VIDEO:
-				return V.Editor.Video.HTML5.renderVideoFromWrapper(object);
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: "objectPreview"});
 				break;
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);

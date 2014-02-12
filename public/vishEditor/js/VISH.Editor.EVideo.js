@@ -88,20 +88,52 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	/*
 	 * Callback from the V.Editor.Video module to add the video
 	 */
-	var onVideoSelected = function(contentToAdd,eVideo){
-		if(!eVideo){
-			eVideo = V.Slides.getCurrentSlide();
+	var onVideoSelected = function(contentToAdd,eVideoDOM){
+		if(!eVideoDOM){
+			eVideoDOM = V.Slides.getCurrentSlide();
 		}
 
-		if($(eVideo).attr("type")===V.Constant.EVIDEO){
-			$(eVideo).find("div.change_evideo_button").hide();
-			//Draw video...
-			console.log("Draw video");
-			console.log(contentToAdd);
-			console.log(eVideo);
+		if($(eVideoDOM).attr("type")===V.Constant.EVIDEO){
+			$(eVideoDOM).find("div.change_evideo_button").hide();
+			_renderVideo(contentToAdd,eVideoDOM);
 		}
 
 		$.fancybox.close();
+	};
+
+	var _renderVideo = function(videoObj,eVideoDOM){
+		var videoBody = $(eVideoDOM).find(".evideoBody");
+		var eVideoId = $(eVideoDOM).attr("id");
+		var objectInfo = V.Object.getObjectInfo(videoObj);
+		switch(objectInfo.type){
+			case V.Constant.MEDIA.HTML5_VIDEO:
+				var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+				var video = $(V.Video.HTML5.renderVideoFromSources(sources,{controls: false, poster: false}));
+				$(video).attr("videoType",V.Constant.MEDIA.HTML5_VIDEO);
+				$(video).attr("eVideoId",eVideoId);
+				$(videoBody).append(video);
+				V.Video.onVideoReady(video,_onVideoReady);
+				break;
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
+				// var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(eVideoJSON.video));
+				// $(videoBody).attr("source", $(videoWrapper).attr("source"));
+				// $(videoBody).attr("ytcontainerid", $(videoWrapper).attr("ytcontainerid"));
+				// V.Video.Youtube.loadYoutubeObject($(videoBody),{controls: false, onReadyCallback: function(event){
+				// 	var iframe = event.target.getIframe();
+				// 	var video = $("#"+iframe.id);
+				// 	$(video).attr("videoType",eVideoJSON.video.type);
+				// 	$(video).attr("eVideoId",eVideoJSON.id);
+				// 	_onVideoReady(video);
+				// }});
+				break;
+			default:
+				return;
+		};
+	};
+
+	var _onVideoReady = function(video){
+		console.log("On video ready");
+		console.log(video);
 	};
 
 	////////////////

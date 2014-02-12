@@ -101,10 +101,10 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 	/*
 	 * Renderer
 	 */
-	var renderVideoFromWrapper = function(videoTag){
+	var renderVideoFromWrapper = function(videoTag,options){
 		var sources = V.Video.HTML5.getSources(videoTag);
 		if(sources.length > 0){
-			var options = {};
+			var options = options || {};
 			//Look for poster
 			var video = $(videoTag);
 			if($(video).attr("poster")){
