@@ -1544,14 +1544,6 @@ img.loading_presentation_carrousel {
 	display: none !important;
 }
 
-.competi_disabled{
-	opacity: 0.6 !important;
-	text-shadow: none !important;
-	background: #ccc !important;
-	cursor: default !important;
-}
-
-
 /* Waiting overlay */
 #waiting_overlay{
 	height: 100%;

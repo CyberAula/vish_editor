@@ -653,12 +653,12 @@ input.slider_range_input {
 
 }
 
-.slidesScrollbarButton:hover {
+.slidesScrollbarButton:not(.addSlideButtonDisabled):hover {
 	background: #357ebd;
 	color: #fff;
 }
 
-.slidesScrollbarButton:active {
+.slidesScrollbarButton:not(.addSlideButtonDisabled):active {
 	background: #357ebd;
 	color: #fff;
 	box-shadow: inset 0px 3px 10px 1px rgba(0,0,0,0.1);
@@ -2582,6 +2582,33 @@ div.change_evideo_button:hover {
 	background: url(/vishEditor/images/icons/evideo_add_button_hover.png);
 }
 
+.evideoIndexBodyActions {
+	height: 6%;
+	margin-top: 20%;
+	text-align: left;
+}
+
+section.slides_editor .evideoChapters{
+	height: 79% !important;
+	margin-top: 10px;
+	margin-bottom: 5px;
+}
+
+.evideoAddChapterButton{
+	width: auto;
+}
+
+.evideoAddChapterButton span{
+	margin-left: 7px;
+}
+
+.addSlideButtonDisabled{
+	color: rgb(92, 92, 92);
+	background: #ccc !important;
+	cursor: default !important;
+	opacity: 0.8;
+}
+
 
 /* Toolbar Button styles */
 
@@ -2606,18 +2633,18 @@ div.change_evideo_button:hover {
 	font-family: 'Open Sans', arial, sans-serif;
 }
 
-.btn:focus {
+.btn:not(.addSlideButtonDisabled):focus {
 	outline: thin dotted #333;
 	outline: 5px auto -webkit-focus-ring-color;
 	outline-offset: -2px;
 }
 
-.btn:hover, .btn:focus {
+.btn:not(.addSlideButtonDisabled):hover, .btn:not(.addSlideButtonDisabled):focus {
 	color: #ffffff;
 	text-decoration: none;
 }
 
-.btn:active, .btn.active {
+.btn:not(.addSlideButtonDisabled):active, .btn:not(.addSlideButtonDisabled).active {
 	outline: 0;
 	-webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 	box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);

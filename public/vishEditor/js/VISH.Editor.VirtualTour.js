@@ -234,7 +234,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		};
 	};
 
-	var _getAddressForText = function(addressText,callback) {
+	var _getAddressForText = function(addressText,callback){
 		geocoder.geocode( { 'address': addressText}, function(results, status) {
 			if (status === google.maps.GeocoderStatus.OK) {
 				var addrLocation = results[0].geometry.location;

@@ -31,6 +31,11 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		var indexBox = V.EVideo.renderIndexBoxDummy();
 		//Modify indexBox renderized from Viewer
 		$(indexBox).find(".evideoIndexSide").html("");
+		var eVideoIndexBody = $(indexBox).find(".evideoIndexBody");
+		var eVideoIndexBodyActions = $("<div class='evideoIndexBodyActions'></div>");
+		$(eVideoIndexBodyActions).html('<button type="button" class="btn btn-small slidesScrollbarButton evideoAddChapterButton addSlideButtonDisabled"><i class="icon-plus"></i><span>'+V.I18n.getTrans("i.AddChapter")+'</span></button>');
+		$(eVideoIndexBody).prepend(eVideoIndexBodyActions);	
+
 		return "<article id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/>" + V.Utils.getOuterHTML(videoBox) + V.Utils.getOuterHTML(indexBox) + "</article>";
 	};
 

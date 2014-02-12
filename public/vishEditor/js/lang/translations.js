@@ -273,6 +273,7 @@ var i18n =
 				"i.Add"						: "Añadir",
 				"i.Addanavatar"				: "Añadir avatar *",
 				"i.addatitle"				: "añade un título",
+				"i.AddChapter"				: "Añadir Capítulo",
 				"i.AddContent"				: "Añadir Contenido",
 				"i.addembeddedobject"		: "añadir objeto embebido",
 				"i.AddFromJSONfile"			: "Añadir una presentación de ViSH Editor de un fichero JSON",
@@ -542,6 +543,7 @@ var i18n =
 			{
 				"i.add"						: "add",
 				"i.Add"						: "Add",
+				"i.AddChapter"				: "Add Chapter",
 				"i.AddTags"					: "Add tags",
 				"i.areyousureNotification"	: "are you sure?",
 				"i.Author"					: "Author",
