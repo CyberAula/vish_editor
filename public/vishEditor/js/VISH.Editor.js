@@ -97,6 +97,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Renderer.init();
 		V.Slides.init();
 		V.User.init(options);
+		V.Video.init();
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 

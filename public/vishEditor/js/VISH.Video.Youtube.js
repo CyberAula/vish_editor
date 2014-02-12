@@ -52,20 +52,33 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var renderVideoFromJSON = function(videoJSON, options){
-		var videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
-		var videoSource = videoJSON['body'] || videoJSON['source'];
-		var videoClass = "";
+		var source = videoJSON['body'] || videoJSON['source'];
+		var options = options || {};
+		options.id = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+		options.objectStyle = videoJSON['style'];
+		options.zoomInStyle = videoJSON['zoomInStyle'];
+		return renderVideoFromSource(source,options);
+	};
+
+	var renderVideoFromSource = function(source,options){
+		var videoId = ((options)&&(options.id)) ? options.id : V.Utils.getId();
+		var ytContainerId = V.Utils.getId();
+		var videoClasses = "";
+		var objectStyle = "";
+		var zoomInStyle = "";
 		if(options){
-			if(options.videoClass){
-				videoClass = videoClass + " " + options.videoClass;
+			if(options.extraClasses){
+				videoClasses = videoClasses + " " + options.extraClasses;
+			}
+			if(options.style){
+				objectStyle = "objectStyle='" + options.style + "' ";
+			}
+			if(options.zoomInStyle){
+				zoomInStyle = "zoomInStyle='" + options.zoomInStyle + "' ";
 			}
 		};
-		videoClass = "class='" + videoClass + "'";
 
-		var ytContainerId = V.Utils.getId();
-		var style = (videoJSON['style'])? videoJSON['style'] : "";
-		var zoomInStyle = (videoJSON['zoomInStyle'])? videoJSON['zoomInStyle'] : "";
-		var video = "<div id='"+ videoId + "' " + videoClass + " objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' source='" + videoSource + "' ytContainerId='" + ytContainerId + "'>" + "</div>";
+		var video = "<div id='"+ videoId + "' ytContainerId='" + ytContainerId + "' class='" + videoClasses + "' " + objectStyle + zoomInStyle + " source='" + source + "'>" + "</div>";
 		return video;
 	};
 
@@ -84,6 +97,10 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			} else {
 				$(container).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
 				$(container).addClass("videoOfflineContainer");
+				var nonAvailableImg = $(container).find("img");
+				$(nonAvailableImg).load(function(response){
+					$(nonAvailableImg).css("margin-top",($(container).height()-$(nonAvailableImg).height())/2 + "px");
+				});
 			}
 			return;
 		}
@@ -333,6 +350,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	return {
 		init 				: init,
 		renderVideoFromJSON	: renderVideoFromJSON,
+		renderVideoFromSource	: renderVideoFromSource,
 		loadYoutubeObject	: loadYoutubeObject,
 		onPlayerReady 		: onPlayerReady,
 		onPlayerStateChange : onPlayerStateChange,

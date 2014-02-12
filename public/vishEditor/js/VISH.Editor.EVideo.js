@@ -94,7 +94,8 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		}
 
 		if($(eVideoDOM).attr("type")===V.Constant.EVIDEO){
-			$(eVideoDOM).find("div.change_evideo_button").hide();
+			$(eVideoDOM).find("div.change_evideo_button").remove();
+			$(eVideoDOM).find("div.evideoBody").css("margin-top","0px");
 			_renderVideo(contentToAdd,eVideoDOM);
 		}
 
@@ -115,16 +116,17 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				V.Video.onVideoReady(video,_onVideoReady);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				// var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(eVideoJSON.video));
-				// $(videoBody).attr("source", $(videoWrapper).attr("source"));
-				// $(videoBody).attr("ytcontainerid", $(videoWrapper).attr("ytcontainerid"));
-				// V.Video.Youtube.loadYoutubeObject($(videoBody),{controls: false, onReadyCallback: function(event){
-				// 	var iframe = event.target.getIframe();
-				// 	var video = $("#"+iframe.id);
-				// 	$(video).attr("videoType",eVideoJSON.video.type);
-				// 	$(video).attr("eVideoId",eVideoJSON.id);
-				// 	_onVideoReady(video);
-				// }});
+				var source = objectInfo.source;
+				var videoWrapper = $(V.Video.Youtube.renderVideoFromSource(source));
+				$(videoBody).attr("source", $(videoWrapper).attr("source"));
+				$(videoBody).attr("ytcontainerid", $(videoWrapper).attr("ytcontainerid"));
+				V.Video.Youtube.loadYoutubeObject($(videoBody),{controls: false, onReadyCallback: function(event){
+					var iframe = event.target.getIframe();
+					var video = $("#"+iframe.id);
+					$(video).attr("videoType",V.Constant.MEDIA.YOUTUBE_VIDEO);
+					$(video).attr("eVideoId",eVideoId);
+					_onVideoReady(video);
+				}});
 				break;
 			default:
 				return;
@@ -134,6 +136,27 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	var _onVideoReady = function(video){
 		console.log("On video ready");
 		console.log(video);
+
+		var videoBody = $(video).parent();
+		var videoBox = $(videoBody).parent();
+		var eVideoDOM = $(videoBox).parent();
+		var eVideoId = $(eVideoDOM).attr("id");
+		var videoHeader = $(videoBox).find(".evideoHeader");
+		var videoFooter = $(videoBox).find(".evideoFooter");
+		var videoType = $(video).attr("videotype");
+
+		var durationDOM = $(videoHeader).find(".evideoDuration");
+		var videoDuration = V.Video.getDuration(video);
+		var formatedDuration = V.Utils.fomatTimeForMPlayer(videoDuration);
+		$(durationDOM).html(formatedDuration);
+
+		var significativeNumbers = formatedDuration.split(":").join("").length;
+		$(video).attr("sN",significativeNumbers);
+
+		V.EVideo.fitVideoInVideoBox(videoBox);
+
+		$(videoHeader).show();
+		$(videoFooter).show();
 	};
 
 	////////////////

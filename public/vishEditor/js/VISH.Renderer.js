@@ -159,7 +159,7 @@ VISH.Renderer = (function(V,$,undefined){
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				return V.Video.Youtube.renderVideoFromJSON(element,{videoClass: "objectelement youtubeelement " + template+"_"+ element['areaid']});
+				return V.Video.Youtube.renderVideoFromJSON(element,{extraClasses: "objectelement youtubeelement " + template+"_"+ element['areaid']});
 				break;
 			default:
 				var style = (element['style'])? element['style'] : "";

@@ -1134,6 +1134,23 @@ VISH.Utils = (function(V,undefined){
 			}
 		}
 	};
+
+
+	/* Time Format for Multimedia */
+	var fomatTimeForMPlayer = function(s,sN){
+		sN = (typeof sN == "number" ? sN : -1);
+
+		//Get whole hours
+		var h = Math.floor(s/3600);
+		s -= h*3600;
+
+		//Get remaining minutes
+		var m = Math.floor(s/60); 
+		s -= m*60;
+		s = Math.round(s);
+
+		return ((h<1 && sN<5) ? '' : h + ":") + ((sN>3) ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
+	};
 	
 
 	return {
@@ -1168,7 +1185,8 @@ VISH.Utils = (function(V,undefined){
 		removeHashFromUrlString	: removeHashFromUrlString,
 		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash,
-		checkAnimationsFinish	: checkAnimationsFinish
+		checkAnimationsFinish	: checkAnimationsFinish,
+		fomatTimeForMPlayer		: fomatTimeForMPlayer
 	};
 
 }) (VISH);

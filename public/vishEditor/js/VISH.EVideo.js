@@ -258,7 +258,7 @@ VISH.EVideo = (function(V,$,undefined){
 			//Get duration from JSON
 			videoDuration = parseFloat(eVideos[eVideoId].video.duration);
 		}
-		var formatedDuration = _fomatTime(videoDuration);
+		var formatedDuration = V.Utils.fomatTimeForMPlayer(videoDuration);
 		$(durationDOM).html(formatedDuration);
 
 		var significativeNumbers = formatedDuration.split(":").join("").length;
@@ -367,7 +367,7 @@ VISH.EVideo = (function(V,$,undefined){
 			$(item).attr("etime",ball.etime);
 			if(typeof ball.name != "string"){
 				var video = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
-				ball.name = "" + _fomatTime(ball.etime,parseInt($(video).attr("sN")));
+				ball.name = "" + V.Utils.fomatTimeForMPlayer(ball.etime,parseInt($(video).attr("sN")));
 			}
 
 			$(item).html("<span class='eVideoIndexEntryNumber'>"+ (index+1) + ". " + "</span><span class='eVideoIndexEntryBody'>" + ball.name + "</span>");
@@ -564,7 +564,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		//Update current time field
 		var currentTimeField = $(videoBox).find(".evideoCurTime");
-		$(currentTimeField).html(_fomatTime(currentTime,parseInt($(video).attr("sN"))));
+		$(currentTimeField).html(V.Utils.fomatTimeForMPlayer(currentTime,parseInt($(video).attr("sN"))));
 	};
 
 	var _updatePlayButton = function(video,vStatus){
@@ -747,7 +747,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		// V.Debugging.log("_updateNextBall");
 		// if(nextBall){
-		// 	V.Debugging.log(_fomatTime(nextBall.etime));
+		// 	V.Debugging.log(V.Utils.fomatTimeForMPlayer(nextBall.etime));
 		// 	V.Debugging.log(nextBall.name);
 		// } else {
 		// 	V.Debugging.log("There are no next ball");
@@ -840,19 +840,8 @@ VISH.EVideo = (function(V,$,undefined){
 		return eVideos[$(video).attr("evideoid")];
 	};
 
-	var _fomatTime = function(s,sN){
-		sN = (typeof sN == "number" ? sN : -1);
-
-		//Get whole hours
-		var h = Math.floor(s/3600);
-		s -= h*3600;
-
-		//Get remaining minutes
-		var m = Math.floor(s/60); 
-		s -= m*60;
-		s = Math.round(s);
-
-		return ((h<1 && sN<5) ? '' : h + ":") + ((sN>3) ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
+	var fitVideoInVideoBox = function(video){
+		_fitVideoInVideoBox(video);
 	};
 
 	return {
@@ -862,6 +851,7 @@ VISH.EVideo = (function(V,$,undefined){
 		onLeaveSlideset		: onLeaveSlideset,
 		renderVideoBoxDummy	: renderVideoBoxDummy,
 		renderIndexBoxDummy	: renderIndexBoxDummy,
+		fitVideoInVideoBox 	: fitVideoInVideoBox,
 		afterSetupSize		: afterSetupSize
 	};
 
