@@ -24,11 +24,16 @@ function onYouTubeIframeAPIReady(){ _youTubeIframeApiReady = true; }
 
 VISH.Video.Youtube = (function(V,$,undefined){
 
+	var _waitForLoadYouTubeAPI = true;
 	var _enableCustomPlayer;
 
 	var init = function(enableCustomPlayer){
-		_loadYouTubeIframeAPILibrary();
 		_enableCustomPlayer = enableCustomPlayer;
+
+		_loadYouTubeIframeAPILibrary();
+		setTimeout(function(){
+			_waitForLoadYouTubeAPI = false;
+		},11000);
 	};
 
 	var _loadYouTubeIframeAPILibrary = function(){
@@ -72,9 +77,14 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 		// If Youtube Iframe isn't ready, load nothing
 		if(!_isYouTubeIframeAPIReady()){
-			setTimeout(function(){
-				loadYoutubeObject(container,options);
-			},1000);
+			if(_waitForLoadYouTubeAPI){
+				setTimeout(function(){
+					loadYoutubeObject(container,options);
+				},1000);
+			} else {
+				$(container).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
+				$(container).addClass("videoOfflineContainer");
+			}
 			return;
 		}
 

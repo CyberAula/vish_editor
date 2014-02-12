@@ -1863,46 +1863,6 @@ div.ballWrapper div.ballImg:active {
 }
 
 
-
-/* Segments and balls */
-
-.evideoSegments {
-	width: 100%;
-	margin: 0;
-	padding: 0;
-	border: 0px solid;
-	border-top: none;
-	position: relative;
-	background: none;
-	height: 10px;
-	list-style-type: none;
-}
-
-.evideoBall {
-	border-radius: 50%;
-	width: 20px;
-	height: 20px; 
-	background-color: #787878;
-	position: absolute;
-	z-index: 20;
-	margin-top: 5%;
-	border: 2px solid white;
-	box-shadow: 2px 2px 2px #888888;
-	background-image: url('http://catn.com/wp-content/uploads/2013/07/icon-grey-plus.png');
-	background-position: 0px; 
-	background-size: 20px;
-}
-
-.evideoMarker{
-	height: 235%;
-	width: 3px;
-	background-color: #787878;
-	position: absolute;
-	z-index: 20;
-	pointer-events: none;
-}
-
-
 /* EVideo Index */
 
 .evideoIndexBody {
@@ -2001,4 +1961,9 @@ div.ballWrapper div.ballImg:active {
 
 .evideoChapters li:hover span.eVideoIndexEntryBody {
 	color: #075b77 !important;
+}
+
+.videoOfflineContainer{
+	background-color: #636363;
+	border-radius: 30px;
 }
