@@ -5,10 +5,13 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	//Store enriched videos data
 	var eVideos;
+	//Direct access to current balls (balls[ballId] = ball)
+	var balls;
 
 	var init = function(){
 		if(!initialized){
 			eVideos = {};
+			balls = {};
 			_loadEvents();
 			initialized = true;
 		}
@@ -86,19 +89,52 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		if(typeof eVideos[eVideoId] == "undefined"){
 			eVideos[eVideoId] = eVideoJSON;
-			eVideos[eVideoId].balls = {};
+
+			//Create balls array grounded on pois hashes
+			eVideoJSON.balls = [];
+			$(eVideoJSON.pois).each(function(index,poi){
+				eVideoJSON.balls.push(poi);
+			});
+
+			eVideoJSON.balls = ((eVideoJSON.balls.filter(function(ball){
+				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>0));
+			})).map(function(ball){
+				ball.letter = _getLetterForBall(eVideoJSON,ball);
+				ball.etime = parseFloat(ball.etime);
+				ball.eVideoId = eVideoId;
+				return ball;
+			})).sort(function(A,B){
+				return A.etime>B.etime;
+			}).map(function(ball){
+				balls[ball.id] = ball;
+				return ball;
+			});
 		}
 
 		if(eVideos[eVideoId].drawed === true){
 			//Already drawed
 			return;
 		}
+
 		eVideos[eVideoId].drawed = true;
 
 		var eVideoObject = _getEVideoObjectFromJSON(eVideoJSON);
 		if(typeof eVideoObject != "undefined"){
 			_renderVideo(eVideoObject,eVideoDOM);
 		}
+	};
+
+	var _getLetterForBall = function(eVideoJSON,ball){
+		var letter = undefined;
+		var slideId = ball.slide_id;
+
+		$(eVideoJSON.slides).each(function(index,slide){
+			if(slide.id === slideId){
+				letter = String.fromCharCode(64+parseInt(index+1));
+				return false;
+			}
+		});
+		return letter;
 	};
 
 	var _getEVideoObjectFromJSON = function(eVideoJSON){
@@ -216,12 +252,114 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		V.Video.onTimeUpdate(video,V.EVideo.onTimeUpdate);
 		V.Video.onStatusChange(video,V.EVideo.onStatusChange);
 
+		_renderIndex(eVideoDOM,eVideos[eVideoId]);
+		_renderBalls(eVideoDOM,eVideos[eVideoId]);
+
 		//Fire initial onTimeUpdate event for YouTube videos. (The same as HTML5 videos)
 		if(videoType==V.Constant.Video.Youtube){
 			V.EVideo.onTimeUpdate(video,0);
 		};
 
 		$(eVideoDOM).removeClass("temp_shown");
+	};
+
+	var _renderIndex = function(eVideoDOM,eVideoJSON){
+		//Clean before render
+		var indexBody = $(eVideoDOM).find(".evideoIndexBox");
+		var eVideoChapters = $(indexBody).find(".evideoChapters");
+		$(eVideoChapters).html("");
+
+		V.EVideo.renderIndex(eVideoDOM,eVideoJSON);
+
+		//Add remove and edit buttons
+		var chapterList = $(eVideoDOM).find(".evideoChapters li");
+		$(chapterList).each(function(value,li){
+			var infoDiv = $("<div class='eVideoChapterInfo'></div>");
+			$(infoDiv).html($(li).html());
+			var actionDiv = $("<div class='eVideoChapterActions'></div>");
+			var editButton = $('<p title="edit"><i class="icon-button icon-edit"></i></p>');
+			var removeButton = $('<p class="icon-trash-container" title="remove"><i class="icon-button icon-trash"></i></p>');
+			$(actionDiv).prepend(removeButton);
+			$(actionDiv).prepend(editButton);
+
+			$(li).html("");
+			$(li).append(infoDiv);
+			$(li).append(actionDiv);
+		});
+
+		//Add ball Letter to index.
+		$(chapterList).each(function(value,li){
+			var ballId = $(li).attr("ballid");
+			var ballLetter = balls[ballId].letter;
+			$(li).find(".eVideoIndexEntryNumber").html((value+1) + " (" + ballLetter + "). ");
+		});
+	};
+
+	var _renderBalls = function(eVideoDOM,eVideoJSON){
+		var videoBox = $(eVideoDOM).find(".evideoBox");
+		var videoDOM = V.EVideo.getVideoFromVideoBox(videoBox);
+		var duration = V.Video.getDuration(videoDOM);
+
+		$(eVideoJSON.balls).each(function(index,ball){
+			_drawBall(eVideoDOM,eVideoJSON,ball,duration);
+		});
+
+		var videoFooter = $(videoBox).find(".evideoFooter");
+		$(videoBox).find(".ballSlider .ui-slider-handle").height($(videoFooter).height());
+	};
+
+	var _drawBall = function(eVideoDOM,eVideoJSON,ball,duration){
+		if(ball.etime > duration){
+			return;
+		}
+
+		var left = (ball.etime*100/duration);
+
+		var videoBox = $(eVideoDOM).find(".evideoBox");
+		var eVideoControls = $(videoBox).find("div.evideoControls");
+		var ballSliderWrapper = $("<div class='ballSliderWrapper'><div class='ballSlider'></div></div>");
+		$(eVideoControls).find(".evideoProgressBarSliderWrapper").append(ballSliderWrapper);
+
+		var ballSlider = $(ballSliderWrapper).find(".ballSlider");
+		$(ballSlider).slider({
+			orientation: "horizontal",
+			range: "min",
+			min: 0,
+			max: 100,
+			value: left,
+			step: 0.1,
+			slide: function(event,ui){
+				var ballTimeSpan = $(event.target).find("span.ballTimeSpan");
+				var newTime = (parseFloat($(ballTimeSpan).attr("videoduration")) * ui.value)/100;
+				$(ballTimeSpan).html(V.Utils.fomatTimeForMPlayer(newTime));
+			}, start: function(event,ui){
+				var ballId = $(event.target).find("span.ballTimeSpan").attr("ballid");
+				var selectedChapter = $(eVideoDOM).find("ul.evideoChapters").find("li[ballid='"+ballId+"']");
+				$(selectedChapter).addClass("active");
+			}, stop: function(event,ui){
+				var ballTimeSpan = $(event.target).find("span.ballTimeSpan");
+				var newTime = (parseFloat($(ballTimeSpan).attr("videoduration")) * ui.value)/100;
+				var ballId = $(ballTimeSpan).attr("ballid");
+				var ball = balls[ballId];
+				ball.etime = newTime;
+
+				var selectedChapter = $(eVideoDOM).find("ul.evideoChapters").find("li[ballid='"+ballId+"']");
+				$(selectedChapter).removeClass("active");
+
+				_reOrderBalls(eVideoDOM,eVideos[ball.eVideoId]);
+			}, create: function(event,ui){
+				var ballWrapper = $("<div class='ballWrapper'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'><span class='ballLetterSpan'>"+ ball.letter +"</span></div><span class='ballTimeSpan' eVideoId='"+ ball.eVideoId +"' ballid='"+ ball.id +"' balltime='"+ ball.etime +"' videoDuration='"+ duration +"'>" + V.Utils.fomatTimeForMPlayer(ball.etime) + "</span></div>");
+				var handler = $(ballSlider).find(".ui-slider-handle");
+				$(handler).append(ballWrapper);
+			}
+		});
+	};
+
+	var _reOrderBalls = function(eVideoDOM,eVideoJSON){
+		eVideos[eVideoJSON.id].balls.sort(function(A,B){
+			return A.etime>B.etime;
+		});
+		_renderIndex(eVideoDOM,eVideos[eVideoJSON.id]);
 	};
 
 	////////////////
@@ -237,15 +375,14 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var onEnterSlideset = function(eVideo){
 		//Load arrows
-		
 	};
 
 	var onLeaveSlideset = function(eVideo){
 	};
 
 	var loadSlideset = function(eVideo){
-		// //Show Arrows
-		// $("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
+		//Show Arrows
+		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
 
 	var unloadSlideset = function(eVideo){
@@ -253,14 +390,14 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var beforeCreateSlidesetThumbnails = function(eVideo){
 		_drawPois(eVideo);
-	}
+	};
 
 	var beforeRemoveSlideset = function(eVideo){
 		var eVideoId = $(eVideo).attr("id");
 		if(typeof eVideos[eVideoId] !== "undefined"){
 			delete eVideos[eVideoId];
 		}
-	}
+	};
 
 	var beforeRemoveSubslide = function(eVideo,subslide){
 		var subslideId = $(subslide).attr("id");
@@ -298,6 +435,21 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	}
 
+
+	var _existPoiForSlideId = function(eVideoJSON,slideId){
+		if((typeof eVideoJSON == "undefined")||(typeof slideId == "udnefined")){
+			return false;
+		}
+		var _existPoiForSlideId = false;
+		$(eVideoJSON.balls).each(function(index,ball){
+			if(ball.slide_id===slideId){
+				_existPoiForSlideId = true;
+				return false;
+			}
+		});
+		return _existPoiForSlideId;
+	};
+
 	/*
 	 * Redraw the pois of the virtual tour
 	 * This actions must be called after thumbnails have been rewritten
@@ -308,12 +460,6 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			return;
 		}
 
-
-		return;
-
-
-		var markers = eVideo.markers;
-		
 		//Create arrows for existing subslides
 		var subslides = $(eVideoDOM).find("article");
 		$("#subslides_list").find("div.wrapper_barbutton").each(function(index,div){
@@ -325,12 +471,13 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
 				$(div).prepend(arrowDiv);
 
-				if(typeof markers[slide_id] != "undefined"){
+				if(_existPoiForSlideId(eVideoJSON,slide_id)){
 					$(arrowDiv).hide();
 				}
 			};
 		});
 
+		return;
 
 		//Drag&Drop POIs
 

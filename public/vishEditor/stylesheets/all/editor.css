@@ -2612,6 +2612,117 @@ section.slides_editor .evideoChapters{
 	opacity: 0.8;
 }
 
+div.eVideoChapterInfo {
+	display: inline-block;
+	width: 70%;
+	margin-right: 10%;
+	min-height: 40px;
+}
+
+div.eVideoChapterActions {
+	display: inline-block;
+	width: 20%;
+	position: absolute;
+}
+
+div.eVideoChapterActions p {
+	margin-top: 1px;
+	margin-bottom: 5px;
+	cursor: pointer;
+}
+
+div.eVideoChapterActions p.icon-trash-container {
+	margin-left: 1px;
+}
+
+.evideoChapters li {
+	cursor: default !important;
+}
+
+.evideoChapters li:hover {
+	background-color: transparent !important;
+}
+
+.evideoChapters li:hover span.eVideoIndexEntryNumber {
+	color: #7C7C7C !important;
+}
+
+.evideoChapters li:hover span.eVideoIndexEntryBody {
+	color: black !important;
+}
+
+.evideoChapters li.active {
+	background-color: #E9E9E9;
+}
+
+.ballSliderWrapper {
+	position: relative;
+	height: 0%;
+	width: 100%;
+	background: #535353;
+}
+
+.ballSlider {
+	position: absolute;
+	background: #535353;
+	height: 0%;
+	width: 100%;
+	overflow: visible;
+	display: block;
+	border: none;
+}
+
+.ballSliderWrapper .ui-widget-header {
+	background: #cc0000;
+}
+
+.ballSliderWrapper .ui-slider-handle {
+	background: transparent;
+	position: absolute;
+	width: 3%;
+	height: 50px;
+	margin-left: -1.4%;
+	margin-top: 0%;
+	border: none;
+	cursor: pointer;
+}
+
+.ballSliderWrapper div.ballWrapper {
+	height: 100%;
+	width: 100%;
+}
+
+div.ballWrapper div.ballLine {
+	height: 50% !important;
+}
+
+div.ballWrapper div.ballImg {
+	top: 42% !important;
+}
+
+span.ballLetterSpan, span.ballTimeSpan {
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 11px;
+	color: black;
+	left: 0%;
+} 
+
+span.ballLetterSpan {
+	position: absolute;
+	bottom: 20%;
+	text-align: center;
+	width: 100%;
+}
+
+span.ballTimeSpan{
+	bottom: 0%;
+	position: absolute;
+	left: 0%;
+	width: 100%;
+	bottom: 3%;
+	text-align: center;
+}
+
 
 /* Toolbar Button styles */
 

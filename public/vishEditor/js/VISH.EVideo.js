@@ -81,7 +81,7 @@ VISH.EVideo = (function(V,$,undefined){
 				_seeking = true;
 				_displayVol = false;
 			}, stop: function(event, ui){
-				var video = _getVideoFromVideoBox(videoBox);
+				var video = getVideoFromVideoBox(videoBox);
 				_updateProgressBar(video,ui.value);
 				setTimeout(function(){
 					_seeking = false;
@@ -102,7 +102,7 @@ VISH.EVideo = (function(V,$,undefined){
 			max: 100,
 			value: 100,
 			slide: function( event, ui ) {
-				var video = _getVideoFromVideoBox($(".evideoBox").has(event.target));
+				var video = getVideoFromVideoBox($(".evideoBox").has(event.target));
 				_onVolumeChange(video,ui.value);
 			}
 		});
@@ -137,7 +137,7 @@ VISH.EVideo = (function(V,$,undefined){
 				ball.eVideoId = eVideoJSON.id;
 				return ball;
 			})).sort(function(A,B){
-				return parseFloat(A.etime)>parseFloat(B.etime);
+				return A.etime>B.etime;
 			});
 		};
 
@@ -304,7 +304,7 @@ VISH.EVideo = (function(V,$,undefined){
 		_updateNextBall(video,0);
 
 		//6. Render index
-		_renderIndex(eVideoDOM,eVideos[eVideoId]);
+		renderIndex(eVideoDOM,eVideos[eVideoId]);
 
 		//7. Render balls
 		_renderBalls(eVideoDOM,eVideos[eVideoId]);
@@ -317,7 +317,7 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var fitVideoInVideoBox = function(videoBox){
-		var video = _getVideoFromVideoBox(videoBox);
+		var video = getVideoFromVideoBox(videoBox);
 		var eVideoBody = $(videoBox).find(".evideoBody");
 		$(eVideoBody).css("height","85%");
 
@@ -363,7 +363,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	/* Index */
 
-	var _renderIndex = function(eVideoDOM,eVideoJSON){
+	var renderIndex = function(eVideoDOM,eVideoJSON){
 		var indexBody = $(eVideoDOM).find(".evideoIndexBox");
 		var eVideoChapters = $(indexBody).find(".evideoChapters");
 
@@ -372,7 +372,7 @@ VISH.EVideo = (function(V,$,undefined){
 			$(item).attr("ballid",ball.id);
 			$(item).attr("etime",ball.etime);
 			if(typeof ball.name != "string"){
-				var video = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+				var video = getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
 				ball.name = "" + V.Utils.fomatTimeForMPlayer(ball.etime,parseInt($(video).attr("sN")));
 			}
 
@@ -434,7 +434,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var onEnterSlideset = function(eVideoDOM){
 		var eVideoId = $(eVideoDOM).attr("id");
 		var videoBox = $(eVideoDOM).find(".evideoBox");
-		var videoDOM = _getVideoFromVideoBox(videoBox);
+		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
 
 		switch(eVideoJSON.estatusBeforeLeave){
@@ -460,7 +460,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var onLeaveSlideset = function(eVideoDOM){
 		var eVideoId = $(eVideoDOM).attr("id");
-		var videoDOM = _getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+		var videoDOM = getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
 		var eVideoJSON = eVideos[eVideoId];
 		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
 
@@ -480,7 +480,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var onClickToggleVideo = function(event){
 		var videoBox = $(".evideoBox").has(event.target);
-		var video = _getVideoFromVideoBox(videoBox);
+		var video = getVideoFromVideoBox(videoBox);
 		_togglePlay(video);
 	};
 
@@ -509,7 +509,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var chapterTime = parseFloat($(chapter).attr("etime"));
 		var eVideoIndexBox = $(".evideoIndexBox").has(chapter);
 		var videoBox = $(eVideoIndexBox).parent().find(".evideoBox");
-		var video = _getVideoFromVideoBox(videoBox);
+		var video = getVideoFromVideoBox(videoBox);
 
 		var options;
 		var ballId = $(chapter).attr("ballid");
@@ -527,7 +527,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var ballDOM = event.target;
 		var ballTime = parseFloat($(ballDOM).attr("ballTime"));
 		var videoBox = $(".evideoBox").has(ballDOM);
-		var video = _getVideoFromVideoBox(videoBox);
+		var video = getVideoFromVideoBox(videoBox);
 		_onChapterSelected(video,ballTime);
 	};
 
@@ -562,7 +562,7 @@ VISH.EVideo = (function(V,$,undefined){
 			return;
 		}
 
-		var videoBox = _getVideoBoxFromVideo(video);
+		var videoBox = getVideoBoxFromVideo(video);
 		var currentTime = (typeof currentTime != "undefined") ? currentTime : V.Video.getCurrentTime(video);
 
 		if(!_seeking){
@@ -578,7 +578,7 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _updatePlayButton = function(video,vStatus){
-		var videoBox = _getVideoBoxFromVideo(video);
+		var videoBox = getVideoBoxFromVideo(video);
 		var eVideoPlayButton = $(videoBox).find(".evideoPlayButton");
 		if(vStatus == V.Constant.EVideo.Status.Playing){
 			$(eVideoPlayButton).attr("src", V.ImagesPath + "customPlayer/eVideoPause.png");
@@ -689,7 +689,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var _renderBalls = function(eVideoDOM,eVideoJSON){
 		var videoBox = $(eVideoDOM).find(".evideoBox");
 		var progressBarWrapper = $(videoBox).find("div.evideoProgressBarWrapper");
-		var videoDOM = _getVideoFromVideoBox(videoBox);
+		var videoDOM = getVideoFromVideoBox(videoBox);
 		var duration = V.Video.getDuration(videoDOM);
 		if(duration===0){
 			//Patch to fix YouTube Iframe API bug
@@ -783,7 +783,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var _displayBall = function(ball,videoDOM){
 		eVideos[ball.eVideoId].displayedBall = ball;
 		setTimeout(function(){
-			var videoBox = _getVideoBoxFromVideo(videoDOM);
+			var videoBox = getVideoBoxFromVideo(videoDOM);
 			var subslideDOM = $("#"+ball.slide_id);
 			if($(subslideDOM).hasClass("show_in_smartcard")){
 				$(videoBox).addClass("temp_hidden");
@@ -796,7 +796,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var eVideoJSON = eVideos[eVideoId];
 		var videoBox = $("#"+eVideoId).find(".evideoBox");
 		$(videoBox).removeClass("temp_hidden");
-		var videoDOM = _getVideoFromVideoBox(videoBox);
+		var videoDOM = getVideoFromVideoBox(videoBox);
 		var cTime = V.Video.getCurrentTime(videoDOM);
 		var prevBall = jQuery.extend({}, eVideoJSON.displayedBall); //displayedBall points to the ball we are closing
 		_updateNextBall(videoDOM,prevBall.etime);
@@ -838,11 +838,11 @@ VISH.EVideo = (function(V,$,undefined){
 
 	// Utils
 
-	var _getVideoFromVideoBox = function(videoBox){
+	var getVideoFromVideoBox = function(videoBox){
 		return $(videoBox).find(".evideoBody").children()[0];
 	};
 
-	var _getVideoBoxFromVideo = function(video){
+	var getVideoBoxFromVideo = function(video){
 		return $(".evideoBox").has(video);
 	};
 
@@ -858,10 +858,13 @@ VISH.EVideo = (function(V,$,undefined){
 		renderVideoBoxDummy		: renderVideoBoxDummy,
 		renderIndexBoxDummy		: renderIndexBoxDummy,
 		fitVideoInVideoBox 		: fitVideoInVideoBox,
+		renderIndex 			: renderIndex,
 		loadEventsForControls	: loadEventsForControls,
 		onClickToggleVideo		: onClickToggleVideo,
 		onStatusChange			: onStatusChange,
 		onTimeUpdate			: onTimeUpdate,
+		getVideoFromVideoBox	: getVideoFromVideoBox,
+		getVideoBoxFromVideo 	: getVideoBoxFromVideo,
 		afterSetupSize			: afterSetupSize
 	};
 
