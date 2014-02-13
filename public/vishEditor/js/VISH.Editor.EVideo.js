@@ -103,9 +103,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _getEVideoObjectFromJSON = function(eVideoJSON){
 		var videoJSON = eVideoJSON.video;
+		if(typeof videoJSON == "undefined"){
+			return undefined;
+		}
 		switch(videoJSON.type){
 			case V.Constant.Video.HTML5:
-				var videoTag = V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(videoJSON));
+				var options = {};
+				if(typeof videoJSON.poster == "string"){
+					options.poster = videoJSON.poster;
+				}
+				var videoTag = V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(videoJSON),options);
 				return videoTag;
 			case V.Constant.Video.Youtube:
 				return videoJSON.source;
@@ -147,7 +154,15 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
-				var video = $(V.Video.HTML5.renderVideoFromSources(sources,{controls: false, poster: false}));
+				var options = {};
+				options.controls = false;
+				// if(typeof $(videoObj).attr("poster") == "string"){
+				// 	options.poster = $(videoObj).attr("poster");
+				// } else {
+				// 	options.poster = false;
+				// }
+				options.poster = false;
+				var video = $(V.Video.HTML5.renderVideoFromSources(sources,options));
 				$(video).attr("videoType",V.Constant.MEDIA.HTML5_VIDEO);
 				$(video).attr("eVideoId",eVideoId);
 				$(videoBody).append(video);
@@ -221,14 +236,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var onEnterSlideset = function(eVideo){
+		//Load arrows
+		
 	};
 
 	var onLeaveSlideset = function(eVideo){
 	};
 
 	var loadSlideset = function(eVideo){
-		//Show Arrows
-		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
+		// //Show Arrows
+		// $("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
 
 	var unloadSlideset = function(eVideo){
