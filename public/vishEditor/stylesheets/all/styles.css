@@ -1682,7 +1682,6 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoPlayButtonWrapper:hover {
-	opacity: 0.8;
 }
 
 .evideoPlayButton {
@@ -1701,7 +1700,6 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolButtonWrapper:hover {
-	opacity: 0.8;
 }
 
 .evideoVolButton {

@@ -504,12 +504,21 @@ input.slider_range_input {
 	margin-left: 46px;
 }
 
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
-.ui-widget-header { border: 1px solid #e78f08; background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; }
-.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
-
+#presentationdetails .ui-state-default, #presentationdetails .ui-widget-content .ui-state-default, #presentationdetails .ui-widget-header .ui-state-default { 
+	border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; margin-left: -5px;
+}
+#presentationdetails .ui-state-active, #presentationdetails .ui-widget-content .ui-state-active, #presentationdetails .ui-widget-header .ui-state-active { 
+	border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; 
+}
+#presentationdetails .ui-state-hover, #presentationdetails .ui-widget-content .ui-state-hover, #presentationdetails .ui-widget-header .ui-state-hover, #presentationdetails .ui-state-focus, #presentationdetails .ui-widget-content .ui-state-focus, #presentationdetails .ui-widget-header .ui-state-focus { 
+	border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; 
+}
+#presentationdetails .ui-widget-header { 
+	background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; 
+}
+#presentationdetails .ui-widget-content { 
+	border: 1px solid #dddddd; background: #eeeeee; 
+}
 
 #age_range_wrapper{
 	height: 50px;
@@ -2463,12 +2472,6 @@ p.draggable_number {
 #menuButton {
 	border: none;
 }
-
-.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; margin-left: -5px; color: none; }
-.ui-state-active, .ui-widget-content .ui-state-active, .ui-widget-header .ui-state-active { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
-.ui-state-hover, .ui-widget-content .ui-state-hover, .ui-widget-header .ui-state-hover, .ui-state-focus, .ui-widget-content .ui-state-focus, .ui-widget-header .ui-state-focus { border: none; background: url(/vishEditor/images/icons/opcion.png) no-repeat; font-weight: normal; color: none; }
-.ui-widget-header { border: 1px solid #e78f08; background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; }
-.ui-widget-content { border: 1px solid #dddddd; background: #eeeeee; }
 
 .excursions_repo_content {
 	width: 100%;

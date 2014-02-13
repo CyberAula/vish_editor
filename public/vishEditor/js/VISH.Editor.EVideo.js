@@ -16,7 +16,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _loadEvents = function(){
 		//Select Video Event
-		var hiddenLinkToAddVideos = $('<a id="hidden_button_to_selectVideoSourceForEVideo" href="#video_fancybox" style="display:none"></a>');
+		var hiddenLinkToAddVideos = $('<a href="#video_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddVideos).fancybox({
 			'autoDimensions' : false,
 			'width': 800,
@@ -35,6 +35,25 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			V.Editor.setCurrentContainer($(V.Slides.getCurrentSlide()).find(".evideoBody"));
 			$(hiddenLinkToAddVideos).trigger("click");
 		});
+
+		var hiddenLinkToAddChapters = $('<a href="#chapters_fancybox" style="display:none"></a>');
+		$(hiddenLinkToAddChapters).fancybox({
+			'autoDimensions' : false,
+			'height': 600,
+			'width': 800,
+			'scrolling': 'no',
+			'padding' : 0,
+			"onStart"  : function(data){
+			},
+			"onClosed"  : function(data) {
+			}
+		});
+		$(document).on("click", 'button.evideoAddChapterButton:not(.addSlideButtonDisabled)', function(){
+			$(hiddenLinkToAddChapters).trigger("click");
+		});
+
+		//Play button
+		$(document).on("click", '.evideoPlayButtonWrapper', V.EVideo.onClickToggleVideo);
 	};
 
 	var getDummy = function(slidesetId,options){
@@ -57,7 +76,6 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 
 	var _drawEVideo = function(eVideoJSON,eVideoDOM){
-		
 		if(!eVideoJSON){
 			//Default values
 			eVideoJSON = {};
@@ -75,10 +93,25 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			//Already drawed
 			return;
 		}
-
 		eVideos[eVideoId].drawed = true;
-		$(eVideoDOM).addClass("temp_shown");
-		$(eVideoDOM).removeClass("temp_shown");
+
+		var eVideoObject = _getEVideoObjectFromJSON(eVideoJSON);
+		if(typeof eVideoObject != "undefined"){
+			_renderVideo(eVideoObject,eVideoDOM);
+		}
+	};
+
+	var _getEVideoObjectFromJSON = function(eVideoJSON){
+		var videoJSON = eVideoJSON.video;
+		switch(videoJSON.type){
+			case V.Constant.Video.HTML5:
+				var videoTag = V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(videoJSON));
+				return videoTag;
+			case V.Constant.Video.Youtube:
+				return videoJSON.source;
+			default:
+				return undefined;
+		}
 	};
 
 	var _getCurrentEVideoJSON = function(){
@@ -94,8 +127,6 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		}
 
 		if($(eVideoDOM).attr("type")===V.Constant.EVIDEO){
-			$(eVideoDOM).find("div.change_evideo_button").remove();
-			$(eVideoDOM).find("div.evideoBody").css("margin-top","0px");
 			_renderVideo(contentToAdd,eVideoDOM);
 		}
 
@@ -103,6 +134,13 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _renderVideo = function(videoObj,eVideoDOM){
+		$(eVideoDOM).addClass("temp_shown");
+		
+		//Clean dummy properties...
+		$(eVideoDOM).find("div.change_evideo_button").remove();
+		$(eVideoDOM).find("div.evideoBody").css("margin-top","0px");
+
+		//Render video
 		var videoBody = $(eVideoDOM).find(".evideoBody");
 		var eVideoId = $(eVideoDOM).attr("id");
 		var objectInfo = V.Object.getObjectInfo(videoObj);
@@ -134,9 +172,6 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _onVideoReady = function(video){
-		console.log("On video ready");
-		console.log(video);
-
 		var videoBody = $(video).parent();
 		var videoBox = $(videoBody).parent();
 		var eVideoDOM = $(videoBox).parent();
@@ -157,6 +192,21 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		$(videoHeader).show();
 		$(videoFooter).show();
+
+		//Enable chapters
+		$(eVideoDOM).find(".evideoAddChapterButton").removeClass("addSlideButtonDisabled");
+		
+		//Events
+		V.EVideo.loadEventsForControls(videoBox);
+		V.Video.onTimeUpdate(video,V.EVideo.onTimeUpdate);
+		V.Video.onStatusChange(video,V.EVideo.onStatusChange);
+
+		//Fire initial onTimeUpdate event for YouTube videos. (The same as HTML5 videos)
+		if(videoType==V.Constant.Video.Youtube){
+			V.EVideo.onTimeUpdate(video,0);
+		};
+
+		$(eVideoDOM).removeClass("temp_shown");
 	};
 
 	////////////////
