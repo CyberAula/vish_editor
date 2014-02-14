@@ -574,6 +574,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		//Update current time field
 		var currentTimeField = $(videoBox).find(".evideoCurTime");
+
 		$(currentTimeField).html(V.Utils.fomatTimeForMPlayer(currentTime,parseInt($(video).attr("sN"))));
 	};
 

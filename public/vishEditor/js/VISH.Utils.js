@@ -1149,7 +1149,7 @@ VISH.Utils = (function(V,undefined){
 		s -= m*60;
 		s = Math.round(s);
 
-		return ((h<1 && sN<5) ? '' : h + ":") + ((sN>3) ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
+		return ((h<1 && sN<5) ? '' : h + ":") + (((sN>3)&&(m<10)) ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
 	};
 	
 
