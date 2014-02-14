@@ -8,6 +8,10 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	//Direct access to current balls (balls[ballId] = ball)
 	var balls;
 
+	//Link to open chapters fancybox
+	var hiddenLinkToAddChapters;
+
+
 	var init = function(){
 		if(!initialized){
 			eVideos = {};
@@ -23,8 +27,8 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(hiddenLinkToAddVideos).fancybox({
 			'autoDimensions' : false,
 			'width': 800,
-			'scrolling': 'no',
 			'height': 600,
+			'scrolling': 'no',
 			'padding' : 0,
 			"onStart"  : function(data) {
 				V.Editor.Video.setAddContentMode(V.Constant.EVIDEO);
@@ -39,24 +43,143 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			$(hiddenLinkToAddVideos).trigger("click");
 		});
 
-		var hiddenLinkToAddChapters = $('<a href="#chapters_fancybox" style="display:none"></a>');
+		hiddenLinkToAddChapters = $('<a href="#chapters_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddChapters).fancybox({
 			'autoDimensions' : false,
-			'height': 600,
-			'width': 800,
+			'height': 400,
+			'width': 400,
 			'scrolling': 'no',
 			'padding' : 0,
 			"onStart"  : function(data){
+								var currentVideo = _getCurrentVideo();
+				if(currentVideo){
+					var videoDuration = V.Video.getDuration(currentVideo);
+					var formatedDuration = V.Utils.fomatTimeForMPlayer(videoDuration);
+					var significativeNumbers = formatedDuration.split(":").join("").length;
+					if(videoDuration){
+						$("#eVideochapters_duration_value").val(formatedDuration);
+						$("#eVideochapters_duration_value").attr("duration",videoDuration);
+						$("#eVideochapters_duration_value").attr("sN",significativeNumbers);
+						if(videoDuration < 60*60){
+							_disableTimeInput($("#eVideochapters_hours"));
+						} else {
+							_enableTimeInput($("#eVideochapters_hours"));
+						}
+
+						if(videoDuration < 60){
+							_disableTimeInput($("#eVideochapters_minutes"));
+						} else {
+							_enableTimeInput($("#eVideochapters_minutes"));
+						}
+
+						_enableTimeInput($("#eVideochapters_seconds"));
+
+						_onChapterTimeChange();
+
+						//Load chapter values if we are editing an existing one
+						var chapter = _getCurrentChapter();
+						if(typeof chapter != "undefined"){
+							try {
+								var cTime = Math.round(parseFloat($(chapter).attr("etime")));
+							} catch(e) {
+								var cTime = 0;
+							}
+							if(isNaN(cTime)){
+								cTime = 0;
+							}
+							var durationsPerUnit = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit("PT"+ cTime + "S",true);
+							$("#eVideochapters_hours").val(durationsPerUnit[4]);
+							$("#eVideochapters_minutes").val(durationsPerUnit[5]);
+							$("#eVideochapters_seconds").val(durationsPerUnit[6]);
+							_onChapterTimeChange();
+						}
+					}
+				}
 			},
-			"onClosed"  : function(data) {
+			"onComplete" : function(data){
+
+			},
+			"onClosed"  : function(data){
+				$("ul.evideoChapters li").removeClass("selected");
 			}
 		});
 		$(document).on("click", 'button.evideoAddChapterButton:not(.addSlideButtonDisabled)', function(){
+			$("ul.evideoChapters li").removeClass("selected");
 			$(hiddenLinkToAddChapters).trigger("click");
 		});
 
 		//Play button
 		$(document).on("click", '.evideoPlayButtonWrapper', V.EVideo.onClickToggleVideo);
+
+		//Chapter table actions
+		$(document).on('click', 'div.eVideoChapterActions i.icon-edit', _onEditChapter);
+		$(document).on('click', 'div.eVideoChapterActions i.icon-trash', _onRemoveChapter);
+
+		//Chapters screen events
+		$(document).on('change', '#eVideochapters_hours', _onChapterTimeChange);
+		$(document).on('change', '#eVideochapters_minutes', _onChapterTimeChange);
+		$(document).on('change', '#eVideochapters_seconds', _onChapterTimeChange);
+	};
+
+
+	var _disableTimeInput = function(input){
+		$(input).val(0);
+		$(input).attr("readonly","readonly");
+		$(input).parent().find(".tlt_input_title").addClass("tlt_input_title_disabled");
+	};
+
+	var _enableTimeInput = function(input){
+		$(input).val(0);
+		$(input).removeAttr("readonly");
+		$(input).parent().find(".tlt_input_title").removeClass("tlt_input_title_disabled");
+	};
+
+	var _onEditChapter = function(event){
+		var chapter = $("ul.evideoChapters li").has(event.target);
+
+		//Mark chapter has selected
+		$("ul.evideoChapters li").removeClass("selected");
+		$(chapter).addClass("selected");
+
+		//Open chapter edit screen
+		$(hiddenLinkToAddChapters).trigger("click");
+	};
+
+	var _onRemoveChapter = function(event){
+		var chapter = $("ul.evideoChapters li").has(event.target);
+		console.log("On remove chapter");
+		console.log(chapter);
+	};
+
+	var _getCurrentChapter = function(){
+		return $(V.Slides.getCurrentSlide()).find(".evideoChapters li.selected");
+	};
+
+	var _onChapterTimeChange = function(){
+		var cTime = _getEditableChapterTime();
+		if(typeof cTime == "number"){
+			cTime = Math.max(0,Math.min(cTime,parseFloat($("#eVideochapters_duration_value").attr("duration"))));
+			var sN = $("#eVideochapters_duration_value").attr("sN");
+			$("#eVideochapters_current_value").val(V.Utils.fomatTimeForMPlayer(cTime,sN));
+		} else {
+			// $("#eVideochapters_current_value").val(V.I18n.getTrans("i.invalidvalue"));
+			$("#eVideochapters_current_value").val("");
+		}
+	};
+
+	var _getEditableChapterTime = function(){
+		var hours = $("#eVideochapters_hours").val();
+		var minutes = $("#eVideochapters_minutes").val();
+		var seconds = $("#eVideochapters_seconds").val();
+
+		if(jQuery.isNumeric(hours)&&jQuery.isNumeric(minutes)&&jQuery.isNumeric(seconds)){
+			hours = parseInt(hours);
+			minutes = parseInt(minutes);
+			seconds = parseInt(seconds);
+			return ((hours*60+minutes)*60+seconds);
+		}
+
+		return undefined;
 	};
 
 	var getDummy = function(slidesetId,options){
@@ -71,7 +194,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(indexBox).find(".evideoIndexSide").html("");
 		var eVideoIndexBody = $(indexBox).find(".evideoIndexBody");
 		var eVideoIndexBodyActions = $("<div class='evideoIndexBodyActions'></div>");
-		$(eVideoIndexBodyActions).html('<button type="button" class="btn btn-small slidesScrollbarButton evideoAddChapterButton addSlideButtonDisabled"><i class="icon-plus"></i><span>'+V.I18n.getTrans("i.AddChapter")+'</span></button>');
+		$(eVideoIndexBodyActions).html('<button type="button" class="btn btn-small slidesScrollbarButton evideoAddChapterButton addSlideButtonDisabled"><i class="icon-plus"></i><span>'+V.I18n.getTrans("i.AddItem")+'</span></button>');
 		$(eVideoIndexBody).prepend(eVideoIndexBodyActions);	
 
 		return "<article id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/>" + V.Utils.getOuterHTML(videoBox) + V.Utils.getOuterHTML(indexBox) + "</article>";
@@ -159,6 +282,10 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _getCurrentEVideoJSON = function(){
 		return eVideos[$(V.Slides.getCurrentSlide()).attr("id")];
+	};
+
+	var _getCurrentVideo = function(){
+		return V.EVideo.getVideoFromVideoBox($(V.Slides.getCurrentSlide()).find(".evideoBox"));
 	};
 
 	/*

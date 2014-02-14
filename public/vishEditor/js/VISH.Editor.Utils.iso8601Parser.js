@@ -25,7 +25,7 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 
 
 	var getDuration = function(period){
-		var durationPerUnit = getDurationPerUnit(period);
+		var durationPerUnit = getDurationPerUnit(period,true);
 		if(durationPerUnit){
 			var durationInSeconds = 0;
 			var dL = durationPerUnit.length;
@@ -36,23 +36,24 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 		}
 		
 		return null;
-	}
+	};
 
-	var getDurationPerUnit = function(period){
+	var getDurationPerUnit = function(period,distributeOverflow){
+		var distributeOverflow = (typeof distributeOverflow == "boolean") ? distributeOverflow : false;
 		try {
-			var durationPerUnit = _parsePeriodString(period);
+			var durationPerUnit = _parsePeriodString(period,distributeOverflow);
 		} catch (e){
 			return null;
 		}
 		return durationPerUnit;
-	}
+	};
 
    /**
 	* Parses a ISO8601 period string.
 	* @param period iso8601 period string
 	* @param _distributeOverflow if 'true', the unit overflows are merge into the next higher units.
 	*/
-	function _parsePeriodString(period, _distributeOverflow) {
+	function _parsePeriodString(period, _distributeOverflow){
 
 		var distributeOverflow = (_distributeOverflow) ? _distributeOverflow : false;
 		var valueIndexes = [2, 3, 4, 5, 7, 8, 9];

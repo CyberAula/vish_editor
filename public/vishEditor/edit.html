@@ -500,7 +500,7 @@
 						<div id="age_range_wrapper">
 							<div class="range_text"><span i18n-key="i.Age_range">Age range</span>:</div>
 							<div class="slider_wrapper">
-								<input type="text" id="age_range" class="slider_range_input"/>
+								<input type="text" id="age_range" class="slider_range_input" readonly/>
 								<div id="slider-age" class="slider_bar"></div>
 							</div>
 						</div>
@@ -508,14 +508,14 @@
 						<div id="difficulty_wrapper" class="margin_for_new_field_settings">
 							<div class="range_text"><span i18n-key="i.Difficulty">Difficulty</span>:</div>
 							<div class="slider_wrapper">
-								<input type="text" id="difficulty_range" class="slider_range_input"/>
+								<input type="text" id="difficulty_range" class="slider_range_input" readonly/>
 								<div id="slider-difficulty" class="slider_bar"></div>
 							</div>
 						</div>
 
 						<div id="tlt_wrapper" class="margin_for_new_field_settings">
 							<div class="range_text"><span i18n-key="i.Typicallearningtime">Typical learning time</span>:</div>
-							<input type="text" id="tlt_current_value" class="slider_range_input"/>
+							<input type="text" id="tlt_current_value" class="slider_range_input" readonly/>
 							<div class="tlt_inputs_wrapper">
 								<div class="tlt_input_wrapper">
 									<p class="tlt_input_title" i18n-key="i.Hours">Hours</p>
@@ -1299,8 +1299,25 @@
 
 	<!-- Chapters for EVideos -->
 	<div style='display:none'>
-		<div id="chapters_fancybox" class="outer_box">
-			<p> Add Chapters </p>
+		<div id="chapters_fancybox">
+			<div id="eVideochapters_wrapper" class="margin_for_new_field_settings">
+				<div class="range_text"><span i18n-key="i.Time">Time</span>:</div>
+				<input type="text" id="eVideochapters_current_value" class="slider_range_input" readonly/>/<input type="text" id="eVideochapters_duration_value" class="slider_range_input" readonly/>
+				<div class="tlt_inputs_wrapper">
+					<div class="tlt_input_wrapper">
+						<p class="tlt_input_title" i18n-key="i.Hours">Hours</p>
+						<input type="number" value="0" min="0" max="23" id="eVideochapters_hours" class="tlt_input"/>
+					</div>
+					<div class="tlt_input_wrapper">
+						<p class="tlt_input_title" i18n-key="i.Minutes">Minutes</p>
+						<input type="number" value="0" min="0" max="59" id="eVideochapters_minutes" class="tlt_input"/>
+					</div>
+					<div class="tlt_input_wrapper">
+						<p class="tlt_input_title" i18n-key="i.Seconds">Seconds</p>
+						<input type="number" value="0" min="0" max="59" step="1" id="eVideochapters_seconds" class="tlt_input"/>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 

@@ -2723,6 +2723,41 @@ span.ballTimeSpan{
 	text-align: center;
 }
 
+/* Chapter fancybox style */
+
+#chapters_fancybox{
+	font-size: 1.4em;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-weight: 300;
+	padding: 25px;
+}
+
+#eVideochapters_wrapper {
+	height: 75px;
+}
+
+#eVideochapters_current_value {
+	display: inline;
+	width: 55px;
+	margin-left: 4px;
+	margin-right: 1px;
+	text-align: right;
+}
+
+#eVideochapters_duration_value {
+	display: inline;
+	width: 55px;
+	margin-left: 1px;
+	text-align: left;
+}
+
+#eVideochapters_current_value, #eVideochapters_duration_value {
+	font-size: 14px;
+}
+
+.tlt_input_title_disabled, .tlt_input[readonly]{
+	color: #ccc;
+}
 
 /* Toolbar Button styles */
 

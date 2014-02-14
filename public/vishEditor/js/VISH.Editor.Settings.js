@@ -50,7 +50,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
 			V.Editor.API.requestTags(_onInitialTagsReceived);
 		}
-	}
+	};
 
 	var displaySettings = function(){
 		// fancybox to edit presentation settings
@@ -79,7 +79,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		});
 
 		$("a#edit_presentation_details").trigger('click');
-	}
+	};
 
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
@@ -121,7 +121,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Check for enable continue button
 		_checkIfEnableContinueButton();
-	}
+	};
 
 	var loadPresentationSettings = function(presentation){
 		//Prevent to check presentation var in all cases
@@ -212,7 +212,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(presentation.educational_objectives){
 			$("#educational_objectives_textarea").val(presentation.educational_objectives);
 		}		
-	}
+	};
 
 	var _onThemeImagesLoaded = function(){
 
@@ -245,30 +245,30 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//Create scrollbar
 		$("#" + themeScrollbarDivId).show();
 		V.Editor.Scrollbar.createScrollbar(themeScrollbarDivId, options);
-	}
+	};
 
 	var _onClickTheme = function(event){
 		var themeNumber = $(event.target).attr("themeNumber");
 		selectTheme(themeNumber);
-	}
+	};
 
 	var _afterCreateThemesScrollbar = function(){
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 		V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
 		themeScrollbarCreated = true;
-	}
+	};
 
 	var selectTheme = function(themeNumber){
 		$(".theme_selected_in_scrollbar").removeClass("theme_selected_in_scrollbar");
 		$("#scrollbar_themes_list img.image_barbutton[themenumber='"+themeNumber+"']").addClass("theme_selected_in_scrollbar");
 		$(".theme_selected_in_fancybox").removeClass("theme_selected_in_fancybox");
 		$("#theme_fancybox div#select_theme"+themeNumber+" img").addClass("theme_selected_in_fancybox");
-	}
+	};
 
 	var selectAnimation = function(animationNumber){
 		$(".animation_selected_in_fancybox").removeClass("animation_selected_in_fancybox");
 		$("#animation_fancybox div#select_animation"+animationNumber).addClass("animation_selected_in_fancybox");
-	}
+	};
 
 	var _onInitialTagsReceived = function(data){
 		tagsLoaded = true;
@@ -299,18 +299,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
-	}
+	};
 
 	var onChangeThumbnailClicked = function(){
 		$("#editthumb").hide();
 		$("#hidden_button_to_uploadThumbnail").trigger("click");
-	}
+	};
 
 	var onThumbnailSelected = function(thumbnail_url){
 		V.Editor.Settings.displaySettings(); //Hide previous fancybox
 		_addThumbnail(thumbnail_url);
 		_checkIfEnableContinueButton();
-	}
+	};
 
 	var _addThumbnail = function(thumbnail_url){
 		var thumbnail_wrapper = $("#presentation_details_preview_thumbnail");
@@ -319,7 +319,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$(thumbnail).attr("src",thumbnail_url);
 		$(thumbnail_wrapper).find("p.addthumbtitle").hide();
 		presentationThumbnail = thumbnail_url;
-	}
+	};
 
 	var onKeyUpOnTitle = function(event){
 		var inputData = $("#presentation_details_input_title");
@@ -332,7 +332,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(inputPreview).val("");
 		}
 		_checkIfEnableContinueButton();
-	}
+	};
 
 	var onKeyUpOnPreviewTitle = function(event){
 		var inputData = $("#presentation_details_input_title");
@@ -345,7 +345,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(inputData).val("");
 		}
 		_checkIfEnableContinueButton();
-	}
+	};
 
 	var onTLTchange = function(){
 		var TLT = _getTLT();
@@ -356,7 +356,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		} else if(typeof TLT == "string"){
 			$("#tlt_current_value").val(TLT);
 		}
-	}
+	};
 
 	var _checkIfEnableContinueButton = function(){
 		var enable = checkMandatoryFields();
@@ -372,7 +372,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#save_presentation_details").addClass("buttonDisabledOnSettings");
 			$("#save_presentation_details").attr("disabled","true");
 		}
-	}
+	};
 
 	var checkMandatoryFields = function(){
 		//Check that mandatory params are filled appropiately.
@@ -386,7 +386,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			return false;
 		}
 		return true;
-	}
+	};
 
 	/**
 	 * function called when the user clicks on the save button
@@ -547,7 +547,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 		return null;
-	}
+	};
 
 	var getTags = function(){
 		var tagIndex = $("#tagindex");
