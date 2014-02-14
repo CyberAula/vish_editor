@@ -502,6 +502,7 @@ input.slider_range_input {
 	height: 151px;
 	margin-top: 10px;
 	margin-left: 46px;
+	resize: none;
 }
 
 #presentationdetails .ui-state-default, #presentationdetails .ui-widget-content .ui-state-default, #presentationdetails .ui-widget-header .ui-state-default { 
@@ -2732,7 +2733,7 @@ span.ballTimeSpan{
 	padding: 25px;
 }
 
-#eVideochapters_wrapper {
+#eVideoChaptersTime_wrapper {
 	height: 75px;
 }
 
@@ -2757,6 +2758,40 @@ span.ballTimeSpan{
 
 .tlt_input_title_disabled, .tlt_input[readonly]{
 	color: #ccc;
+}
+
+#eVideoChaptersName_wrapper{
+
+}
+
+#eVideoChaptersTextArea{
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 1.2rem;
+	width: 100%;
+	height: 35px;
+	margin-top: 5px;
+	margin-left: 0px;
+	resize: none;
+}
+
+#eVideoChaptersBall_wrapper {
+	margin-top: 20px;
+	font-size: 15px;
+}
+
+span.letterInChapterDialog {
+	font-weight: bold;
+}
+
+#eVideoChaptersButtons_wrapper{
+	position: absolute;
+	bottom: 25px;
+	right: 20px;
+	font-size: 13px;
+}
+
+#eVideoChaptersButtons_wrapper a.button {
+	margin-left: 10px;
 }
 
 /* Toolbar Button styles */

@@ -46,13 +46,22 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		hiddenLinkToAddChapters = $('<a href="#chapters_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddChapters).fancybox({
 			'autoDimensions' : false,
-			'height': 400,
+			'height': 330,
 			'width': 400,
 			'scrolling': 'no',
+			'showCloseButton': false,
 			'padding' : 0,
 			"onStart"  : function(data){
 								var currentVideo = _getCurrentVideo();
 				if(currentVideo){
+
+					//Title field
+					$("#eVideoChaptersTextArea").val("");
+
+					//Ball field
+					$("#eVideoChaptersBall_wrapper").hide();
+
+					//Time field
 					var videoDuration = V.Video.getDuration(currentVideo);
 					var formatedDuration = V.Utils.fomatTimeForMPlayer(videoDuration);
 					var significativeNumbers = formatedDuration.split(":").join("").length;
@@ -75,25 +84,40 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 						_enableTimeInput($("#eVideochapters_seconds"));
 
 						_onChapterTimeChange();
-
-						//Load chapter values if we are editing an existing one
-						var chapter = _getCurrentChapter();
-						if(typeof chapter != "undefined"){
-							try {
-								var cTime = Math.round(parseFloat($(chapter).attr("etime")));
-							} catch(e) {
-								var cTime = 0;
-							}
-							if(isNaN(cTime)){
-								cTime = 0;
-							}
-							var durationsPerUnit = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit("PT"+ cTime + "S",true);
-							$("#eVideochapters_hours").val(durationsPerUnit[4]);
-							$("#eVideochapters_minutes").val(durationsPerUnit[5]);
-							$("#eVideochapters_seconds").val(durationsPerUnit[6]);
-							_onChapterTimeChange();
-						}
 					}
+
+					//Load chapter values if we are editing an existing one
+					var chapter = _getCurrentChapter();
+					if(typeof chapter != "undefined"){
+						//Title field
+						var titleName = $(chapter).find(".eVideoIndexEntryBody").html();
+						if(typeof titleName == "string"){
+							$("#eVideoChaptersTextArea").val(titleName);
+						}
+
+						//Ball field
+						var ball = balls[$(chapter).attr("ballid")];
+						if((typeof ball != "undefined")&&(typeof ball.letter == "string")){
+							$("#eVideoChaptersBall_wrapper").find("span").html(VISH.I18n.getTrans("i.ItemAndBall", {letter: "<span class='letterInChapterDialog'>"+ball.letter+"</span>"}));
+							$("#eVideoChaptersBall_wrapper").show();
+						}
+
+						//Time field
+						try {
+							var cTime = Math.round(parseFloat($(chapter).attr("etime")));
+						} catch(e) {
+							var cTime = 0;
+						}
+						if(isNaN(cTime)){
+							cTime = 0;
+						}
+						var durationsPerUnit = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit("PT"+ cTime + "S",true);
+						$("#eVideochapters_hours").val(durationsPerUnit[4]);
+						$("#eVideochapters_minutes").val(durationsPerUnit[5]);
+						$("#eVideochapters_seconds").val(durationsPerUnit[6]);
+						_onChapterTimeChange();
+					}
+
 				}
 			},
 			"onComplete" : function(data){
@@ -119,8 +143,12 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(document).on('change', '#eVideochapters_hours', _onChapterTimeChange);
 		$(document).on('change', '#eVideochapters_minutes', _onChapterTimeChange);
 		$(document).on('change', '#eVideochapters_seconds', _onChapterTimeChange);
-	};
 
+		$(document).on('click', '#eVideoChaptersButtons_wrapper a[buttonaction="Ok"]', _onAddChapter);
+		$(document).on('click', '#eVideoChaptersButtons_wrapper a[buttonaction="Cancel"]', function(){
+			$.fancybox.close();
+		});
+	};
 
 	var _disableTimeInput = function(input){
 		$(input).val(0);
@@ -181,6 +209,12 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		return undefined;
 	};
+
+	var _onAddChapter = function(){
+		console.log("Add Chapter");
+		$.fancybox.close();
+	};
+
 
 	var getDummy = function(slidesetId,options){
 		var videoBox = V.EVideo.renderVideoBoxDummy();

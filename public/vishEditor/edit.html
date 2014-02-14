@@ -1300,7 +1300,16 @@
 	<!-- Chapters for EVideos -->
 	<div style='display:none'>
 		<div id="chapters_fancybox">
-			<div id="eVideochapters_wrapper" class="margin_for_new_field_settings">
+			<div>
+				<div id="eVideoChaptersName_wrapper">
+					<span i18n-key="i.Title">Title</span>
+				</div>
+				<textarea id='eVideoChaptersTextArea' maxlength="200"></textarea>
+			</div>
+			<div id="eVideoChaptersBall_wrapper" style='display:none'>
+				<span></span>
+			</div>
+			<div id="eVideoChaptersTime_wrapper" class="margin_for_new_field_settings">
 				<div class="range_text"><span i18n-key="i.Time">Time</span>:</div>
 				<input type="text" id="eVideochapters_current_value" class="slider_range_input" readonly/>/<input type="text" id="eVideochapters_duration_value" class="slider_range_input" readonly/>
 				<div class="tlt_inputs_wrapper">
@@ -1317,6 +1326,10 @@
 						<input type="number" value="0" min="0" max="59" step="1" id="eVideochapters_seconds" class="tlt_input"/>
 					</div>
 				</div>
+			</div>
+			<div id="eVideoChaptersButtons_wrapper">
+				<a href="#" buttonaction="Ok" class="button notification_button">Ok</a>
+				<a href="#" buttonaction="Cancel" class="button notification_button">Cancel</a>
 			</div>
 		</div>
 	</div>
