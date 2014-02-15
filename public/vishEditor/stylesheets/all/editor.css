@@ -2637,23 +2637,23 @@ div.eVideoChapterActions p.icon-trash-container {
 	margin-left: 1px;
 }
 
-.evideoChapters li {
+section.slides_editor .evideoChapters li {
 	cursor: default !important;
 }
 
-.evideoChapters li:hover {
+section.slides_editor .evideoChapters li:hover {
 	background-color: transparent !important;
 }
 
-.evideoChapters li:hover span.eVideoIndexEntryNumber {
+section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryNumber {
 	color: #7C7C7C !important;
 }
 
-.evideoChapters li:hover span.eVideoIndexEntryBody {
+section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryBody {
 	color: black !important;
 }
 
-.evideoChapters li.active {
+section.slides_editor .evideoChapters li.active {
 	background-color: #E9E9E9;
 }
 
@@ -2694,11 +2694,11 @@ div.eVideoChapterActions p.icon-trash-container {
 	width: 100%;
 }
 
-div.ballWrapper div.ballLine {
+section.slides_editor div.ballWrapper div.ballLine {
 	height: 50% !important;
 }
 
-div.ballWrapper div.ballImg {
+section.slides_editor div.ballWrapper div.ballImg {
 	top: 42% !important;
 }
 
