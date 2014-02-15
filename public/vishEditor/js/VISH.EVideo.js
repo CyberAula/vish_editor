@@ -15,6 +15,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var _displayVol = true;
 	
 	var _lastVideoEndedCall;
+	var MIN_TIME_BETWEEN_TOGGLE_INDEX = 1600;
 
 	var initialized = false;
 
@@ -49,8 +50,8 @@ VISH.EVideo = (function(V,$,undefined){
 			});
 		}
 
-		$(document).on("click", '.evideoToggleIndex.maximized, .evideoIndexSide.maximized', _minimizeIndex);
-		$(document).on("click", '.evideoToggleIndex.minimized, .evideoIndexSide.minimized', _maximizeIndex);
+		$(document).on("click", '.evideoToggleIndex.maximized:not(.disabled), .evideoIndexSide.maximized:not(.disabled)', _minimizeIndex);
+		$(document).on("click", '.evideoToggleIndex.minimized:not(.disabled), .evideoIndexSide.minimized:not(.disabled)', _maximizeIndex);
 		$(document).on("click", '.evideoChapters li', _onClickChapter);
 		$(document).on("click", 'div.ballWrapper div.ballImg', _onClickBall);
 
@@ -205,7 +206,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var renderIndexBoxDummy = function(){
 		var indexBox = $("<div class='evideoIndexBox'></div>");
-		var indexSide = $("<div class='evideoIndexSide maximized'><div class='evideoToggleIndex maximized'></div></div>");
+		var indexSide = $("<div class='evideoIndexSide maximized disabled'><div class='evideoToggleIndex maximized disabled'></div></div>");
 		var indexBody = $("<div class='evideoIndexBody'><ul class='evideoChapters'></ul></div>");
 		$(indexBox).append(indexBody);
 		$(indexBox).append(indexSide);
@@ -313,7 +314,6 @@ VISH.EVideo = (function(V,$,undefined){
 		if(videoType==V.Constant.Video.Youtube){
 			onTimeUpdate(video,0);
 		};
-		
 	};
 
 	var fitVideoInVideoBox = function(videoBox){
@@ -379,6 +379,11 @@ VISH.EVideo = (function(V,$,undefined){
 			$(item).html("<span class='eVideoIndexEntryNumber'>"+ (index+1) + ". " + "</span><span class='eVideoIndexEntryBody'>" + ball.name + "</span>");
 			$(eVideoChapters).append(item);
 		});
+
+		var indexSide = $(indexBody).find(".evideoIndexSide");
+		var toggleIndexButton = $(indexSide).find(".evideoToggleIndex");
+		$(indexSide).removeClass("disabled");
+		$(toggleIndexButton).removeClass("disabled");
 	};
 
 	/* Events */
@@ -415,7 +420,7 @@ VISH.EVideo = (function(V,$,undefined){
 				return;
 			}
 		}
-		_lastVideoEndedCall = Date.now();
+		_lastVideoEndedCall = dN;
 
 		//OnVideoEnded
 		_updateCurrentTime(video,V.Video.getDuration(video));
@@ -589,6 +594,11 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _minimizeIndex = function(event){
 		event.stopPropagation();
+
+		if(V.Utils.delayFunction("toggleIndexCall",function(){_minimizeIndex(event)}, MIN_TIME_BETWEEN_TOGGLE_INDEX)){
+			return;
+		}
+
 		var eVideoIndexBox = $(".evideoIndexBox").has(event.target);
 		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
 		$(eVideoIndexBox).find(".evideoChapters li").hide();
@@ -606,8 +616,13 @@ VISH.EVideo = (function(V,$,undefined){
 		_redimensionateVideoAfterIndex(eVideoBox);
 	};
 
-	var _maximizeIndex = function(){
+	var _maximizeIndex = function(event){
 		event.stopPropagation();
+
+		if(V.Utils.delayFunction("toggleIndexCall",function(){_maximizeIndex(event)}, MIN_TIME_BETWEEN_TOGGLE_INDEX)){
+			return;
+		}
+
 		var eVideoIndexBox = $(".evideoIndexBox").has(event.target);
 		var indexBody = $(eVideoIndexBox).find(".evideoIndexBody");
 		var animationId = V.Utils.getId("animation");

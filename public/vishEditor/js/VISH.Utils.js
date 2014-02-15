@@ -1153,6 +1153,41 @@ VISH.Utils = (function(V,undefined){
 	};
 	
 
+
+
+	var delayedFunctionTimestamps = {};
+	var delayedFunctionTimers = {};
+
+	/* 
+	 * Prevent multiple calls to the same function in a time period 
+	 */
+	 var delayFunction = function(functionId,callbackFunction,PERIOD){
+		var dN = Date.now();
+		// var timeStamp = delayedFunctionTimestamps[functionId];
+		// var timer = delayedFunctionTimers[functionId];
+
+		if(typeof delayedFunctionTimestamps[functionId] != "undefined"){
+			var diff = dN - delayedFunctionTimestamps[functionId];
+			if(diff < PERIOD){
+				if(typeof delayedFunctionTimers[functionId] == "undefined"){
+					delayedFunctionTimers[functionId] = setTimeout(function(){
+						delayedFunctionTimers[functionId] = undefined;
+						callbackFunction();
+					},PERIOD-diff);
+				}
+				return true;
+			}
+		}
+
+		if(typeof delayedFunctionTimers[functionId] != "undefined"){
+			clearTimeout(delayedFunctionTimers[functionId]);
+			delayedFunctionTimers[functionId] = undefined;
+		}
+		delayedFunctionTimestamps[functionId] = dN;
+
+		return false;
+	 };
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -1186,7 +1221,8 @@ VISH.Utils = (function(V,undefined){
 		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash,
 		checkAnimationsFinish	: checkAnimationsFinish,
-		fomatTimeForMPlayer		: fomatTimeForMPlayer
+		fomatTimeForMPlayer		: fomatTimeForMPlayer,
+		delayFunction 			: delayFunction
 	};
 
 }) (VISH);

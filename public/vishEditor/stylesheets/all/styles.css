@@ -1890,7 +1890,6 @@ div.ballWrapper div.ballImg:active {
 	left: 5px;
 	float: left;
 	text-align: right;
-	cursor: pointer;
 	background: transparent;
 	background-image: url("/vishEditor/images/vicons/arrows_eVideo.png");
 	background-repeat: no-repeat;
@@ -1898,20 +1897,36 @@ div.ballWrapper div.ballImg:active {
 	z-index: 1;
 }
 
-.evideoToggleIndex .minimized {
+.evideoToggleIndex:not(.disabled){
+	cursor: pointer;
+}
+
+.evideoToggleIndex.disabled{
+	cursor: default;
+}
+
+.evideoToggleIndex .minimized:not(.disabled) {
 	background-position: 0 0%;
 }
 
-.evideoToggleIndex.maximized {
+.evideoToggleIndex.maximized:not(.disabled) {
 	background-position: 0 40%;
 }
 
-.evideoToggleIndex.maximized:hover {
+.evideoToggleIndex.maximized:not(.disabled):hover {
 	background-position: 0 50%;
 }
 
-.evideoToggleIndex.maximized:active {
+.evideoToggleIndex.maximized:not(.disabled):active {
 	background-position: 0 60%;
+}
+
+.evideoToggleIndex.maximized.disabled {
+	background-position: 0 70%;
+}
+
+.evideoToggleIndex.minimized.disabled {
+	background-position: 0 30%;
 }
 
 .evideoChapters {
