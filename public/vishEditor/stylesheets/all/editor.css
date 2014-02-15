@@ -2736,6 +2736,11 @@ span.ballTimeSpan{
 
 #eVideoChaptersTime_wrapper {
 	height: 75px;
+	color: black;
+}
+
+#eVideoChaptersTime_wrapper span.evideoTimeSlash {
+	color: #808080;
 }
 
 #eVideochapters_current_value {
@@ -2744,6 +2749,7 @@ span.ballTimeSpan{
 	margin-left: 4px;
 	margin-right: 1px;
 	text-align: right;
+	color: black;
 }
 
 #eVideochapters_duration_value {
@@ -2751,6 +2757,7 @@ span.ballTimeSpan{
 	width: 55px;
 	margin-left: 1px;
 	text-align: left;
+	color: #808080;
 }
 
 #eVideochapters_current_value, #eVideochapters_duration_value {

@@ -52,7 +52,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			'showCloseButton': false,
 			'padding' : 0,
 			"onStart"  : function(data){
-								var currentVideo = _getCurrentVideo();
+				var currentVideo = _getCurrentVideo();
 				if(currentVideo){
 
 					//Title field
@@ -140,11 +140,10 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(document).on('click', 'div.eVideoChapterActions i.icon-trash', _onRemoveChapter);
 
 		//Chapters screen events
-		$(document).on('change', '#eVideochapters_hours', _onChapterTimeChange);
-		$(document).on('change', '#eVideochapters_minutes', _onChapterTimeChange);
-		$(document).on('change', '#eVideochapters_seconds', _onChapterTimeChange);
+		$(document).on('keyup', '#eVideochapters_hours, #eVideochapters_minutes, #eVideochapters_seconds', _onChapterTimeChange);
+		$(document).on('change', '#eVideochapters_hours, #eVideochapters_minutes, #eVideochapters_seconds', _onChapterTimeChange);
 
-		$(document).on('click', '#eVideoChaptersButtons_wrapper a[buttonaction="Ok"]', _onAddChapter);
+		$(document).on('click', '#eVideoChaptersButtons_wrapper a[buttonaction="Add"]', _onAddChapter);
 		$(document).on('click', '#eVideoChaptersButtons_wrapper a[buttonaction="Cancel"]', function(){
 			$.fancybox.close();
 		});
@@ -180,10 +179,15 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _getCurrentChapter = function(){
-		return $(V.Slides.getCurrentSlide()).find(".evideoChapters li.selected");
+		return $(V.Slides.getCurrentSlide()).find(".evideoChapters li.selected")[0];
 	};
 
-	var _onChapterTimeChange = function(){
+	var _onChapterTimeChange = function(event){
+		if((event)&&(event.keyCode===13)){
+			$(event.target).blur();
+			return;
+		}
+
 		var cTime = _getEditableChapterTime();
 		if(typeof cTime == "number"){
 			cTime = Math.max(0,Math.min(cTime,parseFloat($("#eVideochapters_duration_value").attr("duration"))));
@@ -211,7 +215,23 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _onAddChapter = function(){
-		console.log("Add Chapter");
+		var chaptersFancy = $("#chapters_fancybox");
+		var title = $(chaptersFancy).find("#eVideoChaptersTextArea").val();
+		var time = _getEditableChapterTime();
+
+		if((typeof title != "string")||(title.trim()=="")){
+			title = V.I18n.getTrans("i.Untitled");
+		}
+
+		var chapter = _getCurrentChapter();
+		if(chapter){
+			//Edit existing chapter
+			
+		} else {
+			//Add new chapter (always without a slide associated)
+			
+		}
+
 		$.fancybox.close();
 	};
 

@@ -41,9 +41,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();
 				$.fancybox.close();
 			});
-			$(document).on('change', '#tlt_hours', V.Editor.Settings.onTLTchange);
-			$(document).on('change', '#tlt_minutes', V.Editor.Settings.onTLTchange);
-			$(document).on('change', '#tlt_seconds', V.Editor.Settings.onTLTchange);
+			$(document).on('change', '#tlt_hours, #tlt_minutes, #tlt_seconds', V.Editor.Settings.onTLTchange);
+			$(document).on('keyup', '#tlt_hours, #tlt_minutes, #tlt_seconds', V.Editor.Settings.onTLTchange);
 			$(document).on('click', '#save_presentation_details', V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 			
 			$(document).on('click','div.templatethumb', V.Editor.onSlideThumbClicked);

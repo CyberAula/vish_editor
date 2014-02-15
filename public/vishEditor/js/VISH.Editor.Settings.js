@@ -357,7 +357,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 	};
 
-	var onTLTchange = function(){
+	var onTLTchange = function(event){
+		if((event)&&(event.keyCode===13)){
+			$(event.target).blur();
+			return;
+		}
+
 		var TLT = _getTLT();
 		if(TLT===null){
 			$("#tlt_current_value").val(V.I18n.getTrans("i.invalidvalue"));
