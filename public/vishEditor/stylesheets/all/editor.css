@@ -158,6 +158,7 @@ p.presentation_details_column_title {
 }
 
 #presentation_details_preview_author {
+	cursor: default;
 	padding: 5px;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1em;

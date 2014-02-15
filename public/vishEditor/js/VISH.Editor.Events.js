@@ -7,7 +7,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var ctrlDown = false;
 
 
-	var init = function() {
+	var init = function(){
 		bindEditorEventListeners();
 	};
 
@@ -32,6 +32,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 					$("#editthumb").slideUp();
 				}
 			});
+			
 			$(document).on('keyup', '#presentation_details_input_title', V.Editor.Settings.onKeyUpOnTitle);
 			$(document).on('keyup', '#presentation_details_preview_addtitle_input', V.Editor.Settings.onKeyUpOnPreviewTitle);
 			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);

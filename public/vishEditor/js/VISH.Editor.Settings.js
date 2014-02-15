@@ -332,6 +332,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(inputPreview).val("");
 		}
 		_checkIfEnableContinueButton();
+
+		if(event.keyCode===13){
+			//Enter key
+			$(inputData).blur();
+		}
 	};
 
 	var onKeyUpOnPreviewTitle = function(event){
@@ -345,6 +350,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(inputData).val("");
 		}
 		_checkIfEnableContinueButton();
+
+		if(event.keyCode===13){
+			//Enter key
+			$(inputPreview).blur();
+		}
 	};
 
 	var onTLTchange = function(){
