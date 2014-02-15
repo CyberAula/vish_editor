@@ -452,7 +452,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(chapterList).each(function(value,li){
 			var ballId = $(li).attr("ballid");
 			var ballLetter = balls[ballId].letter;
-			$(li).find(".eVideoIndexEntryNumber").html((value+1) + " (" + ballLetter + "). ");
+			if(typeof ballLetter == "string"){
+				$(li).find(".eVideoIndexEntryNumber").html((value+1) + " (" + ballLetter + "). ");
+			}
 		});
 	};
 
@@ -462,7 +464,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		var duration = V.Video.getDuration(videoDOM);
 
 		$(eVideoJSON.balls).each(function(index,ball){
-			_drawBall(eVideoDOM,eVideoJSON,ball,duration);
+			if(typeof ball.slide_id != "undefined"){
+				_drawBall(eVideoDOM,eVideoJSON,ball,duration);
+			}
 		});
 
 		var videoFooter = $(videoBox).find(".evideoFooter");

@@ -388,35 +388,23 @@ VISH.EVideo = (function(V,$,undefined){
 		$(indexSide).removeClass("disabled");
 		$(toggleIndexButton).removeClass("disabled");
 
-		// //Hover events
-		// if(!V.Editing){
-		// 	$(eVideoChapters).find("li").hover(function(event){
-		// 		var ballId = $(event.target).attr("ballId");
-		// 		var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+ballId+"']");
-				
-		// 		if(ballWrapper.length == 0){
-		// 			//Look for a group ball
-		// 			var groupBallsWrapper = $(eVideoDOM).find(".ballWrapper[ballgroup='true']");
-		// 			$(groupBallsWrapper).each(function(value,gBall){
-		// 				var rBalls;
-		// 				try {
-		// 					rBalls = JSON.parse($(gBall).attr("rBalls"));
-		// 				} catch(e) {}
-		// 				if(typeof rBalls == "object"){
-		// 					if(rBalls.indexOf(ballId)!=-1){
-		// 						ballWrapper = gBall;
-		// 						return false;
-		// 					}
-		// 				}
-		// 			});
-		// 		}
-		// 		$(ballWrapper).addClass("selected");
-		// 	}, function(event){
-		// 		var ballId = $(event.target).attr("ballId");
-		// 		var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+ballId+"']");
-		// 		$(ballWrapper).removeClass("selected");
-		// 	});
-		// }
+		//Hover events
+		if(!V.Editing){
+			$(eVideoChapters).find("li").hover(function(event){
+				var representedBallId = $(event.target).attr("representedBallId");
+				var target = (typeof representedBallId == "string") ? event.target : $(event.target).parent();
+				representedBallId = $(target).attr("representedBallId");
+				var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+representedBallId+"']");
+				$(".ballWrapper").removeClass("selected");
+				$(ballWrapper).addClass("selected");
+			}, function(event){
+				var representedBallId = $(event.target).attr("representedBallId");
+				var target = (typeof representedBallId == "string") ? event.target : $(event.target).parent();
+				representedBallId = $(target).attr("representedBallId");
+				var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+representedBallId+"']");
+				$(ballWrapper).removeClass("selected");
+			});
+		}
 	};
 
 	/* Events */
@@ -755,6 +743,20 @@ VISH.EVideo = (function(V,$,undefined){
 
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		$(videoBox).find(".ballWrapper").height($(videoFooter).height());
+
+		//Hover events
+		$(progressBarWrapper).find(".ballWrapper").hover(function(event){
+			var target = ($(event.target).hasClass("ballWrapper")) ? event.target : $(event.target).parent();
+			var ballId = $(target).attr("ballId");
+			var chapter = $(eVideoDOM).find("ul.evideoChapters li[representedballid='"+ballId+"']");
+			$(".ul.evideoChapters li").removeClass("hover");
+			$(chapter).addClass("hover");
+		}, function(event){
+			var target = ($(event.target).hasClass("ballWrapper")) ? event.target : $(event.target).parent();
+			var ballId = $(target).attr("ballId");
+			var chapter = $(eVideoDOM).find("ul.evideoChapters li[representedballid='"+ballId+"']");
+			$(chapter).removeClass("hover");
+		});
 	};
 
 	var _lastLeft;
@@ -789,8 +791,38 @@ VISH.EVideo = (function(V,$,undefined){
 		_lastDrawedBallWrapper = ballWrapper;
 	};
 
-	var _linkChaptersAndBalls = function(){
+	var _linkChaptersAndBalls = function(eVideoDOM,eVideoJSON){
+		var indexBody = $(eVideoDOM).find(".evideoIndexBox");
+		var eVideoChapters = $(indexBody).find(".evideoChapters li");
 
+		//Add ball references to chapters
+		$(eVideoChapters).each(function(index,li){
+			var ballId = $(li).attr("ballId");
+			var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+ballId+"']");
+			if(ballWrapper.length == 0){
+				//Look for a group ball
+				var groupBallsWrapper = $(eVideoDOM).find(".ballWrapper[ballgroup='true']");
+				$(groupBallsWrapper).each(function(value,gBall){
+					var rBalls;
+					try {
+						rBalls = JSON.parse($(gBall).attr("rBalls"));
+					} catch(e) {}
+					if(typeof rBalls == "object"){
+						if(rBalls.indexOf(ballId)!=-1){
+							ballWrapper = gBall;
+							return false;
+						}
+					}
+				});
+			}
+			var representedBallId = $(ballWrapper).attr("ballid");
+			if(typeof representedBallId == "string"){
+				$(li).attr("representedBallId",representedBallId);
+			}
+		});
+
+		//Add chapter references to balls
+		//TODO. May be not neccesary.
 	};
 
 	/* Ball Management */

@@ -1824,7 +1824,6 @@ div.ballWrapper{
 
 div.ballWrapper.selected {
 	opacity: 0.6;
-	background: red;
 }
 
 div.ballWrapper div.ballLine{
@@ -1954,7 +1953,7 @@ div.ballWrapper div.ballImg:active {
 	cursor: pointer;
 }
 
-.evideoChapters li:hover {
+.evideoChapters li:hover, .evideoChapters li.hover {
 	background-color: #E9E9E9;
 }
 
@@ -1966,7 +1965,7 @@ div.ballWrapper div.ballImg:active {
 	color: black;
 }
 
-.evideoChapters li:hover span.eVideoIndexEntryNumber, .evideoChapters li:hover span.eVideoIndexEntryBody {
+.evideoChapters li:hover span.eVideoIndexEntryNumber, .evideoChapters li:hover span.eVideoIndexEntryBody, .evideoChapters li.hover span.eVideoIndexEntryNumber, .evideoChapters li.hover span.eVideoIndexEntryBody {
 	color: #075b77 !important;
 }
 
