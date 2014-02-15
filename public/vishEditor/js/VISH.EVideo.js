@@ -310,6 +310,9 @@ VISH.EVideo = (function(V,$,undefined){
 		//7. Render balls
 		_renderBalls(eVideoDOM,eVideos[eVideoId]);
 
+		//8. Link chapters and balls
+		_linkChaptersAndBalls(eVideoDOM,eVideos[eVideoId]);
+
 		//Fire initial onTimeUpdate event for YouTube videos. (The same as HTML5 videos)
 		if(videoType==V.Constant.Video.Youtube){
 			onTimeUpdate(video,0);
@@ -384,6 +387,36 @@ VISH.EVideo = (function(V,$,undefined){
 		var toggleIndexButton = $(indexSide).find(".evideoToggleIndex");
 		$(indexSide).removeClass("disabled");
 		$(toggleIndexButton).removeClass("disabled");
+
+		// //Hover events
+		// if(!V.Editing){
+		// 	$(eVideoChapters).find("li").hover(function(event){
+		// 		var ballId = $(event.target).attr("ballId");
+		// 		var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+ballId+"']");
+				
+		// 		if(ballWrapper.length == 0){
+		// 			//Look for a group ball
+		// 			var groupBallsWrapper = $(eVideoDOM).find(".ballWrapper[ballgroup='true']");
+		// 			$(groupBallsWrapper).each(function(value,gBall){
+		// 				var rBalls;
+		// 				try {
+		// 					rBalls = JSON.parse($(gBall).attr("rBalls"));
+		// 				} catch(e) {}
+		// 				if(typeof rBalls == "object"){
+		// 					if(rBalls.indexOf(ballId)!=-1){
+		// 						ballWrapper = gBall;
+		// 						return false;
+		// 					}
+		// 				}
+		// 			});
+		// 		}
+		// 		$(ballWrapper).addClass("selected");
+		// 	}, function(event){
+		// 		var ballId = $(event.target).attr("ballId");
+		// 		var ballWrapper = $(eVideoDOM).find(".ballWrapper[ballid='"+ballId+"']");
+		// 		$(ballWrapper).removeClass("selected");
+		// 	});
+		// }
 	};
 
 	/* Events */
@@ -518,7 +551,8 @@ VISH.EVideo = (function(V,$,undefined){
 
 		var options;
 		var ballId = $(chapter).attr("ballid");
-		if(typeof ballId == "string"){
+		var ball = getBallOfEVideo(_getJSONFromVideo(video),ballId);
+		if(typeof ball.slide_id != "undefined"){
 			//The chapter points to a ball
 			options = {
 				"nextBallId" : ballId
@@ -714,7 +748,9 @@ VISH.EVideo = (function(V,$,undefined){
 
 		_lastLeft = undefined;
 		$(eVideoJSON.balls).each(function(value,ball){
-			_drawBall(ball,progressBarWrapper,duration);
+			if(typeof ball.slide_id != "undefined"){
+				_drawBall(ball,progressBarWrapper,duration);
+			}
 		});
 
 		var videoFooter = $(videoBox).find(".evideoFooter");
@@ -722,21 +758,40 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _lastLeft;
+	var _lastDrawedBallWrapper;
 	var _drawBall = function(ball,progressBarWrapper,duration){
 		var left = (ball.etime*100/duration);
 
 		if(typeof _lastLeft != "undefined"){
 			if(left - _lastLeft < RANGE_BETWEEN_BALLS){
+
+				//Look for the last drawed ball to represent this ball
+				if(typeof _lastDrawedBallWrapper != "undefined"){
+					$(_lastDrawedBallWrapper).attr("ballGroup","true");
+					var rBalls;
+					try {
+						rBalls = JSON.parse($(_lastDrawedBallWrapper).attr("rBalls"));
+					} catch (e){}
+					if(typeof rBalls == "undefined"){
+						rBalls = [];
+					}
+					rBalls.push(ball.id);
+					$(_lastDrawedBallWrapper).attr("rBalls",JSON.stringify(rBalls));
+				}
 				return;
 			}
 		}
 		_lastLeft = left;
 
-		var ballWrapper = $("<div class='ballWrapper'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'></div></div>");
+		var ballWrapper = $("<div class='ballWrapper' ballid='"+ball.id+"'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'></div></div>");
 		$(ballWrapper).css("left",left+"%");
 		$(progressBarWrapper).append(ballWrapper);
+		_lastDrawedBallWrapper = ballWrapper;
 	};
 
+	var _linkChaptersAndBalls = function(){
+
+	};
 
 	/* Ball Management */
 
@@ -755,12 +810,12 @@ VISH.EVideo = (function(V,$,undefined){
 		var lookForNextBallId = ((options)&&(options.nextBallId));
 		$(eVideos[eVideoId].balls).each(function(index,ball){
 			if(lookForNextBallId){
-				if(ball.id === options.nextBallId){
+				if((ball.id === options.nextBallId)&&(typeof ball.slide_id != "undefined")){
 					nextBall = ball;
 					return false;
 				}
 			} else {
-				if((ball.etime >= cTime)&&(eVideos[eVideoId].prevBalls.indexOf(ball)==-1)){
+				if(((typeof ball.slide_id != "undefined"))&&(ball.etime >= cTime)&&(eVideos[eVideoId].prevBalls.indexOf(ball)==-1)){
 					nextBall = ball;
 					return false;
 				}
@@ -863,6 +918,17 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _getJSONFromVideo = function(video){
 		return eVideos[$(video).attr("evideoid")];
+	};
+
+	var getBallOfEVideo = function(eVideoJSON,ballId){
+		var bL = eVideoJSON.balls.length;
+		for(var i=0; i<bL; i++){
+			var ball = eVideoJSON.balls[i];
+			if(ball.id==ballId){
+				return ball;
+			}
+		};
+		return undefined;
 	};
 
 	return {

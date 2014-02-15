@@ -1127,6 +1127,10 @@ VISH.Samples = (function(V,undefined){
 						"slide_id":"article2_article3",
 						"name": "Curiosity Wikipedia at 62"
 					},{
+						"id":"article2_poi5",
+						"etime": "120",
+						"name": "No ball at 120"
+					},{
 						"id":"article2_poi4",
 						"etime": "174",
 						"slide_id":"article2_article4",

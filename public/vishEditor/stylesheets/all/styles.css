@@ -1822,6 +1822,11 @@ div.ballWrapper{
 	text-align: center;
 }
 
+div.ballWrapper.selected {
+	opacity: 0.6;
+	background: red;
+}
+
 div.ballWrapper div.ballLine{
 	width: 25%; /* Line width */
   	background-color: rgb(156, 156, 156); /* Line color */
