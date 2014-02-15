@@ -1007,7 +1007,7 @@ VISH.Samples = (function(V,undefined){
 					"type":"HTML5",
 					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/1342.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/325.mp4\"}]",
 					"poster":"http://vishub.org/videos/1342.png?style=170x127%23",
-					"duration": 24.066
+					"duration": "24.066"
 				},
 				"pois":[
 					{
@@ -1108,7 +1108,7 @@ VISH.Samples = (function(V,undefined){
 				"video": {
 					"type":"Youtube",
 					"source": "http://www.youtube.com/embed/8t29CZcGAbs",
-					"duration": 174
+					"duration": "174"
 				},
 				"pois":[
 					{
@@ -1257,7 +1257,7 @@ VISH.Samples = (function(V,undefined){
 					"type":"HTML5",
 					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/3366.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/3366.mp4\"}]",
 					"poster":"http://vishub.org/videos/3366.png?style=170x127%23",
-					"duration": 799.16
+					"duration": "799.16"
 				},
 				"pois":[
 					{

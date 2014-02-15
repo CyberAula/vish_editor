@@ -978,6 +978,7 @@ VISH.EVideo = (function(V,$,undefined){
 		onTimeUpdate			: onTimeUpdate,
 		getVideoFromVideoBox	: getVideoFromVideoBox,
 		getVideoBoxFromVideo 	: getVideoBoxFromVideo,
+		getBallOfEVideo			: getBallOfEVideo,
 		afterSetupSize			: afterSetupSize
 	};
 
