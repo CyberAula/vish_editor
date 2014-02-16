@@ -436,7 +436,7 @@ VISH.Utils = (function(V,undefined){
 		}
 		options.buttons = [button1];
 		V.Utils.showDialog(options);
-	}
+	};
 
 	var getOuterHTML = function(tag){
 		//In some old browsers (before firefox 11 for example) outerHTML does not work
@@ -446,7 +446,7 @@ VISH.Utils = (function(V,undefined){
 		} else {
 			return $(tag)[0].outerHTML;
 		}
-	}
+	};
 
 	/*
 	 * Function to send the parent to the specified URL, used for fullscreen
@@ -985,7 +985,7 @@ VISH.Utils = (function(V,undefined){
 		});
 		
 		$("a#link_to_notification_template").trigger('click');
-	}
+	};
 
 	var _cleanDialog = function(){
 		var notificationWrapper = $("#notification_template_wrapper");
@@ -1152,16 +1152,14 @@ VISH.Utils = (function(V,undefined){
 		return ((h<1 && sN<5) ? '' : h + ":") + (((sN>3)&&(m<10)) ? '0'+m : m) + ":" + (s < 10 ? '0'+s : s);
 	};
 	
-
-
-
-	var delayedFunctionTimestamps = {};
-	var delayedFunctionTimers = {};
-
+	
 	/* 
 	 * Prevent multiple calls to the same function in a time period 
 	 */
-	 var delayFunction = function(functionId,callbackFunction,PERIOD){
+	var delayedFunctionTimestamps = {};
+	var delayedFunctionTimers = {};
+
+	var delayFunction = function(functionId,callbackFunction,PERIOD){
 		var dN = Date.now();
 		// var timeStamp = delayedFunctionTimestamps[functionId];
 		// var timer = delayedFunctionTimers[functionId];
@@ -1186,7 +1184,8 @@ VISH.Utils = (function(V,undefined){
 		delayedFunctionTimestamps[functionId] = dN;
 
 		return false;
-	 };
+	};
+
 
 	return {
 		init 					: init,
