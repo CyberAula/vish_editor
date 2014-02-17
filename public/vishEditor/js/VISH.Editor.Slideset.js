@@ -171,6 +171,13 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		}
 	};
 
+	var afterCreateSubslide = function(slideset,subslide){
+		var slidesetCreator = getCreatorModule($(slideset).attr("type"));
+		if(typeof slidesetCreator.afterCreateSubslide == "function"){
+			slidesetCreator.afterCreateSubslide(slideset,subslide);
+		}
+	};
+
 
 	/////////////////
 	// Methods
@@ -252,6 +259,7 @@ VISH.Editor.Slideset = (function(V,$,undefined){
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		beforeRemoveSlideset			: beforeRemoveSlideset,
 		beforeRemoveSubslide			: beforeRemoveSubslide,
+		afterCreateSubslide				: afterCreateSubslide,
 		getCurrentSubslide				: getCurrentSubslide,
 		openSubslideWithNumber 			: openSubslideWithNumber,
 		openSubslide					: openSubslide,

@@ -449,7 +449,11 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	var _reOrderBalls = function(eVideoDOM,eVideoJSON){
 		eVideos[eVideoJSON.id].balls.sort(function(A,B){
 			return A.etime>B.etime;
+		}).map(function(ball){
+			ball.letter = _getLetterForBall(eVideos[eVideoJSON.id],ball);
+			return ball;
 		});
+
 		_renderIndex(eVideoDOM,eVideos[eVideoJSON.id]);
 	};
 
@@ -528,12 +532,17 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _updateBall = function(eVideoDOM,eVideoJSON,ball,duration){
 		var left = Math.min(100,(ball.etime*100/duration));
-		var ballSlider = $(eVideoDOM).find(".ballSliderWrapper[ballid='"+ball.id+"']").find(".ballSlider");
+		var ballSliderWrapper = $(eVideoDOM).find(".ballSliderWrapper[ballid='"+ball.id+"']");
+		var ballSlider = $(ballSliderWrapper).find(".ballSlider");
 		var sliderValue = $(ballSlider).slider("value");
 		if(Math.abs(left - sliderValue) > 0.05){
 			//If the difference is less than step/2, nothing will change
 			$(ballSlider).slider("value",left);
 		}
+
+		//Update letter
+		var ballLetterSpan = $(ballSliderWrapper).find("span.ballLetterSpan");
+		$(ballLetterSpan).html(ball.letter);
 	};
 
 	//////////////
@@ -619,6 +628,23 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		if(typeof ball == "object"){
 			_removeBall(ball);
 		}		
+	};
+
+	_addBallToCurrentTime = function(slideId){
+		var eVideoDOM = V.Slides.getCurrentSlide();
+		var eVideoId = $(eVideoDOM).attr("id");
+
+		if(_isVideoCreated(eVideoDOM)){
+			var cTime = V.Video.getCurrentTime(_getCurrentVideo());
+		}
+		
+		var ball = {};
+		ball.id = V.Utils.getId(eVideoId + "_poi");
+		ball.name = V.I18n.getTrans("i.Untitled");
+		ball.etime = (typeof cTime == "number") ? cTime : 0;
+		ball.slide_id = slideId;
+		ball.eVideoId = eVideoId;
+		_addBall(ball);
 	};
 
 	var _addBall = function(ball){
@@ -738,68 +764,61 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		_drawEVideo(slidesetJSON,scaffoldDOM);
 	};
 
-	var onEnterSlideset = function(eVideo){
-		//Load arrows
+	var onEnterSlideset = function(eVideoDOM){
 	};
 
-	var onLeaveSlideset = function(eVideo){
+	var onLeaveSlideset = function(eVideoDOM){
 	};
 
-	var loadSlideset = function(eVideo){
+	var loadSlideset = function(eVideoDOM){
 		//Show Arrows
 		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
 
-	var unloadSlideset = function(eVideo){
+	var unloadSlideset = function(eVideoDOM){
 	};
 
-	var beforeCreateSlidesetThumbnails = function(eVideo){
-		_drawPois(eVideo);
+	var beforeCreateSlidesetThumbnails = function(eVideoDOM){
+		_drawPois(eVideoDOM);
 	};
 
-	var beforeRemoveSlideset = function(eVideo){
-		var eVideoId = $(eVideo).attr("id");
+	var beforeRemoveSlideset = function(eVideoDOM){
+		var eVideoId = $(eVideoDOM).attr("id");
 		if(typeof eVideos[eVideoId] !== "undefined"){
 			delete eVideos[eVideoId];
+			_updateBallsArray(eVideoId);
 		}
 	};
 
-	var beforeRemoveSubslide = function(eVideo,subslide){
+	var beforeRemoveSubslide = function(eVideoDOM,subslide){
 		var subslideId = $(subslide).attr("id");
-		var slideNumber = $(subslide).attr("slideNumber");
+		var eVideoJSON = _getCurrentEVideoJSON();
 
-		//Remove the subslide markers (if exist)
-		var markers = _getCurrentTour().markers;
-		Object.keys(markers).forEach(function(key){
-			var marker = markers[key];
-			if(marker.slide_id===subslideId){
-				_removeMarker(marker);
-			} else {
-				//Adjust pinImages of the rest of the markers
-				var markerArrow = $(".draggable_sc_div[slide_id='"+marker.slide_id+"']");
-				var markerSlideNumber = $(markerArrow).attr("slideNumber");
-				if(markerSlideNumber > slideNumber){
-					$(markerArrow).attr("slideNumber", markerSlideNumber-1);
-					marker.setIcon(_getPinImageForSlideNumber(markerSlideNumber-1));
-				}
+		//Remove slide from JSON
+		$(eVideoJSON.slides).each(function(index,slide){
+			if(slide.id == subslideId){
+				eVideos[eVideoJSON.id].slides.splice(index,1);
+				return false;
 			}
 		});
 
-		// //Adjust pinImages of the rest of markers
-		// var rMl = removedMarkers.length;
-		// for(var k=0; k<rMl; k++){
-		// 	var deletedSlideNumber = removedMarkers[k].slideNumber;
-		// 	Object.keys(markers).forEach(function(key){
-		// 		var marker = markers[key];
-		// 		if(marker.slideNumber > deletedSlideNumber){
-		// 			marker.slideNumber = marker.slideNumber-1;
-		// 			marker.setIcon(_getPinImageForSlideNumber(marker.slideNumber));
-		// 		}
-		// 	});
-		// }
+		//Remove the timestamp links (if exist)
+		$(eVideoJSON.balls).each(function(index,ball){
+			if(ball.slide_id === subslideId){
+				_removeBall(ball);
+				return false;
+			}
+		});
+		_updateBalls($(subslide).parent());
+	};
 
-	}
+	var afterCreateSubslide = function(eVideoDOM,subslide){
+		var subslideId = $(subslide).attr("id");
+		var eVideoJSON = _getCurrentEVideoJSON();
 
+		//Add slide to JSON
+		eVideos[eVideoJSON.id].slides.push({id: subslideId});
+	};
 
 	var _existPoiForSlideId = function(eVideoJSON,slideId){
 		if((typeof eVideoJSON == "undefined")||(typeof slideId == "udnefined")){
@@ -820,6 +839,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var _drawPois = function(eVideoDOM){
+		var slidesetDOM = eVideoDOM;
 		var eVideoJSON = _getCurrentEVideoJSON();
 		if(!eVideoJSON){
 			return;
@@ -842,17 +862,14 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			};
 		});
 
-		return;
+		
 
 		//Drag&Drop POIs
-
 		$("div.draggable_sc_div").draggable({
+			// revert: true,
 			start: function( event, ui ) {
 				var position = $(event.target).css("position");
-				if(position==="fixed"){
-					//Start d&d in background
-					$(event.target).attr("ddstart","background");
-				} else {
+				if(position==="absolute"){
 					//Start d&d in scrollbar
 					//Compensate change to position fixed with margins
 					var current_offset = $(event.target).offset();
@@ -862,58 +879,53 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 					$(event.target).attr("ddstart","scrollbar");
 				}
 			},
-			stop: function(event, ui) {
-				// //Chek if poi is inside map
+			stop: function(event,ui) {
+				//Chek if arrow is inside slideset
 
-				// var canvas = $(eVideoDOM).find("div.vt_canvas");
-				// var xDif = ($(eVideoDOM).outerWidth() - $(canvas).outerWidth())/2;
-				// var yDif = ($(eVideoDOM).outerHeight() - $(canvas).outerHeight())/2;
-				// var vt_offset = $(eVideoDOM).offset();
-				// var poi_offset = $(event.target).offset();
+				var current_offset = $(event.target).offset();
+				var slideset_offset = $(slidesetDOM).offset();
+				var yOk = ((current_offset.top > (slideset_offset.top-10))&&(current_offset.top < (slideset_offset.top+$(slidesetDOM).outerHeight()-38)));
+				var xOk = ((current_offset.left > (slideset_offset.left-5))&&(current_offset.left < (slideset_offset.left+$(slidesetDOM).outerWidth()-44)));
+				var insideSlideset = ((yOk)&&(xOk));
 
-				// //Compensate margins and adjust to put marker in map
-				// var myX = poi_offset.left-vt_offset.left-xDif+25;
-				// var myY = poi_offset.top-vt_offset.top-yDif+34;
+				//Check that the Slideset is showed at the current moment
+				insideSlideset = (insideSlideset && V.Editor.Slideset.getCurrentSubslide()==null);
 
-				// var point = new google.maps.Point(myX,myY);
-				// var position = _getCurrentTour().overlay.getProjection().fromContainerPixelToLatLng(point);
-				// var insideMap = _isPositionInViewport(position);
+				if(insideSlideset){
+					$(event.target).attr("ddend","background");
 
-				// //Check that the vtour is showed at the current moment
-				// insideMap = (insideMap && V.Editor.Slideset.getCurrentSubslide()==null);
+					if($(event.target).attr("ddstart")==="scrollbar"){
+						//Drop inside slideset from scrollbar
+						//Transform margins to top and left
+						var newTop = $(event.target).cssNumber("margin-top") +  $(event.target).cssNumber("top");
+						var newLeft = $(event.target).cssNumber("margin-left") +  $(event.target).cssNumber("left");
+						$(event.target).css("margin-top", "0px");
+						$(event.target).css("margin-left", "0px");
+						$(event.target).css("top", newTop+"px");
+						$(event.target).css("left", newLeft+"px");
 
-				// if(insideMap){
-				// 	$(event.target).attr("ddend","background");
+						var slide_id = $(event.target).attr("slide_id");
+						_addBallToCurrentTime(slide_id);
+						$(event.target).hide();
+					}
 
-				// 	//Drop inside background from scrollbar
-				// 	//Transform margins to top and left
-				// 	var newTop = $(event.target).cssNumber("margin-top") +  $(event.target).cssNumber("top");
-				// 	var newLeft = $(event.target).cssNumber("margin-left") +  $(event.target).cssNumber("left");
-				// 	$(event.target).css("margin-top", "0px");
-				// 	$(event.target).css("margin-left", "0px");
-				// 	$(event.target).css("top", newTop+"px");
-				// 	$(event.target).css("left", newLeft+"px");
-
-				// 	var slide_id = $(event.target).attr("slide_id");
-				// 	var marker = _addMarkerToPosition(position,slide_id);
-				// 	$(event.target).hide();
-
-				// } else {
-				// 	//Drop outside background (always from scrollbar in virtual tours)
-				// 	//Return to original position
-				// 	$(event.target).animate({ top: 0, left: 0 }, 'slow', function(){
-				// 		//Animate complete
-				// 		$(event.target).css("position", "absolute");
-				// 		//Original margins
-				// 		$(event.target).css("margin-top","-20px");
-				// 		$(event.target).css("margin-left","12px");
-				// 		$(event.target).attr("ddend","scrollbar");
-				// 	});
-				// }
+				} else {
+					//Drop outside slideset
+					//Return to original position
+					$(event.target).animate({ top: 0, left: 0 }, 'slow', function(){
+						//Animate complete
+						$(event.target).css("position", "absolute");
+						//Original margins
+						$(event.target).css("margin-top","-20px");
+						$(event.target).css("margin-left","12px");
+						$(event.target).attr("ddend","scrollbar");
+					});
+				}
 			}
 		});
-	};
 
+		return;
+	};
 
 	var getThumbnailURL = function(eVideo){
 		return (V.ImagesPath + "templatesthumbs/tEVideo.png");
@@ -1010,6 +1022,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		beforeCreateSlidesetThumbnails	: beforeCreateSlidesetThumbnails,
 		beforeRemoveSlideset			: beforeRemoveSlideset,
 		beforeRemoveSubslide			: beforeRemoveSubslide,
+		afterCreateSubslide				: afterCreateSubslide,
 		getSlideHeader					: getSlideHeader,
 		getThumbnailURL					: getThumbnailURL,
 		preCopyActions					: preCopyActions,

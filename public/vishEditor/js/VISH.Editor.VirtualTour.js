@@ -578,7 +578,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 					$(event.target).css("left", newLeft+"px");
 
 					var slide_id = $(event.target).attr("slide_id");
-					var marker = _addMarkerToPosition(position,slide_id);
+					_addMarkerToPosition(position,slide_id);
 					$(event.target).hide();
 
 				} else {
