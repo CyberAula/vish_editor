@@ -8,7 +8,8 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	//Direct access to current balls (balls[ballId] = ball)
 	var balls;
 
-	//Link to open chapters fancybox
+	//Links to open video tab and chapters fancybox
+	var hiddenLinkToAddVideos;
 	var hiddenLinkToAddChapters;
 
 
@@ -23,7 +24,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _loadEvents = function(){
 		//Select Video Event
-		var hiddenLinkToAddVideos = $('<a id="hidden_button_to_change_video" href="#video_fancybox" style="display:none"></a>');
+		hiddenLinkToAddVideos = $('<a id="hidden_button_to_change_video" href="#video_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddVideos).fancybox({
 			'autoDimensions' : false,
 			'width': 800,
@@ -39,8 +40,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			}
 		});
 		$(document).on("click", 'div.change_evideo_button', function(){
-			V.Editor.setCurrentContainer($(V.Slides.getCurrentSlide()).find(".evideoBody"));
-			$(hiddenLinkToAddVideos).trigger("click");
+			onChangeVideo();
 		});
 		$(document.body).append(hiddenLinkToAddVideos);
 
@@ -149,6 +149,37 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		});
 	};
 
+	var onChangeVideo = function(){
+		var eVideoDOM = V.Slides.getCurrentSlide();
+		if(!_isVideoCreated(eVideoDOM)){
+			_onChangeVideo(eVideoDOM);
+		} else {
+			var options = {};
+			options.width = 600;
+			options.height = 135;
+			options.notificationIconSrc = getThumbnailURL();
+			options.notificationIconClass = "notificationIconDelete";
+			options.text = V.I18n.getTrans("i.eVideoChangeNotification");
+			var button1 = {};
+			button1.text = V.I18n.getTrans("i.no");
+			button1.callback = function(){
+				$.fancybox.close();
+			}
+			var button2 = {};
+			button2.text = V.I18n.getTrans("i.yes");
+			button2.callback = function(){
+				_onChangeVideo(eVideoDOM);
+			}
+			options.buttons = [button1,button2];
+			V.Utils.showDialog(options);
+		}
+	};
+
+	var _onChangeVideo = function(eVideoDOM){
+		V.Editor.setCurrentContainer($(eVideoDOM).find(".evideoBody"));
+		$(hiddenLinkToAddVideos).trigger("click");
+	};
+
 	/*
 	 * Rendering functions
 	 */
@@ -171,7 +202,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		return "<article id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/>" + V.Utils.getOuterHTML(videoBox) + V.Utils.getOuterHTML(indexBox) + "</article>";
 	};
 
-	var _drawEVideo = function(eVideoJSON,eVideoDOM){
+	var _drawEVideo = function(eVideoJSON,eVideoDOM,videoToRender){
 		if(!eVideoJSON){
 			//Default values
 			eVideoJSON = {};
@@ -211,7 +242,12 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		eVideos[eVideoId].drawed = true;
 
-		var eVideoObject = _getEVideoObjectFromJSON(eVideos[eVideoId]);
+		if(typeof videoToRender != "undefined"){
+			//Clean video from eVideoDOM
+			$(eVideoDOM).find(".evideoBody").html("");
+		}
+
+		var eVideoObject = (typeof videoToRender != "undefined") ? videoToRender : _getEVideoObjectFromJSON(eVideos[eVideoId]);
 		if(typeof eVideoObject != "undefined"){
 			_renderVideo(eVideoObject,eVideoDOM);
 		}
@@ -259,7 +295,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		}
 
 		if($(eVideoDOM).attr("type")===V.Constant.EVIDEO){
-			_renderVideo(contentToAdd,eVideoDOM);
+			if(_isVideoCreated(eVideoDOM)){
+				//Clean previous EVideo
+				var eVideoId = $(eVideoDOM).attr("id");
+				_removeAllBalls(eVideoDOM);
+				delete eVideos[eVideoId];
+				// _updateBallsArray(eVideoId);
+				_drawEVideo(undefined,eVideoDOM,contentToAdd);
+			} else {
+				_renderVideo(contentToAdd,eVideoDOM);
+			}	
 		}
 
 		$.fancybox.close();
@@ -415,7 +460,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		$(eVideoJSON.balls).each(function(index,ball){
 			if(typeof ball.slide_id != "undefined"){
-				if(ball.drawed !== true) {
+				if(ball.drawed != true) {
 					_drawBall(eVideoDOM,eVideoJSON,ball,duration);
 				} else {
 					_updateBall(eVideoDOM,eVideoJSON,ball,duration);
@@ -605,6 +650,30 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		delete balls[ball.id];
 
 		_updateBalls(eVideoDOM);
+
+		if(typeof ball.slide_id != "undefined"){
+			_drawPois(eVideoDOM);
+		}
+	};
+
+	var _removeAllBalls = function(eVideoDOM){
+		var eVideoId = $(eVideoDOM).attr("id");
+
+		//Remove balls from DOM
+		var ballWrappers = $(eVideoDOM).find(".ballWrapper[ballid]");
+		$(ballWrappers).each(function(index,ballWrapper){
+			var chapter = $("#"+$(ballWrapper).attr("ballid"));
+			$(chapter).remove();
+		});
+		$(ballWrappers).remove();
+
+		//Remove balls from JSON
+		$(eVideos[eVideoId].balls).each(function(index,eball){
+			delete balls[eball.id];
+		});
+		eVideos[eVideoId].balls = [];
+
+		_drawPois(eVideoDOM);
 	};
 
 	var _getCurrentChapter = function(){
@@ -908,6 +977,12 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		return V.EVideo.getVideoFromVideoBox($(V.Slides.getCurrentSlide()).find(".evideoBox"));
 	};
 
+	var _isVideoCreated = function(eVideoDOM){
+		var videoBox = $(eVideoDOM).find(".evideoBox");
+		var video = V.EVideo.getVideoFromVideoBox(videoBox);
+		return (typeof $(video).attr("videotype") != "undefined");
+	};
+
 	var _updateBallsArray = function(eVideoId){
 		$(balls).each(function(index,ball){
 			if(ball.eVideoId===eVideoId){
@@ -915,13 +990,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			}
 		});
 
-		eVideos[eVideoId].balls.map(function(ball){
-			balls[ball.id] = ball;
-		});
+		if(typeof eVideos[eVideoId] != "undefined"){
+			eVideos[eVideoId].balls.map(function(ball){
+				balls[ball.id] = ball;
+			});
+		}
 	};
 
 	return {
 		init 				 			: init,
+		onChangeVideo					: onChangeVideo,
 		getDummy						: getDummy,
 		draw 							: draw,
 		onVideoSelected					: onVideoSelected,

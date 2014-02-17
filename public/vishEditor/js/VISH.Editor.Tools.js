@@ -490,7 +490,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	};
 
 	var changeVideo = function(){
-		$("#hidden_button_to_change_video").trigger("click");
+		V.Editor.EVideo.onChangeVideo();
 	};
 
    /*
