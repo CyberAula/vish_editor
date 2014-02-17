@@ -9,7 +9,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		} else {
 			_loadImagesOnContainer(imagesArray,containerId,options);
 		}
-	}
+	};
 
 	var _loadImagesOnContainer = function(imagesArray,containerId,options){
 		var imagesLength = imagesArray.length;
@@ -30,7 +30,7 @@ VISH.Utils.Loader = (function(V,undefined){
 				}
 			})
 		});
-	}
+	};
 
 	var _loadImagesOnContainerWithOrder = function(imagesArray,containerId,options){
 		var validImagesArray = imagesArray;
@@ -76,13 +76,13 @@ VISH.Utils.Loader = (function(V,undefined){
 				
 			});
 		});
-	}
+	};
 
 	var _insertElementsWithOrder = function(imagesArray,containerId,options){
 		$.each(imagesArray, function(i, image) {
 			_insertElementOnContainer(image,imagesArray,containerId,options);
 		});
-	}
+	};
 
 	var _insertElementOnContainer = function(image,imagesArray,containerId,options){
 		var titleArray = options.titleArray;
@@ -91,7 +91,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		} else {
 			$("#" + containerId).append('<div>' + V.Utils.getOuterHTML(image) + '</div>');
 		}
-	}
+	};
 
 	/*
 	* Load a script asynchronously
@@ -218,7 +218,7 @@ VISH.Utils.Loader = (function(V,undefined){
 				loadCSS("browser/chrome.css");
 				break;
 		}
-	}
+	};
 
 	var loadLanguageCSS = function(){
 		var languagesWithCSS = ["es"];
@@ -227,7 +227,7 @@ VISH.Utils.Loader = (function(V,undefined){
 			//Load CSS for this language
 			loadCSS("language/" + language + ".css");
 		}
-	}
+	};
 
 
 	/*
@@ -274,7 +274,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		$("#fancybox-outer").css("background", "rgba(255,255,255,0.9)");
 		$("#fancybox-wrap").css("margin-top", "20px");
        	$("#fancybox-wrap").css("margin-left", "20px");
-	}
+	};
 
 	var _isFullLoadingActive = function(){
 		return $("#loading_fancy").is(":visible");
@@ -300,6 +300,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		$(container).find(".loading_fancy_img").parent().remove();
 		$(container).removeClass("loadingtmpShown");
 	};
+
 
 	return {
 		loadImagesOnContainer		: loadImagesOnContainer,

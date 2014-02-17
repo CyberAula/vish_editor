@@ -40,22 +40,22 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		}
 
 		V.Editor.Tools.Menu.init();
-	}
+	};
 	 
 	var cleanToolbar = function(){
 		var cSlide = V.Slides.getCurrentSlide();
 		if(typeof cSlide != "undefined"){
 			loadToolsForSlide(cSlide);
 		}
-	}
+	};
 
 	var enableToolbar = function(){
 		$("#toolbar_wrapper").show();
-	}
+	};
 
 	var disableToolbar = function(){
 		$("#toolbar_wrapper").hide();
-	}
+	};
 
 
    /*
@@ -75,6 +75,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		_cleanPresentationToolbar();
 
 		var type = $(slide).attr("type");
+		$(".toolbar_presentation_wrapper_slideTools:not(.toolbar_" + type + ")").hide();
+		$(".toolbar_presentation_wrapper_slideTools.toolbar_" + type).show();
+		$(".toolbar_presentation_wrapper_slideTools.toolbar_" + type).children().css("visibility","visible");
+
 		switch(type){
 			case V.Constant.STANDARD:
 				$("#toolbar_background").parent().addClass("toolbar_presentation_wrapper_disabled");
@@ -90,18 +94,18 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			case V.Constant.FLASHCARD:
 				break;
 			case V.Constant.VTOUR:
-				$("#toolbar_background").parent().addClass("toolbar_presentation_wrapper_disabled");
+				$("#toolbar_background_wrapper").children().css('visibility', 'hidden');
 				break;
 			default:
 				return;
 		}
-	}
+	};
 
 	var _cleanPresentationToolbar = function(){
 		//Enable all buttons
 		$(".toolbar_presentation_wrapper_slideTools").removeClass("toolbar_presentation_wrapper_disabled");
 		cleanZoneTools();
-	}
+	};
 
 	/*
 	 * Draft Mode: change publish button status
@@ -126,7 +130,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			default:
 				return;
 		}
-	}
+	};
 
 	var _enablePublishButton = function(){
 		$("#waiting_overlay").hide();
@@ -144,7 +148,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(menuItem).parent().removeClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
 		$(menuItem).attr("action","onPublishButtonClicked");
-	}
+	};
 
 	var _enablePublishingButton = function(){
 		$("#waiting_overlay").show();
@@ -160,7 +164,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var menuItem = $(".menu_option.menu_action.publishMenuOption");
 		$(menuItem).parent().addClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publishing"));
-	}
+	};
 
 	var _enableUnpublishButton = function(){
 		$("#waiting_overlay").hide();
@@ -178,7 +182,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(menuItem).parent().removeClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Unpublish"));
 		$(menuItem).attr("action","onUnpublishButtonClicked");
-	}
+	};
 
 	var _enableUnpublishingButton = function(){
 		$("#waiting_overlay").hide();
@@ -191,7 +195,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var menuItem = $(".menu_option.menu_action.publishMenuOption");
 		$(menuItem).parent().addClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Unpublishing"));
-	}
+	};
 
 	var _disablePublishButton = function(){
 		$("#waiting_overlay").hide();
@@ -204,7 +208,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var menuItem = $(".menu_option.menu_action.publishMenuOption");
 		$(menuItem).parent().addClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
-	}
+	};
 
 
 	/*
@@ -227,7 +231,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			default:
 				return;
 		}
-	}
+	};
 
 	var _enableSaveButton = function(){
 		if(saveButtonStatus === "enabled"){
@@ -242,7 +246,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		//Menu
 		$(".menu_option.menu_action[action='onSaveButtonClicked']").parent().removeClass("menu_item_disabled");
 		$(".menu_option.menu_action[action='onSaveButtonClicked']").find("span").html(V.I18n.getTrans("i.Save"));
-	}
+	};
 
 	var _loadingSaveButton = function(){
 		if(saveButtonStatus === "loading"){
@@ -256,7 +260,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		//Menu
 		$(".menu_option.menu_action[action='onSaveButtonClicked']").parent().addClass("menu_item_disabled");
 		$(".menu_option.menu_action[action='onSaveButtonClicked']").find("span").html(V.I18n.getTrans("i.Saving"));
-	}
+	};
 
 	var _disableSaveButton = function(){
 		if(saveButtonStatus === "disabled"){
@@ -275,13 +279,13 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		//Menu
 		$(".menu_option.menu_action[action='onSaveButtonClicked']").parent().addClass("menu_item_disabled");
 		$(".menu_option.menu_action[action='onSaveButtonClicked']").find("span").html(V.I18n.getTrans("i.Saved"));
-	}
+	};
 
 	var _stopDirtyTimeout = function(){
 		if(typeof dirtyModeTimeout != "undefined"){
 			clearTimeout(dirtyModeTimeout);
 		}
-	}
+	};
 
 
    /*
@@ -359,7 +363,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		if($(tooltip).css("margin-top")==="0px"){	
 			_setTooltipMargins(tooltip);
 		}
-	}
+	};
 
 	var _setTooltipMargins = function(tooltip){
 		var zone = $("div").has(tooltip);
@@ -379,7 +383,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(tooltip).removeClass("temp_shown");
 
 		$(tooltip).css("margin-top",marginTop+"px");
-	}
+	};
 
 	var setAllTooltipMargins = function(callback){
 		$("span.zone_tooltip").each(function(index,tooltip){
@@ -388,14 +392,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		if(typeof callback == "function"){
 			callback(true);
 		}
-	}
+	};
 
 	var hideZoneToolTip = function(tooltip){
 		var zone = $("div").has(tooltip);
 		$(tooltip).hide();
 		$(tooltip).attr("visible","false");
 		$(zone).attr("tooltip","false");
-	}
+	};
 
 	var cleanZoneTools = function(zone){
 		$(".menuselect_hide").hide();
@@ -408,7 +412,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		} else {
 			hideZoneToolTip(tooltip);
 		}
-	}
+	};
 
    /*
 	* Element Toolbar
@@ -424,12 +428,12 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var toolbarClass = "toolbar_" + type;
 		$("#toolbar_element").find("img").hide();
 		$("#toolbar_element").find("img." + toolbarClass).show();
-	}
+	};
 
 	var _loadTextToolbar = function(){
 		$("#toolbar_element").find("img").hide();
 		$("#toolbar_text").show();
-	}
+	};
 
 	var loadToolbarForObject = function(object){
 		var objectInfo = V.Object.getObjectInfo(object);
@@ -443,14 +447,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				//object default toolbar
 				break;
 		}
-	}
+	};
 
 	var _cleanElementToolbar = function(){
 		//Wysiwyg Toolbar
 		$("#toolbar_text").hide();
 		//Generic Toolbars
 		$("#toolbar_element").find("img").hide();
-	}
+	};
 
 
    /*
@@ -459,33 +463,35 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
     var save = function(){
 		V.Editor.Tools.Menu.onSaveButtonClicked();
-	}
+	};
 
 	var publish = function(){
 		V.Editor.Tools.Menu.onPublishButtonClicked();
-	}
+	};
 
 	var unpublish = function(){
 		V.Editor.Tools.Menu.onUnpublishButtonClicked();
-	}
+	};
 
 	var preview = function(){
 		V.Editor.Preview.preview();
-	}
+	};
 
 	var selectTheme = function(){
 		$("#hidden_button_to_launch_theme_fancybox").trigger("click");
-	}
+	};
 
 	var selectAnimation = function(){
 		$("#hidden_button_to_launch_animation_fancybox").trigger("click");
-	}
-
+	};
 
 	var changeBackground = function(){
 		$("#hidden_button_to_change_slide_background").trigger("click");
-	}
+	};
 
+	var changeVideo = function(){
+		$("#hidden_button_to_change_video").trigger("click");
+	};
 
    /*
 	* Element actions
@@ -614,7 +620,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	var addLink = function(){
 		$.fancybox(
@@ -643,7 +649,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				}
 			}
 		);
-	} 
+	};
 
 	var _addUrlOnKeyDown = function(event){
 		switch (event.keyCode) {
@@ -653,7 +659,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	var addUrl = function(){
 		var url;
@@ -682,7 +688,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var area = V.Editor.getCurrentArea();
 		$(area).removeAttr("hyperlink");
 		$.fancybox.close();
-	}
+	};
   
 	return {
 		init							: init,
@@ -707,6 +713,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		selectTheme						: selectTheme,
 		selectAnimation					: selectAnimation,
 		changeBackground				: changeBackground,
+		changeVideo						: changeVideo,
 		addTooltipsToSlide				: addTooltipsToSlide,
 		addTooltipToZone				: addTooltipToZone,
 		showZoneToolTip					: showZoneToolTip,

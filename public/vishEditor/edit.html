@@ -262,7 +262,7 @@
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Save">Save</p>
 				</div>
-				<div id="toolbar_preview_help" class="toolbar_presentation_wrapper">
+				<div id="toolbar_preview_wrapper" class="toolbar_presentation_wrapper">
 					<a id="toolbar_preview" class="tool_action" action="preview" href="#">
 						<button type="button" class="btn btn-primary btn-small">
 							<i class="icon-button icon-eye-open"></i>
@@ -270,7 +270,7 @@
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Preview">Preview</p>
 				</div>
-				<div id="toolbar_publish_help" class="toolbar_presentation_wrapper">
+				<div id="toolbar_publish_wrapper" class="toolbar_presentation_wrapper">
 					<a id="toolbar_publish" class="tool_action" action="publish" href="#">
 						<button type="button" class="btn btn-primary btn-small">
 							<i class="icon-button icon-rotate-270 icon-download-alt"></i>
@@ -278,7 +278,7 @@
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Publish">Publish</p>
 				</div>
-				<div id="toolbar_themes_help" class="toolbar_presentation_wrapper ">
+				<div id="toolbar_themes_wrapper" class="toolbar_presentation_wrapper ">
 					<a id="toolbar_theme" class="tool_action" action="selectTheme" href="#">
 						<button type="button" class="btn btn-primary btn-small">
 							<i class="icon-button icon-adjust"></i>
@@ -286,7 +286,7 @@
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Style">Style</p>
 				</div>
-				<div id="toolbar_animation_help" class="toolbar_presentation_wrapper lasticonborder">
+				<div id="toolbar_animation_wrapper" class="toolbar_presentation_wrapper lasticonborder">
 					<a id="toolbar_animation" class="tool_action" action="selectAnimation" href="#">
 						<button type="button" class="btn btn-primary btn-small">
 							<i class="icon-button icon-magic"></i>
@@ -294,13 +294,19 @@
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Animations">Animation</p>
 				</div>
-				<div id="toolbar_background_help" class="toolbar_presentation_wrapper toolbar_presentation_wrapper_slideTools bgtoolpos">
+				<div id="toolbar_background_wrapper" class="toolbar_presentation_wrapper toolbar_presentation_wrapper_slideTools bgtoolpos toolbar_standard toolbar_flashcard toolbar_VirtualTour" style='display:none'>
 					<a id="toolbar_background" class="tool_action" action="changeBackground" href="#">
 						<button type="button" class="btn btn-primary btn-small">
 							<i class="icon-button icon-picture"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Background"> Background</p>
+				</div>
+				<div id="toolbar_evideo_wrapper" class="toolbar_presentation_wrapper toolbar_presentation_wrapper_slideTools bgtoolpos toolbar_enrichedvideo" style='display:none'>
+					<a id="toolbar_evideo" class="tool_action" action="changeVideo" href="#">
+						<img class="big_toolbar_icon toolbar_web" src="/vishEditor/images/toolbar/change_evideo.png"/>
+					</a>
+					<p class="toolbar_presentation_title" i18n-key="i.Video"> Video</p>
 				</div>
 			</div>
 			<div id="toolbar_element">
@@ -1398,25 +1404,25 @@
 			<p i18n-key="i.walkWelcome6_1">This button allow you to save your excursion as a draft.</p>
 		</li> -->
 
-		<li data-id="toolbar_publish_help" data-options="tipLocation:top" data-text="Next" i18n-key="i.Next" class="tut_width350 tut_with_arrow">
+		<li data-id="toolbar_publish_wrapper" data-options="tipLocation:top" data-text="Next" i18n-key="i.Next" class="tut_width350 tut_with_arrow">
 			<h2 i18n-key="i.Publish">Publish</h2>
 			<p i18n-key="i.walkWelcome7_1">This button allows you to publish your presentation in the ViSH platform. If your presentation is not complete, you can also save it as a draft to keep it private and finish it later.</p>
 			<p class="tut_space">&nbsp;</p>
 		</li>
 
-		<li data-id="toolbar_preview_help" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top" class="tut_width350 tut_with_arrow">
+		<li data-id="toolbar_preview_wrapper" data-text="Next" i18n-key="i.Next" data-options="tipLocation:top" class="tut_width350 tut_with_arrow">
 			<h2 i18n-key="i.Preview">Preview</h2>
 			<p i18n-key="i.walkWelcome8_1">This button allows you to preview your presentation. You will be able to see the presentation in the same way that users will see it after its publication.</p>
 			<p class="tut_space">&nbsp;</p>
 		</li>
 
-		<li data-id="toolbar_themes_help" class="tut_with_arrow tut_width350" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
+		<li data-id="toolbar_themes_wrapper" class="tut_with_arrow tut_width350" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
 			<h2 i18n-key="i.Style">Style</h2>
 			<p i18n-key="i.walkWelcome9_1">This button allows you to choose a visual theme for your presentation.</p>
 			<p class="tut_space">&nbsp;</p>
 		</li>
 
-		<li data-id="toolbar_background_help" class="tut_with_arrow tut_width350" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
+		<li data-id="toolbar_background_wrapper" class="tut_with_arrow tut_width350" data-options="tipLocation:bottom;" data-text="Next" i18n-key="i.Next">
 			<h2 i18n-key="i.Background">Background</h2>
 			<p i18n-key="i.walkWelcome10_1">Define a custom background for the current slide.</p>
 			<p class="tut_space">&nbsp;</p>

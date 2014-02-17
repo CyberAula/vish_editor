@@ -58,6 +58,9 @@
 	border-right: 1px solid #E9E9E9;
 }
 
+.toolbar_presentation_wrapper_slideTools {
+	min-width: 76px;
+}
 
 .toolbar_presentation_wrapper > p {
 	cursor: default;
@@ -100,6 +103,12 @@
 	height: 43px;
 	cursor: pointer;
 	opacity:0.6;
+}
+
+.big_toolbar_icon {
+	width: 41px;
+	height: 32px;
+	margin: 2px 0px -3px 0px;
 }
 
 .toolbar_icon:hover {

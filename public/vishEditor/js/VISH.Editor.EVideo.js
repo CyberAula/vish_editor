@@ -23,18 +23,18 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _loadEvents = function(){
 		//Select Video Event
-		var hiddenLinkToAddVideos = $('<a href="#video_fancybox" style="display:none"></a>');
+		var hiddenLinkToAddVideos = $('<a id="hidden_button_to_change_video" href="#video_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddVideos).fancybox({
 			'autoDimensions' : false,
 			'width': 800,
 			'height': 600,
 			'scrolling': 'no',
 			'padding' : 0,
-			"onStart"  : function(data) {
+			"onStart"  : function(data){
 				V.Editor.Video.setAddContentMode(V.Constant.EVIDEO);
 				V.Editor.Utils.loadTab('tab_video_youtube');
 			},
-			"onClosed"  : function(data) {
+			"onClosed"  : function(data){
 				V.Editor.Video.setAddContentMode(V.Constant.NONE);
 			}
 		});
@@ -42,6 +42,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			V.Editor.setCurrentContainer($(V.Slides.getCurrentSlide()).find(".evideoBody"));
 			$(hiddenLinkToAddVideos).trigger("click");
 		});
+		$(document.body).append(hiddenLinkToAddVideos);
 
 		hiddenLinkToAddChapters = $('<a href="#chapters_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddChapters).fancybox({
