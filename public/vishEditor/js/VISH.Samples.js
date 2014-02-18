@@ -1118,7 +1118,7 @@ VISH.Samples = (function(V,undefined){
 						"name": "Curiosity YouTube video at 15.3"
 					},{
 						"id":"article2_poi2",
-						"etime": "61.5",
+						"etime": "62",
 						"slide_id":"article2_article2",
 						"name": "Alpha Particle X-Ray  at 61.5"
 					},{

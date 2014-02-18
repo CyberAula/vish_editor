@@ -16,6 +16,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	// cChapterJSON: {name: "Name", ballId: "ballId", etime: 0, slideId: "slideId"}
 	var _cChapter;
 
+	//Time delta to order balls in the 'same' point
+	var TIME_DELTA = 0.0001;
+
 	var init = function(){
 		if(!initialized){
 			eVideos = {};
@@ -140,6 +143,8 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		//Chapter table actions
 		$(document).on('click', 'div.eVideoChapterActions i.icon-edit', _onEditChapter);
 		$(document).on('click', 'div.eVideoChapterActions i.icon-trash', _onRemoveChapter);
+		$(document).on('click', 'div.eVideoChapterActions i.icon-arrow-down', _onDownChapter);
+		$(document).on('click', 'div.eVideoChapterActions i.icon-arrow-up', _onUpChapter);
 
 		//Chapters screen events
 		$(document).on('keyup', '#eVideochapters_hours, #eVideochapters_minutes, #eVideochapters_seconds', _onChapterTimeChange);
@@ -438,18 +443,40 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			$(actionDiv).prepend(removeButton);
 			$(actionDiv).prepend(editButton);
 
+			//Arrows
+			var prevChapter = chapterList[value-1];
+			var nextChapter = chapterList[value+1];
+			var arrowUp = (typeof prevChapter != "undefined")&&(Math.round($(prevChapter).attr("etime"))==Math.round($(li).attr("etime")));
+			var arrowDown = (typeof nextChapter != "undefined")&&(Math.round($(nextChapter).attr("etime"))==Math.round($(li).attr("etime")));
+			var arrows = ((arrowUp)||(arrowDown));
+
+			if(arrows){
+				var arrows = $('<p class="icon-arrows-container"></p>');
+				if(arrowUp){
+					$(arrows).append('<i title="move up" class="icon-button icon-arrow-up"></i>');
+				}
+				if(arrowDown){
+					$(arrows).append('<i title="move down" class="icon-button icon-arrow-down"></i>');
+				}
+				$(actionDiv).append(arrows);
+			}
+
 			$(li).html("");
 			$(li).append(infoDiv);
 			$(li).append(actionDiv);
-		});
 
-		//Add ball Letter, time and id to lis.
-		$(chapterList).each(function(value,li){
+			//Add ball Letter, time and id to lis.
 			var ballId = $(li).attr("ballid");
 			$(li).attr("id",ballId);
 			var ballLetter = balls[ballId].letter;
 			$(li).find(".eVideoIndexEntryNumber").html((value+1) + " [" + V.Utils.fomatTimeForMPlayer(balls[ballId].etime,parseInt($(eVideoDOM).attr("sN"))) + "]" + ((typeof ballLetter == "string") ? " (" + ballLetter + ") " : "") + ". ");
+		
+			//Adjust li height
+			if(arrows){
+				$(li).find("div.eVideoChapterInfo").css("min-height","60px");
+			}
 		});
+
 	};
 
 
@@ -657,6 +684,64 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		if(typeof ball == "object"){
 			_removeBall(ball);
 		}		
+	};
+
+	var _onDownChapter = function(event){
+		var chapter = $("ul.evideoChapters li").has(event.target);
+		_exchangeChapters(chapter,$(chapter).next());
+	};
+
+	var _onUpChapter = function(event){
+		var chapter = $("ul.evideoChapters li").has(event.target);
+		_exchangeChapters(chapter,$(chapter).prev());
+	};
+
+	var _exchangeChapters = function(chapterA,chapterB){
+		var ballA = balls[$(chapterA).attr("id")];
+		var ballB = balls[$(chapterB).attr("id")];
+
+		var timeBallA = ballA.etime;
+		var timeBallB = ballB.etime;
+
+		if(Math.round(timeBallA)!=Math.round(timeBallB)){
+			return;
+		}
+
+		var eVideoId = ballA.eVideoId;
+		var eVideoDOM = $("#" + eVideoId);
+
+		var timeOrigin;
+		var lastChangedTime;
+
+		var chapterAisBefore = ($(chapterA).attr("id") === $(chapterB).prev().attr("id"));
+		if(chapterAisBefore){
+			timeOrigin = timeBallA;
+			timeBallA = timeBallB + TIME_DELTA;
+			lastChangedTime = timeBallA;
+		} else {
+			timeOrigin = timeBallB;
+			timeBallB = timeBallA + TIME_DELTA;
+			lastChangedTime = timeBallB;
+		}
+
+		eVideos[eVideoId].balls.map(function(ball){
+			if(ball.id === ballA.id){
+				ball.etime = timeBallA;
+				return true;
+			}
+			if(ball.id === ballB.id){
+				ball.etime = timeBallB;
+				return true;
+			}
+
+			if((ball.etime > timeOrigin)&&(ball.etime < lastChangedTime)){
+				ball.etime = lastChangedTime + TIME_DELTA;
+				lastChangedTime = ball.etime;
+			};
+		});
+
+		_updateBallsArray(eVideoId);
+		_updateBalls(eVideoDOM);
 	};
 
 	_addBallToCurrentTime = function(slideId){
