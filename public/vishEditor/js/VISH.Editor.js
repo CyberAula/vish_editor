@@ -149,6 +149,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Text.init();
 		V.Editor.Image.init();
 		V.Editor.Video.init();
+		V.Editor.Audio.init();
 		V.Editor.Object.init();
 		V.Editor.PDFex.init();
 		V.Editor.Presentation.Repository.init();

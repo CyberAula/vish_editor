@@ -1,17 +1,15 @@
-VISH.Editor.Video.Soundcloud = (function(V,$,undefined){
+VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	
-	var containerDivId = "tab_video_soundcloud_content";
-	var carrouselDivId = "tab_video_soundcloud_content_carrousel";
-	var previewDivId = "tab_video_soundcloud_content_preview";
+	var containerDivId = "tab_audio_soundcloud_content";
+	var carrouselDivId = "tab_audio_soundcloud_content_carrousel";
+	var previewDivId = "tab_audio_soundcloud_content_preview";
 	var myInput;
 	var timestampLastSearch;
 
-	//Store video metadata
+	//Store audio metadata
 	var currentAudios = new Array();
 	var selectedAudio = null;
 
-	//Youtube API
-	var MAX_VIDEOS = 20; //maximum video query for soundcloud API's (999 max)
 
 
 	var init = function(){
@@ -40,7 +38,7 @@ VISH.Editor.Video.Soundcloud = (function(V,$,undefined){
 
 	var _prepareRequest = function(){
 		_cleanCarrousel();
-		_cleanVideoPreview();
+		_cleanAudioPreview();
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).attr("disabled","true");
 		timestampLastSearch = Date.now();
@@ -50,7 +48,7 @@ VISH.Editor.Video.Soundcloud = (function(V,$,undefined){
 		timestampLastSearch = undefined;
 		$(myInput).val("");
 		$(myInput).removeAttr("disabled");
-		_cleanVideoPreview();
+		_cleanAudioPreview();
 		_cleanCarrousel();
 	};
 
@@ -186,8 +184,8 @@ VISH.Editor.Video.Soundcloud = (function(V,$,undefined){
 	
 	var _onClickCarrouselElement = function(event) {
 		var audioId = $(event.target).attr("audioId");
-		var renderedPreviewVideo = _generatePreviewWrapper(audioId);
-		_renderVideoPreview(renderedPreviewVideo, currentAudios[audioId]);
+		var renderedPreviewAudio = _generatePreviewWrapper(audioId);
+		_renderAudioPreview(renderedPreviewAudio, currentAudios[audioId]);
 		selectedAudio = currentAudios[audioId];
 	};
 
@@ -208,31 +206,30 @@ VISH.Editor.Video.Soundcloud = (function(V,$,undefined){
 
 	/* Video Preview */
   
-	var _renderVideoPreview = function(renderedIframe, video) {
-		var videoArea = $("#" + previewDivId).find("#tab_video_soundcloud_content_preview_video");
-		var metadataArea = $("#" + previewDivId).find("#tab_video_soundcloud_content_preview_metadata");
+	var _renderAudioPreview = function(renderedIframe, audio) {
+		var audioArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_audio");
+		var metadataArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_metadata");
 		var button = $("#" + previewDivId).find(".okButton");
-		$(videoArea).html("");
+		$(audioArea).html("");
 		$(metadataArea).html("");
-		if((renderedIframe) && (video)) {
-			$(videoArea).append(renderedIframe);
-			var table = V.Editor.Utils.generateTable({title:video.title, author:video.author, description:video.subtitle});
+		if((renderedIframe) && (audio)) {
+			$(audioArea).append(renderedIframe);
+			var table = V.Editor.Utils.generateTable({title:audio.title, author:audio.author, description:audio.subtitle});
 			$(metadataArea).html(table);
 			$(button).show();
 		}
 	};
   
-	var _cleanVideoPreview = function() {
-		var videoArea = $("#" + previewDivId).find("#tab_video_soundcloud_content_preview_video");
-		var metadataArea = $("#" + previewDivId).find("#tab_video_soundcloud_content_preview_metadata");
+	var _cleanAudioPreview = function() {
+		var audioArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_audio");
+		var metadataArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_metadata");
 		var button = $("#" + previewDivId).find(".okButton");
-		$(videoArea).html("");
+		$(audioArea).html("");
 		$(metadataArea).html("");
 		$(button).hide();
 	};
 
 	var _generateWrapper = function(audioId){
-		console.log("_generateWrapper");
 		var audio_embedded = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
 		//current_area=  V.Editor.getCurrentArea();
 		//var width_height = V.Utils.dimentionsToDraw(current_area.width(), current_area.height(), 325, 243 ); 
