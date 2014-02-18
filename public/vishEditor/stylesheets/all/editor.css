@@ -2948,3 +2948,7 @@ span.letterInChapterDialog {
 	width: 50px !important;
 	height: 42px !important;
 }
+
+#tab_audio_soundcloud{
+	height: 30px !important;
+}
