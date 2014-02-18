@@ -145,6 +145,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(document).on('click', 'div.eVideoChapterActions i.icon-trash', _onRemoveChapter);
 		$(document).on('click', 'div.eVideoChapterActions i.icon-arrow-down', _onDownChapter);
 		$(document).on('click', 'div.eVideoChapterActions i.icon-arrow-up', _onUpChapter);
+		$(document).on('click', 'div.eVideoChapterInfo', _onClickChapterInfo);
 
 		//Chapters screen events
 		$(document).on('keyup', '#eVideochapters_hours, #eVideochapters_minutes, #eVideochapters_seconds', _onChapterTimeChange);
@@ -550,6 +551,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				var ballId = $(event.target).find("span.ballTimeSpan").attr("ballid");
 				var selectedChapter = $(eVideoDOM).find("ul.evideoChapters").find("li[ballid='"+ballId+"']");
 				$(selectedChapter).addClass("active");
+				_bringBallToFront(balls[ballId]);
 			}, stop: function(event,ui){
 				var ballTimeSpan = $(event.target).find("span.ballTimeSpan");
 				var newTime = (parseFloat($(ballTimeSpan).attr("videoduration")) * ui.value)/100;
@@ -562,7 +564,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 				_reOrderBalls(eVideoDOM,eVideos[ball.eVideoId]);
 			}, create: function(event,ui){
-				var ballWrapper = $("<div class='ballWrapper' ballid='"+ ball.id +"'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'><span class='ballLetterSpan'>"+ ball.letter +"</span></div><span class='ballTimeSpan' eVideoId='"+ ball.eVideoId +"' ballid='"+ ball.id +"' balltime='"+ ball.etime +"' videoDuration='"+ duration +"'>" + V.Utils.fomatTimeForMPlayer(ball.etime) + "</span></div>");
+				var ballWrapper = $("<div class='ballWrapper' layer='1' ballid='"+ ball.id +"'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'><span class='ballLetterSpan'>"+ ball.letter +"</span></div><span class='ballTimeSpan' eVideoId='"+ ball.eVideoId +"' ballid='"+ ball.id +"' balltime='"+ ball.etime +"' videoDuration='"+ duration +"'>" + V.Utils.fomatTimeForMPlayer(ball.etime) + "</span></div>");
 				var handler = $(ballSlider).find(".ui-slider-handle");
 				$(handler).append(ballWrapper);
 			}
@@ -742,6 +744,34 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		_updateBallsArray(eVideoId);
 		_updateBalls(eVideoDOM);
+	};
+
+	var _onClickChapterInfo = function(event){
+		//Bring ball to front (and all the other ones to the back)
+		var chapter = $("ul.evideoChapters li").has(event.target);
+		var ballId = $(chapter).attr("ballid");
+		_bringBallToFront(balls[ballId]);
+	};
+
+	var _bringBallToFront = function(ball){
+		if(typeof ball.slide_id == "undefined"){
+			return;
+		}
+		
+		var eVideoDOM = $("#" + ball.eVideoId);
+		var ballSliderWrapper = $(eVideoDOM).find("div.ballSliderWrapper[ballid='"+ball.id+"']");
+
+		if(ballSliderWrapper.length > 0){
+			$(eVideoDOM).find("div.ballSliderWrapper").attr("layer",2);
+			$(ballSliderWrapper).attr("layer",1);
+			_updateBallLayers(eVideoDOM);
+		}
+	};
+
+	var _updateBallLayers = function(eVideoDOM){
+		$(eVideoDOM).find("div.ballSliderWrapper").each(function(value,ballSliderWrapper){
+			$(ballSliderWrapper).css("z-index",11 - parseInt($(ballSliderWrapper).attr("layer")));
+		});
 	};
 
 	_addBallToCurrentTime = function(slideId){
