@@ -311,11 +311,17 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _renderVideo = function(videoObj,eVideoDOM){
-		$(eVideoDOM).addClass("temp_shown");
-		
 		//Clean dummy properties...
 		$(eVideoDOM).find("div.change_evideo_button").remove();
 		$(eVideoDOM).find("div.evideoBody").css("margin-top","0px");
+
+		var videoBody = $(eVideoDOM).find(".evideoBody");
+
+		//Add loading
+		var loadingContainer = $("<div class='loadingEVideoContainer'></div>");
+		$(videoBody).append(loadingContainer);
+		$(videoBody).addClass("loadingEVideoContainerWrapper");
+		V.Utils.Loader.startLoadingInContainer(loadingContainer);
 
 		//Render video
 		var videoBody = $(eVideoDOM).find(".evideoBody");
@@ -364,6 +370,15 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		var videoType = $(video).attr("videotype");
+
+		//Stop loading
+		var loadingContainer = $(videoBody).find(".loadingEVideoContainer");
+		// V.Utils.Loader.stopLoadingInContainer(loadingContainer);
+		$(loadingContainer).remove();
+		$(videoBody).removeClass("loadingEVideoContainerWrapper");
+		
+		//Start rendering
+		$(eVideoDOM).addClass("temp_shown");
 
 		var durationDOM = $(videoHeader).find(".evideoDuration");
 		var videoDuration = V.Video.getDuration(video);

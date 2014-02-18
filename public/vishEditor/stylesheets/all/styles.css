@@ -1974,3 +1974,18 @@ div.ballWrapper div.ballImg:active {
 	background-color: #636363;
 	border-radius: 30px;
 }
+
+/* Loading */
+
+div.loadingEVideoContainer {
+	width: 100%;
+	height: 100%;
+}
+
+div.loadingEVideoContainerWrapper > div:not(.loadingEVideoContainer){
+	display: none;
+}
+
+div.loadingEVideoContainer img.loading_fancy_img {
+	margin-top: 45% !important;
+}
