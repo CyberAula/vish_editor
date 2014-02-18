@@ -17,6 +17,9 @@ VISH.EVideo = (function(V,$,undefined){
 	var _lastVideoEndedCall;
 	var MIN_TIME_BETWEEN_TOGGLE_INDEX = 1600;
 
+	var VOL_INITIAL = 100;
+	var _lastVolumeValue = VOL_INITIAL;
+
 	var initialized = false;
 
 	//Time range around the ball, in which we will show its associated slide. Currently 300ms
@@ -101,7 +104,7 @@ VISH.EVideo = (function(V,$,undefined){
 			range: "min",
 			min: 0,
 			max: 100,
-			value: 100,
+			value: VOL_INITIAL,
 			slide: function( event, ui ) {
 				var video = getVideoFromVideoBox($(".evideoBox").has(event.target));
 				_onVolumeChange(video,ui.value);
@@ -263,7 +266,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		var videoType = $(video).attr("videotype");
-		
+
 		//Stop loading
 		var loadingContainer = $(videoBody).find(".loadingEVideoContainer");
 		$(loadingContainer).remove();
@@ -462,9 +465,29 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _onVolumeChange = function(video,volume){
+		if((volume >= 50)&&(_lastVolumeValue < 50)){
+			_updateVolumeImg(video,volume);
+		} else if((volume < 50)&&(volume > 0)&&((_lastVolumeValue > 50)||(_lastVolumeValue==0))){
+			_updateVolumeImg(video,volume);
+		} else {
+			_updateVolumeImg(video,volume);
+		}
+		_lastVolumeValue = volume;
+
 		V.Video.setVolume(video,volume);
 	};
 
+	var _updateVolumeImg = function(video,volume){
+		var videoBox = getVideoBoxFromVideo(video);
+		var volButton = $(videoBox).find(".evideoControlButton.evideoVolButton");
+		if(volume >= 50){
+			$(volButton).attr("src",V.ImagesPath + "customPlayer/eVideoSound.png");
+		} else if((volume < 50)&&(volume > 0)){
+			$(volButton).attr("src",V.ImagesPath + "customPlayer/eVideoSoundLow.png");
+		} else {
+			$(volButton).attr("src",V.ImagesPath + "customPlayer/eVideoSoundMute.png");
+		}
+	};
 
 	/* Load methods */
 

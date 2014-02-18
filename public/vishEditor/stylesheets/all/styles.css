@@ -1734,7 +1734,7 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSlider .ui-slider-handle {
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
 	width: 200%;
 	height: 25%;
 	left: -50%;
@@ -1746,7 +1746,7 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSlider .ui-slider-handle:active {
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2_hover.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_hover.png") no-repeat center center;
 	width: 200%;
 	height: 25%;
 	left: -50%;
@@ -1787,7 +1787,7 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoProgressBarSlider .ui-slider-handle {
 	position: absolute;
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
 	width: 7%;
 	height: 160%;
 	margin-left: -3.5%;
@@ -1799,7 +1799,7 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoProgressBarSlider .ui-slider-handle:active {
 	position: absolute;
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2_hover.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_hover.png") no-repeat center center;
 	width: 7%;
 	height: 160%;
 	margin-left: -3.5%;
