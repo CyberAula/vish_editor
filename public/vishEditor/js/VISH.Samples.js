@@ -1039,7 +1039,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t2",
 						"elements":[
 							{
-								"id":"article4_article1_zone1",
+								"id":"article1_article1_zone1",
 								"type":"object",
 								"areaid":"left",
 								"body":"<iframe src=\"http://www.youtube.com/embed/P4boyXQuUIw?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
@@ -1052,24 +1052,24 @@ VISH.Samples = (function(V,undefined){
 						"template":"t7",
 						"elements":[
 							{
-								"id":"article4_article3_zone1",
+								"id":"article1_article2_zone1",
 								"type":"image",
 								"areaid":"header",
 								"body":"http://vishub.org/pictures/315.jpeg",
 								"style":"position: relative; width:101.9%; height:190.4%; top:-69.2%; left:-0.1%;"
 							},{
-								"id":"article4_article3_zone2",
+								"id":"article1_article2_zone2",
 								"type":"text",
 								"areaid":"left",
 								"body":"The image shows the Alpha Particle X-Ray Spectrometer (APXS) on NASA's Curiosity rover, with the Martian landscape in the background.<div class=\"vish-parent-font5\" style=\"font-weight: normal; \"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>"},
 							{
-								"id":"article4_article3_zone3",
+								"id":"article1_article2_zone3",
 								"type":"image",
 								"areaid":"center",
 								"body":"http://vishub.org/pictures/316.jpeg",
 								"style":"position: relative; width:129.1%; height:110.6%; top:-5.2%; left:-10.9%;"
 							},{
-								"id":"article4_article3_zone4",
+								"id":"article1_article2_zone4",
 								"type":"text",
 								"areaid":"subheader",
 								"body":"<div class=\"vish-parent-font4\" style=\"font-weight: normal; \"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Image credit: NASA/JPL-Caltech/MSSS</span><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"></span></div>"
@@ -1081,7 +1081,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t10",
 						"elements":[
 							{
-								"id":"article4_article4_zone1",
+								"id":"article1_article3_zone1",
 								"type":"object",
 								"areaid":"center",
 								"body":"<iframe src=\"http://en.wikipedia.org/wiki/Curiosity_rover?wmode=transparent\" id=\"resizableunicID6\" class=\"t10_object\" wmode=\"opaque\"></iframe>","style":"position: relative; width:100%; height:100%; top:0%; left:0%;"
@@ -1093,7 +1093,7 @@ VISH.Samples = (function(V,undefined){
 						"template":"t10",
 						"elements":[
 							{
-								"id":"article4_article4_zone1",
+								"id":"article1_article4_zone1",
 								"type":"object",
 								"areaid":"center",
 								"body":"<iframe src=\"http://en.wikipedia.org/wiki/Curiosity_rover?wmode=transparent\" id=\"resizableunicID6\" class=\"t10_object\" wmode=\"opaque\"></iframe>","style":"position: relative; width:100%; height:100%; top:0%; left:0%;"

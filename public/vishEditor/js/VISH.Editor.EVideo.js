@@ -800,7 +800,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	////////////////
 
 	/*
-	 * Complete the eVideo scaffold to draw the virtual tour in the presentation
+	 * Complete the eVideo scaffold to draw the slideset in the presentation
 	 */
 	var draw = function(slidesetJSON,scaffoldDOM){
 		_drawEVideo(slidesetJSON,scaffoldDOM);
@@ -880,7 +880,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	/*
-	 * Redraw the pois of the virtual tour
+	 * Redraw the pois of the slideset
 	 * This actions must be called after thumbnails have been rewritten
 	 */
 	var _drawPois = function(eVideoDOM){
@@ -984,36 +984,71 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	////////////////////
 
 	/*
-	 * Used by VISH.Editor module to save the virtual tour in the JSON
+	 * Used by VISH.Editor module to save the slideset in the JSON
 	 */
 	var getSlideHeader = function(eVideoDOM){
 		var eVideoId = $(eVideoDOM).attr('id');
-		var eVideo = eVideos[eVideoId];
+		var eVideoJSON = eVideos[eVideoId];
+		var videoDOM = _getVideoFromEVideo(eVideoDOM);
+		var duration = V.Video.getDuration(videoDOM);
 
 		var slide = {};
 		slide.id = eVideoId;
 		slide.type = V.Constant.EVIDEO;
+
+		slide.video = {};
+		slide.video.type = V.Video.getTypeVideo(videoDOM);
+		switch(slide.video.type){
+			case V.Constant.Video.HTML5:
+				var sources = V.Video.HTML5.getSources(videoDOM);
+				var sourcesString = '';
+				$(sources).each(function(index, source) {
+					if(index!==0){
+						sourcesString = sourcesString + ',';
+					}
+					sourcesString = sourcesString + '{ "src": "' + source.src + '" , "type": "' + source.mimeType + '"}';
+				});
+				sourcesString = '[' + sourcesString + ']';
+				slide.video.sources = sourcesString;
+				slide.video.duration = duration;
+				//TODO
+				// slide.video.poster = ;
+				break;
+			case  V.Constant.Video.Youtube:
+				slide.video.source = V.Video.Youtube.getEmbedSource(videoDOM);
+				slide.video.duration = duration;
+				break;
+			default:
+				break;
+		};
 
 		slide.width = "100%";
 		slide.height = "100%";
 
 		//Get pois
 		var pois = [];
-		for(var key in eVideo.markers){
-			var marker = eVideo.markers[key];
-			var poi = {};
-			// poi.lat = marker.position.lat().toString();
-			// poi.lng = marker.position.lng().toString();
-			// poi.slide_id = marker.slide_id;
-			pois.push(poi);
-		};
-		slide.pois = pois;
 
+		$(eVideoJSON.balls).each(function(index,ball){
+			var poi = {};
+			poi.id = ball.id;
+			poi.etime = _getValidatedBallTime(ball.etime,duration);
+			if(typeof ball.slide_id != "undefined"){
+				poi.slide_id = ball.slide_id;
+			}
+			poi.name = ball.name;
+			pois.push(poi);
+		});
+
+		slide.pois = pois;
 		slide.slides = [];
 
 		return slide;
 	};
 
+
+	var _getValidatedBallTime = function(etime,duration){
+		return Math.max(Math.min(etime,duration),0);
+	};
 
 	/////////////////
 	// Clipboard
@@ -1033,7 +1068,11 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _getCurrentVideo = function(){
-		return V.EVideo.getVideoFromVideoBox($(V.Slides.getCurrentSlide()).find(".evideoBox"));
+		return _getVideoFromEVideo(V.Slides.getCurrentSlide());
+	};
+
+	var _getVideoFromEVideo = function(eVideoDOM){
+		return V.EVideo.getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
 	};
 
 	var _isVideoCreated = function(eVideoDOM){
