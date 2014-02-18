@@ -222,6 +222,12 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBody = $("#"+eVideoId).find(".evideoBody");
 		$(videoBody).attr("videoType",eVideoJSON.video.type);
 
+		//Start loading
+		var loadingContainer = $("<div class='loadingEVideoContainer'></div>");
+		$(videoBody).append(loadingContainer);
+		$(videoBody).addClass("loadingEVideoContainerWrapper");
+		V.Utils.Loader.startLoadingInContainer(loadingContainer);
+
 		switch(eVideoJSON.video.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var video = $(V.Video.HTML5.renderVideoFromJSON(eVideoJSON.video,{controls: false, poster: false}));
@@ -257,6 +263,11 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		var videoType = $(video).attr("videotype");
+		
+		//Stop loading
+		var loadingContainer = $(videoBody).find(".loadingEVideoContainer");
+		$(loadingContainer).remove();
+		$(videoBody).removeClass("loadingEVideoContainerWrapper");
 
 		var durationDOM = $(videoHeader).find(".evideoDuration");
 		var videoDuration = V.Video.getDuration(video);

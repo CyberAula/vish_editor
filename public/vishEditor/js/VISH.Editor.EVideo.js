@@ -317,7 +317,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		var videoBody = $(eVideoDOM).find(".evideoBody");
 
-		//Add loading
+		//Start loading
 		var loadingContainer = $("<div class='loadingEVideoContainer'></div>");
 		$(videoBody).append(loadingContainer);
 		$(videoBody).addClass("loadingEVideoContainerWrapper");
