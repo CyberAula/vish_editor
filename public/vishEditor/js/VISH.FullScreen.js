@@ -1,3 +1,8 @@
+/* 
+ * Enable FullScreen for ViSH Viewer
+ * IE documentation: http://msdn.microsoft.com/en-us/library/ie/dn265028(v=vs.85).aspx
+ */
+
 VISH.FullScreen = (function(V,$,undefined){
 
 	//Internals
@@ -66,7 +71,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		if(_canUseNativeFs()){
 			//if we have Native FullScreen feature, use it
 			$(document).on('click', '#page-fullscreen', _toggleFullScreen);
-			$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange",function(event){
+			$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",function(event){
 				//Give some time...
 				setTimeout(function(){
 					_pageIsFullScreen = !_pageIsFullScreen;
@@ -142,11 +147,11 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _getFsElement = function(myDoc){
-		return myDoc.fullscreenElement || myDoc.mozFullScreenElement || myDoc.webkitFullscreenElement;
+		return myDoc.fullscreenElement || myDoc.mozFullScreenElement || myDoc.webkitFullscreenElement || myDoc.msFullscreenElement;
 	};
 
 	var _getFsEnabled = function(myDoc){
-		return myDoc.fullscreenEnabled || myDoc.mozFullScreenEnabled || myDoc.webkitFullscreenEnabled;
+		return myDoc.fullscreenEnabled || myDoc.mozFullScreenEnabled || myDoc.webkitFullscreenEnabled || myDoc.msFullscreenEnabled;
 	};
 
 	var _launchFullscreenForElement = function(myDoc,element){
@@ -179,13 +184,15 @@ VISH.FullScreen = (function(V,$,undefined){
 			myDoc.webkitExitFullscreen();
 		} else if (myDoc.webkitCancelFullScreen) {
 			myDoc.webkitCancelFullScreen();
+		} else if(myDoc.msExitFullscreen) {
+			myDoc.msExitFullscreen();
 		}
 	};
 
 	/* Check full screen support */
 	var isFullScreenSupported = function(){
 		var elem = document.createElement('div');
-		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen)){
+		if(elem && (elem.requestFullScreen || elem.mozRequestFullScreen || elem.webkitRequestFullScreen || elem.msRequestFullscreen)){
 			return true;
 		} else {
 			return false;
