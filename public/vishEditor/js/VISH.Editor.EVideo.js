@@ -651,15 +651,17 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 		_cChapter = undefined;
 		$.fancybox.close();
+		return false;
 	};
 
-	var _onCancelAddChapter = function(){
+	var _onCancelAddChapter = function(event){
 		var chapter = _getCurrentChapter();
 		if((typeof chapter != "undefined")&&(typeof chapter.slideId != "undefined")){
 			_drawPois(V.Slides.getCurrentSlide());
 		}
 		_cChapter = undefined;
 		$.fancybox.close();
+		return false;
 	};
 
 	var _onEditChapter = function(event){
