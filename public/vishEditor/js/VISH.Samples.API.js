@@ -518,23 +518,23 @@ VISH.Samples.API = (function(V,undefined){
 	
 	
 	var imageListDummy = {
-	'pictures': []
-  };
+		'pictures': []
+	};
 	
 	
 	var video = {
-	  'id'     : '1534',
-	  'title'         :  'Midnight Sun',
-	  'description'   :  'Awesome HTML5 video example',
-	  'author'        :  'John Doe',
-	  'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
-	  'sources': '['                                                                                                         +
+		'id'     : '1534',
+		'title'         :  'Midnight Sun',
+		'description'   :  'Awesome HTML5 video example',
+		'author'        :  'John Doe',
+		'poster' : "http://d1p69vb2iuddhr.cloudfront.net/assets/www/demo/midnight_sun_800-e460322294501e1d5db9ab3859dd859a.jpg",
+		'sources': '['                                                                                                         +
 					'{ "type": "video/webm", "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_720p.webm"},'  + 
 					'{ "type": "video/mp4",  "src": "http://media.jilion.com/videos/demo/midnight_sun_sv1_360p.mp4" }'   +
 				 ']'
 	};
 	
-  var videoList = {
+  var videoListOld = {
 	'videos'        : [
 	{
 	  'id'     : '1534',
@@ -669,6 +669,35 @@ VISH.Samples.API = (function(V,undefined){
 				 ']'
 	}
 	]};
+
+	var videoList = {
+		"videos":[
+			{
+				"id":1342,
+				"title":"Windmill Formato Nuevo",
+				"description":"",
+				"author":"Luis Vaquerizo",
+				"poster":"http://vishub.org/videos/1342.png?style=170x127%23",
+				"sources":[
+					{"type":"video/webm","src":"http://vishub.org/videos/1342.webm"},
+					{"type":"video/mp4","src":"http://vishub.org/videos/1342.mp4"},
+					{"type":"video/x-flv","src":"http://vishub.org/videos/1342.flv"}
+				]
+			},
+			{
+				"id":1342,
+				"title":"Windmill Formato Antiguo",
+				"description":"",
+				"author":"Luis Vaquerizo",
+				"poster":"http://vishub.org/videos/1342.png?style=170x127%23",
+				"sources":
+				 '['                                                                         +
+					'{ "type": "video/webm", "src": "http://vishub.org/videos/1342.webm"},'  + 
+					'{ "type": "video/mp4",  "src": "http://vishub.org/videos/1342.mp4" }'   +
+				 ']'
+			}
+		]
+	};
 		
 		
 	var videoListLittle = {

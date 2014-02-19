@@ -239,18 +239,30 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	};
 
 	var getSourcesFromJSON = function(videoJSON){
-		try {
-			var sources = JSON.parse(videoJSON.sources);
-
-			//Compatibility with old VE versions (now the attr type is called mimeType)
-			$.each(sources, function(index, source) {
-				source.mimeType = source.type;
-			});
-
-			return sources;
-		} catch (e){
+		if(typeof videoJSON != "object"){
 			return [];
 		}
+
+		if(typeof videoJSON.sources == "string"){
+			try {
+				var sources = JSON.parse(videoJSON.sources);
+			} catch (e){
+				return [];
+			}
+		} else if(typeof videoJSON.sources == "object"){
+			var sources = videoJSON.sources;
+		}
+
+		if(typeof sources != "undefined"){
+			//Compatibility with old VE versions (now the attr type is called mimeType)
+			$.each(sources, function(index, source){
+				if(typeof source.type != "undefined"){
+					source.mimeType = source.type;
+				}
+			});
+		}
+
+		return sources;
 	};
 
 	var getVideoMimeType = function(url){
