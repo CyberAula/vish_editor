@@ -498,6 +498,8 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
 
+		$(eVideoDOM).removeClass("temp_shown");
+
 		switch(eVideoJSON.estatusBeforeLeave){
 			case V.Constant.EVideo.Status.Playing:
 				V.Video.play(videoDOM);
@@ -521,10 +523,13 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var onLeaveSlideset = function(eVideoDOM){
 		var eVideoId = $(eVideoDOM).attr("id");
-		var videoDOM = getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+		var videoBox = $(eVideoDOM).find(".evideoBox");
+		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
-		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
 
+		$(eVideoDOM).addClass("temp_shown");
+
+		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
 		switch(eVideoJSON.estatusBeforeLeave){
 			case V.Constant.EVideo.Status.Playing:
 				V.Video.pause(videoDOM);

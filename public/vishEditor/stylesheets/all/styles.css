@@ -97,6 +97,11 @@ this can not be done with show() and hide() because then it remains with display
 	opacity: 0 !important;
 }
 
+.temp_shown_b {
+	display: block !important;
+	opacity: 0 !important;
+}
+
 .temp_hidden {
 	display: none !important;
 }
