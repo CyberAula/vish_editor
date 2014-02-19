@@ -57,6 +57,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(document).on("click", '.evideoToggleIndex.minimized:not(.disabled), .evideoIndexSide.minimized:not(.disabled)', _maximizeIndex);
 		$(document).on("click", '.evideoChapters li', _onClickChapter);
 		$(document).on("click", 'div.ballWrapper div.ballImg', _onClickBall);
+		$(document).on("click", 'div.ballWrapper div.ballLine', _onClickBallLine);
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideClosed, function(params){
 			var subslideId = params.slideId;
@@ -592,6 +593,14 @@ VISH.EVideo = (function(V,$,undefined){
 		_onChapterSelected(video,ballTime);
 	};
 
+	var _onClickBallLine = function(event){
+		var ballLine = event.target;
+		var ballTime = parseFloat($(ballLine).attr("ballTime"));
+		var videoBox = $(".evideoBox").has(ballLine);
+		var video = getVideoFromVideoBox(videoBox);
+		_onChapterSelected(video,ballTime);
+	};
+
 	var _onChapterSelected = function(video,chapterTime,options){
 		var timeToSeek = chapterTime;
 		var duration = V.Video.getDuration(video);
@@ -770,9 +779,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		_lastLeft = undefined;
 		$(eVideoJSON.balls).each(function(value,ball){
-			if(typeof ball.slide_id != "undefined"){
-				_drawBall(ball,progressBarWrapper,duration);
-			}
+			_drawBall(ball,progressBarWrapper,duration);
 		});
 
 		var videoFooter = $(videoBox).find(".evideoFooter");
@@ -798,28 +805,36 @@ VISH.EVideo = (function(V,$,undefined){
 	var _drawBall = function(ball,progressBarWrapper,duration){
 		var left = (ball.etime*100/duration);
 
-		if(typeof _lastLeft != "undefined"){
-			if(left - _lastLeft < RANGE_BETWEEN_BALLS){
+		//Group Balls (not simple link timestamps)
+		if(typeof ball.slide_id != "undefined"){
+			if(typeof _lastLeft != "undefined"){
+				if(left - _lastLeft < RANGE_BETWEEN_BALLS){
 
-				//Look for the last drawed ball to represent this ball
-				if(typeof _lastDrawedBallWrapper != "undefined"){
-					$(_lastDrawedBallWrapper).attr("ballGroup","true");
-					var rBalls;
-					try {
-						rBalls = JSON.parse($(_lastDrawedBallWrapper).attr("rBalls"));
-					} catch (e){}
-					if(typeof rBalls == "undefined"){
-						rBalls = [];
+					//Look for the last drawed ball to represent this ball
+					if(typeof _lastDrawedBallWrapper != "undefined"){
+						$(_lastDrawedBallWrapper).attr("ballGroup","true");
+						var rBalls;
+						try {
+							rBalls = JSON.parse($(_lastDrawedBallWrapper).attr("rBalls"));
+						} catch (e){}
+						if(typeof rBalls == "undefined"){
+							rBalls = [];
+						}
+						rBalls.push(ball.id);
+						$(_lastDrawedBallWrapper).attr("rBalls",JSON.stringify(rBalls));
 					}
-					rBalls.push(ball.id);
-					$(_lastDrawedBallWrapper).attr("rBalls",JSON.stringify(rBalls));
+					return;
 				}
-				return;
 			}
+			_lastLeft = left;
 		}
-		_lastLeft = left;
 
-		var ballWrapper = $("<div class='ballWrapper' ballid='"+ball.id+"'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'></div></div>");
+		var ballWrapper = $("<div class='ballWrapper' ballid='"+ball.id+"' ballTime='"+ ball.etime +"'><div class='ballLine' ballTime='"+ ball.etime +"'></div></div>");
+		if(typeof ball.slide_id != "undefined"){
+			$(ballWrapper).attr("slide_id",ball.slide_id);
+			$(ballWrapper).append("<div class='ballImg' ballTime='"+ ball.etime +"'></div>");
+		}
+
 		$(ballWrapper).css("left",left+"%");
 		$(progressBarWrapper).append(ballWrapper);
 		_lastDrawedBallWrapper = ballWrapper;

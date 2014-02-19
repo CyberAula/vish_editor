@@ -2704,8 +2704,12 @@ section.slides_editor .evideoChapters li.active {
 	width: 100%;
 }
 
-section.slides_editor div.ballWrapper div.ballLine {
+section.slides_editor div.ballWrapper[slide_id] div.ballLine {
 	height: 50% !important;
+}
+
+section.slides_editor div.ballWrapper:not([slide_id]) div.ballLine {
+	height: 30% !important;
 }
 
 section.slides_editor div.ballWrapper div.ballImg {

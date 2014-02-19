@@ -1795,6 +1795,7 @@ span.evideoTimeSlash, span.evideoDuration {
 	background-size: contain;
 	border: none;
 	cursor: pointer;
+	z-index: 20;
 }
 
 .evideoProgressBarSlider .ui-slider-handle:active {
@@ -1820,20 +1821,32 @@ div.ballWrapper{
 	width: 3%;
 	margin-left: -1.5%;
 	text-align: center;
+	z-index: 2;
+	pointer-events: none;
 }
 
 div.ballWrapper.selected {
 	opacity: 0.6;
 }
 
+
 div.ballWrapper div.ballLine{
 	width: 25%; /* Line width */
-  	background-color: rgb(156, 156, 156); /* Line color */
-  	height: 75%;
+	background-color: rgb(156, 156, 156); /* Line color */
 	margin-left: 35%;
+	cursor: pointer;
+	pointer-events: auto;
 }
 
-div.ballWrapper div.ballImg{
+div.ballWrapper[slide_id] div.ballLine{
+	height: 75%;
+}
+
+div.ballWrapper:not([slide_id]) div.ballLine{
+	height: 30%;
+}
+
+div.ballWrapper[slide_id] div.ballImg{
 	width: 99%;
 	height: 35%;
 	position: absolute;
@@ -1846,6 +1859,7 @@ div.ballWrapper div.ballImg{
 	border: none;
 	z-index: 1;
 	cursor: pointer;
+	pointer-events: auto;
 }
 
 div.ballWrapper div.ballImg:hover {

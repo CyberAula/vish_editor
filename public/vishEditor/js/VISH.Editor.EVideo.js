@@ -261,8 +261,11 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _getLetterForBall = function(eVideoJSON,ball){
 		var letter = undefined;
-		var slideId = ball.slide_id;
+		if(typeof ball.slide_id == "undefined"){
+			return letter;
+		}
 
+		var slideId = ball.slide_id;
 		$(eVideoJSON.slides).each(function(index,slide){
 			if(slide.id === slideId){
 				letter = String.fromCharCode(64+parseInt(index+1));
@@ -506,12 +509,10 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		var duration = V.Video.getDuration(videoDOM);
 
 		$(eVideoJSON.balls).each(function(index,ball){
-			if(typeof ball.slide_id != "undefined"){
-				if(ball.drawed != true) {
-					_drawBall(eVideoDOM,eVideoJSON,ball,duration);
-				} else {
-					_updateBall(eVideoDOM,eVideoJSON,ball,duration);
-				}
+			if(ball.drawed != true) {
+				_drawBall(eVideoDOM,eVideoJSON,ball,duration);
+			} else {
+				_updateBall(eVideoDOM,eVideoJSON,ball,duration);
 			}
 		});
 
@@ -564,7 +565,18 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 				_reOrderBalls(eVideoDOM,eVideos[ball.eVideoId]);
 			}, create: function(event,ui){
-				var ballWrapper = $("<div class='ballWrapper' layer='1' ballid='"+ ball.id +"'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'><span class='ballLetterSpan'>"+ ball.letter +"</span></div><span class='ballTimeSpan' eVideoId='"+ ball.eVideoId +"' ballid='"+ ball.id +"' balltime='"+ ball.etime +"' videoDuration='"+ duration +"'>" + V.Utils.fomatTimeForMPlayer(ball.etime) + "</span></div>");
+
+				var ballWrapper = $("<div class='ballWrapper' layer='1' ballid='"+ ball.id +"'><div class='ballLine'></div></div>");
+
+				if(typeof ball.slide_id != "undefined"){
+					var ballImg = $("<div class='ballImg' ballTime='"+ ball.etime +"'><span class='ballLetterSpan'>"+ ball.letter +"</span></div>");
+					$(ballWrapper).append(ballImg);
+					$(ballWrapper).attr("slide_id",ball.slide_id);
+				}
+		
+				var ballTimeSpan = $("<span class='ballTimeSpan' eVideoId='"+ ball.eVideoId +"' ballid='"+ ball.id +"' balltime='"+ ball.etime +"' videoDuration='"+ duration +"'>" + V.Utils.fomatTimeForMPlayer(ball.etime) + "</span>");
+				$(ballWrapper).append(ballTimeSpan);
+
 				var handler = $(ballSlider).find(".ui-slider-handle");
 				$(handler).append(ballWrapper);
 			}
@@ -585,8 +597,10 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		}
 
 		//Update letter
-		var ballLetterSpan = $(ballSliderWrapper).find("span.ballLetterSpan");
-		$(ballLetterSpan).html(ball.letter);
+		if(typeof ball.slide_id != "undefined"){
+			var ballLetterSpan = $(ballSliderWrapper).find("span.ballLetterSpan");
+			$(ballLetterSpan).html(ball.letter);
+		}
 	};
 
 	//////////////
@@ -754,10 +768,6 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _bringBallToFront = function(ball){
-		if(typeof ball.slide_id == "undefined"){
-			return;
-		}
-		
 		var eVideoDOM = $("#" + ball.eVideoId);
 		var ballSliderWrapper = $(eVideoDOM).find("div.ballSliderWrapper[ballid='"+ball.id+"']");
 
