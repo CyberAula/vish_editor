@@ -1042,7 +1042,8 @@ VISH.Samples = (function(V,undefined){
 								"id":"article1_article1_zone1",
 								"type":"object",
 								"areaid":"left",
-								"body":"<iframe src=\"http://www.youtube.com/embed/P4boyXQuUIw?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+								// "body":"<iframe src=\"http://www.youtube.com/embed/P4boyXQuUIw?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+								"body":"<iframe src=\"http://www.wikipedia.com?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
 								"style":"position: relative; width:100%; height:98.7%; top:0%; left:0%;"
 							}
 						]
@@ -1147,7 +1148,8 @@ VISH.Samples = (function(V,undefined){
 								"id":"article2_article1_zone1",
 								"type":"object",
 								"areaid":"left",
-								"body":"<iframe src=\"http://www.youtube.com/embed/P4boyXQuUIw?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+								// "body":"<iframe src=\"http://www.youtube.com/embed/P4boyXQuUIw?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+								"body":"<iframe src=\"http://www.wikipedia.com?wmode=opaque\" frameborder=\"0\" id=\"resizableunicID3\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
 								"style":"position: relative; width:100%; height:98.7%; top:0%; left:0%;"
 							}
 						]

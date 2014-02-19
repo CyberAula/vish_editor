@@ -937,16 +937,16 @@ VISH.EVideo = (function(V,$,undefined){
 			var videoBox = getVideoBoxFromVideo(videoDOM);
 			var subslideDOM = $("#"+ball.slide_id);
 			if($(subslideDOM).hasClass("show_in_smartcard")){
-				$(videoBox).addClass("temp_hidden");
+				$(videoBox).addClass("temp_hidden_soft");
 			}
 		},1500);
 		V.Slides.openSubslide(ball.slide_id);
-	}
+	};
 
 	var _onCloseBall = function(eVideoId){
 		var eVideoJSON = eVideos[eVideoId];
 		var videoBox = $("#"+eVideoId).find(".evideoBox");
-		$(videoBox).removeClass("temp_hidden");
+		$(videoBox).removeClass("temp_hidden_soft");
 		var videoDOM = getVideoFromVideoBox(videoBox);
 		var cTime = V.Video.getCurrentTime(videoDOM);
 		var prevBall = jQuery.extend({}, eVideoJSON.displayedBall); //displayedBall points to the ball we are closing

@@ -101,6 +101,10 @@ this can not be done with show() and hide() because then it remains with display
 	display: none !important;
 }
 
+.temp_hidden_soft {
+	opacity: 0 !important;
+}
+
 .slides > article.far-past {
 	display: none;
 	pointer-events: none;
