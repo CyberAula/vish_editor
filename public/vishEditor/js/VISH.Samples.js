@@ -1005,8 +1005,8 @@ VISH.Samples = (function(V,undefined){
 				"type":"enrichedvideo",
 				"video": {
 					"type":"HTML5",
-					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/1342.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/1342.mp4\"}]",
-					"poster":"http://vishub.org/videos/1342.png?style=170x127%23",
+					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/3447.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/3447.mp4\"}]",
+					"poster":"http://vishub.org/videos/3447.png?style=170x127%23",
 					"duration": "24.066"
 				},
 				"pois":[
