@@ -771,6 +771,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var _bringBallToFront = function(ball){
+		if(typeof ball == "undefined"){
+			return;
+		}
 		var eVideoDOM = $("#" + ball.eVideoId);
 		var ballSliderWrapper = $(eVideoDOM).find("div.ballSliderWrapper[ballid='"+ball.id+"']");
 
