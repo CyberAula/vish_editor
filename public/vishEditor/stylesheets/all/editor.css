@@ -2436,7 +2436,12 @@ div.draggable_sc_div {
 	margin-top: -20px;
 	margin-left: 12px;
 	opacity: 1;
+	pointer-events: none;
+}
+
+div.draggable_sc_div > * {
 	cursor: pointer;
+	pointer-events: auto;
 }
 
 div.draggable_sc_div img.fc_draggable_arrow {
