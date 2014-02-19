@@ -228,7 +228,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			});
 
 			eVideos[eVideoId].balls = ((eVideos[eVideoId].balls.filter(function(ball){
-				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>0));
+				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>=0));
 			})).map(function(ball){
 				ball.letter = _getLetterForBall(eVideos[eVideoId],ball);
 				ball.etime = parseFloat(ball.etime);
@@ -631,7 +631,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			//Edit existing chapter
 			var ballId = chapter.ballId;
 			balls[ballId].name = title;
-			balls[ballId].etime = time;
+			if(Math.round(time)!=Math.round(balls[ballId].etime)){
+				balls[ballId].etime = time;
+			}
 			_updateBalls(eVideoDOM);
 		} else {
 			//Add new chapter (always without a slide associated)

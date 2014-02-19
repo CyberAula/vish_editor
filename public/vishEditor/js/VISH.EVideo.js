@@ -136,7 +136,7 @@ VISH.EVideo = (function(V,$,undefined){
 				eVideoJSON.balls.push(value);
 			});
 			eVideoJSON.balls = ((eVideoJSON.balls.filter(function(ball){
-				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>0));
+				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>=0));
 			})).map(function(ball){
 				ball.etime = parseFloat(ball.etime);
 				ball.eVideoId = eVideoJSON.id;

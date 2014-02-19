@@ -2616,15 +2616,16 @@ section.slides_editor .evideoChapters{
 
 div.eVideoChapterInfo {
 	display: inline-block;
-	width: 70%;
+	width: 80%;
 	margin-right: 9%;
 	min-height: 40px;
 }
 
 div.eVideoChapterActions {
 	display: inline-block;
-	width: 21%;
 	position: absolute;
+	width: 15%;
+	height: 77%;
 }
 
 div.eVideoChapterActions p {
@@ -2649,10 +2650,23 @@ div.eVideoChapterActions p.icon-arrows-container i {
 
 section.slides_editor .evideoChapters li {
 	cursor: default !important;
+	display: inline-block;
+	width: 87%;
 }
 
 section.slides_editor .evideoChapters li:hover {
 	background-color: transparent !important;
+}
+
+section.slides_editor .evideoChapters li span.eVideoIndexEntryNumber {
+	display: block;
+}
+
+section.slides_editor .evideoChapters li span.eVideoIndexEntryBody {
+	max-width: 100%;
+	display: inline-block;
+	overflow: hidden;
+	white-space: normal;
 }
 
 section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryNumber {
@@ -2661,6 +2675,7 @@ section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryNumber {
 
 section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryBody {
 	color: black !important;
+	display: inline-block;
 }
 
 section.slides_editor .evideoChapters li.active {
