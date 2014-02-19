@@ -953,20 +953,21 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var onEnterSlideset = function(eVideoDOM){
+		$(eVideoDOM).removeClass("temp_shown");
 	};
 
 	var onLeaveSlideset = function(eVideoDOM){
+		$(eVideoDOM).addClass("temp_shown");
 	};
 
 	var loadSlideset = function(eVideoDOM){
-		$(eVideoDOM).removeClass("temp_shown");
-
+		$(eVideoDOM).find(".evideoBox").removeClass("temp_shown");
 		//Show Arrows
 		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
 
 	var unloadSlideset = function(eVideoDOM){
-		$(eVideoDOM).addClass("temp_shown");
+		$(eVideoDOM).find(".evideoBox").addClass("temp_shown");
 	};
 
 	var beforeCreateSlidesetThumbnails = function(eVideoDOM){
