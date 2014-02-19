@@ -123,7 +123,7 @@ VISH.Renderer = (function(V,$,undefined){
 	
 	var _renderHTML5Video = function(videoJSON, template){
 		var rendered = "<div id='"+videoJSON['id']+"' class='"+template+"_"+videoJSON['areaid']+"'>";
-		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{videoClass: template + "_video"});
+		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{id: V.Utils.getId(videoJSON['id'] + "_video"),videoClass: template + "_video"});
 		rendered = rendered + video + "</div>";
 		return rendered;
 	};

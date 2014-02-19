@@ -160,6 +160,9 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		
 		//Params forced by options
 		if(options){
+			if(options.id){
+				renderOptions.videoId = options.id;
+			}
 			if(options.videoClass){
 				renderOptions.extraClasses = options.videoClass;
 			}
