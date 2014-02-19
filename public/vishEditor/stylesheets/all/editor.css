@@ -2754,6 +2754,11 @@ span.ballTimeSpan{
 	text-align: center;
 }
 
+img.notificationIconDeleteTimestampLink {
+	height: 45px;
+	width: auto;
+}
+
 /* Chapter fancybox style */
 
 #chapters_fancybox{
