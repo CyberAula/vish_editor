@@ -99,7 +99,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		} else {
 			_loadImagesOnContainer(imagesArray,containerId,options);
 		}
-	}
+	};
 
 	var _loadImagesOnContainer = function(imagesArray,containerId,options){
 		var imagesLength = imagesArray.length;
@@ -120,7 +120,7 @@ VISH.Utils.Loader = (function(V,undefined){
 				}
 			})
 		});
-	}
+	};
 
 	var _loadImagesOnContainerWithOrder = function(imagesArray,containerId,options){
 		var validImagesArray = imagesArray;
@@ -166,13 +166,13 @@ VISH.Utils.Loader = (function(V,undefined){
 				
 			});
 		});
-	}
+	};
 
 	var _insertElementsWithOrder = function(imagesArray,containerId,options){
 		$.each(imagesArray, function(i, image) {
 			_insertElementOnContainer(image,imagesArray,containerId,options);
 		});
-	}
+	};
 
 	var _insertElementOnContainer = function(image,imagesArray,containerId,options){
 		var titleArray = options.titleArray;
@@ -181,7 +181,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		} else {
 			$(&quot;#&quot; + containerId).append(&#x27;&lt;div&gt;&#x27; + V.Utils.getOuterHTML(image) + &#x27;&lt;&#x2F;div&gt;&#x27;);
 		}
-	}
+	};
 
 	&#x2F;*
 	* Load a script asynchronously
@@ -308,7 +308,7 @@ VISH.Utils.Loader = (function(V,undefined){
 				loadCSS(&quot;browser&#x2F;chrome.css&quot;);
 				break;
 		}
-	}
+	};
 
 	var loadLanguageCSS = function(){
 		var languagesWithCSS = [&quot;es&quot;];
@@ -317,7 +317,7 @@ VISH.Utils.Loader = (function(V,undefined){
 			&#x2F;&#x2F;Load CSS for this language
 			loadCSS(&quot;language&#x2F;&quot; + language + &quot;.css&quot;);
 		}
-	}
+	};
 
 
 	&#x2F;*
@@ -364,7 +364,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(255,255,255,0.9)&quot;);
 		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
        	$(&quot;#fancybox-wrap&quot;).css(&quot;margin-left&quot;, &quot;20px&quot;);
-	}
+	};
 
 	var _isFullLoadingActive = function(){
 		return $(&quot;#loading_fancy&quot;).is(&quot;:visible&quot;);
@@ -390,6 +390,7 @@ VISH.Utils.Loader = (function(V,undefined){
 		$(container).find(&quot;.loading_fancy_img&quot;).parent().remove();
 		$(container).removeClass(&quot;loadingtmpShown&quot;);
 	};
+
 
 	return {
 		loadImagesOnContainer		: loadImagesOnContainer,

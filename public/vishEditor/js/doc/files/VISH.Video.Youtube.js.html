@@ -108,19 +108,33 @@ YT.PlayerState.BUFFERING = 3;
 YT.PlayerState.CUED = 5;
 
 &#x2F;&#x2F;Callback from Youtube Iframe API
-function onYouTubeIframeAPIReady() { }
+var _youTubeIframeApiReady = false;
+function onYouTubeIframeAPIReady(){ _youTubeIframeApiReady = true; }
 
 
 VISH.Video.Youtube = (function(V,$,undefined){
 
+	var _waitForLoadYouTubeAPI = true;
 	var _enableCustomPlayer;
 
 	var init = function(enableCustomPlayer){
 		_enableCustomPlayer = enableCustomPlayer;
+
+		_loadYouTubeIframeAPILibrary();
+		setTimeout(function(){
+			_waitForLoadYouTubeAPI = false;
+		},11000);
+	};
+
+	var _loadYouTubeIframeAPILibrary = function(){
+		var tag = document.createElement(&#x27;script&#x27;);
+		tag.src = &quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;iframe_api&quot;;
+		var firstScriptTag = document.getElementsByTagName(&#x27;script&#x27;)[0];
+		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	};
 
 	var _isYouTubeIframeAPIReady = function(){
-		if(window[&#x27;YT&#x27;]){
+		if((window[&#x27;YT&#x27;])&amp;&amp;(_youTubeIframeApiReady===true)){
 			return true;
 		} else {
 			return false;
@@ -128,20 +142,33 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var renderVideoFromJSON = function(videoJSON, options){
-		var videoId = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
-		var videoSource = videoJSON[&#x27;body&#x27;] || videoJSON[&#x27;source&#x27;];
-		var videoClass = &quot;&quot;;
+		var source = videoJSON[&#x27;body&#x27;] || videoJSON[&#x27;source&#x27;];
+		var options = options || {};
+		options.id = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
+		options.objectStyle = videoJSON[&#x27;style&#x27;];
+		options.zoomInStyle = videoJSON[&#x27;zoomInStyle&#x27;];
+		return renderVideoFromSource(source,options);
+	};
+
+	var renderVideoFromSource = function(source,options){
+		var videoId = ((options)&amp;&amp;(options.id)) ? options.id : V.Utils.getId();
+		var ytContainerId = V.Utils.getId();
+		var videoClasses = &quot;&quot;;
+		var objectStyle = &quot;&quot;;
+		var zoomInStyle = &quot;&quot;;
 		if(options){
-			if(options.videoClass){
-				videoClass = videoClass + &quot; &quot; + options.videoClass;
+			if(options.extraClasses){
+				videoClasses = videoClasses + &quot; &quot; + options.extraClasses;
+			}
+			if(options.style){
+				objectStyle = &quot;objectStyle=&#x27;&quot; + options.style + &quot;&#x27; &quot;;
+			}
+			if(options.zoomInStyle){
+				zoomInStyle = &quot;zoomInStyle=&#x27;&quot; + options.zoomInStyle + &quot;&#x27; &quot;;
 			}
 		};
-		videoClass = &quot;class=&#x27;&quot; + videoClass + &quot;&#x27;&quot;;
 
-		var ytContainerId = V.Utils.getId();
-		var style = (videoJSON[&#x27;style&#x27;])? videoJSON[&#x27;style&#x27;] : &quot;&quot;;
-		var zoomInStyle = (videoJSON[&#x27;zoomInStyle&#x27;])? videoJSON[&#x27;zoomInStyle&#x27;] : &quot;&quot;;
-		var video = &quot;&lt;div id=&#x27;&quot;+ videoId + &quot;&#x27; &quot; + videoClass + &quot; objectStyle=&#x27;&quot; + style + &quot;&#x27; zoomInStyle=&#x27;&quot; + zoomInStyle + &quot;&#x27; source=&#x27;&quot; + videoSource + &quot;&#x27; ytContainerId=&#x27;&quot; + ytContainerId + &quot;&#x27;&gt;&quot; + &quot;&lt;&#x2F;div&gt;&quot;;
+		var video = &quot;&lt;div id=&#x27;&quot;+ videoId + &quot;&#x27; ytContainerId=&#x27;&quot; + ytContainerId + &quot;&#x27; class=&#x27;&quot; + videoClasses + &quot;&#x27; &quot; + objectStyle + zoomInStyle + &quot; source=&#x27;&quot; + source + &quot;&#x27;&gt;&quot; + &quot;&lt;&#x2F;div&gt;&quot;;
 		return video;
 	};
 
@@ -153,6 +180,18 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 		&#x2F;&#x2F; If Youtube Iframe isn&#x27;t ready, load nothing
 		if(!_isYouTubeIframeAPIReady()){
+			if(_waitForLoadYouTubeAPI){
+				setTimeout(function(){
+					loadYoutubeObject(container,options);
+				},1000);
+			} else {
+				$(container).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
+				$(container).addClass(&quot;videoOfflineContainer&quot;);
+				var nonAvailableImg = $(container).find(&quot;img&quot;);
+				$(nonAvailableImg).load(function(response){
+					$(nonAvailableImg).css(&quot;margin-top&quot;,($(container).height()-$(nonAvailableImg).height())&#x2F;2 + &quot;px&quot;);
+				});
+			}
 			return;
 		}
 
@@ -398,9 +437,14 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		return id;
 	};
 
+	var getEmbedSource = function(youTubeVideoDOM){
+		return &quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;&quot; + V.Video.Youtube.getYoutubeIdFromURL(V.Object.getObjectInfo(youTubeVideoDOM).source);
+	};
+
 	return {
 		init 				: init,
 		renderVideoFromJSON	: renderVideoFromJSON,
+		renderVideoFromSource	: renderVideoFromSource,
 		loadYoutubeObject	: loadYoutubeObject,
 		onPlayerReady 		: onPlayerReady,
 		onPlayerStateChange : onPlayerStateChange,
@@ -408,7 +452,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		pauseVideo 			: pauseVideo,
 		seekVideo 			: seekVideo,
 		getYoutubeIdFromURL	: getYoutubeIdFromURL,
-		getYouTubePlayer	: getYouTubePlayer
+		getYouTubePlayer	: getYouTubePlayer,
+		getEmbedSource		: getEmbedSource
 	};
 
 })(VISH,jQuery);

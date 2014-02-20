@@ -140,7 +140,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			V.Utils.Loader.startLoadingInContainer($(&quot;#tagBoxIntro&quot;),{style: &quot;loading_tags&quot;});
 			V.Editor.API.requestTags(_onInitialTagsReceived);
 		}
-	}
+	};
 
 	var displaySettings = function(){
 		&#x2F;&#x2F; fancybox to edit presentation settings
@@ -169,7 +169,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		});
 
 		$(&quot;a#edit_presentation_details&quot;).trigger(&#x27;click&#x27;);
-	}
+	};
 
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
@@ -211,7 +211,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Check for enable continue button
 		_checkIfEnableContinueButton();
-	}
+	};
 
 	var loadPresentationSettings = function(presentation){
 		&#x2F;&#x2F;Prevent to check presentation var in all cases
@@ -302,7 +302,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(presentation.educational_objectives){
 			$(&quot;#educational_objectives_textarea&quot;).val(presentation.educational_objectives);
 		}		
-	}
+	};
 
 	var _onThemeImagesLoaded = function(){
 
@@ -335,30 +335,30 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		&#x2F;&#x2F;Create scrollbar
 		$(&quot;#&quot; + themeScrollbarDivId).show();
 		V.Editor.Scrollbar.createScrollbar(themeScrollbarDivId, options);
-	}
+	};
 
 	var _onClickTheme = function(event){
 		var themeNumber = $(event.target).attr(&quot;themeNumber&quot;);
 		selectTheme(themeNumber);
-	}
+	};
 
 	var _afterCreateThemesScrollbar = function(){
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 		V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$(&quot;img.theme_selected_in_scrollbar&quot;));
 		themeScrollbarCreated = true;
-	}
+	};
 
 	var selectTheme = function(themeNumber){
 		$(&quot;.theme_selected_in_scrollbar&quot;).removeClass(&quot;theme_selected_in_scrollbar&quot;);
 		$(&quot;#scrollbar_themes_list img.image_barbutton[themenumber=&#x27;&quot;+themeNumber+&quot;&#x27;]&quot;).addClass(&quot;theme_selected_in_scrollbar&quot;);
 		$(&quot;.theme_selected_in_fancybox&quot;).removeClass(&quot;theme_selected_in_fancybox&quot;);
 		$(&quot;#theme_fancybox div#select_theme&quot;+themeNumber+&quot; img&quot;).addClass(&quot;theme_selected_in_fancybox&quot;);
-	}
+	};
 
 	var selectAnimation = function(animationNumber){
 		$(&quot;.animation_selected_in_fancybox&quot;).removeClass(&quot;animation_selected_in_fancybox&quot;);
 		$(&quot;#animation_fancybox div#select_animation&quot;+animationNumber).addClass(&quot;animation_selected_in_fancybox&quot;);
-	}
+	};
 
 	var _onInitialTagsReceived = function(data){
 		tagsLoaded = true;
@@ -389,18 +389,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
-	}
+	};
 
 	var onChangeThumbnailClicked = function(){
 		$(&quot;#editthumb&quot;).hide();
 		$(&quot;#hidden_button_to_uploadThumbnail&quot;).trigger(&quot;click&quot;);
-	}
+	};
 
 	var onThumbnailSelected = function(thumbnail_url){
 		V.Editor.Settings.displaySettings(); &#x2F;&#x2F;Hide previous fancybox
 		_addThumbnail(thumbnail_url);
 		_checkIfEnableContinueButton();
-	}
+	};
 
 	var _addThumbnail = function(thumbnail_url){
 		var thumbnail_wrapper = $(&quot;#presentation_details_preview_thumbnail&quot;);
@@ -409,7 +409,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$(thumbnail).attr(&quot;src&quot;,thumbnail_url);
 		$(thumbnail_wrapper).find(&quot;p.addthumbtitle&quot;).hide();
 		presentationThumbnail = thumbnail_url;
-	}
+	};
 
 	var onKeyUpOnTitle = function(event){
 		var inputData = $(&quot;#presentation_details_input_title&quot;);
@@ -422,7 +422,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(inputPreview).val(&quot;&quot;);
 		}
 		_checkIfEnableContinueButton();
-	}
+
+		if(event.keyCode===13){
+			&#x2F;&#x2F;Enter key
+			$(inputData).blur();
+		}
+	};
 
 	var onKeyUpOnPreviewTitle = function(event){
 		var inputData = $(&quot;#presentation_details_input_title&quot;);
@@ -435,9 +440,19 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(inputData).val(&quot;&quot;);
 		}
 		_checkIfEnableContinueButton();
-	}
 
-	var onTLTchange = function(){
+		if(event.keyCode===13){
+			&#x2F;&#x2F;Enter key
+			$(inputPreview).blur();
+		}
+	};
+
+	var onTLTchange = function(event){
+		if((event)&amp;&amp;(event.keyCode===13)){
+			$(event.target).blur();
+			return;
+		}
+
 		var TLT = _getTLT();
 		if(TLT===null){
 			$(&quot;#tlt_current_value&quot;).val(V.I18n.getTrans(&quot;i.invalidvalue&quot;));
@@ -446,7 +461,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		} else if(typeof TLT == &quot;string&quot;){
 			$(&quot;#tlt_current_value&quot;).val(TLT);
 		}
-	}
+	};
 
 	var _checkIfEnableContinueButton = function(){
 		var enable = checkMandatoryFields();
@@ -462,7 +477,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(&quot;#save_presentation_details&quot;).addClass(&quot;buttonDisabledOnSettings&quot;);
 			$(&quot;#save_presentation_details&quot;).attr(&quot;disabled&quot;,&quot;true&quot;);
 		}
-	}
+	};
 
 	var checkMandatoryFields = function(){
 		&#x2F;&#x2F;Check that mandatory params are filled appropiately.
@@ -476,7 +491,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			return false;
 		}
 		return true;
-	}
+	};
 
 	&#x2F;**
 	 * function called when the user clicks on the save button
@@ -637,7 +652,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 		return null;
-	}
+	};
 
 	var getTags = function(){
 		var tagIndex = $(&quot;#tagindex&quot;);

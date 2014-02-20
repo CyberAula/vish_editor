@@ -110,7 +110,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		&quot;&lt;article id=&#x27;article_id_to_change&#x27; type=&#x27;standard&#x27; template=&#x27;t14&#x27; slidenumber=&#x27;slidenumber_to_change&#x27;&gt;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&lt;img class=&#x27;help_in_slide help_in_sslide&#x27; src=&#x27;&quot;+V.ImagesPath+&quot;vicons&#x2F;helptutorial_circle_blank.png&#x27;&#x2F;&gt;&lt;div id=&#x27;div_id_to_change&#x27; 	areaid=&#x27;circle1&#x27; size=&#x27;small&#x27; class=&#x27;t14_circle1 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;right1&#x27; size=&#x27;medium&#x27; class=&#x27;t14_right1 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;circle2&#x27; size=&#x27;small&#x27; class=&#x27;t14_circle2 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;right2&#x27; size=&#x27;medium&#x27; class=&#x27;t14_right2 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;circle3&#x27; size=&#x27;small&#x27; class=&#x27;t14_circle3 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;right3&#x27; size=&#x27;medium&#x27; class=&#x27;t14_right3 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;&#x2F;article&gt;&quot;,
 		&quot;&lt;article id=&#x27;article_id_to_change&#x27; type=&#x27;standard&#x27; template=&#x27;t15&#x27; slidenumber=&#x27;slidenumber_to_change&#x27;&gt;&lt;div class=&#x27;delete_slide&#x27;&gt;&lt;&#x2F;div&gt;&lt;img class=&#x27;help_in_slide help_in_sslide&#x27; src=&#x27;&quot;+V.ImagesPath+&quot;vicons&#x2F;helptutorial_circle_blank.png&#x27;&#x2F;&gt;&lt;div id=&#x27;div_id_to_change&#x27; 	areaid=&#x27;left&#x27; 	 size=&#x27;medium&#x27; class=&#x27;t15_left editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;center&#x27; size=&#x27;medium&#x27; class=&#x27;t15_center editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;right&#x27; size=&#x27;medium&#x27; class=&#x27;t15_right editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;div id=&#x27;div_id_to_change&#x27; areaid=&#x27;center2&#x27; size=&#x27;large&#x27; class=&#x27;t15_center2 editable vezone selectable&#x27;&gt;&lt;&#x2F;div&gt;&lt;&#x2F;article&gt;&quot;
 		];
-	}
+	};
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -168,7 +168,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		} else if(slideType==V.Constant.STANDARD){
 			return _getScaffoldForStandardSlide(slide,options);
 		}
-	}
+	};
 
 	var _getScaffoldForStandardSlide = function(slide,options){
 		var zoneIds = [];
@@ -177,7 +177,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 		}
 		var dummy = dummies[parseInt(options.template,10)-1];
 		return _removeEditable(_replaceIds(dummy, options.slideNumber, slide.id, zoneIds));
-	}
+	};
 
 	&#x2F;**
 	 * Function to replace dummy ids
@@ -216,7 +216,7 @@ VISH.Editor.Dummies = (function(V,undefined){
 
 	var _removeEditable = function(dummy){
 		return dummy.replace(&#x2F;editable &#x2F;g,&quot;&quot;);
-	}
+	};
 
 	return {
 		init				: init,

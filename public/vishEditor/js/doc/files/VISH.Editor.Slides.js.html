@@ -501,6 +501,8 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			&#x2F;&#x2F;Subslides Thumbnails drawed succesfully
 			V.Editor.Thumbnails.selectSubslideThumbnail($(subslide).attr(&quot;slidenumber&quot;));
 		});
+
+		V.Editor.Slideset.afterCreateSubslide(slideset,subslide);
 	};
 
 	var appendSubslide = function(slideset,subslide){
