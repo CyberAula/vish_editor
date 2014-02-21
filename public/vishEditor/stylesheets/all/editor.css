@@ -1861,10 +1861,11 @@ div.object_wrapper {
 /* Upload stylessheet */
 
 .documentsForm { 
-	display: inline;
+	display: inline-block;
 	position: absolute;
 	margin-left: 1.5%;
 	margin-top: 3.7%;
+	width: 615px;
 }
 
 .upload_progress_bar_wrapper { 
@@ -1920,6 +1921,7 @@ div.object_wrapper {
 }
 
 .upload_file_input {
+	display: inline-block;
 	font-family: 'Open Sans', arial, sans-serif;
   	font-size: 16px;
   	background: 5px 50% no-repeat;

@@ -1549,7 +1549,7 @@ img.loading_presentation_carrousel {
 	display: block !important;
 }
 
-.loadingtmpShown img:not(.loading_fancy_img) {
+.loadingtmpShown > div:not(.loading_fancy) {
 	display: none !important;
 }
 
