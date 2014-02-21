@@ -69,16 +69,17 @@ var getOptions = function(){
 			
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
-				// developmentSettings.samples = VISH.Samples.basic_samples;
-				// developmentSettings.samples = VISH.Samples.samplesv01;
+				developmentSettings.samples = VISH.Samples.basic_samples;
+				// developmentSettings.samples = VISH.Samples.full_samples;
 				// developmentSettings.samples = VISH.Samples.fc_sample;
-				// developmentSettings.samples = VISH.Samples.samples_vtour;
-				developmentSettings.samples = VISH.Samples.full_samples;
+				// developmentSettings.samples = VISH.Samples.vt_sample;
+				// developmentSettings.samples = VISH.Samples.evideo_sample;
 				// developmentSettings.samples = VISH.Samples.quiz_samples;
 				//quiz_simple_sample
 				// developmentSettings.samples = VISH.Samples.quiz_samples.slides[0].elements[0].quiz_simple_json
-				// developmentSettings.samples = VISH.Samples.magnetic_gifs;
-				// developmentSettings.samples = VISH.Samples.new_wysiwyg;
+				// developmentSettings.samples = VISH.Samples.text_samples;
+				// developmentSettings.samples = VISH.Samples.VE01_samples;
+				// developmentSettings.samples = VISH.Samples.test;
 			}
 
 			//Possible actions: "preview"
