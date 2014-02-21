@@ -76,17 +76,17 @@ VISH.Editor.Object.Live = (function(V,$,undefined){
 			var imageSource = null;
 
 			switch (objectInfo.type){
-				case "swf":
+				case V.Constant.MEDIA.FLASH:
 					imageSource = V.ImagesPath + "carrousel/swf.png";
 					break;
-				case "youtube":
-					imageSource = V.ImagesPath + "carrousel/youtube.png";
+				case V.Constant.MEDIA.YOUTUBE_VIDEO:
+					imageSource = V.ImagesPath + "carrousel/video.png";
 					break;
-				case "web":
+				case V.Constant.MEDIA.WEB:
 					if(objectInfo.wrapper=="IFRAME"){
-					imageSource = V.ImagesPath + "carrousel/iframe.png";
+						imageSource = V.ImagesPath + "carrousel/iframe.png";
 					} else {
-					imageSource = V.ImagesPath + "carrousel/object.png";
+						imageSource = V.ImagesPath + "carrousel/object.png";
 					}
 					break;
 				default:

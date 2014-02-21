@@ -88,7 +88,6 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 			var author = item.user.username;
 			var subtitle = item.description;
 
-
 			var audioId = item.id;
 			currentAudios[audioId] = new Object();
 			// Se mantiene igual
@@ -97,11 +96,11 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 			currentAudios[audioId].author = author;
 			currentAudios[audioId].subtitle = subtitle;
 
-			//var image_url = item.artwork_url;
-			if(item.artwork_url!= null){
+			var image_url;
+			if((typeof item.artwork_url != "undefined")&&(item.artwork_url != null)){
 				image_url = item.artwork_url;
 			} else {
-				image_url = 'http://www.wpclipart.com/computer/disks/cd_grey.png';
+				image_url = V.ImagesPath + "carrousel/audio.png";
 			}
 			var myImg = $("<img audioId='"+audioId+"' src='"+image_url+"' title='"+title+"'/>");
 			carrouselImages.push(myImg);
