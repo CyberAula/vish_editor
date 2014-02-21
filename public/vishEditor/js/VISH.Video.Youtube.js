@@ -70,7 +70,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			if(options.extraClasses){
 				videoClasses = videoClasses + " " + options.extraClasses;
 			}
-			if(options.style){
+			if(options.objectStyle){
+				objectStyle = "objectStyle='" + options.objectStyle + "' ";
+			} else if(options.style){
 				objectStyle = "objectStyle='" + options.style + "' ";
 			}
 			if(options.zoomInStyle){
@@ -111,7 +113,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 		
 		var iframeId = $(container).attr("ytContainerId");
-		$(container).html("<div id='" + iframeId + "' videotype='"+ V.Constant.MEDIA.YOUTUBE_VIDEO +"' style='" + $(container).attr("objectStyle") + "'></div>");
+		var ytStyle = (typeof $(container).attr("objectStyle") != "undefined") ? ("style='" + $(container).attr("objectStyle") + "' ") : "";
+		$(container).html("<div id='" + iframeId + "' videotype='"+ V.Constant.MEDIA.YOUTUBE_VIDEO + "' " + ytStyle + "'></div>");
 
 		var enableCustomPlayer = _enableCustomPlayer;
 		var controls = enableCustomPlayer ? 0 : 1;

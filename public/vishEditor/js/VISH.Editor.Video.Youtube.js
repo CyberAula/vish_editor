@@ -211,9 +211,10 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 
 	var _generateWrapper = function(videoId){
 		var videoURL = "http://www.youtube.com/embed/"+videoId;
+		videoURL = V.Utils.addParamToUrl(videoURL,"wmode","opaque");
 		var videoWContainer = ((typeof V.Editor.getCurrentArea() != "undefined")&&(V.Editor.getCurrentArea() != null)) ? V.Editor.getCurrentArea() : V.Editor.getCurrentContainer();
 		var dimensionsToDraw = V.Utils.dimentionsToDraw($(videoWContainer).width(), $(videoWContainer).height(),325,243);
-		var wrapper = "<iframe src='"+videoURL+"?wmode=opaque' frameborder='0' style='width:"+dimensionsToDraw.width+"px; height:"+dimensionsToDraw.height+"px;'></iframe>";
+		var wrapper = "<iframe src='"+videoURL+"' frameborder='0' style='width:"+dimensionsToDraw.width+"px; height:"+dimensionsToDraw.height+"px;'></iframe>";
 		return wrapper;
 	};
  
@@ -222,13 +223,14 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		if(videoId!=null){
 			return _generateWrapper(videoId);
 		} else {
-			return "Youtube Video ID can't be founded."
+			return "Youtube Video ID can't be founded.";
 		}
 	};
 
 	var _generatePreviewWrapper = function(videoId){
 		var videoURL = "http://www.youtube.com/embed/"+videoId;
-		var wrapper = '<iframe class="objectPreview" type="text/html" src="'+videoURL+'?wmode=opaque" frameborder="0"></iframe>';
+		videoURL = V.Utils.addParamToUrl(videoURL,"wmode","opaque");
+		var wrapper = '<iframe class="objectPreview" src="'+videoURL+'" frameborder="0"></iframe>';
 		return wrapper;
 	};
 
@@ -241,13 +243,13 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		}
 	};
 
-  return {
+	return {
 		init		  								: init,
 		beforeLoadTab								: beforeLoadTab,
 		onLoadTab	  								: onLoadTab,
 		addSelectedVideo							: addSelectedVideo,
 		generateWrapperForYoutubeVideoUrl 			: generateWrapperForYoutubeVideoUrl,
 		generatePreviewWrapperForYoutubeVideoUrl 	: generatePreviewWrapperForYoutubeVideoUrl
-  };
+	};
 
 }) (VISH, jQuery);

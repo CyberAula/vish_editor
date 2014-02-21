@@ -220,22 +220,24 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	};
 
 	var _generateWrapper = function(audioId){
-		var audio_embedded = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
-		var wrapper = "<iframe src='"+audio_embedded+"?wmode=opaque' frameborder='0'></iframe>";
+		var url = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
+		url = V.Utils.addParamToUrl(url,"wmode","opaque");
+		var wrapper = "<iframe src='"+url+"' frameborder='0'></iframe>";
 		return wrapper;
 	};
  
 	var _generatePreviewWrapper = function(audioId){
-		var audio_embedded = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
-		var wrapper = '<iframe class="objectPreview" type="text/html" src="'+audio_embedded+'?wmode=opaque" frameborder="0"></iframe>';
+		var url = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
+		url = V.Utils.addParamToUrl(url,"wmode","opaque");
+		var wrapper = "<iframe class='objectPreview' src='"+url+"' frameborder='0'></iframe>";
 		return wrapper;
 	};
 
-  return {
+	return {
 		init		  								: init,
 		beforeLoadTab								: beforeLoadTab,
 		onLoadTab	  								: onLoadTab,
 		addSelectedAudio							: addSelectedAudio
-  };
+	};
 
 }) (VISH, jQuery);
