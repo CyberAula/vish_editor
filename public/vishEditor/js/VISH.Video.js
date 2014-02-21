@@ -24,7 +24,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				V.Video.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				V.Video.Youtube.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
@@ -37,7 +37,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				V.Video.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				V.Video.Youtube.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			default:
@@ -50,7 +50,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				V.Video.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				V.Video.Youtube.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			default:
@@ -82,7 +82,7 @@ VISH.Video = (function(V,$,undefined){
 			return V.Constant.MEDIA.HTML5_VIDEO;
 		} else if((tagName==="OBJECT")||(tagName==="IFRAME")){ 
 			//Iframe for HTML5 API, Object for deprecated Flash API
-			return V.Constant.Video.Youtube;
+			return V.Constant.MEDIA.YOUTUBE_VIDEO;
 		}
 		return V.Constant.UNKNOWN;
 	};
@@ -94,7 +94,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video)[0].play();
 				break;
-			case V.Constant.Video.Youtube:		
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:		
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 
@@ -128,7 +128,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video)[0].pause();
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				ytplayer.pauseVideo();
@@ -143,7 +143,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video)[0].currentTime = seekTime;
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				var ytStatus = ytplayer.getPlayerState();
@@ -175,7 +175,7 @@ VISH.Video = (function(V,$,undefined){
 				//Volume should be a number between 0.0 and 1.0
 				$(video)[0].volume = (volume/100);
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				//Volume should be a number between 0 and 100
 				V.Video.Youtube.getYouTubePlayer($(video).attr("id")).setVolume(volume);
 				break;
@@ -205,7 +205,7 @@ VISH.Video = (function(V,$,undefined){
 					}
 				});
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				// onVideoReady callback must be specified when loading the YouTube video.
 				// After load the YouTube video, its possible to add events on fly.
 				break;
@@ -228,7 +228,7 @@ VISH.Video = (function(V,$,undefined){
 					timeUpdateCallback(video,cTime);
 				});
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				if(typeof youtubePlayerTimeUpdate[videoId] == "undefined"){
@@ -281,7 +281,7 @@ VISH.Video = (function(V,$,undefined){
 				});
 
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				ytplayer.addEventListener("onStateChange", function(event){
@@ -345,7 +345,7 @@ VISH.Video = (function(V,$,undefined){
 					vStatus = V.Constant.EVideo.Status.Paused;
 				}
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var ytplayer =  V.Video.Youtube.getYouTubePlayer($(video).attr("id"));
 				//Returns the state of the player. Possible values are unstarted (-1), ended (0), playing (1), paused (2), buffering (3), video cued (5).
 				var ytStatus = ytplayer.getPlayerState();
@@ -389,7 +389,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				return $(video)[0].duration;
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				return V.Video.Youtube.getYouTubePlayer($(video).attr("id")).getDuration();
 				break;
 			default:
@@ -402,7 +402,7 @@ VISH.Video = (function(V,$,undefined){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				return video.currentTime;
 				break;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				return V.Video.Youtube.getYouTubePlayer($(video).attr("id")).getCurrentTime();
 				break;
 			default:

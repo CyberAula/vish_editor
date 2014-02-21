@@ -94,17 +94,6 @@ VISH.Constant.QZ_MODE.RT = "realTime";
 VISH.Constant.TextDefault = 12;
 VISH.Constant.TextBase = 12;
 
-// Video
-VISH.Constant.Video = {};
-VISH.Constant.Video.HTML5 = "HTML5";
-VISH.Constant.Video.Youtube = "Youtube";
-
-//Audio
-VISH.Constant.Audio = {};
-VISH.Constant.Audio.HTML5 = "HTML5";
-VISH.Constant.Audio.Soundcloud = "Soundcloud";
-
-
 //Clipboard
 VISH.Constant.Clipboard = {};
 VISH.Constant.Clipboard.Slide = "slide";

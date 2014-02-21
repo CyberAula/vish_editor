@@ -292,16 +292,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object preview from source
-				switch (objectInfo.type) {			
+				switch (objectInfo.type) {	
 					case V.Constant.MEDIA.IMAGE:
 						return "<img class='imagePreview' src='" + object + "'></img>";
 						break;
 					case V.Constant.MEDIA.FLASH:
 						object = V.Utils.addParamToUrl(object,"wmode","opaque");
 						return "<embed class='objectPreview' src='" + object + "'></embed>";
-						break;
-					 case V.Constant.MEDIA.AUDIO:
-						return V.Editor.Object.Audio.renderAudioFromSources([object]);
 						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:
@@ -313,6 +310,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
 						return V.Editor.Video.HTML5.renderVideoWithURL(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: "objectPreview"});
+						break;
+					case V.Constant.MEDIA.HTML5_AUDIO:
+						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{extraClasses: "objectPreview"});
 						break;
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
@@ -334,6 +334,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 			case V.Constant.WRAPPER.VIDEO:
 				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: "objectPreview"});
+				break;
+			case V.Constant.WRAPPER.AUDIO:
+				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{extraClasses: "objectPreview"});
 				break;
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
@@ -402,9 +405,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case V.Constant.MEDIA.FLASH:
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
-					case V.Constant.MEDIA.AUDIO:
-						V.Editor.Object.Audio.drawAudioWithUrl(object);
-						break;
 					case V.Constant.MEDIA.PDF:
 					case V.Constant.MEDIA.DOC:
 					case V.Constant.MEDIA.PPT:
@@ -415,6 +415,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
 						V.Editor.Video.HTML5.drawVideoWithUrl(object);
+						break;
+					case V.Constant.MEDIA.AUDIO:
+						V.Editor.Audio.HTML5.drawAudioWithUrl(object);
 						break;
 					case V.Constant.MEDIA.WEB:
 						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
@@ -439,6 +442,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 			case V.Constant.WRAPPER.VIDEO:
 				V.Editor.Video.HTML5.drawVideoWithWrapper(object);
+				break;
+
+			case V.Constant.WRAPPER.AUDIO:
+				V.Editor.Audio.HTML5.drawAudioWithWrapper(object);
 				break;
 
 			default:
