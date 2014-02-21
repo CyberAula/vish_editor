@@ -40,6 +40,9 @@ var getOptions = function(){
 		configuration["Vimeo"] = false;
 		configuration["LRE"] = true;
 
+		configuration["Soundcloud"] = true;
+		configuration["SoundcloudAPIKey"] = 'bb5aebd03b5d55670ba8fa5b5c3a3da5';
+
 		configuration["Upload"] = true;
 
 		//Posible values: noserver, node, vish

@@ -30,7 +30,6 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 	
 	var onLoadTab = function(){
-		
 	};
 	
 	var _requestData = function(text){

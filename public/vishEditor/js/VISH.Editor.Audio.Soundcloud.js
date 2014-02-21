@@ -26,7 +26,6 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	};
 	
 	var onLoadTab = function(){
-		
 	};
 	
 	var _requestData = function(text){
@@ -57,7 +56,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 
 	var _searchInSoundcloud = function(text){
 		$.getJSON("http://api.soundcloud.com/tracks?callback=?",{
-			consumer_key: 'bb5aebd03b5d55670ba8fa5b5c3a3da5',
+			consumer_key: V.Configuration.getConfiguration()["SoundcloudAPIKey"],
 			q: text,
 			format: "json"
 		},

@@ -369,10 +369,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param options.style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object, options){
-
-		console.log("Draw Object");
-		console.log(object);
-
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
