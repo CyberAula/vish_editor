@@ -98,6 +98,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Slides.init();
 		V.User.init(options);
 		V.Video.init();
+		V.Audio.init();
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 
@@ -599,7 +600,7 @@ VISH.Editor = (function(V,$,undefined){
 				element.id		=	$(div).attr('id');
 				element.type	=	$(div).attr('type');
 				element.areaid	=	$(div).attr('areaid');				 
-					
+
 				if(element.type==V.Constant.TEXT){
 					var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
 					if(CKEditor!==null){
@@ -632,7 +633,7 @@ VISH.Editor = (function(V,$,undefined){
 					});
 					sources = '[' + sources + ']';
 					element.sources = sources;
-				} else if(element.type==V.Constant.MEDIA.AUDIO){
+				} else if(element.type==V.Constant.AUDIO){
 					var audio = $(div).find("audio");
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(audio));
 					//Sources

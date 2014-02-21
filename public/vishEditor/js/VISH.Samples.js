@@ -1004,7 +1004,7 @@ VISH.Samples = (function(V,undefined){
 				"id":"article1",
 				"type":"enrichedvideo",
 				"video": {
-					"type":"HTML5",
+					"type":"HTML5_VIDEO",
 					"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/3447.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/3447.mp4\"}]",
 					"poster":"http://vishub.org/videos/3447.png?style=170x127%23",
 					"duration": "24.066"
@@ -1315,24 +1315,75 @@ VISH.Samples = (function(V,undefined){
 	var magnetic_gifs = {"id":"405","type":"presentation","title":"Magnetic Resonance Imaging of Foods (Mobile)","description":"Images of magnetic resonance: Food series.\nhttp://insideinsides.blogspot.com.es/","avatar":"http://vishub.org/assets/logos/original/excursion-35.png","tags":["Art","Mobile","LifeSciences","Life-Sciences","EarthScience","e-learning"],"author":"N\u00e9stor Toribio Ruiz","slides":[{"id":"article_405_0","type":"standard","template":"t1","elements":[{"id":"zone1","type":"image","areaid":"left","body":"http://3.bp.blogspot.com/-QLfceEKHmis/TijNAXnjwLI/AAAAAAAACSA/LWzvgAAy4YI/s840/insideinsides.jpg","style":"position: relative; width:97.61388286334056%; height:60.85790884718499%; top:23.288651126319536%; left:1.0773698057890455%;"},{"id":"zone2","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" class=\"vish-parent-font7 vish-parent-font2 vish-parent-font4\" align=\"center\"><span class=\"vish-font4 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:#201815;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\">Magnetic Resonance</span></span></span></div>"},{"id":"zone3","type":"text","areaid":"subheader","body":"<div style=\"font-weight: 400;\" class=\"vish-parent-font5 vish-parent-font2\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font5 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><i>Imaging of Foods</i></span></span></div>"}]},{"id":"article_405_1","type":"standard","template":"t5","elements":[{"id":"zone4","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"font-weight: 400;\">Magnetic Resonance: Broccoli</span></span></div>"},{"id":"zone5","type":"image","areaid":"left","body":"http://vishub.org/pictures/150.gif","style":"position: relative; width:123.07692307692308%; height:70.78651685393258%; top:12.142323697550912%; left:-17.887178861177883%;"},{"id":"zone6","type":"image","areaid":"right","body":"http://www.tarot-josnell.com/imagenes/brocoli.jpg","style":"position: relative; width:107.6923076923077%; height:75.50561797752809%; top:9.438202247191011%; left:-3.6923076923076925%;"}]},{"id":"article_405_2","type":"standard","template":"t5","elements":[{"id":"zone7","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" class=\"vish-parent-font2\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"font-weight: 400;\">Magnetic Resonance: Corn</span></span><br></div>"},{"id":"zone8","type":"image","areaid":"left","body":"http://vishub.org/pictures/146.gif","style":"position: relative; width:70.76923076923077%; height:101.79775280898876%; top:0%; left:15.097430889423077%;"},{"id":"zone9","type":"image","areaid":"right","body":"http://www.scientificamerican.com/media/inline/that-burger-youre-eating-is-mostly-corn_1.jpg","style":"position: relative; width:169.23076923076923%; height:123.59550561797752%; top:-13.730335021286868%; left:-36.68716195913461%;"}]},{"id":"article_405_3","type":"standard","template":"t5","elements":[{"id":"zone10","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"font-weight: 400;\">Magnetic Resonance: Garlic</span></span></div>"},{"id":"zone11","type":"image","areaid":"left","body":"http://vishub.org/pictures/149.gif","style":"position: relative; width:132.30769230769232%; height:97.52808988764045%; top:6.29962706833743%; left:-16.041053185096153%;"},{"id":"zone12","type":"image","areaid":"right","body":"http://www.planetmattersandmore.com/wp-content/uploads/2012/04/garlic_bulb.jpg","style":"position: relative; width:153.84615384615384%; height:84.9438202247191%; top:7.872660776202598%; left:-28.369290865384617%;"}]},{"id":"article_405_4","type":"standard","template":"t5","elements":[{"id":"zone13","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"font-weight: 400;\">Magnetic Resonance: Tomato</span></span></div>"},{"id":"zone14","type":"image","areaid":"left","body":"http://vishub.org/pictures/148.gif","style":"position: relative; width:107.6923076923077%; height:78.65168539325843%; top:8.546818079573384%; left:-7.405127892127404%;"},{"id":"zone15","type":"image","areaid":"right","body":"http://www.lacocinadeinma.com/wp-content/uploads/Tomate.jpg","style":"position: relative; width:123.07692307692308%; height:89.88764044943821%; top:4.943820224719101%; left:-9.866671048677885%;"}]},{"id":"article_405_5","type":"standard","template":"t5","elements":[{"id":"zone16","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"font-weight: 400;\">Magnetic Resonance: Pineapple</span></span></div>"},{"id":"zone17","type":"image","areaid":"left","body":"http://vishub.org/pictures/156.gif?1347543540","style":"position: relative; width:200%; height:81.57303370786516%; top:12.36329496576545%; left:-48.05127892127404%;"},{"id":"zone18","type":"image","areaid":"right","body":"http://www.floridahillnursery.com/images/gold%20pineapple%20.jpg","style":"position: relative; width:123.07692307692308%; height:165.8426966292135%; top:-69.93258358387465%; left:-10.784621018629808%;"}]},{"id":"article_405_6","type":"standard","template":"t5","elements":[{"id":"zone19","type":"text","areaid":"header","body":"<div style=\"font-weight: 400;\" align=\"center\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"font-weight: 400;\">Magnetic Resonance: Apple</span></span></div>"},{"id":"zone20","type":"image","areaid":"left","body":"http://vishub.org/pictures/151.gif","style":"position: relative; width:163.07692307692307%; height:119.10112359550561%; top:-8.771533751755618%; left:-32.65127798227164%;"},{"id":"zone21","type":"image","areaid":"right","body":"http://appleadayproject.files.wordpress.com/2011/03/apple-full2.jpg","style":"position: relative; width:138.46153846153845%; height:101.79775280898876%; top:-8.996252852879213%; left:-14.4769287109375%;"}]},{"id":"article_405_7","type":"standard","template":"t2","elements":[{"id":"zone22","type":"text","areaid":"left","body":"<div style=\"font-weight: 400;\" class=\"vish-parent-font7 vish-parent-font2 vish-parent-fontundefined\" align=\"center\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><br></span><span class=\"vish-fontundefined vish-fontHelvetica\" style=\"color:#717175;undefined;\"><span class=\"vish-font2 vish-fontHelvetica\" style=\"color:undefined;undefined;\"><span class=\"vish-font7 vish-fontHelvetica\" style=\"color:undefined;undefined;\">http://insideinsides.blogspot.com.es/</span></span></span></div>"}]}]};
  	var new_wysiwyg = {"VEVersion":"0.3","id":"4","type":"presentation","title":"The Iberian Lynx","description":"The Iberian Lynx.\nAmazing presentation with images, videos and objects, generated by ViSH Editor.","avatar":"http://vishub.org/assets/logos/original/excursion-10.png","tags":["DoÃ±ana","Lynx","Biology"],"theme":"theme1","age_range":"4 - 20","subject":["Biology"],"language":"en","educational_objectives":"Know about Iberian Lynx","adquired_competencies":"Pupils will be smarter","author":"","slides":[{"id":"article1","type":"standard","template":"t2","elements":[{"id":"article1_zone1","type":"text","areaid":"left","body":"<p>\n\taaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</p>\n<p>\n\tbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb</p>\n<p>\n\t<span style=\"font-size:10px;\">10cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc</span></p>\n<p>\n\t<span style=\"font-size: 10px;\"><span style=\"font-size:16px;\">16ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd</span></span></p>\n<p>\n\t<span style=\"font-size: 10px;\"><span style=\"font-size:16px;\"><span style=\"font-size:26px;\">26eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee</span></span></span></p>\n<p>\n\t<span style=\"font-size: 10px;\"><span style=\"font-size:16px;\"><span style=\"font-size:26px;\"><span style=\"font-size:48px;\">48ffffffffffffffffffffffffffffffffffffffffffffffff</span></span></span></span></p>\n<p>\n\t<span style=\"font-size: 10px;\"><span style=\"font-size:16px;\"><span style=\"font-size:26px;\"><span style=\"font-size:48px;\"><span style=\"font-size:72px;\">72ggggggggggggggg</span></span></span></span></span></p>\n<p>\n\t&nbsp;</p>\n"}]},{"id":"article2","type":"standard","template":"t2","elements":[{"id":"article2_zone1","type":"text","areaid":"left","body":"<p style=\"text-align: center;\">\n\t<span style=\"color:#ff0000;\"><span style=\"font-size:48px;\"><span style=\"font-family:trebuchet ms,helvetica,sans-serif;\">Hello World</span></span></span></p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t&nbsp;</p>\n<p style=\"text-align: center;\">\n\t<span style=\"color: rgb(255, 0, 0); font-family: 'trebuchet ms', helvetica, sans-serif; font-size: 48px;\">Hello World</span></p>\n"}]},{"id":"article3","type":"standard","template":"t2","elements":[{"id":"article3_zone1","type":"text","areaid":"left","body":"<p style=\"text-align:left;\">\n\t<span style=\"font-size:36px;\">&shy;<span style=\"font-size:20px;\">1</span></span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">2</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">3</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">4</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">5</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">6</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">7</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">8</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">9</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">10</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">11</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">12</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">13</span></p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:20px;\">14</span></p>\n"}]},{"id":"article4","type":"standard","template":"t1","elements":[{"id":"article4_zone1","type":"text","areaid":"left","body":"<p style=\"text-align:left;\">\n\t<span style=\"font-size:36px;\"><a href=\"http://delanada\" target=\"_blank\">http://delanada</a>&shy;</span></p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n"},{"id":"article4_zone2","areaid":"header"},{"id":"article4_zone3","type":"text","areaid":"subheader","body":"<p style=\"text-align:left;\">\n\t<span style=\"font-size:18px;\">&shy;asdadsad</span></p>\n"}]},{"id":"article5","type":"standard","template":"t2","elements":[{"id":"article5_zone1","type":"text","areaid":"left","body":"<p style=\"text-align:left;\">\n\t<span style=\"font-size:36px;\">exponentes<sup>2</sup></span></p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:22px;\"><span style=\"font-size:36px;\">exponentesb<sub>345</sub>asdadsadasd</span></span></p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t<u><span style=\"font-size:22px;\"><span style=\"font-size:36px;\">Subrayado</span></span></u></p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t<em><span style=\"font-size:22px;\"><span style=\"font-size:36px;\">Cursiva</span></span></em></p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t<strong><span style=\"font-size:22px;\"><span style=\"font-size:36px;\">Negrita</span></span></strong></p>\n"}]},{"id":"article6","type":"standard","template":"t2","elements":[{"id":"article6_zone1","type":"text","areaid":"left","body":"<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<p style=\"text-align:left;\">\n\t&nbsp;</p>\n<table align=\"center\" border=\"1\" cellpadding=\"1\" cellspacing=\"1\" style=\"width: 500px;\" summary=\"Fin de ejemplo de tabla\">\n\t<caption>\n\t\t<span style=\"font-size:24px;\">Ejemplo de Tabla</span></caption>\n\t<tbody>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<span style=\"color:#ffff00;\"><span style=\"font-size:36px;\"><span style=\"font-family:comic sans ms,cursive;\"><span style=\"background-color:#000000;\">Esto es un</span></span></span></span></td>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">ejemplo de&nbsp;</span></td>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">una tabla</span></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">con el</span></td>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">nuevo</span></td>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">wysiwyg</span></td>\n\t\t</tr>\n\t\t<tr>\n\t\t\t<td>\n\t\t\t\t<font size=\"5\">a ver si</font></td>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">redimensiona</span></td>\n\t\t\t<td>\n\t\t\t\t<span style=\"font-size:24px;\">bien</span></td>\n\t\t</tr>\n\t</tbody>\n</table>\n<p style=\"text-align:left;\">\n\t<span style=\"font-size:36px;\">&shy;</span></p>\n"}]}]};
 
-	var test = {"VEVersion":"0.8.5","type":"presentation","title":"Enriched Video Example","description":"First Enriched Video Example","avatar":"http://vishub.org/pictures/311.jpg","author":{"name":"agordillo","vishMetadata":{"id":"24"}},"tags":["Science","Quiz","Video"],"theme":"theme1","animation":"animation1","language":"independent","age_range":"12 - 30","subject":["Astronomy"],"educational_objectives":"MOOCs","vishMetadata":{"draft":"false"},
-	"slides":[
-		{
-			"id":"article7",
-			"type":"standard",
-			"template":"t2",
-			"elements":[
-				{
-					"id":"article7_zone1",
-					"type":"video",
-					"areaid":"left",
-					"poster":"/vishEditor/images/vicons/example_poster_image.jpg",
-					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
-					"sources":"[{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/3366.mp4\"}]"
-				}
-			]
-		}
-	]};
+ 	var audio_samples = {
+		"VEVersion":"0.8.6",
+		"type":"presentation",
+		"title":"The Iberian Lynx",
+		"description":"The Iberian Lynx.\nAmazing presentation with images, videos and objects, generated by ViSH Editor.",
+		"avatar":"http://vishub.org/assets/logos/original/excursion-10.png",
+		"author":{"name":"agordillo","vishMetadata":{"id":"24"}},
+		"contributors":[{"name":"Fred Griffin","vishMetadata":{"id":5}}],
+		"tags":["Doñana","Lynx","Biology"],
+		"theme":"theme1",
+		"animation":"animation1",
+		"language":"en",
+		"age_range":"4 - 20",
+		"difficulty":"easy",
+		"TLT":"PT6H30M15S",
+		"subject":["Art","Astronomy","Biology"],
+		"educational_objectives":"Know about the Iberian Lynx","vishMetadata":{"draft":"false"},
+		"slides":[
+			{
+				"id":"article10",
+				"type":"standard",
+				"template":"t10",
+				"elements":[
+					{
+						"id":"article10_zone1",
+						"type":"audio",
+						"areaid":"center",
+						"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
+						"sources":"[{ \"type\": \"audio/ogg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.ogg\"},{ \"type\": \"audio/mpeg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.mp3\"}]"
+					}
+				]
+			}
+		]
+	};
+
+	var test = {
+		"VEVersion":"0.8.6",
+		"type":"presentation",
+		"title":"The Iberian Lynx",
+		"description":"The Iberian Lynx.\nAmazing presentation with images, videos and objects, generated by ViSH Editor.",
+		"avatar":"http://vishub.org/assets/logos/original/excursion-10.png",
+		"author":{"name":"agordillo","vishMetadata":{"id":"24"}},
+		"contributors":[{"name":"Fred Griffin","vishMetadata":{"id":5}}],
+		"tags":["Doñana","Lynx","Biology"],
+		"theme":"theme1",
+		"animation":"animation1",
+		"language":"en",
+		"age_range":"4 - 20",
+		"difficulty":"easy",
+		"TLT":"PT6H30M15S",
+		"subject":["Art","Astronomy","Biology"],
+		"educational_objectives":"Know about the Iberian Lynx","vishMetadata":{"draft":"false"},
+		"slides":[
+			{
+				"id":"article10",
+				"type":"standard",
+				"template":"t10",
+				"elements":[
+					{
+						"id":"article10_zone1",
+						"type":"audio",
+						"areaid":"center",
+						"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
+						"sources":"[{ \"type\": \"audio/ogg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.ogg\"},{ \"type\": \"audio/mpeg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.mp3\"}]"
+					}
+				]
+			}
+		]
+	};
 
 
 	return {
@@ -1346,6 +1397,7 @@ VISH.Samples = (function(V,undefined){
 		new_wysiwyg 		: new_wysiwyg,
 		evideo_sample		: evideo_sample,
 		mooc_sample			: mooc_sample,
+		audio_samples		: audio_samples,
 		test 				: test
 	};
 

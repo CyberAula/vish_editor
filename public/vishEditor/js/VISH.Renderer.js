@@ -56,8 +56,8 @@ VISH.Renderer = (function(V,$,undefined){
 				content += _renderImage(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.VIDEO){
 				content += _renderHTML5Video(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === V.Constant.MEDIA.AUDIO){
-				content += renderAudio(slide.elements[el],slide.template);
+			} else if(slide.elements[el].type === V.Constant.AUDIO){
+				content += _renderHTML5Audio(slide.elements[el],slide.template);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				content += _renderObject(slide.elements[el],slide.template);
 				classes += "object ";
@@ -123,35 +123,15 @@ VISH.Renderer = (function(V,$,undefined){
 	
 	var _renderHTML5Video = function(videoJSON, template){
 		var rendered = "<div id='"+videoJSON['id']+"' class='"+template+"_"+videoJSON['areaid']+"'>";
-		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{id: V.Utils.getId(videoJSON['id'] + "_video"),videoClass: template + "_video"});
+		var video = V.Video.HTML5.renderVideoFromJSON(videoJSON,{id: V.Utils.getId(videoJSON['id'] + "_video"),extraClasses: template + "_video"});
 		rendered = rendered + video + "</div>";
 		return rendered;
 	};
 
-	var renderAudio = function(element, template){
-		var rendered = "<div id='"+element['id']+"' class='"+template+"_"+element['areaid']+"'>";
-		var style = (element['style'])?"style='" + element['style'] + "'":"";
-		var controls= (element['controls'])?"controls='" + element['controls'] + "' ":"controls='controls' ";
-		var sources = element['sources'];
-
-
-		if(typeof sources == "string"){
-			sources = JSON.parse(sources)
-		}
-		
-		rendered = rendered + "<audio class='" + template + "_audio' preload='metadata' "  + style + controls  + ">";
-		
-		$.each(sources, function(index, source) {
-			var type = (source.type)?"type='" + source.type + "' ":"";
-			rendered = rendered + "<source src='" + source.src + "' " + type + ">";
-		});
-		
-		if(sources.length>0){
-			rendered = rendered + "<p>Your browser does not support HTML5 video.</p>";
-		}
-		
-		rendered = rendered + "</audio>";
-
+	var _renderHTML5Audio = function(audioJSON, template){
+		var rendered = "<div id='"+audioJSON['id']+"' class='"+template+"_"+audioJSON['areaid']+"'>";
+		var audio = V.Audio.HTML5.renderAudioFromJSON(audioJSON,{id: V.Utils.getId(audioJSON['id'] + "_audio"),extraClasses: template + "_audio"});
+		rendered = rendered + audio + "</div>";
 		return rendered;
 	};
 	

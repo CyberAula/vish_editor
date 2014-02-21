@@ -281,14 +281,14 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			return undefined;
 		}
 		switch(videoJSON.type){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				var options = {};
 				if(typeof videoJSON.poster == "string"){
 					options.poster = videoJSON.poster;
 				}
 				var videoTag = V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(videoJSON),options);
 				return videoTag;
-			case V.Constant.Video.Youtube:
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				return videoJSON.source;
 			default:
 				return undefined;
@@ -421,7 +421,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		_renderBalls(eVideoDOM,eVideos[eVideoId]);
 
 		//Fire initial onTimeUpdate event for YouTube videos. (The same as HTML5 videos)
-		if(videoType==V.Constant.Video.Youtube){
+		if(videoType==V.Constant.MEDIA.YOUTUBE_VIDEO){
 			V.EVideo.onTimeUpdate(video,0);
 		};
 
@@ -1151,7 +1151,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		slide.video = {};
 		slide.video.type = V.Video.getTypeVideo(videoDOM);
 		switch(slide.video.type){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				var sources = V.Video.HTML5.getSources(videoDOM);
 				var sourcesString = '';
 				$(sources).each(function(index, source) {
@@ -1166,7 +1166,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				//TODO
 				// slide.video.poster = ;
 				break;
-			case  V.Constant.Video.Youtube:
+			case  V.Constant.MEDIA.YOUTUBE_VIDEO:
 				slide.video.source = V.Video.Youtube.getEmbedSource(videoDOM);
 				slide.video.duration = duration;
 				break;

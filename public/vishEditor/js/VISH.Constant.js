@@ -50,6 +50,7 @@ VISH.Constant.GAME = "game";
 //Element types
 VISH.Constant.TEXT = "text";
 VISH.Constant.IMAGE = "image";
+VISH.Constant.AUDIO = "audio";
 VISH.Constant.VIDEO = "video";
 VISH.Constant.OBJECT = "object";
 VISH.Constant.SNAPSHOT = "snapshot";
@@ -59,11 +60,12 @@ VISH.Constant.QUIZ = "quiz";
 //Media types
 VISH.Constant.MEDIA = {};
 VISH.Constant.MEDIA.IMAGE = "image";
-VISH.Constant.MEDIA.AUDIO = "audio";
 VISH.Constant.MEDIA.FLASH = "swf";
 VISH.Constant.MEDIA.PDF = "pdf";
 VISH.Constant.MEDIA.YOUTUBE_VIDEO = "Youtube";
-VISH.Constant.MEDIA.HTML5_VIDEO = "HTML5";
+VISH.Constant.MEDIA.HTML5_VIDEO = "HTML5_VIDEO";
+VISH.Constant.MEDIA.HTML5_AUDIO = "HTML5_AUDIO";
+VISH.Constant.MEDIA.SOUNDCLOUD_AUDIO = "Soundcloud";
 VISH.Constant.MEDIA.WEB = "web";
 VISH.Constant.MEDIA.JSON = "json";
 VISH.Constant.MEDIA.DOC = "doc";
@@ -75,6 +77,7 @@ VISH.Constant.WRAPPER.EMBED = "EMBED";
 VISH.Constant.WRAPPER.OBJECT = "OBJECT";
 VISH.Constant.WRAPPER.IFRAME = "IFRAME";
 VISH.Constant.WRAPPER.VIDEO = "VIDEO";
+VISH.Constant.WRAPPER.AUDIO = "AUDIO";
 
 //Subtypes
 VISH.Constant.QZ_TYPE = {};
@@ -95,6 +98,11 @@ VISH.Constant.TextBase = 12;
 VISH.Constant.Video = {};
 VISH.Constant.Video.HTML5 = "HTML5";
 VISH.Constant.Video.Youtube = "Youtube";
+
+//Audio
+VISH.Constant.Audio = {};
+VISH.Constant.Audio.HTML5 = "HTML5";
+VISH.Constant.Audio.Soundcloud = "Soundcloud";
 
 
 //Clipboard

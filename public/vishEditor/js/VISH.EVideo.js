@@ -303,7 +303,7 @@ VISH.EVideo = (function(V,$,undefined){
 		}));
 
 		//Fix
-		if(videoType==V.Constant.Video.Youtube){
+		if(videoType==V.Constant.MEDIA.YOUTUBE_VIDEO){
 			//YouTube API returns duration applying a Math.round over a float value.
 			//Maybe some balls are lower than videoDuration, but they really aren't in a correct value.
 			//Apply patch to fix it
@@ -329,7 +329,7 @@ VISH.EVideo = (function(V,$,undefined){
 		_linkChaptersAndBalls(eVideoDOM,eVideos[eVideoId]);
 
 		//Fire initial onTimeUpdate event for YouTube videos. (The same as HTML5 videos)
-		if(videoType==V.Constant.Video.Youtube){
+		if(videoType==V.Constant.MEDIA.YOUTUBE_VIDEO){
 			onTimeUpdate(video,0);
 		};
 	};
@@ -508,7 +508,7 @@ VISH.EVideo = (function(V,$,undefined){
 			case V.Constant.EVideo.Status.Ended:
 				//Fix hidden handler on HTML5 Videos (due to z-index bug in video tags)
 				var videoBody = $(videoBox).find(".evideoBody");
-				if($(videoBody).attr("videotype")==V.Constant.Video.HTML5){
+				if($(videoBody).attr("videotype")==V.Constant.MEDIA.HTML5_VIDEO){
 					var posSlider = $(videoBox).find(".evideoProgressBarSlider");
 					$(posSlider).css("opacity",0.9);
 					setTimeout(function(){

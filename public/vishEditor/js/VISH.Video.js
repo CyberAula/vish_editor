@@ -21,7 +21,7 @@ VISH.Video = (function(V,$,undefined){
 	 */
 	var playVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){									 
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				V.Video.HTML5.playVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
@@ -34,7 +34,7 @@ VISH.Video = (function(V,$,undefined){
 
 	var pauseVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				V.Video.HTML5.pauseVideo(videoId,currentTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
@@ -47,7 +47,7 @@ VISH.Video = (function(V,$,undefined){
 
 	var seekVideo = function(videoId,seekTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				V.Video.HTML5.seekVideo(videoId,seekTime,triggeredByUser);
 				break;
 			case V.Constant.Video.Youtube:
@@ -79,7 +79,7 @@ VISH.Video = (function(V,$,undefined){
 
 		var tagName = $(video)[0].tagName;
 		if(tagName==="VIDEO"){
-			return V.Constant.Video.HTML5;
+			return V.Constant.MEDIA.HTML5_VIDEO;
 		} else if((tagName==="OBJECT")||(tagName==="IFRAME")){ 
 			//Iframe for HTML5 API, Object for deprecated Flash API
 			return V.Constant.Video.Youtube;
@@ -91,7 +91,7 @@ VISH.Video = (function(V,$,undefined){
 	//Actions
 	var play = function(video){
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video)[0].play();
 				break;
 			case V.Constant.Video.Youtube:		
@@ -125,7 +125,7 @@ VISH.Video = (function(V,$,undefined){
 
 	var pause = function(video){
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video)[0].pause();
 				break;
 			case V.Constant.Video.Youtube:
@@ -140,7 +140,7 @@ VISH.Video = (function(V,$,undefined){
 
 	var seekTo = function(video,seekTime){
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video)[0].currentTime = seekTime;
 				break;
 			case V.Constant.Video.Youtube:
@@ -171,7 +171,7 @@ VISH.Video = (function(V,$,undefined){
 	var setVolume = function(video,volume){
 		//Volume is a number between 0 and 100
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				//Volume should be a number between 0.0 and 1.0
 				$(video)[0].volume = (volume/100);
 				break;
@@ -191,7 +191,7 @@ VISH.Video = (function(V,$,undefined){
 		}
 
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video).on("loadeddata", function(event){
 					var video = event.target;
 					//Check state (based on http://www.w3schools.com/tags/av_prop_readystate.asp)
@@ -222,7 +222,7 @@ VISH.Video = (function(V,$,undefined){
 		}
 
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				$(video).on("timeupdate", function(){
 					var cTime = video.currentTime;
 					timeUpdateCallback(video,cTime);
@@ -258,7 +258,7 @@ VISH.Video = (function(V,$,undefined){
 		}
 
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				video.addEventListener('play', function(){
 					statusCallback(video,V.Constant.EVideo.Status.Playing);
 				}, false);
@@ -338,7 +338,7 @@ VISH.Video = (function(V,$,undefined){
 	var getStatus = function(video){
 		var vStatus;
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				if(video.paused == false){
 					vStatus = V.Constant.EVideo.Status.Playing;
 				} else {
@@ -386,7 +386,7 @@ VISH.Video = (function(V,$,undefined){
 
 	var getDuration = function(video){
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				return $(video)[0].duration;
 				break;
 			case V.Constant.Video.Youtube:
@@ -399,7 +399,7 @@ VISH.Video = (function(V,$,undefined){
 
 	var getCurrentTime = function(video){
 		switch(getTypeVideo(video)){
-			case V.Constant.Video.HTML5:
+			case V.Constant.MEDIA.HTML5_VIDEO:
 				return video.currentTime;
 				break;
 			case V.Constant.Video.Youtube:

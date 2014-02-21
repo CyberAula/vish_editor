@@ -151,7 +151,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 var renderVideoFromJSON = function(videoJSON, options){
 		var renderOptions = {};
 
-		renderOptions.videoId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+		renderOptions.elId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
 		renderOptions.style = videoJSON['style'];
 		renderOptions.controls = videoJSON['controls'];
 		renderOptions.autoplay = videoJSON['autoplay'];
@@ -161,10 +161,10 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		//Params forced by options
 		if(options){
 			if(options.id){
-				renderOptions.videoId = options.id;
+				renderOptions.elId = options.id;
 			}
-			if(options.videoClass){
-				renderOptions.extraClasses = options.videoClass;
+			if(options.extraClasses){
+				renderOptions.extraClasses = options.extraClasses;
 			}
 			if(options.controls === false){
 				renderOptions.controls = options.controls;
@@ -178,8 +178,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	};
 
 	var renderVideoFromSources = function(sources,options){
-		var videoId = "";
-		var videoClasses = "";
+		var elId = "";
+		var extraClasses = "";
 		var controls = "controls='controls' ";
 		var autoplay = "";
 		var poster = "";
@@ -187,11 +187,11 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var style = "";
 		
 		if(options){
-			if(options['videoId']){
-				videoId = "id='"+options['videoId']+"'";
+			if(options['elId']){
+				elId = "id='"+options['elId']+"'";
 			}
 			if(options['extraClasses']){
-				videoClasses = videoClasses + options['extraClasses'];
+				extraClasses = extraClasses + options['extraClasses'];
 			}
 			if(options.controls === false){
 				controls = "";
@@ -210,7 +210,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 			}
 		}
 
-		var video = "<video " + videoId + " class='" + videoClasses + "' preload='metadata' " + controls + autoplay + poster + loop + style + ">";
+		var video = "<video " + elId + " class='" + extraClasses + "' preload='metadata' " + controls + autoplay + poster + loop + style + ">";
 		$.each(sources, function(index, source){
 			if(typeof source.src == "string"){
 				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";

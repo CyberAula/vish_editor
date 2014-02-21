@@ -10,8 +10,6 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	var currentAudios = new Array();
 	var selectedAudio = null;
 
-
-
 	var init = function(){
 		myInput = $("#" + containerDivId).find("input[type='search']");
 		$(myInput).vewatermark(V.I18n.getTrans("i.SearchContent"));
@@ -58,22 +56,19 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	};
 
 	var _searchInSoundcloud = function(text){
-
 		$.getJSON("http://api.soundcloud.com/tracks?callback=?",{
-		consumer_key: 'bb5aebd03b5d55670ba8fa5b5c3a3da5',
-        q: text, //Aquí ponemos la búsqueda
-        format: "json"
-      },
-      function(data) {
-      	_onDataReceived(data);
-      	}).error(function(){
+			consumer_key: 'bb5aebd03b5d55670ba8fa5b5c3a3da5',
+			q: text,
+			format: "json"
+		},
+		function(data) {
+			_onDataReceived(data);
+		}).error(function(){
 			_onAPIError();
-      }); 
+		}); 
 	};
 
-	var _onDataReceived = function(data) {
-	// De aquí sacamos los datos de los audios
-
+	var _onDataReceived = function(data){
 		if(!_isValidResult()){
 			return;
 		}
@@ -88,10 +83,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 		var carrouselImages = [];
 		var carrouselImagesTitles = [];
 
-		// Itera sobre data.feed.entry
-
 		$.each(data, function(i, item){
-
 			var audio = item.uri;
 			var title = item.title;
 			var author = item.user.username;
@@ -109,8 +101,8 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 			//var image_url = item.artwork_url;
 			if(item.artwork_url!= null){
 				image_url = item.artwork_url;
-			}else{
-				image_url= 'http://www.wpclipart.com/computer/disks/cd_grey.png';
+			} else {
+				image_url = 'http://www.wpclipart.com/computer/disks/cd_grey.png';
 			}
 			var myImg = $("<img audioId='"+audioId+"' src='"+image_url+"' title='"+title+"'/>");
 			carrouselImages.push(myImg);
@@ -171,7 +163,6 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 		if(selectedAudio != null){
 			V.Editor.Object.drawObject(_generateWrapper(selectedAudio.id));
 			$.fancybox.close();
-		// Returns iframe type and uses it to draw Soundcloud Player.
 		}
 	};
 
@@ -204,7 +195,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	};
 
 
-	/* Video Preview */
+	/* Audio Preview */
   
 	var _renderAudioPreview = function(renderedIframe, audio) {
 		var audioArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_audio");
@@ -212,7 +203,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 		var button = $("#" + previewDivId).find(".okButton");
 		$(audioArea).html("");
 		$(metadataArea).html("");
-		if((renderedIframe) && (audio)) {
+		if((renderedIframe) && (audio)){
 			$(audioArea).append(renderedIframe);
 			var table = V.Editor.Utils.generateTable({title:audio.title, author:audio.author, description:audio.subtitle});
 			$(metadataArea).html(table);
@@ -220,7 +211,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 		}
 	};
   
-	var _cleanAudioPreview = function() {
+	var _cleanAudioPreview = function(){
 		var audioArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_audio");
 		var metadataArea = $("#" + previewDivId).find("#tab_audio_soundcloud_content_preview_metadata");
 		var button = $("#" + previewDivId).find(".okButton");
@@ -231,16 +222,12 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 
 	var _generateWrapper = function(audioId){
 		var audio_embedded = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
-		//current_area=  V.Editor.getCurrentArea();
-		//var width_height = V.Utils.dimentionsToDraw(current_area.width(), current_area.height(), 325, 243 ); 
 		var wrapper = "<iframe src='"+audio_embedded+"?wmode=opaque' frameborder='0'></iframe>";
 		return wrapper;
 	};
  
-
 	var _generatePreviewWrapper = function(audioId){
 		var audio_embedded = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/"+ audioId;
-		console.log("audio_embedded: " + audio_embedded);
 		var wrapper = '<iframe class="objectPreview" type="text/html" src="'+audio_embedded+'?wmode=opaque" frameborder="0"></iframe>';
 		return wrapper;
 	};

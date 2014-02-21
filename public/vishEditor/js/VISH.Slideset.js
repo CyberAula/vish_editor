@@ -55,8 +55,8 @@ VISH.Slideset = (function(V,$,undefined){
 			return obj;
 		} else if(typeof obj == "object"){
 			return $(obj).attr("type");
-		} else if(typeof obj.type == "string"){
-			return obj;
+		} else if((typeof obj != "undefined")&&(typeof obj.type == "string")){
+			return obj.type;
 		}
 		return undefined;
 	};

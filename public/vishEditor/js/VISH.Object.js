@@ -37,6 +37,9 @@ VISH.Object = (function(V,$,undefined){
 			case "VIDEO":
 				type = V.Constant.MEDIA.HTML5_VIDEO;
 				break;
+			case "AUDIO":
+				type = V.Constant.MEDIA.HTML5_AUDIO;
+				break;
 			default:
 				type = _getTypeFromSource(source);
 		}
@@ -62,6 +65,8 @@ VISH.Object = (function(V,$,undefined){
 				return $(object).attr("src");
 			case V.Constant.WRAPPER.VIDEO:
 				return V.Video.HTML5.getSources(object);
+			case V.Constant.WRAPPER.AUDIO:
+				return V.Audio.HTML5.getSources(object);
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
 				return null;
@@ -85,7 +90,7 @@ VISH.Object = (function(V,$,undefined){
 		var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9-]+))|((www.youtube.com\/((watch\?v=)|(embed\/)|(v\/)))([aA-z0-9-Z&=.])+))/g
 		var html5VideoFormats = ["mp4","webm","ogg"];
 		var imageFormats = ["jpg","jpeg","png","gif","bmp","svg"];
-		var audioFormats = ["mp3", "wav"];
+		var audioFormats = ["mp3", "wav","ogg"];
 
 		if(typeof source != "string"){
 			return null
@@ -96,16 +101,12 @@ VISH.Object = (function(V,$,undefined){
 		}
 			
 		//Purge options
-		source = source.split('?')[0]
+		source = source.split('?')[0];
 
 		var extension = getExtensionFromSrc(source);
 
 		if(imageFormats.indexOf(extension)!="-1"){
 			return V.Constant.MEDIA.IMAGE;
-		}
-
-		if(audioFormats.indexOf(extension)!="-1"){
-			return V.Constant.MEDIA.AUDIO;
 		}
 
 		if(extension=="swf"){
@@ -118,6 +119,10 @@ VISH.Object = (function(V,$,undefined){
 
 		if(html5VideoFormats.indexOf(extension)!="-1"){
 			return V.Constant.MEDIA.HTML5_VIDEO;
+		}
+
+		if(audioFormats.indexOf(extension)!="-1"){
+			return V.Constant.MEDIA.HTML5_AUDIO;
 		}
 
 		if(extension=="json"){
