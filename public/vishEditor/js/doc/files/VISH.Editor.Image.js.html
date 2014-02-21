@@ -92,6 +92,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var contentToAdd = null;
 	var contentAddMode = V.Constant.NONE;
+
 	var uploadDivId = &quot;tab_pic_upload_content&quot;;
 	var urlDivId = &quot;tab_pic_from_url_content&quot;;
 	var urlInputId = &quot;picture_url&quot;;
@@ -104,10 +105,10 @@ VISH.Editor.Image = (function(V,$,undefined){
 		&#x2F;&#x2F; $(&quot;#&quot; + urlInputId).vewatermark(V.I18n.getTrans(&quot;i.pasteImageURL&quot;));
 
 		&#x2F;&#x2F;Load from URL
-		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
+		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event){
 			if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
-				V.Editor.Object.drawPreview(urlDivId, contentToAdd)
+				V.Editor.Object.drawPreview(urlDivId, contentToAdd);
 			}
 		});
 
@@ -192,7 +193,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		contentToAdd = null;
 		V.Editor.Object.resetPreview(urlDivId);
 		$(&quot;#&quot; + urlInputId).val(&quot;&quot;);
-	}
+	};
 	
 	var _onLoadUploadTab = function(){
 		contentToAdd = null;
@@ -206,7 +207,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		_resetUploadFields();
 
 		V.Editor.API.requestTags(_onTagsReceived)
-	}
+	};
 	
 	var _resetUploadFields = function(){
 		var bar = $(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar&quot;);
@@ -220,7 +221,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		if($(tagList)[0].children.length!==0){
 			$(tagList).tagit(&quot;reset&quot;)
 		}
-	}
+	};
 	 
 	var _onTagsReceived = function(data){
 		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
@@ -237,7 +238,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}
-	}
+	};
 	
 	
 	var processResponse = function(response){
@@ -252,7 +253,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		} catch(e) {
 			&#x2F;&#x2F;No JSON response
 		}
-	}
+	};
 	
 	var addContent = function(content,options){
 		if(content){
@@ -271,7 +272,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 		}
 		&#x2F;&#x2F;Reset contentAddMode
 		contentAddMode = V.Constant.NONE;
-	}
+	};
 	
    &#x2F;**
 	* Function to draw an image in a zone of the template
@@ -351,26 +352,20 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 	var getAddContentMode = function(){
 		return contentAddMode;
-	}
+	};
 
 	var setAddContentMode = function(mode){
-		_cleanTabs();
+		V.Editor.Utils.hideNonDefaultTabs();
 		switch(mode){
-			case V.Constant.NONE:
-				break;
 			case V.Constant.THUMBNAIL:
 				$(&quot;#tab_pic_thumbnails&quot;).show();
 				break;
+			case V.Constant.NONE:
 			case V.Constant.FLASHCARD:
 				break;	
 		}
 		contentAddMode = mode;
-	}
-
-	var _cleanTabs = function(){
-		&#x2F;&#x2F;Hide thumbnails tab
-		$(&quot;#tab_pic_thumbnails&quot;).hide();
-	}
+	};
 
 	return {
 		init 				: init,

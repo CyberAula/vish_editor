@@ -70,9 +70,11 @@ VISH.Slides = (function(V,$,undefined){
 			$(el).addClass(className);
 		}
 
-		for (var i in SLIDE_CLASSES) {
-			if (className != SLIDE_CLASSES[i]) {
-				$(el).removeClass(SLIDE_CLASSES[i]);
+		var sCL = SLIDE_CLASSES.length;
+		for(var i=0; i<sCL; i++) {
+			var sCLClass = SLIDE_CLASSES[i];
+			if (className != sCLClass) {
+				$(el).removeClass(sCLClass);
 			}
 		}
 	};

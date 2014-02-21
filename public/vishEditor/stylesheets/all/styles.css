@@ -97,8 +97,17 @@ this can not be done with show() and hide() because then it remains with display
 	opacity: 0 !important;
 }
 
+.temp_shown_b {
+	display: block !important;
+	opacity: 0 !important;
+}
+
 .temp_hidden {
 	display: none !important;
+}
+
+.temp_hidden_soft {
+	opacity: 0 !important;
 }
 
 .slides > article.far-past {
@@ -1734,7 +1743,7 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSlider .ui-slider-handle {
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
 	width: 200%;
 	height: 25%;
 	left: -50%;
@@ -1746,7 +1755,7 @@ span.evideoTimeSlash, span.evideoDuration {
 }
 
 .evideoVolSlider .ui-slider-handle:active {
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2_hover.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_hover.png") no-repeat center center;
 	width: 200%;
 	height: 25%;
 	left: -50%;
@@ -1787,7 +1796,7 @@ span.evideoTimeSlash, span.evideoDuration {
 
 .evideoProgressBarSlider .ui-slider-handle {
 	position: absolute;
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker.png") no-repeat center center;
 	width: 7%;
 	height: 160%;
 	margin-left: -3.5%;
@@ -1795,11 +1804,12 @@ span.evideoTimeSlash, span.evideoDuration {
 	background-size: contain;
 	border: none;
 	cursor: pointer;
+	z-index: 20;
 }
 
 .evideoProgressBarSlider .ui-slider-handle:active {
 	position: absolute;
-	background: url("/vishEditor/images/customPlayer/eVideoMarker_2_hover.png") no-repeat center center;
+	background: url("/vishEditor/images/customPlayer/eVideoMarker_hover.png") no-repeat center center;
 	width: 7%;
 	height: 160%;
 	margin-left: -3.5%;
@@ -1820,20 +1830,32 @@ div.ballWrapper{
 	width: 3%;
 	margin-left: -1.5%;
 	text-align: center;
+	z-index: 2;
+	pointer-events: none;
 }
 
 div.ballWrapper.selected {
 	opacity: 0.6;
 }
 
+
 div.ballWrapper div.ballLine{
 	width: 25%; /* Line width */
-  	background-color: rgb(156, 156, 156); /* Line color */
-  	height: 75%;
+	background-color: rgb(156, 156, 156); /* Line color */
 	margin-left: 35%;
+	cursor: pointer;
+	pointer-events: auto;
 }
 
-div.ballWrapper div.ballImg{
+div.ballWrapper[slide_id] div.ballLine{
+	height: 75%;
+}
+
+div.ballWrapper:not([slide_id]) div.ballLine{
+	height: 30%;
+}
+
+div.ballWrapper[slide_id] div.ballImg{
 	width: 99%;
 	height: 35%;
 	position: absolute;
@@ -1846,6 +1868,7 @@ div.ballWrapper div.ballImg{
 	border: none;
 	z-index: 1;
 	cursor: pointer;
+	pointer-events: auto;
 }
 
 div.ballWrapper div.ballImg:hover {
@@ -1973,4 +1996,19 @@ div.ballWrapper div.ballImg:active {
 .videoOfflineContainer{
 	background-color: #636363;
 	border-radius: 30px;
+}
+
+/* Loading */
+
+div.loadingEVideoContainer {
+	width: 100%;
+	height: 100%;
+}
+
+div.loadingEVideoContainerWrapper > div:not(.loadingEVideoContainer){
+	display: none;
+}
+
+div.loadingEVideoContainer img.loading_fancy_img {
+	margin-top: 45% !important;
 }

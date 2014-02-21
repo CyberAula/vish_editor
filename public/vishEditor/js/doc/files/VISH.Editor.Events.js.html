@@ -97,7 +97,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var ctrlDown = false;
 
 
-	var init = function() {
+	var init = function(){
 		bindEditorEventListeners();
 	};
 
@@ -122,6 +122,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 					$(&quot;#editthumb&quot;).slideUp();
 				}
 			});
+			
 			$(document).on(&#x27;keyup&#x27;, &#x27;#presentation_details_input_title&#x27;, V.Editor.Settings.onKeyUpOnTitle);
 			$(document).on(&#x27;keyup&#x27;, &#x27;#presentation_details_preview_addtitle_input&#x27;, V.Editor.Settings.onKeyUpOnPreviewTitle);
 			$(document).on(&#x27;click&#x27;, &#x27;#pedagogical_clasification_button&#x27;, V.Editor.Settings.onPedagogicalButtonClicked);
@@ -130,9 +131,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();
 				$.fancybox.close();
 			});
-			$(document).on(&#x27;change&#x27;, &#x27;#tlt_hours&#x27;, V.Editor.Settings.onTLTchange);
-			$(document).on(&#x27;change&#x27;, &#x27;#tlt_minutes&#x27;, V.Editor.Settings.onTLTchange);
-			$(document).on(&#x27;change&#x27;, &#x27;#tlt_seconds&#x27;, V.Editor.Settings.onTLTchange);
+			$(document).on(&#x27;change&#x27;, &#x27;#tlt_hours, #tlt_minutes, #tlt_seconds&#x27;, V.Editor.Settings.onTLTchange);
+			$(document).on(&#x27;keyup&#x27;, &#x27;#tlt_hours, #tlt_minutes, #tlt_seconds&#x27;, V.Editor.Settings.onTLTchange);
 			$(document).on(&#x27;click&#x27;, &#x27;#save_presentation_details&#x27;, V.Editor.Settings.onSavePresentationDetailsButtonClicked);
 			
 			$(document).on(&#x27;click&#x27;,&#x27;div.templatethumb&#x27;, V.Editor.onSlideThumbClicked);
@@ -277,7 +277,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
 				&#x27;height&#x27;: 600,
 				&#x27;padding&#x27; : 0,
-				&quot;onStart&quot;  : function(data) {		
+				&quot;onStart&quot;  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
 					V.Editor.Utils.loadTab(&#x27;tab_pic_thumbnails&#x27;);
 				},
@@ -334,6 +334,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 		&#x2F;&#x2F;Help in Virtual Tours
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_vt&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
+		});
+
+		&#x2F;&#x2F;Help in Enriched Videos
+		$(document).on(&#x27;click&#x27;,&#x27;.help_in_evideo&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;evideo_help&#x27;, &#x27;top&#x27;);
 		});
 
 		&#x2F;&#x2F;Help in slide templates selection

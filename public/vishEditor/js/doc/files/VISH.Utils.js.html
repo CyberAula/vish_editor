@@ -526,7 +526,7 @@ VISH.Utils = (function(V,undefined){
 		}
 		options.buttons = [button1];
 		V.Utils.showDialog(options);
-	}
+	};
 
 	var getOuterHTML = function(tag){
 		&#x2F;&#x2F;In some old browsers (before firefox 11 for example) outerHTML does not work
@@ -536,7 +536,7 @@ VISH.Utils = (function(V,undefined){
 		} else {
 			return $(tag)[0].outerHTML;
 		}
-	}
+	};
 
 	&#x2F;*
 	 * Function to send the parent to the specified URL, used for fullscreen
@@ -1075,7 +1075,7 @@ VISH.Utils = (function(V,undefined){
 		});
 		
 		$(&quot;a#link_to_notification_template&quot;).trigger(&#x27;click&#x27;);
-	}
+	};
 
 	var _cleanDialog = function(){
 		var notificationWrapper = $(&quot;#notification_template_wrapper&quot;);
@@ -1224,7 +1224,58 @@ VISH.Utils = (function(V,undefined){
 			}
 		}
 	};
+
+
+	&#x2F;* Time Format for Multimedia *&#x2F;
+	var fomatTimeForMPlayer = function(s,sN){
+		sN = (typeof sN == &quot;number&quot; ? sN : -1);
+
+		&#x2F;&#x2F;Get whole hours
+		var h = Math.floor(s&#x2F;3600);
+		s -= h*3600;
+
+		&#x2F;&#x2F;Get remaining minutes
+		var m = Math.floor(s&#x2F;60); 
+		s -= m*60;
+		s = Math.round(s);
+
+		return ((h&lt;1 &amp;&amp; sN&lt;5) ? &#x27;&#x27; : h + &quot;:&quot;) + (((sN&gt;3)&amp;&amp;(m&lt;10)) ? &#x27;0&#x27;+m : m) + &quot;:&quot; + (s &lt; 10 ? &#x27;0&#x27;+s : s);
+	};
 	
+	
+	&#x2F;* 
+	 * Prevent multiple calls to the same function in a time period 
+	 *&#x2F;
+	var delayedFunctionTimestamps = {};
+	var delayedFunctionTimers = {};
+
+	var delayFunction = function(functionId,callbackFunction,PERIOD){
+		var dN = Date.now();
+		&#x2F;&#x2F; var timeStamp = delayedFunctionTimestamps[functionId];
+		&#x2F;&#x2F; var timer = delayedFunctionTimers[functionId];
+
+		if(typeof delayedFunctionTimestamps[functionId] != &quot;undefined&quot;){
+			var diff = dN - delayedFunctionTimestamps[functionId];
+			if(diff &lt; PERIOD){
+				if(typeof delayedFunctionTimers[functionId] == &quot;undefined&quot;){
+					delayedFunctionTimers[functionId] = setTimeout(function(){
+						delayedFunctionTimers[functionId] = undefined;
+						callbackFunction();
+					},PERIOD-diff);
+				}
+				return true;
+			}
+		}
+
+		if(typeof delayedFunctionTimers[functionId] != &quot;undefined&quot;){
+			clearTimeout(delayedFunctionTimers[functionId]);
+			delayedFunctionTimers[functionId] = undefined;
+		}
+		delayedFunctionTimestamps[functionId] = dN;
+
+		return false;
+	};
+
 
 	return {
 		init 					: init,
@@ -1258,7 +1309,9 @@ VISH.Utils = (function(V,undefined){
 		removeHashFromUrlString	: removeHashFromUrlString,
 		getHashParams			: getHashParams,
 		getSlideNumberFromHash	: getSlideNumberFromHash,
-		checkAnimationsFinish	: checkAnimationsFinish
+		checkAnimationsFinish	: checkAnimationsFinish,
+		fomatTimeForMPlayer		: fomatTimeForMPlayer,
+		delayFunction 			: delayFunction
 	};
 
 }) (VISH);

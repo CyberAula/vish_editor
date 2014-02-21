@@ -17,6 +17,9 @@ VISH.EVideo = (function(V,$,undefined){
 	var _lastVideoEndedCall;
 	var MIN_TIME_BETWEEN_TOGGLE_INDEX = 1600;
 
+	var VOL_INITIAL = 100;
+	var _lastVolumeValue = VOL_INITIAL;
+
 	var initialized = false;
 
 	//Time range around the ball, in which we will show its associated slide. Currently 300ms
@@ -54,6 +57,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(document).on("click", '.evideoToggleIndex.minimized:not(.disabled), .evideoIndexSide.minimized:not(.disabled)', _maximizeIndex);
 		$(document).on("click", '.evideoChapters li', _onClickChapter);
 		$(document).on("click", 'div.ballWrapper div.ballImg', _onClickBall);
+		$(document).on("click", 'div.ballWrapper div.ballLine', _onClickBallLine);
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideClosed, function(params){
 			var subslideId = params.slideId;
@@ -101,7 +105,7 @@ VISH.EVideo = (function(V,$,undefined){
 			range: "min",
 			min: 0,
 			max: 100,
-			value: 100,
+			value: VOL_INITIAL,
 			slide: function( event, ui ) {
 				var video = getVideoFromVideoBox($(".evideoBox").has(event.target));
 				_onVolumeChange(video,ui.value);
@@ -132,7 +136,7 @@ VISH.EVideo = (function(V,$,undefined){
 				eVideoJSON.balls.push(value);
 			});
 			eVideoJSON.balls = ((eVideoJSON.balls.filter(function(ball){
-				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>0));
+				return ((typeof ball.etime!= "undefined") && (!isNaN(parseFloat(ball.etime))) && (parseFloat(ball.etime)>=0));
 			})).map(function(ball){
 				ball.etime = parseFloat(ball.etime);
 				ball.eVideoId = eVideoJSON.id;
@@ -222,6 +226,12 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBody = $("#"+eVideoId).find(".evideoBody");
 		$(videoBody).attr("videoType",eVideoJSON.video.type);
 
+		//Start loading
+		var loadingContainer = $("<div class='loadingEVideoContainer'></div>");
+		$(videoBody).append(loadingContainer);
+		$(videoBody).addClass("loadingEVideoContainerWrapper");
+		V.Utils.Loader.startLoadingInContainer(loadingContainer);
+
 		switch(eVideoJSON.video.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var video = $(V.Video.HTML5.renderVideoFromJSON(eVideoJSON.video,{controls: false, poster: false}));
@@ -257,6 +267,11 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		var videoType = $(video).attr("videotype");
+
+		//Stop loading
+		var loadingContainer = $(videoBody).find(".loadingEVideoContainer");
+		$(loadingContainer).remove();
+		$(videoBody).removeClass("loadingEVideoContainerWrapper");
 
 		var durationDOM = $(videoHeader).find(".evideoDuration");
 		var videoDuration = V.Video.getDuration(video);
@@ -451,9 +466,29 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var _onVolumeChange = function(video,volume){
+		if((volume >= 50)&&(_lastVolumeValue < 50)){
+			_updateVolumeImg(video,volume);
+		} else if((volume < 50)&&(volume > 0)&&((_lastVolumeValue > 50)||(_lastVolumeValue==0))){
+			_updateVolumeImg(video,volume);
+		} else {
+			_updateVolumeImg(video,volume);
+		}
+		_lastVolumeValue = volume;
+
 		V.Video.setVolume(video,volume);
 	};
 
+	var _updateVolumeImg = function(video,volume){
+		var videoBox = getVideoBoxFromVideo(video);
+		var volButton = $(videoBox).find(".evideoControlButton.evideoVolButton");
+		if(volume >= 50){
+			$(volButton).attr("src",V.ImagesPath + "customPlayer/eVideoSound.png");
+		} else if((volume < 50)&&(volume > 0)){
+			$(volButton).attr("src",V.ImagesPath + "customPlayer/eVideoSoundLow.png");
+		} else {
+			$(volButton).attr("src",V.ImagesPath + "customPlayer/eVideoSoundMute.png");
+		}
+	};
 
 	/* Load methods */
 
@@ -462,6 +497,8 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoBox = $(eVideoDOM).find(".evideoBox");
 		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
+
+		$(eVideoDOM).removeClass("temp_shown");
 
 		switch(eVideoJSON.estatusBeforeLeave){
 			case V.Constant.EVideo.Status.Playing:
@@ -486,10 +523,13 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var onLeaveSlideset = function(eVideoDOM){
 		var eVideoId = $(eVideoDOM).attr("id");
-		var videoDOM = getVideoFromVideoBox($(eVideoDOM).find(".evideoBox"));
+		var videoBox = $(eVideoDOM).find(".evideoBox");
+		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
-		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
 
+		$(eVideoDOM).addClass("temp_shown");
+
+		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
 		switch(eVideoJSON.estatusBeforeLeave){
 			case V.Constant.EVideo.Status.Playing:
 				V.Video.pause(videoDOM);
@@ -554,6 +594,14 @@ VISH.EVideo = (function(V,$,undefined){
 		var ballDOM = event.target;
 		var ballTime = parseFloat($(ballDOM).attr("ballTime"));
 		var videoBox = $(".evideoBox").has(ballDOM);
+		var video = getVideoFromVideoBox(videoBox);
+		_onChapterSelected(video,ballTime);
+	};
+
+	var _onClickBallLine = function(event){
+		var ballLine = event.target;
+		var ballTime = parseFloat($(ballLine).attr("ballTime"));
+		var videoBox = $(".evideoBox").has(ballLine);
 		var video = getVideoFromVideoBox(videoBox);
 		_onChapterSelected(video,ballTime);
 	};
@@ -736,9 +784,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		_lastLeft = undefined;
 		$(eVideoJSON.balls).each(function(value,ball){
-			if(typeof ball.slide_id != "undefined"){
-				_drawBall(ball,progressBarWrapper,duration);
-			}
+			_drawBall(ball,progressBarWrapper,duration);
 		});
 
 		var videoFooter = $(videoBox).find(".evideoFooter");
@@ -764,28 +810,36 @@ VISH.EVideo = (function(V,$,undefined){
 	var _drawBall = function(ball,progressBarWrapper,duration){
 		var left = (ball.etime*100/duration);
 
-		if(typeof _lastLeft != "undefined"){
-			if(left - _lastLeft < RANGE_BETWEEN_BALLS){
+		//Group Balls (not simple link timestamps)
+		if(typeof ball.slide_id != "undefined"){
+			if(typeof _lastLeft != "undefined"){
+				if(left - _lastLeft < RANGE_BETWEEN_BALLS){
 
-				//Look for the last drawed ball to represent this ball
-				if(typeof _lastDrawedBallWrapper != "undefined"){
-					$(_lastDrawedBallWrapper).attr("ballGroup","true");
-					var rBalls;
-					try {
-						rBalls = JSON.parse($(_lastDrawedBallWrapper).attr("rBalls"));
-					} catch (e){}
-					if(typeof rBalls == "undefined"){
-						rBalls = [];
+					//Look for the last drawed ball to represent this ball
+					if(typeof _lastDrawedBallWrapper != "undefined"){
+						$(_lastDrawedBallWrapper).attr("ballGroup","true");
+						var rBalls;
+						try {
+							rBalls = JSON.parse($(_lastDrawedBallWrapper).attr("rBalls"));
+						} catch (e){}
+						if(typeof rBalls == "undefined"){
+							rBalls = [];
+						}
+						rBalls.push(ball.id);
+						$(_lastDrawedBallWrapper).attr("rBalls",JSON.stringify(rBalls));
 					}
-					rBalls.push(ball.id);
-					$(_lastDrawedBallWrapper).attr("rBalls",JSON.stringify(rBalls));
+					return;
 				}
-				return;
 			}
+			_lastLeft = left;
 		}
-		_lastLeft = left;
 
-		var ballWrapper = $("<div class='ballWrapper' ballid='"+ball.id+"'><div class='ballLine'></div><div class='ballImg' ballTime='"+ ball.etime +"'></div></div>");
+		var ballWrapper = $("<div class='ballWrapper' ballid='"+ball.id+"' ballTime='"+ ball.etime +"'><div class='ballLine' ballTime='"+ ball.etime +"'></div></div>");
+		if(typeof ball.slide_id != "undefined"){
+			$(ballWrapper).attr("slide_id",ball.slide_id);
+			$(ballWrapper).append("<div class='ballImg' ballTime='"+ ball.etime +"'></div>");
+		}
+
 		$(ballWrapper).css("left",left+"%");
 		$(progressBarWrapper).append(ballWrapper);
 		_lastDrawedBallWrapper = ballWrapper;
@@ -888,16 +942,16 @@ VISH.EVideo = (function(V,$,undefined){
 			var videoBox = getVideoBoxFromVideo(videoDOM);
 			var subslideDOM = $("#"+ball.slide_id);
 			if($(subslideDOM).hasClass("show_in_smartcard")){
-				$(videoBox).addClass("temp_hidden");
+				$(videoBox).addClass("temp_hidden_soft");
 			}
 		},1500);
 		V.Slides.openSubslide(ball.slide_id);
-	}
+	};
 
 	var _onCloseBall = function(eVideoId){
 		var eVideoJSON = eVideos[eVideoId];
 		var videoBox = $("#"+eVideoId).find(".evideoBox");
-		$(videoBox).removeClass("temp_hidden");
+		$(videoBox).removeClass("temp_hidden_soft");
 		var videoDOM = getVideoFromVideoBox(videoBox);
 		var cTime = V.Video.getCurrentTime(videoDOM);
 		var prevBall = jQuery.extend({}, eVideoJSON.displayedBall); //displayedBall points to the ball we are closing

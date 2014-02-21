@@ -559,6 +559,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		return false;
 	};
 
+	var hideNonDefaultTabs = function(){
+		$(&quot;a.venondefaulttab&quot;).hide();
+	};
+
 	var addTmpShown = function(els){
 		$(els).each(function(index,el){
 			$(el).addClass(&quot;temp_shown&quot;);
@@ -583,6 +587,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		autocompleteUrls 			: autocompleteUrls,
 		filterFilePath 				: filterFilePath,
 		loadTab						: loadTab,
+		hideNonDefaultTabs			: hideNonDefaultTabs,
 		addTmpShown					: addTmpShown,
 		removeTmpShown				: removeTmpShown
 	};

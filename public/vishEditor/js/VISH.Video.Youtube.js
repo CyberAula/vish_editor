@@ -347,6 +347,10 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		return id;
 	};
 
+	var getEmbedSource = function(youTubeVideoDOM){
+		return "https://www.youtube.com/embed/" + V.Video.Youtube.getYoutubeIdFromURL(V.Object.getObjectInfo(youTubeVideoDOM).source);
+	};
+
 	return {
 		init 				: init,
 		renderVideoFromJSON	: renderVideoFromJSON,
@@ -358,7 +362,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		pauseVideo 			: pauseVideo,
 		seekVideo 			: seekVideo,
 		getYoutubeIdFromURL	: getYoutubeIdFromURL,
-		getYouTubePlayer	: getYouTubePlayer
+		getYouTubePlayer	: getYouTubePlayer,
+		getEmbedSource		: getEmbedSource
 	};
 
 })(VISH,jQuery);

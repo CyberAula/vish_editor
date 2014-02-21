@@ -1343,7 +1343,7 @@ div.addUrlButtons{
 
 .stthumb_wrapper {
 	overflow: hidden;
-	width: 101px;
+	width: 110px;
 	height: 110px;
 	float: left;
 	margin: 16px 11px 6px 16px;
@@ -1356,6 +1356,7 @@ div.addUrlButtons{
 	width: 99px;
 	height: 75px;
 	overflow: hidden;
+	margin-left: 5px;
 }
 
 .stthumb:hover {
@@ -2435,7 +2436,12 @@ div.draggable_sc_div {
 	margin-top: -20px;
 	margin-left: 12px;
 	opacity: 1;
+	pointer-events: none;
+}
+
+div.draggable_sc_div > * {
 	cursor: pointer;
+	pointer-events: auto;
 }
 
 div.draggable_sc_div img.fc_draggable_arrow {
@@ -2589,13 +2595,13 @@ div.change_evideo_button:hover {
 
 .evideoIndexBodyActions {
 	height: 6%;
-	margin-top: 20%;
+	margin-top: 23%;
 	text-align: left;
 }
 
 section.slides_editor .evideoChapters{
 	height: 79% !important;
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
@@ -2616,15 +2622,16 @@ section.slides_editor .evideoChapters{
 
 div.eVideoChapterInfo {
 	display: inline-block;
-	width: 70%;
-	margin-right: 10%;
+	width: 80%;
+	margin-right: 9%;
 	min-height: 40px;
 }
 
 div.eVideoChapterActions {
 	display: inline-block;
-	width: 20%;
 	position: absolute;
+	width: 15%;
+	height: 77%;
 }
 
 div.eVideoChapterActions p {
@@ -2635,14 +2642,37 @@ div.eVideoChapterActions p {
 
 div.eVideoChapterActions p.icon-trash-container {
 	margin-left: 1px;
+	display: block;
+}
+
+div.eVideoChapterActions p.icon-arrows-container {
+	display: block;
+}
+
+div.eVideoChapterActions p.icon-arrows-container i {
+	font-size: 15px;
+	margin-left: 2px;
 }
 
 section.slides_editor .evideoChapters li {
 	cursor: default !important;
+	display: inline-block;
+	width: 87%;
 }
 
 section.slides_editor .evideoChapters li:hover {
 	background-color: transparent !important;
+}
+
+section.slides_editor .evideoChapters li span.eVideoIndexEntryNumber {
+	display: block;
+}
+
+section.slides_editor .evideoChapters li span.eVideoIndexEntryBody {
+	max-width: 100%;
+	display: inline-block;
+	overflow: hidden;
+	white-space: normal;
 }
 
 section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryNumber {
@@ -2651,6 +2681,7 @@ section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryNumber {
 
 section.slides_editor .evideoChapters li:hover span.eVideoIndexEntryBody {
 	color: black !important;
+	display: inline-block;
 }
 
 section.slides_editor .evideoChapters li.active {
@@ -2694,8 +2725,12 @@ section.slides_editor .evideoChapters li.active {
 	width: 100%;
 }
 
-section.slides_editor div.ballWrapper div.ballLine {
+section.slides_editor div.ballWrapper[slide_id] div.ballLine {
 	height: 50% !important;
+}
+
+section.slides_editor div.ballWrapper:not([slide_id]) div.ballLine {
+	height: 30% !important;
 }
 
 section.slides_editor div.ballWrapper div.ballImg {
@@ -2723,6 +2758,11 @@ span.ballTimeSpan{
 	width: 100%;
 	bottom: 3%;
 	text-align: center;
+}
+
+img.notificationIconDeleteTimestampLink {
+	height: 45px;
+	width: auto;
 }
 
 /* Chapter fancybox style */

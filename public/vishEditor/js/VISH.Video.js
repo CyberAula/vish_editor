@@ -73,11 +73,12 @@ VISH.Video = (function(V,$,undefined){
 	};
 
 	var getTypeVideo = function(video){
-		var tagName = $(video)[0].tagName;
-
-		if(!video){
+		if(typeof $(video)[0] == "undefined"){
 			return V.Constant.UNKNOWN;
-		} else if(tagName==="VIDEO"){
+		}
+
+		var tagName = $(video)[0].tagName;
+		if(tagName==="VIDEO"){
 			return V.Constant.Video.HTML5;
 		} else if((tagName==="OBJECT")||(tagName==="IFRAME")){ 
 			//Iframe for HTML5 API, Object for deprecated Flash API
