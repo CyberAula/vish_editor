@@ -286,6 +286,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var significativeNumbers = formatedDuration.split(":").join("").length;
 		$(video).attr("sN",significativeNumbers);
 
+		$(eVideoDOM).addClass("temp_shown");
 		$(video).removeClass("temp_hidden");
 
 		fitVideoInVideoBox(videoBox);
@@ -332,6 +333,8 @@ VISH.EVideo = (function(V,$,undefined){
 		if(videoType==V.Constant.MEDIA.YOUTUBE_VIDEO){
 			onTimeUpdate(video,0);
 		};
+
+		$(eVideoDOM).removeClass("temp_shown");
 	};
 
 	var fitVideoInVideoBox = function(videoBox){
@@ -746,6 +749,11 @@ VISH.EVideo = (function(V,$,undefined){
 	};
 
 	var resizeEVideoAfterSetupSize = function(eVideoDOM,increase,increaseW){
+		var isEVideoVisible = ($(eVideoDOM).css("display") != "none");
+		if(!isEVideoVisible){
+			$(eVideoDOM).addClass("temp_shown_b");
+		}
+
 		var videoBox = $(eVideoDOM).find(".evideoBox");
 		fitVideoInVideoBox(videoBox);
 
@@ -769,6 +777,10 @@ VISH.EVideo = (function(V,$,undefined){
 		//Balls
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		$(videoBox).find(".ballWrapper").height($(videoFooter).height());
+
+		if(!isEVideoVisible){
+			$(eVideoDOM).removeClass("temp_shown_b");
+		}
 	};
 
 	var _renderBalls = function(eVideoDOM,eVideoJSON){
