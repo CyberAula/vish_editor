@@ -652,6 +652,7 @@ var i18n =
 				"i.Searchplaces"			: "Search places",
 				"i.SelectSlide"				: "Select Slide",
 				"i.Time"					: "Time",
+				"i.Title"					: "Title",
 				"i.TitleM"					: "Title *",
 				"i.unpublish"				: "unpublish",
 				"i.Unpublish"				: "Unpublish",
