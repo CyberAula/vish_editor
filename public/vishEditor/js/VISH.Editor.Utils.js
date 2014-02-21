@@ -474,6 +474,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	};
 
 	var hideNonDefaultTabs = function(){
+		$("div.fancy_tabs a.fancy_tab:not(.disabled)").show();
 		$("a.venondefaulttab").hide();
 	};
 

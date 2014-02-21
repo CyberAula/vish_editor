@@ -52,8 +52,10 @@ VISH.Editor.Video = (function(V,$,undefined){
 		V.Editor.Utils.hideNonDefaultTabs();
 		switch(mode){
 			case V.Constant.NONE:
+				break;
 			case V.Constant.EVIDEO:
-				break;	
+				$("#tab_audio_soundcloud").hide();
+				break;
 		}
 		contentAddMode = mode;
 	};
