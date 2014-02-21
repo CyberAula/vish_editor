@@ -79,11 +79,11 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				var options = [];
 				options['poster'] = slide.elements[el].poster;
 				options['autoplay'] = slide.elements[el].autoplay;
-				var sourcesArray = [];
-				$.each(JSON.parse(slide.elements[el].sources), function(index, source){
-					sourcesArray.push({"src":source.src, "mimeType": source.type});
-				});
-				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
+				V.Editor.Video.HTML5.drawVideo(V.Video.HTML5.getSourcesFromJSON(slide.elements[el]), options, area);
+			} else if(slide.elements[el].type === V.Constant.AUDIO){
+				var options = [];
+				options['autoplay'] = slide.elements[el].autoplay;
+				V.Editor.Audio.HTML5.drawAudio(V.Audio.HTML5.getSourcesFromJSON(slide.elements[el]), options, area);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				V.Editor.Object.drawObject(slide.elements[el].body, {area:area, style:slide.elements[el].style, zoomInStyle:slide.elements[el].zoomInStyle});
 			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){

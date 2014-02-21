@@ -369,6 +369,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param options.style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object, options){
+
+		console.log("Draw Object");
+		console.log(object);
+
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
@@ -416,7 +420,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case V.Constant.MEDIA.HTML5_VIDEO:
 						V.Editor.Video.HTML5.drawVideoWithUrl(object);
 						break;
-					case V.Constant.MEDIA.AUDIO:
+					case V.Constant.MEDIA.HTML5_AUDIO:
 						V.Editor.Audio.HTML5.drawAudioWithUrl(object);
 						break;
 					case V.Constant.MEDIA.WEB:
