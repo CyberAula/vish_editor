@@ -1016,14 +1016,13 @@ VISH.Utils = (function(V,undefined){
 			$(buttons_wrapper).before(middlerow);
 		}
 
-		$(notificationParent).addClass(&quot;temp_shown&quot;);
+		V.Utils.addTempShown(notificationParent);
 		var adjustedHeight = $(text_wrapper).outerHeight(true)+$(buttons_wrapper).outerHeight(true);
 		if(options.middlerow){
 			var middlerow = $(rootTemplate).find(&quot;.notification_middlerow&quot;);
 			adjustedHeight = adjustedHeight + $(middlerow).outerHeight(true);
 		}
-		$(notificationParent).removeClass(&quot;temp_shown&quot;);
-
+		V.Utils.removeTempShown(notificationParent);
 
 		&#x2F;&#x2F;*Clone the root template
 		var cloneTemplate = $(rootTemplate).clone();
@@ -1276,6 +1275,27 @@ VISH.Utils = (function(V,undefined){
 		return false;
 	};
 
+	var addTempShown = function(els){
+		$(els).each(function(index,el){
+			var tmpShownCount = (typeof $(el).attr(&quot;temp_shown_count&quot;) != &quot;undefined&quot;) ? parseInt($(el).attr(&quot;temp_shown_count&quot;)) : 0;
+			if(tmpShownCount === 0){
+				$(el).addClass(&quot;temp_shown&quot;);
+			}
+			$(el).attr(&quot;temp_shown_count&quot;,tmpShownCount+1);
+		});
+	};
+
+	var removeTempShown = function(els){
+		$(els).each(function(index,el){
+			var tmpShownCount = (typeof $(el).attr(&quot;temp_shown_count&quot;) != &quot;undefined&quot;) ? parseInt($(el).attr(&quot;temp_shown_count&quot;)) : 0;
+			var newTmpShownCount = Math.max(0,tmpShownCount-1);
+			$(el).attr(&quot;temp_shown_count&quot;,newTmpShownCount);
+			if(newTmpShownCount==0){
+				$(el).removeClass(&quot;temp_shown&quot;);
+			}
+		});
+	};
+
 
 	return {
 		init 					: init,
@@ -1311,7 +1331,9 @@ VISH.Utils = (function(V,undefined){
 		getSlideNumberFromHash	: getSlideNumberFromHash,
 		checkAnimationsFinish	: checkAnimationsFinish,
 		fomatTimeForMPlayer		: fomatTimeForMPlayer,
-		delayFunction 			: delayFunction
+		delayFunction 			: delayFunction,
+		addTempShown			: addTempShown,
+		removeTempShown			: removeTempShown
 	};
 
 }) (VISH);

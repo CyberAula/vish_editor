@@ -369,18 +369,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var zone = $("div").has(tooltip);
 		var slide = $("article").has(zone);
 
-		$(slide).addClass("temp_shown");
-		$(zone).addClass("temp_shown");
-		$(tooltip).addClass("temp_shown");
+		V.Utils.addTempShown([slide,zone,tooltip]);
 
 		//Adjust margin-top
 		var zoneHeight = $(zone).height();
 		var spanHeight = $(tooltip).height();
 		var marginTop = ((zoneHeight-spanHeight)/2);
 		
-		$(slide).removeClass("temp_shown");
-		$(zone).removeClass("temp_shown");
-		$(tooltip).removeClass("temp_shown");
+		V.Utils.removeTempShown([slide,zone,tooltip]);
 
 		$(tooltip).css("margin-top",marginTop+"px");
 	};

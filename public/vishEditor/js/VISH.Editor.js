@@ -589,9 +589,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		//important show it (the browser does not know the height and width if it is hidden)
 		if(isSubslide){
-			$(slideDOM).parent().addClass("temp_shown");
+			V.Utils.addTempShown($(slideDOM).parent());
 		}
-		$(slideDOM).addClass("temp_shown");
+		V.Utils.addTempShown(slideDOM);
 
 		$(slideDOM).find('div').each(function(i,div){
 			var element = {};
@@ -717,9 +717,9 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		if(isSubslide){
-			$(slideDOM).parent().removeClass("temp_shown");
+			V.Utils.removeTempShown($(slideDOM).parent());
 		}
-		$(slideDOM).removeClass("temp_shown");
+		V.Utils.removeTempShown(slideDOM);
 		
 		return slide;
 	};

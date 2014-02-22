@@ -200,8 +200,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		if(!hasCurrentClass){
 			$(fc).addClass("current");
 		}
-		$(fc).addClass("temp_shown");
-		$(poisDOM).addClass("temp_shown");
+
+		V.Utils.addTempShown([fc,poisDOM]);
 		
 		var fc_offset = $(fc).offset();
 
@@ -215,8 +215,8 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 		if(!hasCurrentClass){
 			$(fc).removeClass("current");
 		}
-		$(poisDOM).removeClass("temp_shown");
-		$(fc).removeClass("temp_shown");
+		
+		V.Utils.removeTempShown([fc,poisDOM]);
 
 		return pois;
 	};

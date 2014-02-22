@@ -150,7 +150,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			V.Editor.Slides.appendSubslide(renderOptions.slidesetDOM,scaffold);
 			var scaffoldDOM = $(&quot;#&quot;+$(scaffold).attr(&quot;id&quot;));
 			&#x2F;&#x2F;Show subslide
-			$(scaffoldDOM).addClass(&quot;temp_shown&quot;);
+			V.Utils.addTempShown(scaffoldDOM);
 		}
 
 		for(el in slide.elements){
@@ -169,11 +169,11 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				var options = [];
 				options[&#x27;poster&#x27;] = slide.elements[el].poster;
 				options[&#x27;autoplay&#x27;] = slide.elements[el].autoplay;
-				var sourcesArray = [];
-				$.each(JSON.parse(slide.elements[el].sources), function(index, source){
-					sourcesArray.push({&quot;src&quot;:source.src, &quot;mimeType&quot;: source.type});
-				});
-				V.Editor.Video.HTML5.drawVideo(sourcesArray, options, area);
+				V.Editor.Video.HTML5.drawVideo(V.Video.HTML5.getSourcesFromJSON(slide.elements[el]), options, area, slide.elements[el].style);
+			} else if(slide.elements[el].type === V.Constant.AUDIO){
+				var options = [];
+				options[&#x27;autoplay&#x27;] = slide.elements[el].autoplay;
+				V.Editor.Audio.HTML5.drawAudio(V.Audio.HTML5.getSourcesFromJSON(slide.elements[el]), options, area, slide.elements[el].style);
 			} else if(slide.elements[el].type === V.Constant.OBJECT){
 				V.Editor.Object.drawObject(slide.elements[el].body, {area:area, style:slide.elements[el].style, zoomInStyle:slide.elements[el].zoomInStyle});
 			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
@@ -193,7 +193,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		}
 
 		if(renderOptions.subslide){
-			$(scaffoldDOM).removeClass(&quot;temp_shown&quot;);
+			V.Utils.removeTempShown(scaffoldDOM);
 		}
 	};
 	

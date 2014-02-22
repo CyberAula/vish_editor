@@ -79,7 +79,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		}
 
 		vts[vtId].drawed = true;
-		$(vtDOM).addClass("temp_shown");
+		V.Utils.addTempShown(vtDOM);
 
 		var latlng = new google.maps.LatLng(vtJSON.center.lat, vtJSON.center.lng);
 		var myOptions = {
@@ -124,7 +124,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			});
 
 			// do something only the first time the map is loaded
-			$(vtDOM).removeClass("temp_shown");
+			V.Utils.removeTempShown(vtDOM);
 		});
 	};
 

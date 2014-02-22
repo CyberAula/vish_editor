@@ -60,7 +60,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			V.Editor.Slides.appendSubslide(renderOptions.slidesetDOM,scaffold);
 			var scaffoldDOM = $("#"+$(scaffold).attr("id"));
 			//Show subslide
-			$(scaffoldDOM).addClass("temp_shown");
+			V.Utils.addTempShown(scaffoldDOM);
 		}
 
 		for(el in slide.elements){
@@ -103,7 +103,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		}
 
 		if(renderOptions.subslide){
-			$(scaffoldDOM).removeClass("temp_shown");
+			V.Utils.removeTempShown(scaffoldDOM);
 		}
 	};
 	

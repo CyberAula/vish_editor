@@ -160,7 +160,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 			return;
 		}
 
-		$(article_to_move).addClass("temp_shown");
+		V.Utils.addTempShown(article_to_move);
 
 		//Refresh Draggable Objects
 		V.Editor.Utils.refreshDraggables(article_to_move);
@@ -169,7 +169,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		_cleanTextAreas(article_to_move);
 		_loadTextAreasOfSlide(article_to_move,textAreas);
 
-		$(article_to_move).removeClass("temp_shown");
+		V.Utils.removeTempShown(article_to_move);
 
 		//Update slideEls
 		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));

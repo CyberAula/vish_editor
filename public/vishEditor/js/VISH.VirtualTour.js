@@ -84,7 +84,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 		var canvas =  $("<div id='"+canvasId+"' class='map_canvas' style='height:"+"100%"+"; width:"+"100%"+"'></div>");
 		var vtDOM = $("#"+vtJSON.id);
 		$(vtDOM).append(canvas);
-		$(vtDOM).addClass("temp_shown");
+		V.Utils.addTempShown(vtDOM);
 
 		//Draw map
 		var center = new google.maps.LatLng(vtJSON.center.lat, vtJSON.center.lng);
@@ -105,7 +105,7 @@ VISH.VirtualTour = (function(V,$,undefined){
 		//Map events
 		google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
 			//this part runs when the mapobject is created and rendered
-			$(vtDOM).removeClass("temp_shown");
+			V.Utils.removeTempShown(vtDOM);
 			google.maps.event.addListenerOnce(map, 'tilesloaded', function(){
 				//this part runs when the mapobject shown for the first time
 			});

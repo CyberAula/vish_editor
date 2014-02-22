@@ -205,7 +205,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(eVideoIndexBodyActions).html('<button type="button" class="btn btn-small slidesScrollbarButton evideoAddChapterButton addSlideButtonDisabled"><i class="icon-plus"></i><span>'+V.I18n.getTrans("i.AddTimestampLink")+'</span></button>');
 		$(eVideoIndexBody).prepend(eVideoIndexBodyActions);	
 
-		return "<article class='temp_shown' id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/>" + V.Utils.getOuterHTML(videoBox) + V.Utils.getOuterHTML(indexBox) + "</article>";
+		return "<article class='temp_shown' temp_shown_count='1' id='"+slidesetId+"' type='"+V.Constant.EVIDEO+"' slidenumber='"+options.slideNumber+"'><div class='delete_slide'></div><img class='help_in_slide help_in_evideo' src='"+V.ImagesPath+"vicons/helptutorial_circle_blank.png'/>" + V.Utils.getOuterHTML(videoBox) + V.Utils.getOuterHTML(indexBox) + "</article>";
 	};
 
 	var _drawEVideo = function(eVideoJSON,eVideoDOM,videoToRender){
@@ -387,7 +387,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		$(videoBody).removeClass("loadingEVideoContainerWrapper");
 		
 		//Start rendering
-		$(eVideoDOM).addClass("temp_shown_b");
+		V.Utils.addTempShown(eVideoDOM);
 
 		var durationDOM = $(videoHeader).find(".evideoDuration");
 		var videoDuration = V.Video.getDuration(video);
@@ -425,7 +425,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			V.EVideo.onTimeUpdate(video,0);
 		};
 
-		$(eVideoDOM).removeClass("temp_shown_b");
+		V.Utils.removeTempShown(eVideoDOM);
 	};
 
 	var _renderIndex = function(eVideoDOM,eVideoJSON){
@@ -955,21 +955,21 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var onEnterSlideset = function(eVideoDOM){
-		$(eVideoDOM).removeClass("temp_shown");
+		V.Utils.removeTempShown(eVideoDOM);
 	};
 
 	var onLeaveSlideset = function(eVideoDOM){
-		$(eVideoDOM).addClass("temp_shown");
+		V.Utils.addTempShown(eVideoDOM);
 	};
 
 	var loadSlideset = function(eVideoDOM){
-		$(eVideoDOM).find(".evideoBox").removeClass("temp_shown");
+		V.Utils.removeTempShown($(eVideoDOM).find(".evideoBox"));
 		//Show Arrows
 		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
 
 	var unloadSlideset = function(eVideoDOM){
-		$(eVideoDOM).find(".evideoBox").addClass("temp_shown");
+		V.Utils.addTempShown($(eVideoDOM).find(".evideoBox"));
 	};
 
 	var beforeCreateSlidesetThumbnails = function(eVideoDOM){

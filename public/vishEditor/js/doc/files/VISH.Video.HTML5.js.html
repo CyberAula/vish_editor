@@ -241,7 +241,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 var renderVideoFromJSON = function(videoJSON, options){
 		var renderOptions = {};
 
-		renderOptions.videoId = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
+		renderOptions.elId = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
 		renderOptions.style = videoJSON[&#x27;style&#x27;];
 		renderOptions.controls = videoJSON[&#x27;controls&#x27;];
 		renderOptions.autoplay = videoJSON[&#x27;autoplay&#x27;];
@@ -251,10 +251,10 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		&#x2F;&#x2F;Params forced by options
 		if(options){
 			if(options.id){
-				renderOptions.videoId = options.id;
+				renderOptions.elId = options.id;
 			}
-			if(options.videoClass){
-				renderOptions.extraClasses = options.videoClass;
+			if(options.extraClasses){
+				renderOptions.extraClasses = options.extraClasses;
 			}
 			if(options.controls === false){
 				renderOptions.controls = options.controls;
@@ -268,8 +268,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	};
 
 	var renderVideoFromSources = function(sources,options){
-		var videoId = &quot;&quot;;
-		var videoClasses = &quot;&quot;;
+		var elId = &quot;&quot;;
+		var extraClasses = &quot;&quot;;
 		var controls = &quot;controls=&#x27;controls&#x27; &quot;;
 		var autoplay = &quot;&quot;;
 		var poster = &quot;&quot;;
@@ -277,11 +277,11 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var style = &quot;&quot;;
 		
 		if(options){
-			if(options[&#x27;videoId&#x27;]){
-				videoId = &quot;id=&#x27;&quot;+options[&#x27;videoId&#x27;]+&quot;&#x27;&quot;;
+			if(options[&#x27;elId&#x27;]){
+				elId = &quot;id=&#x27;&quot;+options[&#x27;elId&#x27;]+&quot;&#x27;&quot;;
 			}
 			if(options[&#x27;extraClasses&#x27;]){
-				videoClasses = videoClasses + options[&#x27;extraClasses&#x27;];
+				extraClasses = extraClasses + options[&#x27;extraClasses&#x27;];
 			}
 			if(options.controls === false){
 				controls = &quot;&quot;;
@@ -300,7 +300,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 			}
 		}
 
-		var video = &quot;&lt;video &quot; + videoId + &quot; class=&#x27;&quot; + videoClasses + &quot;&#x27; preload=&#x27;metadata&#x27; &quot; + controls + autoplay + poster + loop + style + &quot;&gt;&quot;;
+		var video = &quot;&lt;video &quot; + elId + &quot; class=&#x27;&quot; + extraClasses + &quot;&#x27; preload=&#x27;metadata&#x27; &quot; + controls + autoplay + poster + loop + style + &quot;&gt;&quot;;
 		$.each(sources, function(index, source){
 			if(typeof source.src == &quot;string&quot;){
 				var mimeType = (source.mimeType)?&quot;type=&#x27;&quot; + source.mimeType + &quot;&#x27; &quot;:&quot;&quot;;

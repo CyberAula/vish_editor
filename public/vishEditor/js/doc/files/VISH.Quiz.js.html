@@ -571,12 +571,12 @@ VISH.Quiz = (function(V,$,undefined){
 		&#x2F;&#x2F;Draw QR for fancybox
 		var container = $(&quot;.quizQr&quot;);
 		$(container).html(&quot;&quot;);
+		var tabQuizSessionContent = $(&quot;#tab_quiz_session_content&quot;);
 
-		$(&quot;#tab_quiz_session_content&quot;).addClass(&quot;temp_shown&quot;);
-		$(container).addClass(&quot;temp_shown&quot;);
+		V.Utils.addTempShown([tabQuizSessionContent,container]);
 		var height = $(container).height();
-		$(container).removeClass(&quot;temp_shown&quot;);
-		$(&quot;#tab_quiz_session_content&quot;).removeClass(&quot;temp_shown&quot;);
+		V.Utils.removeTempShown([tabQuizSessionContent,container]);
+		
 		var width = height;
 
 		var qrOptions = {

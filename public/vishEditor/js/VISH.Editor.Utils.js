@@ -478,17 +478,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$("a.venondefaulttab").hide();
 	};
 
-	var addTmpShown = function(els){
-		$(els).each(function(index,el){
-			$(el).addClass("temp_shown");
-		});
-	};
-
-	var removeTmpShown = function(els){
-		$(els).each(function(index,el){
-			$(el).removeClass("temp_shown");
-		});
-	};
 
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
@@ -502,9 +491,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		autocompleteUrls 			: autocompleteUrls,
 		filterFilePath 				: filterFilePath,
 		loadTab						: loadTab,
-		hideNonDefaultTabs			: hideNonDefaultTabs,
-		addTmpShown					: addTmpShown,
-		removeTmpShown				: removeTmpShown
+		hideNonDefaultTabs			: hideNonDefaultTabs
 	};
 
 }) (VISH, jQuery);

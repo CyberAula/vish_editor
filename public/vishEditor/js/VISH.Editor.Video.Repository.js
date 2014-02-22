@@ -102,14 +102,14 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			return;
 		}
 
-		V.Editor.Utils.addTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
+		V.Utils.addTempShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 
 		if(noResults===true){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.Noresultsfound") + "</p>");
-			V.Editor.Utils.removeTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
+			V.Utils.removeTempShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 		} else if(noResults===false){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.errorViSHConnection") + "</p>");
-			V.Editor.Utils.removeTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
+			V.Utils.removeTempShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 		} else {
 			var options = new Array();
 			options.callback = _onClickCarrouselElement;
@@ -118,7 +118,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			options.afterCreateCarruselFunction = function(){
 				//We need to wait even a little more that afterCreate callback
 				setTimeout(function(){
-					V.Editor.Utils.removeTmpShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
+					V.Utils.removeTempShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 				},100);
 			}
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);

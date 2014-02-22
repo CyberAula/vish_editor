@@ -210,6 +210,8 @@ VISH.Editor.Text = (function(V,$,undefined){
 			config.autoGrow_maxHeight = 800;
 		}
 
+		V.Utils.addTempShown(current_area);
+
 		&#x2F;&#x2F;Fit the current area
 		config.width = &#x27;100%&#x27;;
 		&#x2F;&#x2F;The height value defines the height of CKEditor editing area and can be given in pixels or em. Percent values are not supported. 
@@ -229,6 +231,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
 
+		V.Utils.removeTempShown(current_area);
 
 		var newInstance = !(typeof initial_text === &quot;string&quot;)||((options)&amp;&amp;(options.forceNew));
 
@@ -297,10 +300,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 					if(isQuiz){
 						var slide = $(&quot;article&quot;).has(current_area);
-						$(slide).addClass(&quot;temp_shown&quot;);
+						var subslide = $(&quot;article &gt; article&quot;).has(current_area);
+						V.Utils.addTempShown(slide);
+						V.Utils.addTempShown(subslide);
 						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
 						var newMyHeight = $(iframeContent).find(&quot;html&quot;).height();
-						$(slide).removeClass(&quot;temp_shown&quot;);
+						V.Utils.removeTempShown(slide);
+						V.Utils.removeTempShown(subslide);
 
 						if(newMyHeight &gt; myHeight){
 							&#x2F;&#x2F;Prevent some browsers (e.g. Firefox) to calculate wrong heights...

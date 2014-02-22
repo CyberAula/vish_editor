@@ -188,6 +188,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Slides.init();
 		V.User.init(options);
 		V.Video.init();
+		V.Audio.init();
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); &#x2F;&#x2F;Settings must be initialize before V.Editor.Renderer.init(presentation);
 
@@ -678,9 +679,9 @@ VISH.Editor = (function(V,$,undefined){
 
 		&#x2F;&#x2F;important show it (the browser does not know the height and width if it is hidden)
 		if(isSubslide){
-			$(slideDOM).parent().addClass(&quot;temp_shown&quot;);
+			V.Utils.addTempShown($(slideDOM).parent());
 		}
-		$(slideDOM).addClass(&quot;temp_shown&quot;);
+		V.Utils.addTempShown(slideDOM);
 
 		$(slideDOM).find(&#x27;div&#x27;).each(function(i,div){
 			var element = {};
@@ -689,7 +690,7 @@ VISH.Editor = (function(V,$,undefined){
 				element.id		=	$(div).attr(&#x27;id&#x27;);
 				element.type	=	$(div).attr(&#x27;type&#x27;);
 				element.areaid	=	$(div).attr(&#x27;areaid&#x27;);				 
-					
+
 				if(element.type==V.Constant.TEXT){
 					var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
 					if(CKEditor!==null){
@@ -722,7 +723,7 @@ VISH.Editor = (function(V,$,undefined){
 					});
 					sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
 					element.sources = sources;
-				} else if(element.type==V.Constant.MEDIA.AUDIO){
+				} else if(element.type==V.Constant.AUDIO){
 					var audio = $(div).find(&quot;audio&quot;);
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(audio));
 					&#x2F;&#x2F;Sources
@@ -806,9 +807,9 @@ VISH.Editor = (function(V,$,undefined){
 		}
 
 		if(isSubslide){
-			$(slideDOM).parent().removeClass(&quot;temp_shown&quot;);
+			V.Utils.removeTempShown($(slideDOM).parent());
 		}
-		$(slideDOM).removeClass(&quot;temp_shown&quot;);
+		V.Utils.removeTempShown(slideDOM);
 		
 		return slide;
 	};

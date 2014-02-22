@@ -467,6 +467,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case &quot;tab_video_vimeo&quot;:
 				V.Editor.Video.Vimeo.beforeLoadTab();
 				break;	
+			&#x2F;&#x2F;Audio
+			case &quot;tab_audio_soundcloud&quot;:
+				V.Editor.Audio.Soundcloud.beforeLoadTab();
+				break;
 			&#x2F;&#x2F;Objects
 			case &quot;tab_object_repo&quot;:
 				V.Editor.Object.Repository.beforeLoadTab();
@@ -560,20 +564,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	};
 
 	var hideNonDefaultTabs = function(){
+		$(&quot;div.fancy_tabs a.fancy_tab:not(.disabled)&quot;).show();
 		$(&quot;a.venondefaulttab&quot;).hide();
 	};
 
-	var addTmpShown = function(els){
-		$(els).each(function(index,el){
-			$(el).addClass(&quot;temp_shown&quot;);
-		});
-	};
-
-	var removeTmpShown = function(els){
-		$(els).each(function(index,el){
-			$(el).removeClass(&quot;temp_shown&quot;);
-		});
-	};
 
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
@@ -587,9 +581,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		autocompleteUrls 			: autocompleteUrls,
 		filterFilePath 				: filterFilePath,
 		loadTab						: loadTab,
-		hideNonDefaultTabs			: hideNonDefaultTabs,
-		addTmpShown					: addTmpShown,
-		removeTmpShown				: removeTmpShown
+		hideNonDefaultTabs			: hideNonDefaultTabs
 	};
 
 }) (VISH, jQuery);

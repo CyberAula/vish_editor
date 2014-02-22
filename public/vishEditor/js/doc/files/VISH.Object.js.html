@@ -127,6 +127,9 @@ VISH.Object = (function(V,$,undefined){
 			case &quot;VIDEO&quot;:
 				type = V.Constant.MEDIA.HTML5_VIDEO;
 				break;
+			case &quot;AUDIO&quot;:
+				type = V.Constant.MEDIA.HTML5_AUDIO;
+				break;
 			default:
 				type = _getTypeFromSource(source);
 		}
@@ -152,6 +155,8 @@ VISH.Object = (function(V,$,undefined){
 				return $(object).attr(&quot;src&quot;);
 			case V.Constant.WRAPPER.VIDEO:
 				return V.Video.HTML5.getSources(object);
+			case V.Constant.WRAPPER.AUDIO:
+				return V.Audio.HTML5.getSources(object);
 			default:
 				V.Debugging.log(&quot;Unrecognized object wrapper: &quot; + wrapper);
 				return null;
@@ -175,7 +180,7 @@ VISH.Object = (function(V,$,undefined){
 		var youtube_video_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)?(((youtu.be\&#x2F;)([aA-zZ0-9-]+))|((www.youtube.com\&#x2F;((watch\?v=)|(embed\&#x2F;)|(v\&#x2F;)))([aA-z0-9-Z&amp;=.])+))&#x2F;g
 		var html5VideoFormats = [&quot;mp4&quot;,&quot;webm&quot;,&quot;ogg&quot;];
 		var imageFormats = [&quot;jpg&quot;,&quot;jpeg&quot;,&quot;png&quot;,&quot;gif&quot;,&quot;bmp&quot;,&quot;svg&quot;];
-		var audioFormats = [&quot;mp3&quot;, &quot;wav&quot;];
+		var audioFormats = [&quot;mp3&quot;, &quot;wav&quot;,&quot;ogg&quot;];
 
 		if(typeof source != &quot;string&quot;){
 			return null
@@ -186,16 +191,12 @@ VISH.Object = (function(V,$,undefined){
 		}
 			
 		&#x2F;&#x2F;Purge options
-		source = source.split(&#x27;?&#x27;)[0]
+		source = source.split(&#x27;?&#x27;)[0];
 
 		var extension = getExtensionFromSrc(source);
 
 		if(imageFormats.indexOf(extension)!=&quot;-1&quot;){
 			return V.Constant.MEDIA.IMAGE;
-		}
-
-		if(audioFormats.indexOf(extension)!=&quot;-1&quot;){
-			return V.Constant.MEDIA.AUDIO;
 		}
 
 		if(extension==&quot;swf&quot;){
@@ -208,6 +209,10 @@ VISH.Object = (function(V,$,undefined){
 
 		if(html5VideoFormats.indexOf(extension)!=&quot;-1&quot;){
 			return V.Constant.MEDIA.HTML5_VIDEO;
+		}
+
+		if(audioFormats.indexOf(extension)!=&quot;-1&quot;){
+			return V.Constant.MEDIA.HTML5_AUDIO;
 		}
 
 		if(extension==&quot;json&quot;){

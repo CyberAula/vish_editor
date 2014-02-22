@@ -160,7 +160,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			if(options.extraClasses){
 				videoClasses = videoClasses + &quot; &quot; + options.extraClasses;
 			}
-			if(options.style){
+			if(options.objectStyle){
+				objectStyle = &quot;objectStyle=&#x27;&quot; + options.objectStyle + &quot;&#x27; &quot;;
+			} else if(options.style){
 				objectStyle = &quot;objectStyle=&#x27;&quot; + options.style + &quot;&#x27; &quot;;
 			}
 			if(options.zoomInStyle){
@@ -201,7 +203,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 		
 		var iframeId = $(container).attr(&quot;ytContainerId&quot;);
-		$(container).html(&quot;&lt;div id=&#x27;&quot; + iframeId + &quot;&#x27; videotype=&#x27;&quot;+ V.Constant.MEDIA.YOUTUBE_VIDEO +&quot;&#x27; style=&#x27;&quot; + $(container).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		var ytStyle = (typeof $(container).attr(&quot;objectStyle&quot;) != &quot;undefined&quot;) ? (&quot;style=&#x27;&quot; + $(container).attr(&quot;objectStyle&quot;) + &quot;&#x27; &quot;) : &quot;&quot;;
+		$(container).html(&quot;&lt;div id=&#x27;&quot; + iframeId + &quot;&#x27; videotype=&#x27;&quot;+ V.Constant.MEDIA.YOUTUBE_VIDEO + &quot;&#x27; &quot; + ytStyle + &quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
 
 		var enableCustomPlayer = _enableCustomPlayer;
 		var controls = enableCustomPlayer ? 0 : 1;

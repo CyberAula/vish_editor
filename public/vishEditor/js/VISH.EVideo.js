@@ -286,7 +286,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var significativeNumbers = formatedDuration.split(":").join("").length;
 		$(video).attr("sN",significativeNumbers);
 
-		$(eVideoDOM).addClass("temp_shown");
+		V.Utils.addTempShown(eVideoDOM);
 		$(video).removeClass("temp_hidden");
 
 		fitVideoInVideoBox(videoBox);
@@ -334,7 +334,7 @@ VISH.EVideo = (function(V,$,undefined){
 			onTimeUpdate(video,0);
 		};
 
-		$(eVideoDOM).removeClass("temp_shown");
+		V.Utils.removeTempShown(eVideoDOM);
 	};
 
 	var fitVideoInVideoBox = function(videoBox){
@@ -364,11 +364,9 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoHeight = $(video).height();
 		var videoWidth = $(video).width();
 
-		$(videoHeader).addClass("temp_shown");
-		$(videoFooter).addClass("temp_shown");
+		V.Utils.addTempShown([videoHeader,videoFooter]);
 		var totalVideoBoxHeight = $(videoHeader).height() + videoHeight + $(videoFooter).height();
-		$(videoHeader).removeClass("temp_shown");
-		$(videoFooter).removeClass("temp_shown");
+		V.Utils.removeTempShown([videoHeader,videoFooter]);
 
 		//Remove margin from videoHeader to get videoBox height appropiattely
 		$(videoHeader).css("margin-top","0px");
@@ -501,7 +499,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
 
-		$(eVideoDOM).removeClass("temp_shown");
+		V.Utils.removeTempShown(eVideoDOM);
 
 		switch(eVideoJSON.estatusBeforeLeave){
 			case V.Constant.EVideo.Status.Playing:
@@ -530,7 +528,7 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoDOM = getVideoFromVideoBox(videoBox);
 		var eVideoJSON = eVideos[eVideoId];
 
-		$(eVideoDOM).addClass("temp_shown");
+		V.Utils.addTempShown(eVideoDOM);
 
 		eVideoJSON.estatusBeforeLeave = V.Video.getStatus(videoDOM);
 		switch(eVideoJSON.estatusBeforeLeave){
@@ -751,7 +749,7 @@ VISH.EVideo = (function(V,$,undefined){
 	var resizeEVideoAfterSetupSize = function(eVideoDOM,increase,increaseW){
 		var isEVideoVisible = ($(eVideoDOM).css("display") != "none");
 		if(!isEVideoVisible){
-			$(eVideoDOM).addClass("temp_shown_b");
+			V.Utils.addTempShown(eVideoDOM);
 		}
 
 		var videoBox = $(eVideoDOM).find(".evideoBox");
@@ -779,7 +777,7 @@ VISH.EVideo = (function(V,$,undefined){
 		$(videoBox).find(".ballWrapper").height($(videoFooter).height());
 
 		if(!isEVideoVisible){
-			$(eVideoDOM).removeClass("temp_shown_b");
+			V.Utils.removeTempShown(eVideoDOM);
 		}
 	};
 

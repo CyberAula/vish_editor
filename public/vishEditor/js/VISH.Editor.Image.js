@@ -228,15 +228,9 @@ VISH.Editor.Image = (function(V,$,undefined){
 			//Adjust dimensions after drawing (Only after insert new images)
 			var theImg = $("#"+idToDragAndResize);
 			$(theImg).load(function(){
-				$(current_area).parent().addClass("temp_shown");
-				$(current_area).addClass("temp_shown");
-				$(theImg).addClass("temp_shown");
-				
+				V.Utils.addTempShown([$(current_area).parent(),$(current_area),$(theImg)]);
 				var dimentionsToDraw = V.Utils.dimentionsToDraw($(current_area).width(), $(current_area).height(), $(theImg).width(), $(theImg).height());
-				
-				$(current_area).parent().removeClass("temp_shown");
-				$(current_area).removeClass("temp_shown");
-				$(theImg).removeClass("temp_shown");
+				V.Utils.removeTempShown([$(current_area).parent(),$(current_area),$(theImg)]);
 
 				$(theImg).width(dimentionsToDraw.width);
 				//Prevent incorrect height detections
