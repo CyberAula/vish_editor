@@ -192,6 +192,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var getDummy = function(slidesetId,options){
 		var videoBox = V.EVideo.renderVideoBoxDummy();
+		$(videoBox).attr("id",V.Utils.getId(slidesetId + "_videoBox"));
 		//Modify videoBox renderized from Viewer
 		var eVideoBody = $(videoBox).find(".evideoBody");
 		$(eVideoBody).css("margin-top","7.5%");
@@ -963,13 +964,23 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 	};
 
 	var loadSlideset = function(eVideoDOM){
-		V.Utils.removeTempShown($(eVideoDOM).find(".evideoBox"));
+		var eVideoBox = $(eVideoDOM).find(".evideoBox");
+		if($(eVideoBox).attr("loaded") == "false"){
+			var eVideoBox = $(eVideoDOM).find(".evideoBox");
+			V.Utils.removeTempShown(eVideoBox);
+		}
+		$(eVideoBox).attr("loaded","true");
+
 		//Show Arrows
 		$("#subslides_list").find("div.draggable_sc_div[ddend='scrollbar']").show();
 	};
 
 	var unloadSlideset = function(eVideoDOM){
-		V.Utils.addTempShown($(eVideoDOM).find(".evideoBox"));
+		var eVideoBox = $(eVideoDOM).find(".evideoBox");
+		if($(eVideoBox).attr("loaded") != "false"){
+			$(eVideoBox).attr("loaded","false");
+			V.Utils.addTempShown($(eVideoDOM).find(".evideoBox"));
+		}		
 	};
 
 	var beforeCreateSlidesetThumbnails = function(eVideoDOM){
