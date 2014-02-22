@@ -1216,7 +1216,11 @@ VISH.Utils = (function(V,undefined){
 			var newTmpShownCount = Math.max(0,tmpShownCount-1);
 			tempShownCounts[elId] = newTmpShownCount;
 			if(newTmpShownCount==0){
-				$(el).removeClass("temp_shown");
+				setTimeout(function(){
+					if(tempShownCounts[elId]===0){
+						$(el).removeClass("temp_shown");
+					}
+				},1);
 			}
 		});
 	};
