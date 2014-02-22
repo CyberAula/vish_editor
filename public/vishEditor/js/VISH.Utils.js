@@ -1197,7 +1197,7 @@ VISH.Utils = (function(V,undefined){
 			}
 			var tmpShownCount = (typeof tempShownCounts[elId] != "undefined") ? tempShownCounts[elId] : 0;
 			tempShownCounts[elId] = tmpShownCount+1;
-			if(tmpShownCount === 1){
+			if(tmpShownCount === 0){
 				$(el).addClass("temp_shown");
 			}
 		});
