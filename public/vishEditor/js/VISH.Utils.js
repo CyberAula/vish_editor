@@ -1185,23 +1185,37 @@ VISH.Utils = (function(V,undefined){
 		return false;
 	};
 
+
+	var tempShownCounts = [];
+
 	var addTempShown = function(els){
 		$(els).each(function(index,el){
-			var tmpShownCount = (typeof $(el).attr("temp_shown_count") != "undefined") ? parseInt($(el).attr("temp_shown_count")) : 0;
-			if(tmpShownCount === 0){
+			var elId = $(el).attr("tmpshownid");
+			if(typeof elId == "undefined"){
+				elId = V.Utils.getId("TmpShownId");
+				$(el).attr("tmpshownid",elId);
+			}
+			var tmpShownCount = (typeof tempShownCounts[elId] != "undefined") ? tempShownCounts[elId] : 0;
+			tempShownCounts[elId] = tmpShownCount+1;
+			if(tmpShownCount === 1){
 				$(el).addClass("temp_shown");
 			}
-			$(el).attr("temp_shown_count",tmpShownCount+1);
 		});
 	};
 
 	var removeTempShown = function(els){
 		$(els).each(function(index,el){
-			var tmpShownCount = (typeof $(el).attr("temp_shown_count") != "undefined") ? parseInt($(el).attr("temp_shown_count")) : 0;
+			var elId = $(el).attr("tmpshownid");
+			if(typeof elId == "undefined"){
+				elId = V.Utils.getId("TmpShownId");
+				$(el).attr("tmpshownid",elId);
+			}
+			var tmpShownCount = (typeof tempShownCounts[elId] != "undefined") ? tempShownCounts[elId] : 0;
 			var newTmpShownCount = Math.max(0,tmpShownCount-1);
-			$(el).attr("temp_shown_count",newTmpShownCount);
+			tempShownCounts[elId] = newTmpShownCount;
 			if(newTmpShownCount==0){
 				$(el).removeClass("temp_shown");
+				$(el).removeAttr("tmpshownid");
 			}
 		});
 	};

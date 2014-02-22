@@ -80,6 +80,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 			current_area.attr('type','text');
 		}
 
+		var slide = $("article").has(current_area);
+		var subslide = $("article > article").has(current_area);
+
+		V.Utils.addTempShown([slide,subslide,current_area]);
+
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
 		var wysiwygContainer = $("<div id='"+wysiwygContainerId+"' class='wysiwygTextArea'></div>")
@@ -120,8 +125,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 			config.autoGrow_maxHeight = 800;
 		}
 
-		V.Utils.addTempShown(current_area);
-
 		//Fit the current area
 		config.width = '100%';
 		//The height value defines the height of CKEditor editing area and can be given in pixels or em. Percent values are not supported. 
@@ -140,8 +143,6 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		var myWidth = $(current_area).width();
 		var myHeight = $(current_area).height();
-
-		V.Utils.removeTempShown(current_area);
 
 		var newInstance = !(typeof initial_text === "string")||((options)&&(options.forceNew));
 
@@ -205,22 +206,17 @@ VISH.Editor.Text = (function(V,$,undefined){
 		ckeditor.on("instanceReady", function(){
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
-					//Resize: needed to fit content properly
-					//Acces current_area leads to errors, use myWidth and myHeight
-
+					
 					if(isQuiz){
-						var slide = $("article").has(current_area);
-						var subslide = $("article > article").has(current_area);
-						V.Utils.addTempShown(slide);
-						V.Utils.addTempShown(subslide);
 						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
 						var newMyHeight = $(iframeContent).find("html").height();
-						V.Utils.removeTempShown(slide);
-						V.Utils.removeTempShown(subslide);
 
 						if(newMyHeight > myHeight){
-							//Prevent some browsers (e.g. Firefox) to calculate wrong heights...
+							//This condition allows to prevent some browsers (e.g. Firefox) to calculate wrong heights...
+							V.Utils.removeTempShown([slide,subslide]);
+							//Resize must be performed without temp_shown clases on the slides
 							ckeditor.resize(myWidth,newMyHeight);
+							V.Utils.addTempShown([slide,subslide]);
 						}
 
 						//Firefox don't calculate height right, maybe a fallback could be provided
@@ -228,18 +224,24 @@ VISH.Editor.Text = (function(V,$,undefined){
 						// }
 
 					} else {
-						ckeditor.resize(myWidth,myHeight);
+						// Resize: needed to fit content properly
+						// Not necessary in the new version
+						// ckeditor.resize(myWidth,myHeight);
 					}
 				
 					//Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
-				});
 
-				if(newInstance){
-					if((isTemplateArea)||((options)&&(options.focus))){
-						ckeditor.focus();
+					if(newInstance){
+						if((isTemplateArea)||((options)&&(options.focus))){
+							ckeditor.focus();
+						}
 					}
-				}
+
+					V.Utils.removeTempShown([slide,subslide,current_area]);
+				});
+			} else {
+				V.Utils.removeTempShown([slide,subslide,current_area]);
 			}
 		});
 
@@ -297,7 +299,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 		});
 		return CKEditorInstance;
-	}
+	};
 
 	var getZoneForCKContainer = function(container){
 		var area;
@@ -306,7 +308,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			area = $("div[type='quiz']").has(container);
 		}
 		return area;
-	}
+	};
 
 	var getCKEditorIframeContentFromZone = function(zone){
 		var editor = getCKEditorFromZone(zone);
@@ -314,12 +316,12 @@ VISH.Editor.Text = (function(V,$,undefined){
 			return null;
 		}
 		return _getCKEditorIframeContentFromInstance(editor);
-	}
+	};
 
 	var _getCKEditorIframeContentFromInstance = function(editor){
 		var iframe = $(document.getElementById('cke_contents_' + editor.name)).find("iframe")[0];
 		return $(iframe).contents()[0];
-	}
+	};
 
 
 	var getCKEditorFromTextArea = function(textArea){
@@ -342,11 +344,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 		});
 		return CKEditorInstance;
-	}
+	};
 
 	var _getPlainText = function(){
 		return $(this.getSnapshot()).text();
-	}
+	};
 
 	/*
 	 * Fix oficial WebKit bug: http://ckeditor.com/forums/CKEditor-3.x/Minimum-Editor-Width-Safari#comment-48574
@@ -358,7 +360,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 	        iframe.style.display = 'none';
 	        iframe.style.display = 'block';
 	    }
-	}
+	};
 
 	var refreshAutoColors = function(){
 		var currentColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
@@ -369,7 +371,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			 	$(span).attr("style",currentColor+";");
 			 });
 		});
-	}
+	};
 
 	return {
 		init								: init,
