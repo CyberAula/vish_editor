@@ -1186,18 +1186,20 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
-	var tempShownCounts = [];
+	var tempShownCounts = {};
 
 	var addTempShown = function(els){
 		$(els).each(function(index,el){
-			var elId = $(el).attr("tmpshownid");
+			var elId = $(el).attr("id");
 			if(typeof elId == "undefined"){
+				// V.Debugging.log("WARNING: Element without id");
+				// V.Debugging.log(el);
 				elId = V.Utils.getId("TmpShownId");
-				$(el).attr("tmpshownid",elId);
+				$(el).attr("id",elId);
 			}
 			var tmpShownCount = (typeof tempShownCounts[elId] != "undefined") ? tempShownCounts[elId] : 0;
 			tempShownCounts[elId] = tmpShownCount+1;
-			if(tmpShownCount === 0){
+			if(tmpShownCount==0){
 				$(el).addClass("temp_shown");
 			}
 		});
@@ -1205,17 +1207,16 @@ VISH.Utils = (function(V,undefined){
 
 	var removeTempShown = function(els){
 		$(els).each(function(index,el){
-			var elId = $(el).attr("tmpshownid");
+			var elId = $(el).attr("id");
 			if(typeof elId == "undefined"){
 				elId = V.Utils.getId("TmpShownId");
-				$(el).attr("tmpshownid",elId);
+				$(el).attr("id",elId);
 			}
 			var tmpShownCount = (typeof tempShownCounts[elId] != "undefined") ? tempShownCounts[elId] : 0;
 			var newTmpShownCount = Math.max(0,tmpShownCount-1);
 			tempShownCounts[elId] = newTmpShownCount;
 			if(newTmpShownCount==0){
 				$(el).removeClass("temp_shown");
-				$(el).removeAttr("tmpshownid");
 			}
 		});
 	};

@@ -83,6 +83,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var slide = $("article").has(current_area);
 		var subslide = $("article > article").has(current_area);
 
+		if(typeof $(current_area).attr("id") == "undefined"){
+			//We need an ID to call addTempShown properly
+			$(current_area).attr("id",V.Utils.getId("TmpShownId")); 
+		}
 		V.Utils.addTempShown([slide,subslide,current_area]);
 
 		//Create the wysiwyg container and add to the area
