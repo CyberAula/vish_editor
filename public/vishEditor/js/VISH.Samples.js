@@ -1460,7 +1460,7 @@ VISH.Samples = (function(V,undefined){
 	};
 
 	//Testing samples
-	var test = {
+	var mooc = {
 		"VEVersion":"0.8.5",
 		"type":"presentation",
 		"title":"Modulo 1: Introduccion a Internet, el Web, la nube, HTML5 y CSS",
@@ -1536,6 +1536,8 @@ VISH.Samples = (function(V,undefined){
 			}
 		]
 	};
+
+	var test = {"VEVersion":"0.8.6","type":"presentation","author":{"name":"agordillo","vishMetadata":{"id":"24"}},"theme":"theme1","animation":"animation1","language":"independent","age_range":"4 - 20","vishMetadata":{"draft":"true"},"slides":[{"id":"article2","type":"enrichedvideo","video":{"type":"Unknown"},"width":"100%","height":"100%","pois":[],"slides":[]}]};
 
 	return {
 		basic_samples		: basic_samples,

@@ -219,7 +219,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var _renderVideo = function(eVideoId){
 		var eVideoJSON = eVideos[eVideoId];
-		if((typeof eVideoJSON != "object")||(typeof eVideoJSON.video != "object")){
+		if((typeof eVideoJSON != "object")||(typeof eVideoJSON.video != "object")||(!haveSources(eVideoJSON))){
 			return;
 		}
 
@@ -1027,6 +1027,21 @@ VISH.EVideo = (function(V,$,undefined){
 		return undefined;
 	};
 
+	var haveSources = function(eVideoJSON){
+		if((typeof eVideoJSON == "undefined")||(typeof eVideoJSON.video == "undefined")){
+			return false;
+		}
+
+		switch(eVideoJSON.video.type){
+			case V.Constant.MEDIA.HTML5_VIDEO:
+				return (typeof eVideoJSON.video.sources != "undefined");
+			case V.Constant.MEDIA.YOUTUBE_VIDEO:
+				return (typeof eVideoJSON.video.source != "undefined");
+			default:
+				return false;
+		};
+	};
+
 	return {
 		init					: init,
 		draw					: draw,
@@ -1043,6 +1058,7 @@ VISH.EVideo = (function(V,$,undefined){
 		getVideoFromVideoBox	: getVideoFromVideoBox,
 		getVideoBoxFromVideo 	: getVideoBoxFromVideo,
 		getBallOfEVideo			: getBallOfEVideo,
+		haveSources				: haveSources,
 		afterSetupSize			: afterSetupSize
 	};
 
