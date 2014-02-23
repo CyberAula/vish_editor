@@ -210,38 +210,41 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var myWidth = currentAreaWidth;
 		var myHeight = currentAreaHeight;
 
-		//Keep slide subslide an area visible until the quiz has been drawed
-		V.Utils.addTempShown([slide,subslide,current_area]);
-		setTimeout(function(){
-			if(_initializedCKEditorInstances[ckeditor.name] !== true){
-				_initializedCKEditorInstances[ckeditor.name] = false;
-				V.Utils.removeTempShown([slide,subslide,current_area]);
-			} else {
-				_initializedCKEditorInstances[ckeditor.name] = undefined;
-			}
-		},6000);
+		if(!newInstance){
+			//Keep slide subslide an area visible until the quiz has been drawed
+			V.Utils.addTempShown([slide,subslide,current_area]);
+			setTimeout(function(){
+				if(_initializedCKEditorInstances[ckeditor.name] !== true){
+					_initializedCKEditorInstances[ckeditor.name] = false;
+					V.Utils.removeTempShown([slide,subslide,current_area]);
+				} else {
+					_initializedCKEditorInstances[ckeditor.name] = undefined;
+				}
+			},6000);
+		}
 
 		ckeditor.on("instanceReady", function(){
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
-					
 					if(isQuiz){
-						setTimeout(function(){
-							V.Utils.addTempShown([slide,subslide,current_area]);
-							var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
-							var newMyHeight = $(iframeContent).find("html").height();
-							if(newMyHeight > myHeight){
-								//This condition allows to prevent some browsers (e.g. Firefox) to calculate wrong heights...
-								// V.Debugging.log("newMyHeight for " + ckeditor.name + " is: " + newMyHeight);
-								ckeditor.resize(myWidth,newMyHeight);
-							}
+						if(!newInstance){
+							setTimeout(function(){
+								V.Utils.addTempShown([slide,subslide,current_area]);
+								var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
+								var newMyHeight = $(iframeContent).find("html").height();
+								if(newMyHeight > myHeight){
+									//This condition allows to prevent some browsers (e.g. Firefox) to calculate wrong heights...
+									// V.Debugging.log("newMyHeight for " + ckeditor.name + " is: " + newMyHeight);
+									ckeditor.resize(myWidth,newMyHeight);
+								}
 
-							//Firefox don't calculate height right, maybe a fallback could be provided
-							// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
-							// }
+								//Firefox don't calculate height right, maybe a fallback could be provided
+								// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
+								// }
 
-							V.Utils.removeTempShown([slide,subslide,current_area]);
-						},1000);
+								V.Utils.removeTempShown([slide,subslide,current_area]);
+							},1000);
+						}
 					} else {
 						// Resize: Not necessary (to fit the content properly) in the new version
 						// ckeditor.resize(myWidth,myHeight);
@@ -258,11 +261,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 				});
 			}
 
-			if(typeof _initializedCKEditorInstances[ckeditor.name] == "undefined"){
-				_initializedCKEditorInstances[ckeditor.name] = true;
-				V.Utils.removeTempShown([slide,subslide,current_area]);
-			} else {
-				_initializedCKEditorInstances[ckeditor.name] = undefined;
+			if(!newInstance){
+				if(typeof _initializedCKEditorInstances[ckeditor.name] == "undefined"){
+					_initializedCKEditorInstances[ckeditor.name] = true;
+					V.Utils.removeTempShown([slide,subslide,current_area]);
+				} else {
+					_initializedCKEditorInstances[ckeditor.name] = undefined;
+				}
 			}
 		});
 
