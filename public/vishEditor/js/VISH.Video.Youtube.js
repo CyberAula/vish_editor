@@ -85,8 +85,31 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var loadYoutubeObject = function(container,options){
+		var enableCustomPlayer = _enableCustomPlayer;
+		var controls = enableCustomPlayer ? 0 : 1;
+		var _onReadyCallback = onPlayerReady;
+		var _onPlayerError = onPlayerError;
+
+		if(options){
+			if(typeof options.enableCustomPlayer == "boolean"){
+				enableCustomPlayer = options.enableCustomPlayer;
+				controls = enableCustomPlayer ? 0 : 1;
+			}
+			if(typeof options.controls == "boolean"){
+				controls = (options.controls===true) ? 1 : 0;
+			}
+			if(typeof options.onReadyCallback == "function"){
+				_onReadyCallback = options.onReadyCallback;
+			}
+			if(typeof options.onPlayerError == "function"){
+				_onPlayerError = options.onPlayerError;
+			}
+		}
+
+
 		if(V.Status.isOnline()===false){
 			$(container).html("<img src='"+V.ImagesPath+"adverts/advert_new_grey_video.png'/>");
+			_onPlayerError();
 			return;
 		}
 
@@ -103,35 +126,20 @@ VISH.Video.Youtube = (function(V,$,undefined){
 				$(nonAvailableImg).load(function(response){
 					$(nonAvailableImg).css("margin-top",($(container).height()-$(nonAvailableImg).height())/2 + "px");
 				});
+				_onPlayerError();
 			}
 			return;
 		}
 
 		var youtubeVideoId = getYoutubeIdFromURL($(container).attr("source")); 
 		if(youtubeVideoId===null){
+			_onPlayerError();
 			return;
 		}
 		
 		var iframeId = $(container).attr("ytContainerId");
 		var ytStyle = (typeof $(container).attr("objectStyle") != "undefined") ? ("style='" + $(container).attr("objectStyle") + "' ") : "";
 		$(container).html("<div id='" + iframeId + "' videotype='"+ V.Constant.MEDIA.YOUTUBE_VIDEO + "' " + ytStyle + "'></div>");
-
-		var enableCustomPlayer = _enableCustomPlayer;
-		var controls = enableCustomPlayer ? 0 : 1;
-		var _onReadyCallback = onPlayerReady;
-
-		if(options){
-			if(typeof options.enableCustomPlayer == "boolean"){
-				enableCustomPlayer = options.enableCustomPlayer;
-				controls = enableCustomPlayer ? 0 : 1;
-			}
-			if(typeof options.controls == "boolean"){
-				controls = (options.controls===true) ? 1 : 0;
-			}
-			if(typeof options.onReadyCallback == "function"){
-				_onReadyCallback = options.onReadyCallback;
-			}
-		}
 
 		youtubePlayers[iframeId] = new YT.Player(iframeId, {
 		  height: '100%',
@@ -141,7 +149,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		  events: {
 			 'onReady': _onReadyCallback,
 			 // 'onStateChange': onPlayerStateChange,
-			 'onError' : onPlayerError
+			 'onError' : _onPlayerError
 		  }
 		});
 
@@ -152,7 +160,6 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			//In current version player control events are loaded in onPlayerReady event
 			V.Video.CustomPlayer.addCustomPlayerControls(iframeId,false);
 		}
-
 	};
 
 	var onPlayerReady = function(event){

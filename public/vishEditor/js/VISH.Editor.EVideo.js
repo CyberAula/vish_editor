@@ -309,12 +309,15 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				//Clean previous EVideo
 				var eVideoId = $(eVideoDOM).attr("id");
 				_removeAllBalls(eVideoDOM);
-				delete eVideos[eVideoId];
-				// _updateBallsArray(eVideoId);
+
+				eVideos[eVideoId].drawed = false;
+				eVideos[eVideoId].pois = [];
+				eVideos[eVideoId].video = undefined;
+
 				_drawEVideo(undefined,eVideoDOM,contentToAdd);
 			} else {
 				_renderVideo(contentToAdd,eVideoDOM);
-			}	
+			}
 		}
 
 		$.fancybox.close();
@@ -359,12 +362,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				var videoWrapper = $(V.Video.Youtube.renderVideoFromSource(source));
 				$(videoBody).attr("source", $(videoWrapper).attr("source"));
 				$(videoBody).attr("ytcontainerid", $(videoWrapper).attr("ytcontainerid"));
+				V.Utils.addTempShown(eVideoDOM);
 				V.Video.Youtube.loadYoutubeObject($(videoBody),{controls: false, onReadyCallback: function(event){
+					V.Utils.removeTempShown(eVideoDOM);
 					var iframe = event.target.getIframe();
 					var video = $("#"+iframe.id);
 					$(video).attr("videoType",V.Constant.MEDIA.YOUTUBE_VIDEO);
 					$(video).attr("eVideoId",eVideoId);
 					_onVideoReady(video);
+				}, onPlayerError: function(){
+					V.Utils.removeTempShown(eVideoDOM);
 				}});
 				break;
 			default:
@@ -637,7 +644,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			}
 			_updateBalls(eVideoDOM);
 		} else {
-			//Add new chapter (always without a slide associated)
+			//Add new chapter
 			var ball = {};
 			ball.id = V.Utils.getId(eVideoId + "_poi");
 			ball.eVideoId = eVideoId;

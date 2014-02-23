@@ -1202,6 +1202,9 @@ VISH.Utils = (function(V,undefined){
 			if(tmpShownCount==0){
 				$(el).addClass("temp_shown");
 			}
+			// if(tempShownCounts[elId] > 1){
+			// 	V.Debugging.log("tempShownCounts[elId] greater than 1: " + elId);
+			// }
 		});
 	};
 

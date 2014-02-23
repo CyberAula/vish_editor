@@ -538,12 +538,14 @@ VISH.Editor = (function(V,$,undefined){
 				slide = _saveStandardSlide(slideDOM,presentation,false);
 			} else {
 				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);
+				V.Utils.addTempShown(slideDOM);
 				slide = slidesetModule.getSlideHeader(slideDOM);
 				//Save subslides
 				$(slideDOM).find("article").each(function(index,subslideDOM){
 					var subslide = _saveStandardSlide(subslideDOM,presentation,true);
 					slide.slides.push(subslide);
 				});
+				V.Utils.removeTempShown(slideDOM);
 			}
 
 			presentation.slides.push(slide);	
@@ -588,9 +590,6 @@ VISH.Editor = (function(V,$,undefined){
 		slide.elements = [];
 
 		//important show it (the browser does not know the height and width if it is hidden)
-		if(isSubslide){
-			V.Utils.addTempShown($(slideDOM).parent());
-		}
 		V.Utils.addTempShown(slideDOM);
 
 		$(slideDOM).find('div').each(function(i,div){
@@ -716,9 +715,6 @@ VISH.Editor = (function(V,$,undefined){
 			}
 		}
 
-		if(isSubslide){
-			V.Utils.removeTempShown($(slideDOM).parent());
-		}
 		V.Utils.removeTempShown(slideDOM);
 		
 		return slide;
