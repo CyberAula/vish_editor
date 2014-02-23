@@ -204,20 +204,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 
 		var newStyle;
 		if(style){
-			var slide = $(current_area).parent();
-			var isSubslide = V.Slides.isSubslide(slide);
-			if(isSubslide){
-				var slideset = $(slide).parent();
-				V.Utils.addTempShown(slideset);
-			}
-			V.Utils.addTempShown([slide,current_area]);
-
 			newStyle = V.Editor.Utils.setStyleInPixels(style,current_area);
-			
-			V.Utils.removeTempShown([slide,current_area]);
-			if(isSubslide){
-				V.Utils.removeTempShown(slideset);
-			}
 		} else {
 			var image_width = $(current_area).width(); //default image width
 			newStyle = "width:"+image_width+"px;";

@@ -40,7 +40,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 	/**
 	 * function to render one slide in editor
 	 */
-	var _renderSlide = function(slide, renderOptions){
+	var _renderSlide = function(slide,renderOptions){
 		var options = {};
 
 		options.template = "1";

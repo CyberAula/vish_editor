@@ -1,6 +1,7 @@
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var initialized = false;
+	var _initializedCKEditorInstances = {};
 
 	var init = function(){
 		if(!initialized){
@@ -87,7 +88,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 			//We need an ID to call addTempShown properly
 			$(current_area).attr("id",V.Utils.getId("TmpShownId")); 
 		}
-		V.Utils.addTempShown([slide,subslide,current_area]);
+		V.Utils.addTempShown(current_area);
+		var currentAreaHeight = $(current_area).height();
+		var currentAreaWidth = $(current_area).width();
+		V.Utils.removeTempShown(current_area);
 
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
@@ -133,7 +137,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		config.width = '100%';
 		//The height value defines the height of CKEditor editing area and can be given in pixels or em. Percent values are not supported. 
 		//http://docs.cksource.com/CKEditor_3.x/Howto/Editor_Size_On_The_Fly
-		config.height = $(current_area).height();
+		config.height = currentAreaHeight;
 
 		//Toolbar defaults
 		config.fontSize_defaultLabel = '12';
@@ -142,14 +146,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf("editor/"));
 		config.skin = 'vEditor,' + ckeditorBasePath + 'editor/skins/vEditor/';
 
-		//Add ckeditor wysiwyg instance
-		var ckeditor = CKEDITOR.appendTo(wysiwygContainerId,config);
-
-		var myWidth = $(current_area).width();
-		var myHeight = $(current_area).height();
-
 		var newInstance = !(typeof initial_text === "string")||((options)&&(options.forceNew));
-
 		if(newInstance){
 			var defaultFontSize = 12;
 			var defaultAlignment = "left";
@@ -207,29 +204,46 @@ VISH.Editor.Text = (function(V,$,undefined){
 			initial_text_blank = "<p style='text-align:"+defaultAlignment+";'><span autoColor='true' style='"+blankTextColor+"'><span style='font-size:"+defaultFontSize+"px;'>"+"&shy"+"</span></span></p>";
 		}
 
+		//Add ckeditor wysiwyg instance
+		var ckeditor = CKEDITOR.appendTo(wysiwygContainerId,config);
+
+		var myWidth = currentAreaWidth;
+		var myHeight = currentAreaHeight;
+
+		//Keep slide subslide an area visible until the quiz has been drawed
+		V.Utils.addTempShown([slide,subslide,current_area]);
+		setTimeout(function(){
+			if(_initializedCKEditorInstances[ckeditor.name] !== true){
+				_initializedCKEditorInstances[ckeditor.name] = false;
+				V.Utils.removeTempShown([slide,subslide,current_area]);
+			} else {
+				_initializedCKEditorInstances[ckeditor.name] = undefined;
+			}
+		},6000);
+
 		ckeditor.on("instanceReady", function(){
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
 					
 					if(isQuiz){
-						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
-						var newMyHeight = $(iframeContent).find("html").height();
+						setTimeout(function(){
+							V.Utils.addTempShown([slide,subslide,current_area]);
+							var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
+							var newMyHeight = $(iframeContent).find("html").height();
+							if(newMyHeight > myHeight){
+								//This condition allows to prevent some browsers (e.g. Firefox) to calculate wrong heights...
+								// V.Debugging.log("newMyHeight for " + ckeditor.name + " is: " + newMyHeight);
+								ckeditor.resize(myWidth,newMyHeight);
+							}
 
-						if(newMyHeight > myHeight){
-							//This condition allows to prevent some browsers (e.g. Firefox) to calculate wrong heights...
-							V.Utils.removeTempShown([slide,subslide]);
-							//Resize must be performed without temp_shown clases on the slides
-							ckeditor.resize(myWidth,newMyHeight);
-							V.Utils.addTempShown([slide,subslide]);
-						}
+							//Firefox don't calculate height right, maybe a fallback could be provided
+							// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
+							// }
 
-						//Firefox don't calculate height right, maybe a fallback could be provided
-						// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
-						// }
-
+							V.Utils.removeTempShown([slide,subslide,current_area]);
+						},1000);
 					} else {
-						// Resize: needed to fit content properly
-						// Not necessary in the new version
+						// Resize: Not necessary (to fit the content properly) in the new version
 						// ckeditor.resize(myWidth,myHeight);
 					}
 				
@@ -241,11 +255,14 @@ VISH.Editor.Text = (function(V,$,undefined){
 							ckeditor.focus();
 						}
 					}
-
-					V.Utils.removeTempShown([slide,subslide,current_area]);
 				});
-			} else {
+			}
+
+			if(typeof _initializedCKEditorInstances[ckeditor.name] == "undefined"){
+				_initializedCKEditorInstances[ckeditor.name] = true;
 				V.Utils.removeTempShown([slide,subslide,current_area]);
+			} else {
+				_initializedCKEditorInstances[ckeditor.name] = undefined;
 			}
 		});
 
