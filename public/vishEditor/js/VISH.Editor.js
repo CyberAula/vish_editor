@@ -706,6 +706,7 @@ VISH.Editor = (function(V,$,undefined){
 			quizPresentation.description = presentation.description;
 			quizPresentation.author = presentation.author;
 			quizPresentation.type = V.Constant.QUIZ_SIMPLE;
+			quizPresentation.theme = presentation.theme;
 			quizPresentation.slides = [quizSlide];
 
 			for(var k=0; k<slide.elements.length; k++){

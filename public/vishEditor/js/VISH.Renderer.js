@@ -75,7 +75,7 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		return "<article class='"+ extraClasses + " " +classes+"' type='"+V.Constant.STANDARD+"' id='"+slide.id+"'>"+ extraButtons + content+"</article>";
+		return "<article class='"+ extraClasses + " " +classes+"' type='"+V.Constant.STANDARD+"' template='" + slide.template + "' id='"+slide.id+"'>"+ extraButtons + content+"</article>";
 	};
 
 	var _renderSlideset = function(slidesetJSON){

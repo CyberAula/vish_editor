@@ -8,12 +8,12 @@
 .mc_question_wrapper {
 	border: 1px dotted #666666 !important;
 	color: #000000;
-	background: #fff;
 	min-height: 15%;
 	margin-left: 6%;
 	margin-top: 10px;
 	width: 85%;
 	overflow: hidden;
+	background: rgba(255, 255, 255, 0.3);
 }
 
 .mc_question_wrapper_viewer {
@@ -51,7 +51,6 @@ div.mc_option_text {
 	color: #000000;
 	float: left;
 	font-family: Arial;
-	background: #fff;
 	font-size: 1rem;
 	min-height: 52px;
 	margin-left: 1%;
@@ -60,6 +59,7 @@ div.mc_option_text {
 	width: 78%;
 	overflow: hidden;
 	z-index: 1000;
+	background: rgba(255, 255, 255, 0.3);
 }
 
 div.mc_option_text_viewer{
@@ -222,8 +222,42 @@ img.tfCheckbox_viewer{
 
 tr.mc_correct_choice{
 	background: #E2FFE3;
+	background: rgba(226, 255, 227, 0.7);
 }
 
 tr.mc_wrong_choice{
 	background: #FFE2E2;
+	background: rgba(255, 226, 226, 0.7);
 }
+
+tr.mc_correct_choice, tr.mc_correct_choice *, tr.mc_wrong_choice, tr.mc_wrong_choice * {
+	color: black !important;
+}
+
+table.mc_options tr.mc_correct_choice td:first-child, table.mc_options tr.mc_wrong_choice td:first-child {
+	border-top-left-radius: 15px;
+	border-bottom-left-radius: 15px;
+}
+
+table.mc_options tr.mc_correct_choice td:last-child, table.mc_options tr.mc_wrong_choice td:last-child {
+	border-top-right-radius: 15px;
+	border-bottom-right-radius: 15px;
+}
+
+table.tf_options tr:nth-child(2).mc_correct_choice td:first-child, table.tf_options tr:nth-child(2).mc_wrong_choice td:first-child {
+	border-top-left-radius: 15px;
+}
+
+table.tf_options tr:nth-child(2).mc_correct_choice td:last-child, table.tf_options tr:nth-child(2).mc_wrong_choice td:last-child {
+	border-top-right-radius: 15px;
+}
+
+table.tf_options tr:last-child.mc_correct_choice td:first-child, table.tf_options tr:last-child.mc_wrong_choice td:first-child {
+	border-bottom-left-radius: 15px;
+}
+
+table.tf_options tr:last-child.mc_correct_choice td:last-child, table.tf_options tr:last-child.mc_wrong_choice td:last-child {
+	border-bottom-right-radius: 15px;
+}
+
+
