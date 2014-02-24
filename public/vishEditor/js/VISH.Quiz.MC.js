@@ -61,8 +61,13 @@ VISH.Quiz.MC = (function(V,$,undefined){
 	*/
 
 	/* Update UI after answer */
-	var onAnswerQuiz = function(quiz){
+	var onAnswerQuiz = function(quiz,options){
+		var afterAnswerAction = ((typeof options.afterAnswerAction != "undefined")&&(typeof options.afterAnswerAction == "string")) ? options.afterAnswerAction : "disabled";
+		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
+		
 		var answeredQuiz = false;
+		var answeredQuizCorrectly = false;
+
 		var quizChoices = choices[$(quiz).attr("id")];
 
 		//Color correct and wrong answers
@@ -74,6 +79,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 				var trAnswer = $("tr.mc_option").has(radioBox);
 				if(choice.answer===true){
 					$(trAnswer).addClass("mc_correct_choice");
+					answeredQuizCorrectly = true;
 				} else if(choice.answer===false){
 					$(trAnswer).addClass("mc_wrong_choice");
 				}
@@ -81,39 +87,58 @@ VISH.Quiz.MC = (function(V,$,undefined){
 			}
 		});
 
-		//Look and mark correct answers
-		var trCorrectAnswers = [];
-		for (var key in quizChoices){
-			if(quizChoices[key].answer===true){
-				//Get correct choice
-				var trCorrect = $(quiz).find("tr.mc_option")[key];
-				trCorrectAnswers.push($(quiz).find("tr.mc_option")[key]);
-				if(answeredQuiz){
-					$(trCorrect).addClass("mc_correct_choice");
+		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
+
+		if(!willRetry){
+			//Look and mark correct answers
+			var trCorrectAnswers = [];
+			for (var key in quizChoices){
+				if(quizChoices[key].answer===true){
+					//Get correct choice
+					var trCorrect = $(quiz).find("tr.mc_option")[key];
+					trCorrectAnswers.push($(quiz).find("tr.mc_option")[key]);
+					if(answeredQuiz){
+						$(trCorrect).addClass("mc_correct_choice");
+					}
 				}
 			}
 		}
 
 		//Unfulfilled quiz
 		if(!answeredQuiz){
-			//Mark correct answers without colors
-			$(trCorrectAnswers).each(function(index,trCorrect){
-				$(trCorrect).find("input[name='mc_option']").attr("checked","checked");
-			});
+			if(!willRetry){
+				//Mark correct answers without colors
+				$(trCorrectAnswers).each(function(index,trCorrect){
+					$(trCorrect).find("input[name='mc_option']").attr("checked","checked");
+				});
+			}
 		}
 
-		// TODO: decide if retry answer based on the number of attempts of the quiz
-		// V.Quiz.retryAnswerButton(quiz);
-		disableQuiz(quiz);
-	}
+		if(willRetry){
+			//Retry
+			_disableQuiz(quiz);
+			V.Quiz.retryAnswerButton(quiz);
+		} else {
+			switch(afterAnswerAction){
+				case "continue":
+					V.Quiz.continueAnswerButton(quiz);
+					break;
+				case "disabled":
+				default:
+					disableQuiz(quiz);
+					break;
+			};
+		}
+	};
 
 	/* Reset UI to make possible to answer again the quiz */
 	var onRetryQuiz = function(quizDOM){
 		$(quizDOM).find("tr").removeClass("mc_correct_choice");
 		$(quizDOM).find("tr").removeClass("mc_wrong_choice");
 		$(quizDOM).find("input[name='mc_option']").removeAttr("checked");
+		_enableQuiz(quizDOM);
 		V.Quiz.enableAnswerButton(quizDOM);
-	}
+	};
 
 	/* 
 	* Methods used for Real Time Quizzes 
@@ -131,12 +156,20 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
 		report.empty = (report.answers.length===0);
 		return report;
-	}
+	};
 
 	var disableQuiz = function(quiz){
-		$(quiz).find("input[name='mc_option']").attr("disabled","disabled");
+		_disableQuiz(quiz);
 		V.Quiz.disableAnswerButton(quiz);
-	}
+	};
+
+	var _disableQuiz = function(quiz){
+		$(quiz).find("input[name='mc_option']").attr("disabled","disabled");
+	};
+
+	var _enableQuiz = function(quiz){
+		$(quiz).find("input[name='mc_option']").removeAttr("disabled");
+	};
 
 	return {
 		init                : init,
