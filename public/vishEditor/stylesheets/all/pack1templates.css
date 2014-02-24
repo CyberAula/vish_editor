@@ -19,7 +19,6 @@
     overflow: hidden;
     position: relative;
     width: 68%;
-	z-index: 10px;
 }
 
 .t1_subheader{
@@ -108,7 +107,6 @@
 	width: 100%;
 	overflow: hidden;
 	position: relative;
-	z-index: 10px;
 }
 
 .t3_left{
@@ -164,7 +162,6 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t4_left{
@@ -217,7 +214,6 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t5_left{
@@ -269,7 +265,6 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t6_left{
@@ -332,7 +327,6 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t7_left{
@@ -392,7 +386,6 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t8_left{
@@ -453,7 +446,6 @@
 	width: 100%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t9_left{
@@ -555,6 +547,10 @@
 	height: 100%;
 	border: none;
 	padding: none;
+}
+
+.t10_quiz, .t10_text {
+	padding: 2% 4%;
 }
 
 
@@ -683,7 +679,6 @@
 	margin-bottom: 3%;
 	overflow:hidden;	
 	position: relative;
-	z-index: 10px;
 }
 
 .t13_circle{
