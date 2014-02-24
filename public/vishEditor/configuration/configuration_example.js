@@ -80,6 +80,10 @@ var getOptions = function(){
 				// developmentSettings.samples = VISH.Samples.text_samples;
 				// developmentSettings.samples = VISH.Samples.VE01_samples;
 				// developmentSettings.samples = VISH.Samples.test;
+
+				// Activate insertMode
+				// developmentSettings.samples.insertMode = true;
+				// options["preview"] = true;
 			}
 
 			//Possible actions: "preview"
