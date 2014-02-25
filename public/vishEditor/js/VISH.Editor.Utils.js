@@ -310,17 +310,20 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		var slideset = jQuery.extend(true, {}, slidesetJSON);
 		slideset.id = slidesetId;
 
-		for(var index in slideset.slides){	
-			var oldSubslideId = slideset.slides[index].id;
-			slideset.slides[index] = _replaceIdsForStandardSlideJSON(slideset.slides[index],slideset.id + "_article" + (parseInt(index)+1));
-			if(slideset.slides[index]===null){
+		var slidesetSlidesL = slideset.slides.length;
+		for(var i=0; i<slidesetSlidesL; i++){
+			var oldSubslideId = slideset.slides[i].id;
+			slideset.slides[i] = _replaceIdsForStandardSlideJSON(slideset.slides[i],slideset.id + "_article" + (parseInt(i)+1));
+			if(slideset.slides[i]===null){
 				return null;
 			}
-			newSubslideIds[oldSubslideId] = slideset.slides[index].id;
+			newSubslideIds[oldSubslideId] = slideset.slides[i].id;
 		}
-		for(var pindex in slideset.pois){
-			slideset.pois[pindex].id = slideset.id + "_poi" + (parseInt(pindex)+1);
-			slideset.pois[pindex].slide_id = newSubslideIds[slideset.pois[pindex].slide_id];
+
+		var slidesetPoisL = slideset.pois.length;
+		for(var j=0; j<slidesetPoisL; j++){
+			slideset.pois[j].id = slideset.id + "_poi" + (parseInt(j)+1);
+			slideset.pois[j].slide_id = newSubslideIds[slideset.pois[j].slide_id];
 		}
 
 		return slideset;
