@@ -551,6 +551,8 @@
 
 .t10_quiz, .t10_text {
 	padding: 2% 4%;
+	width: 93% !important;
+	height: 96% !important;
 }
 
 
