@@ -3044,3 +3044,17 @@ span.letterInChapterDialog {
 #tab_audio_soundcloud{
 	height: 29px !important;
 }
+
+#json_preview_button {
+	float: left !important
+}
+
+#json_file_input {
+	display: inline-block;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 16px;
+	background: 5px 50% no-repeat;
+	margin-top: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+}
