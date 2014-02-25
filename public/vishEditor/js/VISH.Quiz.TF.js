@@ -1,16 +1,14 @@
 VISH.Quiz.TF = (function(V,$,undefined){
   
-	var choices = {};
-
 	var init = function(){
 		_loadEvents();
 	};
 
 	var _loadEvents = function(){
-	}
+	};
 
 	var render = function(slide,template){
-		var quizId = V.Utils.getId();
+		var quizId = slide.quizId;
 		var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.TF+"'></div>");
 
 		//Question
@@ -20,7 +18,6 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
 		//Options
 		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='tf_options'></table>");
-		choices[quizId] = [];
 
 		//TF head
 		var newTr = $("<tr class='mc_option tf_head'><td><img src='"+V.ImagesPath+ "quiz/checkbox_checked.png' class='tfCheckbox_viewer'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/></td><td></td><td></td></tr>");
@@ -40,8 +37,6 @@ VISH.Quiz.TF = (function(V,$,undefined){
 			$(optionWrapper).append(optionIndex);
 			$(optionWrapper).append(optionText);
 			$(optionsWrapper).append(optionWrapper);
-
-			choices[quizId].push(option);
 		}
 
 		$(container).append(optionsWrapper);
@@ -58,8 +53,14 @@ VISH.Quiz.TF = (function(V,$,undefined){
 	*/
 
 	/* Update UI after answer */
-	var onAnswerQuiz = function(quiz){
-		var quizChoices = choices[$(quiz).attr("id")];
+	var onAnswerQuiz = function(quiz,options){
+		var afterAnswerAction = ((typeof options.afterAnswerAction != "undefined")&&(typeof options.afterAnswerAction == "string")) ? options.afterAnswerAction : "disabled";
+		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
+
+		var answeredQuizCorrectly = true;
+
+		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
+		var quizChoices = quizJSON.choices;
 
 		$(quiz).find("tr.mc_option").not(".tf_head").each(function(index,tr){
 			var trueRadio = $(tr).find("input[type='radio'][column='true']")[0];
@@ -80,29 +81,49 @@ VISH.Quiz.TF = (function(V,$,undefined){
 			if(myAnswer===choice.answer){
 				$(trChoice).addClass("mc_correct_choice");
 			} else if(typeof myAnswer != "undefined"){
+				answeredQuizCorrectly = false;
 				$(trChoice).addClass("mc_wrong_choice");
 			} else {
-				//No mark, indicate correct answer
-				if(choice.answer===true){
-					$(trueRadio).attr('checked', true);
-				} else if(choice.answer===false){
-					$(falseRadio).attr('checked', true);
+				//No answer selected
+				answeredQuizCorrectly = false;
+				if(!canRetry){
+					//Mark correct answer
+					if(choice.answer===true){
+						$(trueRadio).attr('checked', true);
+					} else if(choice.answer===false){
+						$(falseRadio).attr('checked', true);
+					}
 				}
 			}
 		});
 
-		// TODO: decide if retry answer based on the number of attempts of the quiz
-		// V.Quiz.retryAnswerButton(quiz);
-		disableQuiz(quiz);
-	}
+		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
+
+		if(willRetry){
+			//Retry
+			_disableQuiz(quiz);
+			V.Quiz.retryAnswerButton(quiz);
+		} else {
+			switch(afterAnswerAction){
+				case "continue":
+					V.Quiz.continueAnswerButton(quiz);
+					break;
+				case "disabled":
+				default:
+					disableQuiz(quiz);
+					break;
+			};
+		}
+	};
 
 	/* Reset UI to make possible to answer again the quiz */
 	var onRetryQuiz = function(quizDOM){
 		$(quizDOM).find("tr").removeClass("mc_correct_choice");
 		$(quizDOM).find("tr").removeClass("mc_wrong_choice");
 		$(quizDOM).find("input[type='radio']").removeAttr("checked");
+		_enableQuiz(quizDOM);
 		V.Quiz.enableAnswerButton(quizDOM);
-	}
+	};
 
 
 	/* 
@@ -130,13 +151,20 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		});
 
 		return report;
-	}
+	};
 
 	var disableQuiz = function(quiz){
-		$(quiz).find("input[type='radio']").attr("disabled","disabled");
+		_disableQuiz(quiz);
 		V.Quiz.disableAnswerButton(quiz);
-	}
+	};
 
+	var _disableQuiz = function(quiz){
+		$(quiz).find("input[type='radio']").attr("disabled","disabled");
+	};
+
+	var _enableQuiz = function(quiz){
+		$(quiz).find("input[type='radio']").removeAttr("disabled");
+	};
 
 	return {
 		init          : init,

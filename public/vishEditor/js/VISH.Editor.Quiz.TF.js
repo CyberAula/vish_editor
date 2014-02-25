@@ -66,7 +66,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
 	/*
 	 * Create an empty MC Quiz
@@ -83,11 +83,11 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 
 	var _getDummy = function(){
 		return "<div class='tfContainer'><div class='mc_question_wrapper'></div><ul class='mc_options'></ul><img src='"+V.ImagesPath+ "icons/add.png' class='"+addQuizOptionButtonClass+"'/><input type='hidden' name='quiz_id'/></div></div>";
-	}
+	};
 
 	var _getOptionDummy = function(){
 		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index'></span><div class='mc_option_text'></div><table class='mc_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.png' class='"+tfCheckbox+"' column='true' check='none'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.png' class='"+tfCheckbox+"' column='false' check='none'/></td></tr></table></div></li>";
-	}
+	};
 
 	/*
 	 * AddOptionInQuiz called from click event
@@ -96,7 +96,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 		var area = $("#" + event.target.parentElement.parentElement.id);
 		V.Editor.setCurrentArea(area);
 		_addOptionInQuiz(area);
-	}
+	};
 
 	var _addOptionInQuiz = function (area,value,check) {
 		var nChoices = $(area).find("li.mc_option").size();
@@ -127,7 +127,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 		$(area).find("li.mc_option").each(function(index, option_element){
 			$(option_element).find(".mc_option_index").text(String.fromCharCode(96+index+1)+")");
 		});
-	}
+	};
 
 	var _launchTextEditorForQuestion = function(area,question){
 		var textArea = $(area).find(".mc_question_wrapper");
@@ -136,7 +136,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 		} else {
 			V.Editor.Text.launchTextEditor({}, textArea, question, {autogrow: true});
 		}
-	}
+	};
 
 	var _launchTextEditorForOptions = function(area,nChoice,value){
 		var first = (nChoice===0);
@@ -150,53 +150,53 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 		}else{
 			V.Editor.Text.launchTextEditor({}, textArea, value, {autogrow: true});
 		}
-	}
+	};
 
 	/*
 	 * Generate JSON
 	 */
-	 var save = function(area){
-	 	var textArea = $(area).find(".mc_question_wrapper");
-	 	var quiz = {};
-	 	quiz.quizType = VISH.Constant.QZ_TYPE.TF;
-	 	// Self-assessment (Autoevaluación)
-	 	quiz.selfA = false; //false by default
+	var save = function(area){
+		var textArea = $(area).find(".mc_question_wrapper");
+		var quiz = {};
+		quiz.quizType = VISH.Constant.QZ_TYPE.TF;
+		// Self-assessment (Autoevaluación)
+		quiz.selfA = false; //false by default
 
-	 	var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));
-	 	quiz.question = {};
-	 	quiz.question.value = questionInstance.getPlainText();
-	 	quiz.question.wysiwygValue = questionInstance.getData();
+		var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));
+		quiz.question = {};
+		quiz.question.value = questionInstance.getPlainText();
+		quiz.question.wysiwygValue = questionInstance.getData();
 	 	
-	 	quiz.choices = [];
+		quiz.choices = [];
 
-	 	var nChoices = $(area).find("li.mc_option").size();
-	 	var optionTextAreas = $(area).find(".mc_option_text");
+		var nChoices = $(area).find("li.mc_option").size();
+		var optionTextAreas = $(area).find(".mc_option_text");
 
-	 	for(var i=0; i<nChoices; i++){
-	 		var textArea = optionTextAreas[i];
-	 		var optionInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
-	 		var choice = {};
-	 		choice.id = (i+1).toString();
-	 		choice.value = optionInstance.getPlainText();
-	 		choice.wysiwygValue = optionInstance.getData();
-	 		var trueColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='true']");
-	 		if($(trueColumCheckbox).attr("check")==="true"){
-	 			choice.answer = true;
-	 			quiz.selfA = true;
-	 		} else {
-	 			var falseColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='false']");
-	 			if($(falseColumCheckbox).attr("check")==="false"){
-	 				choice.answer = false;
-	 				quiz.selfA = true;
-	 			} else {
-	 				choice.answer = "?";
-	 			}
-	 		}
-	 		quiz.choices.push(choice);
-	 	}
+		for(var i=0; i<nChoices; i++){
+			var textArea = optionTextAreas[i];
+			var optionInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
+			var choice = {};
+			choice.id = (i+1).toString();
+			choice.value = optionInstance.getPlainText();
+			choice.wysiwygValue = optionInstance.getData();
+			var trueColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='true']");
+			if($(trueColumCheckbox).attr("check")==="true"){
+				choice.answer = true;
+				quiz.selfA = true;
+			} else {
+				var falseColumCheckbox = $(textArea).parent().find(".tfCheckbox[column='false']");
+				if($(falseColumCheckbox).attr("check")==="false"){
+					choice.answer = false;
+					quiz.selfA = true;
+				} else {
+					choice.answer = "?";
+				}
+			}
+			quiz.choices.push(choice);
+		}
 
-	 	return quiz;
-	 }
+		return quiz;
+	};
 
 	/*
 	 * Render the quiz in the editor

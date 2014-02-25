@@ -1,17 +1,15 @@
 VISH.Quiz.MC = (function(V,$,undefined){
-  
-  var choices = {};
 
-  var init = function(){
-	  _loadEvents();
-  };
+	var init = function(){
+		_loadEvents();
+	};
 
-  var _loadEvents = function(){
-  }
+	var _loadEvents = function(){
+	};
 
 	/* Render the quiz in the DOM */
 	var render = function(slide,template){
-		var quizId = V.Utils.getId();
+		var quizId = slide.quizId;
 		var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.MCHOICE+"'></div>");
 
 		var multipleAnswer = false;
@@ -29,7 +27,6 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
 		//Options
 		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='mc_options'></table>");
-		choices[quizId] = [];
 
 		for(var i=0; i<slide.choices.length; i++){
 			var option = slide.choices[i];
@@ -43,8 +40,6 @@ VISH.Quiz.MC = (function(V,$,undefined){
 			$(optionWrapper).append(optionIndex);
 			$(optionWrapper).append(optionText);
 			$(optionsWrapper).append(optionWrapper);
-
-			choices[quizId].push(option);
 		}
 
 		$(container).append(optionsWrapper);
@@ -67,8 +62,10 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		
 		var answeredQuiz = false;
 		var answeredQuizCorrectly = false;
+		var answeredQuizWrong = false;
 
-		var quizChoices = choices[$(quiz).attr("id")];
+		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
+		var quizChoices = quizJSON.choices;
 
 		//Color correct and wrong answers
 		$(quiz).find("input[name='mc_option']").each(function(index,radioBox){
@@ -82,10 +79,13 @@ VISH.Quiz.MC = (function(V,$,undefined){
 					answeredQuizCorrectly = true;
 				} else if(choice.answer===false){
 					$(trAnswer).addClass("mc_wrong_choice");
+					answeredQuizWrong = true;
 				}
 				answeredQuiz = true;
 			}
 		});
+
+		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
@@ -107,7 +107,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		//Unfulfilled quiz
 		if(!answeredQuiz){
 			if(!willRetry){
-				//Mark correct answers without colors
+				//Mark correct answers
 				$(trCorrectAnswers).each(function(index,trCorrect){
 					$(trCorrect).find("input[name='mc_option']").attr("checked","checked");
 				});
@@ -181,5 +181,3 @@ VISH.Quiz.MC = (function(V,$,undefined){
 	};
 	
 }) (VISH, jQuery);
-
- 

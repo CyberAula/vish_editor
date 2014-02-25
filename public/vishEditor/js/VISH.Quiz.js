@@ -1,11 +1,16 @@
 VISH.Quiz = (function(V,$,undefined){
-  
-	var quizMode; //selfA or realTime
+ 
+	var quizMode; //selfA (for Self-assesment quizzes) or realTime (for real time quizzes)
 	
-	//Self-assesment quizzes//
+	/*
+	 * Self-assesment quizzes
+	 */
+	//Store the JSON of the quizzes
 	var quizzes = {};
 
-	//Quiz in real time//
+	/*
+	 * Real Time Quizzes
+	 */
 	//Current quiz DOM element
 	var currentQuizDOM;
 	//JSON of the current quiz session
@@ -15,6 +20,9 @@ VISH.Quiz = (function(V,$,undefined){
 	var quizSessionId;
 
 
+	/*
+	 * Common methods (both for Self-assesment quizzes and real time quizzes)
+	 */
 	var initBeforeRender = function(presentation){
 		if(presentation.type===V.Constant.QUIZ_SIMPLE){
 			quizMode = V.Constant.QZ_MODE.RT;
@@ -69,70 +77,164 @@ VISH.Quiz = (function(V,$,undefined){
 		});
 	};
 
+
+	////////////////
+	//Render methods
+	///////////////
+
+   /**
+	* Function to render a quiz inside an article (a slide)
+	*/
+	var render = function(elJSON,template){
+		var quizModule = _getQuizModule(elJSON.quiztype);
+		if(quizModule){
+			var zoneId = elJSON['id'];
+			var quizId = V.Utils.getId("quiz");
+			elJSON['quizId'] = quizId;
+			quizzes[quizId] = elJSON;
+			var quizDOM = quizModule.render(elJSON,template);
+			return "<div id='"+zoneId+"' class='quizWrapper "+template+"_"+elJSON['areaid']+" "+template+"_quiz"+"'>"+quizDOM+"</div>";
+		}
+	};
+
+	var renderButtons = function(selfA){
+		var quizButtons = $("<div class='quizButtons'></div>");
+
+		if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
+			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='"+V.I18n.getTrans("i.QuizLaunch")+"'/>");
+			$(quizButtons).append(startButton);
+		}
+		if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
+			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='"+V.I18n.getTrans("i.QuizButtonAnswer")+"'/>");
+			$(quizButtons).append(answerButton);
+		}
+
+		return quizButtons;
+	};
+
+
+	/*
+	* Answer button states: Enabled, Retry, Continue, Loading and Disabled
+	*/
+	var enableAnswerButton = function(quiz){
+		var answerButton = $(quiz).find("input.quizAnswerButton");
+		$(answerButton).removeAttr("disabled");
+		$(answerButton).removeClass("quizStartButtonLoading");
+		$(answerButton).removeAttr("quizStatus");
+		$(answerButton).attr("value",V.I18n.getTrans("i.QuizButtonAnswer"));
+	};
+
+	var retryAnswerButton = function(quiz){
+		var answerButton = $(quiz).find("input.quizAnswerButton");
+		$(answerButton).removeAttr("disabled");
+		$(answerButton).removeClass("quizStartButtonLoading");
+		// $(answerButton).addClass("quizAnswerButtonRetry");
+		$(answerButton).attr("quizStatus","retry");
+		$(answerButton).attr("value",V.I18n.getTrans("i.QuizRetry"));
+	};
+
+	var continueAnswerButton = function(quiz){
+		var answerButton = $(quiz).find("input.quizAnswerButton");
+		$(answerButton).removeAttr("disabled");
+		$(answerButton).removeClass("quizStartButtonLoading");
+		$(answerButton).attr("quizStatus","continue");
+		$(answerButton).attr("value",V.I18n.getTrans("i.QuizButtonContinue"));
+	};
+
+	var _loadingAnswerButton = function(quiz){
+		var answerButton = $(quiz).find("input.quizAnswerButton");
+		$(answerButton).attr("disabled", "disabled");
+		$(answerButton).addClass("quizStartButtonLoading");
+		$(answerButton).attr("quizStatus","loading");
+	};
+
+	var disableAnswerButton = function(quiz){
+		var answerButton = $(quiz).find("input.quizAnswerButton");
+		$(answerButton).attr("disabled", "disabled");
+		$(answerButton).addClass("quizAnswerButtonDisabled");
+		$(answerButton).removeClass("quizStartButtonLoading");
+		$(answerButton).attr("quizStatus","disabled");
+	};
+
+	/*
+	* Handle onAnswerQuiz Event
+	*/
 	var _onAnswerQuiz = function(event){
 		var quizDOM = $("div.quizContainer").has(event.target);
 		var quizModule = _getQuizModule($(quizDOM).attr("type"));
 		if(quizModule){
 			if(quizMode===V.Constant.QZ_MODE.SELFA){
-				var quizStatus = $(quizDOM).find(".quizAnswerButton").attr("quizstatus");
-				if(quizStatus === "retry"){
-					quizModule.onRetryQuiz(quizDOM);
-				} else if(quizStatus === "continue"){
-					var slideDOM = V.Slides.getTargetSlide();
-					if((V.Slides.isSubslide(slideDOM))&&($(slideDOM).parent().attr("type")===V.Constant.EVIDEO)){
-						// //Reset quiz
-						// var quizWrapper = $("div.quizWrapper").has(event.target);
-						// quizzes[$(quizWrapper).attr("id")].cnAttempts = undefined;
-						// quizModule.onRetryQuiz(quizDOM);
-
-						//Close subslide
-						var closeButtonId = "close" + $(slideDOM).attr("id");
-						$("#"+closeButtonId).trigger("click");
-					}
-				} else {
-					var _canRetry = false;
-					var _afterAnswerAction = "disable";
-
-					//If the quiz is contained in a EVideo, allow continue option
-					var slideDOM = V.Slides.getTargetSlide();
-					if((V.Slides.isSubslide(slideDOM))&&($(slideDOM).parent().attr("type")===V.Constant.EVIDEO)){
-						_afterAnswerAction = "continue";
-					}
-
-					var quizWrapper = $("div.quizWrapper").has(event.target);
-					var quizId = $(quizWrapper).attr("id");
-					var quizJSON = quizzes[quizId];
-
-					var nAttempts = 1;
-					if(typeof quizzes[quizId] != "undefined"){
-						if(typeof quizzes[quizId].cnAttempts != "undefined"){
-							nAttempts = quizzes[quizId].cnAttempts;
-						} else if(typeof quizzes[quizId].nAttempts != "undefined"){
-							nAttempts = quizzes[quizId].nAttempts;
-						}
-					}
-
-					if((nAttempts>1)||(nAttempts === "unlimited")){
-						_canRetry = true;
-					}
-					if(nAttempts != "unlimited"){
-						quizzes[quizId].cnAttempts = nAttempts-1;
-					}
-
-					quizModule.onAnswerQuiz(quizDOM,{afterAnswerAction: _afterAnswerAction, canRetry: _canRetry});
-				}
+				_onAnswerSAQuiz(quizDOM,quizModule);
 			} else {
-				var report = quizModule.getReport(quizDOM);
-				_answerRTQuiz(quizDOM,quizModule,report);
+				_answerRTQuiz(quizDOM,quizModule);
 			}
 		}
 	};
 
-	var _answerRTQuiz = function(quizDOM,quizModule,report){
+
+	/*
+	 * Self-assesment quizzes
+	 */
+
+	_onAnswerSAQuiz = function(quizDOM,quizModule){
+		var quizStatus = $(quizDOM).find(".quizAnswerButton").attr("quizstatus");
+		if(quizStatus === "retry"){
+			quizModule.onRetryQuiz(quizDOM);
+		} else if(quizStatus === "continue"){
+			var slideDOM = V.Slides.getTargetSlide();
+			if((V.Slides.isSubslide(slideDOM))&&($(slideDOM).parent().attr("type")===V.Constant.EVIDEO)){
+				// //Reset quiz
+				// var quizWrapper = $("div.quizWrapper").has(event.target);
+				// quizzes[$(quizWrapper).attr("id")].cnAttempts = undefined;
+				// quizModule.onRetryQuiz(quizDOM);
+
+				//Close subslide
+				var closeButtonId = "close" + $(slideDOM).attr("id");
+				$("#"+closeButtonId).trigger("click");
+			}
+		} else {
+			var _canRetry = false;
+			var _afterAnswerAction = "disable";
+
+			//If the quiz is contained in a EVideo, allow continue option
+			var slideDOM = V.Slides.getTargetSlide();
+			if((V.Slides.isSubslide(slideDOM))&&($(slideDOM).parent().attr("type")===V.Constant.EVIDEO)){
+				_afterAnswerAction = "continue";
+			}
+
+			var quizId = $(quizDOM).attr("id");
+			// var quizJSON = quizzes[quizId];
+
+			var nAttempts = 3; //TODO change
+			if(typeof quizzes[quizId] != "undefined"){
+				if(typeof quizzes[quizId].cnAttempts != "undefined"){
+					nAttempts = quizzes[quizId].cnAttempts;
+				} else if(typeof quizzes[quizId].nAttempts != "undefined"){
+					nAttempts = quizzes[quizId].nAttempts;
+				}
+			}
+
+			if((nAttempts>1)||(nAttempts === "unlimited")){
+				_canRetry = true;
+			}
+			if(nAttempts != "unlimited"){
+				quizzes[quizId].cnAttempts = nAttempts-1;
+			}
+
+			quizModule.onAnswerQuiz(quizDOM,{afterAnswerAction: _afterAnswerAction, canRetry: _canRetry});
+		}
+	};
+
+
+	/*
+	 * Real Time Quizzes
+	 */
+	var _answerRTQuiz = function(quizDOM,quizModule){
 		if(!quizSessionId){
 			return;
 		}
 
+		var report = quizModule.getReport(quizDOM);
 		if(report.empty===true){
 			var options = {};
 			options.width = '80%';
@@ -216,7 +318,7 @@ VISH.Quiz = (function(V,$,undefined){
 			return;
 		}
 		_loadingLaunchButton(quizDOM);
-		var quizJSON = _getQuizJSONFromQuiz(quizDOM);
+		var quizJSON = _getQuizSimpleJSONForQuiz(quizDOM);
 		V.Quiz.API.startQuizSession(quizDOM,quizJSON,_onQuizSessionReceived,_onQuizSessionReceivedError);
 	};
 
@@ -243,32 +345,6 @@ VISH.Quiz = (function(V,$,undefined){
 		options.buttons = [button1];
 		V.Utils.showDialog(options);
 		return;
-	};
-
-	var _getQuizJSONFromQuiz = function(quizDOM){
-		var slideDOM = $("article").has(quizDOM);
-		return _getQuizJSONFromSlide(slideDOM);
-	};
-
-	var _getQuizJSONFromSlide = function(slideDOM){
-		var slideId = $(slideDOM).attr("id");
-		var presentation = V.Viewer.getCurrentPresentation();
-		if((slideId)&&(presentation)){
-			var slides = presentation.slides;
-			var sL = slides.length;
-			for(var i=0; i<sL; i++){
-				if(slides[i].id==slideId){
-					//Look for quiz element
-					var elements = slides[i].elements;
-					var eL = elements.length;
-					for(var j=0; j<eL; j++){
-						if(elements[j].type==V.Constant.QUIZ){
-							return elements[j].quiz_simple_json;
-						}
-					}
-				}
-			}
-		}
 	};
 
 	var _onStopQuiz = function(event){
@@ -364,79 +440,34 @@ VISH.Quiz = (function(V,$,undefined){
 		_afterCloseQuizSession();
 	};
 
-	/**
-	* Function to render a quiz inside an article (a slide)
-	*/
-	var render = function(elJSON,template){
-		var quizModule = _getQuizModule(elJSON.quiztype);
-		if(quizModule){
-			var quizDOM = quizModule.render(elJSON,template);
-			var quizId = elJSON['id'];
-			quizzes[quizId] = elJSON;
-			return "<div id='"+quizId+"' class='quizWrapper "+template+"_"+elJSON['areaid']+" "+template+"_quiz"+"'>"+quizDOM+"</div>";
-		}
-	};
-
-	var renderButtons = function(selfA){
-		var quizButtons = $("<div class='quizButtons'></div>");
-
-		if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
-			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='"+V.I18n.getTrans("i.QuizLaunch")+"'/>");
-			$(quizButtons).append(startButton);
-		}
-		if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
-			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='"+V.I18n.getTrans("i.QuizButtonAnswer")+"'/>");
-			$(quizButtons).append(answerButton);
-		}
-
-		return quizButtons;
-	};
-
-
 	/*
-	* Answer button states: Enabled, Retry, Loading and Disabled 
-	*/
-
-	var enableAnswerButton = function(quiz){
-		var answerButton = $(quiz).find("input.quizAnswerButton");
-		$(answerButton).removeAttr("disabled");
-		$(answerButton).removeClass("quizStartButtonLoading");
-		$(answerButton).removeAttr("quizStatus");
-		$(answerButton).attr("value",V.I18n.getTrans("i.QuizButtonAnswer"));
+	 * Utils for Real Time Quizzes
+	 */
+	var _getQuizSimpleJSONForQuiz = function(quizDOM){
+		var slideDOM = $("article").has(quizDOM);
+		return _getQuizSimpleJSONForSlide(slideDOM);
 	};
 
-	var retryAnswerButton = function(quiz){
-		var answerButton = $(quiz).find("input.quizAnswerButton");
-		$(answerButton).removeAttr("disabled");
-		$(answerButton).removeClass("quizStartButtonLoading");
-		// $(answerButton).addClass("quizAnswerButtonRetry");
-		$(answerButton).attr("quizStatus","retry");
-		$(answerButton).attr("value",V.I18n.getTrans("i.QuizRetry"));
+	var _getQuizSimpleJSONForSlide = function(slideDOM){
+		var slideId = $(slideDOM).attr("id");
+		var presentation = V.Viewer.getCurrentPresentation();
+		if((slideId)&&(presentation)){
+			var slides = presentation.slides;
+			var sL = slides.length;
+			for(var i=0; i<sL; i++){
+				if(slides[i].id==slideId){
+					//Look for quiz element
+					var elements = slides[i].elements;
+					var eL = elements.length;
+					for(var j=0; j<eL; j++){
+						if(elements[j].type==V.Constant.QUIZ){
+							return elements[j].quiz_simple_json;
+						}
+					}
+				}
+			}
+		}
 	};
-
-	var _loadingAnswerButton = function(quiz){
-		var answerButton = $(quiz).find("input.quizAnswerButton");
-		$(answerButton).attr("disabled", "disabled");
-		$(answerButton).addClass("quizStartButtonLoading");
-		$(answerButton).attr("quizStatus","loading");
-	};
-
-	var disableAnswerButton = function(quiz){
-		var answerButton = $(quiz).find("input.quizAnswerButton");
-		$(answerButton).attr("disabled", "disabled");
-		$(answerButton).addClass("quizAnswerButtonDisabled");
-		$(answerButton).removeClass("quizStartButtonLoading");
-		$(answerButton).attr("quizStatus","disabled");
-	};
-
-	var continueAnswerButton = function(quiz){
-		var answerButton = $(quiz).find("input.quizAnswerButton");
-		$(answerButton).removeAttr("disabled");
-		$(answerButton).removeClass("quizStartButtonLoading");
-		$(answerButton).attr("quizStatus","continue");
-		$(answerButton).attr("value",V.I18n.getTrans("i.QuizButtonContinue"));
-	};
-
 
 	/*
 	* Launch button states: Enabled, Loading and Running
@@ -517,7 +548,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 		var gPlus = $("#tab_quiz_session_share_gPlus");
 		$(gPlus).attr("href","https://plus.google.com/share?url="+currentQuizSession.url);
-	}
+	};
 
 	var _loadStats = function(){
 		V.Quiz.API.getResults(currentQuizSession.id, function(results){
@@ -525,7 +556,6 @@ VISH.Quiz = (function(V,$,undefined){
 			_startPolling();
 		});
 	};
-
 
 	var _loadQr = function(url){
 		if(typeof url != "string"){
@@ -662,7 +692,7 @@ VISH.Quiz = (function(V,$,undefined){
 		$(canvas).attr("width",desiredWidth);
 		$(canvas).attr("height",desiredHeight);
 		$(canvas).show();
-		var quizJSON = _getQuizJSONFromQuiz(currentQuizDOM);
+		var quizJSON = _getQuizSimpleJSONForQuiz(currentQuizDOM);
 		V.QuizCharts.drawQuizChart(canvas,quizJSON,results,options);
 	};
 
@@ -674,9 +704,14 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 
-	/*
-	* Utils
+   /*
+	* Common Quiz Utils
 	*/
+
+	var getQuiz = function(quizId){
+		return quizzes[quizId];
+	};
+
 	var _getQuizModule = function(quiz_type){
 		switch (quiz_type) {
 			case V.Constant.QZ_TYPE.OPEN:
@@ -725,11 +760,13 @@ VISH.Quiz = (function(V,$,undefined){
 		},500);
 	};
 
+
 	return {
 		initBeforeRender  	 : initBeforeRender,
 		init              	 : init,
 		render            	 : render,
 		renderButtons     	 : renderButtons,
+		getQuiz 			 : getQuiz,
 		updateCheckbox    	 : updateCheckbox,
 		enableAnswerButton   : enableAnswerButton,
 		retryAnswerButton	 : retryAnswerButton,
