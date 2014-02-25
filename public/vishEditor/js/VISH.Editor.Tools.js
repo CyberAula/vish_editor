@@ -676,8 +676,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 
 	/* Element Settings */
-  	var quizSettings = function(){
-  		alert("QuizSettings!");
+  	var quizSettings = function(event){
+  		V.Editor.Quiz.showQuizSettings();
   	};
 
 
