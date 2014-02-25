@@ -32,7 +32,7 @@ div.image_carousel_single_row {
 }
 
 div.image_carousel_multiple_row {
-	padding: 102px 0 60px 0px;
+	padding: 40px 0 60px 0px;
 }
 
 div.image_carousel img {
@@ -127,7 +127,7 @@ a.prev_single_row, a.next_single_row {
 }
 
 a.prev_multiple_row, a.next_multiple_row {
-	top: 245px;
+	top: 185px;
 }
 
 div.carrousel_element_single_row {
