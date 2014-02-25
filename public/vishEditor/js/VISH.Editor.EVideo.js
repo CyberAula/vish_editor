@@ -690,7 +690,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		var options = {};
 		options.width = 375;
 		options.height = 135;
-		options.notificationIconSrc = V.ImagesPath + "customPlayer/eVideoMarker.png";
+		options.notificationIconSrc = V.ImagesPath + "icons/timestamp_delete.png";	
 		options.notificationIconClass = "notificationIconDeleteTimestampLink";
 		options.text = V.I18n.getTrans("i.areyousureNotification");
 		var button1 = {};
@@ -1181,7 +1181,6 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				sourcesString = '[' + sourcesString + ']';
 				slide.video.sources = sourcesString;
 				slide.video.duration = duration;
-				//TODO
 				// slide.video.poster = ;
 				break;
 			case  V.Constant.MEDIA.YOUTUBE_VIDEO:

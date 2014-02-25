@@ -884,9 +884,6 @@ VISH.EVideo = (function(V,$,undefined){
 				$(li).attr("representedBallId",representedBallId);
 			}
 		});
-
-		//Add chapter references to balls
-		//TODO. May be not neccesary.
 	};
 
 	/* Ball Management */
