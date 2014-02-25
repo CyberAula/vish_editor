@@ -205,7 +205,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var quizId = $(quizDOM).attr("id");
 			// var quizJSON = quizzes[quizId];
 
-			var nAttempts = 3; //TODO change
+			var nAttempts = 1;
 			if(typeof quizzes[quizId] != "undefined"){
 				if(typeof quizzes[quizId].cnAttempts != "undefined"){
 					nAttempts = quizzes[quizId].cnAttempts;
