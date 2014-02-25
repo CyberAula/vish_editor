@@ -801,7 +801,7 @@
         },
         {
             "file": "VISH.Editor.Text.js",
-            "line": 60,
+            "line": 61,
             "description": "Function called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
             "class": "VISH.Editor"
         },
@@ -841,7 +841,7 @@
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 334,
+            "line": 337,
             "description": "Function to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
             "class": "VISH.Editor"
         },
@@ -944,7 +944,7 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 861,
+            "line": 858,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1021,7 +1021,7 @@
         },
         {
             "file": "VISH.Quiz.js",
-            "line": 323,
+            "line": 85,
             "description": "Function to render a quiz inside an article (a slide)",
             "class": "",
             "namespace": "VISH"
@@ -1189,14 +1189,14 @@
         },
         {
             "file": "VISH.Video.Youtube.js",
-            "line": 236,
+            "line": 243,
             "description": "Function to pause a specific video",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Video.Youtube.js",
-            "line": 263,
+            "line": 270,
             "description": "Function to pause a specific video",
             "class": "",
             "namespace": "VISH"
@@ -1550,7 +1550,7 @@
         },
         {
             "message": "Missing item type\nFunction called when user clicks on the text thumb\nAllows users to include text content in the slide using a WYSIWYG editor\nparam area: optional param indicating the area to add the wysiwyg, used for editing presentations",
-            "line": " VISH.Editor.Text.js:60"
+            "line": " VISH.Editor.Text.js:61"
         },
         {
             "message": "Missing item type\nFunction to select the thumbnail",
@@ -1570,7 +1570,7 @@
         },
         {
             "message": "Missing item type\nFunction to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
-            "line": " VISH.Editor.Utils.js:334"
+            "line": " VISH.Editor.Utils.js:337"
         },
         {
             "message": "Missing item type\nReturns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -1618,7 +1618,7 @@
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:861"
+            "line": " VISH.Editor.js:858"
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
@@ -1662,7 +1662,7 @@
         },
         {
             "message": "Missing item type\nFunction to render a quiz inside an article (a slide)",
-            "line": " VISH.Quiz.js:323"
+            "line": " VISH.Quiz.js:85"
         },
         {
             "message": "Missing item type\nHelpers",
@@ -1758,11 +1758,11 @@
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.Youtube.js:236"
+            "line": " VISH.Video.Youtube.js:243"
         },
         {
             "message": "Missing item type\nFunction to pause a specific video",
-            "line": " VISH.Video.Youtube.js:263"
+            "line": " VISH.Video.Youtube.js:270"
         },
         {
             "message": "Missing item type\nFunction to initialize the Viewer, saves the slides object and init the presentation with it\noptions is a hash with params and options from the server.",

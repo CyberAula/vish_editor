@@ -91,6 +91,7 @@
 VISH.Editor.Text = (function(V,$,undefined){
 	
 	var initialized = false;
+	var _initializedCKEditorInstances = {};
 
 	var init = function(){
 		if(!initialized){
@@ -170,6 +171,18 @@ VISH.Editor.Text = (function(V,$,undefined){
 			current_area.attr(&#x27;type&#x27;,&#x27;text&#x27;);
 		}
 
+		var slide = $(&quot;article&quot;).has(current_area);
+		var subslide = $(&quot;article &gt; article&quot;).has(current_area);
+
+		if(typeof $(current_area).attr(&quot;id&quot;) == &quot;undefined&quot;){
+			&#x2F;&#x2F;We need an ID to call addTempShown properly
+			$(current_area).attr(&quot;id&quot;,V.Utils.getId(&quot;TmpShownId&quot;)); 
+		}
+		V.Utils.addTempShown(current_area);
+		var currentAreaHeight = $(current_area).height();
+		var currentAreaWidth = $(current_area).width();
+		V.Utils.removeTempShown(current_area);
+
 		&#x2F;&#x2F;Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
 		var wysiwygContainer = $(&quot;&lt;div id=&#x27;&quot;+wysiwygContainerId+&quot;&#x27; class=&#x27;wysiwygTextArea&#x27;&gt;&lt;&#x2F;div&gt;&quot;)
@@ -210,13 +223,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 			config.autoGrow_maxHeight = 800;
 		}
 
-		V.Utils.addTempShown(current_area);
-
 		&#x2F;&#x2F;Fit the current area
 		config.width = &#x27;100%&#x27;;
 		&#x2F;&#x2F;The height value defines the height of CKEditor editing area and can be given in pixels or em. Percent values are not supported. 
 		&#x2F;&#x2F;http:&#x2F;&#x2F;docs.cksource.com&#x2F;CKEditor_3.x&#x2F;Howto&#x2F;Editor_Size_On_The_Fly
-		config.height = $(current_area).height();
+		config.height = currentAreaHeight;
 
 		&#x2F;&#x2F;Toolbar defaults
 		config.fontSize_defaultLabel = &#x27;12&#x27;;
@@ -225,16 +236,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		var ckeditorBasePath = CKEDITOR.basePath.substr(0, CKEDITOR.basePath.indexOf(&quot;editor&#x2F;&quot;));
 		config.skin = &#x27;vEditor,&#x27; + ckeditorBasePath + &#x27;editor&#x2F;skins&#x2F;vEditor&#x2F;&#x27;;
 
-		&#x2F;&#x2F;Add ckeditor wysiwyg instance
-		var ckeditor = CKEDITOR.appendTo(wysiwygContainerId,config);
-
-		var myWidth = $(current_area).width();
-		var myHeight = $(current_area).height();
-
-		V.Utils.removeTempShown(current_area);
-
 		var newInstance = !(typeof initial_text === &quot;string&quot;)||((options)&amp;&amp;(options.forceNew));
-
 		if(newInstance){
 			var defaultFontSize = 12;
 			var defaultAlignment = &quot;left&quot;;
@@ -292,43 +294,69 @@ VISH.Editor.Text = (function(V,$,undefined){
 			initial_text_blank = &quot;&lt;p style=&#x27;text-align:&quot;+defaultAlignment+&quot;;&#x27;&gt;&lt;span autoColor=&#x27;true&#x27; style=&#x27;&quot;+blankTextColor+&quot;&#x27;&gt;&lt;span style=&#x27;font-size:&quot;+defaultFontSize+&quot;px;&#x27;&gt;&quot;+&quot;&amp;shy&quot;+&quot;&lt;&#x2F;span&gt;&lt;&#x2F;span&gt;&lt;&#x2F;p&gt;&quot;;
 		}
 
+		&#x2F;&#x2F;Add ckeditor wysiwyg instance
+		var ckeditor = CKEDITOR.appendTo(wysiwygContainerId,config);
+
+		var myWidth = currentAreaWidth;
+		var myHeight = currentAreaHeight;
+
+		if(!newInstance){
+			&#x2F;&#x2F;Keep slide subslide an area visible until the quiz has been drawed
+			V.Utils.addTempShown([slide,subslide,current_area]);
+			setTimeout(function(){
+				if(_initializedCKEditorInstances[ckeditor.name] !== true){
+					_initializedCKEditorInstances[ckeditor.name] = false;
+					V.Utils.removeTempShown([slide,subslide,current_area]);
+				} else {
+					_initializedCKEditorInstances[ckeditor.name] = undefined;
+				}
+			},6000);
+		}
+
 		ckeditor.on(&quot;instanceReady&quot;, function(){
 			if(initial_text){
 				ckeditor.setData(initial_text, function(){
-					&#x2F;&#x2F;Resize: needed to fit content properly
-					&#x2F;&#x2F;Acces current_area leads to errors, use myWidth and myHeight
-
 					if(isQuiz){
-						var slide = $(&quot;article&quot;).has(current_area);
-						var subslide = $(&quot;article &gt; article&quot;).has(current_area);
-						V.Utils.addTempShown(slide);
-						V.Utils.addTempShown(subslide);
-						var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
-						var newMyHeight = $(iframeContent).find(&quot;html&quot;).height();
-						V.Utils.removeTempShown(slide);
-						V.Utils.removeTempShown(subslide);
+						if(!newInstance){
+							setTimeout(function(){
+								V.Utils.addTempShown([slide,subslide,current_area]);
+								var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
+								var newMyHeight = $(iframeContent).find(&quot;html&quot;).height();
+								if(newMyHeight &gt; myHeight){
+									&#x2F;&#x2F;This condition allows to prevent some browsers (e.g. Firefox) to calculate wrong heights...
+									&#x2F;&#x2F; V.Debugging.log(&quot;newMyHeight for &quot; + ckeditor.name + &quot; is: &quot; + newMyHeight);
+									ckeditor.resize(myWidth,newMyHeight);
+								}
 
-						if(newMyHeight &gt; myHeight){
-							&#x2F;&#x2F;Prevent some browsers (e.g. Firefox) to calculate wrong heights...
-							ckeditor.resize(myWidth,newMyHeight);
+								&#x2F;&#x2F;Firefox don&#x27;t calculate height right, maybe a fallback could be provided
+								&#x2F;&#x2F; if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
+								&#x2F;&#x2F; }
+
+								V.Utils.removeTempShown([slide,subslide,current_area]);
+							},1000);
 						}
-
-						&#x2F;&#x2F;Firefox don&#x27;t calculate height right, maybe a fallback could be provided
-						&#x2F;&#x2F; if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
-						&#x2F;&#x2F; }
-
 					} else {
-						ckeditor.resize(myWidth,myHeight);
+						&#x2F;&#x2F; Resize: Not necessary (to fit the content properly) in the new version
+						&#x2F;&#x2F; ckeditor.resize(myWidth,myHeight);
 					}
 				
 					&#x2F;&#x2F;Apply fix for a official CKEditor bug
 					_fixCKEDITORBug(ckeditor);
-				});
 
-				if(newInstance){
-					if((isTemplateArea)||((options)&amp;&amp;(options.focus))){
-						ckeditor.focus();
+					if(newInstance){
+						if((isTemplateArea)||((options)&amp;&amp;(options.focus))){
+							ckeditor.focus();
+						}
 					}
+				});
+			}
+
+			if(!newInstance){
+				if(typeof _initializedCKEditorInstances[ckeditor.name] == &quot;undefined&quot;){
+					_initializedCKEditorInstances[ckeditor.name] = true;
+					V.Utils.removeTempShown([slide,subslide,current_area]);
+				} else {
+					_initializedCKEditorInstances[ckeditor.name] = undefined;
 				}
 			}
 		});
@@ -387,7 +415,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 		});
 		return CKEditorInstance;
-	}
+	};
 
 	var getZoneForCKContainer = function(container){
 		var area;
@@ -396,7 +424,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			area = $(&quot;div[type=&#x27;quiz&#x27;]&quot;).has(container);
 		}
 		return area;
-	}
+	};
 
 	var getCKEditorIframeContentFromZone = function(zone){
 		var editor = getCKEditorFromZone(zone);
@@ -404,12 +432,12 @@ VISH.Editor.Text = (function(V,$,undefined){
 			return null;
 		}
 		return _getCKEditorIframeContentFromInstance(editor);
-	}
+	};
 
 	var _getCKEditorIframeContentFromInstance = function(editor){
 		var iframe = $(document.getElementById(&#x27;cke_contents_&#x27; + editor.name)).find(&quot;iframe&quot;)[0];
 		return $(iframe).contents()[0];
-	}
+	};
 
 
 	var getCKEditorFromTextArea = function(textArea){
@@ -432,11 +460,11 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 		});
 		return CKEditorInstance;
-	}
+	};
 
 	var _getPlainText = function(){
 		return $(this.getSnapshot()).text();
-	}
+	};
 
 	&#x2F;*
 	 * Fix oficial WebKit bug: http:&#x2F;&#x2F;ckeditor.com&#x2F;forums&#x2F;CKEditor-3.x&#x2F;Minimum-Editor-Width-Safari#comment-48574
@@ -448,7 +476,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 	        iframe.style.display = &#x27;none&#x27;;
 	        iframe.style.display = &#x27;block&#x27;;
 	    }
-	}
+	};
 
 	var refreshAutoColors = function(){
 		var currentColor = &quot;color:#&quot; + V.Editor.Themes.getCurrentTheme().color;
@@ -459,7 +487,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			 	$(span).attr(&quot;style&quot;,currentColor+&quot;;&quot;);
 			 });
 		});
-	}
+	};
 
 	return {
 		init								: init,

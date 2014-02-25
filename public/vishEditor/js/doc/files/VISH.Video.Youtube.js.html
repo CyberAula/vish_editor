@@ -175,8 +175,31 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var loadYoutubeObject = function(container,options){
+		var enableCustomPlayer = _enableCustomPlayer;
+		var controls = enableCustomPlayer ? 0 : 1;
+		var _onReadyCallback = onPlayerReady;
+		var _onPlayerError = onPlayerError;
+
+		if(options){
+			if(typeof options.enableCustomPlayer == &quot;boolean&quot;){
+				enableCustomPlayer = options.enableCustomPlayer;
+				controls = enableCustomPlayer ? 0 : 1;
+			}
+			if(typeof options.controls == &quot;boolean&quot;){
+				controls = (options.controls===true) ? 1 : 0;
+			}
+			if(typeof options.onReadyCallback == &quot;function&quot;){
+				_onReadyCallback = options.onReadyCallback;
+			}
+			if(typeof options.onPlayerError == &quot;function&quot;){
+				_onPlayerError = options.onPlayerError;
+			}
+		}
+
+
 		if(V.Status.isOnline()===false){
 			$(container).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
+			_onPlayerError();
 			return;
 		}
 
@@ -193,35 +216,20 @@ VISH.Video.Youtube = (function(V,$,undefined){
 				$(nonAvailableImg).load(function(response){
 					$(nonAvailableImg).css(&quot;margin-top&quot;,($(container).height()-$(nonAvailableImg).height())&#x2F;2 + &quot;px&quot;);
 				});
+				_onPlayerError();
 			}
 			return;
 		}
 
 		var youtubeVideoId = getYoutubeIdFromURL($(container).attr(&quot;source&quot;)); 
 		if(youtubeVideoId===null){
+			_onPlayerError();
 			return;
 		}
 		
 		var iframeId = $(container).attr(&quot;ytContainerId&quot;);
 		var ytStyle = (typeof $(container).attr(&quot;objectStyle&quot;) != &quot;undefined&quot;) ? (&quot;style=&#x27;&quot; + $(container).attr(&quot;objectStyle&quot;) + &quot;&#x27; &quot;) : &quot;&quot;;
 		$(container).html(&quot;&lt;div id=&#x27;&quot; + iframeId + &quot;&#x27; videotype=&#x27;&quot;+ V.Constant.MEDIA.YOUTUBE_VIDEO + &quot;&#x27; &quot; + ytStyle + &quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
-
-		var enableCustomPlayer = _enableCustomPlayer;
-		var controls = enableCustomPlayer ? 0 : 1;
-		var _onReadyCallback = onPlayerReady;
-
-		if(options){
-			if(typeof options.enableCustomPlayer == &quot;boolean&quot;){
-				enableCustomPlayer = options.enableCustomPlayer;
-				controls = enableCustomPlayer ? 0 : 1;
-			}
-			if(typeof options.controls == &quot;boolean&quot;){
-				controls = (options.controls===true) ? 1 : 0;
-			}
-			if(typeof options.onReadyCallback == &quot;function&quot;){
-				_onReadyCallback = options.onReadyCallback;
-			}
-		}
 
 		youtubePlayers[iframeId] = new YT.Player(iframeId, {
 		  height: &#x27;100%&#x27;,
@@ -231,7 +239,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		  events: {
 			 &#x27;onReady&#x27;: _onReadyCallback,
 			 &#x2F;&#x2F; &#x27;onStateChange&#x27;: onPlayerStateChange,
-			 &#x27;onError&#x27; : onPlayerError
+			 &#x27;onError&#x27; : _onPlayerError
 		  }
 		});
 
@@ -242,7 +250,6 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			&#x2F;&#x2F;In current version player control events are loaded in onPlayerReady event
 			V.Video.CustomPlayer.addCustomPlayerControls(iframeId,false);
 		}
-
 	};
 
 	var onPlayerReady = function(event){

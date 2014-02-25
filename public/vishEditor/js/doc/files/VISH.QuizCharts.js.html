@@ -153,7 +153,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		};
 
 		return trans;
-	}
+	};
 
 
 	&#x2F;* Draw Methods *&#x2F;
@@ -179,7 +179,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			return null; 
 			break;
 		}
-	}
+	};
 
 	var _drawMcChoiceQuizChart = function(canvas,quizParams,answersList,options){
 		var pieFragments = [];
@@ -241,7 +241,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		if((options)&amp;&amp;(options.animation!=true)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
 			options.callback();
 		}
-	}
+	};
 
 	var _drawMcChoiceMAnswerQuizChart = function(canvas,quizParams,answersList,options){
 		var labels = [];
@@ -318,7 +318,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		if((options)&amp;&amp;(options.animation!=true)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
 			options.callback();
 		}
-	}
+	};
 
 
 	var _drawTFQuizChart = function(canvas,quizParams,answersList,options){
@@ -408,7 +408,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		if((options)&amp;&amp;(options.animation!=true)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
 			options.callback();
 		}
-	}
+	};
 
 	&#x2F;**
 	* Helpers
@@ -420,7 +420,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			answers.push(JSON.parse(results[i].answer));
 		}
 		return answers;
-	}
+	};
 
 	var _getQuizParams = function(quiz){
 		var params = {};
@@ -444,7 +444,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			}
 		} catch (e){}
 		return params;
-	}
+	};
 
 	var _purgeString = function(str){
 		if(typeof str != &quot;string&quot;){
@@ -452,7 +452,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 		}
 		str = str.replace(&#x2F;â€‹&#x2F;g, &#x27;&#x27;);
 		return str.replace(&#x2F;Â&#x2F;g, &#x27;&#x27;);
-	}
+	};
 
 	return {
 		init                : init,
