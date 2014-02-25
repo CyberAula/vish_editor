@@ -416,19 +416,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 	var _loadToolbarForElement = function(type){
 		_cleanElementToolbar();
-		if(type=="text" || type=="quiz"){
-			_loadTextToolbar();
-			return;
-		}
-		
-		var toolbarClass = "toolbar_" + type;
-		$("#toolbar_element").find("img").hide();
-		$("#toolbar_element").find("img." + toolbarClass).show();
-	};
 
-	var _loadTextToolbar = function(){
-		$("#toolbar_element").find("img").hide();
-		$("#toolbar_text").show();
+		var toolbarClass = "toolbar_" + type;
+		$("#toolbar_element").children().hide();
+		$("#toolbar_element").find("." + toolbarClass).css("display","inline-block");
 	};
 
 	var loadToolbarForObject = function(object){
@@ -446,10 +437,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	};
 
 	var _cleanElementToolbar = function(){
-		//Wysiwyg Toolbar
-		$("#toolbar_text").hide();
-		//Generic Toolbars
-		$("#toolbar_element").find("img").hide();
+		$("#toolbar_element").children().hide();
 	};
 
 
@@ -685,7 +673,14 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(area).removeAttr("hyperlink");
 		$.fancybox.close();
 	};
-  
+
+
+	/* Element Settings */
+  	var quizSettings = function(){
+  		alert("QuizSettings!");
+  	};
+
+
 	return {
 		init							: init,
 		loadToolsForSlide				: loadToolsForSlide,
@@ -716,7 +711,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		hideZoneToolTip					: hideZoneToolTip,
 		setAllTooltipMargins			: setAllTooltipMargins,
 		changePublishButtonStatus		: changePublishButtonStatus,
-		changeSaveButtonStatus			: changeSaveButtonStatus
+		changeSaveButtonStatus			: changeSaveButtonStatus,
+		quizSettings 					: quizSettings
 	};
 
 }) (VISH, jQuery);
