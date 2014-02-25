@@ -3046,7 +3046,7 @@ span.letterInChapterDialog {
 }
 
 #json_preview_button {
-	float: left !important
+	float: left !important;
 }
 
 #json_file_input {
@@ -3057,4 +3057,6 @@ span.letterInChapterDialog {
 	margin-top: 2%;
 	margin-left: 2%;
 	margin-right: 2%;
+	position: relative;
+	float: left;
 }
