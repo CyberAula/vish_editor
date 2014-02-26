@@ -34,8 +34,8 @@
 }
 
 #toolbar_presentation {
-	padding-right: 11px;
-	padding-left: 11px;
+	padding-right: 8px;
+	padding-left: 8px;
 	min-width: 475px;
 	float: left;
 	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
@@ -131,9 +131,10 @@ button.btn-toolbarElementWrapper {
 	width: 41px;
 	height: 32px;
 	margin: 0px 0px -4px 0px;
+	opacity: 0.9;
 }
 
-.toolbar_icon:hover {
+.toolbar_icon:hover, img.big_toolbar_icon:hover {
 	opacity: 1;	
 }
 
