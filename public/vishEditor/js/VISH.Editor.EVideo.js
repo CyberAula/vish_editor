@@ -357,6 +357,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				var video = $(V.Video.HTML5.renderVideoFromSources(sources,options));
 				$(videoBody).append(video);
 				V.Video.HTML5.addSourcesToVideoTag(sources,video);
+				// $(video).load();
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var source = objectInfo.source;
@@ -1201,7 +1202,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 					if(index!==0){
 						sourcesString = sourcesString + ',';
 					}
-					sourcesString = sourcesString + '{ "src": "' + source.src + '" , "type": "' + source.mimeType + '"}';
+					sourcesString = sourcesString + '{ "src": "' + source.src.split("?")[0] + '" , "type": "' + source.mimeType + '"}';
 				});
 				sourcesString = '[' + sourcesString + ']';
 				slide.video.sources = sourcesString;

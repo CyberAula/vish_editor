@@ -171,6 +171,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	var renderVideoFromSources = function(sources,options){
 		var video = $("<video></video>");
 
+		$(video).attr("preload","metadata");
+
 		if((options)&&(options.extraAttrs)){
 			for(var key in options.extraAttrs){
 				$(video).attr(key,options.extraAttrs[key]);
@@ -243,6 +245,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		$.each(sources, function(index, source){
 			if(typeof source.src == "string"){
 				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
+				// $(videoTag).append("<source src='"+source.src+"?t=" + Math.random()/10000 + "' " + mimeType + ">");
 				$(videoTag).append("<source src='"+source.src+"' " + mimeType + ">");
 			}
 		});
