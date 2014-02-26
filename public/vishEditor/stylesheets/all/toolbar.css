@@ -34,8 +34,8 @@
 }
 
 #toolbar_presentation {
-	padding-right: 15px;
-	padding-left: 15px;
+	padding-right: 11px;
+	padding-left: 11px;
 	min-width: 475px;
 	float: left;
 	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
@@ -44,7 +44,7 @@
 }
 
 #toolbar_element {
-	padding-left: 2px;
+	padding-left: 1px;
 	min-width: 425px;
 	text-align: left;
 	max-width: 620px;
@@ -64,7 +64,7 @@
 
 #toolbar_text {
 	position: absolute;
-	margin-left: 12px;
+	margin-left: 10px;
 }
 
 .toolbar_presentation_wrapper_slideTools {
@@ -76,7 +76,7 @@
 	font-family: 'Open Sans', arial, sans-serif;
 }
 
-.toolbar_presentation_wrapper img {
+.toolbar_presentation_wrapper img:not(.big_toolbar_icon){
 	max-height: 27px;
 	max-width: 27px;
 }
@@ -132,7 +132,7 @@ button.btn-toolbarElementWrapper {
 .big_toolbar_icon {
 	width: 41px;
 	height: 32px;
-	margin: 2px 0px -3px 0px;
+	margin: 0px 0px -4px 0px;
 }
 
 .toolbar_icon:hover {
@@ -172,4 +172,8 @@ img.toolbar_icon {
 
 .withoutRightBorder {
 	border-right: none;
+}
+
+#toolbar_background_wrapper, #toolbar_evideo_wrapper {
+	min-width: 88px;
 }
