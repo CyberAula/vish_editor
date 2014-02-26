@@ -284,9 +284,9 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		switch(videoJSON.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var options = {};
-				if(typeof videoJSON.poster == "string"){
-					options.poster = videoJSON.poster;
-				}
+				// if(typeof videoJSON.poster == "string"){
+				// 	options.poster = videoJSON.poster;
+				// }
 				var videoTag = V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(videoJSON),options);
 				return videoTag;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
@@ -351,11 +351,11 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				// 	options.poster = false;
 				// }
 				options.poster = false;
-				var video = $(V.Video.HTML5.renderVideoFromSources(sources,options));
-				$(video).attr("videoType",V.Constant.MEDIA.HTML5_VIDEO);
-				$(video).attr("eVideoId",eVideoId);
+				options.onVideoReady = "VISH.Editor.EVideo.onHTML5VideoReady";
+				options.extraAttrs = {"videoType":V.Constant.MEDIA.HTML5_VIDEO, "eVideoId": eVideoId};
+				var videoHTML = V.Video.HTML5.renderVideoFromSources(sources,options);
+				var video = $(videoHTML);
 				$(videoBody).append(video);
-				V.Video.onVideoReady(video,_onVideoReady);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var source = objectInfo.source;
@@ -379,10 +379,34 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		};
 	};
 
+	var onHTML5VideoReady = function(video){
+		//Check state (based on http://www.w3schools.com/tags/av_prop_readystate.asp)
+		if((typeof video != "undefined")&&((video.readyState == 4)||(video.readyState == 3))){
+			_onVideoReady(video);
+		}
+	};
+
 	var _onVideoReady = function(video){
 		var videoBody = $(video).parent();
 		var videoBox = $(videoBody).parent();
 		var eVideoDOM = $(videoBox).parent();
+
+		//Prevent race conditions when video loading very fast (when is cached)
+		if($(eVideoDOM).length === 0){
+			var t_eVideoId = $(video).attr("evideoid");
+			var t_eVideoDOM = $("#" + t_eVideoId);
+			var t_videoBox = $(t_eVideoDOM).find(".evideoBox");
+			var t_video = V.EVideo.getVideoFromVideoBox(t_videoBox);
+			if($(t_video).attr("loaded") != "true"){
+				setTimeout(function(){
+					_onVideoReady(video);
+				},500);
+			}
+			return;
+		}
+
+		$(video).attr("loaded","true");
+
 		var eVideoId = $(eVideoDOM).attr("id");
 		var videoHeader = $(videoBox).find(".evideoHeader");
 		var videoFooter = $(videoBox).find(".evideoFooter");
@@ -1281,7 +1305,8 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		getSlideHeader					: getSlideHeader,
 		getThumbnailURL					: getThumbnailURL,
 		preCopyActions					: preCopyActions,
-		postCopyActions					: postCopyActions
+		postCopyActions					: postCopyActions,
+		onHTML5VideoReady				: onHTML5VideoReady
 	};
 
 }) (VISH, jQuery);

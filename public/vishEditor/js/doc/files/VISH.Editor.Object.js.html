@@ -399,7 +399,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoWithURL(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: &quot;objectPreview&quot;});
+						return V.Editor.Video.HTML5.renderVideoWithURL(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: [&quot;objectPreview&quot;]});
 						break;
 					case V.Constant.MEDIA.HTML5_AUDIO:
 						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{extraClasses: &quot;objectPreview&quot;});
@@ -423,7 +423,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return _genericWrapperPreview(object);
 				break;
 			case V.Constant.WRAPPER.VIDEO:
-				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: &quot;objectPreview&quot;});
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: [&quot;objectPreview&quot;]});
 				break;
 			case V.Constant.WRAPPER.AUDIO:
 				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{extraClasses: &quot;objectPreview&quot;});

@@ -149,68 +149,78 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 */
 
 	 var renderVideoFromJSON = function(videoJSON, options){
-		var renderOptions = {};
+		var renderOptions = options || {};
 
-		renderOptions.elId = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+		if(typeof renderOptions.id == "undefined"){
+			renderOptions.id = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+		}
+		if(typeof renderOptions.controls == "undefined"){
+			renderOptions.controls = videoJSON['controls'];
+		}
+		// if(typeof renderOptions.poster != "undefined"){
+		// 	renderOptions.poster = videoJSON['poster'];
+		// }
+
 		renderOptions.style = videoJSON['style'];
-		renderOptions.controls = videoJSON['controls'];
 		renderOptions.autoplay = videoJSON['autoplay'];
-		renderOptions.poster = videoJSON['poster'];
 		renderOptions.loop = videoJSON['loop'];
 		
-		//Params forced by options
-		if(options){
-			if(options.id){
-				renderOptions.elId = options.id;
-			}
-			if(options.extraClasses){
-				renderOptions.extraClasses = options.extraClasses;
-			}
-			if(options.controls === false){
-				renderOptions.controls = options.controls;
-			}
-			if(typeof options.poster != "undefined"){
-				renderOptions.poster = options.poster;
-			}
-		};
-
 		return renderVideoFromSources(getSourcesFromJSON(videoJSON),renderOptions);
 	};
 
 	var renderVideoFromSources = function(sources,options){
-		var elId = "";
-		var extraClasses = "";
-		var controls = "controls='controls' ";
-		var autoplay = "";
-		var poster = "";
-		var loop = "";
-		var style = "";
-		
-		if(options){
-			if(options['elId']){
-				elId = "id='"+options['elId']+"'";
-			}
-			if(options['extraClasses']){
-				extraClasses = extraClasses + options['extraClasses'];
-			}
-			if(options.controls === false){
-				controls = "";
-			}
-			if(typeof options.autoplay != "undefined"){
-				autoplay = "autoplayonslideenter='" + options.autoplay + "' ";
-			}
-			if(typeof options['poster'] == "string"){
-				poster = "poster='"+options['poster']+"' ";
-			}
-			if(options['loop'] === true){
-				loop = "loop='loop' ";
-			}
-			if(options['style']){
-				style = "style='" + options['style'] + "' ";
+		var video = $("<video></video>");
+
+		if((options)&&(options.extraAttrs)){
+			for(var key in options.extraAttrs){
+				$(video).attr(key,options.extraAttrs[key]);
 			}
 		}
 
-		var video = "<video " + elId + " class='" + extraClasses + "' preload='metadata' " + controls + autoplay + poster + loop + style + ">";
+		if(options){
+			if(options['id']){
+				$(video).attr("id",options['id']);
+			}
+			if(typeof options.onVideoReady == "string"){
+				//Look for the function
+				try {
+					var onVideoReadySplit = options.onVideoReady.split(".");
+					var onVideoReadyFunction = window[onVideoReadySplit[0]];
+					for(var k=1; k<onVideoReadySplit.length; k++){
+						onVideoReadyFunction = onVideoReadyFunction[onVideoReadySplit[k]];
+					}
+					if(typeof onVideoReadyFunction == "function"){
+						// onVideoReady = 'onloadeddata="'+ options.onVideoReady + '(this)' + '" ';
+						$(video).attr("onloadeddata",options.onVideoReady + '(this)');
+					}
+				} catch(e){}
+			}
+			if(options['extraClasses']){
+				var extraClassesLength = options['extraClasses'].length;
+				for(var i=0; i<extraClassesLength; i++){
+					$(video).addClass(options['extraClasses'][i]);
+				}
+			}
+			if(options.controls !== false){
+				$(video).attr("controls","controls");
+			}
+			if(typeof options.autoplay != "undefined"){
+				$(video).attr("autoplayonslideenter",options.autoplay);
+			}
+			if(typeof options['poster'] == "string"){
+				$(video).attr("poster",options['poster']);
+			}
+			if(options['loop'] === true){
+				$(video).attr("loop","loop");
+			}
+			if(options['style']){
+				$(video).attr("style",options['style']);
+			}
+		}
+		video = V.Utils.getOuterHTML(video);
+		video = video.split("</video>")[0];
+
+		//Write sources (we can't loaded it to the DOM directly, because then they will start to load, before been actually rendered)
 		$.each(sources, function(index, source){
 			if(typeof source.src == "string"){
 				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";

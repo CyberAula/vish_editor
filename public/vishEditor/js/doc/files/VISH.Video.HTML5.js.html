@@ -239,68 +239,78 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 *&#x2F;
 
 	 var renderVideoFromJSON = function(videoJSON, options){
-		var renderOptions = {};
+		var renderOptions = options || {};
 
-		renderOptions.elId = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
+		if(typeof renderOptions.id == &quot;undefined&quot;){
+			renderOptions.id = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
+		}
+		if(typeof renderOptions.controls == &quot;undefined&quot;){
+			renderOptions.controls = videoJSON[&#x27;controls&#x27;];
+		}
+		&#x2F;&#x2F; if(typeof renderOptions.poster != &quot;undefined&quot;){
+		&#x2F;&#x2F; 	renderOptions.poster = videoJSON[&#x27;poster&#x27;];
+		&#x2F;&#x2F; }
+
 		renderOptions.style = videoJSON[&#x27;style&#x27;];
-		renderOptions.controls = videoJSON[&#x27;controls&#x27;];
 		renderOptions.autoplay = videoJSON[&#x27;autoplay&#x27;];
-		renderOptions.poster = videoJSON[&#x27;poster&#x27;];
 		renderOptions.loop = videoJSON[&#x27;loop&#x27;];
 		
-		&#x2F;&#x2F;Params forced by options
-		if(options){
-			if(options.id){
-				renderOptions.elId = options.id;
-			}
-			if(options.extraClasses){
-				renderOptions.extraClasses = options.extraClasses;
-			}
-			if(options.controls === false){
-				renderOptions.controls = options.controls;
-			}
-			if(typeof options.poster != &quot;undefined&quot;){
-				renderOptions.poster = options.poster;
-			}
-		};
-
 		return renderVideoFromSources(getSourcesFromJSON(videoJSON),renderOptions);
 	};
 
 	var renderVideoFromSources = function(sources,options){
-		var elId = &quot;&quot;;
-		var extraClasses = &quot;&quot;;
-		var controls = &quot;controls=&#x27;controls&#x27; &quot;;
-		var autoplay = &quot;&quot;;
-		var poster = &quot;&quot;;
-		var loop = &quot;&quot;;
-		var style = &quot;&quot;;
-		
-		if(options){
-			if(options[&#x27;elId&#x27;]){
-				elId = &quot;id=&#x27;&quot;+options[&#x27;elId&#x27;]+&quot;&#x27;&quot;;
-			}
-			if(options[&#x27;extraClasses&#x27;]){
-				extraClasses = extraClasses + options[&#x27;extraClasses&#x27;];
-			}
-			if(options.controls === false){
-				controls = &quot;&quot;;
-			}
-			if(typeof options.autoplay != &quot;undefined&quot;){
-				autoplay = &quot;autoplayonslideenter=&#x27;&quot; + options.autoplay + &quot;&#x27; &quot;;
-			}
-			if(typeof options[&#x27;poster&#x27;] == &quot;string&quot;){
-				poster = &quot;poster=&#x27;&quot;+options[&#x27;poster&#x27;]+&quot;&#x27; &quot;;
-			}
-			if(options[&#x27;loop&#x27;] === true){
-				loop = &quot;loop=&#x27;loop&#x27; &quot;;
-			}
-			if(options[&#x27;style&#x27;]){
-				style = &quot;style=&#x27;&quot; + options[&#x27;style&#x27;] + &quot;&#x27; &quot;;
+		var video = $(&quot;&lt;video&gt;&lt;&#x2F;video&gt;&quot;);
+
+		if((options)&amp;&amp;(options.extraAttrs)){
+			for(var key in options.extraAttrs){
+				$(video).attr(key,options.extraAttrs[key]);
 			}
 		}
 
-		var video = &quot;&lt;video &quot; + elId + &quot; class=&#x27;&quot; + extraClasses + &quot;&#x27; preload=&#x27;metadata&#x27; &quot; + controls + autoplay + poster + loop + style + &quot;&gt;&quot;;
+		if(options){
+			if(options[&#x27;id&#x27;]){
+				$(video).attr(&quot;id&quot;,options[&#x27;id&#x27;]);
+			}
+			if(typeof options.onVideoReady == &quot;string&quot;){
+				&#x2F;&#x2F;Look for the function
+				try {
+					var onVideoReadySplit = options.onVideoReady.split(&quot;.&quot;);
+					var onVideoReadyFunction = window[onVideoReadySplit[0]];
+					for(var k=1; k&lt;onVideoReadySplit.length; k++){
+						onVideoReadyFunction = onVideoReadyFunction[onVideoReadySplit[k]];
+					}
+					if(typeof onVideoReadyFunction == &quot;function&quot;){
+						&#x2F;&#x2F; onVideoReady = &#x27;onloadeddata=&quot;&#x27;+ options.onVideoReady + &#x27;(this)&#x27; + &#x27;&quot; &#x27;;
+						$(video).attr(&quot;onloadeddata&quot;,options.onVideoReady + &#x27;(this)&#x27;);
+					}
+				} catch(e){}
+			}
+			if(options[&#x27;extraClasses&#x27;]){
+				var extraClassesLength = options[&#x27;extraClasses&#x27;].length;
+				for(var i=0; i&lt;extraClassesLength; i++){
+					$(video).addClass(options[&#x27;extraClasses&#x27;][i]);
+				}
+			}
+			if(options.controls !== false){
+				$(video).attr(&quot;controls&quot;,&quot;controls&quot;);
+			}
+			if(typeof options.autoplay != &quot;undefined&quot;){
+				$(video).attr(&quot;autoplayonslideenter&quot;,options.autoplay);
+			}
+			if(typeof options[&#x27;poster&#x27;] == &quot;string&quot;){
+				$(video).attr(&quot;poster&quot;,options[&#x27;poster&#x27;]);
+			}
+			if(options[&#x27;loop&#x27;] === true){
+				$(video).attr(&quot;loop&quot;,&quot;loop&quot;);
+			}
+			if(options[&#x27;style&#x27;]){
+				$(video).attr(&quot;style&quot;,options[&#x27;style&#x27;]);
+			}
+		}
+		video = V.Utils.getOuterHTML(video);
+		video = video.split(&quot;&lt;&#x2F;video&gt;&quot;)[0];
+
+		&#x2F;&#x2F;Write sources (we can&#x27;t loaded it to the DOM directly, because then they will start to load, before been actually rendered)
 		$.each(sources, function(index, source){
 			if(typeof source.src == &quot;string&quot;){
 				var mimeType = (source.mimeType)?&quot;type=&#x27;&quot; + source.mimeType + &quot;&#x27; &quot;:&quot;&quot;;
