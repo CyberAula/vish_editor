@@ -231,12 +231,12 @@ VISH.EVideo = (function(V,$,undefined){
 		$(videoBody).append(loadingContainer);
 		$(videoBody).addClass("loadingEVideoContainerWrapper");
 		V.Utils.Loader.startLoadingInContainer(loadingContainer);
-
 		switch(eVideoJSON.video.type){
 			case V.Constant.MEDIA.HTML5_VIDEO:
 				var extraAttrs = {"videoType":eVideoJSON.video.type, "eVideoId": eVideoJSON.id};
-				var video = $(V.Video.HTML5.renderVideoFromJSON(eVideoJSON.video,{onVideoReady: "VISH.EVideo.onHTML5VideoReady", controls: false, poster: false, extraClasses: ["temp_hidden"], extraAttrs: extraAttrs}));
+				var video = $(V.Video.HTML5.renderVideoFromJSON(eVideoJSON.video,{onVideoReady: "VISH.EVideo.onHTML5VideoReady", loadSources: false, controls: false, poster: false, extraClasses: ["temp_hidden"], extraAttrs: extraAttrs}));
 				$(videoBody).append(video);
+				V.Video.HTML5.addSourcesToVideoTag(V.Video.HTML5.getSourcesFromJSON(eVideoJSON.video),video);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(eVideoJSON.video));
@@ -272,22 +272,6 @@ VISH.EVideo = (function(V,$,undefined){
 		var videoFooter = $(videoBox).find(".evideoFooter");
 		var videoType = $(video).attr("videotype");
 
-		//Prevent race conditions when video loading very fast (when is cached)
-		if($(eVideoDOM).length === 0){
-			var t_eVideoId = $(video).attr("evideoid");
-			var t_eVideoDOM = $("#" + t_eVideoId);
-			var t_videoBox = $(t_eVideoDOM).find(".evideoBox");
-			var t_video = V.EVideo.getVideoFromVideoBox(t_videoBox);
-			if($(t_video).attr("loaded") != "true"){
-				setTimeout(function(){
-					_onVideoReady(video);
-				},500);
-			}
-			return;
-		}
-
-		$(video).attr("loaded","true");
-
 		//Stop loading
 		var loadingContainer = $(videoBody).find(".loadingEVideoContainer");
 		$(loadingContainer).remove();
@@ -308,6 +292,7 @@ VISH.EVideo = (function(V,$,undefined){
 
 		V.Utils.addTempShown(eVideoDOM);
 		$(video).removeClass("temp_hidden");
+		$(video).attr("loaded","true");
 
 		fitVideoInVideoBox(videoBox);
 
@@ -359,6 +344,10 @@ VISH.EVideo = (function(V,$,undefined){
 
 	var fitVideoInVideoBox = function(videoBox){
 		var video = getVideoFromVideoBox(videoBox);
+		if((typeof video == "undefined")||($(video).attr("loaded")!="true")){
+			return;
+		}
+
 		var eVideoBody = $(videoBox).find(".evideoBody");
 		$(eVideoBody).css("height","85%");
 
@@ -1022,7 +1011,7 @@ VISH.EVideo = (function(V,$,undefined){
 	// Utils
 
 	var getVideoFromVideoBox = function(videoBox){
-		return $(videoBox).find(".evideoBody").children()[0];
+		return $(videoBox).find(".evideoBody").children().not(".loadingEVideoContainer")[0];
 	};
 
 	var getVideoBoxFromVideo = function(video){

@@ -353,9 +353,10 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 				options.poster = false;
 				options.onVideoReady = "VISH.Editor.EVideo.onHTML5VideoReady";
 				options.extraAttrs = {"videoType":V.Constant.MEDIA.HTML5_VIDEO, "eVideoId": eVideoId};
-				var videoHTML = V.Video.HTML5.renderVideoFromSources(sources,options);
-				var video = $(videoHTML);
+				options.loadSources = false;
+				var video = $(V.Video.HTML5.renderVideoFromSources(sources,options));
 				$(videoBody).append(video);
+				V.Video.HTML5.addSourcesToVideoTag(sources,video);
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var source = objectInfo.source;

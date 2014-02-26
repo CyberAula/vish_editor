@@ -221,15 +221,17 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		video = video.split("</video>")[0];
 
 		//Write sources (we can't loaded it to the DOM directly, because then they will start to load, before been actually rendered)
-		$.each(sources, function(index, source){
-			if(typeof source.src == "string"){
-				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
-				video = video + "<source src='" + source.src + "' " + mimeType + ">";
-			}	
-		});
+		if((!options)||(options.loadSources !== false)){
+			$.each(sources, function(index, source){
+				if(typeof source.src == "string"){
+					var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
+					video = video + "<source src='" + source.src + "' " + mimeType + ">";
+				}
+			});
 
-		if(sources.length>0){
-			video = video + "<p>Your browser does not support HTML5 video.</p>";
+			if(sources.length>0){
+				video = video + "<p>Your browser does not support HTML5 video.</p>";
+			}
 		}
 
 		video = video + "</video>";
@@ -237,6 +239,17 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return video;
 	};
 
+	var addSourcesToVideoTag = function(sources,videoTag){
+		$.each(sources, function(index, source){
+			if(typeof source.src == "string"){
+				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
+				$(videoTag).append("<source src='"+source.src+"' " + mimeType + ">");
+			}
+		});
+		if(sources.length>0){
+			$(videoTag).append("<p>Your browser does not support HTML5 video.</p>");
+		}
+	};
 
 	/*
 	 * Utils
@@ -287,6 +300,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		init 				: init,
 		renderVideoFromJSON	: renderVideoFromJSON,
 		renderVideoFromSources	: renderVideoFromSources,
+		addSourcesToVideoTag	: addSourcesToVideoTag,
 		setVideoEvents 		: setVideoEvents,
 		playVideos 			: playVideos,
 		stopVideos 			: stopVideos,
