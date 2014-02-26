@@ -256,6 +256,23 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 */
 
 	var getSources = function(videoDOM){
+		if(typeof videoDOM == "string"){
+			var sources = [];
+			//Prevent video to be rendered in a non appropriate time.
+			var srcPattern = new RegExp("src=(\'||\")([a-z.://0-9]+)","g");
+
+			// var videoDOM = "<video controls='controls'><source src='http://vishub.org/videos/3366.webm' type='video/webm' ><source src='http://vishub.org/videos/3366.mp4' type='video/mp4' ><p>Your browser does not support HTML5 video.</p></video>";
+			var found;
+			while(found = srcPattern.exec(videoDOM)){
+				if(found.length>2){
+					sources.push(found[2]);
+				}
+				srcPattern.lastIndex = found.index+1;
+			};
+
+			return sources.map(function(value){ return {"src": value, "mimeType": getVideoMimeType(value)}});
+		}
+
 		try {
 			return $(videoDOM).find("source").map(function(){ return {"src": this.src, "mimeType": getVideoMimeType(this.src)}});
 		} catch(e){
