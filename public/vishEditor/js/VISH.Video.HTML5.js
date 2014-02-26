@@ -157,9 +157,9 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		if(typeof renderOptions.controls == "undefined"){
 			renderOptions.controls = videoJSON['controls'];
 		}
-		// if(typeof renderOptions.poster != "undefined"){
-		// 	renderOptions.poster = videoJSON['poster'];
-		// }
+		if(typeof renderOptions.poster == "undefined"){
+			renderOptions.poster = videoJSON['poster'];
+		}
 
 		renderOptions.style = videoJSON['style'];
 		renderOptions.autoplay = videoJSON['autoplay'];
