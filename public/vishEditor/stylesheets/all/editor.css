@@ -686,6 +686,9 @@ input.slider_range_input {
 	padding-bottom: 15px;
 }
 
+#importButton > .btn-small {
+	padding: 5px 5px;
+}
 
 #addSlideButton, #importButton {
 	font-family: 'Open Sans', arial, sans-serif;
@@ -694,6 +697,7 @@ input.slider_range_input {
 
 #addSlideButton > .slidesScrollbarButton {
 	width: 90px;
+	padding: ;
 }
 
 #importButton > .slidesScrollbarButton {
