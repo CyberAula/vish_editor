@@ -59,7 +59,6 @@
 	min-width: 75px;
 	text-align: center;
 	margin-top: 4px;
-	border-right: 1px solid #E9E9E9;
 }
 
 #toolbar_text {
@@ -96,7 +95,6 @@ button.btn-toolbarElementWrapper {
 
 .toolbar_presentation_wrapper_disabled {
 	opacity: 0.2;
-	border-left: 1px solid #A3A3A3 !important;
 }
 
 .toolbar_presentation_wrapper_disabled * {
@@ -161,17 +159,28 @@ img.toolbar_icon {
 	opacity: 1;
 }
 
-#toolbarborder {
-	border: none;
-	margin-bottom: 12px;
-}
-
 .withLeftBorder {
 	border-left: 1px solid #E9E9E9;
 }
 
+.toolbar_presentation_wrapper_disabled.withLeftBorder {
+	border-left: 1px solid #A3A3A3 !important;
+}
+
+.withRightBorder {
+	border-right: 1px solid #E9E9E9;
+}
+
+.toolbar_presentation_wrapper_disabled.withRightBorder {
+	border-right: 1px solid #A3A3A3 !important;
+}
+
 .withoutRightBorder {
 	border-right: none;
+}
+
+.withoutLeftBorder {
+	border-left: none;
 }
 
 #toolbar_background_wrapper, #toolbar_evideo_wrapper {
