@@ -134,7 +134,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 	
 	var _onClickCarrouselElement = function(event) {
 		var videoId = $(event.target).attr("videoId");
-		var renderedVideo = "<div>" + V.Video.HTML5.renderVideoFromJSON(currentVideos[videoId],{extraClasses: ["preview_video"]}) + "</div>";
+		var renderedVideo = "<div>" + V.Video.HTML5.renderVideoFromJSON(currentVideos[videoId],{loadSources: false, extraClasses: ["preview_video"]}) + "</div>";
 		_renderVideoPreview(renderedVideo, currentVideos[videoId]);
 		selectedVideo = currentVideos[videoId];
 	};
@@ -156,14 +156,19 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 
 	/* Preview */
 	
-	var _renderVideoPreview = function(renderedVideo, video){
+	var _renderVideoPreview = function(renderedVideo,video){
 		var videoArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_video");
 		var metadataArea = $("#" + previewDivId).find("#tab_video_repo_content_preview_metadata");
 		var button = $("#" + previewDivId).find(".okButton");
 		$(videoArea).html("");
 		$(metadataArea).html("");
-		if((renderedVideo) && (video)) {
+		if((renderedVideo)&&(video)){
+			renderedVideo = $(renderedVideo);
 			$(videoArea).append(renderedVideo);
+			var sources = V.Video.HTML5.getSourcesFromJSON(video);
+			var videoDOM = $(renderedVideo).find("video");
+			V.Video.HTML5.addSourcesToVideoTag(sources,videoDOM,{timestamp:true});
+
 			var table = V.Editor.Utils.generateTable({title:video.title, author:video.author, description:video.description});
 			$(metadataArea).html(table);
 			$(button).show();

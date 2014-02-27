@@ -175,23 +175,22 @@ VISH.Editor.Object = (function(V,$,undefined){
 		previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
 		$("#" + divId + " .previewimgbox").css("background-image","none");
 		$("#" + divId + " .previewimgbox img.imagePreview").remove();
-		var wrapper = renderObjectPreview(src);
 		if($("#" + divId + " .previewimgbox .objectPreview").length>0){
 			$("#" + divId + " .previewimgbox .objectPreview").remove();
 		}
+		var wrapper = $(renderObjectPreview(src));
 		$("#" + divId + " .previewimgbox").append(wrapper);
+		_loadSources(src,wrapper);
 		$("#" + divId + " .previewimgbox button").show();
-		$("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
 	};
 	
 	var resetPreview = function(divId){
 		$("#" + divId + " .previewimgbox button").hide();
 		$("#" + divId + " .previewimgbox img.imagePreview").remove();
 		$("#" + divId + " .previewimgbox .objectPreview").remove();
-		if (previewBackground){
+		if(previewBackground){
 			$("#" + divId + " .previewimgbox").css("background-image", previewBackground);
 		}
-		$("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
 	};
 	
 	var drawPreviewElement = function(){
@@ -205,6 +204,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	};
 
+	var _loadSources = function(object,tag){
+		var objectInfo = V.Object.getObjectInfo(object);
+		if((objectInfo.wrapper===V.Constant.WRAPPER.VIDEO)||(objectInfo.wrapper===null)&&(objectInfo.type===V.Constant.MEDIA.HTML5_VIDEO)){
+			var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+			V.Video.HTML5.addSourcesToVideoTag(sources,tag,{timestamp:true});
+		}
+	};
 
 	///////////////////////////////////////
 	/// OBJECT RESIZING
@@ -309,7 +315,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoWithURL(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
+						return V.Editor.Video.HTML5.renderVideoWithURL(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
 						break;
 					case V.Constant.MEDIA.HTML5_AUDIO:
 						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{extraClasses: "objectPreview"});

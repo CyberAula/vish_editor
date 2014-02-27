@@ -236,8 +236,7 @@ VISH.EVideo = (function(V,$,undefined){
 				var extraAttrs = {"videoType":eVideoJSON.video.type, "eVideoId": eVideoJSON.id};
 				var video = $(V.Video.HTML5.renderVideoFromJSON(eVideoJSON.video,{onVideoReady: "VISH.EVideo.onHTML5VideoReady", loadSources: false, controls: false, poster: false, extraClasses: ["temp_hidden"], extraAttrs: extraAttrs}));
 				$(videoBody).append(video);
-				V.Video.HTML5.addSourcesToVideoTag(V.Video.HTML5.getSourcesFromJSON(eVideoJSON.video),video);
-				// $(video).load();
+				V.Video.HTML5.addSourcesToVideoTag(V.Video.HTML5.getSourcesFromJSON(eVideoJSON.video),video,{timestamp:true});
 				break;
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				var videoWrapper = $(V.Video.Youtube.renderVideoFromJSON(eVideoJSON.video));

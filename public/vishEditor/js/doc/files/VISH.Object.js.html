@@ -223,7 +223,11 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.DOC;
 		}
 
-		if(extension==&quot;ppt&quot;){
+		if((extension==&quot;ppt&quot;)||(extension==&quot;pptx&quot;)){
+			return V.Constant.MEDIA.PPT;
+		}
+
+		if(extension==&quot;odp&quot;){
 			return V.Constant.MEDIA.PPT;
 		}
 

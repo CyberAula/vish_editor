@@ -1064,12 +1064,6 @@ div.addUrlButtons{
 	top: -15px;
 }
 
-.documentblank {
-	position:absolute;
-	margin-left: 93%;
-	margin-top: 56%;
-}
-
 .buttonaddfancy {
 	position:absolute;
 	margin-top: 67%;
@@ -1942,10 +1936,6 @@ div.object_wrapper {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-}
-
-.documentblank_extraMargin {
-	margin-left: 133%;
 }
 
 .upload_file_input {

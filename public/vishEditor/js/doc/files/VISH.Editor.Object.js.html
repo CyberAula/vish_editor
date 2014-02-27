@@ -265,23 +265,22 @@ VISH.Editor.Object = (function(V,$,undefined){
 		previewBackground = $(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;,&quot;none&quot;);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox img.imagePreview&quot;).remove();
-		var wrapper = renderObjectPreview(src);
 		if($(&quot;#&quot; + divId + &quot; .previewimgbox .objectPreview&quot;).length&gt;0){
 			$(&quot;#&quot; + divId + &quot; .previewimgbox .objectPreview&quot;).remove();
 		}
+		var wrapper = $(renderObjectPreview(src));
 		$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).append(wrapper);
+		_loadSources(src,wrapper);
 		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).show();
-		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).addClass(&quot;documentblank_extraMargin&quot;);
 	};
 	
 	var resetPreview = function(divId){
 		$(&quot;#&quot; + divId + &quot; .previewimgbox button&quot;).hide();
 		$(&quot;#&quot; + divId + &quot; .previewimgbox img.imagePreview&quot;).remove();
 		$(&quot;#&quot; + divId + &quot; .previewimgbox .objectPreview&quot;).remove();
-		if (previewBackground){
+		if(previewBackground){
 			$(&quot;#&quot; + divId + &quot; .previewimgbox&quot;).css(&quot;background-image&quot;, previewBackground);
 		}
-		$(&quot;#&quot; + divId + &quot; .documentblank&quot;).removeClass(&quot;documentblank_extraMargin&quot;);
 	};
 	
 	var drawPreviewElement = function(){
@@ -295,6 +294,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	};
 
+	var _loadSources = function(object,tag){
+		var objectInfo = V.Object.getObjectInfo(object);
+		if((objectInfo.wrapper===V.Constant.WRAPPER.VIDEO)||(objectInfo.wrapper===null)&amp;&amp;(objectInfo.type===V.Constant.MEDIA.HTML5_VIDEO)){
+			var sources = (typeof objectInfo.source == &quot;object&quot;) ? objectInfo.source : [{src: objectInfo.source}];
+			V.Video.HTML5.addSourcesToVideoTag(sources,tag,{timestamp:true});
+		}
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; OBJECT RESIZING
@@ -399,7 +405,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoWithURL(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: [&quot;objectPreview&quot;]});
+						return V.Editor.Video.HTML5.renderVideoWithURL(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: [&quot;objectPreview&quot;]});
 						break;
 					case V.Constant.MEDIA.HTML5_AUDIO:
 						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{extraClasses: &quot;objectPreview&quot;});

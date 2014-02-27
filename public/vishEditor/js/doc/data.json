@@ -714,13 +714,13 @@
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 366,
+            "line": 372,
             "description": "Returns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 460,
+            "line": 466,
             "description": "param style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -1188,6 +1188,13 @@
             "namespace": "VISH"
         },
         {
+            "file": "VISH.Video.HTML5.js",
+            "line": 164,
+            "description": "Function to stop all videos of a slide",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
             "file": "VISH.Video.Youtube.js",
             "line": 243,
             "description": "Function to pause a specific video",
@@ -1217,14 +1224,14 @@
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 167,
+            "line": 173,
             "description": "Function called when leaving a slide in viewer",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 192,
+            "line": 198,
             "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
             "class": "",
             "namespace": "VISH"
@@ -1494,11 +1501,11 @@
         },
         {
             "message": "Missing item type\nReturns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:366"
+            "line": " VISH.Editor.Object.js:372"
         },
         {
             "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:460"
+            "line": " VISH.Editor.Object.js:466"
         },
         {
             "message": "Missing item type\nInsert the selected slides of a slide presentation in JSON",
@@ -1757,6 +1764,10 @@
             "line": " VISH.Video.HTML5.js:132"
         },
         {
+            "message": "Missing item type\nFunction to stop all videos of a slide",
+            "line": " VISH.Video.HTML5.js:164"
+        },
+        {
             "message": "Missing item type\nFunction to pause a specific video",
             "line": " VISH.Video.Youtube.js:243"
         },
@@ -1774,11 +1785,11 @@
         },
         {
             "message": "Missing item type\nFunction called when leaving a slide in viewer",
-            "line": " VISH.Viewer.js:167"
+            "line": " VISH.Viewer.js:173"
         },
         {
             "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
-            "line": " VISH.Viewer.js:192"
+            "line": " VISH.Viewer.js:198"
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",

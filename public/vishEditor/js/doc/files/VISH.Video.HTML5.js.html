@@ -205,7 +205,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var currentVideos = $(slide).find(&quot;video&quot;);
 		$.each(currentVideos, function(index, video){
 			if ($(video).attr(&quot;wasplayingonslideleave&quot;)==&quot;true&quot;){
-			  video.play();
+				video.play();
 			} else if ($(video).attr(&quot;wasplayingonslideleave&quot;)==&quot;false&quot;){
 				&#x2F;&#x2F;Do nothing
 			} else if (typeof $(video).attr(&quot;wasplayingonslideleave&quot;) == &quot;undefined&quot;){
@@ -233,6 +233,38 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		});
 	};
 
+	var playMultimedia = function(slide){
+		var multimediaEls = $(slide).find(&quot;video, audio&quot;);
+		$.each(multimediaEls, function(index,mEl){
+			if ($(mEl).attr(&quot;wasplayingonslideleave&quot;)==&quot;true&quot;){
+				mEl.play();
+			} else if ($(mEl).attr(&quot;wasplayingonslideleave&quot;)==&quot;false&quot;){
+				&#x2F;&#x2F;Do nothing
+			} else if (typeof $(mEl).attr(&quot;wasplayingonslideleave&quot;) == &quot;undefined&quot;){
+				&#x2F;&#x2F;No wasplayingonslideleave attr
+				
+				&#x2F;&#x2F;Check autoplayonsliddenter attr
+				if ($(mEl).attr(&quot;autoplayonslideenter&quot;)==&quot;true&quot;){
+					mEl.play();
+				}
+			}
+		});
+	};
+	
+	&#x2F;**
+	 * Function to stop all videos of a slide
+	 *&#x2F;
+	var stopMultimedia = function(slide){
+		var multimediaEls = $(slide).find(&quot;video, audio&quot;);
+		$.each(multimediaEls, function(index,mEl){
+			var playing = !mEl.paused;
+			$(mEl).attr(&quot;wasplayingonslideleave&quot;,playing);
+			if(playing){
+				mEl.pause();
+			}
+		});
+	};
+
 
 	&#x2F;*
 	 * Rendering
@@ -247,9 +279,9 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		if(typeof renderOptions.controls == &quot;undefined&quot;){
 			renderOptions.controls = videoJSON[&#x27;controls&#x27;];
 		}
-		&#x2F;&#x2F; if(typeof renderOptions.poster != &quot;undefined&quot;){
-		&#x2F;&#x2F; 	renderOptions.poster = videoJSON[&#x27;poster&#x27;];
-		&#x2F;&#x2F; }
+		if(typeof renderOptions.poster == &quot;undefined&quot;){
+			renderOptions.poster = videoJSON[&#x27;poster&#x27;];
+		}
 
 		renderOptions.style = videoJSON[&#x27;style&#x27;];
 		renderOptions.autoplay = videoJSON[&#x27;autoplay&#x27;];
@@ -260,6 +292,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 
 	var renderVideoFromSources = function(sources,options){
 		var video = $(&quot;&lt;video&gt;&lt;&#x2F;video&gt;&quot;);
+
+		$(video).attr(&quot;preload&quot;,&quot;metadata&quot;);
 
 		if((options)&amp;&amp;(options.extraAttrs)){
 			for(var key in options.extraAttrs){
@@ -280,7 +314,6 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 						onVideoReadyFunction = onVideoReadyFunction[onVideoReadySplit[k]];
 					}
 					if(typeof onVideoReadyFunction == &quot;function&quot;){
-						&#x2F;&#x2F; onVideoReady = &#x27;onloadeddata=&quot;&#x27;+ options.onVideoReady + &#x27;(this)&#x27; + &#x27;&quot; &#x27;;
 						$(video).attr(&quot;onloadeddata&quot;,options.onVideoReady + &#x27;(this)&#x27;);
 					}
 				} catch(e){}
@@ -307,19 +340,31 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 				$(video).attr(&quot;style&quot;,options[&#x27;style&#x27;]);
 			}
 		}
+
+		&#x2F;&#x2F;Default callback
+		if(typeof $(video).attr(&quot;onloadeddata&quot;) == &quot;undefined&quot;){
+			$(video).attr(&quot;onloadeddata&quot;,&#x27;VISH.Video.HTML5.onVideoReady(this)&#x27;);
+		};
+
 		video = V.Utils.getOuterHTML(video);
 		video = video.split(&quot;&lt;&#x2F;video&gt;&quot;)[0];
 
 		&#x2F;&#x2F;Write sources (we can&#x27;t loaded it to the DOM directly, because then they will start to load, before been actually rendered)
-		$.each(sources, function(index, source){
-			if(typeof source.src == &quot;string&quot;){
-				var mimeType = (source.mimeType)?&quot;type=&#x27;&quot; + source.mimeType + &quot;&#x27; &quot;:&quot;&quot;;
-				video = video + &quot;&lt;source src=&#x27;&quot; + source.src + &quot;&#x27; &quot; + mimeType + &quot;&gt;&quot;;
-			}	
-		});
+		if((!options)||(options.loadSources !== false)){
+			$.each(sources, function(index, source){
+				if(typeof source.src == &quot;string&quot;){
+					var sourceSrc = source.src;
+					if((typeof options != &quot;undefined&quot;)&amp;&amp;(options.timestamp === true)){
+						sourceSrc = V.Utils.addParamToUrl(sourceSrc,&quot;timestamp&quot;,new Date().getTime());
+					}
+					var mimeType = (source.mimeType)?&quot;type=&#x27;&quot; + source.mimeType + &quot;&#x27; &quot;:&quot;&quot;;
+					video = video + &quot;&lt;source src=&#x27;&quot; + sourceSrc + &quot;&#x27; &quot; + mimeType + &quot;&gt;&quot;;
+				}
+			});
 
-		if(sources.length&gt;0){
-			video = video + &quot;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&quot;;
+			if(sources.length&gt;0){
+				video = video + &quot;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&quot;;
+			}
 		}
 
 		video = video + &quot;&lt;&#x2F;video&gt;&quot;;
@@ -327,12 +372,103 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return video;
 	};
 
+	var addSourcesToVideoTag = function(sources,videoTag,options){
+		var options = options || {};
+
+		$.each(sources, function(index, source){
+			if(typeof source.src == &quot;string&quot;){
+				var sourceSrc = source.src;
+				if(options.timestamp === true){
+					sourceSrc = V.Utils.addParamToUrl(sourceSrc,&quot;timestamp&quot;,&quot;&quot;+new Date().getTime());
+				}
+				var mimeType = (source.mimeType)?&quot;type=&#x27;&quot; + source.mimeType + &quot;&#x27; &quot;:&quot;&quot;;
+				$(videoTag).append(&quot;&lt;source src=&#x27;&quot;+sourceSrc+&quot;&#x27; &quot; + mimeType + &quot;&gt;&quot;);
+			}
+		});
+		if(sources.length&gt;0){
+			$(videoTag).append(&quot;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&quot;);
+		}
+
+		if(options.initTimer===true){
+			_initLoadedTimerForVideo(videoTag);
+		}
+	};
+
+	var _initLoadedTimerForVideo = function(videoTag){
+		var videoTimer = setInterval(function(){
+			var nAttempts = (typeof $(videoTag).attr(&quot;loadAttempts&quot;) != &quot;undefined&quot;) ? parseInt($(videoTag).attr(&quot;loadAttempts&quot;)) : 1;
+			if(($(videoTag).attr(&quot;loaded&quot;)===&quot;true&quot;)||(nAttempts&gt;3)){
+				clearTimeout(videoTimer);
+			} else {
+				$(videoTag).attr(&quot;loadAttempts&quot;,nAttempts+1)
+				_reloadTimestampSources(videoTag);
+			}
+		},10000);
+	};
+
+	var _reloadTimestampSources = function(videoTag){
+		V.Debugging.log(&quot;ViSH.Video.HTML5 Module [BETA VERSION]: _reloadTimestampSources called&quot;);
+
+		var sources = V.Video.HTML5.getSources(videoTag);
+		sources.map(function(source){
+			source.src = V.Utils.addParamToUrl(source.src,&quot;timestamp&quot;,&quot;&quot;+new Date().getTime());
+			return source;
+		});
+
+		$(videoTag).children().remove();
+
+		if($(videoTag).attr(&quot;loaded&quot;)===&quot;true&quot;){
+			return;
+		}
+
+		$(videoTag).load();
+
+		addSourcesToVideoTag(sources,videoTag,{timestamp: true,initTimer: false});
+
+		setTimeout(function(){
+			$(videoTag).load();
+		},500);
+
+		&#x2F;&#x2F; $(videoTag).find(&quot;source&quot;).each(function(index,source){
+		&#x2F;&#x2F; 	var sourceSrc = $(source).attr(&quot;src&quot;);
+		&#x2F;&#x2F; 	&#x2F;&#x2F;addParam method will remove the previous param
+		&#x2F;&#x2F; 	sourceSrc = V.Utils.addParamToUrl(sourceSrc,&quot;timestamp&quot;,&quot;&quot;+new Date().getTime());
+		&#x2F;&#x2F; 	$(source).attr(&quot;src&quot;,sourceSrc);
+		&#x2F;&#x2F; });
+		&#x2F;&#x2F; if($(videoTag).attr(&quot;loaded&quot;)!==&quot;true&quot;){
+		&#x2F;&#x2F; 	$(videoTag).load();
+		&#x2F;&#x2F; }
+	};
+
+	var onVideoReady = function(video){
+		&#x2F;&#x2F;Check state (based on http:&#x2F;&#x2F;www.w3schools.com&#x2F;tags&#x2F;av_prop_readystate.asp)
+		if((typeof video != &quot;undefined&quot;)&amp;&amp;((video.readyState == 4)||(video.readyState == 3))){
+			$(video).attr(&quot;loaded&quot;,&quot;true&quot;);
+		}
+	};
 
 	&#x2F;*
 	 * Utils
 	 *&#x2F;
 
 	var getSources = function(videoDOM){
+		if(typeof videoDOM == &quot;string&quot;){
+			var sources = [];
+			&#x2F;&#x2F;Prevent video to be rendered in a non appropriate time.
+			var srcPattern = new RegExp(&quot;src=(\&#x27;||\&quot;)([a-z.:&#x2F;&#x2F;0-9]+)&quot;,&quot;g&quot;);
+
+			&#x2F;&#x2F; var videoDOM = &quot;&lt;video controls=&#x27;controls&#x27;&gt;&lt;source src=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;videos&#x2F;3366.webm&#x27; type=&#x27;video&#x2F;webm&#x27; &gt;&lt;source src=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;videos&#x2F;3366.mp4&#x27; type=&#x27;video&#x2F;mp4&#x27; &gt;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&lt;&#x2F;video&gt;&quot;;
+			var found;
+			while(found = srcPattern.exec(videoDOM)){
+				if(found.length&gt;2){
+					sources.push(found[2]);
+				}
+				srcPattern.lastIndex = found.index+1;
+			};
+
+			return sources.map(function(value){ return {&quot;src&quot;: value, &quot;mimeType&quot;: getVideoMimeType(value)}});
+		}
+
 		try {
 			return $(videoDOM).find(&quot;source&quot;).map(function(){ return {&quot;src&quot;: this.src, &quot;mimeType&quot;: getVideoMimeType(this.src)}});
 		} catch(e){
@@ -370,23 +506,27 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 
 	var getVideoMimeType = function(url){
 		var source = (V.Object.getObjectInfo(url)).source;
-		return &quot;video&#x2F;&quot; + source.split(&#x27;.&#x27;).pop();
+		return &quot;video&#x2F;&quot; + source.split(&#x27;.&#x27;).pop().split(&quot;?&quot;)[0];
 	};
 
 	return {
-		init 				: init,
-		renderVideoFromJSON	: renderVideoFromJSON,
+		init 					: init,
+		renderVideoFromJSON		: renderVideoFromJSON,
 		renderVideoFromSources	: renderVideoFromSources,
-		setVideoEvents 		: setVideoEvents,
-		playVideos 			: playVideos,
-		stopVideos 			: stopVideos,
-		playVideo 			: playVideo,
-		pauseVideo 			: pauseVideo,
-		seekVideo			: seekVideo,
-		showControls 		: showControls,
-		getSources 			: getSources,
-		getSourcesFromJSON	: getSourcesFromJSON,
-		getVideoMimeType	: getVideoMimeType
+		addSourcesToVideoTag	: addSourcesToVideoTag,
+		setVideoEvents 			: setVideoEvents,
+		playVideos 				: playVideos,
+		stopVideos 				: stopVideos,
+		playMultimedia			: playMultimedia,
+		stopMultimedia			: stopMultimedia,
+		playVideo 				: playVideo,
+		pauseVideo 				: pauseVideo,
+		seekVideo				: seekVideo,
+		showControls 			: showControls,
+		getSources 				: getSources,
+		getSourcesFromJSON		: getSourcesFromJSON,
+		getVideoMimeType		: getVideoMimeType,
+		onVideoReady 			: onVideoReady
 	};
 
 })(VISH,jQuery);

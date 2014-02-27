@@ -224,7 +224,6 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 						onVideoReadyFunction = onVideoReadyFunction[onVideoReadySplit[k]];
 					}
 					if(typeof onVideoReadyFunction == "function"){
-						// onVideoReady = 'onloadeddata="'+ options.onVideoReady + '(this)' + '" ';
 						$(video).attr("onloadeddata",options.onVideoReady + '(this)');
 					}
 				} catch(e){}
@@ -251,6 +250,12 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 				$(video).attr("style",options['style']);
 			}
 		}
+
+		//Default callback
+		if(typeof $(video).attr("onloadeddata") == "undefined"){
+			$(video).attr("onloadeddata",'VISH.Video.HTML5.onVideoReady(this)');
+		};
+
 		video = V.Utils.getOuterHTML(video);
 		video = video.split("</video>")[0];
 
@@ -258,8 +263,12 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		if((!options)||(options.loadSources !== false)){
 			$.each(sources, function(index, source){
 				if(typeof source.src == "string"){
+					var sourceSrc = source.src;
+					if((typeof options != "undefined")&&(options.timestamp === true)){
+						sourceSrc = V.Utils.addParamToUrl(sourceSrc,"timestamp",new Date().getTime());
+					}
 					var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
-					video = video + "<source src='" + source.src + "' " + mimeType + ">";
+					video = video + "<source src='" + sourceSrc + "' " + mimeType + ">";
 				}
 			});
 
@@ -273,16 +282,78 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return video;
 	};
 
-	var addSourcesToVideoTag = function(sources,videoTag){
+	var addSourcesToVideoTag = function(sources,videoTag,options){
+		var options = options || {};
+
 		$.each(sources, function(index, source){
 			if(typeof source.src == "string"){
+				var sourceSrc = source.src;
+				if(options.timestamp === true){
+					sourceSrc = V.Utils.addParamToUrl(sourceSrc,"timestamp",""+new Date().getTime());
+				}
 				var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
-				// $(videoTag).append("<source src='"+source.src+"?t=" + Math.random()/10000 + "' " + mimeType + ">");
-				$(videoTag).append("<source src='"+source.src+"' " + mimeType + ">");
+				$(videoTag).append("<source src='"+sourceSrc+"' " + mimeType + ">");
 			}
 		});
 		if(sources.length>0){
 			$(videoTag).append("<p>Your browser does not support HTML5 video.</p>");
+		}
+
+		if(options.initTimer===true){
+			_initLoadedTimerForVideo(videoTag);
+		}
+	};
+
+	var _initLoadedTimerForVideo = function(videoTag){
+		var videoTimer = setInterval(function(){
+			var nAttempts = (typeof $(videoTag).attr("loadAttempts") != "undefined") ? parseInt($(videoTag).attr("loadAttempts")) : 1;
+			if(($(videoTag).attr("loaded")==="true")||(nAttempts>3)){
+				clearTimeout(videoTimer);
+			} else {
+				$(videoTag).attr("loadAttempts",nAttempts+1)
+				_reloadTimestampSources(videoTag);
+			}
+		},10000);
+	};
+
+	var _reloadTimestampSources = function(videoTag){
+		V.Debugging.log("ViSH.Video.HTML5 Module [BETA VERSION]: _reloadTimestampSources called");
+
+		var sources = V.Video.HTML5.getSources(videoTag);
+		sources.map(function(source){
+			source.src = V.Utils.addParamToUrl(source.src,"timestamp",""+new Date().getTime());
+			return source;
+		});
+
+		$(videoTag).children().remove();
+
+		if($(videoTag).attr("loaded")==="true"){
+			return;
+		}
+
+		$(videoTag).load();
+
+		addSourcesToVideoTag(sources,videoTag,{timestamp: true,initTimer: false});
+
+		setTimeout(function(){
+			$(videoTag).load();
+		},500);
+
+		// $(videoTag).find("source").each(function(index,source){
+		// 	var sourceSrc = $(source).attr("src");
+		// 	//addParam method will remove the previous param
+		// 	sourceSrc = V.Utils.addParamToUrl(sourceSrc,"timestamp",""+new Date().getTime());
+		// 	$(source).attr("src",sourceSrc);
+		// });
+		// if($(videoTag).attr("loaded")!=="true"){
+		// 	$(videoTag).load();
+		// }
+	};
+
+	var onVideoReady = function(video){
+		//Check state (based on http://www.w3schools.com/tags/av_prop_readystate.asp)
+		if((typeof video != "undefined")&&((video.readyState == 4)||(video.readyState == 3))){
+			$(video).attr("loaded","true");
 		}
 	};
 
@@ -345,7 +416,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 
 	var getVideoMimeType = function(url){
 		var source = (V.Object.getObjectInfo(url)).source;
-		return "video/" + source.split('.').pop();
+		return "video/" + source.split('.').pop().split("?")[0];
 	};
 
 	return {
@@ -364,7 +435,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		showControls 			: showControls,
 		getSources 				: getSources,
 		getSourcesFromJSON		: getSourcesFromJSON,
-		getVideoMimeType		: getVideoMimeType
+		getVideoMimeType		: getVideoMimeType,
+		onVideoReady 			: onVideoReady
 	};
 
 })(VISH,jQuery);
