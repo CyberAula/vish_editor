@@ -115,7 +115,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var currentVideos = $(slide).find("video");
 		$.each(currentVideos, function(index, video){
 			if ($(video).attr("wasplayingonslideleave")=="true"){
-			  video.play();
+				video.play();
 			} else if ($(video).attr("wasplayingonslideleave")=="false"){
 				//Do nothing
 			} else if (typeof $(video).attr("wasplayingonslideleave") == "undefined"){
@@ -139,6 +139,38 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 			$(video).attr("wasplayingonslideleave",playing);
 			if(playing){
 				video.pause();
+			}
+		});
+	};
+
+	var playMultimedia = function(slide){
+		var multimediaEls = $(slide).find("video, audio");
+		$.each(multimediaEls, function(index,mEl){
+			if ($(mEl).attr("wasplayingonslideleave")=="true"){
+				mEl.play();
+			} else if ($(mEl).attr("wasplayingonslideleave")=="false"){
+				//Do nothing
+			} else if (typeof $(mEl).attr("wasplayingonslideleave") == "undefined"){
+				//No wasplayingonslideleave attr
+				
+				//Check autoplayonsliddenter attr
+				if ($(mEl).attr("autoplayonslideenter")=="true"){
+					mEl.play();
+				}
+			}
+		});
+	};
+	
+	/**
+	 * Function to stop all videos of a slide
+	 */
+	var stopMultimedia = function(slide){
+		var multimediaEls = $(slide).find("video, audio");
+		$.each(multimediaEls, function(index,mEl){
+			var playing = !mEl.paused;
+			$(mEl).attr("wasplayingonslideleave",playing);
+			if(playing){
+				mEl.pause();
 			}
 		});
 	};
@@ -317,20 +349,22 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	};
 
 	return {
-		init 				: init,
-		renderVideoFromJSON	: renderVideoFromJSON,
+		init 					: init,
+		renderVideoFromJSON		: renderVideoFromJSON,
 		renderVideoFromSources	: renderVideoFromSources,
 		addSourcesToVideoTag	: addSourcesToVideoTag,
-		setVideoEvents 		: setVideoEvents,
-		playVideos 			: playVideos,
-		stopVideos 			: stopVideos,
-		playVideo 			: playVideo,
-		pauseVideo 			: pauseVideo,
-		seekVideo			: seekVideo,
-		showControls 		: showControls,
-		getSources 			: getSources,
-		getSourcesFromJSON	: getSourcesFromJSON,
-		getVideoMimeType	: getVideoMimeType
+		setVideoEvents 			: setVideoEvents,
+		playVideos 				: playVideos,
+		stopVideos 				: stopVideos,
+		playMultimedia			: playMultimedia,
+		stopMultimedia			: stopMultimedia,
+		playVideo 				: playVideo,
+		pauseVideo 				: pauseVideo,
+		seekVideo				: seekVideo,
+		showControls 			: showControls,
+		getSources 				: getSources,
+		getSourcesFromJSON		: getSourcesFromJSON,
+		getVideoMimeType		: getVideoMimeType
 	};
 
 })(VISH,jQuery);
