@@ -294,7 +294,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	var loadToolsForZone = function(zone){
 		cleanZoneTools(V.Editor.getLastArea());
 		
-		var type = $(zone).clone().attr("type");
+		var type = $(zone).attr("type");
 		switch(type){
 			case "text":  
 				_loadToolbarForElement(type);

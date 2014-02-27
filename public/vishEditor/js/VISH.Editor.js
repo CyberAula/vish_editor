@@ -627,8 +627,9 @@ VISH.Editor = (function(V,$,undefined){
 						if(index!==0){
 							sources = sources + ',';
 						}
-						var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':'';
-						sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}';
+						var sourceSrc = V.Utils.removeParamFromUrl($(source).attr("src"),"timestamp");
+						var sourceMimeType = (typeof $(source).attr("type") != "undefined")?', "type": "' + $(source).attr("type") + '"':'';
+						sources = sources + '{"src":"' + sourceSrc + '"' + sourceMimeType + '}';
 					});
 					sources = '[' + sources + ']';
 					element.sources = sources;

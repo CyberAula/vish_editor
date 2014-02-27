@@ -294,7 +294,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	var renderObjectPreview = function(object){
 		var objectInfo = V.Object.getObjectInfo(object);
-
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object preview from source
@@ -339,7 +338,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return _genericWrapperPreview(object);
 				break;
 			case V.Constant.WRAPPER.VIDEO:
-				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
 				break;
 			case V.Constant.WRAPPER.AUDIO:
 				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{extraClasses: "objectPreview"});
@@ -374,11 +373,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param options.area: optional param indicating the area to add the object, used for editing presentations
 	* param options.style: optional param with the style, used in editing presentation
 	*/
-	var drawObject = function(object, options){
+	var drawObject = function(object,options){
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
-
 		//Defaults
 		var objectInfo = V.Object.getObjectInfo(object);
 		var current_area = V.Editor.getCurrentArea();

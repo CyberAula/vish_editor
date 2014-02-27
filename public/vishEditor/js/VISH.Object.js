@@ -24,9 +24,22 @@ VISH.Object = (function(V,$,undefined){
 		var wrapper = null;
 		
 		//Determine wrapper
-		var element = $(object)[0];
-		if(typeof element != 'undefined'){
-			var wrapper = element.tagName;
+		if(typeof object == "string"){
+			var videoPattern = new RegExp("^<video","g");
+			if(videoPattern.exec(object) != null){
+				wrapper = "VIDEO";
+			}
+			var audioPattern = new RegExp("^<audio","g");
+			if(audioPattern.exec(object) != null){
+				wrapper = "AUDIO";
+			}
+		}
+
+		if(typeof wrapper == "undefined"){
+			var element = $(object)[0];
+			if(typeof element != 'undefined'){
+				wrapper = element.tagName;
+			}
 		}
 		
 		//Determine source type

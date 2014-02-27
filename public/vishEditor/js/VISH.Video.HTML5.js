@@ -419,6 +419,22 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return "video/" + source.split('.').pop().split("?")[0];
 	};
 
+	var getPoster = function(videoDOM){
+		if(typeof videoDOM == "string"){
+			//Prevent video to be rendered in a non appropriate time.
+			var posterPattern = new RegExp("poster=(\'||\")([a-z.://0-9?=%]+)","g");
+			// var videoDOM = "<video poster='http://vishub.org/pictures/44.png' controls='controls'><source src='http://vishub.org/videos/3366.webm' type='video/webm' ><source src='http://vishub.org/videos/3366.mp4' type='video/mp4' ><p>Your browser does not support HTML5 video.</p></video>";
+			var found = posterPattern.exec(videoDOM);
+			if((typeof found != "undefined")&&(found != null)&&(found.length>2)){
+				return found[2];
+			}
+
+			return undefined;
+		}
+
+		return $(videoDOM).attr("poster");
+	};
+
 	return {
 		init 					: init,
 		renderVideoFromJSON		: renderVideoFromJSON,
@@ -436,6 +452,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		getSources 				: getSources,
 		getSourcesFromJSON		: getSourcesFromJSON,
 		getVideoMimeType		: getVideoMimeType,
+		getPoster				: getPoster,
 		onVideoReady 			: onVideoReady
 	};
 
