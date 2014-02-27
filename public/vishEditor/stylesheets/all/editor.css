@@ -686,6 +686,9 @@ input.slider_range_input {
 	padding-bottom: 15px;
 }
 
+#importButton > .btn-small {
+	padding: 5px 5px;
+}
 
 #addSlideButton, #importButton {
 	font-family: 'Open Sans', arial, sans-serif;
@@ -928,6 +931,22 @@ div.vezone[tooltip='true'][size='large'] {
 	width: 730px;
 	height: 150px;
 }
+
+.box1_section1{
+	width: 100%;
+	display: inline-block;
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+.box1_section2{
+	width: 100%;
+	display: inline-block;
+}
+.box1_section3{
+	width: 100%;
+	display: inline-block;
+}
+
 .box1fancy2 {
 	width: 730px;
 	height: 500px;
@@ -979,30 +998,34 @@ div.vezone[tooltip='true'][size='large'] {
 }
 
 .textfancy {
-	position: absolute;
+	position: relative;
 	font-family: 'Open Sans', arial, sans-serif;
-	margin-left: 70px;
-	margin-top: 15px;
+	margin: 0px;
+	left: 11%;
+	top: 5%;
 	font-size: 19px;
 	color: #9B999D;
 }
 
 .image_add_url {
 	margin-left: 23px;
-	margin-top: 26px;
+	position: relative;
+	float: left;
 }
 
 .image_add_link {
-	position: absolute;	
-	margin-left: 16px;	
-	margin-top: 25px;
+	position: relative;
+	float: left;
+	margin-left: 16px;
+	margin-top: -14px;
 }
 
 
 div.addUrlButtons{
-	margin-top: 85px;
-	display: block;
-	margin-right: 25px;
+	float: right;
+	display: inline;
+	margin-right: 3%;
+	margin-top: -1%;
 }
 
 .addUrlButton {
@@ -1038,7 +1061,7 @@ div.addUrlButtons{
 }
 
 .tools_input_addUrl {
-	margin-left: 70px !important;
+	top: -15px;
 }
 
 .documentblank {
@@ -1076,6 +1099,10 @@ div.addUrlButtons{
 .formsizefancy1 {
 	width: 620px;
 	height: 30px;
+	margin-top: 0px !important;
+	margin-left: 0px !important;
+	position: relative !important;
+	float: left;
 }
 
 .marginsfancy1 {
@@ -1103,7 +1130,7 @@ div.addUrlButtons{
 	font-size: 16px;
 	background: 5px 50% no-repeat;
 	position:absolute;
-	left: 29px;
+	left: 2%;
 	border: 1px solid #9B999D;
 	border-radius: 10px;
 	-webkit-border-radius: 10px;
@@ -1490,7 +1517,8 @@ div.vezone {
 
 .tab_slides_smartcards {
 	display: inline-block;
-	margin-top: 30px;
+	position: relative;
+	float: left;
 }
 
 a#tab_pic_flikr > img {
@@ -1862,9 +1890,9 @@ div.object_wrapper {
 
 .documentsForm { 
 	display: inline-block;
-	position: absolute;
+	position: relative;
 	margin-left: 1.5%;
-	margin-top: 3.7%;
+	margin-top: 1.7%;
 	width: 615px;
 }
 
@@ -2937,8 +2965,10 @@ span.letterInChapterDialog {
 /* More buttons */
 
 .buttonfancy {
-	margin-left: 620px;
-	margin-top: 2px;
+	position: relative;
+	float: right;
+	margin-right: 2%;
+	margin-top: 1%;
 }
 
 
@@ -2981,7 +3011,6 @@ span.letterInChapterDialog {
 	border: 1px solid #ccc;
 	width: 642px;
 	height: 302px;
-	margin-bottom: -31px;
 	border-radius: 6px;
 }
 
@@ -2999,5 +3028,21 @@ span.letterInChapterDialog {
 }
 
 #tab_audio_soundcloud{
-	height: 30px !important;
+	height: 29px !important;
+}
+
+#json_preview_button {
+	float: left !important;
+}
+
+#json_file_input {
+	display: inline-block;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 16px;
+	background: 5px 50% no-repeat;
+	margin-top: 2%;
+	margin-left: 2%;
+	margin-right: 2%;
+	position: relative;
+	float: left;
 }
