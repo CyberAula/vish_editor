@@ -184,7 +184,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var renderOptions = options || {};
 
 		if(typeof renderOptions.id == "undefined"){
-			renderOptions.id = (videoJSON['id']) ? videoJSON['id'] : V.Utils.getId();
+			renderOptions.id = ((typeof videoJSON != "undefined")&&(videoJSON['id'])) ? videoJSON['id'] : V.Utils.getId();
 		}
 		if(typeof renderOptions.controls == "undefined"){
 			renderOptions.controls = videoJSON['controls'];
