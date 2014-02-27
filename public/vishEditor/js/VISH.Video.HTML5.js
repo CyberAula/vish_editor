@@ -265,7 +265,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 				if(typeof source.src == "string"){
 					var sourceSrc = source.src;
 					if((typeof options != "undefined")&&(options.timestamp === true)){
-						sourceSrc = V.Utils.addParamToUrl(sourceSrc,"timestamp",new Date().getTime());
+						sourceSrc = V.Utils.addParamToUrl(sourceSrc,"timestamp",""+new Date().getTime());
 					}
 					var mimeType = (source.mimeType)?"type='" + source.mimeType + "' ":"";
 					video = video + "<source src='" + sourceSrc + "' " + mimeType + ">";
