@@ -133,7 +133,11 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.DOC;
 		}
 
-		if(extension=="ppt"){
+		if((extension=="ppt")||(extension=="pptx")){
+			return V.Constant.MEDIA.PPT;
+		}
+
+		if(extension=="odp"){
 			return V.Constant.MEDIA.PPT;
 		}
 
