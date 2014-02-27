@@ -20,12 +20,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 				$(myInput).blur();
 			}
 		});
-	}
+	};
 	
 	var beforeLoadTab = function(){
 		_cleanSearch();
 		_cleanObjectPreview();
-	}
+	};
 	
 	var onLoadTab = function(){
 		
@@ -42,7 +42,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).attr("disabled","true");
 		timestampLastSearch = Date.now();
-	}
+	};
 
 	var _cleanSearch = function(){
 		timestampLastSearch = undefined;
@@ -50,12 +50,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		$(myInput).removeAttr("disabled");
 		_cleanObjectPreview();
 		_cleanCarrousel();
-	}
+	};
 
 	var _cleanCarrousel = function(){
 		$("#" + carrouselDivId).hide();
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-	}
+	};
 	
 	var _onDataReceived = function(data){
 		if(!_isValidResult()){
@@ -68,7 +68,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			return;
 		}
 
-		currentObject = new Array();  
+		currentObject = new Array();
 		var carrouselImages = [];
 		var carrouselImagesTitles = [];
 	
@@ -109,12 +109,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	var _onImagesLoaded = function(){
 		_onSearchFinished();
 		_drawData();
-	}
+	};
 
 	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).removeAttr("disabled");
-	}
+	};
 
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
@@ -149,7 +149,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			}
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 		}
-	}
+	};
 	
 	var _onAPIError = function(){
 		if(_isValidResult()){
@@ -165,7 +165,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			_renderObjectPreview(renderedObject,currentObject[objectId]);
 			selectedObject = currentObject[objectId]; 
 		}
-	}
+	};
 
 	var _isValidResult = function(){
 		if(typeof timestampLastSearch == "undefined"){
@@ -179,7 +179,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		}
 
 		return true;
-	}
+	};
   
 
   	/* Preview */
@@ -195,7 +195,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			$(metadataArea).html(table);
 			$("#" + previewDivId).find(".okButton").show();
 		}
-	}
+	};
 	
 	var _cleanObjectPreview = function(){
 		var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
@@ -203,14 +203,14 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		$(objectArea).html("");
 		$(metadataArea).html("");
 		$("#" + previewDivId).find(".okButton").hide();
-	}
+	};
 	
 	var addSelectedObject = function(){
 		if(selectedObject!=null){
 			V.Editor.Object.drawObject(selectedObject.object);
 			$.fancybox.close();
 		}
-	}
+	};
 	
 	return {
 		init 				: init,
