@@ -274,7 +274,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		var renderOptions = options || {};
 
 		if(typeof renderOptions.id == &quot;undefined&quot;){
-			renderOptions.id = (videoJSON[&#x27;id&#x27;]) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
+			renderOptions.id = ((typeof videoJSON != &quot;undefined&quot;)&amp;&amp;(videoJSON[&#x27;id&#x27;])) ? videoJSON[&#x27;id&#x27;] : V.Utils.getId();
 		}
 		if(typeof renderOptions.controls == &quot;undefined&quot;){
 			renderOptions.controls = videoJSON[&#x27;controls&#x27;];
@@ -355,7 +355,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 				if(typeof source.src == &quot;string&quot;){
 					var sourceSrc = source.src;
 					if((typeof options != &quot;undefined&quot;)&amp;&amp;(options.timestamp === true)){
-						sourceSrc = V.Utils.addParamToUrl(sourceSrc,&quot;timestamp&quot;,new Date().getTime());
+						sourceSrc = V.Utils.addParamToUrl(sourceSrc,&quot;timestamp&quot;,&quot;&quot;+new Date().getTime());
 					}
 					var mimeType = (source.mimeType)?&quot;type=&#x27;&quot; + source.mimeType + &quot;&#x27; &quot;:&quot;&quot;;
 					video = video + &quot;&lt;source src=&#x27;&quot; + sourceSrc + &quot;&#x27; &quot; + mimeType + &quot;&gt;&quot;;
@@ -509,6 +509,22 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return &quot;video&#x2F;&quot; + source.split(&#x27;.&#x27;).pop().split(&quot;?&quot;)[0];
 	};
 
+	var getPoster = function(videoDOM){
+		if(typeof videoDOM == &quot;string&quot;){
+			&#x2F;&#x2F;Prevent video to be rendered in a non appropriate time.
+			var posterPattern = new RegExp(&quot;poster=(\&#x27;||\&quot;)([a-z.:&#x2F;&#x2F;0-9?=%]+)&quot;,&quot;g&quot;);
+			&#x2F;&#x2F; var videoDOM = &quot;&lt;video poster=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;pictures&#x2F;44.png&#x27; controls=&#x27;controls&#x27;&gt;&lt;source src=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;videos&#x2F;3366.webm&#x27; type=&#x27;video&#x2F;webm&#x27; &gt;&lt;source src=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;videos&#x2F;3366.mp4&#x27; type=&#x27;video&#x2F;mp4&#x27; &gt;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&lt;&#x2F;video&gt;&quot;;
+			var found = posterPattern.exec(videoDOM);
+			if((typeof found != &quot;undefined&quot;)&amp;&amp;(found != null)&amp;&amp;(found.length&gt;2)){
+				return found[2];
+			}
+
+			return undefined;
+		}
+
+		return $(videoDOM).attr(&quot;poster&quot;);
+	};
+
 	return {
 		init 					: init,
 		renderVideoFromJSON		: renderVideoFromJSON,
@@ -526,6 +542,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		getSources 				: getSources,
 		getSourcesFromJSON		: getSourcesFromJSON,
 		getVideoMimeType		: getVideoMimeType,
+		getPoster				: getPoster,
 		onVideoReady 			: onVideoReady
 	};
 

@@ -1238,6 +1238,15 @@ VISH.Utils = (function(V,undefined){
 		s -= m*60;
 		s = Math.round(s);
 
+		if(s===60){
+			s = 0;
+			m = m+1;
+			if(m===60){
+				m = 0;
+				h = h+1;
+			}
+		}
+
 		return ((h&lt;1 &amp;&amp; sN&lt;5) ? &#x27;&#x27; : h + &quot;:&quot;) + (((sN&gt;3)&amp;&amp;(m&lt;10)) ? &#x27;0&#x27;+m : m) + &quot;:&quot; + (s &lt; 10 ? &#x27;0&#x27;+s : s);
 	};
 	

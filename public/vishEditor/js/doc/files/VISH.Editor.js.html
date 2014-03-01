@@ -717,8 +717,9 @@ VISH.Editor = (function(V,$,undefined){
 						if(index!==0){
 							sources = sources + &#x27;,&#x27;;
 						}
-						var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;;
-						sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;;
+						var sourceSrc = V.Utils.removeParamFromUrl($(source).attr(&quot;src&quot;),&quot;timestamp&quot;);
+						var sourceMimeType = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27;, &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;&#x27;:&#x27;&#x27;;
+						sources = sources + &#x27;{&quot;src&quot;:&quot;&#x27; + sourceSrc + &#x27;&quot;&#x27; + sourceMimeType + &#x27;}&#x27;;
 					});
 					sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
 					element.sources = sources;

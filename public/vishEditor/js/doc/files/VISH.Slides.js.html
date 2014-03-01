@@ -370,9 +370,14 @@ VISH.Slides = (function(V,$,undefined){
 	* n &lt; 0 (go back)
 	*&#x2F;
 	var moveSlides = function(n){
-		if((n&gt;0)&amp;&amp;(!V.Editing)&amp;&amp;(isCurrentLastSlide())){
-			V.Recommendations.showFancybox();
-			return;
+		if((!V.Editing)&amp;&amp;(isCurrentLastSlide())){
+			if(n&gt;0){
+				V.Recommendations.showFancybox();
+				return;
+			} else if((n&lt;0)&amp;&amp;(V.Recommendations.isRecVisible())){
+				V.Recommendations.hideFancybox();
+				return;
+			}
 		}
 
 		var no = curSlideIndex+n+1;
@@ -430,6 +435,19 @@ VISH.Slides = (function(V,$,undefined){
 	*&#x2F;
 	var lastSlide = function(){
 		goToSlide(slideEls.length);
+	};
+
+
+	&#x2F;* 
+	 * Subslides management
+	 *&#x2F;
+	var onClickSlideLink = function(event){
+		event.preventDefault();
+		event.stopPropagation();
+		try {
+			var slideNumber = parseInt($(this).attr(&#x27;href&#x27;).split(&quot;#slide&quot;)[1]);
+			goToSlide(slideNumber);
+		} catch(e){}
 	};
 
 
@@ -544,6 +562,7 @@ VISH.Slides = (function(V,$,undefined){
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
+			onClickSlideLink		: onClickSlideLink,
 			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,

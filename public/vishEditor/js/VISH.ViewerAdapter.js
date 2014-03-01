@@ -144,7 +144,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 */
 	var decideIfPageSwitcher = function(){
-
 		//Arrows
 		if(_showArrows){
 			if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
@@ -169,13 +168,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		// Pager
-		if(V.Slides.isCurrentFirstSlide()){
-			$("#page-switcher-start").addClass("disabledarrow");
-		} else {
+		if(V.Recommendations.isRecVisible()){
 			$("#page-switcher-start").removeClass("disabledarrow");
+			$("#page-switcher-end").addClass("disabledarrow");
+		} else {
+			if(V.Slides.isCurrentFirstSlide()){
+				$("#page-switcher-start").addClass("disabledarrow");
+			} else {
+				$("#page-switcher-start").removeClass("disabledarrow");
+			}
+			if((V.Slides.isCurrentLastSlide())&&(!V.Recommendations.isEnabled())){
+				$("#page-switcher-end").addClass("disabledarrow");
+			} else {
+				$("#page-switcher-end").removeClass("disabledarrow");
+			}
 		}
-		//Always show, if you are in the last you can see the recommendations
-		$("#page-switcher-end").show(); 
 	};
 
 

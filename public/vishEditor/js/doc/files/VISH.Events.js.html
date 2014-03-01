@@ -158,6 +158,9 @@ VISH.Events = (function(V,$,undefined){
 			$(document).on(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, V.Slideset.onCloseSubslideClicked);
 		}
 
+		&#x2F;&#x2F;Slide internal links listener
+		$(document).on(&#x27;click&#x27;,&quot;section.slides article &gt; div a[href^=&#x27;#slide&#x27;]:not(.ui-slider-handle)&quot;, V.Slides.onClickSlideLink);
+
 		&#x2F;&#x2F;when page is cached or updated, add presentation to localstorage
 		if(typeof applicationCache !== &quot;undefined&quot;){
 			applicationCache.addEventListener(&#x27;cached&#x27;, function(){

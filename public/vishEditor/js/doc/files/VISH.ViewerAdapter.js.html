@@ -234,7 +234,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 	 * show both otherwise
 	 *&#x2F;
 	var decideIfPageSwitcher = function(){
-
 		&#x2F;&#x2F;Arrows
 		if(_showArrows){
 			if(V.Viewer.getPresentationType()===V.Constant.PRESENTATION){
@@ -259,13 +258,21 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		&#x2F;&#x2F; Pager
-		if(V.Slides.isCurrentFirstSlide()){
-			$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);
-		} else {
+		if(V.Recommendations.isRecVisible()){
 			$(&quot;#page-switcher-start&quot;).removeClass(&quot;disabledarrow&quot;);
+			$(&quot;#page-switcher-end&quot;).addClass(&quot;disabledarrow&quot;);
+		} else {
+			if(V.Slides.isCurrentFirstSlide()){
+				$(&quot;#page-switcher-start&quot;).addClass(&quot;disabledarrow&quot;);
+			} else {
+				$(&quot;#page-switcher-start&quot;).removeClass(&quot;disabledarrow&quot;);
+			}
+			if((V.Slides.isCurrentLastSlide())&amp;&amp;(!V.Recommendations.isEnabled())){
+				$(&quot;#page-switcher-end&quot;).addClass(&quot;disabledarrow&quot;);
+			} else {
+				$(&quot;#page-switcher-end&quot;).removeClass(&quot;disabledarrow&quot;);
+			}
 		}
-		&#x2F;&#x2F;Always show, if you are in the last you can see the recommendations
-		$(&quot;#page-switcher-end&quot;).show(); 
 	};
 
 

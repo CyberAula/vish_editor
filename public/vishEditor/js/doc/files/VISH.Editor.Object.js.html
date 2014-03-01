@@ -107,7 +107,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		&#x2F;&#x2F; $(urlInput).vewatermark(V.I18n.getTrans(&quot;i.pasteEmbedObject&quot;));
 		
 		&#x2F;&#x2F;Load from URL (embed)
-		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event) {
+		$(&quot;#&quot; + urlDivId + &quot; .previewButton&quot;).click(function(event){
 			if(V.Police.validateObject($(&quot;#&quot; + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($(&quot;#&quot; + urlInputId).val());
 				drawPreview(urlDivId, contentToAdd);
@@ -296,7 +296,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 	var _loadSources = function(object,tag){
 		var objectInfo = V.Object.getObjectInfo(object);
-		if((objectInfo.wrapper===V.Constant.WRAPPER.VIDEO)||(objectInfo.wrapper===null)&amp;&amp;(objectInfo.type===V.Constant.MEDIA.HTML5_VIDEO)){
+		if((objectInfo.wrapper===V.Constant.WRAPPER.VIDEO)||((objectInfo.wrapper===null)&amp;&amp;(objectInfo.type===V.Constant.MEDIA.HTML5_VIDEO))){
 			var sources = (typeof objectInfo.source == &quot;object&quot;) ? objectInfo.source : [{src: objectInfo.source}];
 			V.Video.HTML5.addSourcesToVideoTag(sources,tag,{timestamp:true});
 		}
@@ -384,11 +384,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	var renderObjectPreview = function(object){
 		var objectInfo = V.Object.getObjectInfo(object);
-
 		switch (objectInfo.wrapper) {
 			case null:
 				&#x2F;&#x2F;Draw object preview from source
-				switch (objectInfo.type) {	
+				switch (objectInfo.type) {
 					case V.Constant.MEDIA.IMAGE:
 						return &quot;&lt;img class=&#x27;imagePreview&#x27; src=&#x27;&quot; + object + &quot;&#x27;&gt;&lt;&#x2F;img&gt;&quot;;
 						break;
@@ -429,7 +428,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return _genericWrapperPreview(object);
 				break;
 			case V.Constant.WRAPPER.VIDEO:
-				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: [&quot;objectPreview&quot;]});
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: [&quot;objectPreview&quot;]});
 				break;
 			case V.Constant.WRAPPER.AUDIO:
 				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{extraClasses: &quot;objectPreview&quot;});
@@ -464,7 +463,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param options.area: optional param indicating the area to add the object, used for editing presentations
 	* param options.style: optional param with the style, used in editing presentation
 	*&#x2F;
-	var drawObject = function(object, options){
+	var drawObject = function(object,options){
+
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
@@ -490,7 +490,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				objectInfo.type = options.forceType;
 			}
 		}
-		
+
 		switch (objectInfo.wrapper) {
 			case null:
 				&#x2F;&#x2F;Draw object from source
