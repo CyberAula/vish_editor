@@ -27,6 +27,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		_requesting = false;
 		_generated = false;
 
+		var options = V.Utils.getOptions();
+		if((options)&&(!options.preview)&&(typeof options["recommendationsAPI"] != "undefined")&&(typeof options["recommendationsAPI"]["rootURL"] == "string")){
+			_recommendationAPIUrl = options["recommendationsAPI"]["rootURL"];
+			_enabled = true;
+		} else {
+			return;
+		}
+
 		if(V.Status.getIsInVishSite()){
 			user_id = V.User.getId();
 			var presentation = V.Viewer.getCurrentPresentation();
@@ -37,12 +45,6 @@ VISH.Recommendations = (function(V,$,undefined){
 
 		_searchTerms = getCurrentSearchTerms();
 
-		var options = V.Utils.getOptions();
-		if((options)&&(typeof options["recommendationsAPI"] != "undefined")&&(typeof options["recommendationsAPI"]["rootURL"] == "string")){
-			_recommendationAPIUrl = options["recommendationsAPI"]["rootURL"];
-			_enabled = true;
-		}
-		
 		//Redimension of fancybox is done in ViewerAdapter
 		$("#fancyRec").fancybox({
 			'type'	: 'inline',
