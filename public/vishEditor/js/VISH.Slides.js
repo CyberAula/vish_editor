@@ -346,6 +346,19 @@ VISH.Slides = (function(V,$,undefined){
 	/* 
 	 * Subslides management
 	 */
+	var onClickSlideLink = function(event){
+		event.preventDefault();
+		event.stopPropagation();
+		try {
+			var slideNumber = parseInt($(this).attr('href').split("#slide")[1]);
+			goToSlide(slideNumber);
+		} catch(e){}
+	};
+
+
+	/* 
+	 * Subslides management
+	 */
 
 	var isSubslide = function(slide){
 		var parent = $(slide).parent()[0];
@@ -454,6 +467,7 @@ VISH.Slides = (function(V,$,undefined){
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
+			onClickSlideLink		: onClickSlideLink,
 			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,
