@@ -699,7 +699,7 @@ VISH.Editor = (function(V,$,undefined){
 					}
 				} else if(element.type==V.Constant.IMAGE){
 					element.body   = $(div).find(&#x27;img&#x27;).attr(&#x27;src&#x27;);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find(&#x27;img&#x27;));
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(div).find(&#x27;img&#x27;));
 					if($(div).attr(&quot;hyperlink&quot;)){
 						element.hyperlink = $(div).attr(&quot;hyperlink&quot;);
 					}
@@ -710,7 +710,7 @@ VISH.Editor = (function(V,$,undefined){
 				} else if(element.type==V.Constant.VIDEO){
 					var video = $(div).find(&quot;video&quot;);
 					element.poster = $(video).attr(&quot;poster&quot;);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(video));
 					&#x2F;&#x2F;Sources
 					var sources= &#x27;&#x27;;		
 					$(video).find(&#x27;source&#x27;).each(function(index, source) {
@@ -725,15 +725,16 @@ VISH.Editor = (function(V,$,undefined){
 					element.sources = sources;
 				} else if(element.type==V.Constant.AUDIO){
 					var audio = $(div).find(&quot;audio&quot;);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(audio));
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(audio));
 					&#x2F;&#x2F;Sources
 					var sources= &#x27;&#x27;;				
 					$(audio).find(&#x27;source&#x27;).each(function(index, source) {
 						if(index!==0){
 							sources = sources + &#x27;,&#x27;;
 						}
-						var type = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27; &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;, &#x27;:&#x27;&#x27;;
-						sources = sources + &#x27;{&#x27; + type + &#x27;&quot;src&quot;: &quot;&#x27; + $(source).attr(&quot;src&quot;) + &#x27;&quot;}&#x27;;
+						var sourceSrc = V.Utils.removeParamFromUrl($(source).attr(&quot;src&quot;),&quot;timestamp&quot;);
+						var sourceMimeType = (typeof $(source).attr(&quot;type&quot;) != &quot;undefined&quot;)?&#x27;, &quot;type&quot;: &quot;&#x27; + $(source).attr(&quot;type&quot;) + &#x27;&quot;&#x27;:&#x27;&#x27;;
+						sources = sources + &#x27;{&quot;src&quot;:&quot;&#x27; + sourceSrc + &#x27;&quot;&#x27; + sourceMimeType + &#x27;}&#x27;;
 					});
 					sources = &#x27;[&#x27; + sources + &#x27;]&#x27;;
 					element.sources = sources;
@@ -744,7 +745,7 @@ VISH.Editor = (function(V,$,undefined){
 					var myObject = $(object).clone();
 					$(myObject).removeAttr(&quot;style&quot;);
 					element.body   = V.Utils.getOuterHTML(myObject);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(object).parent());
 					var zoom = V.Utils.getZoomFromStyle($(object).attr(&quot;style&quot;));
 					if(zoom!=1){
 						element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
@@ -764,7 +765,7 @@ VISH.Editor = (function(V,$,undefined){
 					var snapshotIframe = $(snapshotWrapper).children()[0];
 					$(snapshotIframe).removeAttr(&quot;style&quot;);
 					element.body   = V.Utils.getOuterHTML(snapshotIframe);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),snapshotWrapper);
 
 					&#x2F;&#x2F;Save scrolls
 					var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
