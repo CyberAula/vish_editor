@@ -77,11 +77,8 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			var imageSource = null;
 
 			switch (objectInfo.type){
-				case V.Constant.MEDIA.FLASH:
-					imageSource = V.ImagesPath + "carrousel/swf.png";
-					break;
-				case V.Constant.MEDIA.YOUTUBE_VIDEO:
-					imageSource = V.ImagesPath + "carrousel/video.png";
+				case V.Constant.MEDIA.IMAGE:
+					imageSource = V.ImagesPath + "carrousel/image.png";
 					break;
 				case V.Constant.MEDIA.WEB:
 					if(objectInfo.wrapper=="IFRAME"){
@@ -89,6 +86,16 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 					} else {
 						imageSource = V.ImagesPath + "carrousel/object.png";
 					}
+					break;
+				case V.Constant.MEDIA.HTML5_VIDEO:
+				case V.Constant.MEDIA.YOUTUBE_VIDEO:
+					imageSource = V.ImagesPath + "carrousel/video.png";
+					break;
+				case V.Constant.MEDIA.HTML5_AUDIO:
+					imageSource = V.ImagesPath + "carrousel/audio.png";
+					break;
+				case V.Constant.MEDIA.FLASH:
+					imageSource = V.ImagesPath + "carrousel/swf.png";
 					break;
 				default:
 					imageSource = V.ImagesPath + "carrousel/object.png";
@@ -193,10 +200,15 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			renderedObject = $(renderedObject);
 			$(objectArea).append(renderedObject);
 
-			if($(renderedObject).tagName === "AUDIO"){
-				var sources = V.Audio.HTML5.getSourcesFromJSON(object);
-				var audioDOM = $(renderedObject).find("audio");
-				V.Audio.HTML5.addSourcesToAudioTag(sources,audioDOM,{timestamp:true});
+			var objectTagName = $(renderedObject)[0].tagName;
+			if((objectTagName === "AUDIO")||(objectTagName === "VIDEO")){
+				var objectInfo = V.Object.getObjectInfo(object.object);
+				var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+				if(objectTagName == "VIDEO"){
+					V.Video.HTML5.addSourcesToVideoTag(sources,renderedObject,{timestamp:true});
+				} else if(objectTagName == "AUDIO"){
+					V.Audio.HTML5.addSourcesToAudioTag(sources,renderedObject,{timestamp:true});
+				}
 			}
 
 			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description});

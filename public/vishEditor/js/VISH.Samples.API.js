@@ -888,7 +888,35 @@ VISH.Samples.API = (function(V,undefined){
 	  'author'        :  'Conspirazzi',
 	  'object'        :  'http://www.conspirazzi.com/e-books/game-strauss.pdf'
 	},
-		{
+	{
+	  'id'     		  : '123131534',
+	  'title'         :  'Horse Audio',
+	  'description'   :  'Fichero MP3',
+	  'author'        :  'W3C',
+	  'object'        :  'examples/contents/audio/horse.mp3'
+	},
+	{
+	  'id'     		  : '123131535',
+	  'title'         :  'Horse Audio Tag',
+	  'description'   :  'Fichero MP3',
+	  'author'        :  'W3C',
+	  'object'        :  '<audio controls><source src="http://vishub.org/audios/3665.mp3" type="audio/mpeg"><source src="http://vishub.org/audios/3665.wav" type="audio/wav"><source src="http://vishub.org/audios/3665.webm" type="audio/webm">Your browser does not support the audio tag.</audio>'
+	},
+	{
+	  'id'     		  : '123131536',
+	  'title'         :  'HTML5 Video',
+	  'description'   :  'Fichero Webm',
+	  'author'        :  'Unknown',
+	  'object'        :  'http://vishub.org/videos/325.webm'
+	},
+	{
+	  'id'     		  : '123131537',
+	  'title'         :  'HTML5 Video Tag',
+	  'description'   :  'Video Tag',
+	  'author'        :  'Unknown',
+	  'object'        :  '<video preload="metadata" poster="http://vishub.org/videos/325.png?style=170x127%23"><source src="http://vishub.org/videos/325.webm" type="video/webm"><source src="http://vishub.org/videos/325.mp4" type="video/mp4"><source src="http://vishub.org/videos/325.flv" type="video/x-flv"><p>Your browser does not support HTML5 video.</p></video>'
+	},
+	{
 	  'id'     : '1536',
 	  'title'         :  'Profe',
 	  'description'   :  'Flash Object Test',
