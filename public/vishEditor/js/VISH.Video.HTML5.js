@@ -384,6 +384,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		} catch(e){
 			return [];
 		}
+		
 		return [];
 	};
 

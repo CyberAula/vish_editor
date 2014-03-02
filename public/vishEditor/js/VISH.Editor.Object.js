@@ -209,6 +209,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if((objectInfo.wrapper===V.Constant.WRAPPER.VIDEO)||((objectInfo.wrapper===null)&&(objectInfo.type===V.Constant.MEDIA.HTML5_VIDEO))){
 			var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
 			V.Video.HTML5.addSourcesToVideoTag(sources,tag,{timestamp:true});
+		} else if((objectInfo.wrapper===V.Constant.WRAPPER.AUDIO)||((objectInfo.wrapper===null)&&(objectInfo.type===V.Constant.MEDIA.HTML5_AUDIO))){
+			var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+			V.Audio.HTML5.addSourcesToAudioTag(sources,tag,{timestamp:true});
 		}
 	};
 
@@ -317,7 +320,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.HTML5.renderVideoWithURL(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
 						break;
 					case V.Constant.MEDIA.HTML5_AUDIO:
-						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{extraClasses: "objectPreview"});
+						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{loadSources: false, extraClasses: ["objectPreview"]});
 						break;
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
@@ -341,7 +344,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
 				break;
 			case V.Constant.WRAPPER.AUDIO:
-				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{extraClasses: "objectPreview"});
+				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{loadSources: false, extraClasses: ["objectPreview"]});
 				break;
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);

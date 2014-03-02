@@ -130,7 +130,7 @@ VISH.Renderer = (function(V,$,undefined){
 
 	var _renderHTML5Audio = function(audioJSON, template){
 		var rendered = "<div id='"+audioJSON['id']+"' class='"+template+"_"+audioJSON['areaid']+"'>";
-		var audio = V.Audio.HTML5.renderAudioFromJSON(audioJSON,{id: V.Utils.getId(audioJSON['id'] + "_audio"),extraClasses: template + "_audio"});
+		var audio = V.Audio.HTML5.renderAudioFromJSON(audioJSON,{id: V.Utils.getId(audioJSON['id'] + "_audio"),extraClasses: [template + "_audio"], timestamp: true});
 		rendered = rendered + audio + "</div>";
 		return rendered;
 	};

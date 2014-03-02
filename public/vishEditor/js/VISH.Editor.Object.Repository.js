@@ -190,7 +190,15 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		$(objectArea).html("");
 		$(metadataArea).html("");
 		if((renderedObject)&&(object)){
+			renderedObject = $(renderedObject);
 			$(objectArea).append(renderedObject);
+
+			if($(renderedObject).tagName === "AUDIO"){
+				var sources = V.Audio.HTML5.getSourcesFromJSON(object);
+				var audioDOM = $(renderedObject).find("audio");
+				V.Audio.HTML5.addSourcesToAudioTag(sources,audioDOM,{timestamp:true});
+			}
+
 			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description});
 			$(metadataArea).html(table);
 			$("#" + previewDivId).find(".okButton").show();

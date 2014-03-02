@@ -609,7 +609,7 @@ VISH.Editor = (function(V,$,undefined){
 					}
 				} else if(element.type==V.Constant.IMAGE){
 					element.body   = $(div).find('img').attr('src');
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(div).find('img'));
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(div).find('img'));
 					if($(div).attr("hyperlink")){
 						element.hyperlink = $(div).attr("hyperlink");
 					}
@@ -620,7 +620,7 @@ VISH.Editor = (function(V,$,undefined){
 				} else if(element.type==V.Constant.VIDEO){
 					var video = $(div).find("video");
 					element.poster = $(video).attr("poster");
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(video));
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(video));
 					//Sources
 					var sources= '';		
 					$(video).find('source').each(function(index, source) {
@@ -635,15 +635,16 @@ VISH.Editor = (function(V,$,undefined){
 					element.sources = sources;
 				} else if(element.type==V.Constant.AUDIO){
 					var audio = $(div).find("audio");
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(audio));
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(audio));
 					//Sources
 					var sources= '';				
 					$(audio).find('source').each(function(index, source) {
 						if(index!==0){
 							sources = sources + ',';
 						}
-						var type = (typeof $(source).attr("type") != "undefined")?' "type": "' + $(source).attr("type") + '", ':'';
-						sources = sources + '{' + type + '"src": "' + $(source).attr("src") + '"}';
+						var sourceSrc = V.Utils.removeParamFromUrl($(source).attr("src"),"timestamp");
+						var sourceMimeType = (typeof $(source).attr("type") != "undefined")?', "type": "' + $(source).attr("type") + '"':'';
+						sources = sources + '{"src":"' + sourceSrc + '"' + sourceMimeType + '}';
 					});
 					sources = '[' + sources + ']';
 					element.sources = sources;
@@ -654,7 +655,7 @@ VISH.Editor = (function(V,$,undefined){
 					var myObject = $(object).clone();
 					$(myObject).removeAttr("style");
 					element.body   = V.Utils.getOuterHTML(myObject);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), $(object).parent());
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(object).parent());
 					var zoom = V.Utils.getZoomFromStyle($(object).attr("style"));
 					if(zoom!=1){
 						element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
@@ -674,7 +675,7 @@ VISH.Editor = (function(V,$,undefined){
 					var snapshotIframe = $(snapshotWrapper).children()[0];
 					$(snapshotIframe).removeAttr("style");
 					element.body   = V.Utils.getOuterHTML(snapshotIframe);
-					element.style  = V.Editor.Utils.getStylesInPercentages($(div), snapshotWrapper);
+					element.style  = V.Editor.Utils.getStylesInPercentages($(div),snapshotWrapper);
 
 					//Save scrolls
 					var scrollTopAttr = $(snapshotWrapper).attr("scrollTop");
