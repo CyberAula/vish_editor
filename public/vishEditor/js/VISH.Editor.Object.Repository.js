@@ -72,7 +72,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		var carrouselImages = [];
 		var carrouselImagesTitles = [];
 	
-		$.each(data, function(index, objectItem) {
+		$.each(data, function(index, objectItem){
+			if(typeof objectItem.object == "string"){
+				objectItem.object = V.Editor.Utils.autocompleteUrls(objectItem.object);
+			}
+
 			var objectInfo = V.Object.getObjectInfo(objectItem.object);
 			var imageSource = null;
 

@@ -889,6 +889,13 @@ VISH.Samples.API = (function(V,undefined){
 	  'object'        :  'http://www.conspirazzi.com/e-books/game-strauss.pdf'
 	},
 	{
+	  'id'     		  : '123131533',
+	  'title'         :  'Link',
+	  'description'   :  'Link al marca',
+	  'author'        :  'Marca.com',
+	  'object'        :  'www.marca.com'
+	},
+	{
 	  'id'     		  : '123131534',
 	  'title'         :  'Horse Audio',
 	  'description'   :  'Fichero MP3',
