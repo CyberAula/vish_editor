@@ -20,7 +20,7 @@ VISH.Utils = (function(V,undefined){
 		jQuery.fn.reverse = [].reverse;
 
 		//Extend primitives
-		String.prototype.replaceAll = function (find, replace) {
+		String.prototype.replaceAll = function(find,replace){
 			var str = this;
 			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g'), replace);
 		};
@@ -34,7 +34,7 @@ VISH.Utils = (function(V,undefined){
 			return null;
 		};
 
-		// if(!Array.prototype.filter){
+		if(!Array.prototype.filter){
 			Array.prototype.filter = function(fun /*, thisp */){
 				"use strict";
 
@@ -59,10 +59,10 @@ VISH.Utils = (function(V,undefined){
 				}
 				return res;
 			};
-		// };
+		};
 
 		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
-		// if (!Array.prototype.map){
+		if(!Array.prototype.map){
 			Array.prototype.map = function(fun /*, thisArg */){
 				"use strict";
 
@@ -89,7 +89,7 @@ VISH.Utils = (function(V,undefined){
 
 				return res;
 			};
-		// }
+		}
 
 		//Disable watermark for IE
 		jQuery.fn.vewatermark = function(text){
