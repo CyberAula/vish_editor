@@ -431,7 +431,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				V.Editor.Utils.loadTab('tab_live_resource');
 			}
 		});
-	}
+	};
 
 
 	//////////////

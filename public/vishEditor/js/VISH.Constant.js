@@ -21,7 +21,7 @@ VISH.Constant.SAFARI = 'Safari';
 VISH.Constant.ANDROID_BROWSER = 'Android Browser';
 
 //Zone sizes
-VISH.Constant.EXTRA_SMALL = "extra-small";
+VISH.Constant.EXTRA_SMALL = "extra_small";
 VISH.Constant.SMALL = "small";
 VISH.Constant.MEDIUM = "medium";
 VISH.Constant.LARGE = "large";

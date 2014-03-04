@@ -111,6 +111,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			{ name: 'lists', items : ['NumberedList','BulletedList','Table'] },
 			{ name: 'alignment', items : ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
 			{ name: 'link', items : ['Link'] }
+			// { name: 'symbols', items : ['SpecialChar'] }
 		];
 
 		//Singleton toolbar
@@ -126,12 +127,41 @@ VISH.Editor.Text = (function(V,$,undefined){
 		//Disable bottom tags
 		config.removePlugins = 'elementspath';
 		//Enable table resize and autogrow
-		config.extraPlugins = 'tableresize,autogrow';
+		config.extraPlugins = 'tableresize,autogrow,specialchar';
 
 		if((options)&&(options.autogrow)){
 			config.autoGrow_minHeight = 34;
 			config.autoGrow_maxHeight = 800;
 		}
+
+		config.specialChars = [];
+		config.specialChars = config.specialChars.concat(
+			[[ '&alpha;', 'Alpha' ]],
+			[[ '&beta;', 'Beta' ]],
+			[[ '&gamma;', 'Gamma' ]],
+			[[ '&delta;', 'Delta' ]],
+			[[ '&epsilon;', 'Epsilon']],
+			[[ '&zeta;', 'Zeta' ]],
+			[[ '&eta;', 'Eta' ]],
+			[[ '&theta;', 'Theta' ]],
+			[[ '&iota;', 'Iota' ]],
+			[[ '&kappa;', 'Kappa' ]],
+			[[ '&lambda;', 'Lambda' ]],
+			[[ '&mu;', 'Mu' ]],
+			[[ '&nu;', 'Nu' ]],
+			[[ '&xi;', 'Xi' ]],
+			[[ '&omicron;', 'Omicron' ]],
+			[[ '&pi;', 'Pi' ]],
+			[[ '&rho;', 'Rho' ]],
+			[[ '&sigma;', 'Sigma' ]],
+			[[ '&sigma;', 'Sigma' ]],
+			[[ '&tau;', 'Tau' ]],
+			[[ '&upsilon;', 'Upsilon' ]],
+			[[ '&phi;', 'Phi' ]],
+			[[ '&chi;', 'Chi' ]],
+			[[ '&psi;', 'Psi' ]],
+			[[ '&omega;', 'Omega' ]]
+		);
 
 		//Fit the current area
 		config.width = '100%';

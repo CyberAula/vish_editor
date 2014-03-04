@@ -826,7 +826,7 @@ div.vezone[tooltip='true'] {
 	text-align: center;
 }
 
-div.vezone[tooltip='true'][size='extra-small'] {
+div.vezone[tooltip='true'][size='extra_small'] {
 	font-size: 12px;
 }
 

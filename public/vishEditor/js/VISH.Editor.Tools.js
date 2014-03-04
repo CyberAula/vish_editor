@@ -292,7 +292,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Zone Tools
 	*/
 	var loadToolsForZone = function(zone){
-		cleanZoneTools(V.Editor.getLastArea());
+		cleanZoneTool(V.Editor.getLastArea());
 		
 		var type = $(zone).attr("type");
 		switch(type){
@@ -397,23 +397,31 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(zone).attr("tooltip","false");
 	};
 
-	var cleanZoneTools = function(zone){
+	var cleanZoneTools = function(){
 		$(".menuselect_hide").hide();
 		$(".delete_content").hide();
 		_cleanElementToolbar();
+	};
 
-		var tooltip = $(zone).find(".zone_tooltip");	
+	var cleanZoneTool = function(zone){
+		_cleanElementToolbar();
+
+		var tooltip = $(zone).find(".zone_tooltip");
 		if(V.Editor.isZoneEmpty(zone)){
+			$(zone).find(".menuselect_hide").remove();
+			$(zone).removeClass("zoneUnselected").removeClass("zoneSelected").addClass("editable");
 			showZoneToolTip(tooltip);
 		} else {
+			$(zone).find(".menuselect_hide").hide();
+			$(zone).find(".delete_content").hide();
 			hideZoneToolTip(tooltip);
 		}
 	};
 
+
    /*
 	* Element Toolbar
 	*/
-
 	var _loadToolbarForElement = function(type){
 		_cleanElementToolbar();
 
@@ -687,6 +695,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		loadToolsForZone				: loadToolsForZone,
 		loadToolbarForObject			: loadToolbarForObject,
 		cleanZoneTools 					: cleanZoneTools,
+		cleanZoneTool 					: cleanZoneTool,
 		cleanToolbar					: cleanToolbar,
 		enableToolbar					: enableToolbar,
 		disableToolbar					: disableToolbar,

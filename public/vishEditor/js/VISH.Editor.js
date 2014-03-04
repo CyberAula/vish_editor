@@ -275,26 +275,29 @@ VISH.Editor = (function(V,$,undefined){
 		$(content).removeAttr("id");
 
 		$(content).find("a").css("display","none");
-		$(content).find("a.all").css("display","inline");
+		$(content).find("a.all").addClass("thumb_shown");
 
-		switch($(this).attr("size")){
-			case V.Constant.EXTRA_SMALL:
-				$(content).find("a.small").css("display","inline");
-				$(content).find("a > div").addClass("thumb_extra_small");
-				break;
-			case V.Constant.SMALL:
-				$(content).find("a.small").css("display","inline");
-				$(content).find("a > div").addClass("thumb_small");
-				break;
-			case V.Constant.MEDIUM:
-				$(content).find("a.medium").css("display","inline");
-				$(content).find("a > div").addClass("thumb_medium");
-				break;
-			case V.Constant.LARGE:
-				$(content).find("a.large").css("display","inline");
-				$(content).find("a > div").addClass("thumb_large");
-				break;
-		}
+		var zoneSize = $(this).attr("size");
+		var sizeClass = (zoneSize == V.Constant.EXTRA_SMALL) ? V.Constant.SMALL : zoneSize;
+
+		$(content).find("a."+sizeClass).addClass("thumb_shown");
+		$(content).find("a > div").addClass("thumb_" + zoneSize);
+		
+		$(content).find("a.thumb_shown.uniq").each(function(index,uthumb){
+			var shouldBeShown = false;
+			switch($(uthumb).attr("id")){
+				case "add_quiz_thumb":
+					if($(V.Slides.getCurrentSlide()).children("div.vezone[type='quiz']").length < 1){
+						shouldBeShown = true;
+					}	
+					break;
+				default:
+					break;
+			};
+			if(shouldBeShown===false){
+				$(uthumb).removeClass("thumb_shown");
+			}
+		});
 
 		V.Editor.Tools.hideZoneToolTip($(this).find(".zone_tooltip"));
 
@@ -387,7 +390,6 @@ VISH.Editor = (function(V,$,undefined){
 	* Function called when user clicks on any element without class selectable
 	*/
 	var onNoSelectableClicked = function(event){
-
 		var target = $(event.target);
 		var targetParent = $(target).parent();
 
@@ -422,14 +424,13 @@ VISH.Editor = (function(V,$,undefined){
 			if(isWysiwygFancyboxEnabled){
 				return;
 			}
-
 		}
 
 		cleanArea();
 	};
 
 	var cleanArea = function(){
-		V.Editor.Tools.cleanZoneTools(getCurrentArea());
+		V.Editor.Tools.cleanZoneTool(getCurrentArea());
 		setCurrentArea(null);
 		_removeSelectableProperties();
 	};
