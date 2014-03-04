@@ -35,10 +35,10 @@ span.mc_option_index {
 	color: rgb(175, 175, 175);
 	display: inline-block;
 	font-size: 2.0rem;
-	margin-left: 6px;
+	margin-left: 1%;
 	text-align: center;
 	float: left;
-	width: 4%;
+	width: 6%;
 	padding: 0%;
 }
 
@@ -56,7 +56,7 @@ div.mc_option_text {
 	margin-left: 1%;
 	outline: 0 none;
 	position: relative;
-	width: 78%;
+	width: 77%;
 	overflow: hidden;
 	z-index: 1000;
 	background: rgba(255, 255, 255, 0.3);
@@ -97,6 +97,7 @@ img.mcCheckbox, img.tfCheckbox{
 .delete_quiz_option_mc, .delete_quiz_option_tf {
 	cursor: pointer;
 	visibility: hidden;
+	width: 100%;
 }
 
 .add_quiz_option_mc, .add_quiz_option_tf {
@@ -209,10 +210,15 @@ table.tf_options td:nth-child(1), table.tf_options td:nth-child(2), table.tf_opt
 	text-align: center;
 }
 
+table.tf_options td:nth-child(3){
+	padding-left: 1%;
+	padding-right: 1%;
+}
+
 table.tf_options td:nth-child(4){
-	min-width: 85%;
-	max-width: 85%;
-	width: 85%;
+	min-width: 83%;
+	max-width: 83%;
+	width: 83%;
 }
 
 img.tfCheckbox_viewer{
@@ -260,4 +266,8 @@ table.tf_options tr:last-child.mc_correct_choice td:last-child, table.tf_options
 	border-bottom-right-radius: 15px;
 }
 
+/* Zone specific fixes */
 
+div.t5_left.t5_quiz span.mc_option_index, div.t5_right.t5_quiz span.mc_option_index, div.t13_left.t13_quiz span.mc_option_index{
+	font-size: 1.8rem !important;
+}
