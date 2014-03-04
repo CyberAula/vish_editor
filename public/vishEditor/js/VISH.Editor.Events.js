@@ -93,7 +93,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'autoDimensions' : false,
 				'scrolling': 'no',
 				'width': 800,
-				'height': 600,
+				'height': 740,
 				'padding': 0,
 				"onStart"  : function(data) {
 					var slidesAddMode = V.Editor.getContentAddMode();

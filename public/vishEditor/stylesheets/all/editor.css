@@ -1299,7 +1299,7 @@ div.addUrlButtons{
 .slidethumb {
 	width: 99px;
 	height: 75px;
-	margin: 16px 11px 6px 16px;
+	margin: 11px 11px 6px 16px;
 	border-radius: 10px;
 	border: 1px solid #ccc;
 }
@@ -2959,6 +2959,7 @@ span.letterInChapterDialog {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: 400;
 	margin-bottom: 10px;
+	margin-top: -7px;
 }
 
 .bgtoolpos {
@@ -3027,7 +3028,8 @@ span.letterInChapterDialog {
 .templateselectlist {
 	border: 1px solid #ccc;
 	width: 642px;
-	height: 302px;
+	height: 385px;
+	margin-bottom: 15px;
 	border-radius: 6px;
 }
 
