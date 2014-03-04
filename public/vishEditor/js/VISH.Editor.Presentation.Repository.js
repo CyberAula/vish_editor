@@ -33,7 +33,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 
 	var beforeLoadTab = function(){
 		_cleanSearch();
-	}
+	};
 	
 	var onLoadTab = function(){
 		
@@ -50,7 +50,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId),{style: "loading_presentation_carrousel"});
 		$(myInput).attr("disabled","true");
 		timestampLastSearch = Date.now();
-	}
+	};
 
 	var _cleanSearch = function(){
 		timestampLastSearch = undefined;
@@ -58,12 +58,12 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 		$(myInput).removeAttr("disabled");
 		_cleanObjectMetadata();
 		_cleanCarrousel();
-	}
+	};
 
 	var _cleanCarrousel = function(){
 		$("#" + carrouselDivId).hide();
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-	}
+	};
 	
 	var _onDataReceived = function(data) {
 		if(!_isValidResult()){
@@ -80,15 +80,17 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 		var carrouselImages = [];
 		currentExcursions = new Array();
 		$.each(data.excursions, function(index, pres){
-			if(!pres.id){
-				pres.id = V.Utils.getId("tmp");
+			if(typeof pres != "undefined"){
+				if(typeof pres.id == "undefined"){
+					pres.id = V.Utils.getId("tmp");
+				}
+				if(typeof pres.avatar == "undefined"){
+					pres.avatar = V.ImagesPath + "icons/defaultAvatar.png";
+				}
+				var myImg = $("<img excursionId ='"+pres.id+"'' src=" + pres.avatar + " />");
+				carrouselImages.push(myImg);
+				currentExcursions[pres.id] = pres;
 			}
-			if(!pres.avatar){
-				pres.avatar = V.ImagesPath + "icons/defaultAvatar.png";
-			}
-			var myImg = $("<img excursionId ='"+pres.id+"'' src=" + pres.avatar + " />");
-			carrouselImages.push(myImg);
-			currentExcursions[pres.id] = pres;
 		});
 
 		var options = {};
@@ -100,12 +102,12 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	var _onImagesLoaded = function(){
 		_onSearchFinished();
 		_drawData();
-	}
+	};
 
 	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).removeAttr("disabled");
-	}
+	};
 
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
@@ -140,7 +142,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 			}
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 		}
-	}
+	};
 	
 	var _onAPIError = function(){
 		if(_isValidResult()){
@@ -171,7 +173,7 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 		}
 
 		return true;
-	}
+	};
 
 
 	/* Preview */
@@ -180,18 +182,18 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 		var metadataArea = $("#" + previewDivId).find("div.content_preview_metadata");
 		$(metadataArea).html("");
 		if(object){
-			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description, tableClass:"metadata metadata_presentation"});
+			var presAuthor = (typeof object.author == "object") ? object.author.name : ((typeof object.author == "string") ? object.author : "");
+			var table = V.Editor.Utils.generateTable({title:object.title, author:presAuthor, description:object.description, tableClass:"metadata metadata_presentation"});
 			$(metadataArea).html(table);
 			$(previewButton).show();
 		}
-	}
+	};
 	
 	var _cleanObjectMetadata = function(){
 		var metadataArea = $("#" + previewDivId).find("div.content_preview_metadata");
 		$(metadataArea).html("");
 		$(previewButton).hide();
-	}
-
+	};
 
 	return {
 		init 					: init,

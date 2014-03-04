@@ -7,12 +7,15 @@ VISH.Editor.Audio.HTML5 = (function(V,$,undefined){
 		var sources = V.Audio.HTML5.getSources(audioTag);
 		if(sources.length > 0){
 			var options = {};
+			options.timestamp = true;
 			drawAudio(sources,options);
 		}
 	};
 
-	var drawAudioWithUrl = function (url){
-		drawAudio([{src: url}]);
+	var drawAudioWithUrl = function(url){
+		var options = {};
+		options.timestamp = true;
+		drawAudio([{src: url}],options);
 	};
 
 	var drawAudio = function(sources,options,area,style){
@@ -22,6 +25,7 @@ VISH.Editor.Audio.HTML5 = (function(V,$,undefined){
 		}	else {
 			current_area = V.Editor.getCurrentArea();
 		}
+		current_area.attr('type','audio');
 
 		//Default options
 		var autoplay = false;
@@ -37,7 +41,6 @@ VISH.Editor.Audio.HTML5 = (function(V,$,undefined){
 
 		var nextAudioId = V.Utils.getId();
 		var idToDragAndResize = "draggable" + nextAudioId;
-		current_area.attr('type','audio');
 
 		var audioTag = document.createElement('audio');
 		audioTag.setAttribute('id', idToDragAndResize);
@@ -50,24 +53,12 @@ VISH.Editor.Audio.HTML5 = (function(V,$,undefined){
 		if(style){
 			audioTag.setAttribute('style', style);
 		}
-			
-		$(sources).each(function(index, source){
-			var audioSource = document.createElement('source');
-			audioSource.setAttribute('src', source.src);
-			if(source.mimeType){
-				audioSource.setAttribute('type', source.mimeType);
-			} else {
-				audioSource.setAttribute('type', V.Audio.HTML5.getAudioMimeType(source.src));
-			}
-			$(audioTag).append(audioSource);
-		});
-
-		var fallbackText = document.createElement('p');
-		$(fallbackText).html("Your browser does not support HTML5 audio.");
-		$(audioTag).append(fallbackText);
-
+		
 		$(current_area).html("");
 		$(current_area).append(audioTag);
+
+		//Insert sources after append audio
+		V.Audio.HTML5.addSourcesToAudioTag(sources,audioTag,{timestamp:true});
 
 		V.Editor.addDeleteButton($(current_area));
 
@@ -92,7 +83,7 @@ VISH.Editor.Audio.HTML5 = (function(V,$,undefined){
 		return V.Audio.HTML5.renderAudioFromSources([{src: url}],options);
 	};
 
-		
+
 	return {
 		init 						: init,
 		drawAudioWithWrapper		: drawAudioWithWrapper,

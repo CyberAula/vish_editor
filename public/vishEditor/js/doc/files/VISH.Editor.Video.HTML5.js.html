@@ -99,19 +99,21 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			var options = {};
 
 			&#x2F;&#x2F;Look for poster
-			var video = $(videoTag);
-			if($(video).attr(&quot;poster&quot;)){
-				options.poster = $(video).attr(&quot;poster&quot;);
+			var poster = V.Video.HTML5.getPoster(videoTag);
+			if(typeof poster == &quot;string&quot;){
+				options.poster = poster;
 			}
-			&#x2F;&#x2F; if($(video).attr(&quot;autoplay&quot;)==&quot;true&quot;){
-			&#x2F;&#x2F; 	options.autoplay = &quot;true&quot;;
-			&#x2F;&#x2F; }
+			&#x2F;&#x2F;Look for autoplay...
+			options.timestamp = true;
+
 			drawVideo(sources,options);
 		}
 	};
 
 	var drawVideoWithUrl = function(url){
-		drawVideo([{src: url}]);
+		var options = {};
+		options.timestamp = true;
+		drawVideo([{src: url}],options);
 	};
 	
 	&#x2F;**
@@ -128,6 +130,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		}	else {
 			current_area = V.Editor.getCurrentArea();
 		}
+		current_area.attr(&#x27;type&#x27;,&#x27;video&#x27;);
 
 		&#x2F;&#x2F;Default options
 		var posterUrl = V.ImagesPath + &quot;vicons&#x2F;example_poster_image.jpg&quot;;
@@ -147,8 +150,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 
 		var nextVideoId = V.Utils.getId();
 		var idToDragAndResize = &quot;draggable&quot; + nextVideoId;
-		current_area.attr(&#x27;type&#x27;,&#x27;video&#x27;);
-
+		
 		var videoTag = document.createElement(&#x27;video&#x27;);
 		videoTag.setAttribute(&#x27;id&#x27;, idToDragAndResize);
 		videoTag.setAttribute(&#x27;draggable&#x27;, true);
@@ -161,24 +163,12 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		if(style){
 			videoTag.setAttribute(&#x27;style&#x27;, style);
 		}
-			
-		$(sources).each(function(index, source){
-			var videoSource = document.createElement(&#x27;source&#x27;);
-			videoSource.setAttribute(&#x27;src&#x27;, source.src);
-			if(source.mimeType){
-				videoSource.setAttribute(&#x27;type&#x27;, source.mimeType);
-			} else {
-				videoSource.setAttribute(&#x27;type&#x27;, V.Video.HTML5.getVideoMimeType(source.src));
-			}
-			$(videoTag).append(videoSource);
-		});
-
-		var fallbackText = document.createElement(&#x27;p&#x27;);
-		$(fallbackText).html(&quot;Your browser does not support HTML5 video.&quot;);
-		$(videoTag).append(fallbackText);
 
 		$(current_area).html(&quot;&quot;);
 		$(current_area).append(videoTag);
+
+		&#x2F;&#x2F;Insert sources after append video
+		V.Video.HTML5.addSourcesToVideoTag(sources,videoTag,{timestamp:true});
 
 		V.Editor.addDeleteButton($(current_area));
 
@@ -196,9 +186,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		if(sources.length &gt; 0){
 			var options = options || {};
 			&#x2F;&#x2F;Look for poster
-			var video = $(videoTag);
-			if($(video).attr(&quot;poster&quot;)){
-				options.poster = $(video).attr(&quot;poster&quot;);
+			var poster = V.Video.HTML5.getPoster(videoTag);
+			if(typeof poster == &quot;string&quot;){
+				options.poster = poster;
 			}
 			return V.Video.HTML5.renderVideoFromSources(sources,options);
 		}

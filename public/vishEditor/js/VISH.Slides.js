@@ -280,9 +280,14 @@ VISH.Slides = (function(V,$,undefined){
 	* n < 0 (go back)
 	*/
 	var moveSlides = function(n){
-		if((n>0)&&(!V.Editing)&&(isCurrentLastSlide())){
-			V.Recommendations.showFancybox();
-			return;
+		if((!V.Editing)&&(isCurrentLastSlide())){
+			if(n>0){
+				V.Recommendations.showFancybox();
+				return;
+			} else if((n<0)&&(V.Recommendations.isRecVisible())){
+				V.Recommendations.hideFancybox();
+				return;
+			}
 		}
 
 		var no = curSlideIndex+n+1;
@@ -340,6 +345,19 @@ VISH.Slides = (function(V,$,undefined){
 	*/
 	var lastSlide = function(){
 		goToSlide(slideEls.length);
+	};
+
+
+	/* 
+	 * Subslides management
+	 */
+	var onClickSlideLink = function(event){
+		event.preventDefault();
+		event.stopPropagation();
+		try {
+			var slideNumber = parseInt($(this).attr('href').split("#slide")[1]);
+			goToSlide(slideNumber);
+		} catch(e){}
 	};
 
 
@@ -454,6 +472,7 @@ VISH.Slides = (function(V,$,undefined){
 			backwardOneSlide		: backwardOneSlide,	
 			goToSlide				: goToSlide,
 			lastSlide				: lastSlide,
+			onClickSlideLink		: onClickSlideLink,
 			isSubslide				: isSubslide,
 			openSubslide			: openSubslide,
 			closeSubslide			: closeSubslide,

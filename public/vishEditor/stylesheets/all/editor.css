@@ -1064,12 +1064,6 @@ div.addUrlButtons{
 	top: -15px;
 }
 
-.documentblank {
-	position:absolute;
-	margin-left: 93%;
-	margin-top: 56%;
-}
-
 .buttonaddfancy {
 	position:absolute;
 	margin-top: 67%;
@@ -1942,10 +1936,6 @@ div.object_wrapper {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-}
-
-.documentblank_extraMargin {
-	margin-left: 133%;
 }
 
 .upload_file_input {
@@ -2960,23 +2950,6 @@ span.letterInChapterDialog {
 	font-weight: 400;
 	margin-bottom: 10px;
 	margin-top: -7px;
-}
-
-.bgtoolpos {
-	float: right;
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc !important;
-	height: 54px;
-	padding-left: 5px;
-	margin-right: -20px;
-	margin-top: 0px !important;
-	padding-top: 4px;
-	border-right: none;
-	padding-right: 4px;
-}
-
-.lasticonborder {
-	border-right: none;
 }
 
 

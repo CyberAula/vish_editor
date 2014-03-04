@@ -114,9 +114,23 @@ VISH.Object = (function(V,$,undefined){
 		var wrapper = null;
 		
 		&#x2F;&#x2F;Determine wrapper
-		var element = $(object)[0];
-		if(typeof element != &#x27;undefined&#x27;){
-			var wrapper = element.tagName;
+		if(typeof object == &quot;string&quot;){
+			var videoPattern = new RegExp(&quot;^&lt;video&quot;,&quot;g&quot;);
+			if(videoPattern.exec(object) != null){
+				wrapper = &quot;VIDEO&quot;;
+			}
+
+			var audioPattern = new RegExp(&quot;^&lt;audio&quot;,&quot;g&quot;);
+			if(audioPattern.exec(object) != null){
+				wrapper = &quot;AUDIO&quot;;
+			}
+		}
+
+		if((wrapper===null)||(typeof wrapper == &quot;undefined&quot;)){
+			var element = $(object)[0];
+			if(typeof element != &#x27;undefined&#x27;){
+				wrapper = element.tagName;
+			}
 		}
 		
 		&#x2F;&#x2F;Determine source type
@@ -170,7 +184,6 @@ VISH.Object = (function(V,$,undefined){
 	 *&#x2F;                                                         		
 	
 	var _getTypeFromSource = function(source){
-
 		if((typeof source == &quot;object&quot;)&amp;&amp;(typeof source.length == &quot;number&quot;)&amp;&amp;(source.length &gt; 0)){
 			source = source[0];
 		};
@@ -223,7 +236,11 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.DOC;
 		}
 
-		if(extension==&quot;ppt&quot;){
+		if((extension==&quot;ppt&quot;)||(extension==&quot;pptx&quot;)){
+			return V.Constant.MEDIA.PPT;
+		}
+
+		if(extension==&quot;odp&quot;){
 			return V.Constant.MEDIA.PPT;
 		}
 

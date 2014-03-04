@@ -27,6 +27,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		_requesting = false;
 		_generated = false;
 
+		var options = V.Utils.getOptions();
+		if((options)&&(!options.preview)&&(typeof options["recommendationsAPI"] != "undefined")&&(typeof options["recommendationsAPI"]["rootURL"] == "string")){
+			_recommendationAPIUrl = options["recommendationsAPI"]["rootURL"];
+			_enabled = true;
+		} else {
+			return;
+		}
+
 		if(V.Status.getIsInVishSite()){
 			user_id = V.User.getId();
 			var presentation = V.Viewer.getCurrentPresentation();
@@ -37,40 +45,36 @@ VISH.Recommendations = (function(V,$,undefined){
 
 		_searchTerms = getCurrentSearchTerms();
 
-		var options = V.Utils.getOptions();
-		if((options)&&(typeof options["recommendationsAPI"] != "undefined")&&(typeof options["recommendationsAPI"]["rootURL"] == "string")){
-			_recommendationAPIUrl = options["recommendationsAPI"]["rootURL"];
-			_enabled = true;
-		}
-		
 		//Redimension of fancybox is done in ViewerAdapter
 		$("#fancyRec").fancybox({
-			  'type'	: 'inline',
-			  'autoDimensions' : false,
-		      'scrolling': 'no',
-		      'autoScale' : false,		      
-		      'width': '100%',
-		      'height': '100%',
-		      'padding': 0,
-		      'overlayOpacity': 0,
-		      'center': false,
-		      'onStart' : function(){
-		      	$("#fancybox-outer").css("display","none");
-		      },
-		      'onComplete'  : function(data) {
+			'type'	: 'inline',
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'autoScale' : false,		      
+			'width': '100%',
+			'height': '100%',
+			'padding': 0,
+			'overlayOpacity': 0,
+			'center': false,
+			'onStart' : function(){
+				$("#fancybox-outer").css("display","none");
+			},
+			'onComplete'  : function(data) {
 				$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
 				$("#fancybox-wrap").css("margin-top", "0px");
 				V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
 				_isRecVisible = true;
 				V.ViewerAdapter.updateFancyboxAfterSetupSize();
 				$("#fancybox-outer").css("display","block");
-		      },
-		      'onClosed' : function(data) {
-		      		$("#fancybox-outer").css("background", "white");
-		      		$("#fancybox-wrap").css("margin-top", "-14px");
-		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
-		      		_isRecVisible = false;
-		      }
+				V.ViewerAdapter.decideIfPageSwitcher();
+			},
+			'onClosed' : function(data) {
+				$("#fancybox-outer").css("background", "white");
+				$("#fancybox-wrap").css("margin-top", "-14px");
+				V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+				_isRecVisible = false;
+				V.ViewerAdapter.decideIfPageSwitcher();
+			}
 		});
 	};
 
@@ -242,6 +246,10 @@ VISH.Recommendations = (function(V,$,undefined){
 		$("#fancyRec").trigger('click');
 	};
 
+	var hideFancybox = function(){
+		$.fancybox.close();
+	};
+
 	var isRecVisible = function(){
 		return _isRecVisible;
 	};
@@ -307,7 +315,9 @@ VISH.Recommendations = (function(V,$,undefined){
 		canShowEvaluateButton	: canShowEvaluateButton,
 		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
+		hideFancybox			: hideFancybox,
 		isRecVisible 			: isRecVisible,
+		isEnabled				: isEnabled,
 		aftersetupSize			: aftersetupSize,
 		onClickEvaluateButton	: onClickEvaluateButton
 	};

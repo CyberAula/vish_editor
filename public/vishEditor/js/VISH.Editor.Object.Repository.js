@@ -20,12 +20,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 				$(myInput).blur();
 			}
 		});
-	}
+	};
 	
 	var beforeLoadTab = function(){
 		_cleanSearch();
 		_cleanObjectPreview();
-	}
+	};
 	
 	var onLoadTab = function(){
 		
@@ -42,7 +42,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).attr("disabled","true");
 		timestampLastSearch = Date.now();
-	}
+	};
 
 	var _cleanSearch = function(){
 		timestampLastSearch = undefined;
@@ -50,12 +50,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		$(myInput).removeAttr("disabled");
 		_cleanObjectPreview();
 		_cleanCarrousel();
-	}
+	};
 
 	var _cleanCarrousel = function(){
 		$("#" + carrouselDivId).hide();
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-	}
+	};
 	
 	var _onDataReceived = function(data){
 		if(!_isValidResult()){
@@ -68,20 +68,21 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			return;
 		}
 
-		currentObject = new Array();  
+		currentObject = new Array();
 		var carrouselImages = [];
 		var carrouselImagesTitles = [];
 	
-		$.each(data, function(index, objectItem) {
+		$.each(data, function(index, objectItem){
+			if(typeof objectItem.object == "string"){
+				objectItem.object = V.Editor.Utils.autocompleteUrls(objectItem.object);
+			}
+
 			var objectInfo = V.Object.getObjectInfo(objectItem.object);
 			var imageSource = null;
 
 			switch (objectInfo.type){
-				case V.Constant.MEDIA.FLASH:
-					imageSource = V.ImagesPath + "carrousel/swf.png";
-					break;
-				case V.Constant.MEDIA.YOUTUBE_VIDEO:
-					imageSource = V.ImagesPath + "carrousel/video.png";
+				case V.Constant.MEDIA.IMAGE:
+					imageSource = V.ImagesPath + "carrousel/image.png";
 					break;
 				case V.Constant.MEDIA.WEB:
 					if(objectInfo.wrapper=="IFRAME"){
@@ -89,6 +90,16 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 					} else {
 						imageSource = V.ImagesPath + "carrousel/object.png";
 					}
+					break;
+				case V.Constant.MEDIA.HTML5_VIDEO:
+				case V.Constant.MEDIA.YOUTUBE_VIDEO:
+					imageSource = V.ImagesPath + "carrousel/video.png";
+					break;
+				case V.Constant.MEDIA.HTML5_AUDIO:
+					imageSource = V.ImagesPath + "carrousel/audio.png";
+					break;
+				case V.Constant.MEDIA.FLASH:
+					imageSource = V.ImagesPath + "carrousel/swf.png";
 					break;
 				default:
 					imageSource = V.ImagesPath + "carrousel/object.png";
@@ -109,12 +120,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	var _onImagesLoaded = function(){
 		_onSearchFinished();
 		_drawData();
-	}
+	};
 
 	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).removeAttr("disabled");
-	}
+	};
 
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
@@ -149,7 +160,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			}
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 		}
-	}
+	};
 	
 	var _onAPIError = function(){
 		if(_isValidResult()){
@@ -165,7 +176,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			_renderObjectPreview(renderedObject,currentObject[objectId]);
 			selectedObject = currentObject[objectId]; 
 		}
-	}
+	};
 
 	var _isValidResult = function(){
 		if(typeof timestampLastSearch == "undefined"){
@@ -179,7 +190,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		}
 
 		return true;
-	}
+	};
   
 
   	/* Preview */
@@ -190,12 +201,25 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		$(objectArea).html("");
 		$(metadataArea).html("");
 		if((renderedObject)&&(object)){
+			renderedObject = $(renderedObject);
 			$(objectArea).append(renderedObject);
+
+			var objectTagName = $(renderedObject)[0].tagName;
+			if((objectTagName === "AUDIO")||(objectTagName === "VIDEO")){
+				var objectInfo = V.Object.getObjectInfo(object.object);
+				var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+				if(objectTagName == "VIDEO"){
+					V.Video.HTML5.addSourcesToVideoTag(sources,renderedObject,{timestamp:true});
+				} else if(objectTagName == "AUDIO"){
+					V.Audio.HTML5.addSourcesToAudioTag(sources,renderedObject,{timestamp:true});
+				}
+			}
+
 			var table = V.Editor.Utils.generateTable({title:object.title, author:object.author, description:object.description});
 			$(metadataArea).html(table);
 			$("#" + previewDivId).find(".okButton").show();
 		}
-	}
+	};
 	
 	var _cleanObjectPreview = function(){
 		var objectArea = $("#" + previewDivId).find("#tab_object_repo_content_preview_object");
@@ -203,14 +227,14 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		$(objectArea).html("");
 		$(metadataArea).html("");
 		$("#" + previewDivId).find(".okButton").hide();
-	}
+	};
 	
 	var addSelectedObject = function(){
 		if(selectedObject!=null){
 			V.Editor.Object.drawObject(selectedObject.object);
 			$.fancybox.close();
 		}
-	}
+	};
 	
 	return {
 		init 				: init,

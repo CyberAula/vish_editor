@@ -117,6 +117,14 @@ VISH.Recommendations = (function(V,$,undefined){
 		_requesting = false;
 		_generated = false;
 
+		var options = V.Utils.getOptions();
+		if((options)&amp;&amp;(!options.preview)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;] == &quot;string&quot;)){
+			_recommendationAPIUrl = options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;];
+			_enabled = true;
+		} else {
+			return;
+		}
+
 		if(V.Status.getIsInVishSite()){
 			user_id = V.User.getId();
 			var presentation = V.Viewer.getCurrentPresentation();
@@ -127,40 +135,36 @@ VISH.Recommendations = (function(V,$,undefined){
 
 		_searchTerms = getCurrentSearchTerms();
 
-		var options = V.Utils.getOptions();
-		if((options)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;] == &quot;string&quot;)){
-			_recommendationAPIUrl = options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;];
-			_enabled = true;
-		}
-		
 		&#x2F;&#x2F;Redimension of fancybox is done in ViewerAdapter
 		$(&quot;#fancyRec&quot;).fancybox({
-			  &#x27;type&#x27;	: &#x27;inline&#x27;,
-			  &#x27;autoDimensions&#x27; : false,
-		      &#x27;scrolling&#x27;: &#x27;no&#x27;,
-		      &#x27;autoScale&#x27; : false,		      
-		      &#x27;width&#x27;: &#x27;100%&#x27;,
-		      &#x27;height&#x27;: &#x27;100%&#x27;,
-		      &#x27;padding&#x27;: 0,
-		      &#x27;overlayOpacity&#x27;: 0,
-		      &#x27;center&#x27;: false,
-		      &#x27;onStart&#x27; : function(){
-		      	$(&quot;#fancybox-outer&quot;).css(&quot;display&quot;,&quot;none&quot;);
-		      },
-		      &#x27;onComplete&#x27;  : function(data) {
+			&#x27;type&#x27;	: &#x27;inline&#x27;,
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;autoScale&#x27; : false,		      
+			&#x27;width&#x27;: &#x27;100%&#x27;,
+			&#x27;height&#x27;: &#x27;100%&#x27;,
+			&#x27;padding&#x27;: 0,
+			&#x27;overlayOpacity&#x27;: 0,
+			&#x27;center&#x27;: false,
+			&#x27;onStart&#x27; : function(){
+				$(&quot;#fancybox-outer&quot;).css(&quot;display&quot;,&quot;none&quot;);
+			},
+			&#x27;onComplete&#x27;  : function(data) {
 				$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;rgba(0,0,0,.7)&quot;);
 				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;0px&quot;);
 				V.Slides.triggerLeaveEvent(V.Slides.getCurrentSlideNumber());
 				_isRecVisible = true;
 				V.ViewerAdapter.updateFancyboxAfterSetupSize();
 				$(&quot;#fancybox-outer&quot;).css(&quot;display&quot;,&quot;block&quot;);
-		      },
-		      &#x27;onClosed&#x27; : function(data) {
-		      		$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
-		      		$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;-14px&quot;);
-		      		V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
-		      		_isRecVisible = false;
-		      }
+				V.ViewerAdapter.decideIfPageSwitcher();
+			},
+			&#x27;onClosed&#x27; : function(data) {
+				$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
+				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;-14px&quot;);
+				V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+				_isRecVisible = false;
+				V.ViewerAdapter.decideIfPageSwitcher();
+			}
 		});
 	};
 
@@ -332,6 +336,10 @@ VISH.Recommendations = (function(V,$,undefined){
 		$(&quot;#fancyRec&quot;).trigger(&#x27;click&#x27;);
 	};
 
+	var hideFancybox = function(){
+		$.fancybox.close();
+	};
+
 	var isRecVisible = function(){
 		return _isRecVisible;
 	};
@@ -397,7 +405,9 @@ VISH.Recommendations = (function(V,$,undefined){
 		canShowEvaluateButton	: canShowEvaluateButton,
 		checkForRecommendations	: checkForRecommendations,
 		showFancybox			: showFancybox,
+		hideFancybox			: hideFancybox,
 		isRecVisible 			: isRecVisible,
+		isEnabled				: isEnabled,
 		aftersetupSize			: aftersetupSize,
 		onClickEvaluateButton	: onClickEvaluateButton
 	};

@@ -148,15 +148,14 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	//Add HTTP if is not present.
 	var autocompleteUrls = function(input){
 		var http_urls_pattern=/(^http(s)?:\/\/)/g
-		var objectInfo = V.Object.getObjectInfo();
-
-		if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)){
+		var anchor_urls_pattern=/(^#)/g
+		var objectInfo = V.Object.getObjectInfo(input);
+		if((objectInfo.wrapper==null)&&(input.match(http_urls_pattern)==null)&&(input.match(anchor_urls_pattern)==null)){
 			return "http://" + input;
 		} else {
 			return input;
 		}
 	};
-
 
 	var filterFilePath = function(path){
 		return path.replace("C:\\fakepath\\","");

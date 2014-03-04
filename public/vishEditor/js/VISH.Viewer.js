@@ -121,6 +121,7 @@ VISH.Viewer = (function(V,$,undefined){
 	var onSlideEnterViewer = function(e){
 		var slide = e.target;
 		var isSubslide = V.Slides.isSubslide(slide);
+		var isSlideset = ((!isSubslide)&&(V.Slideset.isSlideset(slide)));
 
 		//Prevent parent to trigger onSlideEnterViewer
 		//Use to prevent slidesets to be called when enter in one of their subslides
@@ -142,24 +143,29 @@ VISH.Viewer = (function(V,$,undefined){
 					return;
 				}
 			}
-			if($(slide).hasClass(V.Constant.OBJECT)){
-				V.ObjectPlayer.loadObject($(slide));
-			}
-			if($(slide).hasClass(V.Constant.SNAPSHOT)){
-				V.SnapshotPlayer.loadSnapshot($(slide));
+			if(!isSlideset){
+				if($(slide).hasClass(V.Constant.OBJECT)){
+					V.ObjectPlayer.loadObject($(slide));
+				}
+				if($(slide).hasClass(V.Constant.SNAPSHOT)){
+					V.SnapshotPlayer.loadSnapshot($(slide));
+				}
 			}
 		},timeToLoadObjects);
 
 		// if(V.Status.getDevice().mobile){
 		// 	V.ImagePlayer.reloadGifs($(slide));
 		// }
-		
+
+		if(!isSlideset){
+			V.Video.HTML5.playMultimedia(slide);
+		}
+
+		if(isSlideset){
+			V.Slideset.onEnterSlideset(slide);
+		}
+
 		if(!isSubslide){
-			if(V.Slideset.isSlideset(slide)){
-				V.Slideset.onEnterSlideset(slide);
-			} else {
-				V.Video.HTML5.playVideos(slide);
-			}
 			V.Recommendations.checkForRecommendations();
 		}
 	};
@@ -170,22 +176,22 @@ VISH.Viewer = (function(V,$,undefined){
 	var onSlideLeaveViewer = function(e){
 		var slide = e.target;
 		var isSubslide = V.Slides.isSubslide(slide);
+		var isSlideset = ((!isSubslide)&&(V.Slideset.isSlideset(slide)));
 
 		e.stopPropagation();
 
-		if($(slide).hasClass(V.Constant.OBJECT)){
-			V.ObjectPlayer.unloadObject($(slide));
-		}
-		if($(slide).hasClass(V.Constant.SNAPSHOT)){
-			V.SnapshotPlayer.unloadSnapshot($(slide));
+		if(!isSlideset){
+			if($(slide).hasClass(V.Constant.OBJECT)){
+				V.ObjectPlayer.unloadObject($(slide));
+			}
+			if($(slide).hasClass(V.Constant.SNAPSHOT)){
+				V.SnapshotPlayer.unloadSnapshot($(slide));
+			}
+			V.Video.HTML5.stopMultimedia(slide);
 		}
 
-		if(!isSubslide){
-			if(V.Slideset.isSlideset(slide)){
-				V.Slideset.onLeaveSlideset(slide);
-			} else {
-				V.Video.HTML5.stopVideos(slide);
-			}
+		if(isSlideset){
+			V.Slideset.onLeaveSlideset(slide);
 		}
 	};
 	

@@ -34,9 +34,9 @@
 }
 
 #toolbar_presentation {
-	padding-right: 20px;
-	padding-left: 20px;
-	min-width: 485px;
+	padding-right: 8px;
+	padding-left: 8px;
+	min-width: 475px;
 	float: left;
 	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
@@ -44,10 +44,14 @@
 }
 
 #toolbar_element {
-	padding-left: 12px;
+	padding-left: 1px;
 	min-width: 425px;
 	text-align: left;
 	max-width: 620px;
+}
+
+#toolbar_element > div {
+	display: inline-block;
 }
 
 .toolbar_presentation_wrapper {
@@ -55,7 +59,11 @@
 	min-width: 75px;
 	text-align: center;
 	margin-top: 4px;
-	border-right: 1px solid #E9E9E9;
+}
+
+#toolbar_text {
+	position: absolute;
+	margin-left: 10px;
 }
 
 .toolbar_presentation_wrapper_slideTools {
@@ -65,6 +73,20 @@
 .toolbar_presentation_wrapper > p {
 	cursor: default;
 	font-family: 'Open Sans', arial, sans-serif;
+}
+
+.toolbar_presentation_wrapper img:not(.big_toolbar_icon){
+	max-height: 27px;
+	max-width: 27px;
+}
+
+.toolbar_presentation_wrapper button {
+	height: 32px;
+	width: 39px;
+}
+
+button.btn-toolbarElementWrapper {
+	padding: 2px 2px;
 }
 
 .icon-button {
@@ -92,7 +114,7 @@
 	text-align: center;
 	font-size: 12px;
 	padding: 0;
-	margin: 0px 5px 0px 5px;
+	margin: 0px 10px 0px 10px;
 }
 
 .toolbar_icon {
@@ -108,10 +130,11 @@
 .big_toolbar_icon {
 	width: 41px;
 	height: 32px;
-	margin: 2px 0px -3px 0px;
+	margin: 0px 0px -4px 0px;
+	opacity: 0.9;
 }
 
-.toolbar_icon:hover {
+.toolbar_icon:hover, img.big_toolbar_icon:hover {
 	opacity: 1;	
 }
 
@@ -137,7 +160,30 @@ img.toolbar_icon {
 	opacity: 1;
 }
 
-#toolbarborder {
-	border: none;
-	margin-bottom: 12px;
+.withLeftBorder {
+	border-left: 1px solid #E9E9E9;
+}
+
+.toolbar_presentation_wrapper_disabled.withLeftBorder {
+	border-left: 1px solid #A3A3A3 !important;
+}
+
+.withRightBorder {
+	border-right: 1px solid #E9E9E9;
+}
+
+.toolbar_presentation_wrapper_disabled.withRightBorder {
+	border-right: 1px solid #A3A3A3 !important;
+}
+
+.withoutRightBorder {
+	border-right: none;
+}
+
+.withoutLeftBorder {
+	border-left: none;
+}
+
+#toolbar_background_wrapper, #toolbar_evideo_wrapper {
+	min-width: 88px;
 }

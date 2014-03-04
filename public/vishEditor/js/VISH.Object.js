@@ -24,9 +24,23 @@ VISH.Object = (function(V,$,undefined){
 		var wrapper = null;
 		
 		//Determine wrapper
-		var element = $(object)[0];
-		if(typeof element != 'undefined'){
-			var wrapper = element.tagName;
+		if(typeof object == "string"){
+			var videoPattern = new RegExp("^<video","g");
+			if(videoPattern.exec(object) != null){
+				wrapper = "VIDEO";
+			}
+
+			var audioPattern = new RegExp("^<audio","g");
+			if(audioPattern.exec(object) != null){
+				wrapper = "AUDIO";
+			}
+		}
+
+		if((wrapper===null)||(typeof wrapper == "undefined")){
+			var element = $(object)[0];
+			if(typeof element != 'undefined'){
+				wrapper = element.tagName;
+			}
 		}
 		
 		//Determine source type
@@ -80,7 +94,6 @@ VISH.Object = (function(V,$,undefined){
 	 */                                                         		
 	
 	var _getTypeFromSource = function(source){
-
 		if((typeof source == "object")&&(typeof source.length == "number")&&(source.length > 0)){
 			source = source[0];
 		};
@@ -133,7 +146,11 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.DOC;
 		}
 
-		if(extension=="ppt"){
+		if((extension=="ppt")||(extension=="pptx")){
+			return V.Constant.MEDIA.PPT;
+		}
+
+		if(extension=="odp"){
 			return V.Constant.MEDIA.PPT;
 		}
 

@@ -9,19 +9,21 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			var options = {};
 
 			//Look for poster
-			var video = $(videoTag);
-			if($(video).attr("poster")){
-				options.poster = $(video).attr("poster");
+			var poster = V.Video.HTML5.getPoster(videoTag);
+			if(typeof poster == "string"){
+				options.poster = poster;
 			}
-			// if($(video).attr("autoplay")=="true"){
-			// 	options.autoplay = "true";
-			// }
+			//Look for autoplay...
+			options.timestamp = true;
+
 			drawVideo(sources,options);
 		}
 	};
 
 	var drawVideoWithUrl = function(url){
-		drawVideo([{src: url}]);
+		var options = {};
+		options.timestamp = true;
+		drawVideo([{src: url}],options);
 	};
 	
 	/**
@@ -38,6 +40,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		}	else {
 			current_area = V.Editor.getCurrentArea();
 		}
+		current_area.attr('type','video');
 
 		//Default options
 		var posterUrl = V.ImagesPath + "vicons/example_poster_image.jpg";
@@ -57,8 +60,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 
 		var nextVideoId = V.Utils.getId();
 		var idToDragAndResize = "draggable" + nextVideoId;
-		current_area.attr('type','video');
-
+		
 		var videoTag = document.createElement('video');
 		videoTag.setAttribute('id', idToDragAndResize);
 		videoTag.setAttribute('draggable', true);
@@ -71,24 +73,12 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		if(style){
 			videoTag.setAttribute('style', style);
 		}
-			
-		$(sources).each(function(index, source){
-			var videoSource = document.createElement('source');
-			videoSource.setAttribute('src', source.src);
-			if(source.mimeType){
-				videoSource.setAttribute('type', source.mimeType);
-			} else {
-				videoSource.setAttribute('type', V.Video.HTML5.getVideoMimeType(source.src));
-			}
-			$(videoTag).append(videoSource);
-		});
-
-		var fallbackText = document.createElement('p');
-		$(fallbackText).html("Your browser does not support HTML5 video.");
-		$(videoTag).append(fallbackText);
 
 		$(current_area).html("");
 		$(current_area).append(videoTag);
+
+		//Insert sources after append video
+		V.Video.HTML5.addSourcesToVideoTag(sources,videoTag,{timestamp:true});
 
 		V.Editor.addDeleteButton($(current_area));
 
@@ -106,9 +96,9 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		if(sources.length > 0){
 			var options = options || {};
 			//Look for poster
-			var video = $(videoTag);
-			if($(video).attr("poster")){
-				options.poster = $(video).attr("poster");
+			var poster = V.Video.HTML5.getPoster(videoTag);
+			if(typeof poster == "string"){
+				options.poster = poster;
 			}
 			return V.Video.HTML5.renderVideoFromSources(sources,options);
 		}

@@ -17,7 +17,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		// $(urlInput).vewatermark(V.I18n.getTrans("i.pasteEmbedObject"));
 		
 		//Load from URL (embed)
-		$("#" + urlDivId + " .previewButton").click(function(event) {
+		$("#" + urlDivId + " .previewButton").click(function(event){
 			if(V.Police.validateObject($("#" + urlInputId).val())[0]){
 				contentToAdd = V.Editor.Utils.autocompleteUrls($("#" + urlInputId).val());
 				drawPreview(urlDivId, contentToAdd);
@@ -175,23 +175,22 @@ VISH.Editor.Object = (function(V,$,undefined){
 		previewBackground = $("#" + divId + " .previewimgbox").css("background-image");
 		$("#" + divId + " .previewimgbox").css("background-image","none");
 		$("#" + divId + " .previewimgbox img.imagePreview").remove();
-		var wrapper = renderObjectPreview(src);
 		if($("#" + divId + " .previewimgbox .objectPreview").length>0){
 			$("#" + divId + " .previewimgbox .objectPreview").remove();
 		}
+		var wrapper = $(renderObjectPreview(src));
 		$("#" + divId + " .previewimgbox").append(wrapper);
+		_loadSources(src,wrapper);
 		$("#" + divId + " .previewimgbox button").show();
-		$("#" + divId + " .documentblank").addClass("documentblank_extraMargin");
 	};
 	
 	var resetPreview = function(divId){
 		$("#" + divId + " .previewimgbox button").hide();
 		$("#" + divId + " .previewimgbox img.imagePreview").remove();
 		$("#" + divId + " .previewimgbox .objectPreview").remove();
-		if (previewBackground){
+		if(previewBackground){
 			$("#" + divId + " .previewimgbox").css("background-image", previewBackground);
 		}
-		$("#" + divId + " .documentblank").removeClass("documentblank_extraMargin");
 	};
 	
 	var drawPreviewElement = function(){
@@ -205,6 +204,16 @@ VISH.Editor.Object = (function(V,$,undefined){
 		}
 	};
 
+	var _loadSources = function(object,tag){
+		var objectInfo = V.Object.getObjectInfo(object);
+		if((objectInfo.wrapper===V.Constant.WRAPPER.VIDEO)||((objectInfo.wrapper===null)&&(objectInfo.type===V.Constant.MEDIA.HTML5_VIDEO))){
+			var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+			V.Video.HTML5.addSourcesToVideoTag(sources,tag,{timestamp:true});
+		} else if((objectInfo.wrapper===V.Constant.WRAPPER.AUDIO)||((objectInfo.wrapper===null)&&(objectInfo.type===V.Constant.MEDIA.HTML5_AUDIO))){
+			var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+			V.Audio.HTML5.addSourcesToAudioTag(sources,tag,{timestamp:true});
+		}
+	};
 
 	///////////////////////////////////////
 	/// OBJECT RESIZING
@@ -288,11 +297,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	var renderObjectPreview = function(object){
 		var objectInfo = V.Object.getObjectInfo(object);
-
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object preview from source
-				switch (objectInfo.type) {	
+				switch (objectInfo.type) {
 					case V.Constant.MEDIA.IMAGE:
 						return "<img class='imagePreview' src='" + object + "'></img>";
 						break;
@@ -309,10 +317,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoWithURL(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: "objectPreview"});
+						return V.Editor.Video.HTML5.renderVideoWithURL(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
 						break;
 					case V.Constant.MEDIA.HTML5_AUDIO:
-						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{extraClasses: "objectPreview"});
+						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{loadSources: false, extraClasses: ["objectPreview"]});
 						break;
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
@@ -333,10 +341,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return _genericWrapperPreview(object);
 				break;
 			case V.Constant.WRAPPER.VIDEO:
-				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: "objectPreview"});
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
 				break;
 			case V.Constant.WRAPPER.AUDIO:
-				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{extraClasses: "objectPreview"});
+				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{loadSources: false, extraClasses: ["objectPreview"]});
 				break;
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
@@ -368,7 +376,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param options.area: optional param indicating the area to add the object, used for editing presentations
 	* param options.style: optional param with the style, used in editing presentation
 	*/
-	var drawObject = function(object, options){
+	var drawObject = function(object,options){
+
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
@@ -394,7 +403,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				objectInfo.type = options.forceType;
 			}
 		}
-		
+
 		switch (objectInfo.wrapper) {
 			case null:
 				//Draw object from source

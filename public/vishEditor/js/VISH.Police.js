@@ -3,10 +3,6 @@ VISH.Police = (function(V,$,undefined){
 	var init = function(){
 	};
 	
-	
-	/* Validate a input content */
-	var valid_url_pattern=/((http(s)?:\/\/)|(www[.]))(.*)/g
-	
 	var validateObject = function(object,callback){
 
 		if(!object){
@@ -16,7 +12,7 @@ VISH.Police = (function(V,$,undefined){
 		if((typeof object == "string")&&(object.trim()=="")){
 			return [false,"Object is an empty string"];
 		}
-		
+
 		var objectInfo = V.Object.getObjectInfo(object);
 		
 		if(!objectInfo){
@@ -39,14 +35,12 @@ VISH.Police = (function(V,$,undefined){
 			return [false,"Invalid object source"];
 		}
 
-
+		// var valid_url_pattern=/((http(s)?:\/\/)|(www[.]))(.*)/g
 //		if(objectInfo.source.match(valid_url_pattern)==null){
 //      	return [false,"Not valid URL"];
 //    	}
 		
-		
 		//Add more conditions here...
-		
 		
 		//Broken links validation (Optional) 
 		if(typeof callback == "function"){
@@ -55,7 +49,7 @@ VISH.Police = (function(V,$,undefined){
 		}
 
 		return [true,"Validation Ok"];
-	}
+	};
 	
   	
 	function _validateUrl(url,callback){
@@ -67,7 +61,7 @@ VISH.Police = (function(V,$,undefined){
 				callback([true,"Validation Ok"]);
 			}
 		});
-	}
+	};
 	
 	function _checkUrl(url, cb){
 		jQuery.ajax({
@@ -80,7 +74,7 @@ VISH.Police = (function(V,$,undefined){
 				}  
 			}
 		});
-	}
+	};
 
 	var validateFileUpload = function(fileName){
 		if(!fileName){
@@ -90,12 +84,12 @@ VISH.Police = (function(V,$,undefined){
 			return [false,"Name is an empty string"];
 		}
 		return [true,"Validation Ok"];
-	}
+	};
 	
 	return {
-		init            : init,
-		validateObject  : validateObject,
-		validateFileUpload : validateFileUpload
+		init            	: init,
+		validateObject  	: validateObject,
+		validateFileUpload 	: validateFileUpload
 	};
 
 }) (VISH, jQuery);
