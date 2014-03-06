@@ -686,6 +686,8 @@ var i18n =
 			},
 			"fr":
 			{
+				"i.Saved"					: "Enregistré",
+				"i.Saving"					: "Enregistrement",
 				"i.Unpublish_confirmation"	: "Vous allez dépublier ce Excursion virtuelle de la plate-forme Vish. Après cela, l'excursion sera privé et ne vous sera en mesure d'y accéder. Que souhaitez-vous faire?",
 				"i.Animations"				: "Animation",
 				"i.Horizontal"				: "Horizontal",
@@ -885,6 +887,8 @@ var i18n =
 				"i.Typicallearningtime"   : "Temps d'apprentissage moyen",
 				"i.unpublish"				: "dépublier",
 				"i.Unpublish"				: "Dépublier",
+				"i.unpublishing"			: "annulation",
+				"i.Unpublishing"			: "Annulation",
 				"i.University"        : "Université",
 				"i.UnselectAll"       : "Désélectionner tout",
 				"i.UnselectSlide"     : "Désélectionner la diapositive",
@@ -906,6 +910,8 @@ var i18n =
 			},
 			"nl":
 			{
+				"i.Saved"					: "Opgeslagen",
+				"i.Saving"					: "Besparing",
 				"i.Unpublish_confirmation"	: "U gaat naar deze Virtuele Excursie depubliceren van de Vish Platform. Hierna zal de excursie prive en alleen u zult in staat zijn om toegang te krijgen zijn. Wat wilt u doen?",
 				"i.Animations"				: "Animatie",
 				"i.Horizontal"				: "Horizontaal",
@@ -1105,6 +1111,8 @@ var i18n =
 				"i.Typicallearningtime"   : "Typische leertijd",
 				"i.unpublish"				: "depubliceren",
 				"i.Unpublish"				: "Depubliceren",
+				"i.unpublishing"			: "verwijderen",
+				"i.Unpublishing"			: "Verwijderen",
 				"i.University"        : "Universiteit",
 				"i.UnselectAll"       : "Alles deselecteren",
 				"i.UnselectSlide"     : "Dia deselecteren",
@@ -1126,6 +1134,8 @@ var i18n =
 			},
 			"hu":
 				{
+					"i.Saved"					: "Mentett",
+					"i.Saving"					: "Mentése",
 					"i.Unpublish_confirmation"	: "Fogsz publikálni ezt a virtuális kirándulás a Vish Platform. Ezt követően a kirándulás lesz magán, és csak akkor lesz képes hozzáférni. Mit szeretnél csinálni?",
 					"i.Animations"				: "Élénkség",
 					"i.Horizontal"				: "Vízszintes",
@@ -1328,8 +1338,10 @@ var i18n =
 					"i.toJSON"          : "JSON-ba",
 					"i.Training"        : "Gyakorlat",
 					"i.Typicallearningtime"   : "Tipikus megtanulási idő",
-					"i.unpublish"				: "Visszavonás",
+					"i.unpublish"				: "visszavonás",
 					"i.Unpublish"				: "Visszavonás",
+					"i.unpublishing"			: "publikálásának",
+					"i.Unpublishing"			: "Publikálásának",
 					"i.University"        : "Egyetem",
 					"i.UnselectAll"       : "Összes kiválasztás törlése",
 					"i.UnselectSlide"     : "Dia kiválasztásának törlése",
@@ -1354,8 +1366,10 @@ var i18n =
 					//Tooltips
 					"i.tooltip.QSInput"     : "Adj meg egy nevet az élő kvízhez"
 				},
-				"neu":
+				"de":
 					{
+						"i.Saved"					: "Gespeicherte ",
+						"i.Saving"					: "Speichern",
 						"i.Unpublish_confirmation"	: "Sie sind dabei, diese Virtual Excursion von der Plattform vish unpublish. Danach wird der Ausflug privat sein und nur Sie werden in der Lage, darauf zuzugreifen. Was würden Sie tun?",
 						"i.Animations"				: "Lebhaftigkeit",
 						"i.Horizontal"				: "Horizontal",
@@ -1565,6 +1579,8 @@ var i18n =
 						"i.UnselectSlide"     : "Auswahl der Folie rückgängig machen",
 						"i.unspecified"       : "Nicht spezifiziert",
 						"i.Unspecified"       : "Nicht spezifiziert",
+						"i.unpublishing"			: "aufheben",
+						"i.Unpublishing"			: "Aufheben",
 						"i.upload"          : "Hochladen",
 						"i.Upload"          : "Hochladen",
 						"i.Version"         : "Version",
