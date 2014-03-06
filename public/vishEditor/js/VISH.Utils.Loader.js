@@ -221,7 +221,7 @@ VISH.Utils.Loader = (function(V,undefined){
 	};
 
 	var loadLanguageCSS = function(){
-		var languagesWithCSS = ["es"];
+		var languagesWithCSS = ["es", "fr", "hu", "nl", "neu"];
 		var language = V.I18n.getLanguage();
 		if(languagesWithCSS.indexOf(language)!=-1){
 			//Load CSS for this language

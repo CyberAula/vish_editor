@@ -1,3 +1,11 @@
 /*
  *	Styles for French
  */
+
+ #addSlideButton > .slidesScrollbarButton {
+	width: 84px;
+}
+
+#importButton > .slidesScrollbarButton {
+	width: 89px;
+}

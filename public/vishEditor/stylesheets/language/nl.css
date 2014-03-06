@@ -1,3 +1,30 @@
 /*
  *	Styles for Netherlands
  */
+
+#addSlideButton > .slidesScrollbarButton {
+ 	width: 84px;
+	padding: 5px 0px;
+}
+
+#importButton > .slidesScrollbarButton {
+	width: 86px;
+	padding: 5px 2px;
+}
+
+.stthumb_wrapper {
+	overflow: hidden;
+	width: 110px;
+	height: 118px;
+	float: left;
+	margin: 10px 9px -2px 9px;
+	text-align: center;
+}
+
+.templateselectlist2 {
+	border: 1px solid #ccc;
+	width: 642px;
+	height: 131px;
+	margin-bottom: -24px;
+	border-radius: 6px;
+}

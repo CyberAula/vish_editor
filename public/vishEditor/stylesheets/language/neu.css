@@ -1,12 +1,15 @@
 /*
- *	Styles for Hungarian
+ *	Styles for Deutsch (German)
  */
 
  #addSlideButton > .slidesScrollbarButton {
- 	width: 84px;
+	width: 83px;
 	padding: 5px 0px;
+	font-size: 11px;
 }
 
 #importButton > .slidesScrollbarButton {
-	width: 86px;
+	width: 83px;
+	padding: 5px 0px;
+	font-size: 11px;
 }

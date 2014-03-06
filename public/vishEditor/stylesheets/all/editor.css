@@ -998,6 +998,7 @@ div.vezone[tooltip='true'][size='large'] {
 }
 
 .textfancy {
+	width: 85%;
 	position: relative;
 	font-family: 'Open Sans', arial, sans-serif;
 	margin: 0px;
