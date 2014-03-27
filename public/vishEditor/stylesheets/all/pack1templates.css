@@ -1025,9 +1025,9 @@
 */
 
 .t18_header{
-	height: 10%;
-	margin-top: -3.3%;
-	margin-bottom: 2%;
+	height: 7%;
+	margin-top: -2.8%;
+	margin-bottom: 0.3%;
 	width: 110.9%;
 	margin-left: -5.6%;
 	overflow: hidden;
@@ -1038,7 +1038,7 @@
 	position: relative;
 	width: 110.9%;
 	margin-left: -5.6%;
-	height: 95.4%;
+	height: 99.9%;
 	float: left;
 	overflow: hidden;
 }
@@ -1076,9 +1076,9 @@
 */
 
 .t19_header{
-	height: 10%;
-	margin-top: -3.3%;
-	margin-bottom: 2%;
+	height: 7%;
+	margin-top: -2.8%;
+	margin-bottom: 0.3%;
 	width: 110.9%;
 	margin-left: -5.6%;
 	overflow: hidden;
@@ -1089,8 +1089,7 @@
 	position: relative;
 	width: 110.9%;
 	margin-left: -5.6%;
-	height: 82%;
-	margin-bottom: 2%;
+	height: 92%;
 	float: left;
 	overflow: hidden;
 }
@@ -1099,7 +1098,9 @@
 	position: relative;
 	width: 110.9%;
 	margin-left: -5.6%;
-	height: 10.4%;
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
+	height: 6.5%;
 	float: left;
 	overflow: hidden;	
 }
