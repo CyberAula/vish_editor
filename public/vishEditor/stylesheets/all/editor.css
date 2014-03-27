@@ -2414,6 +2414,8 @@ iframe:not(.tut_iframe_yt) {
 :focus {outline:none;}
 ::-moz-focus-inner {border:0;}
 
+
+/* Snapshot elements */
 div.snapshot_wrapper{
 	border: 10px #9E1F63 solid;
 	width: 100%;
@@ -2436,6 +2438,11 @@ iframe.snapshot_content{
 	-webkit-transform-origin: 0 0;
 	-ms-transform: scale(1.0);
 	-ms-transform-origin: 0 0;
+}
+
+/* Audio elements */
+div.vezone[type='audio'] audio{
+	width: 100%;
 }
 
 .selectedSlideThumbnail {
