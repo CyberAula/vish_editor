@@ -952,15 +952,3 @@ iframe.snapshot_content_viewer{
   -ms-transform-origin: 0 0;
 }
 
-
-/* 
-	Flashcard background
-*/
-
-.template_flashcard{
-	height: 100%;
-	width: 100%;
-	overflow: hidden;
-	position: relative;
-	border: none;
-}
