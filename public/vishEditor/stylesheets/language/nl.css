@@ -28,3 +28,11 @@
 	margin-bottom: -24px;
 	border-radius: 6px;
 }
+
+div.templateselectlist2 div.stthumb_wrapper:nth-child(2){
+	width: 115px;
+}
+
+h3[i18n-key="i.Opacity"] {
+	font-size: 1rem !important;
+}

@@ -9,3 +9,7 @@
 #importButton > .slidesScrollbarButton {
 	width: 89px;
 }
+
+span[i18n-key="i.Typicallearningtime"] {
+	font-size: 1.2rem !important;
+}
