@@ -2,7 +2,6 @@ var i18n =
 	{ "vish":
 		{ "es":
 			{
-
 				//Walkthroughs
 				"i.walkMenuHelp1a"			: "Para aprender a utilizar ViSH Editor tienes a tu disposición varios videotutoriales en nuestro",
 				"i.YouTubeChannel"			: "canal de YouTube",
@@ -1368,7 +1367,7 @@ var i18n =
 				},
 				"de":
 					{
-						"i.Saved"					: "Gespeicherte ",
+						"i.Saved"					: "Gespeicherte",
 						"i.Saving"					: "Speichern",
 						"i.Unpublish_confirmation"	: "Sie sind dabei, diese Virtual Excursion von der Plattform vish unpublish. Danach wird der Ausflug privat sein und nur Sie werden in der Lage, darauf zuzugreifen. Was würden Sie tun?",
 						"i.Animations"				: "Lebhaftigkeit",
@@ -1598,7 +1597,7 @@ var i18n =
 						"i.ZoneTooltip"       		: "Hier klicken um Inhalte hinzuzufügen",
 
 						//Tooltips
-						"i.tooltip.QSInput"     	: "Einen Namen für das live Quizz eingeben",
+						"i.tooltip.QSInput"     	: "Einen Namen für das live Quizz eingeben"
 					}
 		},
 	 "standalone":
