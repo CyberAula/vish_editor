@@ -93,11 +93,37 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 
+	/* Quiz exporting */
+	//Usage example: VISH.Editor.Quiz.exportTo("QTI", function(){ alert("Success")}, function(){alert("Fail")})
+	var exportTo = function(format,successCallback,failCallback){
+		var cJSONQuiz = _getCurrentJSONQuiz();
+
+		if(typeof cJSONQuiz == "undefined"){
+			if(typeof failCallback == "function"){
+				failCallback();
+			}
+			return;
+		}
+		V.Editor.API.uploadTmpJSON(cJSONQuiz,format,successCallback,failCallback);
+	};
+
+	var _getCurrentJSONQuiz = function(){
+		var presentation = V.Editor.savePresentation();
+		var cslide = V.Slides.getCurrentSlide();
+		if(typeof cSlide == "object"){
+			var cslideId = $(cslide).attr("id");
+			//TODO: 1. Look inside presentation to find the slide with id: cslideId
+			//2. Look inside the slide to find a quiz
+			//3. If there is a quiz, get its JSON and send it. If not return undefined.
+		}
+	};
+
 	return {
 		init				: init, 
 		add					: add,
 		save				: save,
 		draw				: draw,
+		exportTo			: exportTo,
 		showQuizSettings	: showQuizSettings
 	};
 
