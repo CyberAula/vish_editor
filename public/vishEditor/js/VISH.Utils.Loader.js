@@ -194,6 +194,15 @@ VISH.Utils.Loader = (function(V,undefined){
 		};
 
 		head.appendChild(link);
+
+		if(typeof callback == "function"){
+			//Workaround for browsers that don't support LINK onload functions
+			var img = document.createElement('img');
+			img.onerror = function(){
+				callCallback();
+			}
+			img.src = url;
+		}
 	};
 
 	var loadDeviceCSS = function(){
