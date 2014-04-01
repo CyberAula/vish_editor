@@ -108,14 +108,34 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 	var _getCurrentJSONQuiz = function(){
+		var quizJSON = [];
 		var presentation = V.Editor.savePresentation();
 		var cslide = V.Slides.getCurrentSlide();
-		if(typeof cSlide == "object"){
-			var cslideId = $(cslide).attr("id");
-			//TODO: 1. Look inside presentation to find the slide with id: cslideId
+
+		if(typeof cslide == "object"){
+		var cslideId = $(cslide).attr("id");
+			
+		 $.each(presentation.slides, function( index, value ) {
+					if (value.id == cslideId){
+						if(value.containsQuiz == true){
+							 $.each(value.elements, function( index, value_element ) {
+							 	if(value_element.type == "quiz"){
+							 		quizJSON = value_element;
+							 	}
+							 });
+						}else{
+							quizJSON = undefined;
+						}
+		 			}	
+		 	});
+
+			//console.log("cslideId");
+			//console.log(cslideId);
+			//TODO: 1. Look inside presentation JSON to find the slide JSON with id: cslideId
 			//2. Look inside the slide to find a quiz
 			//3. If there is a quiz, get its JSON and send it. If not return undefined.
 		}
+		return quizJSON;
 	};
 
 	return {
@@ -124,7 +144,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		save				: save,
 		draw				: draw,
 		exportTo			: exportTo,
-		showQuizSettings	: showQuizSettings
+		showQuizSettings	: showQuizSettings,
+		_getCurrentJSONQuiz : _getCurrentJSONQuiz
 	};
 
 }) (VISH, jQuery);
