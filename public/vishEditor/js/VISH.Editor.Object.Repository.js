@@ -78,9 +78,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			}
 
 			var objectInfo = V.Object.getObjectInfo(objectItem.object);
-			var imageSource = null;
+			//Ignore type if its explicitly defined in the objectItem provided by the server API
+			var objectType = (typeof objectItem.type != "undefined") ? objectItem.type : objectInfo.type;
 
-			switch (objectInfo.type){
+			var imageSource = null;
+			switch (objectType){
 				case V.Constant.MEDIA.IMAGE:
 					imageSource = V.ImagesPath + "carrousel/image.png";
 					break;
@@ -101,11 +103,20 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 				case V.Constant.MEDIA.FLASH:
 					imageSource = V.ImagesPath + "carrousel/swf.png";
 					break;
+
+				//Special types defined by the repository
+				case "SCORM_Package":
+					imageSource = V.ImagesPath + "carrousel/scorm.png";
+					break;
+				case "IMTS_QTI_QUIZ":
+					imageSource = V.ImagesPath + "carrousel/quizxml.png";
+					break;
+
 				default:
 					imageSource = V.ImagesPath + "carrousel/object.png";
-			}
+			};
 
-			var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"'>");
+			var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"' objectType='" + objectType + "'>");
 			carrouselImages.push(myImg);
 			carrouselImagesTitles.push(objectItem.title);
 			currentObject[objectItem.id]=objectItem;

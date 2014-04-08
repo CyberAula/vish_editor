@@ -101,6 +101,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Audio.init();
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
+		V.SCORM.init();
 
 		//If we have to edit
 		if(initialPresentation){
