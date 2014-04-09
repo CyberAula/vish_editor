@@ -156,11 +156,15 @@ VISH.Editor.Object = (function(V,$,undefined){
 	
 	var processResponse = function(response){
 		try  {
-			var jsonResponse = JSON.parse(response)
+			var jsonResponse = JSON.parse(response);
 			if(jsonResponse.src){
-				if (V.Police.validateObject(jsonResponse.src)[0]) {
-				  drawPreview(uploadDivId,jsonResponse.src)
-				  contentToAdd = jsonResponse.src
+				if(V.Police.validateObject(jsonResponse.src)[0]){
+					var objectToDraw = jsonResponse.src;
+					if(typeof jsonResponse.type == V.Constant.MEDIA.SCORM_PACKAGE){
+						objectToDraw = V.Editor.Object.Scorm.generateWrapperForScorm(jsonResponse.src);
+					}
+					drawPreview(uploadDivId,objectToDraw);
+					contentToAdd = objectToDraw;
 				}
 			}
 		} catch(e) {
@@ -245,7 +249,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		$("#" + id).width(newWidth);
 		$("#" + id).height(newHeight);
-	}
+	};
 	
 	
 	/*
@@ -279,10 +283,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(wrapper).height($("#"+objectID).height());
 			$(wrapper).width($("#"+objectID).width());
 		}
-	}
+	};
 	
-	
-	
+		
 	/*
 	 * Resize object to fix in its wrapper
 	 */
