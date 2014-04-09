@@ -160,7 +160,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			if(jsonResponse.src){
 				if(V.Police.validateObject(jsonResponse.src)[0]){
 					var objectToDraw = jsonResponse.src;
-					if(typeof jsonResponse.type == V.Constant.MEDIA.SCORM_PACKAGE){
+					if(jsonResponse.type === V.Constant.MEDIA.SCORM_PACKAGE){
 						objectToDraw = V.Editor.Object.Scorm.generateWrapperForScorm(jsonResponse.src);
 					}
 					drawPreview(uploadDivId,objectToDraw);
