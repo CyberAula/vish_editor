@@ -12,6 +12,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.Web.init();
 		V.Editor.Object.GoogleDOC.init();
 		V.Editor.Object.Snapshot.init();
+		V.Editor.Object.Scorm.init();
 		
 		var urlInput = $("#"+urlDivId).find("input");
 		// $(urlInput).vewatermark(V.I18n.getTrans("i.pasteEmbedObject"));
