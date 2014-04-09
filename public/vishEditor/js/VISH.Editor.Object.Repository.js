@@ -105,10 +105,10 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 					break;
 
 				//Special types defined by the repository
-				case "SCORM_Package":
+				case V.Constant.MEDIA.SCORM_PACKAGE:
 					imageSource = V.ImagesPath + "carrousel/scorm.png";
 					break;
-				case "IMTS_QTI_QUIZ":
+				case V.Constant.MEDIA.IMS_QTI_QUIZ:
 					imageSource = V.ImagesPath + "carrousel/quizxml.png";
 					break;
 
@@ -183,7 +183,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
 		if(typeof objectId != "undefined"){
-			var renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].object);
+			var options = {};
+			if(typeof currentObject[objectId].type != "undefined"){
+				options.forceType = currentObject[objectId].type;
+			}
+			var renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].object,options);
 			_renderObjectPreview(renderedObject,currentObject[objectId]);
 			selectedObject = currentObject[objectId]; 
 		}
@@ -242,7 +246,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
 	var addSelectedObject = function(){
 		if(selectedObject!=null){
-			V.Editor.Object.drawObject(selectedObject.object);
+			var options = {};
+			if(typeof selectedObject.type != "undefined"){
+				options.forceType = selectedObject.type;
+			}
+			V.Editor.Object.drawObject(selectedObject.object,options);
 			$.fancybox.close();
 		}
 	};

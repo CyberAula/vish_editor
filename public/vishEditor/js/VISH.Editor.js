@@ -662,6 +662,8 @@ VISH.Editor = (function(V,$,undefined){
 					if(zoom!=1){
 						element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
 					}
+					//Save subtype
+					element.subtype = V.Object.getObjectInfo(myObject).type;
 				} else if (element.type === V.Constant.QUIZ) {
 					var quizJSON = VISH.Editor.Quiz.save(div);
 					element.quiztype = quizJSON.quizType;
@@ -690,7 +692,7 @@ VISH.Editor = (function(V,$,undefined){
 						element.scrollTop = $(snapshotWrapper).scrollTop();
 						element.scrollLeft = $(snapshotWrapper).scrollLeft();
 					}
-					
+					element.subtype = V.Constant.MEDIA.WEB;
 				} else if(typeof element.type == "undefined"){
 					//Empty element
 				}

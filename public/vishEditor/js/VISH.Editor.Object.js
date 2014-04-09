@@ -296,12 +296,18 @@ VISH.Editor.Object = (function(V,$,undefined){
 	/// OBJECT DRAW: PREVIEWS
 	///////////////////////////////////////
 	
-	var renderObjectPreview = function(object){
+	var renderObjectPreview = function(object, options){
 		var objectInfo = V.Object.getObjectInfo(object);
-		switch (objectInfo.wrapper) {
+		var objectType = objectInfo.type;
+		
+		if((options)&&(typeof options.forceType == "string")){
+			objectType = options.forceType;
+		}
+
+		switch (objectInfo.wrapper){
 			case null:
 				//Draw object preview from source
-				switch (objectInfo.type) {
+				switch (objectType) {
 					case V.Constant.MEDIA.IMAGE:
 						return "<img class='imagePreview' src='" + object + "'></img>";
 						break;
@@ -326,6 +332,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case V.Constant.MEDIA.WEB:
 						return V.Editor.Object.Web.generatePreviewWrapperForWeb(object);
 						break;
+					case V.Constant.MEDIA.SCORM_PACKAGE:
+						return V.Editor.Object.Scorm.generatePreviewWrapperForScorm(object);
+						break;
 					default:
 						V.Debugging.log("Unrecognized object source type");
 						break;
@@ -339,7 +348,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 				return _genericWrapperPreview(object);
 				break;
 			case V.Constant.WRAPPER.IFRAME:
-				return _genericWrapperPreview(object);
+				if(objectType==V.Constant.MEDIA.SCORM_PACKAGE){
+					return V.Editor.Object.Scorm.generatePreviewWrapperForScorm(objectInfo.source);
+				} else {
+					return _genericWrapperPreview(object);
+				}
 				break;
 			case V.Constant.WRAPPER.VIDEO:
 				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
@@ -432,6 +445,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case V.Constant.MEDIA.WEB:
 						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
 						break;
+					case V.Constant.MEDIA.SCORM_PACKAGE:
+						V.Editor.Object.drawObject(V.Editor.Object.Scorm.generateWrapperForScorm(object));
+						break;
 					default:
 						V.Debugging.log("Unrecognized object source type: " + objectInfo.type);
 						break;
@@ -513,6 +529,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(zoomInStyle){
 			$(wrapperTag).attr('style', zoomInStyle);
 			V.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
+		}
+
+		if($(wrapperTag).attr('objecttype') == V.Constant.MEDIA.SCORM_PACKAGE){
+			V.Editor.Object.Scorm.afterDrawSCORM(wrapperTag);
 		}
 	};
 	

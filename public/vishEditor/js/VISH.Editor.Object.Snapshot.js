@@ -22,7 +22,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		contentToAdd = null;
 		V.Editor.Object.resetPreview(urlDivId);
 		$("#" + urlInputId).val("");
-	}
+	};
 	
 	
 	var drawPreviewElement = function(){
@@ -30,7 +30,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 			drawSnapShot(_wrapperSnapShot(contentToAdd));
 			$.fancybox.close();
 		}
-	}
+	};
 	
 	
 	var _validateSnapShot = function(object){
@@ -48,7 +48,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 				return false;
 				break;
 		}
-	}
+	};
 	
 	var _validateUrl = function(url){
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
@@ -58,7 +58,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		} else {
 			return false;
 		}
-	}
+	};
 	
 	var _wrapperSnapShot = function(content){
 		var objectInfo = V.Object.getObjectInfo(content);
@@ -68,7 +68,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		} else {
 			return content;
 		}
-	}
+	};
 	
 	/**
 	* Param style: optional param with the style, used in editing presentation
@@ -169,7 +169,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		}
 
 		return false;
-	}
+	};
 	
 	/*
 	* Resize object and its wrapper automatically
@@ -180,11 +180,11 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		$("#" + id).height(width*proportion);
 	};
 
-	
+
 	return {
 		init				: init,
 		onLoadTab 			: onLoadTab,
-		drawPreviewElement : drawPreviewElement,
+		drawPreviewElement 	: drawPreviewElement,
 		drawSnapShot 		: drawSnapShot
 	};
 

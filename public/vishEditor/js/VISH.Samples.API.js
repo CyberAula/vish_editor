@@ -962,8 +962,8 @@ VISH.Samples.API = (function(V,undefined){
 		"title":"Medieval Armor",
 		"description":"Description of the SCORM Package",
 		"author":"Aldo",
-		"object":"http://localhost:3000/scormfiles/15.full",
-		"type":"SCORM_Package"
+		"object":"http://localhost:3000/scorm/packages/41/vishubcode_scorm_wrapper.html",
+		"type":"scormpackage"
 	}
 	];
 	 
