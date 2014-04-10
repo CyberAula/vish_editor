@@ -141,6 +141,9 @@ VISH.Renderer = (function(V,$,undefined){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				return V.Video.Youtube.renderVideoFromJSON(element,{extraClasses: "objectelement youtubeelement " + template+"_"+ element['areaid']});
 				break;
+			case V.Constant.MEDIA.SCORM_PACKAGE:
+				return V.SCORM.renderSCORMFromJSON(element,{extraClasses: "" + template +"_" + element['areaid']});
+				break;
 			default:
 				var style = (element['style'])? element['style'] : "";
 				var body = element['body'];
