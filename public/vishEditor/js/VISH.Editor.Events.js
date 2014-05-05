@@ -261,19 +261,24 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_pdfex_help', 'bottom');
 		});
 
-		//Help importing a JSON file
-		$(document).on('click','#tab_json_file_help', function(){
-			V.Tour.startTourWithId('help_iJSON_help', 'bottom');
+		//Help inserting e-Learning packages
+		$(document).on('click','#tab_epackage_help', function(){
+			V.Tour.startTourWithId('help_epackage_help', 'bottom');
 		});
 
-		//Help in LRE carrousel
-		$(document).on('click','#tab_presentations_lre_help', function(){
-			V.Tour.startTourWithId('tab_presentations_lre_help', 'bottom');
-		});	
+		//Help importing external files (e.g. JSON)
+		$(document).on('click','#tab_efile_help', function(){
+			V.Tour.startTourWithId('help_efile_help', 'bottom');
+		});
 
 		//Help in presentation carrousel
 		$(document).on('click','#tab_presentations_repo_help', function(){
 			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
+		});	
+
+		//Help in LRE carrousel
+		$(document).on('click','#tab_presentations_lre_help', function(){
+			V.Tour.startTourWithId('tab_presentations_lre_help', 'bottom');
 		});	
 
 		//Help in themes templates

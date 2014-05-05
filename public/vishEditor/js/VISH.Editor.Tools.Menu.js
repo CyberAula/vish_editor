@@ -304,16 +304,6 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		window.top.location.href = V.exitPath;
 	}
 
-	var insertSmartcard = function(){
-		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_smartcards_repo');
-	};
-
-	var insertPresentation = function(){
-		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_presentations_repo');
-	};
-
 	var insertSlide = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_slides');
@@ -327,15 +317,26 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		return false; //Prevent iframe to move
 	};
 
-	var insertJSON = function(){
-		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_json_file');
-	};
-
 	var insertPDFex = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_pdfex');
 		return false; //Prevent iframe to move
+	};
+
+	var insertPackage = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_epackage');
+		return false; //Prevent iframe to move
+	};
+
+	var insertEFile = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_efile');
+	};
+
+	var insertPresentation = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_presentations_repo');
 	};
 
 	var _exportTo = function(format){
@@ -395,12 +396,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		init							: init,
 		disableMenu 					: disableMenu,
 		enableMenu 						: enableMenu,
-		insertPresentation				: insertPresentation,
-		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
 		insertSubslide					: insertSubslide,
-		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
+		insertPackage					: insertPackage,
+		insertEFile						: insertEFile,
+		insertPresentation				: insertPresentation,
 		exportToJSON 					: exportToJSON,
 		exportToSCORM					: exportToSCORM,
 		displaySettings					: displaySettings,
