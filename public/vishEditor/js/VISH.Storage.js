@@ -17,6 +17,13 @@ VISH.Storage = (function(V,$,undefined){
 		}
 	};
 
+	var isSupported = function(){
+		if(!_initialized){
+			init();
+		}
+		return _isLocalStorageSupported;
+	};
+
 
 	/*
 	 * Generic function to store values
@@ -38,7 +45,7 @@ VISH.Storage = (function(V,$,undefined){
 		} else {
 			return false;
 		}
-	}
+	};
 
 	var get = function(key){
 		if(!_initialized){
@@ -62,7 +69,7 @@ VISH.Storage = (function(V,$,undefined){
 		} else {
 			return undefined;
 		}
-	}
+	};
 
 
 	//////////////
@@ -113,29 +120,41 @@ VISH.Storage = (function(V,$,undefined){
 				localStorage.setItem(name, canvas.toDataURL());
 			};
 		}
-	}
+	};
 
 	///////////////
 	// UTILS
 	//////////////
 
 	var checkLocalStorageSupport = function(){
-		return (typeof(Storage)!=="undefined");
-	}
+		var LSSupported = (typeof(Storage)!=="undefined");
+		if(LSSupported){
+			//Check if there is no security restrictions
+			try {
+				localStorage.getItem("myKey");
+				return true;
+			} catch(e){
+				return false;
+			}
+		} else {
+			return false;
+		}
+	};
 
 	var clear = function(){
 		localStorage.clear();
-	}
+	};
 
 	/*
 	 * In testing mode not save anything, and clear localstorage in the init
 	 */
 	var setTestingMode = function(bolean){
 		_testing = bolean;
-	}
+	};
 
 	return {
 		init						: init,
+		isSupported 				: isSupported,
 		add							: add,
 		get							: get,
 		addPresentation				: addPresentation,
