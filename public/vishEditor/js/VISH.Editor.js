@@ -154,6 +154,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Audio.init();
 		V.Editor.Object.init();
 		V.Editor.PDFex.init();
+		V.Editor.EPackage.init();
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();

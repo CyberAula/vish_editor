@@ -763,7 +763,7 @@
 					<img class="image_add_url" src="/vishEditor/images/icons/url_upl.png"/>
 
 					<form class="documentsForm" action="pdfex.json" method="post" enctype="multipart/form-data">
-						<input id="upload_file_input" type="file" name="pdfex[attach]" class="upload_file_input">
+						<input type="file" name="pdfex[attach]" class="upload_file_input">
 						<input type="hidden" name="document[owner_id]">
 						<input type="hidden" name="authenticity_token">
 						<input id="upload_pdfex_submit" type="submit" class="button" i18n-key="i.Upload" value="Upload">
@@ -794,6 +794,9 @@
 					<div class="upload_progress_bar_wrapper">
 						<div class="upload_progress_bar"></div >
 						<div class="upload_progress_bar_percent">0%</div >
+					</div>
+					<div class="tagBoxUpload">
+						<ul class="tagList"></ul>
 					</div>
 				</div>
 			</div>
@@ -989,7 +992,7 @@
 					<img class="image_add_url" src="/vishEditor/images/icons/url_upl.png"/>
 
 					<form class="documentsForm" action="documents.json" method="post" enctype="multipart/form-data">
-						<input id="upload_file_input" type="file" name="document[file]" class="upload_file_input">
+						<input type="file" name="document[file]" class="upload_file_input">
 						<input type="hidden" name="document[title]">
 						<input type="hidden" name="document[description]">
 						<input type="hidden" name="document[owner_id]">

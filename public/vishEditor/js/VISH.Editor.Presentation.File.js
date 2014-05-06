@@ -70,7 +70,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 		var button1 = {};
 		button1.text = V.I18n.getTrans("i.Ok");
 		button1.callback = function(){
-			V.Editor.Tools.Menu.insertJSON();
+			V.Editor.Tools.Menu.insertEFile();
 		}
 		options.buttons = [button1];
 		V.Utils.showDialog(options);

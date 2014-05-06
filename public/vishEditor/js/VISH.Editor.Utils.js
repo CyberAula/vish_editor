@@ -463,11 +463,14 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_live_resource":
 				V.Editor.Object.Live.onLoadTab();
 				break;
-			case "tab_json_file":
+			case "tab_efile":
 				V.Editor.Presentation.File.onLoadTab();
 				break;
 			case "tab_pdfex":
 				V.Editor.PDFex.onLoadTab();
+				break;
+			case "tab_epackage":
+				V.Editor.EPackage.onLoadTab();
 				break;
 			default:
 				break;

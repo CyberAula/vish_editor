@@ -1,9 +1,8 @@
 VISH.Editor.EPackage = (function(V,$,undefined){
 		
-	var uploadDivId = "tab_epackage_upload_content";
+	var uploadDivId = "tab_epackage_content";
 		
 	var init = function(){
-
 		//Upload content
 		var options = V.Editor.getOptions();
 		var tagList = $("#" + uploadDivId + " .tagList");
@@ -19,7 +18,7 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			$("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
 		});
 		
-		$("#" + uploadDivId + " #upload_document_submit").click(function(event){
+		$("#" + uploadDivId + " #upload_package_submit").click(function(event){
 			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
 				event.preventDefault();
 			} else {
@@ -51,7 +50,15 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			complete: function(xhr) {
 				switch(V.Configuration.getConfiguration()["mode"]){
 					case V.Constant.NOSERVER:
-						_processResponse("{\"src\":\"/vishEditor/images/excursion_thumbnails/excursion-01.png\"}");
+						var SCORMexample = {
+							"author": "Aldo",
+							"description": "Uploaded by Aldo via ViSH Editor",
+							"id" : 48,
+							"src" : "http://localhost:3000/scorm/packages/48/vishubcode_scorm_wrapper.html",
+							"title" : "AncientWeapons.zip",
+							"type"	: "scormpackage"
+						}
+						_processResponse(SCORMexample);
 					break;
 					case V.Constant.VISH:
 						_processResponse(xhr.responseText);
@@ -80,18 +87,14 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 		$("#" + uploadDivId + " .upload_progress_bar_wrapper").hide();
 		$("#" + uploadDivId + " input[name='document[file]']").val("");
 		_resetUploadFields();
-			
 		V.Editor.API.requestTags(_onTagsReceived);
 	};
 	
 	var _resetUploadFields = function(){
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
-
 		bar.width('0%');
 		percent.html('0%');
-		resetPreview(uploadDivId);
-
 		var tagList = $("#" + uploadDivId + " .tagList");
 		if($(tagList)[0].children.length!==0){
 			$(tagList).tagit("reset");
@@ -100,16 +103,7 @@ VISH.Editor.EPackage = (function(V,$,undefined){
    
 	var _onTagsReceived = function(data){
 		var tagList = $("#" + uploadDivId + " .tagList");
-
 		if ($(tagList).children().length == 0){
-			// //Insert the three first tags. //DEPRECATED
-			// $.each(data, function(index, tag) {
-			//   if(index==3){
-			//     return false; //break the bucle
-			//   }
-			//   $(tagList).append("<li>" + tag + "</li>")
-			// });
-
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
@@ -120,11 +114,12 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			var jsonResponse = JSON.parse(response);
 			if(jsonResponse.src){
 				if(V.Police.validateObject(jsonResponse.src)[0]){
-					var objectToDraw = jsonResponse.src;
-					if(jsonResponse.type === V.Constant.MEDIA.SCORM_PACKAGE){
-						objectToDraw = V.Editor.Object.Scorm.generateWrapperForScorm(jsonResponse.src);
-					}
+					// var objectToDraw = jsonResponse.src;
+					// if(jsonResponse.type === V.Constant.MEDIA.SCORM_PACKAGE){
+					// 	objectToDraw = V.Editor.Object.Scorm.generateWrapperForScorm(jsonResponse.src);
+					// }
 					//PREVIEW
+					
 				}
 			}
 		} catch(e) {
