@@ -54,9 +54,14 @@ VISH.Object = (function(V,$,undefined){
 			case "AUDIO":
 				type = V.Constant.MEDIA.HTML5_AUDIO;
 				break;
+			case "IFRAME":
+				if($(object).attr("objecttype")==V.Constant.MEDIA.SCORM_PACKAGE){
+					type = V.Constant.MEDIA.SCORM_PACKAGE;
+					break;
+				}
 			default:
 				type = _getTypeFromSource(source);
-		}
+		};
 
 		return new objectInfo(wrapper,source,type);
 	};

@@ -78,9 +78,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 			}
 
 			var objectInfo = V.Object.getObjectInfo(objectItem.object);
-			var imageSource = null;
+			//Ignore type if its explicitly defined in the objectItem provided by the server API
+			var objectType = (typeof objectItem.type != "undefined") ? objectItem.type : objectInfo.type;
 
-			switch (objectInfo.type){
+			var imageSource = null;
+			switch (objectType){
 				case V.Constant.MEDIA.IMAGE:
 					imageSource = V.ImagesPath + "carrousel/image.png";
 					break;
@@ -101,11 +103,20 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 				case V.Constant.MEDIA.FLASH:
 					imageSource = V.ImagesPath + "carrousel/swf.png";
 					break;
+
+				//Special types defined by the repository
+				case V.Constant.MEDIA.SCORM_PACKAGE:
+					imageSource = V.ImagesPath + "carrousel/scorm.png";
+					break;
+				case V.Constant.MEDIA.IMS_QTI_QUIZ:
+					imageSource = V.ImagesPath + "carrousel/quizxml.png";
+					break;
+
 				default:
 					imageSource = V.ImagesPath + "carrousel/object.png";
-			}
+			};
 
-			var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"'>");
+			var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"' objectType='" + objectType + "'>");
 			carrouselImages.push(myImg);
 			carrouselImagesTitles.push(objectItem.title);
 			currentObject[objectItem.id]=objectItem;
@@ -172,7 +183,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	var _onClickCarrouselElement = function(event){
 		var objectId = $(event.target).attr("objectid");
 		if(typeof objectId != "undefined"){
-			var renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].object);
+			var options = {};
+			if(typeof currentObject[objectId].type != "undefined"){
+				options.forceType = currentObject[objectId].type;
+			}
+			var renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].object,options);
 			_renderObjectPreview(renderedObject,currentObject[objectId]);
 			selectedObject = currentObject[objectId]; 
 		}
@@ -231,7 +246,11 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	
 	var addSelectedObject = function(){
 		if(selectedObject!=null){
-			V.Editor.Object.drawObject(selectedObject.object);
+			var options = {};
+			if(typeof selectedObject.type != "undefined"){
+				options.forceType = selectedObject.type;
+			}
+			V.Editor.Object.drawObject(selectedObject.object,options);
 			$.fancybox.close();
 		}
 	};

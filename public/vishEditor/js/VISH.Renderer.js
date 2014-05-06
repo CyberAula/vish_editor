@@ -47,31 +47,33 @@ VISH.Renderer = (function(V,$,undefined){
 			}
 		}
 
-		for(el in slide.elements){
-			if(!V.Renderer.Filter.allowElement(slide.elements[el])){
-				content += V.Renderer.Filter.renderContentFiltered(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === V.Constant.TEXT){
-				content += _renderText(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === V.Constant.IMAGE){
-				content += _renderImage(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === V.Constant.VIDEO){
-				content += _renderHTML5Video(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === V.Constant.AUDIO){
-				content += _renderHTML5Audio(slide.elements[el],slide.template);
-			} else if(slide.elements[el].type === V.Constant.OBJECT){
-				content += _renderObject(slide.elements[el],slide.template);
+		var elL = slide.elements.length;
+		for(var i=0; i<elL; i++){
+			var element = slide.elements[i];
+			if(!V.Renderer.Filter.allowElement(element)){
+				content += V.Renderer.Filter.renderContentFiltered(element,slide.template);
+			} else if(element.type === V.Constant.TEXT){
+				content += _renderText(element,slide.template);
+			} else if(element.type === V.Constant.IMAGE){
+				content += _renderImage(element,slide.template);
+			} else if(element.type === V.Constant.VIDEO){
+				content += _renderHTML5Video(element,slide.template);
+			} else if(element.type === V.Constant.AUDIO){
+				content += _renderHTML5Audio(element,slide.template);
+			} else if(element.type === V.Constant.OBJECT){
+				content += _renderObject(element,slide.template);
 				classes += "object ";
-			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
-        		content += _renderSnapshot(slide.elements[el],slide.template);
+			} else if(element.type === V.Constant.SNAPSHOT){
+        		content += _renderSnapshot(element,slide.template);
         		classes += "snapshot ";
-      		} else if(slide.elements[el].type === V.Constant.APPLET){
-				content += _renderApplet(slide.elements[el],slide.template);
+      		} else if(element.type === V.Constant.APPLET){
+				content += _renderApplet(element,slide.template);
 				classes += "applet ";
-			} else if(slide.elements[el].type === V.Constant.QUIZ){
-				content += V.Quiz.render(slide.elements[el],slide.template);
+			} else if(element.type === V.Constant.QUIZ){
+				content += V.Quiz.render(element,slide.template);
 				classes += V.Constant.QUIZ;
 			} else {
-				content += _renderEmpty(slide.elements[el], slide.template);
+				content += _renderEmpty(element, slide.template);
 			}
 		}
 
@@ -80,10 +82,13 @@ VISH.Renderer = (function(V,$,undefined){
 
 	var _renderSlideset = function(slidesetJSON){
 		var allSubslides = "";
-		for(index in slidesetJSON.slides){
-			var subslide = slidesetJSON.slides[index];
+
+		var subslidesL = slidesetJSON.slides.length;
+		for(var i=0; i<subslidesL; i++){
+			var subslide = slidesetJSON.slides[i];
 			allSubslides += _renderStandardSlide(subslide, {extraClasses: "hide_in_smartcard", extraButtons: "<div class='close_subslide' id='close"+subslide.id+"'></div>"});
 		}
+		
 		return $("<article type='"+slidesetJSON.type+"' id='"+slidesetJSON.id+"'>"+allSubslides+"</article>");
 	};
 
@@ -140,6 +145,9 @@ VISH.Renderer = (function(V,$,undefined){
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
 				return V.Video.Youtube.renderVideoFromJSON(element,{extraClasses: "objectelement youtubeelement " + template+"_"+ element['areaid']});
+				break;
+			case V.Constant.MEDIA.SCORM_PACKAGE:
+				return V.SCORM.renderSCORMFromJSON(element,{extraClasses: "" + template +"_" + element['areaid']});
 				break;
 			default:
 				var style = (element['style'])? element['style'] : "";

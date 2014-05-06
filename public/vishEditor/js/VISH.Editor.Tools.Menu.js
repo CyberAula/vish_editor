@@ -56,27 +56,27 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			_initialized = true;
 		}
 		$("#menu").show();
-	}
+	};
 
 	var _enableMenuItem = function(items){
 		// $(items).show();
 		$(items).removeClass("menu_item_disabled").addClass("menu_item_enabled");
-	}
+	};
 
 	var _disableMenuItem = function(items){
 		// $(items).hide();
 		$(items).removeClass("menu_item_enabled").addClass("menu_item_disabled");
-	}
+	};
 
 	var disableMenu = function(){
 		$("#menu").hide();
 		$("#menu").attr("id","menuDisabled");
-	}
+	};
 
 	var enableMenu = function(){
 		$("#menuDisabled").show();
 		$("#menuDisabled").attr("id","menu");
-	}
+	};
 
 
 	//////////////////
@@ -96,7 +96,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			// V.Debugging.log("onSave failure");
 			V.Editor.Tools.changeSaveButtonStatus("enabled");
 		});
-	}
+	};
 
 	/**
 	* function called when user clicks on save
@@ -229,7 +229,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var preview = function(){
 		V.Editor.Preview.preview();
-	}
+	};
 
 	/////////////////////
 	/// HELP
@@ -237,7 +237,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var help = function(){
 		$("#help_right").trigger('click');
-	}
+	};
 
 	////////////////
 	//More Actions
@@ -245,7 +245,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var about = function(){
 		V.Tour.startTourWithId('about_screen', 'top');
-	}
+	};
 
 	var exit = function(){
 
@@ -297,21 +297,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		} else {
 			_exitFromVE();
 		}
-	}
+	};
 
 	var _exitFromVE = function(){
 		V.Editor.Events.allowExitWithoutConfirmation();
 		window.top.location.href = V.exitPath;
-	}
-
-	var insertSmartcard = function(){
-		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_smartcards_repo');
-	};
-
-	var insertPresentation = function(){
-		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_presentations_repo');
 	};
 
 	var insertSlide = function(){
@@ -327,15 +317,26 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		return false; //Prevent iframe to move
 	};
 
-	var insertJSON = function(){
-		$("#addSlideFancybox").trigger('click');
-		V.Editor.Utils.loadTab('tab_json_file');
-	};
-
 	var insertPDFex = function(){
 		$("#addSlideFancybox").trigger('click');
 		V.Editor.Utils.loadTab('tab_pdfex');
 		return false; //Prevent iframe to move
+	};
+
+	var insertPackage = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_epackage');
+		return false; //Prevent iframe to move
+	};
+
+	var insertEFile = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_efile');
+	};
+
+	var insertPresentation = function(){
+		$("#addSlideFancybox").trigger('click');
+		V.Editor.Utils.loadTab('tab_presentations_repo');
 	};
 
 	var _exportTo = function(format){
@@ -380,7 +381,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var displaySettings = function(){
 		V.Editor.Settings.displaySettings();
-	}
+	};
 
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
@@ -395,12 +396,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		init							: init,
 		disableMenu 					: disableMenu,
 		enableMenu 						: enableMenu,
-		insertPresentation				: insertPresentation,
-		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
 		insertSubslide					: insertSubslide,
-		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
+		insertPackage					: insertPackage,
+		insertEFile						: insertEFile,
+		insertPresentation				: insertPresentation,
 		exportToJSON 					: exportToJSON,
 		exportToSCORM					: exportToSCORM,
 		displaySettings					: displaySettings,

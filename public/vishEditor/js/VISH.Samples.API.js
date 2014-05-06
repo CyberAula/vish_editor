@@ -63,24 +63,23 @@ VISH.Samples.API = (function(V,undefined){
 	}    
   ];
 
-
 	var excursionList = {
 		'excursions': [
 			VISH.Samples.full_samples, VISH.Samples.quiz_samples, VISH.Samples.magnetic_gifs, 
 			VISH.Samples.basic_samples, VISH.Samples.fc_sample, VISH.Samples.samples_vtour,
 			VISH.Samples.samplesv01, VISH.Samples.test
 		]
-	}
+	};
 
 	var excursionListLittle = {
 		'excursions': [
 			VISH.Samples.full_samples, VISH.Samples.quiz_samples, VISH.Samples.magnetic_gifs
 		]
-	}
+	};
 
 	var excursionListDummy = {
 		'excursions': []
-	}
+	};
 
   
   var flashcardList = {
@@ -957,6 +956,14 @@ VISH.Samples.API = (function(V,undefined){
 		'description'   :  'Flash Object Test 2',
 		'author'        :  'FlashMan',
 		'object'       :  '<embed width="100%" height="100%" id="player_api" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash" wmode="opaque"></embed>'
+	},
+	{
+		"id":"5432115",
+		"title":"Medieval Armor",
+		"description":"Description of the SCORM Package",
+		"author":"Aldo",
+		"object":"http://localhost:3000/scorm/packages/41/vishubcode_scorm_wrapper.html",
+		"type":"scormpackage"
 	}
 	];
 	 

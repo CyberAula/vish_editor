@@ -64,6 +64,7 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Video.init();
 		V.Audio.init();
 		V.FullScreen.init();
+		V.SCORM.init();
 		V.Themes.loadTheme(presentation.theme, function(){
 			_initAferThemeLoaded(options,presentation);
 		});

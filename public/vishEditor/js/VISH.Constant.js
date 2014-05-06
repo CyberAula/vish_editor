@@ -70,6 +70,8 @@ VISH.Constant.MEDIA.WEB = "web";
 VISH.Constant.MEDIA.JSON = "json";
 VISH.Constant.MEDIA.DOC = "doc";
 VISH.Constant.MEDIA.PPT = "ppt";
+VISH.Constant.MEDIA.SCORM_PACKAGE = "scormpackage";
+VISH.Constant.MEDIA.IMS_QTI_QUIZ = "IMS_QTI_QUIZ";
 
 //Wrapper types
 VISH.Constant.WRAPPER = {};
