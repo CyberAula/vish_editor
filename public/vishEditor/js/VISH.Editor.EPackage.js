@@ -50,15 +50,7 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			complete: function(xhr) {
 				switch(V.Configuration.getConfiguration()["mode"]){
 					case V.Constant.NOSERVER:
-						var SCORMexample = {
-							"author": "Aldo",
-							"description": "Uploaded by Aldo via ViSH Editor",
-							"id" : 48,
-							"src" : "http://localhost:3000/scorm/packages/48/vishubcode_scorm_wrapper.html",
-							"title" : "AncientWeapons.zip",
-							"type"	: "scormpackage"
-						}
-						_processResponse(SCORMexample);
+						// _processResponse(JSON.stringify(V.Samples.SCORMexample));
 					break;
 					case V.Constant.VISH:
 						_processResponse(xhr.responseText);
@@ -74,6 +66,7 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			error: function(error){
 				V.Debugging.log("Upload error");
 				V.Debugging.log(error);
+				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.ePackageError1"));
 			}
 		});	
 	};
@@ -110,27 +103,38 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 	};
 	
 	var _processResponse = function(response){
-		try  {
+		try {
 			var jsonResponse = JSON.parse(response);
 			if(jsonResponse.src){
 				if(V.Police.validateObject(jsonResponse.src)[0]){
-					// var objectToDraw = jsonResponse.src;
-					// if(jsonResponse.type === V.Constant.MEDIA.SCORM_PACKAGE){
-					// 	objectToDraw = V.Editor.Object.Scorm.generateWrapperForScorm(jsonResponse.src);
-					// }
-					//PREVIEW
-					
+					var presentation = _generatePresentationWithEPackage(jsonResponse);
+					V.Editor.Presentation.previewPresentation(presentation);
+					return;
 				}
 			}
 		} catch(e) {
 			//No JSON response
 		}
+		V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.ePackageError1"));
 	};
 	
+	var _generatePresentationWithEPackage = function(ePackage){
+		var element = {};
+		element.type = "object";
+		element.body = "<iframe src=\""+ ePackage.src + "\" objecttype=\"" + ePackage.type + "\"></iframe>"
+		element.style = "position: relative; width:100%; height:100%; top:0%; left:0%;"
+
+		var elements = [element];
+		var options = {
+			template : "t10"
+		}
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
+
 	
 	return {
-		init							: init,
-		onLoadTab 						: onLoadTab
+		init				: init,
+		onLoadTab 			: onLoadTab
 	};
 
 }) (VISH, jQuery);
