@@ -51,6 +51,7 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 				switch(V.Configuration.getConfiguration()["mode"]){
 					case V.Constant.NOSERVER:
 						// _processResponse(JSON.stringify(V.Samples.SCORMexample));
+						// _processResponse(JSON.stringify(V.Samples.Webappexample));
 					break;
 					case V.Constant.VISH:
 						_processResponse(xhr.responseText);

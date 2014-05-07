@@ -843,6 +843,30 @@ VISH.Samples = (function(V,undefined){
 						"sources":"[{ \"type\": \"audio/ogg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.ogg\"},{ \"type\": \"audio/mpeg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.mp3\"}]"
 					}
 				]
+			},{
+				"id":"article18",
+				"type":"standard",
+				"template":"t2",
+				"elements":[{
+					"id":"article18_zone1",
+					"type":"object",
+					"areaid":"left",
+					"body":"<iframe objecttype=\"scormpackage\" src=\"examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html?wmode=opaque\" wmode=\"opaque\" id=\"resizableunicID55\" class=\"t2_object\"></iframe>",
+					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
+					"subtype":"scormpackage"
+				}]
+			},{
+				"id":"article19",
+				"type":"standard",
+				"template":"t2",
+				"elements":[{
+					"id":"article19_zone1",
+					"type":"object",
+					"areaid":"left",
+					"body":"<iframe src=\"examples/contents/webappcode/11/index.html\" width=\"800\" height=\"600\" objecttype=\"webapp\" id=\"resizableunicID53\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
+					"subtype":"webapp"
+				}]
 			}
 		]
 	};
@@ -1522,46 +1546,23 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
-	//SCORM sample
-	var SCORM_sample = {
-		"VEVersion":"0.8.7",
-		"type":"presentation",
-		"title":"SCORM Package Test",
-		"description":"",
-		"avatar":"http://vishub.org/assets/logos/original/excursion-10.png",
-		"author":{"name":"agordillo","vishMetadata":{"id":"24"}},
-		"theme":"theme1",
-		"animation":"animation1",
-		"language":"en",
-		"age_range":"4 - 20",
-		"difficulty":"easy",
-		"TLT":"PT6H30M15S",
-		"subject":["Art","Astronomy","Biology"],
-		"educational_objectives":"Know about the Iberian Lynx",
-		"vishMetadata":{"draft":"false"},
-		"slides":[{
-			"id":"article10",
-			"type":"standard",
-			"template":"t2",
-			"elements":[{
-				"id":"article10_zone1",
-				"type":"object",
-				"areaid":"left",
-				"body":"<iframe src=\"http://localhost:3000/scorm/packages/41/vishubcode_scorm_wrapper.html\" width=\"800\" height=\"600\" objecttype=\"scormpackage\" id=\"resizableunicID53\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
-				"style":"position: relative; width:100%; height:100%; top:0%; left:0%;"
-			}]
-		}]
-	};
-
 	var SCORMexample = {
 		"author": "Aldo",
 		"description": "Uploaded by Aldo via ViSH Editor",
-		"id" : 48,
-		"src" : "http://localhost:3000/scorm/packages/48/vishubcode_scorm_wrapper.html",
+		"id" 	: 48,
+		"src" 	: "examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html",
 		"title" : "AncientWeapons.zip",
 		"type"	: "scormpackage"
 	};
 
+	var Webappexample = {
+		"author": "Aldo",
+		"description": "Uploaded by Aldo via ViSH Editor",
+		"id" 	: 52,
+		"src" 	: "examples/contents/webappcode/11/index.html",
+		"title" : "HelloWorld.zip",
+		"type"	: "webapp"
+	};
 
 	return {
 		basic_samples		: basic_samples,
@@ -1573,8 +1574,8 @@ VISH.Samples = (function(V,undefined){
 		text_samples 		: text_samples,
 		VE01_samples		: VE01_samples,
 		mooc_samples		: mooc_samples,
-		SCORM_sample		: SCORM_sample,
-		SCORMexample		: SCORMexample
+		SCORMexample		: SCORMexample,
+		Webappexample		: Webappexample
 	};
 
 })(VISH);

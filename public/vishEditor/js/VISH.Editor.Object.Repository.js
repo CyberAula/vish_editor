@@ -108,10 +108,13 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 				case V.Constant.MEDIA.SCORM_PACKAGE:
 					imageSource = V.ImagesPath + "carrousel/scorm.png";
 					break;
+				case V.Constant.MEDIA.WEB_APP:
+					imageSource = V.ImagesPath + "carrousel/webapp.png";
+					break;
 				case V.Constant.MEDIA.IMS_QTI_QUIZ:
 					imageSource = V.ImagesPath + "carrousel/quizxml.png";
 					break;
-
+				
 				default:
 					imageSource = V.ImagesPath + "carrousel/object.png";
 			};
