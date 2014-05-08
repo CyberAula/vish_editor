@@ -1,16 +1,15 @@
 $(document).ready(function(){
-	setTimeout(function(){
-		try {
-			checkElement(document);
-		} catch(e){}
-	},600);
-
-	setTimeout(function(){
-		try {
-			checkElement(document);
-		} catch(e){}
-	},1000);
+	checkDocument(600,document);
+	checkDocument(1000,document);
 });
+
+var checkDocument = function(timeout,document){
+	setTimeout(function(){
+		try {
+			checkElement(document);
+		} catch(e){}
+	},timeout);
+};
 
 var checkElement = function(el){
 	var iframes = $(el).find("iframe");
