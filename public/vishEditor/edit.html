@@ -806,10 +806,14 @@
 			<div id='tab_efile_content' class="fancy_tab_content" style='display:none'>
 				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_efile_help' src='/vishEditor/images/vicons/helptutorial_circle_blank.png'/>
 				<div class="box1 box1fancy3">
-					<p class="textfancy" i18n-key="i.AddFromJSONfile">Add ViSH Editor Presentation from JSON file</p></br>
+					<p class="textfancy" i18n-key="i.ImportFromEFile">Import resources from external files: </p>
+					<ul class="listInFancy">
+						<li><p class="textfancy" i18n-key="i.ImportFromEFileVEJSON">ViSH Editor Presentations and Slides from JSON files</p></li>
+						<li><p class="textfancy" i18n-key="i.ImportFromEFileIMSQTI">Quizzes from IMS QTI 2.1 compliant XML files</p></li>
+					</ul>
 					<img class="image_add_url" src="/vishEditor/images/icons/url_upl.png"/>
-					<input id="json_file_input" type="file" id="files" name="files[]" multiple />
-					<button id="json_preview_button" type="button" class="button buttonfancy previewButton" i18n-key="i.Preview">Preview</button>
+					<input id="efile_input" type="file" id="files" name="files[]" multiple />
+					<button id="efile_preview_button" type="button" class="button buttonfancy previewButton" i18n-key="i.Preview">Preview</button>
 				</div>
 			</div>
 
