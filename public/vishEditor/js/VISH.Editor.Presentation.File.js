@@ -1,46 +1,97 @@
 VISH.Editor.Presentation.File = (function(V,$,undefined){
 
-	var fileDivId = "tab_json_file_content";
-	var inputFilesId = "json_file_input";
-	var buttonId = "json_preview_button";
+	var fileDivId = "tab_efile_content";
+	var inputFileId = "efile_input";
+	var buttonId = "efile_preview_button";
 	
 	var initialized = false;
 
 	var init = function(){
 		if(!initialized){
-			$("#"+buttonId).click(function(){
-				var files = $("#"+inputFilesId)[0].files; 
+			var previewButton = $("#"+buttonId);
+			var formInputEl = $("#" + inputFileId);
+
+			$(previewButton).click(function(){
+				var files = $("#"+inputFileId)[0].files; 
 				if(files.length>0){
 					_insertFile(files[0]);
 				} else {
-					_showNoFileDialog();
+					_showErrorDialog(V.I18n.getTrans("i.NoFileError"));
 				}
 			});
+
+			$(formInputEl).change(function(){
+				$(previewButton).show();
+			});
+
 			initialized=true;
 		}
 	};
 	
 	var onLoadTab = function(tab){
-		$("#json_file_input").attr("value","");
+		$("#"+buttonId).hide();
+		$("#"+inputFileId).attr("value","");
 	};
 
 	var _insertFile = function(file){
 		// V.Debugging.log(escape(file.name));
+		// V.Debugging.log(file);
 
-		// Only process json files.
-		// if (!f.type.match('json.*')) {
-		// 	return;
-		// }
+		//Check file type
+		var fileType = undefined;
+
+		if(file.type != ""){
+			//File API recognized the file type.
+			if(file.type.match("text/xml")){
+				fileType = "xml";
+			} else if(file.type.match("json")){
+				fileType = "json";
+			}
+		} else {
+			//File API is uncapable of recognizing the file type.
+			//Get filetype from name.
+			var objectInfo = V.Object.getObjectInfo(file.name);
+			if(objectInfo.type==="json" || objectInfo==="xml"){
+				fileType = objectInfo.type;
+			}
+		}
+
+		if(typeof fileType == "undefined"){
+			_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+			return;
+		}
 
 		var reader = new FileReader();
 
 		reader.onload = (function(theFile) {
-			return function(e) {
-				try {
-					var json = JSON.parse(e.target.result);
-					V.Editor.Presentation.previewPresentation(json);
-				} catch (e) {
-					_showErrorDialog();	
+			return function(e){
+				switch(fileType){
+					case "xml":
+						//TODO. Check if the XML file is IMS QTI 2.1 compliant
+						// var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
+						var isIMSQTICompliant = false;
+						if(isIMSQTICompliant){
+							//TODO. Get JSON from V.Editor.IMSQTI module
+							// var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
+							var json = undefined;
+							V.Editor.Presentation.previewPresentation(json);
+						} else {
+							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+							return;
+						}
+						//IMS QTI?
+						break;
+					case "json":
+						try {
+							var json = JSON.parse(e.target.result);
+							V.Editor.Presentation.previewPresentation(json);
+						} catch (e) {
+							_showErrorDialog(V.I18n.getTrans("i.readJSONfileError"));
+						}
+						break;
+					default:
+						_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+						return;
 				}
 			};
 		})(file);
@@ -48,25 +99,11 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 		reader.readAsText(file);
 	};
 
-	var _showErrorDialog = function(){
+	var _showErrorDialog = function(msg){
 		var options = {};
 		options.width = 650;
 		options.height = 190;
-		options.text = V.I18n.getTrans("i.readJSONfileError");
-		var button1 = {};
-		button1.text = V.I18n.getTrans("i.Ok");
-		button1.callback = function(){
-			$.fancybox.close();
-		}
-		options.buttons = [button1];
-		V.Utils.showDialog(options);
-	};
-
-	var _showNoFileDialog = function(){
-		var options = {};
-		options.width = 650;
-		options.height = 190;
-		options.text = V.I18n.getTrans("i.NoJSONFileError");
+		options.text = msg;
 		var button1 = {};
 		button1.text = V.I18n.getTrans("i.Ok");
 		button1.callback = function(){

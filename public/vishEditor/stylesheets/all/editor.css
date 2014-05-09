@@ -1008,6 +1008,10 @@ div.vezone[tooltip='true'][size='large'] {
 	color: #9B999D;
 }
 
+.listInFancy .textfancy{
+	font-size: 17px;
+}
+
 .image_add_url {
 	margin-left: 23px;
 	position: relative;
@@ -3035,11 +3039,13 @@ span.letterInChapterDialog {
 	height: 29px !important;
 }
 
-#json_preview_button {
+#efile_preview_button {
 	float: left !important;
+	display: none;
+	margin-top: 1.5%;
 }
 
-#json_file_input {
+#efile_input {
 	display: inline-block;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 16px;

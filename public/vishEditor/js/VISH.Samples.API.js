@@ -964,6 +964,14 @@ VISH.Samples.API = (function(V,undefined){
 		"author":"Aldo",
 		"object":"http://localhost:3000/scorm/packages/41/vishubcode_scorm_wrapper.html",
 		"type":"scormpackage"
+	},
+	{
+		"id":"9512332115",
+		"title":"My First Web App",
+		"description":"",
+		"author":"Aldo",
+		"object":"http://localhost:3000/webappscode/9/index.html",
+		"type":"webapp"
 	}
 	];
 	 

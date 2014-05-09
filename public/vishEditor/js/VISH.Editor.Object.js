@@ -13,6 +13,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.GoogleDOC.init();
 		V.Editor.Object.Snapshot.init();
 		V.Editor.Object.Scorm.init();
+		V.Editor.Object.Webapp.init();
 		
 		var urlInput = $("#"+urlDivId).find("input");
 		// $(urlInput).vewatermark(V.I18n.getTrans("i.pasteEmbedObject"));
@@ -162,6 +163,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 					var objectToDraw = jsonResponse.src;
 					if(jsonResponse.type === V.Constant.MEDIA.SCORM_PACKAGE){
 						objectToDraw = V.Editor.Object.Scorm.generateWrapperForScorm(jsonResponse.src);
+					} else if(jsonResponse.type === V.Constant.MEDIA.WEB_APP){
+						objectToDraw = V.Editor.Object.Webapp.generateWrapper(jsonResponse.src);
 					}
 					drawPreview(uploadDivId,objectToDraw);
 					contentToAdd = objectToDraw;
@@ -338,6 +341,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case V.Constant.MEDIA.SCORM_PACKAGE:
 						return V.Editor.Object.Scorm.generatePreviewWrapperForScorm(object);
 						break;
+					case V.Constant.MEDIA.WEB_APP:
+						return V.Editor.Object.Webapp.generatePreviewWrapper(object);
+						break;
 					default:
 						V.Debugging.log("Unrecognized object source type");
 						break;
@@ -353,6 +359,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 			case V.Constant.WRAPPER.IFRAME:
 				if(objectType==V.Constant.MEDIA.SCORM_PACKAGE){
 					return V.Editor.Object.Scorm.generatePreviewWrapperForScorm(objectInfo.source);
+				} else if(objectType==V.Constant.MEDIA.WEB_APP){
+					return V.Editor.Object.Webapp.generatePreviewWrapper(objectInfo.source);
 				} else {
 					return _genericWrapperPreview(object);
 				}
@@ -451,6 +459,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 					case V.Constant.MEDIA.SCORM_PACKAGE:
 						V.Editor.Object.drawObject(V.Editor.Object.Scorm.generateWrapperForScorm(object));
 						break;
+					case V.Constant.MEDIA.WEB_APP:
+						V.Editor.Object.drawObject(V.Editor.Object.Webapp.generateWrapper(object));
+						break;
 					default:
 						V.Debugging.log("Unrecognized object source type: " + objectInfo.type);
 						break;
@@ -534,8 +545,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 			V.ObjectPlayer.adjustDimensionsAfterZoom($(wrapperTag));
 		}
 
-		if($(wrapperTag).attr('objecttype') == V.Constant.MEDIA.SCORM_PACKAGE){
+		var objectTypeAttr = $(wrapperTag).attr('objecttype');
+		if(objectTypeAttr == V.Constant.MEDIA.SCORM_PACKAGE){
 			V.Editor.Object.Scorm.afterDrawSCORM(wrapperTag);
+		} else if(objectTypeAttr == V.Constant.MEDIA.WEB_APP){
+			V.Editor.Object.Webapp.afterDraw(wrapperTag);
 		}
 	};
 	

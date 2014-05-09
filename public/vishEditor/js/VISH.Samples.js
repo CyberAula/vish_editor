@@ -843,6 +843,30 @@ VISH.Samples = (function(V,undefined){
 						"sources":"[{ \"type\": \"audio/ogg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.ogg\"},{ \"type\": \"audio/mpeg\", \"src\": \"http://demos.w3avenue.com/html5-unleashed-tips-tricks-and-techniques/demo-audio.mp3\"}]"
 					}
 				]
+			},{
+				"id":"article18",
+				"type":"standard",
+				"template":"t2",
+				"elements":[{
+					"id":"article18_zone1",
+					"type":"object",
+					"areaid":"left",
+					"body":"<iframe objecttype=\"scormpackage\" src=\"examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html?wmode=opaque\" wmode=\"opaque\" id=\"resizableunicID55\" class=\"t2_object\"></iframe>",
+					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
+					"subtype":"scormpackage"
+				}]
+			},{
+				"id":"article19",
+				"type":"standard",
+				"template":"t2",
+				"elements":[{
+					"id":"article19_zone1",
+					"type":"object",
+					"areaid":"left",
+					"body":"<iframe src=\"examples/contents/webappcode/11/index.html\" width=\"800\" height=\"600\" objecttype=\"webapp\" id=\"resizableunicID53\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
+					"subtype":"webapp"
+				}]
 			}
 		]
 	};
@@ -1522,6 +1546,24 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
+	var SCORMexample = {
+		"author": "Aldo",
+		"description": "Uploaded by Aldo via ViSH Editor",
+		"id" 	: 48,
+		"src" 	: "examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html",
+		"title" : "AncientWeapons.zip",
+		"type"	: "scormpackage"
+	};
+
+	var Webappexample = {
+		"author": "Aldo",
+		"description": "Uploaded by Aldo via ViSH Editor",
+		"id" 	: 52,
+		"src" 	: "examples/contents/webappcode/11/index.html",
+		"title" : "HelloWorld.zip",
+		"type"	: "webapp"
+	};
+
 	return {
 		basic_samples		: basic_samples,
 		full_samples		: full_samples,
@@ -1531,7 +1573,9 @@ VISH.Samples = (function(V,undefined){
 		quiz_samples		: quiz_samples,
 		text_samples 		: text_samples,
 		VE01_samples		: VE01_samples,
-		mooc_samples		: mooc_samples
+		mooc_samples		: mooc_samples,
+		SCORMexample		: SCORMexample,
+		Webappexample		: Webappexample
 	};
 
 })(VISH);

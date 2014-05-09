@@ -483,6 +483,19 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$("a.venondefaulttab").hide();
 	};
 
+	var showErrorDialog = function(msg){
+		var options = {};
+		options.width = 650;
+		options.height = 190;
+		options.text = msg;
+		var button1 = {};
+		button1.text = V.I18n.getTrans("i.Ok");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
+	};
 
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
@@ -496,7 +509,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		autocompleteUrls 			: autocompleteUrls,
 		filterFilePath 				: filterFilePath,
 		loadTab						: loadTab,
-		hideNonDefaultTabs			: hideNonDefaultTabs
+		hideNonDefaultTabs			: hideNonDefaultTabs,
+		showErrorDialog				: showErrorDialog
 	};
 
 }) (VISH, jQuery);
