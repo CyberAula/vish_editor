@@ -13,14 +13,19 @@ var generatePresentationQuiz = function(imgs,pdfexId){
 			pdfexId: pdfexId
 		}
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
-	};
+	}
  
 
- var isCompliantXMLFile(fileXML){
+ var isCompliantXMLFile = function(fileXML){
 		xmlDoc = $.parseXML( fileXML ),
 		$xml = $( xmlDoc );
 		
 		return !$.isEmptyObject($.find('assessmentItem'));
+ }
+
+
+ var getJSONFromXMLFile = function(fileXML){
+ 	return null;
  }
 
  /*
