@@ -184,16 +184,22 @@ var i18n =
 				"i.walkInsertingViSHPres_3"	: "Haz click en cualquiera de las Excursiones Virtuales para seleccionarla. Después, se mostrará un nuevo botón 'Vista Previa'. Cuando pulses este botón, aparecerá una nueva ventana para que elijas las diapositivas que quieres insertar en tu presentación.",
 				"i.walkPresSearch2"			: "y pulsa la tecla 'intro' para comenzar la búsqueda. Cuando termine la búsqueda, las Excursiones Virtuales encontradas serán mostradas en esta pantalla.",
 				
-				"i.walkInsertingViSHSmart_1"	: "Añadiendo Smartcards",
-				"i.walkInsertingViSHSmart_2"	: "Aquí puedes buscar Smartcards en la plataforma ViSH para añadirlas a tu presentación.",
-				"i.walkInsertingViSHSmart_3"	: "Haz click en cualquiera de las Smartcards para seleccionarla. Después, se mostrará un nuevo botón 'Vista Previa'. Cuando pulses este botón, aparecerá una nueva ventana para que puedas ver la Smartcard antes de insertarla en tu presentación.",
-				"i.walkSmartSearch2"			: "y pulsa la tecla 'intro' para comenzar la búsqueda. Cuando termine la búsqueda, las Smartcards encontradas serán mostradas en esta pantalla.",
-
 				"i.walkLearnMoreSmartcards"	: "Pulsa aquí para aprender más sobre las Smartcards.",
+
+				"i.walkEPackage_1"			: "Insertar un paquete de e-Learning",
+				"i.walkEPackage_2"			: "Selecciona un paquete de e-Learning en formato ZIP y sube el archivo. Solo están admitidos archivos en formato ZIP. Puedes subir paquetes SCORM o aplicaciones web HTML5 personalizadas. Para subir una aplicación web personalizada, el archivo HTML principal debe ser renombrado como 'index.html' y debe ser incluido en el archivo ZIP junto con todos los archivos necesarios.",
+				"i.walkEPackage_3"			: "Una vez que la subida del archivo ZIP se haya completado, una nueva ventana aparecerá para que previsualices y confirmes el contenido que se va a insertar.",
+
+				"i.walkInsertEfile_1"		: "Importar recursos de ficheros externos",
+				"i.walkInsertEfile_2"		: "Esta pantalla te permite importar diferentes tipos de recursos mediante ficheros externos.",
+				"i.walkInsertEfile_3"		: "Las siguientes opciones se encuentran disponibles:",
 
 				"i.walkInsertJSONfile_1"	: "Añadir una presentación de ViSH Editor de un fichero JSON",
 				"i.walkInsertJSONfile_2"	: "Selecciona el archivo en formato JSON (.json) en el cual está guardada la presentación que quieres insertar. A continuación, pulsa sobre el botón 'Vista Previa'. Aparecerá una nueva pantalla para que elijas las diapositivas a importar.",
 				"i.walkInsertJSONfile_3"	: "Puedes salvar tu presentación en formato JSON haciendo click en 'Menú -> Exportar -> a JSON'. Se descargará a tu dispositivo un fichero JSON conteniendo tu presentación. De esta forma puedes compartir tu presentación mediante un archivo (por ejemplo enviándolo por email) y almacenarla donde quieras.",
+
+				"i.walkInsertIMSQTI_1"		: "Añadir un Cuestionario (Quiz) mediante un archivo XML compatible con IMS QTI 2.1",
+				"i.walkInsertIMSQTI_2"		: "Selecciona el archivo en formato XML (.xml) en el cual está guardado el cuestionario/quiz que quieres insertar acorde al estándar IMS QTI 2.1. A continuación, pulsa sobre el botón 'Vista Previa'. Aparecerá una nueva pantalla en la que podrás previsualizar el cuestionario antes de añadirlo.",
 
 				"i.walkThemes_1"			: "Temas de ViSH Editor",
 				"i.walkThemes_4"			: "Recuerda que puedes cambiar el tema de la presentación en cualquier momento accediendo a esta pantalla o seleccionando la opción 'Ajustes' en el menu.",
@@ -264,6 +270,7 @@ var i18n =
 				"i.walkQuizzes_9"			: "Si quieres 'cerrar' el cuestionario en vivo debes hacer click en el botón 'Detener' situado en la parte inferior derecha. Después de cerrar un cuestionario, no se admitirán ni guardarán más respuestas. También puedes cerrar un cuestionario en cualquier momento desde la plataforma ViSH. Cuando cierras un cuestionario en vivo, puedes, opcionalmente, especificar un nombre para facilitar su búsqueda posterior en el ViSH.",
 				"i.walkQuizzes_10"			: "Si sales de la pantalla de cuestionarios en vivo, puedes regresar en cualquier momento haciendo click sobre el botón 'Opciones' situado en la parte inferior del cuestionario. Tenga en cuenta que si un cuestionario ha sido lanzado, el botón 'Lanzar' es reemplazado por un botón 'Opciones'. Cuando se cierre el cuestionario, el botón 'Lanzar' volverá a aparecer. Finalmente, tenga en cuenta que no puede lanzar más de un cuestionario en vivo a la vez.",
 
+
 				//Video Tutorials
 				"i.vtTitle_GStarted"		: "Introducción a ViSH Editor",
 
@@ -275,16 +282,7 @@ var i18n =
 				"i.VESurvey2"				: "Por favor, rellena",
 				"i.VESurvey3"				: "esta encuesta",
 				"i.VESurvey4"				: "¡Gracias por tu colaboración",
-				"i.VESurveyURL"				: "https://docs.google.com/forms/d/1b_Ml2iua0oDNKkJqc7eT1W2CDlRhIZR__w2AlicfwjA/viewform",			
-
-				//Competitions
-				"i.walkCompetitions1_1"		: "Estamos organizando una competición",
-				"i.walkCompetitions1_2"		: "Para participar sólo tienes que añadir el tag ViSHCompetition2013 a tu excursión y uno o más de los siguientes tags:",
-				"i.walkCompetitions1_3"		: "Maths, Physics, Chemistry, Biology, EnvironmentalStudies, Geography, Engineering, Humanities, NaturalScience o ComputerScience.",
-				"i.walkCompetitions1_4"		: "Para más información ve a",
-				"i.walkCompetitions1_5"		: "la página de información",
-				"i.walkCompetitions1_6"		: "o a la",
-				"i.walkCompetitions1_7"		: "sección de preguntas frecuentes",
+				"i.VESurveyURL"				: "https://docs.google.com/forms/d/1b_Ml2iua0oDNKkJqc7eT1W2CDlRhIZR__w2AlicfwjA/viewform",
 
 				//UI
 				"i.accept"					: "aceptar",
@@ -294,6 +292,7 @@ var i18n =
 				"i.addatitle"				: "añade un título",
 				"i.AddContent"				: "Añadir Contenido",
 				"i.addembeddedobject"		: "añadir objeto embebido",
+				"i.AddePackage"				: "Añadir un paquete de e-Learning mediante un archivo ZIP. Formatos soportados: SCORM y aplicaciones web HTML5 personalizadas.",
 				"i.AddFromJSONfile"			: "Añadir una presentación de ViSH Editor de un fichero JSON",
 				"i.addpicurl"				: "añadir URL de imagen",
 				"i.AddSlide"				: "Añadir diapositiva",
@@ -361,6 +360,7 @@ var i18n =
 				"i.embedWebSnapshot"		: "embeber Web Snapshot",
 				"i.EnrichedVideo"			: "Vídeo Enriquecido",
 				"i.EnvironmentalEducation"	: "Educación Ambiental",
+				"i.ePackage"				: "Paquete e-Learning",
 				"i.ePackageError1"			: "Ocurrió un error al subir el paquete de e&#8209;Learning.",
 				"i.errorFlickrConnection"	: "Error conectando con Flickr",
 				"i.errorLREConnection"		: "Error al conectarse con el repositorio del LRE",
@@ -371,6 +371,7 @@ var i18n =
 				"i.evaluateTitle"			: "¿Quieres contribuir evaluando esta excursión?",
 				"i.eVideoChangeNotification" : "Si cambias la fuente del vídeo perderás todas las marcas de tiempo que hayas añadido. En cualquier caso, conservarás las diapositivas que hayas creado. ¿Estás seguro de que quieres continuar?",
 				"i.ExcursionDetails" 		: "Información de la Excursión",
+				"i.Excursion"				: "Excursión",
 				"i.Excursions"				: "Excursiones",
 				"i.Exit"					: "Salir",
 				"i.exitConfirmation"		: "Vas a abandonar ViSH Editor. Se perderán todos los cambios que no hayas salvado.",
@@ -381,6 +382,7 @@ var i18n =
 				"i.exportPresToJSONerrorNotification"	: "Ha ocurrido un error. No ha sido posible exportar la presentación a un fichero JSON.",
 				"i.exportPresToSCORMerrorNotification"	: "Ha ocurrido un error. No ha sido posible exportar la presentación a un paquete SCORM.",
 				"i.exviews"					: "visitas",
+				"i.File"					: "Archivo",
 				"i.Filllater"				: "Rellenar después",
 				"i.Finish" 					: "Terminar",
 				"i.Flashcard"				: "Flashcard",
@@ -400,6 +402,9 @@ var i18n =
 				"i.Image"					: "Imagen",
 				"i.Images"					: "Imágenes",
 				"i.Import"					: "Importar",
+				"i.ImportFromEFile"			: "Importar recursos mediante archivos externos:",
+				"i.ImportFromEFileVEJSON"	: "Presentaciones y Diapositivas de ViSH Editor de archivos JSON",
+				"i.ImportFromEFileIMSQTI"	: "Cuestionarios (Quizzes) de archivos XML compatibles con IMS QTI 2.1",
 				"i.Insert"					: "Insertar",
 				"i.invalidvalue"			: "valor inválido",
 				"i.ItemAndBall"				: "Esta entrada está enlazada con la diapositiva #{letter} del Vídeo Enriquecido.",
@@ -440,6 +445,7 @@ var i18n =
 				"i.or" 						: "o",
 				"i.Other"					: "Otro",
 				"i.Others"					: "Otros",
+				"i.Package"					: "Paquete",
 				"i.pasteEmbedObject"		: "pega la URL de un archivo SWF o PDF",
 				"i.pasteImageURL"			: "pega la URL de una imagen",
 				"i.pasteVideoURL"			: "pega la URL de un vídeo HTML5 o de YouTube",
@@ -508,6 +514,7 @@ var i18n =
 				"i.SelectSlide"				: "Seleccionar Diapositiva",
 				"i.SelectTheme"				: "Seleccionar Tema",
 				"i.Settings"				: "Ajustes",
+				"i.Slide"					: "Diapositiva",
 				"i.Slides"					: "Diapositivas",
 				"i.Smartcards"				: "Smartcards",
 				"i.SocialSciences"			: "Ciencias Sociales",
