@@ -67,9 +67,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 			return function(e){
 				switch(fileType){
 					case "xml":
-								//TODO. Check if the XML file is IMS QTI 2.1 compliant
-						// var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
-						var isIMSQTICompliant = false;
+						var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
 						if(isIMSQTICompliant){
 							//TODO. Get JSON from V.Editor.IMSQTI module
 							// var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
