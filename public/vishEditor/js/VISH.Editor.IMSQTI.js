@@ -14,14 +14,35 @@ var generatePresentationQuiz = function(imgs,pdfexId){
 		}
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
+ 
+
+ var isCompliantXMLFile(fileXML){
+		xmlDoc = $.parseXML( fileXML ),
+		$xml = $( xmlDoc );
+		
+		return !$.isEmptyObject($.find('assessmentItem'));
+ }
+
+ /*
+ !$.isEmptyObject($.find('#id'))
+ This will return true if the element exists and false if it doesn't.
+ */
+
+ /*TO DO
+	First we have to check if there's a label called assessmentItem. If there's no one,
+	we can assure it's not a QTI XML file.
+	
+	Doubt: in case there's a file with assessmentItem, do we have to check if that's the correct format?
 
 
 
 
+ */
 
 	return {
 		init 		: init,
-		generatePresentationQuiz	: generatePresentationQuiz
+		generatePresentationQuiz	: generatePresentationQuiz,
+		isCompliantXMLFile			:  isCompliantXMLFile
 	};
 
 }) (VISH, jQuery);

@@ -67,7 +67,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 			return function(e){
 				switch(fileType){
 					case "xml":
-						//TODO. Check if the XML file is IMS QTI 2.1 compliant
+								//TODO. Check if the XML file is IMS QTI 2.1 compliant
 						// var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
 						var isIMSQTICompliant = false;
 						if(isIMSQTICompliant){
