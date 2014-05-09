@@ -20,7 +20,7 @@ var generatePresentationQuiz = function(imgs,pdfexId){
 		xmlDoc = $.parseXML( fileXML ),
 		$xml = $( xmlDoc );
 		
-		return !$.isEmptyObject($.find('assessmentItem'));
+		return !$.isEmptyObject($(xml).find('assessmentItem'));
  }
 
 
