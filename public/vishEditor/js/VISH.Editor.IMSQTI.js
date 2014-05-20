@@ -12,12 +12,30 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
  }
 
 
+ var checkAnswer = function(answer, correctArray){
+ 	var answerString;
+ 	if ((jQuery.inArray( answer, correctArray )) == -1){
+ 		answerString = "false";
+ 	}else{
+ 		answerString = "true";
+ 	}
+
+
+
+
+
+		return answerString;
+ }
+
+
+
  var getJSONFromXMLFile = function(fileXML){
 
  		var elements = [];
  		var cardinality;
  		var question;
  		var answerArray = [];
+ 		var correctanswerArray = [];
 
 		xmlDoc = $.parseXML( fileXML ),
 		$xml = $( xmlDoc )
@@ -33,6 +51,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		});
 
 
+
 		/*To get the question */
 
 		$(xml).find('prompt').each(function(){
@@ -40,67 +59,34 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		});
 
 
+
 		/*To get array of answers */
+
 		$(xml).find('simpleChoice').each(function(){
  			 var answer = $(this).text();
   			answerArray.push(answer);
 		});
 
+
+		/* To get array of corrrect answers */
+		$(xml).find('correctResponse value').each(function(){
+		  var cAnswer = $(this).text();
+		  correctanswerArray.push(cAnswer);
+		});
+
 		/* We know get all the data we have to retrieve from XML */
+		var choices = "";
+		for (var i = 1; i < answerArray.length; i++ ) {
+			var iChoice;
+			iChoice = "{ 'id':" + i + ", 'value':" + answerArray[i-1] + "'wysiwygValue':'<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">" + answerArray[i-1] + "&shy;</span></span></p>\n', 'answer':" + checkAnswer(answerArray[i-1], correctanswerArray) + "}";
+			choices.push(iChoice);
+		}
+		var choicesString = "";	
+		for (var i = 0; i < choices.length; i++ ) {
+			choicesString = choices[i] + choicesString;
+		}
 
-
-
-
-
-
-/* Esto es lo que tengo que insertar
-		"elements":[
-					{"id":"article2_zone1",
-					"type":"quiz",
-					"areaid":"left",
-					"quiztype":"multiplechoice",
-					"selfA":true,
-					"question":{
-						"value":"­What is the oldest ancient weapon?",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;What is the oldest ancient weapon?</span></span></p>\n"
-					},
-
-					"choices":[{
-						"id":"1",
-						"value":"Fu­",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">Fu&shy;</span></span></p>\n",
-						"answer":false},
-
-						{"id":"2",
-						"value":"­Bow",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Bow</span></span></p>\n",
-						"answer":true},
-
-						{"id":"3",
-						"value":"­Chu Ko Nuh",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Chu Ko Nuh</span></span></p>\n",
-						"answer":false},
-
-						{"id":"4",
-						"value":"­War Galley",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;War Galley</span></span></p>\n",
-						"answer":false
-					}],
-
-					"extras":{
-						"multipleAnswer":false
-					}
-
-
-*/
-
-
-
-
-
-
-
-
+		choicesString = "[" + choicesString + "]";
 
 		elements.push({"id":"article2_zone1", 
 			"type":"quiz", 
@@ -112,34 +98,13 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
 			}, 
 
-			"choices":[{
-						"id":"1",
-						"value":"Fu­",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">Fu&shy;</span></span></p>\n",
-						"answer":false
-			},
+			"choices": choicesString,
 
-						{"id":"2",
-						"value":"­Bow",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Bow</span></span></p>\n",
-						"answer":true},
+			"extras":{
+					"multipleAnswer":false
+			}
 
-						{"id":"3",
-						"value":"­Chu Ko Nuh",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;Chu Ko Nuh</span></span></p>\n",
-						"answer":false},
-
-						{"id":"4",
-						"value":"­War Galley",
-						"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">&shy;War Galley</span></span></p>\n",
-						"answer":false
-					}],
-
-					"extras":{
-						"multipleAnswer":false
-					}
-
-);
+		);
 
 		var options = {
 			template : "t2",
