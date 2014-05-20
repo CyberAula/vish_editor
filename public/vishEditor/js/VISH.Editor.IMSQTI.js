@@ -36,6 +36,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
  		var question;
  		var answerArray = [];
  		var correctanswerArray = [];
+ 		var nAnswers;
 
 		xmlDoc = $.parseXML( fileXML ),
 		$xml = $( xmlDoc )
@@ -74,6 +75,12 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		  correctanswerArray.push(cAnswer);
 		});
 
+		if(correctanswerArray > 1){
+			nAnswers = true;
+		}else{
+			nAnswers = false;
+		}
+
 		/* We know get all the data we have to retrieve from XML */
 		var choices = "";
 		for (var i = 1; i < answerArray.length; i++ ) {
@@ -81,12 +88,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			iChoice = "{ 'id':" + i + ", 'value':" + answerArray[i-1] + "'wysiwygValue':'<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">" + answerArray[i-1] + "&shy;</span></span></p>\n', 'answer':" + checkAnswer(answerArray[i-1], correctanswerArray) + "}";
 			choices.push(iChoice);
 		}
-		var choicesString = "";	
-		for (var i = 0; i < choices.length; i++ ) {
-			choicesString = choices[i] + choicesString;
-		}
 
-		choicesString = "[" + choicesString + "]";
+		choicesString = "[" + choices.join() + "]";
 
 		elements.push({"id":"article2_zone1", 
 			"type":"quiz", 
@@ -94,14 +97,14 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			"quiztype":"multiplechoice",
 			"selfA":true, 
 			"question":{
-				"value":question,  
+				"value": question,  
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
 			}, 
 
 			"choices": choicesString,
 
 			"extras":{
-					"multipleAnswer":false
+					"multipleAnswer": nAnswers
 			}
 
 		);
@@ -115,24 +118,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 
 
- 	//return null;
  }
 
- /*
- !$.isEmptyObject($.find('#id'))
- This will return true if the element exists and false if it doesn't.
- */
-
- /*TO DO
-	First we have to check if there's a label called assessmentItem. If there's no one,
-	we can assure it's not a QTI XML file.
-	
-	Doubt: in case there's a file with assessmentItem, do we have to check if that's the correct format?
-
-
-
-
- */
 
 	return {
 		init 		: init,
