@@ -64,6 +64,8 @@
 #toolbar_text {
 	position: absolute;
 	margin-left: 10px;
+	height: 56px;
+	overflow: hidden;
 }
 
 .toolbar_presentation_wrapper_slideTools {

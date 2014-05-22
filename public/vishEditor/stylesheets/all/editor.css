@@ -3056,3 +3056,61 @@ span.letterInChapterDialog {
 	position: relative;
 	float: left;
 }
+
+
+/* Element Settings */
+
+
+.elSettings_fancybox {
+	padding: 20px;
+}
+
+p.elsettings_fancybox_title {
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 20px;
+	color: #B6B6B6;
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+div.new_elsettings_field {
+	margin-left: 10px;
+	margin-top: 25px;
+}
+
+div.new_elsettings_subfield {
+	margin-left: 10px;
+	margin-top: 8px;
+}
+
+div.new_elsettings_field span, div.new_elsettings_field p, div.new_elsettings_subfield span, div.new_elsettings_subfield p {
+	font-size: 16px;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-weight: 300;
+}
+
+div.new_elsettings_field p, div.new_elsettings_subfield p {
+	margin: 0px;
+}
+
+div.new_elsettings_subfield span, div.new_elsettings_subfield p {
+	font-size: 14px;
+}
+
+select.el_settings_select {
+	margin-left: 20px;
+	width: auto;
+}
+
+div.elSettingsButtonsWrapper {
+	text-align: right;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	width: 94%;
+	padding: 3%;
+}
+
+#exportQuizToIMSQTI {
+	cursor: pointer;
+}

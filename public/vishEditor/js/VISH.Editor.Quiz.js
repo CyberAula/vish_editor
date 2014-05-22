@@ -16,16 +16,58 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			'showCloseButton': false,
 			'padding' : 0,
 			"onStart"  : function(data){
-				// var quiz = V.Editor.getCurrentArea();
-				// console.log("onStart loading quizSettings for Quiz:");
-				// console.log(quiz);
-				// var qSF = $("#quizSettings_fancybox");
+				var qSF = $("#quizSettings_fancybox");
+
+				//Load Quiz
+				var quiz = V.Editor.getCurrentArea();
+				$(qSF).find("input[type='hidden'][name='elId']").val($(quiz).attr("id"));
+
+				//Load Settings
+				var qSettings = $(quiz).attr("elSettings");
+				var nAttempts = 1;
+				var ARSEnabled = false;
+
+				if(typeof qSettings == "string"){
+					try{
+						qSettings = JSON.parse(qSettings);
+						if(typeof qSettings.nAttempts != "undefined"){
+							nAttempts = qSettings.nAttempts;
+						}
+						if(qSettings.ARSEnabled===true){
+							ARSEnabled = true;
+						}
+					}catch(e){}
+				}
+
+				//Fill form
+				var nAttemptsDOM = $(qSF).find("#quizSettings_nAttempts");
+				var ARSEnabledCheckbox = $(qSF).find("input[type='checkbox'][name='enableARS']");
+				$(nAttemptsDOM).val(nAttempts);
+				$(ARSEnabledCheckbox).prop('checked', ARSEnabled);
 			},
 			"onComplete" : function(data){
 			},
 			"onClosed"  : function(data){
 			}
 		});
+	};
+
+	var onQuizSettingsDone = function(){
+		//Get Settings
+		var qSF = $("#quizSettings_fancybox");
+		var qSettings = {};
+		qSettings.nAttempts = $(qSF).find("#quizSettings_nAttempts").val();
+		qSettings.ARSEnabled = $(qSF).find("input[type='checkbox'][name='enableARS']").is(":checked");
+
+		//Get quiz
+		var quizId = $(qSF).find("input[type='hidden'][name='elId']").val();
+		var quiz = $("#"+quizId);
+
+		//Save Settings
+		var qSSerialized = JSON.stringify(qSettings);
+		$(quiz).attr("elSettings",qSSerialized);
+
+		$.fancybox.close();
 	};
 
 	/*
@@ -93,9 +135,11 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	};
 
 
-	/* Quiz exporting */
-	//Usage example: VISH.Editor.Quiz.exportTo("QTI", function(){ alert("Success")}, function(){alert("Fail")})
-	var exportTo = function(format,successCallback,failCallback){
+	/* 
+	 * Quiz exporting 
+	 * Usage example: VISH.Editor.Quiz.exportTo("QTI", function(){ alert("Success")}, function(){alert("Fail")})
+	 */
+	var _exportTo = function(format,successCallback,failCallback){
 		var cJSONQuiz = _getCurrentJSONQuiz();
 
 		if(typeof cJSONQuiz == "undefined"){
@@ -104,36 +148,56 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			}
 			return;
 		}
+
 		V.Editor.API.uploadTmpJSON(cJSONQuiz,format,successCallback,failCallback);
 	};
 
+	var onExportTo = function(format){
+		$.fancybox.close();
+		
+		_exportTo(format,function(){
+			//Success
+		},function(){
+			setTimeout(function(){
+				//On fail
+				var options = {};
+				options.width = 600;
+				options.height = 185;
+
+				if(format=="QTI"){
+					options.text = V.I18n.getTrans("i.exportQuizToQTIerrorNotification");
+				} else if(format=="MoodleXML"){
+					options.text = V.I18n.getTrans("i.exportQuizToMoodleXMLerrorNotification");
+				}
+				
+				var button1 = {};
+				button1.text = V.I18n.getTrans("i.Ok");
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
+			},600);
+		});
+	};
+
 	var _getCurrentJSONQuiz = function(){
-		var quizJSON = [];
+		var quizJSON = undefined;
 		var presentation = V.Editor.savePresentation();
 		var cslide = V.Slides.getCurrentSlide();
 
 		if(typeof cslide == "object"){
-		var cslideId = $(cslide).attr("id");
+			var cslideId = $(cslide).attr("id");
 			
-		 $.each(presentation.slides, function( index, value ) {
-					if (value.id == cslideId){
-						if(value.containsQuiz == true){
-							 $.each(value.elements, function( index, value_element ) {
-							 	if(value_element.type == "quiz"){
-							 		quizJSON = value_element;
-							 	}
-							 });
-						}else{
-							quizJSON = undefined;
+		 	$.each(presentation.slides, function(index,value){
+				if((value.id == cslideId)&&(value.containsQuiz == true)){
+					$.each(value.elements, function(index,elVal){
+						if(elVal.type == "quiz"){
+							quizJSON = elVal;
 						}
-		 			}	
+					});
+	 			}	
 		 	});
-
-			//console.log("cslideId");
-			//console.log(cslideId);
-			//TODO: 1. Look inside presentation JSON to find the slide JSON with id: cslideId
-			//2. Look inside the slide to find a quiz
-			//3. If there is a quiz, get its JSON and send it. If not return undefined.
 		}
 		return quizJSON;
 	};
@@ -143,9 +207,9 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		add					: add,
 		save				: save,
 		draw				: draw,
-		exportTo			: exportTo,
+		onExportTo			: onExportTo,
 		showQuizSettings	: showQuizSettings,
-		_getCurrentJSONQuiz : _getCurrentJSONQuiz
+		onQuizSettingsDone	: onQuizSettingsDone
 	};
 
 }) (VISH, jQuery);

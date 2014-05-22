@@ -344,7 +344,7 @@
 				</div>
 			</div>
 			<div id="toolbar_element" class="withLeftBorder">
-				<div id="settings_quiz_wrapper" class="toolbar_presentation_wrapper withRightBorder" style="display:none">
+				<div id="settings_quiz_wrapper" class="toolbar_presentation_wrapper withRightBorder toolbar_quiz" style="display:none">
 					<a id="settings_quiz" class="tool_action" action="quizSettings" href="#">
 						<button type="button" class="btn btn-primary btn-small btn-toolbarElementWrapper">
 							<img src="/vishEditor/images/toolbar/quiz_settings.png"/>
@@ -1477,9 +1477,46 @@
 
 	<!-- Quiz Settings -->
 	<div style='display:none'>
-		<div id="quizSettings_fancybox">
-			<p>Quiz Settings</p>
-			<p class="test"></p>
+		<div id="quizSettings_fancybox" class="elSettings_fancybox">
+			<p class="elsettings_fancybox_title">Quiz Settings</p>
+
+			<input type="hidden" name="elId">
+
+			<div class="new_elsettings_field">
+				<span i18n-key="i.NAttempts">Number of Attempts</span>
+				<select id="quizSettings_nAttempts" class="el_settings_select">
+					<option value="1" selected="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="unlimited" i18n-key="i.Unlimited">Unlimited</option>
+				</select>
+			</div>
+
+			<div class="new_elsettings_field">
+				<span i18n-key="i.AudienceResponseSystem">Audience Response System</span>
+				<div class="new_elsettings_subfield">
+					<p>
+						<span i18n-key="i.Enable">Enable</span>
+						<input type="checkbox" name="enableARS">
+					</p>
+				</div>
+			</div>
+
+			<div class="new_elsettings_field">
+				<a id="exportQuizToIMSQTI">
+					<p>
+						<i class="icon-button icon-rotate-180 icon-download-alt"></i>&nbsp;&nbsp;
+						<span i18n-key="i.ExportToIMSQTI">Export to IMS QTI 2.1</span>
+					</p>
+				</a>
+			</div>
+
+			<div class="elSettingsButtonsWrapper">
+				<button id="quizSettingsDone" type="button" class="button" i18n-key="i.Done">Done</button>
+			</div>
+
 		</div>
 	</div>
 
