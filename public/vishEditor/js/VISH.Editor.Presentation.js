@@ -95,13 +95,69 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		}
 
 		$.fancybox.close();
-	}
+	};
+
+	/*
+	 * Generate presentation scaffold for elements
+	 * element JSON example: { body: "myimage.jpg", type: V.Constant.IMAGE}
+	 * options JSON example: {template : "t2", pdfexId: "22"}
+	 */
+	var generatePresentationScaffold = function(elements,options){
+		var presentation = {};
+		presentation.VEVersion = V.VERSION;
+		presentation.type = V.Constant.PRESENTATION;
+		presentation.theme = V.Constant.Themes.Default
+		presentation.slides = [];
+		
+		var elL = elements.length;
+		for(var i=0; i<elL; i++){
+			presentation.slides.push(_generateSlideScaffold(i+1,elements[i],options));
+		}
+		return presentation;
+	};
+
+	var _generateSlideScaffold = function(index,element,options){
+		var slide = {};
+		slide.id = "article"+index;
+		slide.type = V.Constant.STANDARD;
+
+		var defaultTemplate = "t10";
+		if(element.template){
+			slide.template = options.template;
+		} else if((options)&&(options.template)){
+			slide.template = options.template;
+		} else {
+			slide.template = defaultTemplate;
+		}
+
+		slide.elements = [];
+
+		var element = element || {};
+		element.id = slide.id + "_zone1";
+		switch(slide.template){
+			case "t2":
+				element.areaid = "left";
+				break;
+			default:
+				element.areaid = "center";
+		}
+		
+		if((options)&&(options.pdfexId)){
+			element.options = element.options || {};
+			element.options["vishubPdfexId"] = options.pdfexId;
+		}
+
+		slide.elements.push(element);
+
+		return slide;
+	};
 
 
 	return {
-		init 				 	: init,
-		insertPresentation		: insertPresentation,
-		previewPresentation		: previewPresentation
+		init 				 			: init,
+		insertPresentation				: insertPresentation,
+		previewPresentation				: previewPresentation,
+		generatePresentationScaffold	: generatePresentationScaffold
 	};
 
 }) (VISH, jQuery);

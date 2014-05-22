@@ -101,6 +101,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Audio.init();
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
+		V.SCORM.init();
 
 		//If we have to edit
 		if(initialPresentation){
@@ -153,6 +154,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Audio.init();
 		V.Editor.Object.init();
 		V.Editor.PDFex.init();
+		V.Editor.EPackage.init();
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
@@ -599,7 +601,15 @@ VISH.Editor = (function(V,$,undefined){
 			if($(div).attr("areaid") !== undefined){
 				element.id		=	$(div).attr('id');
 				element.type	=	$(div).attr('type');
-				element.areaid	=	$(div).attr('areaid');				 
+				element.areaid	=	$(div).attr('areaid');
+
+				//Save element settings
+				var elSettings = $(div).attr("elSettings");
+				if(typeof elSettings == "string"){
+					try {
+						element.settings = JSON.parse(elSettings);
+					} catch(e){}
+				}
 
 				if(element.type==V.Constant.TEXT){
 					var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
@@ -661,6 +671,8 @@ VISH.Editor = (function(V,$,undefined){
 					if(zoom!=1){
 						element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
 					}
+					//Save subtype
+					element.subtype = V.Object.getObjectInfo(myObject).type;
 				} else if (element.type === V.Constant.QUIZ) {
 					var quizJSON = VISH.Editor.Quiz.save(div);
 					element.quiztype = quizJSON.quizType;
@@ -689,7 +701,7 @@ VISH.Editor = (function(V,$,undefined){
 						element.scrollTop = $(snapshotWrapper).scrollTop();
 						element.scrollLeft = $(snapshotWrapper).scrollLeft();
 					}
-					
+					element.subtype = V.Constant.MEDIA.WEB;
 				} else if(typeof element.type == "undefined"){
 					//Empty element
 				}

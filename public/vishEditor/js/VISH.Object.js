@@ -1,6 +1,7 @@
 VISH.Object = (function(V,$,undefined){
 			
 	var init = function(){
+		V.Object.Webapp.init();
 	};
 
 	///////////////////////////////////////
@@ -54,9 +55,20 @@ VISH.Object = (function(V,$,undefined){
 			case "AUDIO":
 				type = V.Constant.MEDIA.HTML5_AUDIO;
 				break;
+			case "IFRAME":
+				var objectTypeAttr = $(object).attr("objecttype");
+				if(typeof objectTypeAttr == "string"){
+					if(objectTypeAttr==V.Constant.MEDIA.SCORM_PACKAGE){
+						type = V.Constant.MEDIA.SCORM_PACKAGE;
+						break;
+					} else if(objectTypeAttr==V.Constant.MEDIA.WEB_APP){
+						type = V.Constant.MEDIA.WEB_APP;
+						break;
+					}
+				}
 			default:
 				type = _getTypeFromSource(source);
-		}
+		};
 
 		return new objectInfo(wrapper,source,type);
 	};

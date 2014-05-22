@@ -144,40 +144,18 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 	};
 
 	var _generatePresentationWithImgArray = function(imgs,pdfexId){
-		var presentation = {};
-		presentation.VEVersion = V.VERSION;
-		presentation.type = V.Constant.PRESENTATION;
-		presentation.theme = V.Constant.Themes.Default
-		presentation.slides = [];
-		
-		for(var i=0; i<imgs.length; i++){
-			var imageUrl = imgs[i];
-			presentation.slides.push(_generateSlideWithImg(i,imageUrl,pdfexId));
+		var elements = [];
+		var imgL = imgs.length;
+		for(var i=0; i<imgL; i++){
+			elements.push({"body": imgs[i], "type": V.Constant.IMAGE});
 		}
-		return presentation;
+		var options = {
+			template : "t10",
+			pdfexId: pdfexId
+		}
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
 
-	var _generateSlideWithImg = function(index,imgUrl,pdfexId){
-		var slide = {};
-		slide.id = "article"+index;
-		slide.type = V.Constant.STANDARD;
-		slide.template = "t10";
-		slide.elements = [];
-
-		var element = {};
-		element.areaid = "center";
-		element.body = imgUrl;
-		element.id = slide.id + "_zone1";
-		element.type = V.Constant.IMAGE;
-
-		if(typeof pdfexId != "undefined"){
-			element.options = {};
-			element.options["vishubPdfexId"] = pdfexId;
-		}
-		slide.elements.push(element);
-
-		return slide;
-	};
 
 	return {
 		init 		: init,

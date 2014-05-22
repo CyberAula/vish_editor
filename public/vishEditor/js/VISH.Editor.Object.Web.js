@@ -17,7 +17,6 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
 		});
 	};	
 
-  
 	var onLoadTab = function(tab){
 		contentToAdd = null;
 		V.Editor.Object.resetPreview(urlDivId);

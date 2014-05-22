@@ -41,7 +41,7 @@ VISH.Status.Device = (function(V,$,undefined){
 
 			//Fix for Android Browsers
 			if((device.android)&&(device.browser.name===V.Constant.ANDROID_BROWSER)){
-				if(device.hasTestingViewport===true){
+				if((device.hasTestingViewport===true)&&(V.Storage.isSupported())){
 					//We need to reload the page with the real viewport
 					_reloadOnAndroidTestingViewport(callback,device);
 					return;
@@ -60,7 +60,7 @@ VISH.Status.Device = (function(V,$,undefined){
 
 		//Ensure that the device has been stored
 		var initialDevice = V.Storage.get(V.Constant.Storage.Device);
-		if(typeof storedDevice !== "undefined"){	
+		if(typeof storedDevice !== "undefined"){
 			location.reload(true);
 			return;
 		}
@@ -79,7 +79,7 @@ VISH.Status.Device = (function(V,$,undefined){
 				}
 			}
 		},1000);
-	}
+	};
 
 	var _fillUserAgentBeforeViewport = function(device){
 		device.pixelRatio = window.devicePixelRatio || 1;
@@ -94,7 +94,7 @@ VISH.Status.Device = (function(V,$,undefined){
 
 		//Android devices
 		device.android = /android/i.test(navigator.userAgent);
-	}
+	};
 
 	var _loadViewportForDevice = function(device,callback){
 		if((device.iOS)&&(device.browser.name===V.Constant.SAFARI)){
@@ -147,7 +147,7 @@ VISH.Status.Device = (function(V,$,undefined){
 				callback();
 			}
 		}
-	}
+	};
 
 	//////////////
 	// VIEWPORT
@@ -177,17 +177,17 @@ VISH.Status.Device = (function(V,$,undefined){
 				callback();
 			}
 		},WAITING_TIME_FOR_VIEWPORT_LOAD);
-	}
+	};
 
 	var _setViewportForAndroidBrowser = function(callback){
 		//We cant specify width=device-width due to a iframe loading bug.
 		//It can't be solved
 		_setViewport("user-scalable=yes",callback);
-	}
+	};
 
 	var _setTestingViewportForAndroidBrowser = function(callback){
 		_setViewport("width=device-width,height=device-height,user-scalable=yes",callback);
-	}
+	};
 
 	var _setViewportForChromeForAndroid = function(callback){
 		_setViewport("width=device-width,height=device-height,user-scalable=yes",callback);
@@ -195,7 +195,7 @@ VISH.Status.Device = (function(V,$,undefined){
 
 	var _setViewportForIphone = function(callback){
 		_setViewport("user-scalable=yes",callback);
-	}
+	};
 
 	var _fillUserAgentAfterViewport = function(device){
 		//Android devices
@@ -279,7 +279,7 @@ VISH.Status.Device = (function(V,$,undefined){
 			width: window.screen.availWidth,
 			height: window.screen.availHeight
 		};
-	}
+	};
 
 	return {
 		init            : init
