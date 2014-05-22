@@ -7,13 +7,13 @@ VISH.Quiz.TF = (function(V,$,undefined){
 	var _loadEvents = function(){
 	};
 
-	var render = function(slide,template){
-		var quizId = slide.quizId;
+	var render = function(quizJSON,template){
+		var quizId = quizJSON.quizId;
 		var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.TF+"'></div>");
 
 		//Question
 		var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
-		$(questionWrapper).html(slide.question.wysiwygValue);
+		$(questionWrapper).html(quizJSON.question.wysiwygValue);
 		$(container).append(questionWrapper);
 
 		//Options
@@ -23,8 +23,9 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		var newTr = $("<tr class='mc_option tf_head'><td><img src='"+V.ImagesPath+ "quiz/checkbox_checked.png' class='tfCheckbox_viewer'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox_wrong.png' class='tfCheckbox_viewer'/></td><td></td><td></td></tr>");
 		$(optionsWrapper).prepend(newTr);
 
-		for(var i=0; i<slide.choices.length; i++){
-			var option = slide.choices[i];
+		var quizChoicesLength = quizJSON.choices.length;
+		for(var i=0; i<quizChoicesLength; i++){
+			var option = quizJSON.choices[i];
 			var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
 			var optionBox1 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='true'  /></td>");
 			var optionBox2 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='false' /></td>");
@@ -41,7 +42,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
 		$(container).append(optionsWrapper);
 
-		var quizButtons = V.Quiz.renderButtons(slide.selfA);
+		var quizButtons = V.Quiz.renderButtons(quizJSON);
 		$(container).append(quizButtons);
 
 		return V.Utils.getOuterHTML(container);

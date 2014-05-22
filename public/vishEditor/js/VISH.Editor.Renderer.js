@@ -63,33 +63,41 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 			V.Utils.addTempShown(scaffoldDOM);
 		}
 
-		for(el in slide.elements){
-			var areaId = slide.elements[el].id;
-			var area = $("div#" + areaId + "[areaid='" + slide.elements[el].areaid +"']");	
-			
+		var slideElementsLength = slide.elements.length;
+		for(var i=0; i<slideElementsLength; i++){
+			var element = slide.elements[i];
+			var zoneId = element.id;
+			var area = $("div#" + zoneId + "[areaid='" + element.areaid +"']");
+
 			if(area.length === 0){
 				continue; //with first version presentations we had different template names and some fails, this condition avoid that
 			}
 
-			if(slide.elements[el].type === V.Constant.TEXT){
-				V.Editor.Text.launchTextEditor({}, area, slide.elements[el].body);  //in this case there is no event, so we pass a new empty object
-			} else if(slide.elements[el].type === V.Constant.IMAGE){
-				V.Editor.Image.drawImage(slide.elements[el].body, area, slide.elements[el].style, slide.elements[el].hyperlink, slide.elements[el].options);
-			} else if(slide.elements[el].type === V.Constant.VIDEO){
+			//Save element settings
+			if(element.settings){
+				var serializedSettings = JSON.stringify(element.settings);
+				$(area).attr("elSettings",serializedSettings);
+			}
+
+			if(element.type === V.Constant.TEXT){
+				V.Editor.Text.launchTextEditor({}, area, element.body);  //in this case there is no event, so we pass a new empty object
+			} else if(element.type === V.Constant.IMAGE){
+				V.Editor.Image.drawImage(element.body, area, element.style, element.hyperlink, element.options);
+			} else if(element.type === V.Constant.VIDEO){
 				var options = [];
-				options['poster'] = slide.elements[el].poster;
-				options['autoplay'] = slide.elements[el].autoplay;
-				V.Editor.Video.HTML5.drawVideo(V.Video.HTML5.getSourcesFromJSON(slide.elements[el]), options, area, slide.elements[el].style);
-			} else if(slide.elements[el].type === V.Constant.AUDIO){
+				options['poster'] = element.poster;
+				options['autoplay'] = element.autoplay;
+				V.Editor.Video.HTML5.drawVideo(V.Video.HTML5.getSourcesFromJSON(element), options, area, element.style);
+			} else if(element.type === V.Constant.AUDIO){
 				var options = [];
-				options['autoplay'] = slide.elements[el].autoplay;
-				V.Editor.Audio.HTML5.drawAudio(V.Audio.HTML5.getSourcesFromJSON(slide.elements[el]), options, area, slide.elements[el].style);
-			} else if(slide.elements[el].type === V.Constant.OBJECT){
-				V.Editor.Object.drawObject(slide.elements[el].body, {area:area, style:slide.elements[el].style, zoomInStyle:slide.elements[el].zoomInStyle});
-			} else if(slide.elements[el].type === V.Constant.SNAPSHOT){
-				V.Editor.Object.Snapshot.drawSnapShot(slide.elements[el].body, area, slide.elements[el].style,slide.elements[el].scrollTop,slide.elements[el].scrollLeft);
-			} else if(slide.elements[el].type === V.Constant.QUIZ){
-				V.Editor.Quiz.draw(area,slide.elements[el]);
+				options['autoplay'] = element.autoplay;
+				V.Editor.Audio.HTML5.drawAudio(V.Audio.HTML5.getSourcesFromJSON(element), options, area, element.style);
+			} else if(element.type === V.Constant.OBJECT){
+				V.Editor.Object.drawObject(element.body, {area:area, style:element.style, zoomInStyle:element.zoomInStyle});
+			} else if(element.type === V.Constant.SNAPSHOT){
+				V.Editor.Object.Snapshot.drawSnapShot(element.body, area, element.style,element.scrollTop,element.scrollLeft);
+			} else if(element.type === V.Constant.QUIZ){
+				V.Editor.Quiz.draw(area,element);
 			}
 
 			//Add tooltips to area
@@ -100,6 +108,7 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				$(area).addClass("editable");
 			}
 			V.Editor.Tools.addTooltipToZone(area,hideTooltip);
+
 		}
 
 		if(renderOptions.subslide){
