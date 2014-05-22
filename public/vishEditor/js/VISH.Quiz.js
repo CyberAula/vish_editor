@@ -97,10 +97,18 @@ VISH.Quiz = (function(V,$,undefined){
 		}
 	};
 
-	var renderButtons = function(selfA){
+	var renderButtons = function(quizJSON){
+		var selfA = quizJSON.selfA;
+		var ARSEnabled = false;
+		if(typeof quizJSON.settings == "object"){
+			if((quizJSON.settings.ARSEnabled===true)||(quizJSON.settings.ARSEnabled==="true")){
+				ARSEnabled = true;
+			}
+		}
+		
 		var quizButtons = $("<div class='quizButtons'></div>");
 
-		if((quizMode === V.Constant.QZ_MODE.SELFA)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
+		if((quizMode === V.Constant.QZ_MODE.SELFA)&&(ARSEnabled==true)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
 			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='"+V.I18n.getTrans("i.QuizLaunch")+"'/>");
 			$(quizButtons).append(startButton);
 		}
@@ -203,9 +211,21 @@ VISH.Quiz = (function(V,$,undefined){
 			}
 
 			var quizId = $(quizDOM).attr("id");
-			// var quizJSON = quizzes[quizId];
+			var quizJSON = quizzes[quizId];
 
+			//Get nAttempts
 			var nAttempts = 1;
+			if(typeof quizJSON.settings == "object"){
+				var settingsNAttempts = quizJSON.settings.nAttempts;
+				if(typeof settingsNAttempts != "undefined"){
+					if(settingsNAttempts==="unlimited"){
+						nAttempts = settingsNAttempts;
+					} else {
+						nAttempts = parseInt(settingsNAttempts);
+					}
+				}
+			}
+
 			if(typeof quizzes[quizId] != "undefined"){
 				if(typeof quizzes[quizId].cnAttempts != "undefined"){
 					nAttempts = quizzes[quizId].cnAttempts;

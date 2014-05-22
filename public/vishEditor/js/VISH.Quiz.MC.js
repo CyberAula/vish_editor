@@ -8,13 +8,13 @@ VISH.Quiz.MC = (function(V,$,undefined){
 	};
 
 	/* Render the quiz in the DOM */
-	var render = function(slide,template){
-		var quizId = slide.quizId;
+	var render = function(quizJSON,template){
+		var quizId = quizJSON.quizId;
 		var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.MCHOICE+"'></div>");
 
 		var multipleAnswer = false;
 		var inputType = 'radio';
-		if((slide.extras)&&(slide.extras.multipleAnswer===true)){
+		if((quizJSON.extras)&&(quizJSON.extras.multipleAnswer===true)){
 			multipleAnswer = true;
 			inputType = 'checkbox';
 			$(container).attr("multipleAnswer",true);
@@ -22,14 +22,15 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
 		//Question
 		var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
-		$(questionWrapper).html(slide.question.wysiwygValue);
+		$(questionWrapper).html(quizJSON.question.wysiwygValue);
 		$(container).append(questionWrapper);
 
 		//Options
 		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='mc_options'></table>");
 
-		for(var i=0; i<slide.choices.length; i++){
-			var option = slide.choices[i];
+		var quizChoicesLength = quizJSON.choices.length;
+		for(var i=0; i<quizChoicesLength; i++){
+			var option = quizJSON.choices[i];
 			var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
 			var optionBox = $("<td><input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/></td>");
 			var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+String.fromCharCode(96+i+1)+") </span></td>");
@@ -44,7 +45,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
 		$(container).append(optionsWrapper);
 
-		var quizButtons = V.Quiz.renderButtons(slide.selfA);
+		var quizButtons = V.Quiz.renderButtons(quizJSON);
 		$(container).append(quizButtons);
 
 		return V.Utils.getOuterHTML(container);

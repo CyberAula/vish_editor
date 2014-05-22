@@ -24,21 +24,26 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 				//Load Settings
 				var qSettings = $(quiz).attr("elSettings");
+				var nAttempts = 1;
+				var ARSEnabled = false;
+
 				if(typeof qSettings == "string"){
 					try{
 						qSettings = JSON.parse(qSettings);
-						//Fill form
 						if(typeof qSettings.nAttempts != "undefined"){
-							$(qSF).find("#quizSettings_nAttempts").val(qSettings.nAttempts);
+							nAttempts = qSettings.nAttempts;
 						}
-						var ARSEnabledCheckbox = $(qSF).find("input[type='checkbox'][name='enableARS']");
 						if(qSettings.ARSEnabled===true){
-							$(ARSEnabledCheckbox).prop('checked', true);
-						} else {
-							$(ARSEnabledCheckbox).prop('checked', false);
+							ARSEnabled = true;
 						}
 					}catch(e){}
 				}
+
+				//Fill form
+				var nAttemptsDOM = $(qSF).find("#quizSettings_nAttempts");
+				var ARSEnabledCheckbox = $(qSF).find("input[type='checkbox'][name='enableARS']");
+				$(nAttemptsDOM).val(nAttempts);
+				$(ARSEnabledCheckbox).prop('checked', ARSEnabled);
 			},
 			"onComplete" : function(data){
 			},
