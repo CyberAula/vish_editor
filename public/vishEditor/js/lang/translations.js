@@ -1548,6 +1548,7 @@ var i18n =
 						"i.QuizResults"       		: "Ergebnisse",
 						"i.QuizSaveConfirmation"  	: "Willst du die Ergebnisse vom Quizz speichern?",
 						"i.QuizSessionName"     	: "Name des live Quizz",
+						"i.QuizSettings"			: "Quiz",
 						"i.QuizStop"        		: "Stop",
 						"i.QuizSubmittedAlert"    	: "Deine Antwort wurde zugestellt",
 						"i.Quizzes"         		: "Quizze",
