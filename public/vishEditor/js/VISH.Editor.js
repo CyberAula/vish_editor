@@ -601,7 +601,15 @@ VISH.Editor = (function(V,$,undefined){
 			if($(div).attr("areaid") !== undefined){
 				element.id		=	$(div).attr('id');
 				element.type	=	$(div).attr('type');
-				element.areaid	=	$(div).attr('areaid');				 
+				element.areaid	=	$(div).attr('areaid');
+
+				//Save element settings
+				var elSettings = $(div).attr("elSettings");
+				if(typeof elSettings == "string"){
+					try {
+						element.settings = JSON.parse(elSettings);
+					} catch(e){}
+				}
 
 				if(element.type==V.Constant.TEXT){
 					var CKEditor = V.Editor.Text.getCKEditorFromZone(div);
