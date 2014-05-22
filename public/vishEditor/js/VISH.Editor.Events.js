@@ -203,6 +203,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			//Element Settings
 			$(document).on("click", "#quizSettingsDone", V.Editor.Quiz.onQuizSettingsDone);
+			$(document).on("click", "#exportQuizToIMSQTI", function(){ V.Editor.Quiz.onExportTo("QTI") });
 
 			//onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
@@ -298,7 +299,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on('click','#help_in_settings', function(){
 			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
 		});
-
 
 		//Help in pedagogical options settings	
 		$(document).on('click','#help_pedagogical_selection', function(){

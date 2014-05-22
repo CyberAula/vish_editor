@@ -139,7 +139,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * Quiz exporting 
 	 * Usage example: VISH.Editor.Quiz.exportTo("QTI", function(){ alert("Success")}, function(){alert("Fail")})
 	 */
-	var exportTo = function(format,successCallback,failCallback){
+	var _exportTo = function(format,successCallback,failCallback){
 		var cJSONQuiz = _getCurrentJSONQuiz();
 
 		if(typeof cJSONQuiz == "undefined"){
@@ -150,6 +150,35 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		}
 
 		V.Editor.API.uploadTmpJSON(cJSONQuiz,format,successCallback,failCallback);
+	};
+
+	var onExportTo = function(format){
+		$.fancybox.close();
+		
+		_exportTo(format,function(){
+			//Success
+		},function(){
+			setTimeout(function(){
+				//On fail
+				var options = {};
+				options.width = 600;
+				options.height = 185;
+
+				if(format=="QTI"){
+					options.text = V.I18n.getTrans("i.exportQuizToQTIerrorNotification");
+				} else if(format=="MoodleXML"){
+					options.text = V.I18n.getTrans("i.exportQuizToMoodleXMLerrorNotification");
+				}
+				
+				var button1 = {};
+				button1.text = V.I18n.getTrans("i.Ok");
+				button1.callback = function(){
+					$.fancybox.close();
+				}
+				options.buttons = [button1];
+				V.Utils.showDialog(options);
+			},600);
+		});
 	};
 
 	var _getCurrentJSONQuiz = function(){
@@ -178,7 +207,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		add					: add,
 		save				: save,
 		draw				: draw,
-		exportTo			: exportTo,
+		onExportTo			: onExportTo,
 		showQuizSettings	: showQuizSettings,
 		onQuizSettingsDone	: onQuizSettingsDone
 	};
