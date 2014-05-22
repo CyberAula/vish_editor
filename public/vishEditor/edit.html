@@ -1475,9 +1475,37 @@
 
 	<!-- Quiz Settings -->
 	<div style='display:none'>
-		<div id="quizSettings_fancybox">
-			<p>Quiz Settings</p>
-			<p class="test"></p>
+		<div id="quizSettings_fancybox" class="elSettings_fancybox">
+			<p class="elsettings_fancybox_title">Quiz Settings</p>
+
+			<input type="hidden" name="elId">
+
+			<div class="new_elsettings_field">
+				<span i18n-key="i.NAttempts">Number of Attempts</span>
+				<select id="quizSettings_nAttempts" class="el_settings_select">
+					<option value="1" selected="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5">5</option>
+					<option value="unlimited" i18n-key="i.Unlimited">Unlimited</option>
+				</select>
+			</div>
+
+			<div class="new_elsettings_field">
+				<span i18n-key="i.AudienceResponseSystem">Audience Response System</span>
+				<div class="new_elsettings_subfield">
+					<p>
+						<span i18n-key="i.Enable">Enable</span>
+						<input type="checkbox" name="enableARS">
+					</p>
+				</div>
+			</div>
+
+			<div class="elSettingsButtonsWrapper">
+				<button id="quizSettingsDone" type="button" class="button" i18n-key="i.Done">Done</button>
+			</div>
+
 		</div>
 	</div>
 

@@ -16,16 +16,53 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			'showCloseButton': false,
 			'padding' : 0,
 			"onStart"  : function(data){
-				// var quiz = V.Editor.getCurrentArea();
-				// console.log("onStart loading quizSettings for Quiz:");
-				// console.log(quiz);
-				// var qSF = $("#quizSettings_fancybox");
+				var qSF = $("#quizSettings_fancybox");
+
+				//Load Quiz
+				var quiz = V.Editor.getCurrentArea();
+				$(qSF).find("input[type='hidden'][name='elId']").val($(quiz).attr("id"));
+
+				//Load Settings
+				var qSettings = $(quiz).attr("elSettings");
+				if(typeof qSettings == "string"){
+					try{
+						qSettings = JSON.parse(qSettings);
+						//Fill form
+						if(typeof qSettings.nAttempts != "undefined"){
+							$(qSF).find("#quizSettings_nAttempts").val(qSettings.nAttempts);
+						}
+						var ARSEnabledCheckbox = $(qSF).find("input[type='checkbox'][name='enableARS']");
+						if(qSettings.ARSEnabled===true){
+							$(ARSEnabledCheckbox).prop('checked', true);
+						} else {
+							$(ARSEnabledCheckbox).prop('checked', false);
+						}
+					}catch(e){}
+				}
 			},
 			"onComplete" : function(data){
 			},
 			"onClosed"  : function(data){
 			}
 		});
+	};
+
+	var onQuizSettingsDone = function(){
+		//Get Settings
+		var qSF = $("#quizSettings_fancybox");
+		var qSettings = {};
+		qSettings.nAttempts = $(qSF).find("#quizSettings_nAttempts").val();
+		qSettings.ARSEnabled = $(qSF).find("input[type='checkbox'][name='enableARS']").is(":checked");
+
+		//Get quiz
+		var quizId = $(qSF).find("input[type='hidden'][name='elId']").val();
+		var quiz = $("#"+quizId);
+
+		//Save Settings
+		var qSSerialized = JSON.stringify(qSettings);
+		$(quiz).attr("elSettings",qSSerialized);
+
+		$.fancybox.close();
 	};
 
 	/*
@@ -98,7 +135,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		add					: add,
 		save				: save,
 		draw				: draw,
-		showQuizSettings	: showQuizSettings
+		showQuizSettings	: showQuizSettings,
+		onQuizSettingsDone	: onQuizSettingsDone
 	};
 
 }) (VISH, jQuery);

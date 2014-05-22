@@ -201,6 +201,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
+			//Element Settings
+			$(document).on("click", "#quizSettingsDone", V.Editor.Quiz.onQuizSettingsDone);
+
 			//onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
 			confirmOnExit = true;
