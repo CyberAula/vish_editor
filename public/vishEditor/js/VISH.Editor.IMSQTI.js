@@ -4,37 +4,30 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	
  
 
- var isCompliantXMLFile = function(fileXML){
+ 	var isCompliantXMLFile = function(fileXML){
 
  		var contains;
  		var schema;
-
 
 		xmlDoc = $.parseXML( fileXML ),
 		xml = $( xmlDoc );
 		
 		if($(xml).find('assessmentItem').length != 0){
 			$(xml).find('assessmentItem').each(function(){
-		  	$(this.attributes).each(function(index,attribute){
-		    if(attribute.name == "xsi:schemaLocation"){
-			    if(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1){
-				
-				schema = true;
-
-				}
-				else{
-					schema = false;
-					}
-			}
-			else{
-		    	}
-		   })
-		});
-	}else{
+		  		$(this.attributes).each(function(index,attribute){
+		    		if(attribute.name == "xsi:schemaLocation"){
+			    		if(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1){
+							schema = true;
+						}
+						else{
+							schema = false;
+						}
+					}else{}
+		   		})
+			});
+		}else{
 		schema = false;
-	}
-
-
+		}
 
 		var prompt=$(xml).find("prompt");
 		var simpleChoice=$(xml).find("simpleChoice");
@@ -46,32 +39,31 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		}else{
 			contains= true;
 		}
-
-		return contains;
-
- }
-
-
- var checkAnswer = function(answer, correctArray){
- 	var answerString;
- 	if ((jQuery.inArray(answer, correctArray)) == -1){
- 		answerString = false;
- 	}else{
- 		answerString = true;
+	return contains;
  	}
-		return answerString;
- }
+
+
+	var checkAnswer = function(answer, correctArray){
+		var answerBoolean;
+		if ((jQuery.inArray(answer, correctArray)) == -1){
+			answerBoolean = false;
+	 	}else{
+	 		answerBoolean = true;
+	 	}
+
+	return answerBoolean;
+	}
 
 
 
- var getJSONFromXMLFile = function(fileXML){
+	 var getJSONFromXMLFile = function(fileXML){
 
- 		var elements = [];
- 		var question;
- 		var answerArray = [];
- 		var correctanswerArray = [];
- 		var nAnswers;
- 		var answerIds = [];
+		var elements = [];
+		var question;
+		var answerArray = [];
+		var correctanswerArray = [];
+		var nAnswers;
+		var answerIds = [];
 
 		xmlDoc = $.parseXML( fileXML ),
 		$xml = $( xmlDoc )
@@ -80,7 +72,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		/*To get the question */
 
 		$(xml).find('prompt').each(function(){
-  			question = $(this).text();
+			question = $(this).text();
 		});
 
 
@@ -88,26 +80,25 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		/*To get array of answers */
 
 		$(xml).find('simpleChoice').each(function(){
- 			var answer = $(this).text();
-
-  			answerArray.push(answer);
+			var answer = $(this).text();
+			answerArray.push(answer);
 		});
 
 
 		/* To get array of corrrect answers */
 		$(xml).find('correctResponse value').each(function(){
-		  var cAnswer = $(this).text();
-		  correctanswerArray.push(cAnswer);
+			var cAnswer = $(this).text();
+			correctanswerArray.push(cAnswer);
 		});
 
 		/* To get identifiers */
 
 		$(xml).find('simpleChoice').each(function(){
-		  $(this.attributes).each(function(index,attribute){
-		    if(attribute.name == "identifier"){
-		    	answerIds.push(attribute.textContent);
-		    }
-		   })
+			$(this.attributes).each(function(index,attribute){
+				if(attribute.name == "identifier"){
+					answerIds.push(attribute.textContent);
+		    	}
+		   	})
 		});
 
 		if(correctanswerArray.length > 1){
@@ -119,7 +110,11 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var choices = [];
 		for (var i = 1; i <= answerArray.length; i++ ) {
 			var iChoice;
-			iChoice = {'id': i.toString(), 'value': (answerArray[i-1]).toString() , "wysiwygValue" :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 'answer': checkAnswer(answerIds[i-1], correctanswerArray)};
+			iChoice = {'id': i.toString(), 
+					   'value': (answerArray[i-1]).toString() , 
+					   "wysiwygValue" :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 
+					   'answer': checkAnswer(answerIds[i-1], correctanswerArray)
+					  };
 		}
 
 
@@ -141,8 +136,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			template : "t2",
 		}
 
-		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
-}
+	return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	}
 
 	return {
 		init 		: init,
