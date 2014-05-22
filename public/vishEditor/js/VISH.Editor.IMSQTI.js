@@ -5,25 +5,63 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
  
 
  var isCompliantXMLFile = function(fileXML){
+
+ 		var contains;
+ 		var schema;
+
+
 		xmlDoc = $.parseXML( fileXML ),
-		$xml = $( xmlDoc );
+		xml = $( xmlDoc );
 		
-		return !$.isEmptyObject($(xml).find('assessmentItem'));
+		if($(xml).find('assessmentItem').length != 0){
+			$(xml).find('assessmentItem').each(function(){
+		  	$(this.attributes).each(function(index,attribute){
+		    if(attribute.name == "xsi:schemaLocation"){
+			    if(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1){
+				
+				schema = true;
+
+				}
+				else{
+					schema = false;
+					}
+			}
+			else{
+		    	//schema = false;
+		    	}
+		   })
+		});
+	}else{
+		schema = false;
+	}
+
+	console.log("schema: ");
+	console.log(schema);
+
+
+		var prompt=$(xml).find("prompt");
+		var simpleChoice=$(xml).find("simpleChoice");
+		var correctResponse = $(xml).find("value");
+
+
+		if((prompt.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
+			contains = false;
+		}else{
+			contains= true;
+		}
+
+		return contains;
+
  }
 
 
  var checkAnswer = function(answer, correctArray){
  	var answerString;
- 	if ((jQuery.inArray( answer, correctArray )) == -1){
- 		answerString = "false";
+ 	if ((jQuery.inArray(answer, correctArray)) == -1){
+ 		answerString = false;
  	}else{
- 		answerString = "true";
+ 		answerString = true;
  	}
-
-
-
-
-
 		return answerString;
  }
 
@@ -32,25 +70,14 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
  var getJSONFromXMLFile = function(fileXML){
 
  		var elements = [];
- 		var cardinality;
  		var question;
  		var answerArray = [];
  		var correctanswerArray = [];
  		var nAnswers;
+ 		var answerIds = [];
 
 		xmlDoc = $.parseXML( fileXML ),
 		$xml = $( xmlDoc )
-
-
-		/* To get cardinality */
-
-		$(xml).find('responseDeclaration').each(function(){
-		  $(this.attributes).each(function(index,attribute){
-		    if(attribute.name == "cardinality"){
-		      cardinality = attribute.textContent;
-		    }
-		});
-
 
 
 		/*To get the question */
@@ -64,7 +91,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		/*To get array of answers */
 
 		$(xml).find('simpleChoice').each(function(){
- 			 var answer = $(this).text();
+ 			var answer = $(this).text();
+
   			answerArray.push(answer);
 		});
 
@@ -75,51 +103,51 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		  correctanswerArray.push(cAnswer);
 		});
 
-		if(correctanswerArray > 1){
+		/* To get identifiers */
+
+		$(xml).find('simpleChoice').each(function(){
+		  $(this.attributes).each(function(index,attribute){
+		    if(attribute.name == "identifier"){
+		    	answerIds.push(attribute.textContent);
+		    }
+		   })
+		});
+
+		if(correctanswerArray.length > 1){
 			nAnswers = true;
 		}else{
 			nAnswers = false;
 		}
 
-		/* We know get all the data we have to retrieve from XML */
-		var choices = "";
-		for (var i = 1; i < answerArray.length; i++ ) {
+		var choices = [];
+		for (var i = 1; i <= answerArray.length; i++ ) {
 			var iChoice;
-			iChoice = "{ 'id':" + i + ", 'value':" + answerArray[i-1] + "'wysiwygValue':'<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:24px;\">" + answerArray[i-1] + "&shy;</span></span></p>\n', 'answer':" + checkAnswer(answerArray[i-1], correctanswerArray) + "}";
+			iChoice = {'id': i.toString(), 'value': (answerArray[i-1]).toString() , "wysiwygValue" :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 'answer': checkAnswer(answerIds[i-1], correctanswerArray)};
+			console.log("iChoice");
 			choices.push(iChoice);
 		}
 
-		choicesString = "[" + choices.join() + "]";
 
-		elements.push({"id":"article2_zone1", 
-			"type":"quiz", 
-			"areaid":"left", 
+
+		elements.push({"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
 			"quiztype":"multiplechoice",
-			"selfA":true, 
+			"selfA":true,
 			"question":{
-				"value": question,  
-				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
-			}, 
-
-			"choices": choicesString,
-
-			"extras":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"},
+				"choices": $.extend([{}], choices), 
+				"extras":{
 					"multipleAnswer": nAnswers
-			}
-
-		);
+				}});
 
 		var options = {
 			template : "t2",
 		}
+
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
-
-
-
-
-
- }
-
+}
 
 	return {
 		init 		: init,

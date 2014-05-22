@@ -70,8 +70,10 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 						var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
 						if(isIMSQTICompliant){
 							//TODO. Get JSON from V.Editor.IMSQTI module
-							// var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
-							var json = undefined;
+							var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
+							console.log("json: ");
+							console.log(json);
+							//var json = undefined;
 							V.Editor.Presentation.previewPresentation(json);
 						} else {
 							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));

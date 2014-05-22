@@ -158,7 +158,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
-		V.Editor.ISMQTI.init();
+		//V.Editor.ISMQTI.init();
 		V.Editor.Preview.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
