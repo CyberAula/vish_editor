@@ -27,7 +27,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 					}
 			}
 			else{
-		    	//schema = false;
 		    	}
 		   })
 		});
@@ -35,8 +34,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		schema = false;
 	}
 
-	console.log("schema: ");
-	console.log(schema);
 
 
 		var prompt=$(xml).find("prompt");
@@ -123,8 +120,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		for (var i = 1; i <= answerArray.length; i++ ) {
 			var iChoice;
 			iChoice = {'id': i.toString(), 'value': (answerArray[i-1]).toString() , "wysiwygValue" :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 'answer': checkAnswer(answerIds[i-1], correctanswerArray)};
-			console.log("iChoice");
-			choices.push(iChoice);
 		}
 
 
