@@ -1,5 +1,3 @@
-<!-- FillInTheBlankText -->
-
 <?xml version="1.0" encoding="utf-8"?>
 <assessmentItem xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd" identifier="item1937" title="FillInTheBlankText" adaptive="false" timeDependent="false" toolName="itslearning" toolVersion="3.44" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qti="http://www.imsglobal.org/xsd/imsqti_v2p1">
 	<responseDeclaration cardinality="single" baseType="string" identifier="RESPONSE1">
