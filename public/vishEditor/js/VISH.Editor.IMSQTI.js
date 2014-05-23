@@ -132,8 +132,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 	return {
 		init 						: init,
-		isCompliantXMLFile			:  isCompliantXMLFile,
-		getJSONFromXMLFile			:  getJSONFromXMLFile
+		isCompliantXMLFile			: isCompliantXMLFile,
+		getJSONFromXMLFile			: getJSONFromXMLFile
 	};
 
 }) (VISH, jQuery);
