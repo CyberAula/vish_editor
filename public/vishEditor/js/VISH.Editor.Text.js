@@ -110,8 +110,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 			'/',
 			{ name: 'lists', items : ['NumberedList','BulletedList','Table'] },
 			{ name: 'alignment', items : ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'] },
-			{ name: 'link', items : ['Link'] }
-			// { name: 'symbols', items : ['SpecialChar'] }
+			{ name: 'link', items : ['Link'] },
+			{ name: 'Objects', items : ['Image','MediaEmbed'] },
+			{ name: 'symbols', items : ['SpecialChar'] }
 		];
 
 		//Singleton toolbar
@@ -127,7 +128,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 		//Disable bottom tags
 		config.removePlugins = 'elementspath';
 		//Enable table resize and autogrow
-		config.extraPlugins = 'tableresize,autogrow,specialchar';
+		config.extraPlugins = 'tableresize,autogrow,specialchar,mediaembed';
 
 		if((options)&&(options.autogrow)){
 			config.autoGrow_minHeight = 34;
