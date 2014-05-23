@@ -1,1 +1,56 @@
-<?xml version="1.0" encoding="utf-8"?><assessmentItem xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd" identifier="item1935" title="Matching" adaptive="false" timeDependent="false" toolName="itslearning" toolVersion="3.44" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qti="http://www.imsglobal.org/xsd/imsqti_v2p1"><responseDeclaration cardinality="multiple" baseType="directedPair" identifier="RESPONSE"><correctResponse><value>C0 M3</value><value>C1 M1</value><value>C2 M0</value><value>C3 M2</value></correctResponse><mapping lowerBound="0" upperBound="1" defaultValue="0"><mapEntry mapKey="C0 M3" mappedValue="0.25" /><mapEntry mapKey="C1 M1" mappedValue="0.25" /><mapEntry mapKey="C2 M0" mappedValue="0.25" /><mapEntry mapKey="C3 M2" mappedValue="0.25" /></mapping></responseDeclaration><outcomeDeclaration cardinality="single" baseType="identifier" identifier="FEEDBACK" view="" normalMaximum="0" normalMinimum="0" masteryValue="0" /><itemBody><p>This is an 'Match' kind of question</p><matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="4" minAssociations="0"><simpleMatchSet><simpleAssociableChoice fixed="false" showHide="show" identifier="C0" matchMax="1" matchMin="0"><span><p>Choice 1</p></span></simpleAssociableChoice><simpleAssociableChoice fixed="false" showHide="show" identifier="C1" matchMax="1" matchMin="0"><span><p>Choice 2</p></span></simpleAssociableChoice><simpleAssociableChoice fixed="false" showHide="show" identifier="C2" matchMax="1" matchMin="0"><span><p>Choice 3</p></span></simpleAssociableChoice><simpleAssociableChoice fixed="false" showHide="show" identifier="C3" matchMax="1" matchMin="0"><span><p>Choice 4</p></span></simpleAssociableChoice></simpleMatchSet><simpleMatchSet><simpleAssociableChoice fixed="false" showHide="show" identifier="M3" matchMax="1" matchMin="0"><span><p>Match 1</p></span></simpleAssociableChoice><simpleAssociableChoice fixed="false" showHide="show" identifier="M1" matchMax="1" matchMin="0"><span><p>Match 2</p></span></simpleAssociableChoice><simpleAssociableChoice fixed="false" showHide="show" identifier="M0" matchMax="1" matchMin="0"><span><p>Match 3</p></span></simpleAssociableChoice><simpleAssociableChoice fixed="false" showHide="show" identifier="M2" matchMax="1" matchMin="0"><span><p>Match 4</p></span></simpleAssociableChoice></simpleMatchSet></matchInteraction></itemBody><responseProcessing /></assessmentItem>
+<!-- Matching -->
+
+<?xml version="1.0" encoding="utf-8"?>
+<assessmentItem xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 http://www.imsglobal.org/xsd/imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 http://www.imsglobal.org/xsd/imsmd_v1p2p2.xsd http://www.imsglobal.org/xsd/imsqti_v2p1 http://www.imsglobal.org/xsd/imsqti_v2p1.xsd" identifier="item1935" title="Matching" adaptive="false" timeDependent="false" toolName="itslearning" toolVersion="3.44" xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:qti="http://www.imsglobal.org/xsd/imsqti_v2p1">
+	<responseDeclaration cardinality="multiple" baseType="directedPair" identifier="RESPONSE">
+		<correctResponse>
+			<value>C0 M3</value>
+			<value>C1 M1</value>
+			<value>C2 M0</value>
+			<value>C3 M2</value>
+		</correctResponse>
+		<mapping lowerBound="0" upperBound="1" defaultValue="0">
+			<mapEntry mapKey="C0 M3" mappedValue="0.25" />
+			<mapEntry mapKey="C1 M1" mappedValue="0.25" /><mapEntry mapKey="C2 M0" mappedValue="0.25" />
+			<mapEntry mapKey="C3 M2" mappedValue="0.25" />
+		</mapping>
+	</responseDeclaration>
+
+	<outcomeDeclaration cardinality="single" baseType="identifier" identifier="FEEDBACK" view="" normalMaximum="0" normalMinimum="0" masteryValue="0" />
+
+	<itemBody><p>This is an 'Match' kind of question</p>
+
+	<matchInteraction responseIdentifier="RESPONSE" shuffle="true" maxAssociations="4" minAssociations="0">
+		<simpleMatchSet>
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="C0" matchMax="1" matchMin="0"><span><p>Choice 1</p></span></simpleAssociableChoice>
+
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="C1" matchMax="1" matchMin="0"><span><p>Choice 2</p></span></simpleAssociableChoice>
+
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="C2" matchMax="1" matchMin="0"><span><p>Choice 3</p></span></simpleAssociableChoice>
+
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="C3" matchMax="1" matchMin="0">
+				<span><p>Choice 4</p></span>
+			</simpleAssociableChoice>
+		</simpleMatchSet>
+
+		<simpleMatchSet>
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="M3" matchMax="1" matchMin="0">
+				<span><p>Match 1</p></span>
+			</simpleAssociableChoice>
+
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="M1" matchMax="1" matchMin="0">
+				<span><p>Match 2</p></span>
+			</simpleAssociableChoice>
+
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="M0" matchMax="1" matchMin="0">
+				<span><p>Match 3</p></span>
+			</simpleAssociableChoice>
+
+			<simpleAssociableChoice fixed="false" showHide="show" identifier="M2" matchMax="1" matchMin="0">
+				<span><p>Match 4</p></span>
+			</simpleAssociableChoice>
+		</simpleMatchSet>
+	</matchInteraction>
+</itemBody>
+<responseProcessing />
+</assessmentItem>
