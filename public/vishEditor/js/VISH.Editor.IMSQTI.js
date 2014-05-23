@@ -7,8 +7,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var contains;
 		var schema;
 
-		var xmlDoc = $.parseXML( fileXML ),
-		var xml = $( xmlDoc );
+		var xmlDoc = $.parseXML( fileXML );
+		var xml = $(xmlDoc);
 		
 		if($(xml).find('assessmentItem').length != 0){
 			$(xml).find('assessmentItem').each(function(){
