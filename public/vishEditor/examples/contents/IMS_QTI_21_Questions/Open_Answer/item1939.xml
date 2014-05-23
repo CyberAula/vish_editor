@@ -5,7 +5,8 @@
 
 	<responseDeclaration cardinality="single" baseType="string" identifier="RESPONSE" />
 	
-	<outcomeDeclaration cardinality="single" baseType="string" identifier="MODEL_ANSWER"><defaultValue>
+	<outcomeDeclaration cardinality="single" baseType="string" identifier="MODEL_ANSWER">
+		<defaultValue>
 		<value>&lt;p&gt;Here you have to enter the answer key for the question&lt;/p&gt;</value>
 	</defaultValue>
 	</outcomeDeclaration>

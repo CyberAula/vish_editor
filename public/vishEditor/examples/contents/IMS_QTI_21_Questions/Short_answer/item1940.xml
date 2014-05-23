@@ -10,12 +10,14 @@
 			<value>The answer key </value>
 		</defaultValue>
 	</outcomeDeclaration>
+
 	<outcomeDeclaration cardinality="multiple" baseType="string" identifier="KEYWORDS">
 		<defaultValue>
 			<value>Keyword 1</value>
 			<value>Keyword 2</value>
 		</defaultValue>
 	</outcomeDeclaration>
+	
 	<outcomeDeclaration cardinality="multiple" baseType="string" identifier="KEYWORD_ALTERNATIVES">
 		<defaultValue>
 			<value>Keyword alternate 2,keyword alternate 3</value>

@@ -14,7 +14,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			$(xml).find('assessmentItem').each(function(){
 				$(this.attributes).each(function(index,attribute){
 					if(attribute.name == "xsi:schemaLocation"){
-						if(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1){
+						if((((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1) ||(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/imsqti_v2p1.xsd")) != -1)) {
 							schema = true;
 						} else {
 							schema = false;
@@ -26,15 +26,20 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			schema = false;
 		}
 
-		var prompt = $(xml).find("prompt");
+		var itemBody = $(xml).find("itemBody");
 		var simpleChoice = $(xml).find("simpleChoice");
-		var correctResponse = $(xml).find("value");
+		var correctResponse = $(xml).find("correctResponse value");
 
-		if((prompt.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
+	
+
+		if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
 			contains = false;
 		} else {
 			contains= true;
 		}
+
+		console.log("contains");
+		console.log(contains);
 
 		return contains;
  	};
@@ -64,9 +69,15 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 
 		/*To get the question */
+		if($(xml).find('prompt').length != 0){
 		$(xml).find('prompt').each(function(){
 			question = $(this).text();
 		});
+		}else{
+			$(xml).find('itemBody').children().first().each(function(){
+				question = $(this).text();
+			});	
+		}
 
 		/*To get array of answers */
 		$(xml).find('simpleChoice').each(function(){
@@ -104,6 +115,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 				'wysiwygValue' :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 
 				'answer': checkAnswer(answerIds[i-1], correctanswerArray)
 			};
+			choices.push(iChoice);
 		}
 
 		elements.push({
