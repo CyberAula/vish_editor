@@ -26,7 +26,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		var quizChoicesLength = quizJSON.choices.length;
 		for(var i=0; i<quizChoicesLength; i++){
 			var option = quizJSON.choices[i];
-			var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
+			var optionWrapper = $("<tr class='mc_option' choiceId='"+(option.id)+"'></tr>");
 			var optionBox1 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='true'  /></td>");
 			var optionBox2 = $("<td><input class='tf_radio' type='radio' name='tf_radio"+i+"' column='false' /></td>");
 			var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+String.fromCharCode(96+i+1)+") </span></td>");
@@ -62,6 +62,10 @@ VISH.Quiz.TF = (function(V,$,undefined){
 
 		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
 		var quizChoices = quizJSON.choices;
+		var quizChoicesById = {};
+		$(quizChoices).each(function(index,quizChoice){
+			quizChoicesById[quizChoice.id] = quizChoice;
+		});
 
 		$(quiz).find("tr.mc_option").not(".tf_head").each(function(index,tr){
 			var trueRadio = $(tr).find("input[type='radio'][column='true']")[0];
@@ -76,23 +80,27 @@ VISH.Quiz.TF = (function(V,$,undefined){
 				myAnswer = undefined;
 			}
 
-			var choice = quizChoices[index];
-			var trChoice = $(quiz).find("tr.mc_option").not(".tf_head")[index];
+			var choiceId = $(tr).attr("choiceid");
+			var choice = quizChoicesById[choiceId];
+			var choiceHasAnswer = (typeof choice.answer == "boolean");
 
-			if(myAnswer===choice.answer){
-				$(trChoice).addClass("mc_correct_choice");
-			} else if(typeof myAnswer != "undefined"){
-				answeredQuizCorrectly = false;
-				$(trChoice).addClass("mc_wrong_choice");
-			} else {
-				//No answer selected
-				answeredQuizCorrectly = false;
-				if(!canRetry){
-					//Mark correct answer
-					if(choice.answer===true){
-						$(trueRadio).attr('checked', true);
-					} else if(choice.answer===false){
-						$(falseRadio).attr('checked', true);
+			if(choiceHasAnswer){
+				var trChoice = $(quiz).find("tr.mc_option").not(".tf_head")[index];
+				if(myAnswer===choice.answer){
+					$(trChoice).addClass("mc_correct_choice");
+				} else if(typeof myAnswer != "undefined"){
+					answeredQuizCorrectly = false;
+					$(trChoice).addClass("mc_wrong_choice");
+				} else {
+					//No answer selected
+					answeredQuizCorrectly = false;
+					if(!canRetry){
+						//Mark correct answer
+						if(choice.answer===true){
+							$(trueRadio).attr('checked', true);
+						} else if(choice.answer===false){
+							$(falseRadio).attr('checked', true);
+						}
 					}
 				}
 			}
@@ -140,14 +148,17 @@ VISH.Quiz.TF = (function(V,$,undefined){
 			var trueRadio = $(tr).find("input[type='radio'][column='true']")[0];
 			var falseRadio = $(tr).find("input[type='radio'][column='false']")[0];
 
+			var choiceId = $(tr).attr("choiceid");
+			var originalChoiceId = V.Quiz.getQuizChoiceOriginalId(choiceId);
+
 			if($(trueRadio).is(':checked')){
-				report.answers.push({no: (index+1).toString(), answer: "true"});
+				report.answers.push({choiceId: originalChoiceId.toString(), answer: "true"});
 				report.empty = false;
 			} else if($(falseRadio).is(':checked')){
-				report.answers.push({no: (index+1).toString(), answer: "false"});
+				report.answers.push({choiceId: originalChoiceId.toString(), answer: "false"});
 				report.empty = false;
 			} else {
-				report.answers.push({no: (index+1).toString(), answer: "none"});
+				report.answers.push({choiceId: originalChoiceId.toString(), answer: "none"});
 			}
 		});
 

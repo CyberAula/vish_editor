@@ -31,7 +31,7 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		var quizChoicesLength = quizJSON.choices.length;
 		for(var i=0; i<quizChoicesLength; i++){
 			var option = quizJSON.choices[i];
-			var optionWrapper = $("<tr class='mc_option' nChoice='"+(i+1)+"'></tr>");
+			var optionWrapper = $("<tr class='mc_option' choiceId='"+(option.id)+"'></tr>");
 			var optionBox = $("<td><input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/></td>");
 			var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+String.fromCharCode(96+i+1)+") </span></td>");
 			var optionText = $("<td><div class='mc_option_text mc_option_text_viewer'></div></td>");
@@ -67,11 +67,18 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
 		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
 		var quizChoices = quizJSON.choices;
+		var quizChoicesById = {};
+		$(quizChoices).each(function(index,quizChoice){
+			quizChoicesById[quizChoice.id] = quizChoice;
+		});
 
 		//Color correct and wrong answers
-		$(quiz).find("input[name='mc_option']").each(function(index,radioBox){
+		$(quiz).find("tr.mc_option").each(function(index,tr){
+			var choiceId = $(tr).attr("choiceid");
+			var choice = quizChoicesById[choiceId];
+
+			var radioBox = $(tr).find("input[name='mc_option']");
 			var answerValue = parseInt($(radioBox).attr("value"));
-			var choice = quizChoices[answerValue];
 
 			if($(radioBox).is(':checked')){
 				var trAnswer = $("tr.mc_option").has(radioBox);
@@ -93,16 +100,15 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		if(!willRetry){
 			//Look and mark correct answers
 			var trCorrectAnswers = [];
-			for (var key in quizChoices){
-				if(quizChoices[key].answer===true){
-					//Get correct choice
-					var trCorrect = $(quiz).find("tr.mc_option")[key];
-					trCorrectAnswers.push($(quiz).find("tr.mc_option")[key]);
+			$(quizChoices).each(function(index,quizChoice){
+				if(quizChoice.answer===true){
+					var trCorrect = $(quiz).find("tr.mc_option[choiceid='"+quizChoice.id+"']");
+					trCorrectAnswers.push(trCorrect);
 					if(answeredQuiz){
 						$(trCorrect).addClass("mc_correct_choice");
 					}
 				}
-			}
+			});
 		}
 
 		//Unfulfilled quiz
@@ -149,9 +155,11 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		var report = {};
 		report.answers = [];
 
-		$(quiz).find("input[name='mc_option']").each(function(index,radioBox){
+		$(quiz).find("tr.mc_option").each(function(index,tr){
+			var radioBox = $(tr).find("input[name='mc_option']");
 			if($(radioBox).is(':checked')){
-				report.answers.push({no: (index+1).toString(), answer: "true"});
+				var choiceId = $(tr).attr("choiceid");
+				report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: "true"});
 			}
 		});
 

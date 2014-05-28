@@ -7,6 +7,7 @@ VISH.Quiz = (function(V,$,undefined){
 	 */
 	//Store the JSON of the quizzes
 	var quizzes = {};
+	var quizChoicesIds = {};
 
 	/*
 	 * Real Time Quizzes
@@ -63,8 +64,8 @@ VISH.Quiz = (function(V,$,undefined){
 				$("#fancybox-close").height(0);
 				$("#fancybox-close").css("padding",0);
 			},
-			'onComplete' : function(data) {
-				setTimeout(function (){
+			'onComplete' : function(data){
+				setTimeout(function(){
 					V.ViewerAdapter.updateFancyboxAfterSetupSize();
 					if((currentQuizSession)&&(currentQuizSession.url)){
 						_loadQr(currentQuizSession.url);
@@ -91,6 +92,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var zoneId = elJSON['id'];
 			var quizId = V.Utils.getId("quiz");
 			elJSON['quizId'] = quizId;
+			elJSON = _changeQuizChoicesIds(elJSON);
 			quizzes[quizId] = elJSON;
 			var quizDOM = quizModule.render(elJSON,template);
 			return "<div id='"+zoneId+"' class='quizWrapper "+template+"_"+elJSON['areaid']+" "+template+"_quiz"+"'>"+quizDOM+"</div>";
@@ -711,6 +713,10 @@ VISH.Quiz = (function(V,$,undefined){
 		return quizzes[quizId];
 	};
 
+	var getQuizChoiceOriginalId = function(newQuizChoiceId){
+		return quizChoicesIds[newQuizChoiceId];
+	};
+
 	var _getQuizModule = function(quiz_type){
 		switch (quiz_type) {
 			case V.Constant.QZ_TYPE.OPEN:
@@ -725,6 +731,25 @@ VISH.Quiz = (function(V,$,undefined){
 				return null; 
 				break;
 		}
+	};
+
+	var _changeQuizChoicesIds = function(quizJSON){
+		$(quizJSON.choices).each(function(index,choice){
+			var newChoiceId = _generateRandomQuizChoiceId();
+			quizChoicesIds[newChoiceId] = quizJSON.choices[index].id;
+			quizJSON.choices[index].id = newChoiceId;
+		});
+		return quizJSON;
+	};
+
+	var _usedQuizChoicesIds = [];
+	var _generateRandomQuizChoiceId = function(){
+		var randomInteger;
+		while((typeof randomInteger == "undefined") || (_usedQuizChoicesIds.indexOf(randomInteger) != -1)){
+			randomInteger = Math.round(Math.random()*Math.pow(10,16));
+		}
+		_usedQuizChoicesIds.push(randomInteger);
+		return randomInteger;
 	};
 
 	var updateCheckbox = function(checkbox,check){
@@ -761,18 +786,19 @@ VISH.Quiz = (function(V,$,undefined){
 
 
 	return {
-		initBeforeRender  	 : initBeforeRender,
-		init              	 : init,
-		render            	 : render,
-		renderButtons     	 : renderButtons,
-		getQuiz 			 : getQuiz,
-		updateCheckbox    	 : updateCheckbox,
-		enableAnswerButton   : enableAnswerButton,
-		retryAnswerButton	 : retryAnswerButton,
-		continueAnswerButton : continueAnswerButton,
-		disableAnswerButton  : disableAnswerButton,
-		loadTab              : loadTab,
-		aftersetupSize    	 : aftersetupSize
+		initBeforeRender  	 	: initBeforeRender,
+		init              	 	: init,
+		render            	 	: render,
+		renderButtons     	 	: renderButtons,
+		getQuiz 			 	: getQuiz,
+		getQuizChoiceOriginalId	: getQuizChoiceOriginalId,
+		updateCheckbox    	 	: updateCheckbox,
+		enableAnswerButton   	: enableAnswerButton,
+		retryAnswerButton	 	: retryAnswerButton,
+		continueAnswerButton 	: continueAnswerButton,
+		disableAnswerButton  	: disableAnswerButton,
+		loadTab              	: loadTab,
+		aftersetupSize    	 	: aftersetupSize
 	};
 	
 }) (VISH, jQuery);
