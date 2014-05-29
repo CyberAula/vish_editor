@@ -42,6 +42,11 @@ span.mc_option_index {
 	padding: 0%;
 }
 
+span.sorting_option_index{
+	cursor: pointer;
+	cursor: hand;
+}
+
 span.mc_option_index_viewer{
 	margin-top: 2%;
 }
@@ -94,7 +99,7 @@ img.mcCheckbox, img.tfCheckbox{
 	cursor: pointer;
 }
 
-.delete_quiz_option_mc, .delete_quiz_option_tf {
+.delete_quiz_option_mc, .delete_quiz_option_tf, .delete_quiz_option_sorting {
 	cursor: pointer;
 	visibility: hidden;
 	width: 100%;

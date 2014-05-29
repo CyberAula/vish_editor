@@ -3,7 +3,7 @@
  */
 VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	var addQuizOptionButtonClass = "add_quiz_option_sorting";
-	var deleteQuizOptionButtonClass = "delete_quiz_option_mc";
+	var deleteQuizOptionButtonClass = "delete_quiz_option_sorting";
 	var initialized = false;
 
 	var init = function(){
@@ -34,6 +34,9 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		}
 	};
 
+
+	var ckEditorTmpData;
+
 	/*
 	 * Create an empty Sorting Quiz
 	 */
@@ -45,6 +48,35 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		_launchTextEditorForQuestion(area);
 		_addOptionInQuiz(area);
 		V.Editor.addDeleteButton(area);
+
+		//Add sortable (See http://jqueryui.com/sortable)
+		//See http://stackoverflow.com/questions/15124860/ckeditor-4-and-jquery-ui-sortable-removes-content-after-sorting
+		$(area).find(".mc_options").sortable({
+			cursor: 'move',
+			start: function (event,ui) {
+				try {
+					var textArea = $(ui.item).find(".wysiwygTextArea");
+					var ckEditorInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
+					ckEditorTmpData = ckEditorInstance.getData();
+				}catch(e){ ckEditorTmpData = undefined; }
+			},
+			stop: function(event,ui){
+				var textArea = $(ui.item).find(".wysiwygTextArea");
+				var ckEditorInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
+				ckEditorInstance.destroy();
+
+				if((typeof ckEditorTmpData != "string")||(($(ckEditorTmpData).text().trim())=="­")){
+					//Empty ckEditorTmpData
+					V.Editor.Text.launchTextEditor({},$(textArea).parent(),"",{forceNew: true, fontSize: 24, autogrow: true, focus: false, disableTmpShown: true});
+				} else {
+					V.Editor.Text.launchTextEditor({},$(textArea).parent(),ckEditorTmpData,{autogrow: true, disableTmpShown: true});
+				}
+
+				ckEditorTmpData = undefined;
+
+				_refreshChoicesIndexs(area);
+			}
+		});
 	};
 
 	var _getDummy = function(){
@@ -52,7 +84,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	};
 
 	var _getOptionDummy = function(){
-		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index'></span><div class='mc_option_text sorting_option_text'></div><table class='mc_checks sorting_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td></tr></table></div></li>";
+		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index sorting_option_index'></span><div class='mc_option_text sorting_option_text'></div><table class='mc_checks sorting_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td></tr></table></div></li>";
 	};
 
 	/*
@@ -87,6 +119,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		$(area).find("li.mc_option").each(function(index,option_element){
 			$(option_element).find(".mc_option_index").text((index+1).toString()+")");
 		});
+		//TODO: Update remove buttons
 	};
 
 	var _launchTextEditorForQuestion = function(area,question){

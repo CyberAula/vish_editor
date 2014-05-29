@@ -106,10 +106,17 @@ VISH.Editor.Text = (function(V,$,undefined){
 			//We need an ID to call addTempShown properly
 			$(current_area).attr("id",V.Utils.getId("TmpShownId")); 
 		}
-		V.Utils.addTempShown(current_area);
+
+		var disableTmpShown = (options)&&(options.disableTmpShown);
+
+		if(!disableTmpShown){
+			V.Utils.addTempShown(current_area);
+		}
 		var currentAreaHeight = $(current_area).height();
 		var currentAreaWidth = $(current_area).width();
-		V.Utils.removeTempShown(current_area);
+		if(!disableTmpShown){
+			V.Utils.removeTempShown(current_area);
+		}
 
 		//Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
@@ -361,11 +368,15 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		if(!newInstance){
 			//Keep slide subslide an area visible until the quiz has been drawed
-			V.Utils.addTempShown([slide,subslide,current_area]);
+			if(!disableTmpShown){
+				V.Utils.addTempShown([slide,subslide,current_area]);
+			}
 			setTimeout(function(){
 				if(_initializedCKEditorInstances[ckeditor.name] !== true){
 					_initializedCKEditorInstances[ckeditor.name] = false;
-					V.Utils.removeTempShown([slide,subslide,current_area]);
+					if(!disableTmpShown){
+						V.Utils.removeTempShown([slide,subslide,current_area]);
+					}
 				} else {
 					_initializedCKEditorInstances[ckeditor.name] = undefined;
 				}
@@ -378,7 +389,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 					if(isQuiz){
 						if(!newInstance){
 							setTimeout(function(){
-								V.Utils.addTempShown([slide,subslide,current_area]);
+								if(!disableTmpShown){
+									V.Utils.addTempShown([slide,subslide,current_area]);
+								}
 								var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
 								var newMyHeight = $(iframeContent).find("html").height();
 								if(newMyHeight > myHeight){
@@ -390,8 +403,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 								//Firefox don't calculate height right, maybe a fallback could be provided
 								// if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
 								// }
-
-								V.Utils.removeTempShown([slide,subslide,current_area]);
+								if(!disableTmpShown){
+									V.Utils.removeTempShown([slide,subslide,current_area]);
+								}
 							},1000);
 						}
 					} else {
@@ -413,7 +427,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 			if(!newInstance){
 				if(typeof _initializedCKEditorInstances[ckeditor.name] == "undefined"){
 					_initializedCKEditorInstances[ckeditor.name] = true;
-					V.Utils.removeTempShown([slide,subslide,current_area]);
+					if(!disableTmpShown){
+						V.Utils.removeTempShown([slide,subslide,current_area]);
+					}
 				} else {
 					_initializedCKEditorInstances[ckeditor.name] = undefined;
 				}
