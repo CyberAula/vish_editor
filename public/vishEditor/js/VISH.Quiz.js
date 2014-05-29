@@ -727,6 +727,9 @@ VISH.Quiz = (function(V,$,undefined){
 			case V.Constant.QZ_TYPE.TF:
 				return V.Quiz.TF;
 				break;
+			case V.Constant.QZ_TYPE.SORTING:
+				return V.Quiz.Sorting;
+				break;
 			default:
 				return null; 
 				break;

@@ -5,6 +5,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	var init = function(){
 		V.Editor.Quiz.MC.init();
 		V.Editor.Quiz.TF.init();
+		V.Editor.Quiz.Sorting.init();
 
 		//Quiz Settings
 		_hiddenLinkToInitQuizSettings = $('<a href="#quizSettings_fancybox" style="display:none"></a>');
@@ -74,15 +75,18 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 	 * Quiz modules
 	 */
 	var _getQuizModule = function(quiz_type){
-		switch (quiz_type) {
-			case VISH.Constant.QZ_TYPE.OPEN:
+		switch(quiz_type){
+			case V.Constant.QZ_TYPE.OPEN:
 				 break;
-			case VISH.Constant.QZ_TYPE.MCHOICE:
+			case V.Constant.QZ_TYPE.MCHOICE:
 				return V.Editor.Quiz.MC;
 				break;
-			case VISH.Constant.QZ_TYPE.TF:
+			case V.Constant.QZ_TYPE.TF:
 				return V.Editor.Quiz.TF;
-			 	break;
+				break;
+			case V.Constant.QZ_TYPE.SORTING:
+				return V.Editor.Quiz.Sorting;
+				break;
 			default:
 				return null; 
 				break;

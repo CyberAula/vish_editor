@@ -143,7 +143,7 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 		var textArea = $(area).find(".mc_option_text")[nChoice];
 		if(!value){
 			if(first){
-				V.Editor.Text.launchTextEditor({}, textArea, "Write options here", {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
+				V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptions"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
 			} else {
 				V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 24, autogrow: true, focus: true});
 			}

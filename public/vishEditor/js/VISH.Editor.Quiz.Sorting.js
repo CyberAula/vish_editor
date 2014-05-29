@@ -1,10 +1,9 @@
 /*
- * Multiple Choice Quiz Module
+ * Sorting Quiz Module
  */
-VISH.Editor.Quiz.MC = (function(V,$,undefined){
-	var addQuizOptionButtonClass = "add_quiz_option_mc";
+VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
+	var addQuizOptionButtonClass = "add_quiz_option_sorting";
 	var deleteQuizOptionButtonClass = "delete_quiz_option_mc";
-	var mcCheckbox = "mcCheckbox";
 	var initialized = false;
 
 	var init = function(){
@@ -12,7 +11,6 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 			$(document).on('click', '.' + 'mcContainer', _clickOnQuizArea);
 			$(document).on('click','.'+ addQuizOptionButtonClass, _clickToAddOptionInQuiz);
 			$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
-			$(document).on('click','.'+ mcCheckbox, _onCheckboxClick);
 			initialized = true;
 		}
 	};
@@ -37,43 +35,24 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	};
 
 	/*
-	 * Change checkbox status
-	 */
-	var _onCheckboxClick = function(event){
-		var check = $(event.target).attr("check");
-		switch(check){
-			case "true":
-				V.Quiz.updateCheckbox(event.target,"none");
-				break;
-			case "false":
-				//Not false in MC, just switch between true and none
-				break;
-			case "none":
-			default:
-				V.Quiz.updateCheckbox(event.target,"true");
-				break;
-		}
-	};
-
-	/*
-	 * Create an empty MC Quiz
+	 * Create an empty Sorting Quiz
 	 */
 	var add = function(area){
 		area.append(_getDummy());
 		area.find(".menuselect_hide").remove(); 
 		area.attr('type','quiz');
-		area.attr('quiztype', V.Constant.QZ_TYPE.MCHOICE);
+		area.attr('quiztype', V.Constant.QZ_TYPE.SORTING);
 		_launchTextEditorForQuestion(area);
 		_addOptionInQuiz(area);
 		V.Editor.addDeleteButton(area);
 	};
 
 	var _getDummy = function(){
-		return "<div class='mcContainer'><div class='mc_question_wrapper'></div><ul class='mc_options'></ul><img src='"+V.ImagesPath+ "icons/add.png' class='"+addQuizOptionButtonClass+"'/><input type='hidden' name='quiz_id'/></div></div>";
+		return "<div class='sortingQContainer'><div class='mc_question_wrapper'></div><ul class='mc_options'></ul><img src='"+V.ImagesPath+ "icons/add.png' class='"+addQuizOptionButtonClass+"'/><input type='hidden' name='quiz_id'/></div></div>";
 	};
 
 	var _getOptionDummy = function(){
-		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index'></span><div class='mc_option_text'></div><table class='mc_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td><td><img src='"+V.ImagesPath+ "quiz/checkbox.png' class='"+mcCheckbox+"' check='none'/></td></tr></table></div></li>";
+		return "<li class='mc_option'><div class='mc_option_wrapper'><span class='mc_option_index'></span><div class='mc_option_text sorting_option_text'></div><table class='mc_checks sorting_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "icons/ve_delete.png' class='"+deleteQuizOptionButtonClass+"'/></td></tr></table></div></li>";
 	};
 
 	/*
@@ -85,15 +64,12 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		_addOptionInQuiz(area);
 	};
 
-	var _addOptionInQuiz = function (area,value,check){
+	var _addOptionInQuiz = function(area,value){
 		var nChoices = $(area).find("li.mc_option").size();
 		var quiz_option = $(_getOptionDummy()).attr("nChoice",(nChoices+1));
 		$(area).find(".mc_options").append(quiz_option);
 		_refreshChoicesIndexs(area);
-		if(check){
-			V.Quiz.updateCheckbox($(quiz_option).find("td > img")[1],check);
-		}
-		_launchTextEditorForOptions(area, nChoices,value);
+		_launchTextEditorForOptions(area,nChoices,value);
 		if(nChoices>0) {
 			$(area).find("li[nChoice='"+(nChoices+1)+"']").find("."+deleteQuizOptionButtonClass).css("visibility","visible");
 		}
@@ -108,8 +84,8 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	};
 
 	var _refreshChoicesIndexs = function(area){
-		$(area).find("li.mc_option").each(function(index, option_element) {
-			$(option_element).find(".mc_option_index").text(String.fromCharCode(96+index+1)+")");
+		$(area).find("li.mc_option").each(function(index,option_element){
+			$(option_element).find(".mc_option_index").text((index+1).toString()+")");
 		});
 	};
 
@@ -127,14 +103,15 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		var textArea = $(area).find(".mc_option_text")[nChoice];
 		if(!value){
 			if(first){
-				V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptions"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
+				V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptionsSorting"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
 			} else {
 				V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 24, autogrow: true, focus: true});
 			}
-		}else{
+		} else {
 			V.Editor.Text.launchTextEditor({}, textArea, value, {autogrow: true});
 		}
 	};
+
 
 	/*
 	 * Generate JSON
@@ -166,13 +143,13 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 			choice.id = (i+1).toString();
 			choice.value = optionInstance.getPlainText();
 			choice.wysiwygValue = optionInstance.getData();
-			if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
-				choice.answer = true;
-				quiz.selfA = true;
-				nAnswers++;
-			} else {
-				choice.answer = "?";
-			}
+			// if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
+			// 	choice.answer = true;
+			// 	quiz.selfA = true;
+			// 	nAnswers++;
+			// } else {
+			// 	choice.answer = "?";
+			// }
 			quiz.choices.push(choice);
 		}
 
@@ -205,13 +182,13 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 
 		//Draw choices (checking selfA)
 		$(quiz.choices).each(function(index,choice){
-			var check = undefined;
-			if(quiz.selfA){
-				if(choice.answer===true){
-					check = "true";
-				}
-			}
-			_addOptionInQuiz(area,choice.wysiwygValue,check);
+			// var check = undefined;
+			// if(quiz.selfA){
+			// 	if(choice.answer===true){
+			// 		check = "true";
+			// 	}
+			// }
+			_addOptionInQuiz(area,choice.wysiwygValue);
 		});
 	};
 
