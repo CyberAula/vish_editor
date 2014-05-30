@@ -5,6 +5,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	var addQuizOptionButtonClass = "add_quiz_option_sorting";
 	var deleteQuizOptionButtonClass = "delete_quiz_option_sorting";
 	var initialized = false;
+	var ckEditorTmpData;
 
 	var init = function(){
 		if(!initialized){
@@ -34,9 +35,6 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		}
 	};
 
-
-	var ckEditorTmpData;
-
 	/*
 	 * Create an empty Sorting Quiz
 	 */
@@ -48,17 +46,22 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		_launchTextEditorForQuestion(area);
 		_addOptionInQuiz(area);
 		V.Editor.addDeleteButton(area);
+		_applySortable(area);
+	};
 
-		//Add sortable (See http://jqueryui.com/sortable)
-		//See http://stackoverflow.com/questions/15124860/ckeditor-4-and-jquery-ui-sortable-removes-content-after-sorting
+	//Add sortable (See http://jqueryui.com/sortable)
+	//See http://stackoverflow.com/questions/15124860/ckeditor-4-and-jquery-ui-sortable-removes-content-after-sorting
+	var _applySortable = function(area){
 		$(area).find(".mc_options").sortable({
 			cursor: 'move',
-			start: function (event,ui) {
+			start: function(event,ui){
 				try {
 					var textArea = $(ui.item).find(".wysiwygTextArea");
 					var ckEditorInstance = V.Editor.Text.getCKEditorFromTextArea(textArea);
 					ckEditorTmpData = ckEditorInstance.getData();
-				}catch(e){ ckEditorTmpData = undefined; }
+				} catch(e){ 
+					ckEditorTmpData = undefined; 
+				}
 			},
 			stop: function(event,ui){
 				var textArea = $(ui.item).find(".wysiwygTextArea");
@@ -116,10 +119,17 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	};
 
 	var _refreshChoicesIndexs = function(area){
-		$(area).find("li.mc_option").each(function(index,option_element){
-			$(option_element).find(".mc_option_index").text((index+1).toString()+")");
+		var choices = $(area).find("li.mc_option");
+		var nChoices = $(choices).length;
+		$(choices).each(function(index,optEl){
+			var deleteButton = $(optEl).find("."+deleteQuizOptionButtonClass);
+			if((index===0)&&(nChoices===1)){
+				$(deleteButton).css("visibility","hidden");
+			} else {
+				$(deleteButton).css("visibility","visible");
+			}
+			$(optEl).find(".mc_option_index").text((index+1).toString()+")");
 		});
-		//TODO: Update remove buttons
 	};
 
 	var _launchTextEditorForQuestion = function(area,question){
@@ -151,19 +161,15 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	 */
 	var save = function(area){
 		var textArea = $(area).find(".mc_question_wrapper");
-		var quiz = {};
-		quiz.quizType = VISH.Constant.QZ_TYPE.MCHOICE;
-		// Self-assessment (Autoevaluación)
-		quiz.selfA = false; //false by default
-		quiz.extras = {};
-		quiz.extras.multipleAnswer = false; //false by default
-		var nAnswers = 0;
 
+		var quiz = {};
+		quiz.quizType = V.Constant.QZ_TYPE.SORTING;
+		// Self-assessment is always true in Sorting Quizzes
+		quiz.selfA = true; 
 		var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));
 		quiz.question = {};
 		quiz.question.value = questionInstance.getPlainText();
 		quiz.question.wysiwygValue = questionInstance.getData();
-		
 		quiz.choices = [];
 
 		var nChoices = $(area).find("li.mc_option").size();
@@ -176,26 +182,8 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 			choice.id = (i+1).toString();
 			choice.value = optionInstance.getPlainText();
 			choice.wysiwygValue = optionInstance.getData();
-			// if($(textArea).parent().find(".mcCheckbox").attr("check")==="true"){
-			// 	choice.answer = true;
-			// 	quiz.selfA = true;
-			// 	nAnswers++;
-			// } else {
-			// 	choice.answer = "?";
-			// }
+			choice.answer = i+1;
 			quiz.choices.push(choice);
-		}
-
-		if(quiz.selfA){
-		 	$(quiz.choices).each(function(index,choice){
-				if(choice.answer !== true){
-					choice.answer = false;
-				}
-			});
-		}
-
-		if(nAnswers>1){
-			quiz.extras.multipleAnswer = true;
 		}
 
 		return quiz;
@@ -203,26 +191,22 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 
 	/*
 	 * Render the quiz in the editor
-	 * slide is the area and contains all the required parameters
+	 * area is the slide and contains all the required parameters
 	 */
 	var draw = function(area,quiz){
 		//Draw question
 		$(area).append(_getDummy());
 		$(area).attr('type', V.Constant.QUIZ );
-		$(area).attr('quiztype', V.Constant.QZ_TYPE.MCHOICE);
+		$(area).attr('quiztype', V.Constant.QZ_TYPE.SORTING);
 		_launchTextEditorForQuestion(area,quiz.question.wysiwygValue);
 		V.Editor.addDeleteButton(area);
 
 		//Draw choices (checking selfA)
 		$(quiz.choices).each(function(index,choice){
-			// var check = undefined;
-			// if(quiz.selfA){
-			// 	if(choice.answer===true){
-			// 		check = "true";
-			// 	}
-			// }
 			_addOptionInQuiz(area,choice.wysiwygValue);
 		});
+
+		_applySortable(area);
 	};
 
 	return {

@@ -142,11 +142,12 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 	var save = function(area){
 		var textArea = $(area).find(".mc_question_wrapper");
 		var quiz = {};
-		quiz.quizType = VISH.Constant.QZ_TYPE.MCHOICE;
-		// Self-assessment (Autoevaluación)
-		quiz.selfA = false; //false by default
+		quiz.quizType = V.Constant.QZ_TYPE.MCHOICE;
+		
+		// Self-assessment
+		quiz.selfA = false;
 		quiz.extras = {};
-		quiz.extras.multipleAnswer = false; //false by default
+		quiz.extras.multipleAnswer = false;
 		var nAnswers = 0;
 
 		var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));

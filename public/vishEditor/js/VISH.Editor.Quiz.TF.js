@@ -158,9 +158,9 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 	var save = function(area){
 		var textArea = $(area).find(".mc_question_wrapper");
 		var quiz = {};
-		quiz.quizType = VISH.Constant.QZ_TYPE.TF;
-		// Self-assessment (Autoevaluación)
-		quiz.selfA = false; //false by default
+		quiz.quizType = V.Constant.QZ_TYPE.TF;
+		// Self-assessment
+		quiz.selfA = false;
 
 		var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));
 		quiz.question = {};
