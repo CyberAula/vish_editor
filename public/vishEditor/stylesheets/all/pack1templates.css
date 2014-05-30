@@ -545,7 +545,6 @@
 	height: 96% !important;
 }
 
-
 /*
 	TEMPLATE 11
 */
@@ -1071,6 +1070,12 @@
 	border: none;
 }
 
+.t18_center.t18_quiz, .t18_center.t18_text {
+	padding: 2% 4%;
+	width: 93% !important;
+	height: 96% !important;	
+}
+
 /*
 	TEMPLATE 19
 */
@@ -1125,6 +1130,12 @@
 	width: 100%;
 	height: 100%;
 	border: none;
+}
+
+.t19_center.t19_quiz, .t19_center.t19_text {
+	padding: 2% 4%;
+	width: 93% !important;
+	height: 96% !important;	
 }
 
 /*
