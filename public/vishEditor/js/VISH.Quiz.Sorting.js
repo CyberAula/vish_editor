@@ -5,20 +5,34 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 	};
 
 	var _loadEvents = function(){
+		$("section.slides").find("div.quizContainer[type='sorting'] table.sorting_options tbody").each(function(index,tableTbody){
+			_applySortable(tableTbody);
+		});
+	};
+
+	var _applySortable = function(tableTbody){
+		$(tableTbody).sortable({
+			cursor: 'move',
+			start: function(event,ui){
+			},
+			stop: function(event,ui){
+				var trOption = ui.item;
+				_refreshChoicesIndex(trOption);
+			}
+		});
+	};
+
+	var _refreshChoicesIndex = function(trOption){
+		var tableTBody = $(trOption).parent();
+		$(tableTBody).find("tr").each(function(index,tr){
+			$($(tr).find("td")[0]).html("<span class='mc_option_index sorting_option_index sorting_option_index_viewer'>"+(index+1)+") </span>");
+		});
 	};
 
 	/* Render the quiz in the DOM */
 	var render = function(quizJSON,template){
 		var quizId = quizJSON.quizId;
-		var container = $("<div id='"+quizId+"' class='quizContainer mcContainer' type='"+V.Constant.QZ_TYPE.MCHOICE+"'></div>");
-
-		var multipleAnswer = false;
-		var inputType = 'radio';
-		if((quizJSON.extras)&&(quizJSON.extras.multipleAnswer===true)){
-			multipleAnswer = true;
-			inputType = 'checkbox';
-			$(container).attr("multipleAnswer",true);
-		}
+		var container = $("<div id='"+quizId+"' class='quizContainer sortingQContainer' type='"+V.Constant.QZ_TYPE.SORTING+"'></div>");
 
 		//Question
 		var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
@@ -26,18 +40,20 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		$(container).append(questionWrapper);
 
 		//Options
-		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='mc_options'></table>");
+		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='sorting_options'></table>");
 
-		var quizChoicesLength = quizJSON.choices.length;
+		//Shuffle choices
+		var quizChoices = V.Utils.shuffle(quizJSON.choices);
+		var quizChoicesLength = quizChoices.length;
 		for(var i=0; i<quizChoicesLength; i++){
-			var option = quizJSON.choices[i];
+			var option = quizChoices[i];
 			var optionWrapper = $("<tr class='mc_option' choiceId='"+(option.id)+"'></tr>");
-			var optionBox = $("<td><input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/></td>");
-			var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+String.fromCharCode(96+i+1)+") </span></td>");
-			var optionText = $("<td><div class='mc_option_text mc_option_text_viewer'></div></td>");
-			$(optionText).html(option.wysiwygValue);
+			var optionIndex = $("<td><span class='mc_option_index sorting_option_index sorting_option_index_viewer'>"+(i+1)+") </span></td>");
+			var optionText = $("<td></td>");
+			var optionTextWrapper = $("<div class='sorting_option_text_wrapper_viewer'></div>");
+			$(optionTextWrapper).html(option.wysiwygValue);
+			$(optionText).append(optionTextWrapper);
 
-			$(optionWrapper).append(optionBox);
 			$(optionWrapper).append(optionIndex);
 			$(optionWrapper).append(optionText);
 			$(optionsWrapper).append(optionWrapper);
@@ -61,7 +77,7 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		var afterAnswerAction = ((typeof options.afterAnswerAction != "undefined")&&(typeof options.afterAnswerAction == "string")) ? options.afterAnswerAction : "disabled";
 		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
 		
-		var answeredQuiz = false;
+		var answeredQuiz = true;
 		var answeredQuizCorrectly = false;
 		var answeredQuizWrong = false;
 
@@ -76,20 +92,14 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		$(quiz).find("tr.mc_option").each(function(index,tr){
 			var choiceId = $(tr).attr("choiceid");
 			var choice = quizChoicesById[choiceId];
+			var answerValue = index+1;
 
-			var radioBox = $(tr).find("input[name='mc_option']");
-			var answerValue = parseInt($(radioBox).attr("value"));
-
-			if($(radioBox).is(':checked')){
-				var trAnswer = $("tr.mc_option").has(radioBox);
-				if(choice.answer===true){
-					$(trAnswer).addClass("mc_correct_choice");
-					answeredQuizCorrectly = true;
-				} else if(choice.answer===false){
-					$(trAnswer).addClass("mc_wrong_choice");
-					answeredQuizWrong = true;
-				}
-				answeredQuiz = true;
+			if(choice.answer===answerValue){
+				$(tr).addClass("mc_correct_choice");
+				answeredQuizCorrectly = true;
+			} else {
+				$(tr).addClass("mc_wrong_choice");
+				answeredQuizWrong = true;
 			}
 		});
 
@@ -101,7 +111,8 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 			//Look and mark correct answers
 			var trCorrectAnswers = [];
 			$(quizChoices).each(function(index,quizChoice){
-				if(quizChoice.answer===true){
+				var answerValue = index+1;
+				if(quizChoice.answer===answerValue){
 					var trCorrect = $(quiz).find("tr.mc_option[choiceid='"+quizChoice.id+"']");
 					trCorrectAnswers.push(trCorrect);
 					if(answeredQuiz){
@@ -109,16 +120,6 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 					}
 				}
 			});
-		}
-
-		//Unfulfilled quiz
-		if(!answeredQuiz){
-			if(!willRetry){
-				//Mark correct answers
-				$(trCorrectAnswers).each(function(index,trCorrect){
-					$(trCorrect).find("input[name='mc_option']").attr("checked","checked");
-				});
-			}
 		}
 
 		if(willRetry){
@@ -142,7 +143,6 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 	var onRetryQuiz = function(quizDOM){
 		$(quizDOM).find("tr").removeClass("mc_correct_choice");
 		$(quizDOM).find("tr").removeClass("mc_wrong_choice");
-		$(quizDOM).find("input[name='mc_option']").removeAttr("checked");
 		_enableQuiz(quizDOM);
 		V.Quiz.enableAnswerButton(quizDOM);
 	};
@@ -173,11 +173,13 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 	};
 
 	var _disableQuiz = function(quiz){
-		$(quiz).find("input[name='mc_option']").attr("disabled","disabled");
+		var tableTBody = $(quiz).find("table.sorting_options tbody");
+		$(tableTBody).sortable('disable');
 	};
 
 	var _enableQuiz = function(quiz){
-		$(quiz).find("input[name='mc_option']").removeAttr("disabled");
+		var tableTBody = $(quiz).find("table.sorting_options tbody");
+		$(tableTBody).sortable("enable");
 	};
 
 	return {

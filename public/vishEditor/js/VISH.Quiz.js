@@ -40,6 +40,7 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
+		V.Quiz.Sorting.init();
 		V.QuizCharts.init(V.Utils.getOptions());
 		_loadEvents();
 	};

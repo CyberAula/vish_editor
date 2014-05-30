@@ -1237,6 +1237,11 @@ VISH.Utils = (function(V,undefined){
 		});
 	};
 
+	// Shuffle an array
+	var shuffle = function(o){
+		for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+		return o;
+	};
 
 	return {
 		init 					: init,
@@ -1274,7 +1279,8 @@ VISH.Utils = (function(V,undefined){
 		fomatTimeForMPlayer		: fomatTimeForMPlayer,
 		delayFunction 			: delayFunction,
 		addTempShown			: addTempShown,
-		removeTempShown			: removeTempShown
+		removeTempShown			: removeTempShown,
+		shuffle 				: shuffle
 	};
 
 }) (VISH);

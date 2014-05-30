@@ -42,12 +42,12 @@ span.mc_option_index {
 	padding: 0%;
 }
 
-span.sorting_option_index{
+ul.ui-sortable span.sorting_option_index{
 	cursor: pointer;
 	cursor: hand;
 }
 
-span.mc_option_index_viewer{
+span.mc_option_index_viewer, span.sorting_option_index_viewer{
 	margin-top: 2%;
 }
 
@@ -198,7 +198,7 @@ table.mc_options, table.tf_options{
 	cellpadding:0;
 }
 
-table.mc_options td, table.tf_options td{
+table.mc_options td, table.tf_options td, table.sorting_options td{
 	padding: 0;
 	padding-bottom: 0rem;
 }
@@ -238,6 +238,37 @@ table.tf_options td:nth-child(4){
 img.tfCheckbox_viewer{
 	width: 90%;
 	margin-bottom: -5%;
+}
+
+table.sorting_options td:nth-child(1){
+	min-width: 5%;
+	max-width: 5%;
+	width: 5%;
+	text-align: center;
+}
+
+table.sorting_options td:nth-child(2){
+	min-width: 93%;
+	max-width: 93%;
+	width: 93%;
+	padding-left: 2%;
+}
+
+div.sorting_option_text_wrapper_viewer{
+	border: 1px dotted #666666;
+	border-radius: 14px 14px 14px 14px;
+	padding-left: 2%;
+	margin-top: 0.5%;
+	margin-bottom: 0.5%;
+}
+
+table.sorting_options {
+	margin-top: 3%;
+}
+
+div.sortingQContainer tbody.ui-sortable:not(.ui-sortable-disabled) tr.mc_option{
+	cursor: pointer;
+	cursor: hand;
 }
 
 tr.mc_correct_choice{

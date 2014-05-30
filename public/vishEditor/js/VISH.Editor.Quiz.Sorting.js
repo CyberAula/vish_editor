@@ -9,7 +9,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 
 	var init = function(){
 		if(!initialized){
-			$(document).on('click', '.' + 'mcContainer', _clickOnQuizArea);
+			$(document).on('click', '.' + 'sortingQContainer', _clickOnQuizArea);
 			$(document).on('click','.'+ addQuizOptionButtonClass, _clickToAddOptionInQuiz);
 			$(document).on('click','.'+ deleteQuizOptionButtonClass, _removeOptionInQuiz);
 			initialized = true;
@@ -21,7 +21,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	 */
 	var _clickOnQuizArea = function(event){
 		switch (event.target.classList[0]) {
-			case "mcContainer":
+			case "sortingQContainer":
 				V.Editor.setCurrentArea($("#" + event.target.parentElement.id));
 				break;
 			case "mc_option_text":
@@ -77,7 +77,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 
 				ckEditorTmpData = undefined;
 
-				_refreshChoicesIndexs(area);
+				_refreshChoicesIndex(area);
 			}
 		});
 	};
@@ -103,7 +103,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		var nChoices = $(area).find("li.mc_option").size();
 		var quiz_option = $(_getOptionDummy()).attr("nChoice",(nChoices+1));
 		$(area).find(".mc_options").append(quiz_option);
-		_refreshChoicesIndexs(area);
+		_refreshChoicesIndex(area);
 		_launchTextEditorForOptions(area,nChoices,value);
 		if(nChoices>0) {
 			$(area).find("li[nChoice='"+(nChoices+1)+"']").find("."+deleteQuizOptionButtonClass).css("visibility","visible");
@@ -115,10 +115,10 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		V.Editor.setCurrentArea(area);
 		var liToRemove = $("li.mc_option").has(event.target);
 		$(liToRemove).remove();
-		_refreshChoicesIndexs(area);
+		_refreshChoicesIndex(area);
 	};
 
-	var _refreshChoicesIndexs = function(area){
+	var _refreshChoicesIndex = function(area){
 		var choices = $(area).find("li.mc_option");
 		var nChoices = $(choices).length;
 		$(choices).each(function(index,optEl){
@@ -128,7 +128,7 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 			} else {
 				$(deleteButton).css("visibility","visible");
 			}
-			$(optEl).find(".mc_option_index").text((index+1).toString()+")");
+			$(optEl).find(".sorting_option_index").text((index+1).toString()+")");
 		});
 	};
 
