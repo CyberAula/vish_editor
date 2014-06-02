@@ -679,7 +679,12 @@ VISH.Editor = (function(V,$,undefined){
 					element.quiztype = quizJSON.quizType;
 					element.selfA = quizJSON.selfA;
 					element.question = quizJSON.question;
-					element.choices = quizJSON.choices;
+					if(typeof quizJSON.choices != "undefined"){
+						element.choices = quizJSON.choices;
+					}
+					if(typeof quizJSON.answer != "undefined"){
+						element.answer = quizJSON.answer;
+					}
 					if(quizJSON.extras){
 						element.extras = quizJSON.extras;
 					}
