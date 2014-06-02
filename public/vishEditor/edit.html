@@ -98,6 +98,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.MC.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.TF.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Sorting.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Quiz.Open.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.FullScreen.js"></script>
 
 	<script type="text/javascript" src="/vishEditor/js/VISH.SCORM.js"></script>
@@ -143,6 +144,7 @@
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.MC.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.TF.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.Sorting.js"></script>
+	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Quiz.Open.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Tour.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Settings.js"></script>
 	<script type="text/javascript" src="/vishEditor/js/VISH.Editor.Tools.js"></script>
@@ -858,7 +860,7 @@
 			<div id='tab_quizzes_content' class="fancy_tab_content">
 				<div class='quizFancythumb'>
 					<img src='/vishEditor/images/templatesthumbs/tquiz2.png' onclick='VISH.Editor.Quiz.add("multiplechoice"); return false;'/>
-					<p><span i18n-key="i.walkQuiz_MC1">Multiple choice</span></p>
+					<p><span i18n-key="i.walkQuiz_MC1">Multiple Choice</span></p>
 				</div>
 				<div class='quizFancythumb'>
 					<img src='/vishEditor/images/templatesthumbs/tquiz3.png' onclick='VISH.Editor.Quiz.add("truefalse"); return false;'/>
@@ -867,6 +869,10 @@
 				<div class='quizFancythumb'>
 					<img src='/vishEditor/images/templatesthumbs/tquiz5.png' onclick='VISH.Editor.Quiz.add("sorting"); return false;'/>
 					<p><span i18n-key="i.walkQuiz_Sorting1">Sorting</span></p>
+				</div>
+				<div class='quizFancythumb'>
+					<img src='/vishEditor/images/templatesthumbs/tquiz1.png' onclick='VISH.Editor.Quiz.add("openAnswer"); return false;'/>
+					<p><span i18n-key="i.walkQuiz_Open1">Open Ended</span></p>
 				</div>
 			</div>
 		</div>
@@ -2419,7 +2425,7 @@
 
 	<!-- Help inserting Quizzes -->
 	<ol id="quiz_help" class="joyRideTipContent">
-		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_add_resources_fancybox tut_width600_center tut_without_arrow" data-options="tipLocation:none">
+		<li data-id="thumbcontent" data-text="Close" i18n-key="i.Close" class="tut_add_quizzes_fancybox tut_add_resources_fancybox tut_width700_center tut_without_arrow" data-options="tipLocation:none">
 		<h2 i18n-key="i.walkQuiz_1">Adding Quizzes</h2>
 		<p><span i18n-key="i.walkQuiz_2">You can add different type of quizzes to your presentation. The current available quizzes are showed below</span>:</p>
 			<table class="tut_table_imagewithsubtitle">
@@ -2435,8 +2441,12 @@
 					<td><img src="/vishEditor/images/templatesthumbs/tquiz5.png"/><p i18n-key="i.walkQuiz_Sorting1">Sorting</p></td>
 					<td><p i18n-key="i.walkQuiz_Sorting2">Sorting or sequence quizzes are a form of assessment in which respondents are required to drag and drop items to arrange in sequence. All items must be in the proper sequence for the question to be graded as correct.</p></td>
 				</tr>
+				<tr>
+					<td><img src="/vishEditor/images/templatesthumbs/tquiz1.png"/><p i18n-key="i.walkQuiz_Open1">Open Ended</p></td>
+					<td><p i18n-key="i.walkQuiz_Open2">In a open ended quiz, the student types in a word or phrase in response to a question. Open Ended quizzes can be self&#8209;assessed when the answer is short. In this case these quizzes are called "Short Answer" quizzes. The answer could be a word or a phrase, but it must match the proposed answer exactly.</p></td>
+				</tr>
 			</table>
-			<p i18n-key="i.walkQuiz_3">In addition to the content, you also can define the correct answers of the quiz, allowing this way self-assessment and the auto tracking of students progress in Learning Management Systems like Moodle.</p>
+			<p i18n-key="i.walkQuiz_3">In addition to the content, you also can define the correct answers of the quiz, allowing this way self&#8209;assessment and the auto tracking of students progress in Learning Management Systems like Moodle.</p>
 			<p class="tut_space">&nbsp;</p>
 		</li>
 	</ol>

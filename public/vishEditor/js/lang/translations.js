@@ -154,6 +154,8 @@ var i18n =
 				"i.walkQuiz_TF2"			: "Un cuestionario de verdadero/falso es una forma de evaluación en la que se solicita a los encuestados que seleccionen, para cada afirmación o sentencia, si esta es verdadera o falsa.",
 				"i.walkQuiz_Sorting1"		: "Ordenación",
 				"i.walkQuiz_Sorting2"		: "Los cuestionarios de ordenación o secuencia son una forma de evaluación en la que se requiere a los encuestados arrastrar y soltar una serie de elementos para ordenarlos de acuerdo a una secuencia determinada. Todos los elementos deben estar en el orden correcto para que la pregunta pueda ser calificada como correcta.",
+				"i.walkQuiz_Open1"			: "Respuesta Abierta",
+				"i.walkQuiz_Open2"			: "En un cuestionario de respuesta abierta, los estudiantes escriben una palabra o frase en respuesta a una pregunta. Los cuestionarios de respuesta abierta pueden ser autoevaluados cuando la respuesta es corta. En este caso los cuestionarios se llaman 'Cuestionarios de Respuesta Corta'. La respuesta puede ser una palabra o una frase, pero debe coincidir con la respuesta propuesta de forma exacta.",
 				"i.walkQuiz_3"				: "Ademas de los contenidos, también puedes definir las respuestas correctas del cuestionario o quiz, permitiendo de esta manera la autoevaluación y el seguimiento automático del progreso de los estudiantes en plataformas de aprendizaje como Moodle.",
 
 				"i.walkLive_1"				: "Añadiendo contenidos en directo",

@@ -721,6 +721,7 @@ VISH.Quiz = (function(V,$,undefined){
 	var _getQuizModule = function(quiz_type){
 		switch (quiz_type) {
 			case V.Constant.QZ_TYPE.OPEN:
+				return V.Quiz.Open;
 				break;
 			case V.Constant.QZ_TYPE.MCHOICE:
 				return V.Quiz.MC;
