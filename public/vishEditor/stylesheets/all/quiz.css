@@ -141,6 +141,10 @@ div.openq_answer_text {
 	float: left;
 }
 
+.quizCheckBoxDisabled{
+	opacity: 0.2;
+}
+
 table.open_checks {
 	height: 100%;
 	width: 6%;

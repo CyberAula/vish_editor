@@ -5,6 +5,9 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 	var initialized = false;
 	var qCheckbox = "openQCheckbox";
 
+	var SHORT_ANSWER_MAX_WORDS = 6;
+	var SHORT_ANSWER_MAX_CHARS = 40;
+
 	var init = function(){
 		if(!initialized){
 			$(document).on('click', '.' + 'openQContainer', _clickOnQuizArea);
@@ -78,15 +81,50 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 	var _launchTextEditorForAnswer = function(area,answer){
 		var textArea = $(area).find(".openq_answer_text");
 		if(!answer){
-			V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptionsOpen"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true});
+			V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptionsOpen"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true, onKeyup: _onAnswerKeyUp});
 		} else {
-			V.Editor.Text.launchTextEditor({}, textArea, answer, {autogrow: true});
+			V.Editor.Text.launchTextEditor({}, textArea, answer, {autogrow: true, onKeyup: _onAnswerKeyUp});
 		}
+	};
+
+	var _onAnswerKeyUp = function(area,ckeditorInstance,event){
+		var checkBox = $(area).parent().find("img.openQCheckbox");
+		var checkBoxDisabled = $(checkBox).hasClass("quizCheckBoxDisabled");
+		var answer = ckeditorInstance.getPlainText();
+		try {
+			var charCount = answer.length;
+			var wordCount = answer.match(/\w+/g).length;
+		} catch(e){
+			var charCount = 0;
+			var wordCount = 0;
+		}
+		
+		if((wordCount > SHORT_ANSWER_MAX_WORDS)||(charCount > SHORT_ANSWER_MAX_CHARS)){
+			if(!checkBoxDisabled){
+				_disableCheckBox(checkBox);
+			}
+		} else {
+			if(checkBoxDisabled){
+				_enableCheckBox(checkBox);
+			}
+		}
+	};
+
+	var _disableCheckBox = function(checkbox){
+		$(checkbox).addClass("quizCheckBoxDisabled");
+		$(checkbox).prop("disabled", true);
+		V.Quiz.updateCheckbox(checkbox,"none");
+	};
+
+	var _enableCheckBox = function(checkbox){
+		$(checkbox).removeClass("quizCheckBoxDisabled");
+		$(checkbox).prop("disabled", false);
+		V.Quiz.updateCheckbox(checkbox,"none");
 	};
 
 	var _isSelfAssesment = function(area){
 		var openCheckBox = $(area).find("img.openQCheckbox");
-		return $(openCheckBox).attr("check")==="true";
+		return ($(openCheckBox).attr("check")==="true" && $(openCheckBox).hasClass("quizCheckBoxDisabled")===false);
 	};
 
 

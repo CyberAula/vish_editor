@@ -434,6 +434,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 					_initializedCKEditorInstances[ckeditor.name] = undefined;
 				}
 			}
+
+			if((options)&&(typeof options.onKeyup==="function")&&(options.placeholder!=true)){
+				ckeditor.document.on('keyup', function(event){
+					options.onKeyup(current_area,ckeditor,event);
+				});
+			}
+
 		});
 
 		ckeditor.on("resize", function(event){
@@ -450,7 +457,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 				var b = $(event.editor.getData()).text().replace(/\s+/g,'');
 				if(a==b){
 					setTimeout(function(){
-						event.editor.setData(initial_text_blank);
+						event.editor.setData(initial_text_blank, function(){
+							if((options)&&(typeof options.onKeyup==="function")){
+								ckeditor.document.on('keyup', function(event){
+									options.onKeyup(current_area,ckeditor,event);
+								});
+							}
+						});
 						event.editor.focus();
 					},20);
 				}
