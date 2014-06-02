@@ -143,6 +143,7 @@ div.openq_answer_text {
 
 .quizCheckBoxDisabled{
 	opacity: 0.2;
+	cursor: default !important;
 }
 
 table.open_checks {
