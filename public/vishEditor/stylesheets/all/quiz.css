@@ -303,6 +303,13 @@ div.sortingQContainer tbody.ui-sortable:not(.ui-sortable-disabled) tr.mc_option{
 	cursor: hand;
 }
 
+textarea.openQTextArea{
+	width: 98%;
+	height: 85px;
+	max-height: 55%;
+	resize: none;
+}
+
 tr.mc_correct_choice{
 	background: #E2FFE3;
 	background: rgba(226, 255, 227, 0.7);

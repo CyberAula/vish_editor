@@ -5,21 +5,6 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	};
 
 	var _loadEvents = function(){
-		$("section.slides").find("div.quizContainer[type='sorting'] table.sorting_options tbody").each(function(index,tableTbody){
-			_applySortable(tableTbody);
-		});
-	};
-
-	var _applySortable = function(tableTbody){
-		$(tableTbody).sortable({
-			cursor: 'move',
-			start: function(event,ui){
-			},
-			stop: function(event,ui){
-				var trOption = ui.item;
-				_refreshChoicesIndex(trOption);
-			}
-		});
 	};
 
 	var _refreshChoicesIndex = function(trOption){
@@ -32,34 +17,16 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	/* Render the quiz in the DOM */
 	var render = function(quizJSON,template){
 		var quizId = quizJSON.quizId;
-		var container = $("<div id='"+quizId+"' class='quizContainer sortingQContainer' type='"+V.Constant.QZ_TYPE.SORTING+"'></div>");
+		var container = $("<div id='"+quizId+"' class='quizContainer sortingQContainer' type='"+V.Constant.QZ_TYPE.OPEN+"'></div>");
 
 		//Question
 		var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
 		$(questionWrapper).html(quizJSON.question.wysiwygValue);
 		$(container).append(questionWrapper);
 
-		//Options
-		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='sorting_options'></table>");
-
-		//Shuffle choices
-		var quizChoices = V.Utils.shuffle(quizJSON.choices);
-		var quizChoicesLength = quizChoices.length;
-		for(var i=0; i<quizChoicesLength; i++){
-			var option = quizChoices[i];
-			var optionWrapper = $("<tr class='mc_option' choiceId='"+(option.id)+"'></tr>");
-			var optionIndex = $("<td><span class='mc_option_index sorting_option_index sorting_option_index_viewer'>"+(i+1)+") </span></td>");
-			var optionText = $("<td></td>");
-			var optionTextWrapper = $("<div class='sorting_option_text_wrapper_viewer'></div>");
-			$(optionTextWrapper).html(option.wysiwygValue);
-			$(optionText).append(optionTextWrapper);
-
-			$(optionWrapper).append(optionIndex);
-			$(optionWrapper).append(optionText);
-			$(optionsWrapper).append(optionWrapper);
-		}
-
-		$(container).append(optionsWrapper);
+		//Answer TextArea
+		var answerTextArea = $("<textarea class='openQTextArea'></textarea>");
+		$(container).append(answerTextArea);
 
 		var quizButtons = V.Quiz.renderButtons(quizJSON);
 		$(container).append(quizButtons);

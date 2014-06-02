@@ -41,6 +41,7 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
 		V.Quiz.Sorting.init();
+		V.Quiz.Open.init();
 		V.QuizCharts.init(V.Utils.getOptions());
 		_loadEvents();
 	};
