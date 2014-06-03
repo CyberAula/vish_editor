@@ -42,11 +42,14 @@ VISH.Quiz.Open = (function(V,$,undefined){
 		var textArea = $(quiz).find("textarea.openQTextArea");
 
 		if(quizJSON.selfA){
+			//Short-Answer Quiz with self-assesment
 			var quizAnswer = V.Utils.purgeString(quizJSON.answer.value);
 			var userAnswer = V.Utils.purgeString($(textArea).val());
 
-			var sA = userAnswer.toLowerCase().replace(/\s{2,}/g,' ');
-			var sB = quizAnswer.toLowerCase().replace(/\s{2,}/g,' ');
+			var sA = userAnswer.toLowerCase().replace(/\r\n|\n|\r/g,' ').replace(/\s{2,}/g,' ');
+			var sB = quizAnswer.toLowerCase().replace(/\r\n|\n|\r/g,' ').replace(/\s{2,}/g,' ');
+			sA = V.Utils.purgeString(sA);
+			sB = V.Utils.purgeString(sB);
 			var levenshteinDistance = V.Utils.getLevenshteinDistance(sA,sB);
 
 			var answeredQuizCorrectly = false;
@@ -58,14 +61,22 @@ VISH.Quiz.Open = (function(V,$,undefined){
 			} else {
 				//Color Wrong answer
 				$(textArea).addClass("openQ_wrong_answer");
-				answeredQuizWrong = true;
 			}
 
 			willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
+			if((!willRetry)&&(answeredQuizCorrectly===false)){
+				//Show quiz response in the TextArea
+				var rawUserAnswer = $(textArea).val();
+				$(textArea).val($(textArea).val() + "\n\n" + V.I18n.getTrans("i.ResponseCorrect") + ":" + "\n" + V.Utils.purgeString(quizJSON.answer.value));
+			}
+
 		} else {
-			//Answering a non self-assesment open-ended quiz.
+			//Open-ended quiz (without senf-assesment)
 			willRetry = false;
+
+			//Show response in a fancybox
+			//TODO
 		}
 
 		if(willRetry){
@@ -73,10 +84,6 @@ VISH.Quiz.Open = (function(V,$,undefined){
 			_disableQuiz(quiz);
 			V.Quiz.retryAnswerButton(quiz);
 		} else {
-			//Show quiz response in TextArea
-			var rawUserAnswer = $(textArea).val();
-			$(textArea).val($(textArea).val() + "\n\n" + V.I18n.getTrans("i.Response") + ":" + "\n" + V.Utils.purgeString(quizJSON.answer.value));
-
 			switch(afterAnswerAction){
 				case "continue":
 					V.Quiz.continueAnswerButton(quiz);

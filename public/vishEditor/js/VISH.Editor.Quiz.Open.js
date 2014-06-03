@@ -163,6 +163,11 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 		$(area).attr('quiztype', V.Constant.QZ_TYPE.OPEN);
 		_launchTextEditorForQuestion(area,quiz.question.wysiwygValue);
 		_launchTextEditorForAnswer(area,quiz.answer.wysiwygValue);
+		if(quiz.selfA){
+			var checkBox = $(area).find("img.openQCheckbox");
+			_enableCheckBox(checkBox);
+			V.Quiz.updateCheckbox(checkBox,"true");
+		}
 		V.Editor.addDeleteButton(area);
 	};
 

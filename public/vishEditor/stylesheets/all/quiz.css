@@ -305,7 +305,7 @@ div.sortingQContainer tbody.ui-sortable:not(.ui-sortable-disabled) tr.mc_option{
 
 textarea.openQTextArea{
 	width: 98%;
-	height: 85px;
+	height: 140px;
 	max-height: 55%;
 	resize: none;
 }
