@@ -7,17 +7,10 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	var _loadEvents = function(){
 	};
 
-	var _refreshChoicesIndex = function(trOption){
-		var tableTBody = $(trOption).parent();
-		$(tableTBody).find("tr").each(function(index,tr){
-			$($(tr).find("td")[0]).html("<span class='mc_option_index sorting_option_index sorting_option_index_viewer'>"+(index+1)+") </span>");
-		});
-	};
-
 	/* Render the quiz in the DOM */
 	var render = function(quizJSON,template){
 		var quizId = quizJSON.quizId;
-		var container = $("<div id='"+quizId+"' class='quizContainer sortingQContainer' type='"+V.Constant.QZ_TYPE.OPEN+"'></div>");
+		var container = $("<div id='"+quizId+"' class='quizContainer openQContainer' type='"+V.Constant.QZ_TYPE.OPEN+"'></div>");
 
 		//Question
 		var questionWrapper = $("<div class='mc_question_wrapper, mc_question_wrapper_viewer'></div>");
@@ -43,50 +36,36 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	var onAnswerQuiz = function(quiz,options){
 		var afterAnswerAction = ((typeof options.afterAnswerAction != "undefined")&&(typeof options.afterAnswerAction == "string")) ? options.afterAnswerAction : "disabled";
 		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
-		
-		var answeredQuiz = true;
-		var answeredQuizCorrectly = false;
-		var answeredQuizWrong = false;
+		var willRetry = false;
 
 		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
-		var quizChoices = quizJSON.choices;
-		var quizChoicesById = {};
-		$(quizChoices).each(function(index,quizChoice){
-			quizChoicesById[quizChoice.id] = quizChoice;
-		});
+		var textArea = $(quiz).find("textarea.openQTextArea");
 
-		//Color correct and wrong answers
-		$(quiz).find("tr.mc_option").each(function(index,tr){
-			var choiceId = $(tr).attr("choiceid");
-			var choice = quizChoicesById[choiceId];
-			var answerValue = index+1;
+		if(quizJSON.selfA){
+			var quizAnswer = V.Utils.purgeString(quizJSON.answer.value);
+			var userAnswer = V.Utils.purgeString($(textArea).val());
 
-			if(choice.answer===answerValue){
-				$(tr).addClass("mc_correct_choice");
+			var sA = userAnswer.toLowerCase().replace(/\s{2,}/g,' ');
+			var sB = quizAnswer.toLowerCase().replace(/\s{2,}/g,' ');
+			var levenshteinDistance = V.Utils.getLevenshteinDistance(sA,sB);
+
+			var answeredQuizCorrectly = false;
+
+			//Color answer
+			if(levenshteinDistance===0){
+				$(textArea).addClass("openQ_correct_answer");
 				answeredQuizCorrectly = true;
 			} else {
-				$(tr).addClass("mc_wrong_choice");
+				//Color Wrong answer
+				$(textArea).addClass("openQ_wrong_answer");
 				answeredQuizWrong = true;
 			}
-		});
 
-		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
+			willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
-		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
-
-		if(!willRetry){
-			//Look and mark correct answers
-			var trCorrectAnswers = [];
-			$(quizChoices).each(function(index,quizChoice){
-				var answerValue = index+1;
-				if(quizChoice.answer===answerValue){
-					var trCorrect = $(quiz).find("tr.mc_option[choiceid='"+quizChoice.id+"']");
-					trCorrectAnswers.push(trCorrect);
-					if(answeredQuiz){
-						$(trCorrect).addClass("mc_correct_choice");
-					}
-				}
-			});
+		} else {
+			//Answering a non self-assesment open-ended quiz.
+			willRetry = false;
 		}
 
 		if(willRetry){
@@ -94,6 +73,10 @@ VISH.Quiz.Open = (function(V,$,undefined){
 			_disableQuiz(quiz);
 			V.Quiz.retryAnswerButton(quiz);
 		} else {
+			//Show quiz response in TextArea
+			var rawUserAnswer = $(textArea).val();
+			$(textArea).val($(textArea).val() + "\n\n" + V.I18n.getTrans("i.Response") + ":" + "\n" + V.Utils.purgeString(quizJSON.answer.value));
+
 			switch(afterAnswerAction){
 				case "continue":
 					V.Quiz.continueAnswerButton(quiz);
@@ -108,8 +91,9 @@ VISH.Quiz.Open = (function(V,$,undefined){
 
 	/* Reset UI to make possible to answer again the quiz */
 	var onRetryQuiz = function(quizDOM){
-		$(quizDOM).find("tr").removeClass("mc_correct_choice");
-		$(quizDOM).find("tr").removeClass("mc_wrong_choice");
+		var textArea = $(quizDOM).find("textarea.openQTextArea");
+		$(textArea).removeClass("openQ_correct_answer");
+		$(textArea).removeClass("openQ_wrong_answer");
 		_enableQuiz(quizDOM);
 		V.Quiz.enableAnswerButton(quizDOM);
 	};
@@ -122,13 +106,14 @@ VISH.Quiz.Open = (function(V,$,undefined){
 		var report = {};
 		report.answers = [];
 
-		$(quiz).find("tr.mc_option").each(function(index,tr){
-			var radioBox = $(tr).find("input[name='mc_option']");
-			if($(radioBox).is(':checked')){
-				var choiceId = $(tr).attr("choiceid");
-				report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: "true"});
-			}
-		});
+		// TODO
+		// $(quiz).find("tr.mc_option").each(function(index,tr){
+		// 	var radioBox = $(tr).find("input[name='mc_option']");
+		// 	if($(radioBox).is(':checked')){
+		// 		var choiceId = $(tr).attr("choiceid");
+		// 		report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: "true"});
+		// 	}
+		// });
 
 		report.empty = (report.answers.length===0);
 		return report;
@@ -140,13 +125,14 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	};
 
 	var _disableQuiz = function(quiz){
-		var tableTBody = $(quiz).find("table.sorting_options tbody");
-		$(tableTBody).sortable('disable');
+		var textArea = $(quiz).find("textarea.openQTextArea");
+		$(textArea).attr("readonly","readonly");
 	};
 
 	var _enableQuiz = function(quiz){
-		var tableTBody = $(quiz).find("table.sorting_options tbody");
-		$(tableTBody).sortable("enable");
+		var textArea = $(quiz).find("textarea.openQTextArea");
+		$(textArea).removeAttr("readonly");
+		$(textArea).text("");
 	};
 
 	return {

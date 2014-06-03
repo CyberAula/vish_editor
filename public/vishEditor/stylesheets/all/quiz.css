@@ -350,6 +350,16 @@ table.tf_options tr:last-child.mc_correct_choice td:last-child, table.tf_options
 	border-bottom-right-radius: 15px;
 }
 
+textarea.openQ_correct_answer{
+	background: #E2FFE3;
+	background: rgba(226, 255, 227, 0.7);
+}
+
+textarea.openQ_wrong_answer{
+	background: #FFE2E2;
+	background: rgba(255, 226, 226, 0.7);
+}
+
 /* Zone specific fixes */
 
 div.t5_left.t5_quiz span.mc_option_index, div.t5_right.t5_quiz span.mc_option_index, div.t13_left.t13_quiz span.mc_option_index{

@@ -116,7 +116,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='"+V.I18n.getTrans("i.QuizLaunch")+"'/>");
 			$(quizButtons).append(startButton);
 		}
-		if((selfA)||(quizMode === V.Constant.QZ_MODE.RT)){
+		if((selfA||(quizJSON.quiztype===V.Constant.QZ_TYPE.OPEN))||(quizMode === V.Constant.QZ_MODE.RT)){
 			var answerButton = $("<input type='button' class='buttonQuiz quizAnswerButton' value='"+V.I18n.getTrans("i.QuizButtonAnswer")+"'/>");
 			$(quizButtons).append(answerButton);
 		}

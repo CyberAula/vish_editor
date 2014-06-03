@@ -1243,6 +1243,85 @@ VISH.Utils = (function(V,undefined){
 		return o;
 	};
 
+	var purgeString = function(str){
+		if(typeof str != "string"){
+			return str;
+		}
+		str = str.replace(/â€‹/g, '');
+		str = str.replace(/Â/g, '');
+		str = str.replace(/&shy/g, '');
+
+		//Chars to filter at the begining and end of the string
+		//See http://www.ascii-code.com/
+		var charCodesToPurge = [32,160,173];
+
+		var strL = str.length;
+		var lastValidCharIndex = strL-1;
+		for(var i=strL-1; i>-1; i--){
+			if(charCodesToPurge.indexOf(str.charCodeAt(i))!=-1){
+				//Char to purge
+			} else {
+				//Valid char
+				lastValidCharIndex = i;
+				break;
+			}
+		}
+		str = str.substr(0,lastValidCharIndex+1);
+
+		strL = str.length;
+		lastValidCharIndex = 0;
+		for(var i=0; i<strL; i++){
+			if(charCodesToPurge.indexOf(str.charCodeAt(i))!=-1){
+				//Char to purge
+			} else {
+				//Valid char
+				lastValidCharIndex = i;
+				break;
+			}
+		}
+		str = str.substr(lastValidCharIndex,strL);
+
+		return str;
+	};
+
+	// Calculate the Levenshtein distance between a and b
+	var getLevenshteinDistance = function(a,b) {
+		var cost;
+		var m = a.length;
+		var n = b.length;
+		
+		// make sure a.length >= b.length to use O(min(n,m)) space, whatever that is
+		if(m < n){
+			var c=a;a=b;b=c;
+			var o=m;m=n;n=o;
+		}
+		
+		var r = new Array();
+		r[0] = new Array();
+		for (var c = 0; c < n+1; c++) {
+			r[0][c] = c;
+		}
+		
+		for (var i = 1; i < m+1; i++) {
+			r[i] = new Array();
+			r[i][0] = i;
+			for (var j = 1; j < n+1; j++) {
+				cost = (a.charAt(i-1) == b.charAt(j-1))? 0: 1;
+				r[i][j] = _minimator(r[i-1][j]+1,r[i][j-1]+1,r[i-1][j-1]+cost);
+			}
+		}
+		
+		return r[m][n];
+	};
+
+	// return the smallest of the three values passed in
+	var _minimator = function(x,y,z){
+		if (x < y && x < z) return x;
+		if (y < x && y < z) return y;
+		return z;
+	};
+
+
 	return {
 		init 					: init,
 		getOptions 				: getOptions,
@@ -1280,7 +1359,9 @@ VISH.Utils = (function(V,undefined){
 		delayFunction 			: delayFunction,
 		addTempShown			: addTempShown,
 		removeTempShown			: removeTempShown,
-		shuffle 				: shuffle
+		shuffle 				: shuffle,
+		purgeString				: purgeString,
+		getLevenshteinDistance	: getLevenshteinDistance
 	};
 
 }) (VISH);
