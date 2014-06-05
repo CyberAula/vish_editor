@@ -187,7 +187,6 @@ VISH.Quiz = (function(V,$,undefined){
 	/*
 	 * Self-assesment quizzes
 	 */
-
 	_onAnswerSAQuiz = function(quizDOM,quizModule){
 		var quizStatus = $(quizDOM).find(".quizAnswerButton").attr("quizstatus");
 		if(quizStatus === "retry"){

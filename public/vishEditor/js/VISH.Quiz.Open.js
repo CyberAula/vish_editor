@@ -1,10 +1,33 @@
 VISH.Quiz.Open = (function(V,$,undefined){
 
+	//Link to open Open Ended quiz answer fancybox
+	var hiddenLinkToShowAnswer;
+
 	var init = function(){
 		_loadEvents();
 	};
 
 	var _loadEvents = function(){
+		hiddenLinkToShowAnswer = $('<a href="#openQuizAnswer_fancybox" style="display:none"></a>');
+		$(hiddenLinkToShowAnswer).fancybox({
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'width': '0%',
+			'height': '0%',
+			'padding': 0,
+			"autoScale" : true,
+			"onStart" : function(data) {
+				// $("#fancybox-close").height(0);
+				// $("#fancybox-close").css("padding",0);
+			},
+			'onComplete' : function(data){
+				setTimeout(function(){
+					V.ViewerAdapter.updateFancyboxAfterSetupSize();
+				}, 300);
+			},
+			"onClosed" : function(){
+			}
+		});
 	};
 
 	/* Render the quiz in the DOM */
@@ -34,9 +57,8 @@ VISH.Quiz.Open = (function(V,$,undefined){
 
 	/* Update UI after answer */
 	var onAnswerQuiz = function(quiz,options){
-		var afterAnswerAction = ((typeof options.afterAnswerAction != "undefined")&&(typeof options.afterAnswerAction == "string")) ? options.afterAnswerAction : "disabled";
-		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
-		var willRetry = false;
+		var afterAnswerAction = (typeof options.afterAnswerAction == "string") ? options.afterAnswerAction : "disabled";
+		var canRetry = (typeof options.canRetry == "boolean") ? options.canRetry : false;
 
 		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
 		var textArea = $(quiz).find("textarea.openQTextArea");
@@ -63,34 +85,42 @@ VISH.Quiz.Open = (function(V,$,undefined){
 				$(textArea).addClass("openQ_wrong_answer");
 			}
 
-			willRetry = (canRetry)&&(answeredQuizCorrectly===false);
+			var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
-			if((!willRetry)&&(answeredQuizCorrectly===false)){
-				//Show quiz response in the TextArea
-				var rawUserAnswer = $(textArea).val();
-				$(textArea).val($(textArea).val() + "\n\n" + V.I18n.getTrans("i.ResponseCorrect") + ":" + "\n" + V.Utils.purgeString(quizJSON.answer.value));
+			if(willRetry){
+				//Retry short answer quiz
+				_disableQuiz(quiz);
+				V.Quiz.retryAnswerButton(quiz);
+			} else {
+				if(answeredQuizCorrectly===false){
+					//Show quiz response in the TextArea
+					var rawUserAnswer = $(textArea).val();
+					$(textArea).val($(textArea).val() + "\n\n" + V.I18n.getTrans("i.ResponseCorrect") + ":" + "\n" + V.Utils.purgeString(quizJSON.answer.value));
+				}
+				
+				switch(afterAnswerAction){
+					case "continue":
+						V.Quiz.continueAnswerButton(quiz);
+						break;
+					case "disabled":
+					default:
+						disableQuiz(quiz);
+						break;
+				};
 			}
 
 		} else {
-			//Open-ended quiz (without senf-assesment)
-			willRetry = false;
-
+			//Open-ended quiz (without self-assesment)
 			//Show response in a fancybox
-			//TODO
-		}
+			$(hiddenLinkToShowAnswer).trigger("click");
 
-		if(willRetry){
-			//Retry
-			_disableQuiz(quiz);
-			V.Quiz.retryAnswerButton(quiz);
-		} else {
 			switch(afterAnswerAction){
 				case "continue":
 					V.Quiz.continueAnswerButton(quiz);
 					break;
 				case "disabled":
 				default:
-					disableQuiz(quiz);
+					//Do not disable open ended quizzes (answer can be always checked)
 					break;
 			};
 		}

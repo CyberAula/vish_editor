@@ -30,7 +30,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 
 	var _loadEvents = function(){
 		//Select Video Event
-		hiddenLinkToAddVideos = $('<a id="hidden_button_to_change_video" href="#video_fancybox" style="display:none"></a>');
+		hiddenLinkToAddVideos = $('<a href="#video_fancybox" style="display:none"></a>');
 		$(hiddenLinkToAddVideos).fancybox({
 			'autoDimensions' : false,
 			'width': 800,
