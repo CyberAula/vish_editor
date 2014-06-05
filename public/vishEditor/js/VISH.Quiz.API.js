@@ -184,14 +184,14 @@ VISH.Quiz.API = (function(V,$,undefined){
 				//Empty data
 				data = [];
 			} else if(getResultsCount<3){
-				data = [{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-30T12:35:05Z","id":82,"quiz_session_id":59}];
+				data = [{"answer":"[{\"choiceId\":\"2\",\"answer\":2},{\"choiceId\":\"1\",\"answer\":1},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":true}}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31}];
 			} else {
-				data = [{"answer":"[{\"choiceId\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:49:59Z","id":74,"quiz_session_id":56},{"answer":"[{\"choiceId\":\"2\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:03Z","id":75,"quiz_session_id":56},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:07Z","id":76,"quiz_session_id":56},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:12Z","id":77,"quiz_session_id":56},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:15Z","id":78,"quiz_session_id":56},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:19Z","id":79,"quiz_session_id":56},{"answer":"[{\"choiceId\":\"2\",\"answer\":\"true\"}]","created_at":"2013-11-29T17:50:23Z","id":80,"quiz_session_id":56}];
+				data = [{"answer":"[{\"choiceId\":\"2\",\"answer\":2},{\"choiceId\":\"1\",\"answer\":1},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":true}}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31},{"answer":"[{\"choiceId\":\"2\",\"answer\":1},{\"choiceId\":\"1\",\"answer\":2},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":false}}]","created_at":"2013-11-26T12:49:34Z","id":48,"quiz_session_id":31}];
 			}
 			getResultsCount++;
 
 
-			//MC (Multiple Choice)
+			// MC (Multiple Choice)
 			// var data = [{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:22Z","id":63,"quiz_session_id":50},{"answer":"[{\"choiceId\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:25:13Z","id":64,"quiz_session_id":50}];
 
 			// MC with only one result
@@ -200,9 +200,15 @@ VISH.Quiz.API = (function(V,$,undefined){
 			// MC Multiple answer
 			// var data = [{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"true\"},{\"choiceId\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T17:51:20Z","id":37,"quiz_session_id":27},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"true\"},{\"choiceId\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-22T17:51:29Z","id":38,"quiz_session_id":27},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"true\"}]","created_at":"2013-11-22T17:51:35Z","id":39,"quiz_session_id":27}];
 
-			// TF Quizz (True/False)
+			// TF Quiz (True/False)
 			// var data = [{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"false\"},{\"choiceId\":\"3\",\"answer\":\"true\"},{\"choiceId\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:10:23Z","id":30,"quiz_session_id":19},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"false\"},{\"choiceId\":\"3\",\"answer\":\"false\"},{\"choiceId\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:10:37Z","id":31,"quiz_session_id":19},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"true\"},{\"choiceId\":\"3\",\"answer\":\"false\"},{\"choiceId\":\"4\",\"answer\":\"false\"}]","created_at":"2013-05-13T13:10:52Z","id":32,"quiz_session_id":19},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"false\"},{\"choiceId\":\"3\",\"answer\":\"true\"},{\"choiceId\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:11:09Z","id":33,"quiz_session_id":19},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"},{\"choiceId\":\"2\",\"answer\":\"false\"},{\"choiceId\":\"3\",\"answer\":\"true\"},{\"choiceId\":\"4\",\"answer\":\"true\"}]","created_at":"2013-05-13T13:11:41Z","id":34,"quiz_session_id":19}];
 			
+			// Sorting Quiz
+			// var data = [{"answer":"[{\"choiceId\":\"2\",\"answer\":2},{\"choiceId\":\"1\",\"answer\":1},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":true}}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31},{"answer":"[{\"choiceId\":\"2\",\"answer\":1},{\"choiceId\":\"1\",\"answer\":2},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":false}}]","created_at":"2013-11-26T12:49:34Z","id":48,"quiz_session_id":31}];
+			
+			// Open Ended Quiz
+			// var data = //TODO
+
 			if(typeof successCallback=="function"){
 				setTimeout(function(){
 					successCallback(data);

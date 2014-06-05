@@ -155,14 +155,33 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		var report = {};
 		report.answers = [];
 
-		// TODO
-		// $(quiz).find("tr.mc_option").each(function(index,tr){
-		// 	var radioBox = $(tr).find("input[name='mc_option']");
-		// 	if($(radioBox).is(':checked')){
-		// 		var choiceId = $(tr).attr("choiceid");
-		// 		report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: "true"});
-		// 	}
-		// });
+		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
+		var quizChoices = quizJSON.choices;
+		var quizChoicesById = {};
+		$(quizChoices).each(function(index,quizChoice){
+			quizChoicesById[quizChoice.id] = quizChoice;
+		});
+
+		//Check if quiz has been answered correctly
+		var answeredQuizCorrectly = undefined;
+
+		$(quiz).find("tr.mc_option").each(function(index,tr){
+			var choiceId = $(tr).attr("choiceid");
+			var choice = quizChoicesById[choiceId];
+			var answerValue = index+1;
+
+			if(choice.answer===answerValue){
+				answeredQuizCorrectly = true;
+			} else {
+				answeredQuizCorrectly = false;
+			}
+
+			report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: answerValue});
+		});
+
+		if(typeof answeredQuizCorrectly == "boolean"){
+			report.answers.push({selfAssessment: { result: answeredQuizCorrectly }});
+		}
 
 		report.empty = (report.answers.length===0);
 		return report;
