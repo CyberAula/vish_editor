@@ -1250,6 +1250,7 @@ VISH.Utils = (function(V,undefined){
 		str = str.replace(/â€‹/g, '');
 		str = str.replace(/Â/g, '');
 		str = str.replace(/&shy/g, '');
+		str = str.replace(String.fromCharCode(8203),'');
 
 		//Chars to filter at the begining and end of the string
 		//See http://www.ascii-code.com/

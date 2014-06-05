@@ -551,7 +551,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 	};
 
 	var _getPlainText = function(){
-		return $(this.getSnapshot()).text();
+		var _plainText = "";
+		$(this.getSnapshot()).each(function(index,p){
+			if(index!=0){
+				_plainText = _plainText + "\n"
+			}
+			_plainText = _plainText + $(p).text();
+		});
+
+		// return $(this.getSnapshot()).text();
+		return _plainText;
 	};
 
 	/*
