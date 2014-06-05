@@ -208,6 +208,14 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		return quizJSON;
 	};
 
+	var afterCopyQuiz = function(quizDOM){
+		var quizType = $(quizDOM).attr("quiztype");
+		var quizModule = _getQuizModule(quizType);
+		if((quizModule)&&(typeof quizModule.afterCopyQuiz == "function")){
+			return quizModule.afterCopyQuiz(quizDOM);
+		}
+	};
+
 	return {
 		init				: init, 
 		add					: add,
@@ -215,7 +223,8 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		draw				: draw,
 		onExportTo			: onExportTo,
 		showQuizSettings	: showQuizSettings,
-		onQuizSettingsDone	: onQuizSettingsDone
+		onQuizSettingsDone	: onQuizSettingsDone,
+		afterCopyQuiz		: afterCopyQuiz
 	};
 
 }) (VISH, jQuery);

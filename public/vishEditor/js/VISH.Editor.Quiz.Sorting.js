@@ -209,11 +209,19 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		_applySortable(area);
 	};
 
+	/*
+	 * After Copy Slide Actions
+	 */
+	var afterCopyQuiz = function(quizDOM){
+		_applySortable(quizDOM);
+	};
+
 	return {
 		init			: init, 
 		add				: add,
 		save			: save,
-		draw			: draw
+		draw			: draw,
+		afterCopyQuiz	: afterCopyQuiz
 	};
 
 }) (VISH, jQuery);

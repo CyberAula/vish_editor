@@ -254,6 +254,18 @@ VISH.Editor.Slides = (function(V,$,undefined){
 				_loadTextAreasOfSlide(slideCopied,options.textAreas);
 			}
 		}
+
+		//Call for custom post-copy actions
+		$(slideToCopy).find("div.vezone").each(function(index,zone){
+			var zoneType = $(zone).attr("type");
+			switch(zoneType){
+				case V.Constant.QUIZ:
+					V.Editor.Quiz.afterCopyQuiz(zone);
+					break;
+				default:
+					break;
+			}
+		});
 		
 		//Update slideEls and refresh classes
 		V.Slides.updateSlides();
