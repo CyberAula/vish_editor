@@ -55,7 +55,7 @@ div.mc_option_text {
 	border: 1px dotted #666666;
 	color: #000000;
 	float: left;
-	font-family: Arial;
+	font-family: arial;
 	font-size: 1rem;
 	min-height: 52px;
 	margin-left: 1%;
@@ -308,6 +308,25 @@ textarea.openQTextArea{
 	height: 140px;
 	max-height: 55%;
 	resize: none;
+}
+
+#openQuizAnswer_fancybox{
+	padding: 3%;
+	width: 94%;
+	height: 94%;
+}
+
+div.oQA_title {
+	height: 7%;
+}
+
+div.oQA_title p {
+	font-size: 1.6rem;
+	font-family: arial;
+}
+
+div.oQA_body {
+	height: 90%;
 }
 
 tr.mc_correct_choice{

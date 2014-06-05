@@ -3,6 +3,9 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	//Link to open Open Ended quiz answer fancybox
 	var hiddenLinkToShowAnswer;
 
+	//Reference to the quiz to show in the fancybox
+	var currentQuizJSONToShowInFancy;
+
 	var init = function(){
 		_loadEvents();
 	};
@@ -16,16 +19,21 @@ VISH.Quiz.Open = (function(V,$,undefined){
 			'height': '0%',
 			'padding': 0,
 			"autoScale" : true,
-			"onStart" : function(data) {
-				// $("#fancybox-close").height(0);
-				// $("#fancybox-close").css("padding",0);
+			"onStart" : function(data){
+				$("#fancybox-close").css("visibility","hidden");
+				if(typeof currentQuizJSONToShowInFancy == "object"){
+					var answerBody = $("#openQuizAnswer_fancybox").find("div.oQA_body");
+					$(answerBody).html(currentQuizJSONToShowInFancy.answer.wysiwygValue);
+				}
 			},
 			'onComplete' : function(data){
 				setTimeout(function(){
 					V.ViewerAdapter.updateFancyboxAfterSetupSize();
+					$("#fancybox-close").css("visibility","visible");
 				}, 300);
 			},
 			"onClosed" : function(){
+				currentQuizJSONToShowInFancy = undefined;
 			}
 		});
 	};
@@ -112,6 +120,7 @@ VISH.Quiz.Open = (function(V,$,undefined){
 		} else {
 			//Open-ended quiz (without self-assesment)
 			//Show response in a fancybox
+			currentQuizJSONToShowInFancy = quizJSON;
 			$(hiddenLinkToShowAnswer).trigger("click");
 
 			switch(afterAnswerAction){
