@@ -421,6 +421,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 							ckeditor.focus();
 						}
 					}
+
+					if((options)&&(typeof options.callback == "function")){
+						options.callback();
+					}
 				});
 			}
 
@@ -439,6 +443,10 @@ VISH.Editor.Text = (function(V,$,undefined){
 				ckeditor.document.on('keyup', function(event){
 					options.onKeyup(current_area,ckeditor,event);
 				});
+			}
+
+			if((!initial_text)&&((options)&&(typeof options.callback == "function"))){
+				options.callback();
 			}
 
 		});

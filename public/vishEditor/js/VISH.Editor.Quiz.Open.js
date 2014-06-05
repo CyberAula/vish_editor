@@ -69,7 +69,7 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 		return "<div class='openq_answer_wrapper'><div class='openq_answer_text'></div><table class='open_checks'><tr class='checkFirstRow'><td><img src='"+V.ImagesPath+ "quiz/checkbox.png' class='"+qCheckbox+"' check='none'/></td></tr></table></div>";
 	};
 
-	var _launchTextEditorForQuestion = function(area,question){
+	var _launchTextEditorForQuestion = function(area,question,callback){
 		var textArea = $(area).find(".mc_question_wrapper");
 		if(!question){
 			V.Editor.Text.launchTextEditor({}, textArea, "", {forceNew: true, fontSize: 38, focus: true, autogrow: true});
@@ -78,16 +78,16 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 		}
 	};
 
-	var _launchTextEditorForAnswer = function(area,answer){
+	var _launchTextEditorForAnswer = function(area,answer,callback){
 		var textArea = $(area).find(".openq_answer_text");
 		if(!answer){
-			V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptionsOpen"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true, onKeyup: _onAnswerKeyUp});
+			V.Editor.Text.launchTextEditor({}, textArea, V.I18n.getTrans("i.QuizzesWriteOptionsOpen"), {forceNew: true, fontSize: 24, autogrow: true, placeholder: true, onKeyup: _onAnswerKeyUp, callback: callback});
 		} else {
-			V.Editor.Text.launchTextEditor({}, textArea, answer, {autogrow: true, onKeyup: _onAnswerKeyUp});
+			V.Editor.Text.launchTextEditor({}, textArea, answer, {autogrow: true, onKeyup: _onAnswerKeyUp, callback: callback});
 		}
 	};
 
-	var _onAnswerKeyUp = function(area,ckeditorInstance,event){
+	var _onAnswerKeyUp = function(area,ckeditorInstance){
 		var checkBox = $(area).parent().find("img.openQCheckbox");
 		var checkBoxDisabled = $(checkBox).hasClass("quizCheckBoxDisabled");
 		var answer = ckeditorInstance.getPlainText();
@@ -162,12 +162,20 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 		$(area).attr('type', V.Constant.QUIZ);
 		$(area).attr('quiztype', V.Constant.QZ_TYPE.OPEN);
 		_launchTextEditorForQuestion(area,quiz.question.wysiwygValue);
-		_launchTextEditorForAnswer(area,quiz.answer.wysiwygValue);
+		_launchTextEditorForAnswer(area,quiz.answer.wysiwygValue, function(){
+			//Success callback
+			//Disable checkbox if quiz answer is too long
+			var openQAnswerTextArea = $(area).find("div.openq_answer_text");
+			_onAnswerKeyUp(openQAnswerTextArea,V.Editor.Text.getCKEditorFromTextArea(openQAnswerTextArea));
+		});
+
+		//Enable checkbox if quiz is selfA
 		if(quiz.selfA){
 			var checkBox = $(area).find("img.openQCheckbox");
 			_enableCheckBox(checkBox);
 			V.Quiz.updateCheckbox(checkBox,"true");
 		}
+
 		V.Editor.addDeleteButton(area);
 	};
 
