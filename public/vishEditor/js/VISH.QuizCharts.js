@@ -79,6 +79,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 
 		switch(quizParams.quizType){
 		case V.Constant.QZ_TYPE.OPEN:
+			_drawOpenEndedQuizAnswers(canvas,quizParams,answersList,options);
 			break;
 		case V.Constant.QZ_TYPE.MCHOICE:
 			if(quizParams.extras.multipleAnswer==true){
@@ -393,6 +394,49 @@ VISH.QuizCharts = (function(V,$,undefined){
 		var myNewChart = new Chart(ctx).Pie(data,chartOptions);
 
 		if((options)&&(options.animation!=true)&&(typeof options.callback == "function")){
+			options.callback();
+		}
+	};
+
+	var _drawOpenEndedQuizAnswers = function(canvas,quizParams,answersList,options){
+		//Answer from open ended quizzes are not drawing in a canvas.
+		//Instead, we will use a div
+
+		var canvasWrapper = $(canvas).parent();
+		var container = $(canvasWrapper).find("div.openQuizAnswersListWrapper");
+
+		if($(container).length===0){
+			//Create container
+			var canvasWidth = $(canvas).width();
+			var canvasHeight = $(canvas).height();
+
+			container = $("<div class='openQuizAnswersListWrapper' style='width:"+canvasWidth+"px; height:"+canvasHeight+"px; display: block;'></div>");
+			$(canvasWrapper).prepend(container);
+		}
+
+		$(canvas).hide();
+		$(container).html("");
+		$(container).append("<ul class='openQuizAnswersList'></ul>");
+		var answersListDOM = $(container).find("ul.openQuizAnswersList");
+
+		var alL = answersList.length;
+		for(var j=0; j<alL; j++){
+			//List of answers of a user
+			var answers = answersList[j];
+
+			var aL = answers.length;
+			for(var k=0; k<aL; k++){
+				var answer = answers[k];
+				var userAnswer = answer.answer;
+				$(answersListDOM).append("<li>"+userAnswer+"</li>");
+			} 
+		}
+
+		if($(answersListDOM).children().length===0){
+			$(answersListDOM).append("<li>Waiting for responses...</li>");
+		}
+
+		if(typeof options.callback == "function"){
 			options.callback();
 		}
 	};

@@ -184,12 +184,11 @@ VISH.Quiz.API = (function(V,$,undefined){
 				//Empty data
 				data = [];
 			} else if(getResultsCount<3){
-				data = [{"answer":"[{\"choiceId\":\"2\",\"answer\":2},{\"choiceId\":\"1\",\"answer\":1},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":true}}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31}];
+				data = [{"answer":"[{\"answer\":\"Lorem ipsum dolor si amet one.\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50}];	
 			} else {
-				data = [{"answer":"[{\"choiceId\":\"2\",\"answer\":2},{\"choiceId\":\"1\",\"answer\":1},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":true}}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31},{"answer":"[{\"choiceId\":\"2\",\"answer\":1},{\"choiceId\":\"1\",\"answer\":2},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":false}}]","created_at":"2013-11-26T12:49:34Z","id":48,"quiz_session_id":31}];
+				data = [{"answer":"[{\"answer\":\"Lorem ipsum dolor si amet one.\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50},{"answer":"[{\"answer\":\"Proin in blandit odio. Mauris placerat sollicitudin urna, at malesuada odio rhoncus eget.\"}]","created_at":"2013-11-28T13:24:14Z","id":63,"quiz_session_id":50},{"answer":"[{\"answer\":\"Aenean imperdiet tortor arcu, at congue sapien aliquam a.\"}]","created_at":"2013-11-28T13:24:14Z","id":64,"quiz_session_id":50}];
 			}
 			getResultsCount++;
-
 
 			// MC (Multiple Choice)
 			// var data = [{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50},{"answer":"[{\"choiceId\":\"1\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:24:22Z","id":63,"quiz_session_id":50},{"answer":"[{\"choiceId\":\"3\",\"answer\":\"true\"}]","created_at":"2013-11-28T13:25:13Z","id":64,"quiz_session_id":50}];
@@ -207,7 +206,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 			// var data = [{"answer":"[{\"choiceId\":\"2\",\"answer\":2},{\"choiceId\":\"1\",\"answer\":1},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":true}}]","created_at":"2013-11-26T12:49:34Z","id":47,"quiz_session_id":31},{"answer":"[{\"choiceId\":\"2\",\"answer\":1},{\"choiceId\":\"1\",\"answer\":2},{\"choiceId\":\"3\",\"answer\":3},{\"selfAssessment\":{\"result\":false}}]","created_at":"2013-11-26T12:49:34Z","id":48,"quiz_session_id":31}];
 			
 			// Open Ended Quiz
-			// var data = //TODO
+			// var data = [{"answer":"[{\"answer\":\"Lorem ipsum dolor si amet one.\"}]","created_at":"2013-11-28T13:24:14Z","id":62,"quiz_session_id":50},{"answer":"[{\"answer\":\"Proin in blandit odio. Mauris placerat sollicitudin urna, at malesuada odio rhoncus eget.\"}]","created_at":"2013-11-28T13:24:14Z","id":63,"quiz_session_id":50},{"answer":"[{\"answer\":\"Aenean imperdiet tortor arcu, at congue sapien aliquam a.\"}]","created_at":"2013-11-28T13:24:14Z","id":64,"quiz_session_id":50}];
 
 			if(typeof successCallback=="function"){
 				setTimeout(function(){

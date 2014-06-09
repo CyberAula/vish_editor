@@ -700,6 +700,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _cleanResults = function(){
 		var canvas = $("#quiz_chart");
+		$(canvas).parent().find("div.openQuizAnswersListWrapper").remove();
 		var ctx = $(canvas).get(0).getContext("2d");
 		ctx.clearRect(0, 0, $(canvas).width(), $(canvas).height());
 		$(canvas).hide();

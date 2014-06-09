@@ -147,19 +147,13 @@ VISH.Quiz.Open = (function(V,$,undefined){
 	/* 
 	* Methods used for Real Time Quizzes 
 	*/
-
 	var getReport = function(quiz){
 		var report = {};
 		report.answers = [];
 
-		// TODO
-		// $(quiz).find("tr.mc_option").each(function(index,tr){
-		// 	var radioBox = $(tr).find("input[name='mc_option']");
-		// 	if($(radioBox).is(':checked')){
-		// 		var choiceId = $(tr).attr("choiceid");
-		// 		report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: "true"});
-		// 	}
-		// });
+		var textArea = $(quiz).find("textarea.openQTextArea");
+		var userAnswer = V.Utils.purgeString($(textArea).val());
+		report.answers.push({answer: userAnswer});
 
 		report.empty = (report.answers.length===0);
 		return report;
