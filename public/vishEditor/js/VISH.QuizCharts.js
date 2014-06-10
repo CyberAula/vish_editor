@@ -416,6 +416,13 @@ VISH.QuizCharts = (function(V,$,undefined){
 			var canvasWidth = $(canvas).width();
 			var canvasHeight = $(canvas).height();
 
+			if(canvasWidth===0){
+				canvasWidth = $(canvas).attr("width");
+			}
+			if(canvasHeight===0){
+				canvasHeight = $(canvas).attr("height");
+			}
+
 			container = $("<div class='openQuizAnswersListWrapper' style='width:"+canvasWidth+"px; height:"+canvasHeight+"px; display: block;'></div>");
 			$(container).insertBefore(canvas);
 		}
