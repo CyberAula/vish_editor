@@ -20,14 +20,18 @@ VISH.QuizCharts = (function(V,$,undefined){
 				"i.T"			: "V",
 				"i.F"			: "F",
 				"i.Correct"		: "Correctas",
-				"i.Incorrect"	: "Incorrectas"
+				"i.Incorrect"	: "Incorrectas",
+				"i.Responses"	: "Respuestas",
+				"i.WaitingResponses"	: "Esperando respuestas..."
 			},
 		  "default":
 			{
 				"i.T"			: "T",
 				"i.F"			: "F",
 				"i.Correct"		: "Correct",
-				"i.Incorrect"	: "Incorrect"
+				"i.Incorrect"	: "Incorrect",
+				"i.Responses"	: "Responses",
+				"i.WaitingResponses"	: "Waiting for responses..."
 			}
 		};
 
@@ -41,6 +45,8 @@ VISH.QuizCharts = (function(V,$,undefined){
 		if(i18n[language]){
 			translations = i18n[language];
 		}
+
+		_insertCss("div.openQuizAnswersListWrapper{ overflow: auto; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 15px;} ul.openQuizAnswersList{ padding: 0px; list-style: none; } ul.openQuizAnswersList li { background-color: #f5f8fa; border-bottom: 1px solid #e1e8ed; padding: 15px 10px; font-size: 1.5rem; } ul.openQuizAnswersList li:first-child { padding-bottom: 20px; font-size: 1.7rem; -webkit-border-top-left-radius: 15px; -webkit-border-top-right-radius: 15px; -moz-border-radius-topleft: 15px; -moz-border-radius-topright: 15px; border-top-left-radius: 15px; border-top-right-radius: 15px; text-align: center; } ul.openQuizAnswersList li:last-child { -webkit-border-bottom-left-radius: 15px; -webkit-border-bottom-right-radius: 15px; -moz-border-radius-bottomleft: 15px; -moz-border-radius-bottomright: 15px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; }");
 	};
 
 	var _getTrans = function(s,params){
@@ -411,7 +417,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 			var canvasHeight = $(canvas).height();
 
 			container = $("<div class='openQuizAnswersListWrapper' style='width:"+canvasWidth+"px; height:"+canvasHeight+"px; display: block;'></div>");
-			$(canvasWrapper).prepend(container);
+			$(container).insertBefore(canvas);
 		}
 
 		$(canvas).hide();
@@ -433,7 +439,9 @@ VISH.QuizCharts = (function(V,$,undefined){
 		}
 
 		if($(answersListDOM).children().length===0){
-			$(answersListDOM).append("<li>Waiting for responses...</li>");
+			$(answersListDOM).append("<li>"+_getTrans("i.WaitingResponses")+"</li>");
+		} else {
+			$(answersListDOM).prepend("<li>"+_getTrans("i.Responses")+"</li>");
 		}
 
 		if(typeof options.callback == "function"){
@@ -483,6 +491,20 @@ VISH.QuizCharts = (function(V,$,undefined){
 		}
 		str = str.replace(/â€‹/g, '');
 		return str.replace(/Â/g, '');
+	};
+
+	var _insertCss = function(code){
+		var style = document.createElement('style');
+		style.type = 'text/css';
+
+		if (style.styleSheet) {
+			// IE
+			style.styleSheet.cssText = code;
+		} else {
+			// Other browsers
+			style.innerHTML = code;
+		}
+		document.getElementsByTagName("head")[0].appendChild(style);
 	};
 
 	return {
