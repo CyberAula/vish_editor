@@ -122,8 +122,8 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 		V.Quiz.updateCheckbox(checkbox,"none");
 	};
 
-	var _isSelfAssesment = function(area){
-		var openCheckBox = $(area).find("img.openQCheckbox");
+	var isSelfAssessment = function(quizDOM){
+		var openCheckBox = $(quizDOM).find("img.openQCheckbox");
 		return ($(openCheckBox).attr("check")==="true" && $(openCheckBox).hasClass("quizCheckBoxDisabled")===false);
 	};
 
@@ -137,7 +137,7 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 		var quiz = {};
 		quiz.quizType = V.Constant.QZ_TYPE.OPEN;
 
-		quiz.selfA = _isSelfAssesment(area);
+		quiz.selfA = isSelfAssessment(area);
 
 		var questionInstance = V.Editor.Text.getCKEditorFromTextArea($(area).find(".mc_question_wrapper"));
 		quiz.question = {};
@@ -180,10 +180,11 @@ VISH.Editor.Quiz.Open = (function(V,$,undefined){
 	};
 
 	return {
-		init			: init, 
-		add				: add,
-		save			: save,
-		draw			: draw
+		init				: init, 
+		add					: add,
+		save				: save,
+		draw				: draw,
+		isSelfAssessment	: isSelfAssessment
 	};
 
 }) (VISH, jQuery);

@@ -224,11 +224,22 @@ VISH.Editor.Quiz.TF = (function(V,$,undefined){
 		});
 	};
 
+	var isSelfAssessment = function(quizDOM){
+		var sA = false;
+		$(quizDOM).find("img.tfCheckbox").each(function(index,checkbox){
+			if(($(checkbox).attr("check")==="true")||($(checkbox).attr("check")==="false")){
+				sA = true;
+			}
+		});
+		return sA;
+	};
+
 	return {
-		init			: init, 
-		add				: add,
-		save			: save,
-		draw			: draw
+		init				: init,
+		add					: add,
+		save				: save,
+		draw				: draw,
+		isSelfAssessment	: isSelfAssessment
 	};
 
 }) (VISH, jQuery);

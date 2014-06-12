@@ -3115,6 +3115,11 @@ div.elSettingsButtonsWrapper {
 	padding: 3%;
 }
 
+div.disableSettingsField {
+	color: #ccc;
+}
+
 #exportQuizToIMSQTI {
 	cursor: pointer;
 }
+

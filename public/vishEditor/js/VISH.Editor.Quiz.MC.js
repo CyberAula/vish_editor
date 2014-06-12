@@ -216,11 +216,22 @@ VISH.Editor.Quiz.MC = (function(V,$,undefined){
 		});
 	};
 
+	var isSelfAssessment = function(quizDOM){
+		var sA = false;
+		$(quizDOM).find("img.mcCheckbox").each(function(index,checkbox){
+			if($(checkbox).attr("check")==="true"){
+				sA = true;
+			}
+		});
+		return sA;
+	};
+
 	return {
-		init			: init, 
-		add				: add,
-		save			: save,
-		draw			: draw
+		init				: init, 
+		add					: add,
+		save				: save,
+		draw				: draw,
+		isSelfAssessment	: isSelfAssessment
 	};
 
 }) (VISH, jQuery);

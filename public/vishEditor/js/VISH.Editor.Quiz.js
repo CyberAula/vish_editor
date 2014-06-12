@@ -22,12 +22,17 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 
 				//Load Quiz
 				var quiz = V.Editor.getCurrentArea();
+				var quizType = $(quiz).attr("quiztype");
+				var quizModule = _getQuizModule(quizType);
 				$(qSF).find("input[type='hidden'][name='elId']").val($(quiz).attr("id"));
 
 				//Load Settings
 				var qSettings = $(quiz).attr("elSettings");
 				var nAttempts = 1;
+				var shuffleChoices = false;
+				var disableShuffleChoices = false;
 				var ARSEnabled = false;
+				
 
 				if(typeof qSettings == "string"){
 					try{
@@ -38,14 +43,78 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 						if(qSettings.ARSEnabled===true){
 							ARSEnabled = true;
 						}
+						if(qSettings.shuffleChoices===true){
+							shuffleChoices = true;
+						}
 					}catch(e){}
 				}
 
-				//Fill form
+				//Force options by quiz type
+				switch(quizType){
+					case V.Constant.QZ_TYPE.OPEN:
+						shuffleChoices = false;
+						disableShuffleChoices = true;
+						break;
+					case V.Constant.QZ_TYPE.MCHOICE:
+						break;
+					case V.Constant.QZ_TYPE.TF:
+						break;
+					case V.Constant.QZ_TYPE.SORTING:
+						shuffleChoices = true;
+						disableShuffleChoices = true;
+						break;
+					default:
+						break;
+				};
+
+				//Fill and reset form
+	
+				var isSelfAssessment = false;
+				if((quizModule)&&(typeof quizModule.isSelfAssessment == "function")){
+					isSelfAssessment = quizModule.isSelfAssessment(quiz);
+				}
+
+				//Number of Attempts
 				var nAttemptsDOM = $(qSF).find("#quizSettings_nAttempts");
+				if(!isSelfAssessment){
+					//Disable nAttempts
+					$(nAttemptsDOM).prop('disabled',true);
+					$(nAttemptsDOM).parent().addClass("disableSettingsField");
+					$(nAttemptsDOM).val(1);
+				} else {
+					$(nAttemptsDOM).prop('disabled',false);
+					$(nAttemptsDOM).parent().removeClass("disableSettingsField");
+					$(nAttemptsDOM).val(nAttempts);
+				}
+
+				//Shuffle Choices
+				var shuffleChoicesCheckbox = $(qSF).find("input[type='checkbox'][name='shuffleChoices']");
+				$(shuffleChoicesCheckbox).prop('checked', shuffleChoices);
+				if(disableShuffleChoices){
+					$(shuffleChoicesCheckbox).parent().addClass("disableSettingsField");
+					$(shuffleChoicesCheckbox).attr('disabled', 'disabled');
+				} else {
+					$(shuffleChoicesCheckbox).parent().removeClass("disableSettingsField");
+					$(shuffleChoicesCheckbox).removeAttr('disabled');
+				}		
+
+				//ARS Enabled
 				var ARSEnabledCheckbox = $(qSF).find("input[type='checkbox'][name='enableARS']");
-				$(nAttemptsDOM).val(nAttempts);
 				$(ARSEnabledCheckbox).prop('checked', ARSEnabled);
+
+				// //Post actions
+				// switch(quizType){
+				// 	case V.Constant.QZ_TYPE.OPEN:
+				// 		break;
+				// 	case V.Constant.QZ_TYPE.MCHOICE:
+				// 		break;
+				// 	case V.Constant.QZ_TYPE.TF:
+				// 		break;
+				// 	case V.Constant.QZ_TYPE.SORTING:
+				// 		break;
+				// 	default:
+				// 		break;
+				// };
 			},
 			"onComplete" : function(data){
 			},
@@ -59,6 +128,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		var qSF = $("#quizSettings_fancybox");
 		var qSettings = {};
 		qSettings.nAttempts = $(qSF).find("#quizSettings_nAttempts").val();
+		qSettings.shuffleChoices = $(qSF).find("input[type='checkbox'][name='shuffleChoices']").is(":checked");
 		qSettings.ARSEnabled = $(qSF).find("input[type='checkbox'][name='enableARS']").is(":checked");
 
 		//Get quiz

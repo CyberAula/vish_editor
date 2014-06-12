@@ -209,6 +209,10 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 		_applySortable(area);
 	};
 
+	var isSelfAssessment = function(){
+		return true;
+	};
+
 	/*
 	 * After Copy Slide Actions
 	 */
@@ -217,11 +221,12 @@ VISH.Editor.Quiz.Sorting = (function(V,$,undefined){
 	};
 
 	return {
-		init			: init, 
-		add				: add,
-		save			: save,
-		draw			: draw,
-		afterCopyQuiz	: afterCopyQuiz
+		init				: init,
+		add					: add,
+		save				: save,
+		draw				: draw,
+		isSelfAssessment	: isSelfAssessment,
+		afterCopyQuiz		: afterCopyQuiz
 	};
 
 }) (VISH, jQuery);
