@@ -42,7 +42,7 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		//Options
 		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='sorting_options'></table>");
 
-		//Shuffle choices
+		//Shuffle choices (always)
 		var quizChoices = V.Utils.shuffle(quizJSON.choices);
 		var quizChoicesLength = quizChoices.length;
 		for(var i=0; i<quizChoicesLength; i++){

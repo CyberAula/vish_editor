@@ -28,9 +28,17 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		//Options
 		var optionsWrapper = $("<table cellspacing='0' cellpadding='0' class='mc_options'></table>");
 
-		var quizChoicesLength = quizJSON.choices.length;
+		//Shuffle choices?
+		var quizChoices;
+		if((quizJSON.settings)&&(quizJSON.settings.shuffleChoices===true)){
+			quizChoices = V.Utils.shuffle(quizJSON.choices);
+		} else {
+			quizChoices = quizJSON.choices;
+		}
+		
+		var quizChoicesLength = quizChoices.length;
 		for(var i=0; i<quizChoicesLength; i++){
-			var option = quizJSON.choices[i];
+			var option = quizChoices[i];
 			var optionWrapper = $("<tr class='mc_option' choiceId='"+(option.id)+"'></tr>");
 			var optionBox = $("<td><input class='mc_box' type='"+inputType+"' name='mc_option' value='"+i+"'/></td>");
 			var optionIndex = $("<td><span class='mc_option_index mc_option_index_viewer'>"+String.fromCharCode(96+i+1)+") </span></td>");
