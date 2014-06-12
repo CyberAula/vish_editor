@@ -163,7 +163,9 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		});
 
 		//Check if quiz has been answered correctly
-		var answeredQuizCorrectly = undefined;
+		var answeredQuizCorrectly = false;
+		var answeredQuizWrong = false;
+		var quizAnswered = false;
 
 		$(quiz).find("tr.mc_option").each(function(index,tr){
 			var choiceId = $(tr).attr("choiceid");
@@ -173,13 +175,16 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 			if(choice.answer===answerValue){
 				answeredQuizCorrectly = true;
 			} else {
-				answeredQuizCorrectly = false;
+				answeredQuizWrong = true;
 			}
+			quizAnswered = true;
 
 			report.answers.push({choiceId: V.Quiz.getQuizChoiceOriginalId(choiceId).toString(), answer: answerValue});
 		});
 
-		if(typeof answeredQuizCorrectly == "boolean"){
+		answeredQuizCorrectly = ((answeredQuizCorrectly)&&(!answeredQuizWrong));
+
+		if(quizAnswered){
 			report.answers.push({selfAssessment: { result: answeredQuizCorrectly }});
 		}
 
