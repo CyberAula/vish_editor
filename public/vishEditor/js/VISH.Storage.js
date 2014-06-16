@@ -131,7 +131,9 @@ VISH.Storage = (function(V,$,undefined){
 		if(LSSupported){
 			//Check if there is no security restrictions
 			try {
+				localStorage.setItem("myKey","myKeyValue");
 				localStorage.getItem("myKey");
+				localStorage.removeItem("myKey");
 				return true;
 			} catch(e){
 				return false;
