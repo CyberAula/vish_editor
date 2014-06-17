@@ -1302,7 +1302,7 @@ div.addUrlButtons{
 .slidethumb {
 	width: 99px;
 	height: 75px;
-	margin: 11px 11px 6px 16px;
+	margin: 11px 0px 6px 21px;
 	border-radius: 10px;
 	border: 1px solid #ccc;
 }

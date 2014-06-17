@@ -259,8 +259,9 @@
 
 .t6_left{
     float: left;
-    height: 89%;
+    height: 87%;
     margin-top: 2%;
+    margin-right: 1.6%;
     overflow: hidden;
     position: relative;
     width: 31%;
@@ -268,7 +269,7 @@
 
 .t6_center{
     float: right;
-    height: 89%;
+    height: 87%;
     margin-top: 2%;
     overflow: hidden;
     position: relative;
@@ -277,8 +278,7 @@
 
 .t6_right{
     float: left;
-    height: 89%;
-    margin-left: 2%;
+    height: 87%;
     margin-top: 2%;
     overflow: hidden;
     position: relative;
@@ -750,7 +750,7 @@
     margin-top: 2%;
     overflow: hidden;
     position: relative;
-    width: 23%;
+    width: 22%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -764,7 +764,7 @@
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 23%;
+    width: 22%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -778,7 +778,7 @@
     margin-top: 5%;
     overflow: hidden;
     position: relative;
-    width: 23%;
+    width: 22%;
     border-radius: 100% !important;
     -moz-border-radius: 100% !important;
     -webkit-border-radius: 100% !important;
@@ -862,7 +862,7 @@
     margin-right: 3%;
     overflow: hidden;
     position: relative;
-    width: 31%;
+    width: 30%;
 }
 
 .t15_center{
