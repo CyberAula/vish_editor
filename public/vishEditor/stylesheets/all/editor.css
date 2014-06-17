@@ -1518,10 +1518,15 @@ div.vezone {
 .tab_slides_templates {
 }
 
-.tab_slides_smartcards {
+div.tab_slides_smartcards {
 	display: inline-block;
 	position: relative;
 	float: left;
+}
+
+div.tab_slides_smartcards > p {
+	margin-top: 0px;
+	margin-bottom: 6px;
 }
 
 a#tab_pic_flikr > img {
@@ -3020,10 +3025,11 @@ span.letterInChapterDialog {
 
 .templateselectlist {
 	border: 1px solid #ccc;
-	width: 642px;
+	width: 639px;
 	height: 385px;
 	margin-bottom: 15px;
 	border-radius: 6px;
+	padding-left: 3px;
 }
 
 .templateselectlist2 {
