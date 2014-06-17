@@ -110,7 +110,7 @@ VISH.Utils = (function(V,undefined){
 		jQuery.fn.reverse = [].reverse;
 
 		&#x2F;&#x2F;Extend primitives
-		String.prototype.replaceAll = function (find, replace) {
+		String.prototype.replaceAll = function(find,replace){
 			var str = this;
 			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
 		};
@@ -124,7 +124,7 @@ VISH.Utils = (function(V,undefined){
 			return null;
 		};
 
-		&#x2F;&#x2F; if(!Array.prototype.filter){
+		if(!Array.prototype.filter){
 			Array.prototype.filter = function(fun &#x2F;*, thisp *&#x2F;){
 				&quot;use strict&quot;;
 
@@ -149,10 +149,10 @@ VISH.Utils = (function(V,undefined){
 				}
 				return res;
 			};
-		&#x2F;&#x2F; };
+		};
 
 		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;map
-		&#x2F;&#x2F; if (!Array.prototype.map){
+		if(!Array.prototype.map){
 			Array.prototype.map = function(fun &#x2F;*, thisArg *&#x2F;){
 				&quot;use strict&quot;;
 
@@ -179,7 +179,7 @@ VISH.Utils = (function(V,undefined){
 
 				return res;
 			};
-		&#x2F;&#x2F; }
+		}
 
 		&#x2F;&#x2F;Disable watermark for IE
 		jQuery.fn.vewatermark = function(text){
@@ -1327,6 +1327,91 @@ VISH.Utils = (function(V,undefined){
 		});
 	};
 
+	&#x2F;&#x2F; Shuffle an array
+	var shuffle = function(o){
+		for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+		return o;
+	};
+
+	var purgeString = function(str){
+		if(typeof str != &quot;string&quot;){
+			return str;
+		}
+		str = str.replace(&#x2F;â€‹&#x2F;g, &#x27;&#x27;);
+		str = str.replace(&#x2F;Â&#x2F;g, &#x27;&#x27;);
+		str = str.replace(&#x2F;&amp;shy&#x2F;g, &#x27;&#x27;);
+		str = str.replace(String.fromCharCode(8203),&#x27;&#x27;);
+
+		&#x2F;&#x2F;Chars to filter at the begining and end of the string
+		&#x2F;&#x2F;See http:&#x2F;&#x2F;www.ascii-code.com&#x2F;
+		var charCodesToPurge = [32,160,173];
+
+		var strL = str.length;
+		var lastValidCharIndex = strL-1;
+		for(var i=strL-1; i&gt;-1; i--){
+			if(charCodesToPurge.indexOf(str.charCodeAt(i))!=-1){
+				&#x2F;&#x2F;Char to purge
+			} else {
+				&#x2F;&#x2F;Valid char
+				lastValidCharIndex = i;
+				break;
+			}
+		}
+		str = str.substr(0,lastValidCharIndex+1);
+
+		strL = str.length;
+		lastValidCharIndex = 0;
+		for(var i=0; i&lt;strL; i++){
+			if(charCodesToPurge.indexOf(str.charCodeAt(i))!=-1){
+				&#x2F;&#x2F;Char to purge
+			} else {
+				&#x2F;&#x2F;Valid char
+				lastValidCharIndex = i;
+				break;
+			}
+		}
+		str = str.substr(lastValidCharIndex,strL);
+
+		return str;
+	};
+
+	&#x2F;&#x2F; Calculate the Levenshtein distance between a and b
+	var getLevenshteinDistance = function(a,b) {
+		var cost;
+		var m = a.length;
+		var n = b.length;
+		
+		&#x2F;&#x2F; make sure a.length &gt;= b.length to use O(min(n,m)) space, whatever that is
+		if(m &lt; n){
+			var c=a;a=b;b=c;
+			var o=m;m=n;n=o;
+		}
+		
+		var r = new Array();
+		r[0] = new Array();
+		for (var c = 0; c &lt; n+1; c++) {
+			r[0][c] = c;
+		}
+		
+		for (var i = 1; i &lt; m+1; i++) {
+			r[i] = new Array();
+			r[i][0] = i;
+			for (var j = 1; j &lt; n+1; j++) {
+				cost = (a.charAt(i-1) == b.charAt(j-1))? 0: 1;
+				r[i][j] = _minimator(r[i-1][j]+1,r[i][j-1]+1,r[i-1][j-1]+cost);
+			}
+		}
+		
+		return r[m][n];
+	};
+
+	&#x2F;&#x2F; return the smallest of the three values passed in
+	var _minimator = function(x,y,z){
+		if (x &lt; y &amp;&amp; x &lt; z) return x;
+		if (y &lt; x &amp;&amp; y &lt; z) return y;
+		return z;
+	};
+
 
 	return {
 		init 					: init,
@@ -1364,7 +1449,10 @@ VISH.Utils = (function(V,undefined){
 		fomatTimeForMPlayer		: fomatTimeForMPlayer,
 		delayFunction 			: delayFunction,
 		addTempShown			: addTempShown,
-		removeTempShown			: removeTempShown
+		removeTempShown			: removeTempShown,
+		shuffle 				: shuffle,
+		purgeString				: purgeString,
+		getLevenshteinDistance	: getLevenshteinDistance
 	};
 
 }) (VISH);

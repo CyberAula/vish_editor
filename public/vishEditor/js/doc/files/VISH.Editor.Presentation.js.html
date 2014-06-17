@@ -185,13 +185,69 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		}
 
 		$.fancybox.close();
-	}
+	};
+
+	&#x2F;*
+	 * Generate presentation scaffold for elements
+	 * element JSON example: { body: &quot;myimage.jpg&quot;, type: V.Constant.IMAGE}
+	 * options JSON example: {template : &quot;t2&quot;, pdfexId: &quot;22&quot;}
+	 *&#x2F;
+	var generatePresentationScaffold = function(elements,options){
+		var presentation = {};
+		presentation.VEVersion = V.VERSION;
+		presentation.type = V.Constant.PRESENTATION;
+		presentation.theme = V.Constant.Themes.Default
+		presentation.slides = [];
+		
+		var elL = elements.length;
+		for(var i=0; i&lt;elL; i++){
+			presentation.slides.push(_generateSlideScaffold(i+1,elements[i],options));
+		}
+		return presentation;
+	};
+
+	var _generateSlideScaffold = function(index,element,options){
+		var slide = {};
+		slide.id = &quot;article&quot;+index;
+		slide.type = V.Constant.STANDARD;
+
+		var defaultTemplate = &quot;t10&quot;;
+		if(element.template){
+			slide.template = options.template;
+		} else if((options)&amp;&amp;(options.template)){
+			slide.template = options.template;
+		} else {
+			slide.template = defaultTemplate;
+		}
+
+		slide.elements = [];
+
+		var element = element || {};
+		element.id = slide.id + &quot;_zone1&quot;;
+		switch(slide.template){
+			case &quot;t2&quot;:
+				element.areaid = &quot;left&quot;;
+				break;
+			default:
+				element.areaid = &quot;center&quot;;
+		}
+		
+		if((options)&amp;&amp;(options.pdfexId)){
+			element.options = element.options || {};
+			element.options[&quot;vishubPdfexId&quot;] = options.pdfexId;
+		}
+
+		slide.elements.push(element);
+
+		return slide;
+	};
 
 
 	return {
-		init 				 	: init,
-		insertPresentation		: insertPresentation,
-		previewPresentation		: previewPresentation
+		init 				 			: init,
+		insertPresentation				: insertPresentation,
+		previewPresentation				: previewPresentation,
+		generatePresentationScaffold	: generatePresentationScaffold
 	};
 
 }) (VISH, jQuery);

@@ -146,27 +146,27 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			_initialized = true;
 		}
 		$(&quot;#menu&quot;).show();
-	}
+	};
 
 	var _enableMenuItem = function(items){
 		&#x2F;&#x2F; $(items).show();
 		$(items).removeClass(&quot;menu_item_disabled&quot;).addClass(&quot;menu_item_enabled&quot;);
-	}
+	};
 
 	var _disableMenuItem = function(items){
 		&#x2F;&#x2F; $(items).hide();
 		$(items).removeClass(&quot;menu_item_enabled&quot;).addClass(&quot;menu_item_disabled&quot;);
-	}
+	};
 
 	var disableMenu = function(){
 		$(&quot;#menu&quot;).hide();
 		$(&quot;#menu&quot;).attr(&quot;id&quot;,&quot;menuDisabled&quot;);
-	}
+	};
 
 	var enableMenu = function(){
 		$(&quot;#menuDisabled&quot;).show();
 		$(&quot;#menuDisabled&quot;).attr(&quot;id&quot;,&quot;menu&quot;);
-	}
+	};
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -186,7 +186,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			&#x2F;&#x2F; V.Debugging.log(&quot;onSave failure&quot;);
 			V.Editor.Tools.changeSaveButtonStatus(&quot;enabled&quot;);
 		});
-	}
+	};
 
 	&#x2F;**
 	* function called when user clicks on save
@@ -319,7 +319,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var preview = function(){
 		V.Editor.Preview.preview();
-	}
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;&#x2F; HELP
@@ -327,7 +327,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var help = function(){
 		$(&quot;#help_right&quot;).trigger(&#x27;click&#x27;);
-	}
+	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F;More Actions
@@ -335,7 +335,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var about = function(){
 		V.Tour.startTourWithId(&#x27;about_screen&#x27;, &#x27;top&#x27;);
-	}
+	};
 
 	var exit = function(){
 
@@ -387,21 +387,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		} else {
 			_exitFromVE();
 		}
-	}
+	};
 
 	var _exitFromVE = function(){
 		V.Editor.Events.allowExitWithoutConfirmation();
 		window.top.location.href = V.exitPath;
-	}
-
-	var insertSmartcard = function(){
-		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		V.Editor.Utils.loadTab(&#x27;tab_smartcards_repo&#x27;);
-	};
-
-	var insertPresentation = function(){
-		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		V.Editor.Utils.loadTab(&#x27;tab_presentations_repo&#x27;);
 	};
 
 	var insertSlide = function(){
@@ -417,15 +407,26 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		return false; &#x2F;&#x2F;Prevent iframe to move
 	};
 
-	var insertJSON = function(){
-		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
-		V.Editor.Utils.loadTab(&#x27;tab_json_file&#x27;);
-	};
-
 	var insertPDFex = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_pdfex&#x27;);
 		return false; &#x2F;&#x2F;Prevent iframe to move
+	};
+
+	var insertPackage = function(){
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_epackage&#x27;);
+		return false; &#x2F;&#x2F;Prevent iframe to move
+	};
+
+	var insertEFile = function(){
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_efile&#x27;);
+	};
+
+	var insertPresentation = function(){
+		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
+		V.Editor.Utils.loadTab(&#x27;tab_presentations_repo&#x27;);
 	};
 
 	var _exportTo = function(format){
@@ -470,7 +471,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 
 	var displaySettings = function(){
 		V.Editor.Settings.displaySettings();
-	}
+	};
 
 	var _hideMenuAfterAction = function(){
 		if(_hoverMenu){
@@ -485,12 +486,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		init							: init,
 		disableMenu 					: disableMenu,
 		enableMenu 						: enableMenu,
-		insertPresentation				: insertPresentation,
-		insertSmartcard					: insertSmartcard,
 		insertSlide						: insertSlide,
 		insertSubslide					: insertSubslide,
-		insertJSON						: insertJSON,
 		insertPDFex						: insertPDFex,
+		insertPackage					: insertPackage,
+		insertEFile						: insertEFile,
+		insertPresentation				: insertPresentation,
 		exportToJSON 					: exportToJSON,
 		exportToSCORM					: exportToSCORM,
 		displaySettings					: displaySettings,

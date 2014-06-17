@@ -91,6 +91,7 @@
 VISH.Object = (function(V,$,undefined){
 			
 	var init = function(){
+		V.Object.Webapp.init();
 	};
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
@@ -144,9 +145,20 @@ VISH.Object = (function(V,$,undefined){
 			case &quot;AUDIO&quot;:
 				type = V.Constant.MEDIA.HTML5_AUDIO;
 				break;
+			case &quot;IFRAME&quot;:
+				var objectTypeAttr = $(object).attr(&quot;objecttype&quot;);
+				if(typeof objectTypeAttr == &quot;string&quot;){
+					if(objectTypeAttr==V.Constant.MEDIA.SCORM_PACKAGE){
+						type = V.Constant.MEDIA.SCORM_PACKAGE;
+						break;
+					} else if(objectTypeAttr==V.Constant.MEDIA.WEB_APP){
+						type = V.Constant.MEDIA.WEB_APP;
+						break;
+					}
+				}
 			default:
 				type = _getTypeFromSource(source);
-		}
+		};
 
 		return new objectInfo(wrapper,source,type);
 	};

@@ -183,7 +183,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
 				&#x27;width&#x27;: 800,
-				&#x27;height&#x27;: 600,
+				&#x27;height&#x27;: 740,
 				&#x27;padding&#x27;: 0,
 				&quot;onStart&quot;  : function(data) {
 					var slidesAddMode = V.Editor.getContentAddMode();
@@ -291,6 +291,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
+			&#x2F;&#x2F;Element Settings
+			$(document).on(&quot;click&quot;, &quot;#quizSettingsDone&quot;, V.Editor.Quiz.onQuizSettingsDone);
+			$(document).on(&quot;click&quot;, &quot;#exportQuizToIMSQTI&quot;, function(){ V.Editor.Quiz.onExportTo(&quot;QTI&quot;) });
+
 			&#x2F;&#x2F;onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
 			confirmOnExit = true;
@@ -351,19 +355,24 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;help_pdfex_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help importing a JSON file
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_json_file_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;help_iJSON_help&#x27;, &#x27;bottom&#x27;);
+		&#x2F;&#x2F;Help inserting e-Learning packages
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_epackage_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_epackage_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in LRE carrousel
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_lre_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;tab_presentations_lre_help&#x27;, &#x27;bottom&#x27;);
-		});	
+		&#x2F;&#x2F;Help importing external files (e.g. JSON)
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_efile_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;help_efile_help&#x27;, &#x27;bottom&#x27;);
+		});
 
 		&#x2F;&#x2F;Help in presentation carrousel
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_repo_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_excursion_selection_help&#x27;, &#x27;bottom&#x27;);
+		});	
+
+		&#x2F;&#x2F;Help in LRE carrousel
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_lre_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;tab_presentations_lre_help&#x27;, &#x27;bottom&#x27;);
 		});	
 
 		&#x2F;&#x2F;Help in themes templates
@@ -380,7 +389,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on(&#x27;click&#x27;,&#x27;#help_in_settings&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_in_settings_help&#x27;, &#x27;bottom&#x27;);
 		});
-
 
 		&#x2F;&#x2F;Help in pedagogical options settings	
 		$(document).on(&#x27;click&#x27;,&#x27;#help_pedagogical_selection&#x27;, function(){
@@ -521,7 +529,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				V.Editor.Utils.loadTab(&#x27;tab_live_resource&#x27;);
 			}
 		});
-	}
+	};
 
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;

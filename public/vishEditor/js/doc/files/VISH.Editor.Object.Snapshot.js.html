@@ -112,7 +112,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		contentToAdd = null;
 		V.Editor.Object.resetPreview(urlDivId);
 		$(&quot;#&quot; + urlInputId).val(&quot;&quot;);
-	}
+	};
 	
 	
 	var drawPreviewElement = function(){
@@ -120,7 +120,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 			drawSnapShot(_wrapperSnapShot(contentToAdd));
 			$.fancybox.close();
 		}
-	}
+	};
 	
 	
 	var _validateSnapShot = function(object){
@@ -138,7 +138,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 				return false;
 				break;
 		}
-	}
+	};
 	
 	var _validateUrl = function(url){
 		var http_urls_pattern=&#x2F;(http(s)?:\&#x2F;\&#x2F;)([aA-zZ0-9%=_&amp;+?])+([.&#x2F;-][aA-zZ0-9%=_&amp;+?]+)*[&#x2F;]?&#x2F;g
@@ -148,7 +148,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		} else {
 			return false;
 		}
-	}
+	};
 	
 	var _wrapperSnapShot = function(content){
 		var objectInfo = V.Object.getObjectInfo(content);
@@ -158,7 +158,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		} else {
 			return content;
 		}
-	}
+	};
 	
 	&#x2F;**
 	* Param style: optional param with the style, used in editing presentation
@@ -259,7 +259,7 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		}
 
 		return false;
-	}
+	};
 	
 	&#x2F;*
 	* Resize object and its wrapper automatically
@@ -270,11 +270,11 @@ VISH.Editor.Object.Snapshot = (function(V,$,undefined){
 		$(&quot;#&quot; + id).height(width*proportion);
 	};
 
-	
+
 	return {
 		init				: init,
 		onLoadTab 			: onLoadTab,
-		drawPreviewElement : drawPreviewElement,
+		drawPreviewElement 	: drawPreviewElement,
 		drawSnapShot 		: drawSnapShot
 	};
 

@@ -553,11 +553,14 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case &quot;tab_live_resource&quot;:
 				V.Editor.Object.Live.onLoadTab();
 				break;
-			case &quot;tab_json_file&quot;:
+			case &quot;tab_efile&quot;:
 				V.Editor.Presentation.File.onLoadTab();
 				break;
 			case &quot;tab_pdfex&quot;:
 				V.Editor.PDFex.onLoadTab();
+				break;
+			case &quot;tab_epackage&quot;:
+				V.Editor.EPackage.onLoadTab();
 				break;
 			default:
 				break;
@@ -570,6 +573,19 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		$(&quot;a.venondefaulttab&quot;).hide();
 	};
 
+	var showErrorDialog = function(msg){
+		var options = {};
+		options.width = 650;
+		options.height = 190;
+		options.text = msg;
+		var button1 = {};
+		button1.text = V.I18n.getTrans(&quot;i.Ok&quot;);
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons = [button1];
+		V.Utils.showDialog(options);
+	};
 
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
@@ -583,7 +599,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		autocompleteUrls 			: autocompleteUrls,
 		filterFilePath 				: filterFilePath,
 		loadTab						: loadTab,
-		hideNonDefaultTabs			: hideNonDefaultTabs
+		hideNonDefaultTabs			: hideNonDefaultTabs,
+		showErrorDialog				: showErrorDialog
 	};
 
 }) (VISH, jQuery);

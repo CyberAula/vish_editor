@@ -102,47 +102,65 @@ VISH.Editor.Text = (function(V,$,undefined){
 				var dialogName = ev.data.name;
 				var dialogDefinition = ev.data.definition;
 
-				if (dialogName == &#x27;link&#x27;) {
-					&#x2F;&#x2F;Customize main window
+				switch(dialogName){
+					case &#x27;link&#x27;:
+						&#x2F;&#x2F;Customize Link window
+						&#x2F;&#x2F; Remove unused link type options
+						&#x2F;&#x2F; var linkType = dialogDefinition.getContents(&#x27;info&#x27;).get(&quot;linkType&quot;);
+						&#x2F;&#x2F; linkType.items.splice(2,1);
+						&#x2F;&#x2F; linkType.items.splice(1,1);
 
-					&#x2F;&#x2F; Remove unused link type options
-					&#x2F;&#x2F; var linkType = dialogDefinition.getContents(&#x27;info&#x27;).get(&quot;linkType&quot;);
-					&#x2F;&#x2F; linkType.items.splice(2,1);
-					&#x2F;&#x2F; linkType.items.splice(1,1);
+						&#x2F;&#x2F;Remove LinkType
+						dialogDefinition.getContents(&#x27;info&#x27;).remove(&quot;linkType&quot;);
+						&#x2F;&#x2F;Remove unuseful protocols
+						var protocols = dialogDefinition.getContents(&#x27;info&#x27;).get(&quot;protocol&quot;).items;
+						protocols.splice(3,1);
+						protocols.splice(2,1);
 
-					&#x2F;&#x2F;Remove LinkType
-                    dialogDefinition.getContents(&#x27;info&#x27;).remove(&quot;linkType&quot;);
-                    &#x2F;&#x2F;Remove unuseful protocols
-                    var protocols = dialogDefinition.getContents(&#x27;info&#x27;).get(&quot;protocol&quot;).items;
-                    protocols.splice(3,1);
-					protocols.splice(2,1);
+						&#x2F;&#x2F;Remove advanced options
+						dialogDefinition.removeContents(&#x27;advanced&#x27;);
 
-					&#x2F;&#x2F;Remove advanced options
-					dialogDefinition.removeContents(&#x27;advanced&#x27;);
-					
-					&#x2F;&#x2F;Customize target window
-					var targetTab = dialogDefinition.getContents(&#x27;target&#x27;);
-					var targetField = targetTab.get(&#x27;linkTargetType&#x27;);
-					targetField[&#x27;default&#x27;] =&#x27;_blank&#x27;;
-                    targetField.items.splice(6,1);
-                    targetField.items.splice(4,1);
-                    targetField.items.splice(1,1);
-                    targetField.items.splice(0,1);
-                    &#x2F;&#x2F; dialogDefinition.removeContents( &#x27;target&#x27; ); &#x2F;&#x2F;To remove targets
-				}
+						&#x2F;&#x2F;Customize target window
+						var targetTab = dialogDefinition.getContents(&#x27;target&#x27;);
+						var targetField = targetTab.get(&#x27;linkTargetType&#x27;);
+						targetField[&#x27;default&#x27;] =&#x27;_blank&#x27;;
+						targetField.items.splice(6,1);
+						targetField.items.splice(4,1);
+						targetField.items.splice(1,1);
+						targetField.items.splice(0,1);
+						&#x2F;&#x2F; dialogDefinition.removeContents( &#x27;target&#x27; ); &#x2F;&#x2F;To remove targets
 
-				if (dialogName == &#x27;table&#x27;) {
-					dialogDefinition.removeContents(&#x27;advanced&#x27;);
-					var info = dialogDefinition.getContents(&#x27;info&#x27;);
-					&#x2F;&#x2F;Set center as default alignment
-					var alignment = info.get(&quot;cmbAlign&quot;);
-					alignment.items.splice(0,1);
-					&#x2F;&#x2F;Keep [&quot;default&quot;] to prevent Google closure compiler errors
-					alignment[&quot;default&quot;] = &quot;center&quot;;
-					&#x2F;&#x2F;Remove self-headers
-					info.remove(&quot;selHeaders&quot;);
+						break;
+					case &#x27;table&#x27;:
+						dialogDefinition.removeContents(&#x27;advanced&#x27;);
+						var info = dialogDefinition.getContents(&#x27;info&#x27;);
+						&#x2F;&#x2F;Set center as default alignment
+						var alignment = info.get(&quot;cmbAlign&quot;);
+						alignment.items.splice(0,1);
+						&#x2F;&#x2F;Keep [&quot;default&quot;] to prevent Google closure compiler errors
+						alignment[&quot;default&quot;] = &quot;center&quot;;
+						&#x2F;&#x2F;Remove self-headers
+						info.remove(&quot;selHeaders&quot;);
+
+						break;
+					case &#x27;image&#x27;:
+						&#x2F;&#x2F;Remove advanced options
+						dialogDefinition.removeContents(&#x27;advanced&#x27;);
+
+						&#x2F;&#x2F;Customize target window
+						var linkTab = dialogDefinition.getContents(&#x27;Link&#x27;);
+						var targetField = linkTab.get(&quot;cmbTarget&quot;);
+						targetField[&#x27;default&#x27;] =&#x27;_blank&#x27;;
+						targetField.items.splice(4,1);
+						targetField.items.splice(2,1);
+						targetField.items.splice(0,1);
+
+						break;
+					case &#x27;MediaEmbedDialog&#x27;:
+						break;
 				}
 			});
+
 			initialized=true;
 		}
 	}
@@ -178,10 +196,17 @@ VISH.Editor.Text = (function(V,$,undefined){
 			&#x2F;&#x2F;We need an ID to call addTempShown properly
 			$(current_area).attr(&quot;id&quot;,V.Utils.getId(&quot;TmpShownId&quot;)); 
 		}
-		V.Utils.addTempShown(current_area);
+
+		var disableTmpShown = (options)&amp;&amp;(options.disableTmpShown);
+
+		if(!disableTmpShown){
+			V.Utils.addTempShown(current_area);
+		}
 		var currentAreaHeight = $(current_area).height();
 		var currentAreaWidth = $(current_area).width();
-		V.Utils.removeTempShown(current_area);
+		if(!disableTmpShown){
+			V.Utils.removeTempShown(current_area);
+		}
 
 		&#x2F;&#x2F;Create the wysiwyg container and add to the area
 		var wysiwygContainerId = V.Utils.getId();
@@ -200,7 +225,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 			&#x27;&#x2F;&#x27;,
 			{ name: &#x27;lists&#x27;, items : [&#x27;NumberedList&#x27;,&#x27;BulletedList&#x27;,&#x27;Table&#x27;] },
 			{ name: &#x27;alignment&#x27;, items : [&#x27;JustifyLeft&#x27;,&#x27;JustifyCenter&#x27;,&#x27;JustifyRight&#x27;,&#x27;JustifyBlock&#x27;] },
-			{ name: &#x27;link&#x27;, items : [&#x27;Link&#x27;] }
+			{ name: &#x27;link&#x27;, items : [&#x27;Link&#x27;] },
+			{ name: &#x27;Objects&#x27;, items : [&#x27;Image&#x27;,&#x27;MediaEmbed&#x27;] },
+			{ name: &#x27;symbols&#x27;, items : [&#x27;SpecialChar&#x27;] }
 		];
 
 		&#x2F;&#x2F;Singleton toolbar
@@ -216,12 +243,141 @@ VISH.Editor.Text = (function(V,$,undefined){
 		&#x2F;&#x2F;Disable bottom tags
 		config.removePlugins = &#x27;elementspath&#x27;;
 		&#x2F;&#x2F;Enable table resize and autogrow
-		config.extraPlugins = &#x27;tableresize,autogrow&#x27;;
+		config.extraPlugins = &#x27;tableresize,autogrow,specialchar,mediaembed&#x27;;
 
 		if((options)&amp;&amp;(options.autogrow)){
 			config.autoGrow_minHeight = 34;
 			config.autoGrow_maxHeight = 800;
 		}
+
+		&#x2F;&#x2F;See http:&#x2F;&#x2F;www.htmlhelp.com&#x2F;reference&#x2F;html40&#x2F;entities&#x2F;symbols.html and&#x2F;or http:&#x2F;&#x2F;htmlentities.net&#x2F;html&#x2F;entities for possible symbols
+		config.specialChars = [];
+		config.specialChars = config.specialChars.concat(
+			[[ &#x27;&amp;alpha;&#x27;, &#x27;Alpha&#x27; ]],
+			[[ &#x27;&amp;beta;&#x27;, &#x27;Beta&#x27; ]],
+			[[ &#x27;&amp;gamma;&#x27;, &#x27;Gamma&#x27; ]],
+			[[ &#x27;&amp;delta;&#x27;, &#x27;Delta&#x27; ]],
+			[[ &#x27;&amp;epsilon;&#x27;, &#x27;Epsilon&#x27;]],
+			[[ &#x27;&amp;zeta;&#x27;, &#x27;Zeta&#x27; ]],
+			[[ &#x27;&amp;eta;&#x27;, &#x27;Eta&#x27; ]],
+			[[ &#x27;&amp;theta;&#x27;, &#x27;Theta&#x27; ]],
+			[[ &#x27;&amp;iota;&#x27;, &#x27;Iota&#x27; ]],
+			[[ &#x27;&amp;kappa;&#x27;, &#x27;Kappa&#x27; ]],
+			[[ &#x27;&amp;lambda;&#x27;, &#x27;Lambda&#x27; ]],
+			[[ &#x27;&amp;mu;&#x27;, &#x27;Mu&#x27; ]],
+			[[ &#x27;&amp;nu;&#x27;, &#x27;Nu&#x27; ]],
+			[[ &#x27;&amp;xi;&#x27;, &#x27;Xi&#x27; ]],
+			[[ &#x27;&amp;omicron;&#x27;, &#x27;Omicron&#x27; ]],
+			[[ &#x27;&amp;pi;&#x27;, &#x27;Pi&#x27; ]],
+			[[ &#x27;&amp;rho;&#x27;, &#x27;Rho&#x27; ]],
+			[[ &#x27;&amp;sigma;&#x27;, &#x27;Sigma&#x27; ]],
+			[[ &#x27;&amp;tau;&#x27;, &#x27;Tau&#x27; ]],
+			[[ &#x27;&amp;upsilon;&#x27;, &#x27;Upsilon&#x27; ]],
+			[[ &#x27;&amp;phi;&#x27;, &#x27;Phi&#x27; ]],
+			[[ &#x27;&amp;chi;&#x27;, &#x27;Chi&#x27; ]],
+			[[ &#x27;&amp;psi;&#x27;, &#x27;Psi&#x27; ]],
+			[[ &#x27;&amp;omega;&#x27;, &#x27;Omega&#x27; ]],
+
+			&#x2F;&#x2F;Math symbols
+			[[ &#x27;&amp;divide;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;radic;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;bull;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;middot;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;plusmn;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;frac14;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;frac12;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;frac34;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;permil;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;weierp;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;image;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;real;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;forall;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;part;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;exist;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;empty;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;nabla;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;isin;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;notin;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ni;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;prod;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;sum;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;minus;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;lowast;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;prop;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;infin;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ang;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;and;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;or;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;cap;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;cup;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;int;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;cong;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;asymp;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ne;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;equiv;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;le;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ge;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;sub;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;sup;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;nsub;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;sube;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;supe;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;oplus;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;otimes;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;perp;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;lang;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rang;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;lceil;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rceil;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;lfloor;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rfloor;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;fnof;&#x27;, &#x27;&#x27; ]],
+
+			&#x2F;&#x2F; &#x27;&#x27; and &quot;&quot;
+			[[ &#x27;&amp;lsquo;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rsquo;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ldquo;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rdquo;&#x27;, &#x27;&#x27; ]],
+
+			&#x2F;&#x2F;Arrows
+			[[ &#x27;&amp;larr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;uarr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;darr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rarr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;harr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;crarr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;lArr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;uArr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;dArr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;rArr;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;hArr;&#x27;, &#x27;&#x27; ]],
+
+			&#x2F;&#x2F;Currency
+			[[ &#x27;&amp;euro;&#x27;, &#x27;Euro&#x27; ]],
+			[[ &#x27;&amp;cent;&#x27;, &#x27;Cent&#x27; ]],
+			[[ &#x27;&amp;pound;&#x27;, &#x27;Pound&#x27; ]],
+			[[ &#x27;&amp;yen;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;curren;&#x27;, &#x27;&#x27; ]],
+
+			&#x2F;&#x2F; Other
+			[[ &#x27;&amp;brvbar;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;sect;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;copy;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;reg;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ordf;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;ordm;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;deg;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;laquo;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;raquo;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;not;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;para;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;loz;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;spades;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;clubs;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;hearts;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;diams;&#x27;, &#x27;&#x27; ]],
+			[[ &#x27;&amp;dagger;&#x27;, &#x27;&#x27; ]]
+		);
 
 		&#x2F;&#x2F;Fit the current area
 		config.width = &#x27;100%&#x27;;
@@ -302,11 +458,15 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 		if(!newInstance){
 			&#x2F;&#x2F;Keep slide subslide an area visible until the quiz has been drawed
-			V.Utils.addTempShown([slide,subslide,current_area]);
+			if(!disableTmpShown){
+				V.Utils.addTempShown([slide,subslide,current_area]);
+			}
 			setTimeout(function(){
 				if(_initializedCKEditorInstances[ckeditor.name] !== true){
 					_initializedCKEditorInstances[ckeditor.name] = false;
-					V.Utils.removeTempShown([slide,subslide,current_area]);
+					if(!disableTmpShown){
+						V.Utils.removeTempShown([slide,subslide,current_area]);
+					}
 				} else {
 					_initializedCKEditorInstances[ckeditor.name] = undefined;
 				}
@@ -319,7 +479,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 					if(isQuiz){
 						if(!newInstance){
 							setTimeout(function(){
-								V.Utils.addTempShown([slide,subslide,current_area]);
+								if(!disableTmpShown){
+									V.Utils.addTempShown([slide,subslide,current_area]);
+								}
 								var iframeContent = _getCKEditorIframeContentFromInstance(ckeditor);
 								var newMyHeight = $(iframeContent).find(&quot;html&quot;).height();
 								if(newMyHeight &gt; myHeight){
@@ -331,8 +493,9 @@ VISH.Editor.Text = (function(V,$,undefined){
 								&#x2F;&#x2F;Firefox don&#x27;t calculate height right, maybe a fallback could be provided
 								&#x2F;&#x2F; if(V.Status.getDevice().browser.name === V.Constant.FIREFOX){
 								&#x2F;&#x2F; }
-
-								V.Utils.removeTempShown([slide,subslide,current_area]);
+								if(!disableTmpShown){
+									V.Utils.removeTempShown([slide,subslide,current_area]);
+								}
 							},1000);
 						}
 					} else {
@@ -348,17 +511,34 @@ VISH.Editor.Text = (function(V,$,undefined){
 							ckeditor.focus();
 						}
 					}
+
+					if((options)&amp;&amp;(typeof options.callback == &quot;function&quot;)){
+						options.callback();
+					}
 				});
 			}
 
 			if(!newInstance){
 				if(typeof _initializedCKEditorInstances[ckeditor.name] == &quot;undefined&quot;){
 					_initializedCKEditorInstances[ckeditor.name] = true;
-					V.Utils.removeTempShown([slide,subslide,current_area]);
+					if(!disableTmpShown){
+						V.Utils.removeTempShown([slide,subslide,current_area]);
+					}
 				} else {
 					_initializedCKEditorInstances[ckeditor.name] = undefined;
 				}
 			}
+
+			if((options)&amp;&amp;(typeof options.onKeyup===&quot;function&quot;)&amp;&amp;(options.placeholder!=true)){
+				ckeditor.document.on(&#x27;keyup&#x27;, function(event){
+					options.onKeyup(current_area,ckeditor,event);
+				});
+			}
+
+			if((!initial_text)&amp;&amp;((options)&amp;&amp;(typeof options.callback == &quot;function&quot;))){
+				options.callback();
+			}
+
 		});
 
 		ckeditor.on(&quot;resize&quot;, function(event){
@@ -375,7 +555,13 @@ VISH.Editor.Text = (function(V,$,undefined){
 				var b = $(event.editor.getData()).text().replace(&#x2F;\s+&#x2F;g,&#x27;&#x27;);
 				if(a==b){
 					setTimeout(function(){
-						event.editor.setData(initial_text_blank);
+						event.editor.setData(initial_text_blank, function(){
+							if((options)&amp;&amp;(typeof options.onKeyup===&quot;function&quot;)){
+								ckeditor.document.on(&#x27;keyup&#x27;, function(event){
+									options.onKeyup(current_area,ckeditor,event);
+								});
+							}
+						});
 						event.editor.focus();
 					},20);
 				}
@@ -463,7 +649,16 @@ VISH.Editor.Text = (function(V,$,undefined){
 	};
 
 	var _getPlainText = function(){
-		return $(this.getSnapshot()).text();
+		var _plainText = &quot;&quot;;
+		$(this.getSnapshot()).each(function(index,p){
+			if(index!=0){
+				_plainText = _plainText + &quot;\n&quot;
+			}
+			_plainText = _plainText + $(p).text();
+		});
+
+		&#x2F;&#x2F; return $(this.getSnapshot()).text();
+		return _plainText;
 	};
 
 	&#x2F;*

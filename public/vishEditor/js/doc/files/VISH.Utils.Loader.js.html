@@ -284,6 +284,15 @@ VISH.Utils.Loader = (function(V,undefined){
 		};
 
 		head.appendChild(link);
+
+		if(typeof callback == &quot;function&quot;){
+			&#x2F;&#x2F;Workaround for browsers that don&#x27;t support LINK onload functions
+			var img = document.createElement(&#x27;img&#x27;);
+			img.onerror = function(){
+				callCallback();
+			}
+			img.src = url;
+		}
 	};
 
 	var loadDeviceCSS = function(){
@@ -311,7 +320,7 @@ VISH.Utils.Loader = (function(V,undefined){
 	};
 
 	var loadLanguageCSS = function(){
-		var languagesWithCSS = [&quot;es&quot;];
+		var languagesWithCSS = [&quot;es&quot;, &quot;fr&quot;, &quot;hu&quot;, &quot;nl&quot;, &quot;de&quot;];
 		var language = V.I18n.getLanguage();
 		if(languagesWithCSS.indexOf(language)!=-1){
 			&#x2F;&#x2F;Load CSS for this language

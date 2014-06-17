@@ -455,7 +455,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		if(typeof videoDOM == &quot;string&quot;){
 			var sources = [];
 			&#x2F;&#x2F;Prevent video to be rendered in a non appropriate time.
-			var srcPattern = new RegExp(&quot;src=(\&#x27;||\&quot;)([a-z.:&#x2F;&#x2F;0-9]+)&quot;,&quot;g&quot;);
+			var srcPattern = new RegExp(&quot;src=(\&#x27;||\&quot;)([a-z-.:&#x2F;&#x2F;0-9]+)&quot;,&quot;g&quot;);
 
 			&#x2F;&#x2F; var videoDOM = &quot;&lt;video controls=&#x27;controls&#x27;&gt;&lt;source src=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;videos&#x2F;3366.webm&#x27; type=&#x27;video&#x2F;webm&#x27; &gt;&lt;source src=&#x27;http:&#x2F;&#x2F;vishub.org&#x2F;videos&#x2F;3366.mp4&#x27; type=&#x27;video&#x2F;mp4&#x27; &gt;&lt;p&gt;Your browser does not support HTML5 video.&lt;&#x2F;p&gt;&lt;&#x2F;video&gt;&quot;;
 			var found;
