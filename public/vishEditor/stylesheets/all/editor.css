@@ -1300,9 +1300,9 @@ div.addUrlButtons{
 }
 
 .slidethumb {
-	width: 99px;
-	height: 75px;
-	margin: 11px 0px 6px 21px;
+	width: 100px;
+	height: 79px;
+	margin: 9px 4px 6px 18px;
 	border-radius: 10px;
 	border: 1px solid #ccc;
 }
@@ -2010,7 +2010,7 @@ div.object_wrapper {
 	background: url(/vishEditor/images/icons/themebg.png) no-repeat;
 	width: 530px;
 	height: 300px;
-	padding-left: 35px;
+	padding-left: 45px;
 	padding-right: 35px;
 	padding-top: 87px;
 }
@@ -2033,7 +2033,7 @@ div.object_wrapper {
 	background: url(/vishEditor/images/icons/animationbg.png) no-repeat;
 	width: 530px;
 	height: 300px;
-	padding-left: 35px;
+	padding-left: 44px;
 	padding-right: 35px;
 	padding-top: 87px;
 }
