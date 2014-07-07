@@ -9,6 +9,11 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 		var xmlDoc = $.parseXML( fileXML );
 		var xml = $(xmlDoc);
+
+		var itemBody = $(xml).find("itemBody");
+		var simpleChoice = $(xml).find("simpleChoice");
+		var orderInteraction = $(xml).find("orderInteraction");
+		var correctResponse = $(xml).find("correctResponse value");
 		
 		if($(xml).find('assessmentItem').length != 0){
 			$(xml).find('assessmentItem').each(function(){
@@ -26,22 +31,23 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			schema = false;
 		}
 
+
+
 		if(checkQuizType(fileXML) == "multipleCA"){
-		var itemBody = $(xml).find("itemBody");
-		var simpleChoice = $(xml).find("simpleChoice");
-		var correctResponse = $(xml).find("correctResponse value");
-
-	
-
-		if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
+			if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
+				contains = false;
+			}else{
+				contains= true;
+			}
+		}else if(checkQuizType(fileXML) == "order"){
+			if((itemBody.length == 0)||(orderInteraction.length == 0)||(correctResponse.length == 0)|| (schema == false)){
+				contains = false;
+			}else{
+				contains = true;
+			}
+		}else{
 			contains = false;
-		} else {
-			contains= true;
 		}
-	}else{
-		alert("no es un tipo válido!");
-		contains = false;
-	}
 
 		return contains;
  	};
@@ -94,6 +100,17 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	}
 
 	var getJSONFromXMLFile = function(fileXML){
+		if(checkQuizType(fileXML) == "multipleCA"){
+			return getJSONFromXMLFileMC(fileXML);
+		}else if(checkQuizType(fileXML) == "order"){
+			console.log("hola, order");
+			return getJSONFromXMLFileSorting(fileXML);
+		}
+
+	}
+
+
+	var getJSONFromXMLFileMC = function(fileXML){
 		var elements = [];
 		var question;
 		var answerArray = [];
@@ -137,6 +154,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		   	})
 		});
 
+
 		if(correctanswerArray.length > 1){
 			nAnswers = true;
 		} else {
@@ -177,6 +195,110 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
+
+
+
+	var getJSONFromXMLFileSorting = function(fileXML){
+		var elements = [];
+		var question;
+		var answerArray = [];
+		var correctanswerArray = [];
+		var answerIds = [];
+
+		var xmlDoc = $.parseXML(fileXML);
+		var xml = $(xmlDoc);
+
+
+		/*To get the question */
+		if($(xml).find('prompt').length != 0){
+		$(xml).find('prompt').each(function(){
+			question = $(this).text();
+		});
+		}else{
+			$(xml).find('itemBody').children().first().each(function(){
+				question = $(this).text();
+			});	
+		}
+
+
+		/*To get array of answers */
+		$(xml).find('simpleChoice').each(function(){
+			var answer = $(this).text();
+			answerArray.push(answer);
+		});
+
+
+
+		/* To get array of corrrect answers */
+		$(xml).find('correctResponse value').each(function(){
+			var cAnswer = $(this).text();
+			correctanswerArray.push(cAnswer);
+		});
+
+
+		/* To get identifiers */
+		$(xml).find('simpleChoice').each(function(){
+			$(this.attributes).each(function(index,attribute){
+				if(attribute.name == "identifier"){
+					answerIds.push(attribute.textContent);
+		    	}
+		   	})
+		});
+
+
+		//we get the IDs
+		//now we have to get the choices according to that ID
+		$(xml).find('simpleChoice').each(function(){
+			$(this.attributes).each(function(index,attribute){
+				if(attribute.name == "identifier"){
+					answerIds.push(attribute.textContent);
+		    	}
+		   	})
+		});
+
+		var myHash = [];
+		for (var i = 1; i <= answerArray.length; i++ ){
+			myHash[answerIds[i-1]] = answerArray[i-1];
+		}
+
+
+		var choices = [];
+		for (var i = 1; i <= answerArray.length; i++ ){
+			var iChoice;
+			iChoice = {
+				'id': i.toString(), 
+				'value': myHash[correctanswerArray[i-1]] , 
+				'wysiwygValue' :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + myHash[correctanswerArray[i-1]] + '&shy;</span></span></p>\n', 
+				'answer': i.toString()
+			};
+			choices.push(iChoice);
+
+		}
+
+		elements.push({
+			"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
+			"quiztype":"sorting",
+			"selfA":true,
+			"question":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
+			},
+			"choices": $.extend([{}], choices), 
+		});
+
+		var options = {
+			template : "t2"
+		}
+
+		console.log("elements");
+		console.log(elements);
+
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
+
+
 
 
 	return {
