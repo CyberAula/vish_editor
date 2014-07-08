@@ -19,7 +19,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			$(xml).find('assessmentItem').each(function(){
 				$(this.attributes).each(function(index,attribute){
 					if(attribute.name == "xsi:schemaLocation"){
-						if((((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1) ||(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/imsqti_v2p1.xsd")) != -1)) {
+						if((((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd")) != -1) ||(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/imsqti_v2p1.xsd")) != -1)) {
 							schema = true;
 						} else {
 							schema = false;
@@ -32,7 +32,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		}
 
 
-
 		if(checkQuizType(fileXML) == "multipleCA"){
 			if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
 				contains = false;
@@ -41,6 +40,12 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			}
 		}else if(checkQuizType(fileXML) == "order"){
 			if((itemBody.length == 0)||(orderInteraction.length == 0)||(correctResponse.length == 0)|| (schema == false)){
+				contains = false;
+			}else{
+				contains = true;
+			}
+		}else if(checkQuizType(fileXML) == "openshortAnswer" || checkQuizType(fileXML) == "fillInTheBlankText"){
+			if((itemBody.length == 0)||(correctResponse.length == 0)|| (schema == false)){
 				contains = false;
 			}else{
 				contains = true;
@@ -75,7 +80,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var multipleCA = $(xml).find("simpleChoice");
 		var fillInTheBlankText = $(xml).find("textEntryInteraction");
 		var hotSpotClick = $(xml).find("selectPointInteraction");
-		var openshortAnswer = $(xml).find("extendTextInteraction");
+		var openshortAnswer = $(xml).find("extendedTextInteraction");
 		var order = $(xml).find("orderInteraction");
 		var fillInTheBlankGap = $(xml).find("gapMatchInteraction");
 		var matching = $(xml).find("matchInteraction");
@@ -103,8 +108,9 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		if(checkQuizType(fileXML) == "multipleCA"){
 			return getJSONFromXMLFileMC(fileXML);
 		}else if(checkQuizType(fileXML) == "order"){
-			console.log("hola, order");
 			return getJSONFromXMLFileSorting(fileXML);
+		}else if (checkQuizType(fileXML) == "openshortAnswer" || checkQuizType(fileXML) == "fillInTheBlankText" ){
+			return getJSONFromXMLFileSA(fileXML);
 		}
 
 	}
@@ -292,12 +298,74 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			template : "t2"
 		}
 
-		console.log("elements");
-		console.log(elements);
-
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
 
+		var getJSONFromXMLFileSA = function(fileXML){
+
+		var elements = [];
+		var question;
+		var correctanswerArray = [];
+		var selfA;
+
+		var xmlDoc = $.parseXML(fileXML);
+		var xml = $(xmlDoc);
+
+
+		$(xml).find('responseProcessing').each(function(){
+			$(this.attributes).each(function(index,attribute){
+				if(attribute.name == "template"){
+					if (attribute.textContent == "http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"){
+						selfA = true;
+					}else{
+						selfA = false;
+					}
+		    	}
+		   	})
+		});
+
+
+
+		/*To get the question */
+		if($(xml).find('prompt').length != 0){
+		$(xml).find('prompt').each(function(){
+			question = $(this).text();
+		});
+		}else{
+			$(xml).find('itemBody').children().first().each(function(){
+				question = $(this).text();
+			});	
+		}
+
+
+		/* To get array of corrrect answers */
+		$(xml).find('correctResponse value').each(function(){
+			var cAnswer = $(this).text();
+			correctanswerArray.push(cAnswer);
+		});
+		
+		elements.push({
+			"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
+			"quiztype":"openAnswer",
+			"selfA": selfA,
+			"question":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
+			},
+			"answer":{
+				"value": correctanswerArray[0],
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
+			}, 
+		});
+
+		var options = {
+			template : "t2"
+		}
+
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
 
 
 
