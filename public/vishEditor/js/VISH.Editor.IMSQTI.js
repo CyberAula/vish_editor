@@ -105,14 +105,24 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	}
 
 	var getJSONFromXMLFile = function(fileXML){
-		if(checkQuizType(fileXML) == "multipleCA"){
-			return getJSONFromXMLFileMC(fileXML);
-		}else if(checkQuizType(fileXML) == "order"){
-			return getJSONFromXMLFileSorting(fileXML);
-		}else if (checkQuizType(fileXML) == "openshortAnswer" || checkQuizType(fileXML) == "fillInTheBlankText" ){
-			return getJSONFromXMLFileSA(fileXML);
-		}
 
+		switch (checkQuizType(fileXML)) {
+    		case "multipleCA":
+        		return getJSONFromXMLFileMC(fileXML);
+        	break;
+    		
+    		case "order":
+				return getJSONFromXMLFileSorting(fileXML);
+        	break;
+    
+    		case "openshortAnswer":
+				return getJSONFromXMLFileSA(fileXML);
+        	break;
+
+        	case "fillInTheBlankText" :
+				return getJSONFromXMLFileSA(fileXML);
+        	break;
+		}
 	}
 
 
@@ -286,7 +296,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			"type":"quiz",
 			"areaid":"left",
 			"quiztype":"sorting",
-			"selfA":true,
+			"selfA": true,
 			"question":{
 				"value": question,
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
