@@ -7,6 +7,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var contains;
 		var schema;
 
+
 		var xmlDoc = $.parseXML( fileXML );
 		var xml = $(xmlDoc);
 
@@ -19,7 +20,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			$(xml).find('assessmentItem').each(function(){
 				$(this.attributes).each(function(index,attribute){
 					if(attribute.name == "xsi:schemaLocation"){
-						if((((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd")) != -1) ||(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/imsqti_v2p1.xsd")) != -1)) {
+						if((((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd")) != -1) ||(((attribute.textContent).indexOf("http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1.xsd")) != -1)) {
 							schema = true;
 						} else {
 							schema = false;
