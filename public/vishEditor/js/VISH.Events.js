@@ -190,6 +190,7 @@ VISH.Events = (function(V,$,undefined){
 				event.preventDefault();    		
 				break;
 		}
+		V.TrackingSystem.registerAction("keydown",{"keyCode":event.keyCode});
 	};
 	
 	return {
