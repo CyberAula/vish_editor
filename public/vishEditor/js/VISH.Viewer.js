@@ -109,6 +109,9 @@ VISH.Viewer = (function(V,$,undefined){
 			//Try to win focus
 			window.focus();
 		}
+
+		//After all, init tracking system
+		V.TrackingSystem.init();
 	};
 
 	
