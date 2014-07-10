@@ -124,7 +124,9 @@ VISH.Messenger.Helper = (function(V,undefined){
 				}
 				break;
 			case V.Constant.Event.allowExitWithoutConfirmation:
-					V.Editor.Events.allowExitWithoutConfirmation();
+					if(V.Editing){
+						V.Editor.Events.allowExitWithoutConfirmation();
+					}
 				break;
 			case V.Constant.Event.onSelectedSlides:
 					V.EventsNotifier.notifyEvent(V.Constant.Event.onSelectedSlides,VEMessageObject.params,true);

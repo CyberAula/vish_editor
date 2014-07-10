@@ -113,6 +113,10 @@ VISH.Events = (function(V,$,undefined){
 			}
 		};
 
+		window.onbeforeunload = function(){
+			V.EventsNotifier.notifyEvent(V.Constant.Event.exit);
+		};
+
 		if(_mobile){
 			_eMobile.bindViewerMobileEventListeners();
 		}

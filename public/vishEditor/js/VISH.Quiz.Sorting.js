@@ -105,6 +105,8 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 
 		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
 
+		V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.SORTING, "correct":answeredQuizCorrectly});
+
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
 		if(!willRetry){

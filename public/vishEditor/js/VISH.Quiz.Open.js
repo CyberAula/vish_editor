@@ -93,6 +93,8 @@ VISH.Quiz.Open = (function(V,$,undefined){
 				$(textArea).addClass("openQ_wrong_answer");
 			}
 
+			V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.OPEN, "correct":answeredQuizCorrectly});
+
 			var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
 			if(willRetry){
@@ -132,6 +134,8 @@ VISH.Quiz.Open = (function(V,$,undefined){
 					//Do not disable open ended quizzes (answer can be always checked)
 					break;
 			};
+
+			V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.OPEN});
 		}
 	};
 

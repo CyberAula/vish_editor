@@ -18,6 +18,7 @@ VISH.Constant.Event.onSubslideClosed = "onSubslideClosed";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";
+VISH.Constant.Event.exit = "exit";
 VISH.Constant.Event.onSelectedSlides = "onSelectedSlides";
 VISH.Constant.Event.onVEFocusChange = "onVEFocusChange";
 

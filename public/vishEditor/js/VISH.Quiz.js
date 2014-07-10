@@ -190,6 +190,7 @@ VISH.Quiz = (function(V,$,undefined){
 	_onAnswerSAQuiz = function(quizDOM,quizModule){
 		var quizStatus = $(quizDOM).find(".quizAnswerButton").attr("quizstatus");
 		if(quizStatus === "retry"){
+			V.TrackingSystem.registerAction("retryQuiz");
 			quizModule.onRetryQuiz(quizDOM);
 		} else if(quizStatus === "continue"){
 			var slideDOM = V.Slides.getTargetSlide();
@@ -314,6 +315,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 		switch($(startButton).attr("quizStatus")){
 			case "running":
+				V.TrackingSystem.registerAction("ARSoptions");
 				$("#fancybox-close").hide();
 				$("a#addQuizSessionFancybox").trigger("click");
 				break;
@@ -321,6 +323,7 @@ VISH.Quiz = (function(V,$,undefined){
 				break;
 			case "stop":
 			default:
+				V.TrackingSystem.registerAction("launchARS");
 				_startNewQuizSession(quizDOM);
 			break;
 		}
@@ -381,6 +384,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button1.text = V.I18n.getTrans("i.cancel");
 		button1.extraclass = "quizSession_button_cancel";
 		button1.callback = function(){
+			V.TrackingSystem.registerAction("cancel_saveARS");
 			_onCloseQuizSession('cancel');
 		}
 		options.buttons.push(button1);
@@ -389,6 +393,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button2.text = V.I18n.getTrans("i.No");
 		button2.extraclass = "quizSession_button_no";
 		button2.callback = function(){
+			V.TrackingSystem.registerAction("no_saveARS");
 			_onCloseQuizSession('no');
 		}
 		options.buttons.push(button2);
@@ -397,6 +402,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button3.text = V.I18n.getTrans("i.Yes");
 		button3.extraclass = "quizSession_button_yes";
 		button3.callback = function(){
+			V.TrackingSystem.registerAction("saveARS");
 			_onCloseQuizSession('yes');
 		}
 		options.buttons.push(button3);
@@ -410,6 +416,8 @@ VISH.Quiz = (function(V,$,undefined){
 		options.middlerowExtraClass = "mr_quizSession";
 
 		options.buttonsWrapperClass = "forceCenter";
+		
+		V.TrackingSystem.registerAction("stopARS");
 		
 		V.Utils.showDialog(options);
 	};

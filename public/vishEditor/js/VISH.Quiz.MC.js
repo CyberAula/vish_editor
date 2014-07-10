@@ -80,6 +80,8 @@ VISH.Quiz.MC = (function(V,$,undefined){
 			quizChoicesById[quizChoice.id] = quizChoice;
 		});
 
+		var multipleAnswer = ((quizJSON.extras)&&(quizJSON.extras.multipleAnswer===true));
+
 		//Color correct and wrong answers
 		$(quiz).find("tr.mc_option").each(function(index,tr){
 			var choiceId = $(tr).attr("choiceid");
@@ -102,6 +104,8 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		});
 
 		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
+
+		V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.MCHOICE, "correct": answeredQuizCorrectly, "multipleAnswer": multipleAnswer});
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 

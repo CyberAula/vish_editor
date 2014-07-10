@@ -67,6 +67,8 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
 
 		var answeredQuizCorrectly = true;
+		var correctStatements = 0;
+		var incorrectStatements = 0;
 
 		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
 		var quizChoices = quizJSON.choices;
@@ -96,9 +98,11 @@ VISH.Quiz.TF = (function(V,$,undefined){
 				var trChoice = $(quiz).find("tr.mc_option").not(".tf_head")[index];
 				if(myAnswer===choice.answer){
 					$(trChoice).addClass("mc_correct_choice");
+					correctStatements += 1;
 				} else if(typeof myAnswer != "undefined"){
 					answeredQuizCorrectly = false;
 					$(trChoice).addClass("mc_wrong_choice");
+					incorrectStatements += 1;
 				} else {
 					//No answer selected
 					answeredQuizCorrectly = false;
@@ -110,9 +114,12 @@ VISH.Quiz.TF = (function(V,$,undefined){
 							$(falseRadio).attr('checked', true);
 						}
 					}
+					incorrectStatements += 1;
 				}
 			}
 		});
+
+		V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.TF, "correct":answeredQuizCorrectly, "correctStatements": correctStatements, "incorrectStatements": incorrectStatements});
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 

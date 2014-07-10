@@ -7,8 +7,18 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	//Stores the cronology
 	var _chronology;
 
+	//Tracking API Key
+	var _apiKey;
+
 
 	var init = function(animation,callback){
+		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
+		
+		if(typeof _apiKey == "undefined"){
+			_enabled = false;
+			return;
+		}
+
 		_enabled = true;
 
 		_timeReference = new Date().getTime();
@@ -26,6 +36,31 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			setTimeout(function(){
 				_chronology.push(new ChronologyEntry(V.Slides.getCurrentSlideNumber()));
 			},10);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideOpen, function(params){
+			registerAction(V.Constant.Event.onSubslideOpen,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSubslideClosed, function(params){
+			registerAction(V.Constant.Event.onSubslideClosed,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onPlayVideo, function(params){
+			registerAction(V.Constant.Event.onPlayVideo,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onPauseVideo, function(params){
+			registerAction(V.Constant.Event.onPauseVideo,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSeekVideo, function(params){
+			registerAction(V.Constant.Event.onSeekVideo,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
+			registerAction(V.Constant.Event.exit);
+			//TODO: Send tracking data
 		});
 
 		//Custom Tracking Events
@@ -48,7 +83,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	};
 
 	var registerAction = function(id,params){
-		V.Debugging.log("Action id: " + id);
+		V.Debugging.log("Action id: " + id + ", with params:");
+		V.Debugging.log(params);
 		if((_enabled)&&(typeof _chronology[_chronology.length-1] != "undefined")){
 			_chronology[_chronology.length-1].actions.push(new Action(id,params));
 		}
@@ -73,8 +109,6 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	//ChronologyEntry constructor
 	var ChronologyEntry = function(slideNumber){
 		this.slideNumber = slideNumber;
-		this.nclicks = 0;
-		this.nkeys = 0;
 		this.actions = [];
 		this.t = getAbsoluteTime();
 	};
@@ -82,7 +116,9 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var Action = function(id,params){
 		this.id = id;
 		this.t = getAbsoluteTime();
-		this.params = params;
+		if(typeof params != "undefined"){
+			this.params = params;
+		}
 	};
 
 

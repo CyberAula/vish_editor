@@ -41,7 +41,9 @@ var getOptions = function(){
 		configuration["LRE"] = true;
 
 		configuration["Soundcloud"] = true;
-		configuration["SoundcloudAPIKey"] = 'bb5aebd03b5d55670ba8fa5b5c3a3da5';
+		configuration["SoundcloudAPIKey"] = "SoundcloudAPIKey";
+
+		configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
 
 		configuration["Upload"] = true;
 
@@ -135,6 +137,7 @@ var getOptions = function(){
 
 			//Custom player for videos (needed for video synchronization)
 			// options["videoCustomPlayer"]  = true;
+
 
 			//Addons
 			options.addons = [];
