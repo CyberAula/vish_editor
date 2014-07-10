@@ -7,6 +7,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var contains;
 		var schema;
 		var myRandomIHash = [];
+		var myRandomFHash = [];
 		var min,max;
 		var ident;
 
@@ -47,17 +48,34 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 					})
 				$(this.attributes).each(function(index,attribute){
 					if(attribute.name == "min"){
-						console.log("min" + attribute.textContent);
 						min = attribute.textContent;
 					}else if (attribute.name == "max") {
-						console.log("max" + attribute.textContent);
 						max = attribute.textContent;
 				}
 			});
+			myRandomIHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
 		});
 	}
-	myRandomIHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
 
+	if($(xml).find('templateProcessing setTemplateValue randomFloat').length != 0){
+			$(xml).find('templateProcessing setTemplateValue randomFloat').each(function(){
+				$(this).parent().each(function(){
+						$(this.attributes).each(function(index,attribute){
+							if(attribute.name == "identifier"){
+								ident = attribute.textContent;
+							}
+						})
+					})
+				$(this.attributes).each(function(index,attribute){
+					if(attribute.name == "min"){
+						min = attribute.textContent;
+					}else if (attribute.name == "max") {
+						max = attribute.textContent;
+				}
+			});
+			myRandomFHash[ident] = parseFloat(Math.min(parseInt(min) + (Math.random() * (parseInt(max) - parseInt(min))),parseInt(max)).toFixed(2));
+		});
+	}
 
 		if(checkQuizType(fileXML) == "multipleCA"){
 			if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
