@@ -6,6 +6,9 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	var isCompliantXMLFile = function(fileXML){
 		var contains;
 		var schema;
+		var myRandomIHash = [];
+		var min,max;
+		var ident;
 
 
 		var xmlDoc = $.parseXML( fileXML );
@@ -31,6 +34,29 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		} else {
 			schema = false;
 		}
+
+
+		if($(xml).find('templateProcessing setTemplateValue randomInteger').length != 0){
+			$(xml).find('templateProcessing setTemplateValue randomInteger').each(function(){
+				$(this).parent().each(function(){
+						$(this.attributes).each(function(index,attribute){
+							if(attribute.name == "identifier"){
+								ident = attribute.textContent;
+							}
+						})
+					})
+				$(this.attributes).each(function(index,attribute){
+					if(attribute.name == "min"){
+						console.log("min" + attribute.textContent);
+						min = attribute.textContent;
+					}else if (attribute.name == "max") {
+						console.log("max" + attribute.textContent);
+						max = attribute.textContent;
+				}
+			});
+		});
+	}
+	myRandomIHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
 
 
 		if(checkQuizType(fileXML) == "multipleCA"){
@@ -131,9 +157,11 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var elements = [];
 		var question;
 		var answerArray = [];
+		//var answerArrayL = [];
 		var correctanswerArray = [];
 		var nAnswers;
 		var answerIds = [];
+		//var quiztype;
 
 		var xmlDoc = $.parseXML(fileXML);
 		var xml = $(xmlDoc);
@@ -153,8 +181,18 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		/*To get array of answers */
 		$(xml).find('simpleChoice').each(function(){
 			var answer = $(this).text();
+			//answerArrayL.push(answer.toLowerCase());
 			answerArray.push(answer);
 		});
+
+		// if(answerArray.length == 2){
+		// 	if(((jQuery.inArray("true",answerArrayL)) == -1) && ((jQuery.inArray("false",answerArrayL)) == -1)){
+		// 		quiztype = "multiplechoice";
+		// 	}else{
+		// 		quiztype = "truefalse";
+		// 	}
+		// }
+
 
 		/* To get array of corrrect answers */
 		$(xml).find('correctResponse value').each(function(){
@@ -190,11 +228,12 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			choices.push(iChoice);
 		}
 
+
 		elements.push({
 			"id":"article2_zone1",
 			"type":"quiz",
 			"areaid":"left",
-			"quiztype":"multiplechoice",
+			"quiztype": "multiplechoice",
 			"selfA":true,
 			"question":{
 				"value": question,
