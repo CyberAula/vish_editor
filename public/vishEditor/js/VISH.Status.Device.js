@@ -263,6 +263,13 @@ VISH.Status.Device = (function(V,$,undefined){
 		 // } else if(device.desktop){
 		 // 	alert("desktop");
 		 // }
+
+		 //Add extra device information (useful for the tracking system)
+		 device.userAgent = window.navigator.userAgent;
+		 device.appName = window.navigator.appName;
+		 device.appVersion = window.navigator.appVersion;
+		 device.platform = window.navigator.platform;
+		 device.language = window.navigator.language;
 	};
 
 	/*
@@ -279,7 +286,7 @@ VISH.Status.Device = (function(V,$,undefined){
 			width: window.screen.availWidth,
 			height: window.screen.availHeight
 		};
-		
+
 		return device;
 	};
 
