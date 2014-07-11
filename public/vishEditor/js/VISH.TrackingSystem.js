@@ -95,6 +95,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onAcceptRecommendation, function(params){
+			_rs.accepted = params.id;
 			registerAction(V.Constant.Event.onAcceptRecommendation,params);
 		});
 
@@ -108,7 +109,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
 			registerAction(V.Constant.Event.exit);
-			//TODO: Send tracking data
+			sendTrackingObject();
 		});
 
 		//Custom Tracking Events
@@ -126,7 +127,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 				}
 			}
 
-			// registerAction("click",params);
+			registerAction("click",params);
 		});
 		
 	};
@@ -137,17 +138,35 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	/////////////
 
 	var registerAction = function(id,params){
-		V.Debugging.log("Action id: " + id + ", with params:");
-		V.Debugging.log(params);
+		// V.Debugging.log("Action id: " + id + ", with params:");
+		// V.Debugging.log(params);
 		if((_enabled)&&(typeof _chronology[_chronology.length-1] != "undefined")){
 			_chronology[_chronology.length-1].actions.push(new Action(id,params));
 		}
 	};
 
-	var _composeJSON = function(){
+	var sendTrackingObject = function(){
+		var data = _composeTrackingObject();
+
+		if(typeof V.Configuration.getConfiguration().TrackingSystemAPIURL == "string"){
+			var trackerAPIUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
+		} else {
+			//Default tracker: Vishub.org
+			var trackerAPIUrl = "http://vishub.org/tracking_system_entries";
+		}
+
+		$.ajax({
+			type    : 'POST',
+			url     : trackerAPIUrl,
+			data    : data,
+			async	: false
+		});
+	};
+
+	var _composeTrackingObject = function(){
 		return {
-			"appId": "ViSH Editor",
-			"appKey": _apiKey,
+			"app_id": "ViSH Editor",
+			"app_key": _apiKey,
 			"data": _composeData()
 		}
 	};
@@ -164,6 +183,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		return data;
 	};
+
 
 	/////////////
 	// Helpers
@@ -188,8 +208,11 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	//Constructors
 	var LO = function(){
 		var current_presentation = V.Viewer.getCurrentPresentation();
-		if(typeof current_presentation.vishMetadata == "object"){
-			this.id = current_presentation.vishMetadata.id;
+		if(typeof current_presentation == "object"){
+			this.content = current_presentation;
+			if(typeof current_presentation.vishMetadata == "object"){
+				this.id = current_presentation.vishMetadata.id;
+			}
 		}
 	};
 
@@ -223,12 +246,13 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 
 	return {
-		init				: init,
-		registerAction		: registerAction,
-		getAbsoluteTime		: getAbsoluteTime,
-		getRelativeTime		: getRelativeTime,
-		getChronology		: getChronology,
-		_composeJSON		: _composeJSON
+		init					: init,
+		registerAction			: registerAction,
+		getAbsoluteTime			: getAbsoluteTime,
+		getRelativeTime			: getRelativeTime,
+		getChronology			: getChronology,
+		_composeTrackingObject	: _composeTrackingObject,
+		sendTrackingObject		: sendTrackingObject
 	};
 
 }) (VISH, jQuery);

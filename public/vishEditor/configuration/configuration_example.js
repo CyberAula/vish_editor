@@ -43,7 +43,9 @@ var getOptions = function(){
 		configuration["SoundCloud"] = true;
 		configuration["SoundCloudAPIKEY"] = "SoundcloudAPIKey";
 
-		configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
+		// Do not use the Tracking System on development
+		// configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
+		// configuration["TrackingSystemAPIURL"] = "http://vishub.org/tracking_system_entries";
 
 		configuration["Upload"] = true;
 
