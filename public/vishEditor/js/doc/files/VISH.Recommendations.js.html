@@ -107,6 +107,9 @@ VISH.Recommendations = (function(V,$,undefined){
 	&#x2F;&#x2F;Params to enhance recommendation
 	var _searchTerms;
 
+	&#x2F;&#x2F;Store information for tracking
+	var _RSTrackingData;
+
 
 	&#x2F;**
 	 * Function to initialize the Recommendations
@@ -159,6 +162,7 @@ VISH.Recommendations = (function(V,$,undefined){
 				V.ViewerAdapter.decideIfPageSwitcher();
 			},
 			&#x27;onClosed&#x27; : function(data) {
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onHideRecommendations,{},true);
 				$(&quot;#fancybox-outer&quot;).css(&quot;background&quot;, &quot;white&quot;);
 				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;-14px&quot;);
 				V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
@@ -249,6 +253,9 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
+		&#x2F;&#x2F;Store recommender information for tracking
+        _RSTrackingData = data;
+
 		var applyTargetBlank = V.Status.getIsInExternalSite();
 
         var ex;
@@ -256,9 +263,9 @@ VISH.Recommendations = (function(V,$,undefined){
         for (var i = data.length - 1; i &gt;= 0; i--){
         	ex = data[i];
         	if(applyTargetBlank){
-        		result += &#x27;&lt;a target=&quot;_blank&quot; href=&quot;&#x27;+ex.url+&#x27;&quot;&gt;&#x27;;
+        		result += &#x27;&lt;a target=&quot;_blank&quot; class=&quot;recommendedItemLinkBlank&quot; href=&quot;&#x27;+ex.url+&#x27;&quot; ex_id=&quot;&#x27; + ex.id + &#x27;&quot;&gt;&#x27;;
         	}
-        	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; number=&quot;&#x27;+i+&#x27;&quot;&gt;&#x27;+
+        	result += &#x27;&lt;div class=&quot;rec-excursion&quot; id=&quot;recom-&#x27;+ex.id+&#x27;&quot; ex_id=&quot;&#x27; + ex.id + &#x27;&quot;number=&quot;&#x27;+i+&#x27;&quot;&gt;&#x27;+
                         &#x27;&lt;ul class=&quot;rec-thumbnail&quot;&gt;&#x27;+
                           &#x27;&lt;li class=&quot;rec-img-excursion&quot;&gt;&#x27;+
                            &#x27;&lt;img src=&quot;&#x27;+ex.image+&#x27;&quot;&gt;&#x27;+
@@ -268,7 +275,7 @@ VISH.Recommendations = (function(V,$,undefined){
                             &#x27;&lt;div class=&quot;rec-title-excursion&quot;&gt;&#x27;+ex.title+&#x27;&lt;&#x2F;div&gt;&#x27;+
                             &#x27;&lt;div class=&quot;rec-by&quot;&gt;by &lt;span class=&quot;rec-name&quot;&gt;&#x27;+ex.author+&#x27;&lt;&#x2F;span&gt;&lt;&#x2F;div&gt;&#x27;+
                             &#x27;&lt;span class=&quot;rec-visits&quot;&gt;&#x27;+ex.views+&#x27;&lt;&#x2F;span&gt; &lt;span class=&quot;rec-views&quot;&gt;&#x27;+V.I18n.getTrans(&quot;i.exviews&quot;)+&#x27;&lt;&#x2F;span&gt;&#x27;+
-                            &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&lt;span class=&quot;rec-likes-number&quot;&gt;&#x27;+ex.favourites+&#x27;&lt;&#x2F;span&gt;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;http:&#x2F;&#x2F;vishub.org&#x2F;assets&#x2F;icons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
+                            &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&lt;span class=&quot;rec-likes-number&quot;&gt;&#x27;+ex.favourites+&#x27;&lt;&#x2F;span&gt;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;&#x27;+ V.ImagesPath + &#x27;vicons&#x2F;star-on10.png&quot;&gt;&lt;&#x2F;div&gt;&#x27;+
                           &#x27;&lt;&#x2F;li&gt;&#x27;+
                         &#x27;&lt;&#x2F;ul&gt;&#x27;+
                     &#x27;&lt;&#x2F;div&gt;&#x27;;
@@ -285,6 +292,7 @@ VISH.Recommendations = (function(V,$,undefined){
         	&#x2F;&#x2F;we join the recom-X with sending the parent to the excursion url
         	 for (var i = data.length - 1; i &gt;= 0; i--){
         	 	$(&quot;#recom-&quot;+data[i].id).click(function(my_event){
+        	 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAcceptRecommendation,{&quot;id&quot;: $(this).attr(&quot;ex_id&quot;)},true);
         	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(&quot;.rec-excursion&quot;).attr(&quot;number&quot;)].url);
 				});
         	 }
@@ -332,11 +340,14 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onShowRecommendations,{},true);
+
 		&#x2F;&#x2F;Show fancybox
 		$(&quot;#fancyRec&quot;).trigger(&#x27;click&#x27;);
 	};
 
 	var hideFancybox = function(){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onHideRecommendations,{},true);
 		$.fancybox.close();
 	};
 
@@ -387,16 +398,22 @@ VISH.Recommendations = (function(V,$,undefined){
 		return searchTerms.join(&quot;,&quot;);
 	};
 
+	var getData = function(){
+		return _RSTrackingData;
+	}
+
 
 	&#x2F;&#x2F;Evaluations in recommendation panel
 
 	var onClickEvaluateButton = function(){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
+
 		if(V.Status.getIsInVishSite()){
 			V.FullScreen.exitFromNativeFullScreen();
 			window.parent.document.getElementById(&#x27;evaluation-button-id&#x27;).click();
 		} else if(V.Debugging.isDevelopping()){
 			window.alert(&quot;Evaluate!&quot;);
-		}	
+		}
 	};
 
 	return {
@@ -408,8 +425,9 @@ VISH.Recommendations = (function(V,$,undefined){
 		hideFancybox			: hideFancybox,
 		isRecVisible 			: isRecVisible,
 		isEnabled				: isEnabled,
-		aftersetupSize			: aftersetupSize,
-		onClickEvaluateButton	: onClickEvaluateButton
+		getData					: getData,
+		onClickEvaluateButton	: onClickEvaluateButton,
+		aftersetupSize			: aftersetupSize
 	};
 
 }) (VISH,jQuery);

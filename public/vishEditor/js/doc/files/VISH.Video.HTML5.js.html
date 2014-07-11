@@ -151,88 +151,75 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 * ViSH Viewer features
 	 *&#x2F;
 
-	var setVideoEvents = function(){
-		var videos = $(&quot;video&quot;);
-		$.each(videos, function(index, video){
-			video.addEventListener(&#x27;play&#x27;, function(){
-				&#x2F;&#x2F; V.Debugging.log(&quot;Play at &quot; + video.currentTime);
+	var setMultimediaEvents = function(){
+		var multimediaEls = $(&quot;video, audio&quot;);
+		$.each(multimediaEls, function(index, mEl){
+
+			var isVideo = (mEl.tagName===&quot;VIDEO&quot;);
+			var isAudio = !isVideo;
+			
+			if(isVideo){
+				var mElType = &quot;VIDEO&quot;;
+			} else if(isAudio){
+				var mElType = &quot;AUDIO&quot;;
+			}
+
+			mEl.addEventListener(&#x27;play&#x27;, function(){
+				&#x2F;&#x2F; V.Debugging.log(&quot;Play at &quot; + mEl.currentTime);
 				var params = new Object();
+				params.multimediaType = mElType;
 				params.type = &quot;HTML5&quot;;
-				params.videoId = video.id;
-				params.currentTime = video.currentTime;
+				params.id = mEl.id;
+				params.currentTime = mEl.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
-				V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+				var eventId = (isVideo ? V.Constant.Event.onPlayVideo : V.Constant.Event.onPlayAudio);
+				V.EventsNotifier.notifyEvent(eventId,params,playTriggeredByUser);
 				playTriggeredByUser = true;
 			}, false);
-			video.addEventListener(&#x27;pause&#x27;, function(){
-				&#x2F;&#x2F; V.Debugging.log(&quot;Pause &quot; + video.currentTime);
+			mEl.addEventListener(&#x27;pause&#x27;, function(){
+				&#x2F;&#x2F; V.Debugging.log(&quot;Pause &quot; + mEl.currentTime);
 				var params = new Object();
+				params.multimediaType = mElType;
 				params.type = &quot;HTML5&quot;;
-				params.videoId = video.id;
-				params.currentTime = video.currentTime;
+				params.id = mEl.id;
+				params.currentTime = mEl.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
-				V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+				var eventId = (isVideo ? V.Constant.Event.onPauseVideo : V.Constant.Event.onPauseAudio);
+				V.EventsNotifier.notifyEvent(eventId,params,pauseTriggeredByUser);
 				pauseTriggeredByUser = true;
 			}, false);
-			video.addEventListener(&#x27;ended&#x27;, function(){
-				&#x2F;&#x2F; V.Debugging.log(&quot;Ended &quot; + video.currentTime);
+			mEl.addEventListener(&#x27;ended&#x27;, function(){
+				&#x2F;&#x2F; V.Debugging.log(&quot;Ended &quot; + mEl.currentTime);
 			}, false);
-			video.addEventListener(&quot;error&quot;, function(err){
-                &#x2F;&#x2F; V.Debugging.log(&quot;Video error: &quot; + err);
+			mEl.addEventListener(&quot;error&quot;, function(err){
+                &#x2F;&#x2F; V.Debugging.log(&quot;mEl error: &quot; + err);
             }, false);
-			video.addEventListener(&quot;seeked&quot;, function(err){
-                &#x2F;&#x2F; V.Debugging.log(&quot;Seek at &quot; + video.currentTime);
+			mEl.addEventListener(&quot;seeked&quot;, function(err){
+                &#x2F;&#x2F; V.Debugging.log(&quot;Seek at &quot; + mEl.currentTime);
                 var params = new Object();
+                params.multimediaType = mElType;
 				params.type = &quot;HTML5&quot;;
-				params.videoId = video.id;
-				params.currentTime = video.currentTime;
+				params.id = mEl.id;
+				params.currentTime = mEl.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
-				V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
+				var eventId = (isVideo ? V.Constant.Event.onSeekVideo : V.Constant.Event.onSeekAudio);
+				V.EventsNotifier.notifyEvent(eventId,params,seekTriggeredByUser);
 				seekTriggeredByUser = true;
             }, false);
-			&#x2F;&#x2F;PREVENT KEYBOARD EVENTS ON FIREFOX!
-			$(video).focus(function(event){
-				this.blur();
-			});
-		});
-	};
-	
 
-	&#x2F;**
-	 * Function to start all videos of a slide
-	 *&#x2F;
-	var playVideos = function(slide){
-		var currentVideos = $(slide).find(&quot;video&quot;);
-		$.each(currentVideos, function(index, video){
-			if ($(video).attr(&quot;wasplayingonslideleave&quot;)==&quot;true&quot;){
-				video.play();
-			} else if ($(video).attr(&quot;wasplayingonslideleave&quot;)==&quot;false&quot;){
-				&#x2F;&#x2F;Do nothing
-			} else if (typeof $(video).attr(&quot;wasplayingonslideleave&quot;) == &quot;undefined&quot;){
-				&#x2F;&#x2F;No wasplayingonslideleave attr
-				
-				&#x2F;&#x2F;Check autoplayonsliddenter attr
-				if ($(video).attr(&quot;autoplayonslideenter&quot;)==&quot;true&quot;){
-					video.play();
-				}
-			}
+            if(isVideo){
+				&#x2F;&#x2F;PREVENT KEYBOARD EVENTS ON FIREFOX!
+				$(mEl).focus(function(event){
+					this.blur();
+				});
+            }
+
 		});
 	};
 	
 	&#x2F;**
-	 * Function to stop all videos of a slide
+	 * Function to play all videos and audios of a slide
 	 *&#x2F;
-	var stopVideos = function(slide){
-		var currentVideos = $(slide).find(&quot;video&quot;);
-		$.each(currentVideos, function(index, video) {
-			var playing = ! video.paused;
-			$(video).attr(&quot;wasplayingonslideleave&quot;,playing);
-			if(playing){
-				video.pause();
-			}
-		});
-	};
-
 	var playMultimedia = function(slide){
 		var multimediaEls = $(slide).find(&quot;video, audio&quot;);
 		$.each(multimediaEls, function(index,mEl){
@@ -252,7 +239,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	};
 	
 	&#x2F;**
-	 * Function to stop all videos of a slide
+	 * Function to stop all videos and audios of a slide
 	 *&#x2F;
 	var stopMultimedia = function(slide){
 		var multimediaEls = $(slide).find(&quot;video, audio&quot;);
@@ -531,9 +518,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		renderVideoFromJSON		: renderVideoFromJSON,
 		renderVideoFromSources	: renderVideoFromSources,
 		addSourcesToVideoTag	: addSourcesToVideoTag,
-		setVideoEvents 			: setVideoEvents,
-		playVideos 				: playVideos,
-		stopVideos 				: stopVideos,
+		setMultimediaEvents 	: setMultimediaEvents,
 		playMultimedia			: playMultimedia,
 		stopMultimedia			: stopMultimedia,
 		playVideo 				: playVideo,

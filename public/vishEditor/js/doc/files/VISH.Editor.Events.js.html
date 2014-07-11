@@ -610,6 +610,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 
 	var _exitConfirmation = function(){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.exit);
+		
 		if(confirmOnExit){
 			if(V.Editor.hasPresentationChanged()){
 				if((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(true)){

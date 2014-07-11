@@ -359,7 +359,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 				"value": question,
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
 			},
-			"choices": $.extend([{}], choices), 
+			"choices": $.extend([{}], choices) 
 		});
 
 		var options = {
@@ -425,7 +425,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			"answer":{
 				"value": correctanswerArray[0],
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
-			}, 
+			}
 		});
 
 		var options = {
