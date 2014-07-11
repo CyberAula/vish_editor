@@ -61,88 +61,75 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	 * ViSH Viewer features
 	 */
 
-	var setVideoEvents = function(){
-		var videos = $("video");
-		$.each(videos, function(index, video){
-			video.addEventListener('play', function(){
-				// V.Debugging.log("Play at " + video.currentTime);
+	var setMultimediaEvents = function(){
+		var multimediaEls = $("video, audio");
+		$.each(multimediaEls, function(index, mEl){
+
+			var isVideo = (mEl.tagName==="VIDEO");
+			var isAudio = !isVideo;
+			
+			if(isVideo){
+				var mElType = "VIDEO";
+			} else if(isAudio){
+				var mElType = "AUDIO";
+			}
+
+			mEl.addEventListener('play', function(){
+				// V.Debugging.log("Play at " + mEl.currentTime);
 				var params = new Object();
+				params.multimediaType = mElType;
 				params.type = "HTML5";
-				params.videoId = video.id;
-				params.currentTime = video.currentTime;
+				params.id = mEl.id;
+				params.currentTime = mEl.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
-				V.EventsNotifier.notifyEvent(V.Constant.Event.onPlayVideo,params,playTriggeredByUser);
+				var eventId = (isVideo ? V.Constant.Event.onPlayVideo : V.Constant.Event.onPlayAudio);
+				V.EventsNotifier.notifyEvent(eventId,params,playTriggeredByUser);
 				playTriggeredByUser = true;
 			}, false);
-			video.addEventListener('pause', function(){
-				// V.Debugging.log("Pause " + video.currentTime);
+			mEl.addEventListener('pause', function(){
+				// V.Debugging.log("Pause " + mEl.currentTime);
 				var params = new Object();
+				params.multimediaType = mElType;
 				params.type = "HTML5";
-				params.videoId = video.id;
-				params.currentTime = video.currentTime;
+				params.id = mEl.id;
+				params.currentTime = mEl.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
-				V.EventsNotifier.notifyEvent(V.Constant.Event.onPauseVideo,params,pauseTriggeredByUser);
+				var eventId = (isVideo ? V.Constant.Event.onPauseVideo : V.Constant.Event.onPauseAudio);
+				V.EventsNotifier.notifyEvent(eventId,params,pauseTriggeredByUser);
 				pauseTriggeredByUser = true;
 			}, false);
-			video.addEventListener('ended', function(){
-				// V.Debugging.log("Ended " + video.currentTime);
+			mEl.addEventListener('ended', function(){
+				// V.Debugging.log("Ended " + mEl.currentTime);
 			}, false);
-			video.addEventListener("error", function(err){
-                // V.Debugging.log("Video error: " + err);
+			mEl.addEventListener("error", function(err){
+                // V.Debugging.log("mEl error: " + err);
             }, false);
-			video.addEventListener("seeked", function(err){
-                // V.Debugging.log("Seek at " + video.currentTime);
+			mEl.addEventListener("seeked", function(err){
+                // V.Debugging.log("Seek at " + mEl.currentTime);
                 var params = new Object();
+                params.multimediaType = mElType;
 				params.type = "HTML5";
-				params.videoId = video.id;
-				params.currentTime = video.currentTime;
+				params.id = mEl.id;
+				params.currentTime = mEl.currentTime;
 				params.slideNumber = V.Slides.getCurrentSlideNumber();
-				V.EventsNotifier.notifyEvent(V.Constant.Event.onSeekVideo,params,seekTriggeredByUser);
+				var eventId = (isVideo ? V.Constant.Event.onSeekVideo : V.Constant.Event.onSeekAudio);
+				V.EventsNotifier.notifyEvent(eventId,params,seekTriggeredByUser);
 				seekTriggeredByUser = true;
             }, false);
-			//PREVENT KEYBOARD EVENTS ON FIREFOX!
-			$(video).focus(function(event){
-				this.blur();
-			});
-		});
-	};
-	
 
-	/**
-	 * Function to start all videos of a slide
-	 */
-	var playVideos = function(slide){
-		var currentVideos = $(slide).find("video");
-		$.each(currentVideos, function(index, video){
-			if ($(video).attr("wasplayingonslideleave")=="true"){
-				video.play();
-			} else if ($(video).attr("wasplayingonslideleave")=="false"){
-				//Do nothing
-			} else if (typeof $(video).attr("wasplayingonslideleave") == "undefined"){
-				//No wasplayingonslideleave attr
-				
-				//Check autoplayonsliddenter attr
-				if ($(video).attr("autoplayonslideenter")=="true"){
-					video.play();
-				}
-			}
+            if(isVideo){
+				//PREVENT KEYBOARD EVENTS ON FIREFOX!
+				$(mEl).focus(function(event){
+					this.blur();
+				});
+            }
+
 		});
 	};
 	
 	/**
-	 * Function to stop all videos of a slide
+	 * Function to play all videos and audios of a slide
 	 */
-	var stopVideos = function(slide){
-		var currentVideos = $(slide).find("video");
-		$.each(currentVideos, function(index, video) {
-			var playing = ! video.paused;
-			$(video).attr("wasplayingonslideleave",playing);
-			if(playing){
-				video.pause();
-			}
-		});
-	};
-
 	var playMultimedia = function(slide){
 		var multimediaEls = $(slide).find("video, audio");
 		$.each(multimediaEls, function(index,mEl){
@@ -162,7 +149,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 	};
 	
 	/**
-	 * Function to stop all videos of a slide
+	 * Function to stop all videos and audios of a slide
 	 */
 	var stopMultimedia = function(slide){
 		var multimediaEls = $(slide).find("video, audio");
@@ -441,9 +428,7 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		renderVideoFromJSON		: renderVideoFromJSON,
 		renderVideoFromSources	: renderVideoFromSources,
 		addSourcesToVideoTag	: addSourcesToVideoTag,
-		setVideoEvents 			: setVideoEvents,
-		playVideos 				: playVideos,
-		stopVideos 				: stopVideos,
+		setMultimediaEvents 	: setMultimediaEvents,
 		playMultimedia			: playMultimedia,
 		stopMultimedia			: stopMultimedia,
 		playVideo 				: playVideo,

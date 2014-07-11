@@ -70,6 +70,18 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			registerAction(V.Constant.Event.onSeekVideo,params);
 		});
 
+		V.EventsNotifier.registerCallback(V.Constant.Event.onPlayAudio, function(params){
+			registerAction(V.Constant.Event.onPlayAudio,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onPauseAudio, function(params){
+			registerAction(V.Constant.Event.onPauseAudio,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSeekAudio, function(params){
+			registerAction(V.Constant.Event.onSeekAudio,params);
+		});
+
 		V.EventsNotifier.registerCallback(V.Constant.Event.onShowRecommendations, function(params){
 			_rs.shown = true;
 			//Get and store RS data

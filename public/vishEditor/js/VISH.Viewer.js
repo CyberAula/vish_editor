@@ -77,7 +77,7 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferRenderPresentation = function(options,presentation){
-		V.Video.HTML5.setVideoEvents();
+		V.Video.HTML5.setMultimediaEvents();
 		V.Animations.loadAnimation(presentation.animation, function(){
 			_initAferAnimationLoaded(options,presentation);
 		})
