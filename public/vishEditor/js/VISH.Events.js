@@ -102,11 +102,18 @@ VISH.Events = (function(V,$,undefined){
 		//Prevent multiple consecutively calls
 		var multipleOnResize = undefined;
 		window.onresize = function(){
-			if(typeof multipleOnResize === "undefined"){
+			if(typeof multipleOnResize == "undefined"){
 				multipleOnResize = false;
 				setTimeout(function(){
 					if(!multipleOnResize){
 						multipleOnResize = undefined;
+
+						//After Resize actions
+						V.Status.refreshDeviceAfterResize();
+
+						var currentDevice = V.Status.getDevice();
+						V.EventsNotifier.notifyEvent(V.Constant.Event.onViewportResize,{screen: currentDevice.screen, viewport: currentDevice.viewport});
+						
 						V.ViewerAdapter.updateInterface();
 					} else {
 						multipleOnResize = undefined;

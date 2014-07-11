@@ -203,6 +203,11 @@ VISH.Status = (function(V,$,undefined){
 		return _device;
 	};
 
+	var refreshDeviceAfterResize = function(){
+		//Refresh viewport
+		_device = V.Status.Device.fillScreen(_device);
+	};
+
 	var getIsEmbed = function(){
 		return _isAnotherDomain;
 	};
@@ -346,6 +351,7 @@ VISH.Status = (function(V,$,undefined){
 		setPreventDefaultMode 		: setPreventDefaultMode,
 		setWindowFocus				: setWindowFocus,
 		setCKEditorInstanceFocused	: setCKEditorInstanceFocused,
+		refreshDeviceAfterResize	: refreshDeviceAfterResize,
 		isVEFocused 				: isVEFocused
 	};
 

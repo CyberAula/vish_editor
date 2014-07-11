@@ -8,6 +8,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _lo;
 	//Store the user of the session
 	var _user;
+	//User device
+	var _device;
 	//Stores the cronology
 	var _chronology;
 	//Stores specific information about the RecommenderSystem (RS)
@@ -34,6 +36,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		if(V.User.isLogged()){
 			_user = new User();
 		}
+		_device = V.Status.getDevice();
 		_rs = new RS();
 
 		_chronology = [];
@@ -112,6 +115,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			sendTrackingObject();
 		});
 
+		V.EventsNotifier.registerCallback(V.Constant.Event.onViewportResize, function(params){
+			registerAction(V.Constant.Event.onViewportResize,params);
+		});
+
 		//Custom Tracking Events
 		$(document).bind('click', function(event){
 			var params = {};
@@ -177,6 +184,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		if(typeof _user != "undefined"){
 			data["user"] = _user;
 		}
+		data["device"] = _device;
 		data["chronology"] = _chronology;
 		data["rs"] = _rs;
 		data["duration"] = getAbsoluteTime();
