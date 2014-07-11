@@ -4,8 +4,14 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _timeReference; //since the beginning of the session
 	var _currentTimeReference; //since the last slide change
 
+	//Store the LO of the session
+	var _lo;
+	//Store the user of the session
+	var _user;
 	//Stores the cronology
 	var _chronology;
+	//Stores specific information about the RecommenderSystem (RS)
+	var _rs;
 
 	//Tracking API Key
 	var _apiKey;
@@ -13,7 +19,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 	var init = function(animation,callback){
 		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
-		
+
 		if(typeof _apiKey == "undefined"){
 			_enabled = false;
 			return;
@@ -23,6 +29,12 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		_timeReference = new Date().getTime();
 		_currentTimeReference = _timeReference;
+
+		_lo = new LO();
+		if(V.User.isLogged()){
+			_user = new User();
+		}
+		_rs = new RS();
 
 		_chronology = [];
 		_chronology.push(new ChronologyEntry(V.Slides.getCurrentSlideNumber()));
@@ -58,6 +70,30 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			registerAction(V.Constant.Event.onSeekVideo,params);
 		});
 
+		V.EventsNotifier.registerCallback(V.Constant.Event.onShowRecommendations, function(params){
+			_rs.shown = true;
+			//Get and store RS data
+			_rs.tdata = V.Recommendations.getData();
+			registerAction(V.Constant.Event.onShowRecommendations,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onHideRecommendations, function(params){
+			_rs.accepted = false;
+			registerAction(V.Constant.Event.onHideRecommendations,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onAcceptRecommendation, function(params){
+			registerAction(V.Constant.Event.onAcceptRecommendation,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onEvaluate, function(params){
+			registerAction(V.Constant.Event.onEvaluate,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onEvaluateCompletion, function(params){
+			registerAction(V.Constant.Event.onEvaluateCompletion,params);
+		});
+
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
 			registerAction(V.Constant.Event.exit);
 			//TODO: Send tracking data
@@ -78,9 +114,15 @@ VISH.TrackingSystem = (function(V,$,undefined){
 				}
 			}
 
-			registerAction("click",params);
+			// registerAction("click",params);
 		});
+		
 	};
+
+
+	/////////////
+	// Functions
+	/////////////
 
 	var registerAction = function(id,params){
 		V.Debugging.log("Action id: " + id + ", with params:");
@@ -89,6 +131,31 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			_chronology[_chronology.length-1].actions.push(new Action(id,params));
 		}
 	};
+
+	var _composeJSON = function(){
+		return {
+			"appId": "ViSH Editor",
+			"appKey": _apiKey,
+			"data": _composeData()
+		}
+	};
+
+	var _composeData = function(){
+		var data = {};
+		data["lo"] = _lo;
+		if(typeof _user != "undefined"){
+			data["user"] = _user;
+		}
+		data["chronology"] = _chronology;
+		data["rs"] = _rs;
+		data["duration"] = getAbsoluteTime();
+
+		return data;
+	};
+
+	/////////////
+	// Helpers
+	/////////////
 
 	var getAbsoluteTime = function(){
 		return _getTimeDiff(new Date().getTime(),_timeReference);
@@ -106,6 +173,21 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		return _chronology;
 	};
 
+	//Constructors
+	var LO = function(){
+		var current_presentation = V.Viewer.getCurrentPresentation();
+		if(typeof current_presentation.vishMetadata == "object"){
+			this.id = current_presentation.vishMetadata.id;
+		}
+	};
+
+	var User = function(){
+		var current_user = V.User.getUser();
+		if(typeof current_user == "object"){
+			this.id = current_user.id;
+		}
+	};
+
 	//ChronologyEntry constructor
 	var ChronologyEntry = function(slideNumber){
 		this.slideNumber = slideNumber;
@@ -121,13 +203,20 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		}
 	};
 
+	var RS = function(){
+		this.shown = false;
+		this.accepted = undefined;
+		this.tdata = {};
+	};
+
 
 	return {
 		init				: init,
 		registerAction		: registerAction,
 		getAbsoluteTime		: getAbsoluteTime,
 		getRelativeTime		: getRelativeTime,
-		getChronology		: getChronology
+		getChronology		: getChronology,
+		_composeJSON		: _composeJSON
 	};
 
 }) (VISH, jQuery);

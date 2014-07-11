@@ -1,67 +1,73 @@
 VISH.Samples.API = (function(V,undefined){
 	
   var recommendationList = [
-	{ "id"                : "1",
-	  "url"               : "http://vishub.org/excursions/144",
-	  "title"             : "Nanogame",
-	  "author"            : "Enrique Barra",
-	  "description"       : " bla bla bla",
-	  "image"             : "http://vishub.org/assets/logos/original/excursion-05.png",
-	  "views"             : "56",
-	  "favourites"        : "3",
-	  "number_of_slides"  : "8"
-	},
-	{ "id"                : "2",
-	  "url"               : "http://vishub.org/excursions/83",
-	  "title"             : "Flascard Curiosity",
-	  "author"            : "Evita Tassiopolu",
-	  "description"       : " bla bla bla 2",
-	  "image"             : "http://www.topsecretwriters.com/wp-content/uploads/2012/08/curiosityrover.jpg",
-	  "views"             : "563",
-	  "favourites"        : "13",
-	  "number_of_slides"  : "2"
-	},
-	{ "id"                : "3",
-	  "url"               : "http://vishub.org/excursions/55",
-	  "title"             : "Madrid´s Planetarium",
-	  "author"            : "Nestor Toribio",
-	  "description"       : " bla bla bla",
-	  "image"             : "http://upload.wikimedia.org/wikipedia/commons/0/06/Planetarium_WPKiW.jpg",
-	  "views"             : "56",
-	  "favourites"        : "33",
-	  "number_of_slides"  : "8"
-	},
-	{ "id"                : "4",
-	  "url"               : "http://vishub.org/excursions/14",
-	  "title"             : "Earth explained",
-	  "author"            : "Enrique Barra",
-	  "description"       : " bla bla bla",
-	  "image"             : "http://upload.wikimedia.org/wikipedia/commons/2/22/Earth_Western_Hemisphere_transparent_background.png",
-	  "views"             : "156",
-	  "favourites"        : "3",
-	  "number_of_slides"  : "8"
-	},
-	{ "id"                : "5",
-	  "url"               : "http://vishub.org/excursions/81",
-	  "title"             : "Planets: Mars",
-	  "author"            : "Barbara Kieslinger ",
-	  "description"       : " bla bla bla 2",
-	  "image"             : "http://static.giantbomb.com/uploads/scale_small/0/4866/192066-mars.jpg",
-	  "views"             : "463",
-	  "favourites"        : "23",
-	  "number_of_slides"  : "2"
-	},
-	{ "id"                : "6",
-	  "url"               : "http://vishub.org/excursions/56",
-	  "title"             : "Galileo",
-	  "author"            : "Nestor Toribio",
-	  "description"       : " bla bla bla",
-	  "image"             : "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcRjinxT31jvvelugew_ydynnvzXcJRLSeTAMYPfEcFZsbvxAlHP",
-	  "views"             : "1256",
-	  "favourites"        : "33",
-	  "number_of_slides"  : "8"
-	}    
-  ];
+  	{
+  		"id":515,
+  		"url":"http://vishub.org/excursions/515",
+  		"title":"Identificaci\u00f3n de Minerales",
+  		"author":"2\u00ba Bac IES David Buj\u00e1n",
+  		"description":"Identificaremos minerales en el laboratorio gracias a c\u00f3digos QR.\nHemos escogido los minerales m\u00e1s habituales y as\u00ed, cada profesor podr\u00e1 adaptar nuestra idea a su laboratorio.",
+  		"image":"http://vishub.org/pictures/1730.jpeg",
+  		"views":5908,
+  		"favourites":73,
+  		"number_of_slides":36,
+  		"recommender_data":"{\"cs_score\":0,\"ups_score\":0,\"popularity_score\":1.0,\"quality_score\":1.0,\"overall_score\":1.0,\"rec\":\"ViSHRecommenderSystem\"}"
+  	},{
+  		"id":161,
+  		"url":"http://vishub.org/excursions/161",
+  		"title":"Crowdsourcing Cells",
+  		"author":"Fermin",
+  		"description":"Check the images and help researchers to determine what is going on in the lab",
+  		"image":"http://vishub.org/assets/logos/original/excursion-01.png",
+  		"views":29999,
+  		"favourites":7,
+  		"number_of_slides":6,
+  		"recommender_data":"{\"cs_score\":0,\"ups_score\":0,\"popularity_score\":0.9090726203479781,\"quality_score\":0.8711386696730552,\"overall_score\":0.8901056450105167,\"rec\":\"ViSHRecommenderSystem\"}"
+  	},{
+  		"id":632,
+  		"url":"http://vishub.org/excursions/632",
+  		"title":"Las villas romanas.",
+  		"author":"Juan Antonio Alvarado Quintana",
+  		"description":"Recorrido hist\u00f3rico sobre el periodo de la historia de Occidente en el que comienza a expandirse sobre el Bajo Imperio Romano el modelo de h\u00e1bitat rural en villa, en torno al siglo IV de nuestra era.",
+  		"image":"http://vishub.org/pictures/2651.jpeg",
+  		"views":311,
+  		"favourites":5,
+  		"number_of_slides":11,
+  		"recommender_data":"{\"cs_score\":0,\"ups_score\":0,\"popularity_score\":0.046287520418673116,\"quality_score\":0.9381059751972942,\"overall_score\":0.49219674780798367,\"rec\":\"ViSHRecommenderSystem\"}"
+  	},{
+  		"id":589,
+  		"url":"http://vishub.org/excursions/589",
+  		"title":"Evaluaci\u00f3n de Usabilidad y Experiencia de Usuario",
+  		"author":"Aldo",
+  		"description":"Evaluaci\u00f3n de Usabilidad y Experiencia de Usuario",
+  		"image":"http://vishub.org//system/pdfexes/attaches/000/000/163/original/Usability_and_UX-0.jpg",
+  		"views":128,
+  		"favourites":2,
+  		"number_of_slides":42,
+  		"recommender_data":"{\"cs_score\":0,\"ups_score\":0,\"popularity_score\":0.018125689772175067,\"quality_score\":0.9310033821871477,\"overall_score\":0.4745645359796614,\"rec\":\"ViSHRecommenderSystem\"}"
+  	},{
+  		"id":667,
+  		"url":"http://vishub.org/excursions/667",
+  		"title":"Water cycle",
+  		"author":"FRANCISCO GONZ\u00c1LEZ",
+  		"description":"Explanation and a simulation about water cycle",
+  		"image":"http://scienceprojectideasforkids.com/wp-content/uploads/2011/11/sublimation-dry-ice.jpg",
+  		"views":116,
+  		"favourites":6,
+  		"number_of_slides":8,
+  		"recommender_data":"{\"cs_score\":0,\"ups_score\":0,\"popularity_score\":0.03953678477974751,\"quality_score\":0.9005636978579481,\"overall_score\":0.4700502413188478,\"rec\":\"ViSHRecommenderSystem\"}"
+  	},{
+  		"id":613,
+  		"url":"http://vishub.org/excursions/613",
+  		"title":"Agujeros Negros",
+  		"author":"L. Chicote",
+  		"description":"Los agujeros negros.",
+  		"image":"http://vishub.org/pictures/2507.jpeg",
+  		"views":268,
+  		"favourites":6,
+  		"number_of_slides":18,
+  		"recommender_data":"{\"cs_score\":0,\"ups_score\":0,\"popularity_score\":0.05119225216724824,\"quality_score\":0.8792559188275084,\"overall_score\":0.4652240854973783,\"rec\":\"ViSHRecommenderSystem\"}"
+  	}]
 
 	var excursionList = {
 		'excursions': [

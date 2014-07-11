@@ -129,6 +129,11 @@ VISH.Constant.Event.onVEFocusChange = "onVEFocusChange";
 VISH.Constant.Event.onSimpleClick = "onSimpleClick";
 VISH.Constant.Event.onLongClick = "onLongClick";
 VISH.Constant.Event.onUnknownTouchMovement = "onUnknownTouchMovement";
+VISH.Constant.Event.onShowRecommendations = "onShowRecommendations";
+VISH.Constant.Event.onHideRecommendations = "onHideRecommendations";
+VISH.Constant.Event.onAcceptRecommendation = "onAcceptRecommendation";
+VISH.Constant.Event.onEvaluate = "onEvaluate";
+VISH.Constant.Event.onEvaluateCompletion = "onEvaluateCompletion";
 
 //Storage
 VISH.Constant.Storage = {};

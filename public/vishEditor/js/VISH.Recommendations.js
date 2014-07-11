@@ -17,6 +17,9 @@ VISH.Recommendations = (function(V,$,undefined){
 	//Params to enhance recommendation
 	var _searchTerms;
 
+	//Store information for tracking
+	var _RSTrackingData;
+
 
 	/**
 	 * Function to initialize the Recommendations
@@ -69,6 +72,7 @@ VISH.Recommendations = (function(V,$,undefined){
 				V.ViewerAdapter.decideIfPageSwitcher();
 			},
 			'onClosed' : function(data) {
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onHideRecommendations,{},true);
 				$("#fancybox-outer").css("background", "white");
 				$("#fancybox-wrap").css("margin-top", "-14px");
 				V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
@@ -159,6 +163,9 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
+		//Store recommender information for tracking
+        _RSTrackingData = data;
+
 		var applyTargetBlank = V.Status.getIsInExternalSite();
 
         var ex;
@@ -166,9 +173,9 @@ VISH.Recommendations = (function(V,$,undefined){
         for (var i = data.length - 1; i >= 0; i--){
         	ex = data[i];
         	if(applyTargetBlank){
-        		result += '<a target="_blank" href="'+ex.url+'">';
+        		result += '<a target="_blank" class="recommendedItemLinkBlank" href="'+ex.url+'" ex_id="' + ex.id + '">';
         	}
-        	result += '<div class="rec-excursion" id="recom-'+ex.id+'" number="'+i+'">'+
+        	result += '<div class="rec-excursion" id="recom-'+ex.id+'" ex_id="' + ex.id + '"number="'+i+'">'+
                         '<ul class="rec-thumbnail">'+
                           '<li class="rec-img-excursion">'+
                            '<img src="'+ex.image+'">'+
@@ -195,6 +202,7 @@ VISH.Recommendations = (function(V,$,undefined){
         	//we join the recom-X with sending the parent to the excursion url
         	 for (var i = data.length - 1; i >= 0; i--){
         	 	$("#recom-"+data[i].id).click(function(my_event){
+        	 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAcceptRecommendation,{"id": $(this).attr("ex_id")},true);
         	 		V.Utils.sendParentToURL(data[$(my_event.target).closest(".rec-excursion").attr("number")].url);
 				});
         	 }
@@ -242,11 +250,14 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onShowRecommendations,{},true);
+
 		//Show fancybox
 		$("#fancyRec").trigger('click');
 	};
 
 	var hideFancybox = function(){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onHideRecommendations,{},true);
 		$.fancybox.close();
 	};
 
@@ -297,16 +308,22 @@ VISH.Recommendations = (function(V,$,undefined){
 		return searchTerms.join(",");
 	};
 
+	var getData = function(){
+		return _RSTrackingData;
+	}
+
 
 	//Evaluations in recommendation panel
 
 	var onClickEvaluateButton = function(){
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
+
 		if(V.Status.getIsInVishSite()){
 			V.FullScreen.exitFromNativeFullScreen();
 			window.parent.document.getElementById('evaluation-button-id').click();
 		} else if(V.Debugging.isDevelopping()){
 			window.alert("Evaluate!");
-		}	
+		}
 	};
 
 	return {
@@ -318,8 +335,9 @@ VISH.Recommendations = (function(V,$,undefined){
 		hideFancybox			: hideFancybox,
 		isRecVisible 			: isRecVisible,
 		isEnabled				: isEnabled,
-		aftersetupSize			: aftersetupSize,
-		onClickEvaluateButton	: onClickEvaluateButton
+		getData					: getData,
+		onClickEvaluateButton	: onClickEvaluateButton,
+		aftersetupSize			: aftersetupSize
 	};
 
 }) (VISH,jQuery);

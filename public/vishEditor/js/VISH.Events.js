@@ -81,6 +81,11 @@ VISH.Events = (function(V,$,undefined){
 			}, false);
 		}
 
+		//Accept recommendations (when are target blank links)
+		$(document).on('click','a.recommendedItemLinkBlank', function(event){
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onAcceptRecommendation,{"id": $(this).attr("ex_id")},true);
+		});
+
 		//Evaluate button in recommendations panel
 		$(document).on('click', '#evaluate_excursion', function(event){
 			V.Recommendations.onClickEvaluateButton(event);
