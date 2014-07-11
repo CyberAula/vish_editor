@@ -40,8 +40,8 @@ var getOptions = function(){
 		configuration["Vimeo"] = false;
 		configuration["LRE"] = true;
 
-		configuration["Soundcloud"] = true;
-		configuration["SoundcloudAPIKey"] = "SoundcloudAPIKey";
+		configuration["SoundCloud"] = true;
+		configuration["SoundCloudAPIKEY"] = "SoundcloudAPIKey";
 
 		configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
 
