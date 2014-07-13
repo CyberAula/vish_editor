@@ -130,7 +130,16 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
+			//Save duration of the last slide
+			_cTime = new Date().getTime();
+			if(typeof _chronology[_chronology.length-1] != "undefined"){
+				_chronology[_chronology.length-1].duration = _getTimeDiff(_cTime,_currentTimeReference);
+			}
+			
+			//Exit action
 			registerAction(V.Constant.Event.exit);
+
+			//Send data to the tracker
 			sendTrackingObject();
 		});
 
