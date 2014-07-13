@@ -247,29 +247,31 @@ VISH.Status.Device = (function(V,$,undefined){
 			device.desktop = false;
 		}
 
-		 // Force mobile or tablet
-		 // device.desktop = false;
-		 // device.mobile = false;
-		 // device.tablet = true;
+		// Force mobile or tablet
+		// device.desktop = false;
+		// device.mobile = false;
+		// device.tablet = true;
 
-		 //Force Android with Android Native Browser
-		 // device.android = true;
-		 // device.browser.name = V.Constant.ANDROID_BROWSER;
+		//Force Android with Android Native Browser
+		// device.android = true;
+		// device.browser.name = V.Constant.ANDROID_BROWSER;
 
-		 // if(device.mobile){
-		 // 	alert("mobile");
-		 // } else if(device.tablet){
-		 // 	alert("tablet");
-		 // } else if(device.desktop){
-		 // 	alert("desktop");
-		 // }
+		// if(device.mobile){
+		// 	alert("mobile");
+		// } else if(device.tablet){
+		// 	alert("tablet");
+		// } else if(device.desktop){
+		// 	alert("desktop");
+		// }
 
-		 //Add extra device information (useful for the tracking system)
-		 device.userAgent = window.navigator.userAgent;
-		 device.appName = window.navigator.appName;
-		 device.appVersion = window.navigator.appVersion;
-		 device.platform = window.navigator.platform;
-		 device.language = window.navigator.language;
+		//Add extra device information (useful for the tracking system)
+		if(typeof navigator == "object"){
+			device.userAgent = navigator.userAgent;
+			device.appName = navigator.appName;
+			device.appVersion = navigator.appVersion;
+			device.platform = navigator.platform;
+			device.language = navigator.language;
+		}
 	};
 
 	/*
