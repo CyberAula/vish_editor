@@ -53,6 +53,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		if(typeof sessionOptions == "object"){
 			_environment.lang = sessionOptions.lang;
 			_environment.scorm = (sessionOptions.scorm || false);
+			_environment.embed = V.Status.getIsEmbed();
 			_environment.vish = V.Status.getIsInVishSite();
 			_environment.iframe = V.Status.getIsInIframe();
 			_environment.developping = sessionOptions.developping;
