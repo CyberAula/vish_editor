@@ -52,7 +52,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		var sessionOptions = V.Viewer.getOptions();
 		if(typeof sessionOptions == "object"){
 			_environment.lang = sessionOptions.lang;
-			_environment.scorm = sessionOptions.scorm;
+			_environment.scorm = (sessionOptions.scorm || false);
 			_environment.vish = V.Status.getIsInVishSite();
 			_environment.iframe = V.Status.getIsInIframe();
 			_environment.developping = sessionOptions.developping;
@@ -135,7 +135,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			if(typeof _chronology[_chronology.length-1] != "undefined"){
 				_chronology[_chronology.length-1].duration = _getTimeDiff(_cTime,_currentTimeReference);
 			}
-			
+
 			//Exit action
 			registerAction(V.Constant.Event.exit);
 
@@ -192,6 +192,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		} else {
 			//Default tracker: Vishub.org
 			var trackerAPIUrl = "http://vishub.org/tracking_system_entries";
+		}
+
+		if(V.User.isLogged() && typeof V.User.getToken() != "undefined"){
+			data["authenticity_token"] = V.User.getToken();
 		}
 
 		$.ajax({
