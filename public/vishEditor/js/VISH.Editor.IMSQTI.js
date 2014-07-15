@@ -78,12 +78,17 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 
 		if($(xml).find('printedVariable').length != 0){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					if(myHash[attribute.textContent] != undefined){
-						console.log("he encontrado uno");
-					}
-		    	}
+			$(xml).find('printedVariable').each(function(){
+				$(this.attributes).each(function(index,attribute){
+					if(attribute.name == "identifier"){
+						if(myRandomHash[attribute.textContent] != undefined){
+							$(xml).find('itemBody').each(function(){
+								$(this).find('printedVariable').replaceWith(myRandomHash[attribute.textContent].toString());
+								console.log($(this)[0].innerHTML);
+							});
+						}
+		    		}
+		    	})
 		   	})
 		}
 
