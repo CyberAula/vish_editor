@@ -1,4 +1,5 @@
 VISH.Editor.IMSQTI = (function(V,$,undefined){
+	var itemBodyContent;
 	
 	var init = function(){
 	};
@@ -84,15 +85,15 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 						if(myRandomHash[attribute.textContent] != undefined){
 							$(xml).find('itemBody').each(function(){
 								$(this).find('printedVariable').replaceWith(myRandomHash[attribute.textContent].toString());
-								console.log($(this)[0].innerHTML);
+								console.log("itemBody");
+								itemBodyContent = $(xml).find('itemBody');
+								//itemBodyContent= $(this)[0].innerHTML;
 							});
 						}
 		    		}
 		    	})
 		   	})
 		}
-
-
 
 
 		if(checkQuizType(fileXML) == "multipleCA"){
@@ -209,15 +210,14 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			question = $(this).text();
 		});
 		}else{
-			$(xml).find('itemBody').children().first().each(function(){
+			itemBodyContent.children().first().each(function(){
 				question = $(this).text();
 			});	
 		}
 
 		/*To get array of answers */
-		$(xml).find('simpleChoice').each(function(){
+		itemBodyContent.find('simpleChoice').each(function(){
 			var answer = $(this).text();
-			//answerArrayL.push(answer.toLowerCase());
 			answerArray.push(answer);
 		});
 
@@ -237,7 +237,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		});
 
 		/* To get identifiers */
-		$(xml).find('simpleChoice').each(function(){
+		itemBodyContent.find('simpleChoice').each(function(){
 			$(this.attributes).each(function(index,attribute){
 				if(attribute.name == "identifier"){
 					answerIds.push(attribute.textContent);
@@ -307,14 +307,14 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			question = $(this).text();
 		});
 		}else{
-			$(xml).find('itemBody').children().first().each(function(){
+			itemBodyContent.children().first().each(function(){
 				question = $(this).text();
 			});	
 		}
 
 
 		/*To get array of answers */
-		$(xml).find('simpleChoice').each(function(){
+		itemBodyContent.find('simpleChoice').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
@@ -329,7 +329,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 
 		/* To get identifiers */
-		$(xml).find('simpleChoice').each(function(){
+		itemBodyContent.find('simpleChoice').each(function(){
 			$(this.attributes).each(function(index,attribute){
 				if(attribute.name == "identifier"){
 					answerIds.push(attribute.textContent);
@@ -340,7 +340,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 		//we get the IDs
 		//now we have to get the choices according to that ID
-		$(xml).find('simpleChoice').each(function(){
+		itemBodyContent.find('simpleChoice').each(function(){
 			$(this.attributes).each(function(index,attribute){
 				if(attribute.name == "identifier"){
 					answerIds.push(attribute.textContent);
@@ -418,7 +418,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			question = $(this).text();
 		});
 		}else{
-			$(xml).find('itemBody').children().first().each(function(){
+			itemBodyContent.children().first().each(function(){
 				question = $(this).text();
 			});	
 		}
