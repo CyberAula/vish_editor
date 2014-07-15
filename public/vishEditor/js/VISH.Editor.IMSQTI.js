@@ -6,8 +6,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	var isCompliantXMLFile = function(fileXML){
 		var contains;
 		var schema;
-		var myRandomIHash = [];
-		var myRandomFHash = [];
+		var myRandomHash = [];
 		var min,max;
 		var ident;
 
@@ -53,7 +52,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 						max = attribute.textContent;
 				}
 			});
-			myRandomIHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
+			myRandomHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
 		});
 	}
 
@@ -73,9 +72,23 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 						max = attribute.textContent;
 				}
 			});
-			myRandomFHash[ident] = parseFloat(Math.min(parseInt(min) + (Math.random() * (parseInt(max) - parseInt(min))),parseInt(max)).toFixed(2));
+			myRandomHash[ident] = parseFloat(Math.min(parseInt(min) + (Math.random() * (parseInt(max) - parseInt(min))),parseInt(max)).toFixed(2));
 		});
 	}
+
+
+		if($(xml).find('printedVariable').length != 0){
+			$(this.attributes).each(function(index,attribute){
+				if(attribute.name == "identifier"){
+					if(myHash[attribute.textContent] != undefined){
+						console.log("he encontrado uno");
+					}
+		    	}
+		   	})
+		}
+
+
+
 
 		if(checkQuizType(fileXML) == "multipleCA"){
 			if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
