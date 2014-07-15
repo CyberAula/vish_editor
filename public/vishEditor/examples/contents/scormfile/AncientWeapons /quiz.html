@@ -1,0 +1,80 @@
+<html>
+<head>
+<!-- Created using Articulate Quizmaker '09 3.3 - http://www.articulate.com  --> 
+<!-- version: 3.3.1303.2214 --> 
+
+
+
+<title>Ancient Weapons </title>
+
+<script>
+var g_bLMS = true;
+var g_bAOSupport = false;
+var g_strContentFolder = "quiz_content";
+</script>
+
+<script LANGUAGE="JavaScript1.2" SRC="quiz_content/quiz.js" TYPE="text/javascript"></script>
+
+<script LANGUAGE="VBScript">
+<!--
+Sub player_FSCommand(ByVal command, ByVal args)
+    call player_DoFSCommand(command, args)
+end sub
+// -->
+</SCRIPT>
+
+<script>
+
+var g_strSwfFile = "quiz.swf";
+var g_nWidth = 720;
+var g_nHeight = 540;
+var g_strScale = "noscale";	// noscale | show all
+var g_strBrowserSize = "optimal";	// default, fullscreen, optimal
+var g_strBgColor = "#FFFFFF";
+var g_strAlign = "middle";
+var g_strQuality = "best";
+var g_bCaptureRC = false;
+var g_strFlashVars = "";
+var g_bScrollbars = true;
+
+</script>
+
+</head>
+
+<body onunload="DoOnClose()" onbeforeunload="DoOnClose()" marginheight="0" marginwidth="0" topmargin="0" leftmargin="0">
+
+<script>
+
+document.bgColor = g_strBgColor;
+
+if (g_bScrollbars)
+{
+	document.write("<table border=0 cellpadding=0 cellspacing=0 width='100%' height='100%' align=center>");
+	document.write("<tr>");
+	document.write("<td align=center>");
+}
+
+	WriteSwfObject(g_strSwfFile,
+		       g_nWidth, 
+		       g_nHeight, 
+		       g_strScale,
+		       g_strAlign, 
+		       g_strQuality, 
+		       g_strBgColor, 
+			   g_bCaptureRC,
+		       g_strFlashVars);
+
+if (g_bScrollbars)
+{
+	document.write("</td>");
+	document.write("</tr>");
+	document.write("</table>");
+}
+
+ResizeBrowser(g_strBrowserSize);
+</script>
+
+<DIV id='divEmail' style="position: absolute; width: 10; height: 10; left: 10; top: 10; visibility:hidden" ></DIV>
+
+</body>
+</html>
