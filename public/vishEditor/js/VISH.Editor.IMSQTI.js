@@ -1,5 +1,4 @@
 VISH.Editor.IMSQTI = (function(V,$,undefined){
-	var itemBodyContent;
 	
 	var init = function(){
 	};
@@ -7,9 +6,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	var isCompliantXMLFile = function(fileXML){
 		var contains;
 		var schema;
-		var myRandomHash = [];
-		var min,max;
-		var ident;
 
 
 		var xmlDoc = $.parseXML( fileXML );
@@ -36,64 +32,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			schema = false;
 		}
 
-
-		if($(xml).find('templateProcessing setTemplateValue randomInteger').length != 0){
-			$(xml).find('templateProcessing setTemplateValue randomInteger').each(function(){
-				$(this).parent().each(function(){
-						$(this.attributes).each(function(index,attribute){
-							if(attribute.name == "identifier"){
-								ident = attribute.textContent;
-							}
-						})
-					})
-				$(this.attributes).each(function(index,attribute){
-					if(attribute.name == "min"){
-						min = attribute.textContent;
-					}else if (attribute.name == "max") {
-						max = attribute.textContent;
-				}
-			});
-			myRandomHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
-		});
-	}
-
-	if($(xml).find('templateProcessing setTemplateValue randomFloat').length != 0){
-			$(xml).find('templateProcessing setTemplateValue randomFloat').each(function(){
-				$(this).parent().each(function(){
-						$(this.attributes).each(function(index,attribute){
-							if(attribute.name == "identifier"){
-								ident = attribute.textContent;
-							}
-						})
-					})
-				$(this.attributes).each(function(index,attribute){
-					if(attribute.name == "min"){
-						min = attribute.textContent;
-					}else if (attribute.name == "max") {
-						max = attribute.textContent;
-				}
-			});
-			myRandomHash[ident] = parseFloat(Math.min(parseInt(min) + (Math.random() * (parseInt(max) - parseInt(min))),parseInt(max)).toFixed(2));
-		});
-	}
-
-
-		if($(xml).find('printedVariable').length != 0){
-			$(xml).find('printedVariable').each(function(){
-				$(this.attributes).each(function(index,attribute){
-					if(attribute.name == "identifier"){
-						if(myRandomHash[attribute.textContent] != undefined){
-							$(xml).find('itemBody').each(function(){
-								$(this).find('printedVariable').replaceWith(myRandomHash[attribute.textContent].toString());
-								console.log("itemBody");
-								itemBodyContent = $(xml).find('itemBody');
-								//itemBodyContent= $(this)[0].innerHTML;
-							});
-						}
-		    		}
-		    	})
-		   	})
-		}
 
 
 		if(checkQuizType(fileXML) == "multipleCA"){
@@ -169,28 +107,95 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 	}
 
 	var getJSONFromXMLFile = function(fileXML){
+	
+		var itemBodyContent;
+
+		var xmlDoc = $.parseXML( fileXML );
+		var xml = $(xmlDoc);
+		var myRandomHash = [];
+		var min,max;
+		var ident;
+
+
+		if($(xml).find('templateProcessing setTemplateValue randomInteger').length != 0){
+				$(xml).find('templateProcessing setTemplateValue randomInteger').each(function(){
+					$(this).parent().each(function(){
+							$(this.attributes).each(function(index,attribute){
+								if(attribute.name == "identifier"){
+									ident = attribute.textContent;
+								}
+							})
+						})
+					$(this.attributes).each(function(index,attribute){
+						if(attribute.name == "min"){
+							min = attribute.textContent;
+						}else if (attribute.name == "max") {
+							max = attribute.textContent;
+					}
+				});
+				myRandomHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
+			});
+		}
+
+		if($(xml).find('templateProcessing setTemplateValue randomFloat').length != 0){
+				$(xml).find('templateProcessing setTemplateValue randomFloat').each(function(){
+					$(this).parent().each(function(){
+							$(this.attributes).each(function(index,attribute){
+								if(attribute.name == "identifier"){
+									ident = attribute.textContent;
+								}
+							})
+						})
+					$(this.attributes).each(function(index,attribute){
+						if(attribute.name == "min"){
+							min = attribute.textContent;
+						}else if (attribute.name == "max") {
+							max = attribute.textContent;
+					}
+				});
+				myRandomHash[ident] = parseFloat(Math.min(parseInt(min) + (Math.random() * (parseInt(max) - parseInt(min))),parseInt(max)).toFixed(2));
+			});
+		}
+
+
+			if($(xml).find('printedVariable').length != 0){
+				$(xml).find('printedVariable').each(function(){
+					$(this.attributes).each(function(index,attribute){
+						if(attribute.name == "identifier"){
+							if(myRandomHash[attribute.textContent] != undefined){
+								$(xml).find('itemBody').each(function(){
+									$(this).find('printedVariable').replaceWith(myRandomHash[attribute.textContent].toString());
+									console.log("itemBody");
+									itemBodyContent = $(xml).find('itemBody');
+									//itemBodyContent= $(this)[0].innerHTML;
+								});
+							}
+			    		}
+			    	})
+			   	})
+			}
 
 		switch (checkQuizType(fileXML)) {
     		case "multipleCA":
-        		return getJSONFromXMLFileMC(fileXML);
+        		return getJSONFromXMLFileMC(fileXML, itemBodyContent);
         	break;
     		
     		case "order":
-				return getJSONFromXMLFileSorting(fileXML);
+				return getJSONFromXMLFileSorting(fileXML,itemBodyContent);
         	break;
     
     		case "openshortAnswer":
-				return getJSONFromXMLFileSA(fileXML);
+				return getJSONFromXMLFileSA(fileXML, itemBodyContent);
         	break;
 
         	case "fillInTheBlankText" :
-				return getJSONFromXMLFileSA(fileXML);
+				return getJSONFromXMLFileSA(fileXML, itemBodyContent);
         	break;
 		}
 	}
 
 
-	var getJSONFromXMLFileMC = function(fileXML){
+	var getJSONFromXMLFileMC = function(fileXML, itemBodyContent){
 		var elements = [];
 		var question;
 		var answerArray = [];
@@ -290,7 +295,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 
 
 
-	var getJSONFromXMLFileSorting = function(fileXML){
+	var getJSONFromXMLFileSorting = function(fileXML, itemBodyContent){
 		var elements = [];
 		var question;
 		var answerArray = [];
@@ -387,7 +392,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
 
-		var getJSONFromXMLFileSA = function(fileXML){
+		var getJSONFromXMLFileSA = function(fileXML,itemBodyContent){
 
 		var elements = [];
 		var question;
