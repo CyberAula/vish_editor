@@ -8,24 +8,35 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _lo;
 	//Store the user of the session
 	var _user;
+	//User device
+	var _device;
+	//Any additional data (e.g. relevant session ViSH Viewer options)
+	var _environment;
 	//Stores the cronology
 	var _chronology;
 	//Stores specific information about the RecommenderSystem (RS)
 	var _rs;
 
 	//Tracking API Key
+	var _app_id;
 	var _apiKey;
 
 
 	var init = function(animation,callback){
 		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
 
-		if(typeof _apiKey == "undefined"){
+		if((typeof _apiKey == "undefined")||(V.Status.getIsPreview())){
 			_enabled = false;
 			return;
+		} else {
+			_enabled = true;
 		}
 
-		_enabled = true;
+		if(!V.Editing){
+			_app_id = "ViSH Viewer";
+		} else {
+			_app_id = "ViSH Editor";
+		}
 
 		_timeReference = new Date().getTime();
 		_currentTimeReference = _timeReference;
@@ -34,8 +45,20 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		if(V.User.isLogged()){
 			_user = new User();
 		}
+		_device = V.Status.getDevice();
 		_rs = new RS();
+		_environment = {};
 
+		var sessionOptions = V.Viewer.getOptions();
+		if(typeof sessionOptions == "object"){
+			_environment.lang = sessionOptions.lang;
+			_environment.scorm = (sessionOptions.scorm || false);
+			_environment.embed = V.Status.getIsEmbed();
+			_environment.vish = V.Status.getIsInVishSite();
+			_environment.iframe = V.Status.getIsInIframe();
+			_environment.developping = sessionOptions.developping;
+		}
+		
 		_chronology = [];
 		_chronology.push(new ChronologyEntry(V.Slides.getCurrentSlideNumber()));
 
@@ -108,8 +131,21 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
+			//Save duration of the last slide
+			_cTime = new Date().getTime();
+			if(typeof _chronology[_chronology.length-1] != "undefined"){
+				_chronology[_chronology.length-1].duration = _getTimeDiff(_cTime,_currentTimeReference);
+			}
+
+			//Exit action
 			registerAction(V.Constant.Event.exit);
+
+			//Send data to the tracker
 			sendTrackingObject();
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onViewportResize, function(params){
+			registerAction(V.Constant.Event.onViewportResize,params);
 		});
 
 		//Custom Tracking Events
@@ -146,6 +182,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	};
 
 	var sendTrackingObject = function(){
+		if(!_enabled){
+			return;
+		}
+
 		var data = _composeTrackingObject();
 
 		if(typeof V.Configuration.getConfiguration().TrackingSystemAPIURL == "string"){
@@ -153,6 +193,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		} else {
 			//Default tracker: Vishub.org
 			var trackerAPIUrl = "http://vishub.org/tracking_system_entries";
+		}
+
+		if(V.User.isLogged() && typeof V.User.getToken() != "undefined"){
+			data["authenticity_token"] = V.User.getToken();
 		}
 
 		$.ajax({
@@ -165,7 +209,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 	var _composeTrackingObject = function(){
 		return {
-			"app_id": "ViSH Editor",
+			"app_id": _app_id,
 			"app_key": _apiKey,
 			"data": _composeData()
 		}
@@ -177,6 +221,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		if(typeof _user != "undefined"){
 			data["user"] = _user;
 		}
+		data["device"] = _device;
+		data["environment"] = _environment;
 		data["chronology"] = _chronology;
 		data["rs"] = _rs;
 		data["duration"] = getAbsoluteTime();

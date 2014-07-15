@@ -280,6 +280,7 @@ VISH.Quiz = (function(V,$,undefined){
 	_onAnswerSAQuiz = function(quizDOM,quizModule){
 		var quizStatus = $(quizDOM).find(&quot;.quizAnswerButton&quot;).attr(&quot;quizstatus&quot;);
 		if(quizStatus === &quot;retry&quot;){
+			V.TrackingSystem.registerAction(&quot;retryQuiz&quot;);
 			quizModule.onRetryQuiz(quizDOM);
 		} else if(quizStatus === &quot;continue&quot;){
 			var slideDOM = V.Slides.getTargetSlide();
@@ -404,6 +405,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 		switch($(startButton).attr(&quot;quizStatus&quot;)){
 			case &quot;running&quot;:
+				V.TrackingSystem.registerAction(&quot;ARSoptions&quot;);
 				$(&quot;#fancybox-close&quot;).hide();
 				$(&quot;a#addQuizSessionFancybox&quot;).trigger(&quot;click&quot;);
 				break;
@@ -411,6 +413,7 @@ VISH.Quiz = (function(V,$,undefined){
 				break;
 			case &quot;stop&quot;:
 			default:
+				V.TrackingSystem.registerAction(&quot;launchARS&quot;);
 				_startNewQuizSession(quizDOM);
 			break;
 		}
@@ -471,6 +474,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button1.text = V.I18n.getTrans(&quot;i.cancel&quot;);
 		button1.extraclass = &quot;quizSession_button_cancel&quot;;
 		button1.callback = function(){
+			V.TrackingSystem.registerAction(&quot;cancel_saveARS&quot;);
 			_onCloseQuizSession(&#x27;cancel&#x27;);
 		}
 		options.buttons.push(button1);
@@ -479,6 +483,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button2.text = V.I18n.getTrans(&quot;i.No&quot;);
 		button2.extraclass = &quot;quizSession_button_no&quot;;
 		button2.callback = function(){
+			V.TrackingSystem.registerAction(&quot;no_saveARS&quot;);
 			_onCloseQuizSession(&#x27;no&#x27;);
 		}
 		options.buttons.push(button2);
@@ -487,6 +492,7 @@ VISH.Quiz = (function(V,$,undefined){
 		button3.text = V.I18n.getTrans(&quot;i.Yes&quot;);
 		button3.extraclass = &quot;quizSession_button_yes&quot;;
 		button3.callback = function(){
+			V.TrackingSystem.registerAction(&quot;saveARS&quot;);
 			_onCloseQuizSession(&#x27;yes&#x27;);
 		}
 		options.buttons.push(button3);
@@ -500,6 +506,8 @@ VISH.Quiz = (function(V,$,undefined){
 		options.middlerowExtraClass = &quot;mr_quizSession&quot;;
 
 		options.buttonsWrapperClass = &quot;forceCenter&quot;;
+		
+		V.TrackingSystem.registerAction(&quot;stopARS&quot;);
 		
 		V.Utils.showDialog(options);
 	};

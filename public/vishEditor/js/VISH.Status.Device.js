@@ -11,10 +11,10 @@ VISH.Status.Device = (function(V,$,undefined){
 		var storedDevice = V.Storage.get(V.Constant.Storage.Device);
 		// var storedDevice = undefined;
 		
-		if(typeof storedDevice !== "undefined"){
+		if(typeof storedDevice != "undefined"){
 			device = storedDevice;
 			_loadViewportForDevice(device,function(){
-				_fillScreen(device); //Update screen	
+				fillScreen(device); //Update screen	
 				if(typeof callback === "function"){
 					callback(device);
 				}
@@ -33,7 +33,7 @@ VISH.Status.Device = (function(V,$,undefined){
 		_loadViewportForDevice(device,function(){
 			//On viewport loaded
 			_fillUserAgentAfterViewport(device);
-			_fillScreen(device);
+			fillScreen(device);
 			device.features = V.Status.Device.Features.fillFeatures();
 
 			//Store device
@@ -247,28 +247,37 @@ VISH.Status.Device = (function(V,$,undefined){
 			device.desktop = false;
 		}
 
-		 // Force mobile or tablet
-		 // device.desktop = false;
-		 // device.mobile = false;
-		 // device.tablet = true;
+		// Force mobile or tablet
+		// device.desktop = false;
+		// device.mobile = false;
+		// device.tablet = true;
 
-		 //Force Android with Android Native Browser
-		 // device.android = true;
-		 // device.browser.name = V.Constant.ANDROID_BROWSER;
+		//Force Android with Android Native Browser
+		// device.android = true;
+		// device.browser.name = V.Constant.ANDROID_BROWSER;
 
-		 // if(device.mobile){
-		 // 	alert("mobile");
-		 // } else if(device.tablet){
-		 // 	alert("tablet");
-		 // } else if(device.desktop){
-		 // 	alert("desktop");
-		 // }
+		// if(device.mobile){
+		// 	alert("mobile");
+		// } else if(device.tablet){
+		// 	alert("tablet");
+		// } else if(device.desktop){
+		// 	alert("desktop");
+		// }
+
+		//Add extra device information (useful for the tracking system)
+		if(typeof navigator == "object"){
+			device.userAgent = navigator.userAgent;
+			device.appName = navigator.appName;
+			device.appVersion = navigator.appVersion;
+			device.platform = navigator.platform;
+			device.language = navigator.language;
+		}
 	};
 
 	/*
 	 * Must be called after viewport is loaded
 	 */
-	var _fillScreen = function(device){
+	var fillScreen = function(device){
 		device.viewport = {
 			width: window.innerWidth,
 			height: window.innerHeight
@@ -279,10 +288,13 @@ VISH.Status.Device = (function(V,$,undefined){
 			width: window.screen.availWidth,
 			height: window.screen.availHeight
 		};
+
+		return device;
 	};
 
 	return {
-		init            : init
+		init  		: init,
+		fillScreen	: fillScreen
 	};
 
 }) (VISH, jQuery);

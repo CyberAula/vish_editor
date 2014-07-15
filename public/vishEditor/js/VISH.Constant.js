@@ -137,6 +137,7 @@ VISH.Constant.Event.onHideRecommendations = "onHideRecommendations";
 VISH.Constant.Event.onAcceptRecommendation = "onAcceptRecommendation";
 VISH.Constant.Event.onEvaluate = "onEvaluate";
 VISH.Constant.Event.onEvaluateCompletion = "onEvaluateCompletion";
+VISH.Constant.Event.onViewportResize = "onViewportResize";
 
 //Storage
 VISH.Constant.Storage = {};

@@ -171,6 +171,11 @@ VISH.Events = (function(V,$,undefined){
 			}, false);
 		}
 
+		&#x2F;&#x2F;Accept recommendations (when are target blank links)
+		$(document).on(&#x27;click&#x27;,&#x27;a.recommendedItemLinkBlank&#x27;, function(event){
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onAcceptRecommendation,{&quot;id&quot;: $(this).attr(&quot;ex_id&quot;)},true);
+		});
+
 		&#x2F;&#x2F;Evaluate button in recommendations panel
 		$(document).on(&#x27;click&#x27;, &#x27;#evaluate_excursion&#x27;, function(event){
 			V.Recommendations.onClickEvaluateButton(event);
@@ -187,11 +192,18 @@ VISH.Events = (function(V,$,undefined){
 		&#x2F;&#x2F;Prevent multiple consecutively calls
 		var multipleOnResize = undefined;
 		window.onresize = function(){
-			if(typeof multipleOnResize === &quot;undefined&quot;){
+			if(typeof multipleOnResize == &quot;undefined&quot;){
 				multipleOnResize = false;
 				setTimeout(function(){
 					if(!multipleOnResize){
 						multipleOnResize = undefined;
+
+						&#x2F;&#x2F;After Resize actions
+						V.Status.refreshDeviceAfterResize();
+
+						var currentDevice = V.Status.getDevice();
+						V.EventsNotifier.notifyEvent(V.Constant.Event.onViewportResize,{screen: currentDevice.screen, viewport: currentDevice.viewport});
+						
 						V.ViewerAdapter.updateInterface();
 					} else {
 						multipleOnResize = undefined;
@@ -201,6 +213,10 @@ VISH.Events = (function(V,$,undefined){
 			} else {
 				multipleOnResize = true;
 			}
+		};
+
+		window.onbeforeunload = function(){
+			V.EventsNotifier.notifyEvent(V.Constant.Event.exit);
 		};
 
 		if(_mobile){
@@ -280,6 +296,7 @@ VISH.Events = (function(V,$,undefined){
 				event.preventDefault();    		
 				break;
 		}
+		V.TrackingSystem.registerAction(&quot;keydown&quot;,{&quot;keyCode&quot;:event.keyCode});
 	};
 	
 	return {
