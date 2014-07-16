@@ -20,6 +20,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	//Tracking API Key
 	var _app_id;
 	var _apiKey;
+	var _apiUrl;
 
 
 	var init = function(animation,callback){
@@ -27,7 +28,9 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		_currentTimeReference = _timeReference;
 
 		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
-		if((typeof _apiKey == "undefined")||(V.Status.getIsPreview())){
+		_apiUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
+
+		if((typeof _apiKey == "undefined")||(typeof _apiUrl == "undefined")||(V.Status.getIsPreview())){
 			_enabled = false;
 			return;
 		} else {
@@ -187,20 +190,13 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		var data = _composeTrackingObject();
 
-		if(typeof V.Configuration.getConfiguration().TrackingSystemAPIURL == "string"){
-			var trackerAPIUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
-		} else {
-			//Default tracker: Vishub.org
-			var trackerAPIUrl = "http://vishub.org/tracking_system_entries";
-		}
-
 		if(V.User.isLogged() && typeof V.User.getToken() != "undefined"){
 			data["authenticity_token"] = V.User.getToken();
 		}
 
 		$.ajax({
 			type    : 'POST',
-			url     : trackerAPIUrl,
+			url     : _apiUrl,
 			data    : data,
 			async	: false
 		});
