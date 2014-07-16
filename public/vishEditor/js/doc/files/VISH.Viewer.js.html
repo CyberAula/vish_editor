@@ -214,6 +214,7 @@ VISH.Viewer = (function(V,$,undefined){
 	*&#x2F;
 	var onSlideEnterViewer = function(e){
 		var slide = e.target;
+		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 		var isSubslide = V.Slides.isSubslide(slide);
 		var isSlideset = ((!isSubslide)&amp;&amp;(V.Slideset.isSlideset(slide)));
 
@@ -225,7 +226,6 @@ VISH.Viewer = (function(V,$,undefined){
 
 		if(!isSubslide){
 			V.ViewerAdapter.decideIfPageSwitcher();
-			var cSlideNumber = V.Slides.getCurrentSlideNumber();
 		} else {
 			timeToLoadObjects = 1000;
 		}
@@ -262,6 +262,8 @@ VISH.Viewer = (function(V,$,undefined){
 		if(!isSubslide){
 			V.Recommendations.checkForRecommendations();
 		}
+
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onEnterSlide,{&quot;id&quot;: slide.id, &quot;slideNumber&quot;: cSlideNumber},false);
 	};
 
 	&#x2F;**
