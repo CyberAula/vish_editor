@@ -113,6 +113,7 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		var xmlDoc = $.parseXML( fileXML );
 		var xml = $(xmlDoc);
 		var myRandomHash = [];
+		var randomArray = [];
 		var min,max;
 		var ident;
 
@@ -158,7 +159,30 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 		}
 
 
-			if($(xml).find('printedVariable').length != 0){
+
+
+
+		if($(xml).find('templateProcessing setTemplateValue random').length != 0){
+				$(xml).find('templateProcessing setTemplateValue random').each(function(){
+					$(this).parent().each(function(){
+							$(this.attributes).each(function(index,attribute){
+								if(attribute.name == "identifier"){
+									ident = attribute.textContent;
+									console.log(ident);
+								}
+							})
+							
+						})
+					$(this).children().each(function(){
+					for (var i = 1; i <= ($(this).text().split('\n').length)-2; i++ ){
+						randomArray[i-1] = $(this).text().split('\n')[i];
+					}
+					});
+					myRandomHash[ident] = randomArray[Math.floor(Math.random()*randomArray.length)];
+			});
+		}
+
+		if($(xml).find('printedVariable').length != 0){
 				$(xml).find('printedVariable').each(function(){
 					$(this.attributes).each(function(index,attribute){
 						if(attribute.name == "identifier"){
@@ -173,6 +197,8 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 			    		}
 			    	})
 			   	})
+			}else{
+				itemBodyContent = $(xml).find('itemBody');
 			}
 
 		switch (checkQuizType(fileXML)) {
