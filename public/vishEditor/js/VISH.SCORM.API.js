@@ -4,14 +4,98 @@
 
 VISH.SCORM.API = (function(V,$,undefined){
 
+	//SCORM API Instance
+	var scorm;
+	var connected;
+
+	//Vars
+	var COMPLETION_THRESHOLD = 0.9;
+	var COMPLETION_ATTEMPT_THRESHOLD = 0.1;
+	var SCORE_THRESHOLD = 0.5;
+
+	var hasScore = false;
+
+
 	var init = function(){
-		var scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: true, exit_type: 'suspend'});
-		var lmsconnected = scorm.initialize();
-		scorm.debug("Connected: " + lmsconnected,4);
-		// scorm.getvalue('cmi.location');
-		// scorm.setvalue('cmi.location', '4');
-		// scorm.commit();
-		// scorm.terminate();
+		scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: true, exit_type: ""});
+		connected = scorm.initialize();
+		scorm.debug("Connected: " + connected,4);
+		
+		if(!connected){
+			return;
+		}
+
+		V.ProgressTracking.init();
+		hasScore = V.ProgressTracking.getHasScore();
+
+		if(hasScore){
+			//Init score values
+			scorm.setvalue('cmi.score.min',(0).toString());
+			scorm.setvalue('cmi.score.max',(10).toString());
+		}
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
+			if(typeof objective.progress != "undefined"){
+				_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
+			}
+			if(typeof objective.score != "undefined"){
+				_updateScore(V.ProgressTracking.getScore());
+			}
+			scorm.commit();
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
+			_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
+
+			//TODO: Add cmi.session_time
+
+			// scorm.commit(); terminate will call commit
+			scorm.terminate();
+		});
+	};
+
+	var _updateProgressMeasure = function(progressMeasure){
+		if(typeof progressMeasure == "number"){
+			scorm.setvalue('cmi.progress_measure',progressMeasure.toString());
+			_updateCompletionStatus(progressMeasure);
+		}
+	};
+
+	var _updateCompletionStatus = function(progressMeasure){
+		var completionStatus;
+
+		if(progressMeasure >= COMPLETION_THRESHOLD){
+			completionStatus = "completed";
+		} else if (progressMeasure>=COMPLETION_ATTEMPT_THRESHOLD){
+			completionStatus = "incomplete";
+		} else {
+			completionStatus = "not attempted";
+		}
+
+		scorm.setvalue('cmi.completion_status',completionStatus);
+	};
+
+	var _updateScore = function(score){
+		if(typeof score == "number"){
+			score = Math.max(0,Math.min(1,score));
+			scorm.setvalue('cmi.score.scaled',score.toString());
+			scorm.setvalue('cmi.score.raw',(score*10).toString());
+			_updateSuccessStatus(score);
+		}
+	};
+
+	var _updateSuccessStatus = function(score){
+		var successStatus;
+
+		if(typeof score != "number"){
+			successStatus = "unknown";
+		} else if(score >= SCORE_THRESHOLD){
+			successStatus = "passed";
+		} else {
+			successStatus = "failed";
+		}
+
+		scorm.setvalue('cmi.success_status',successStatus);
 	};
 
 
@@ -1034,7 +1118,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        self.setvalue("cmi.completion_status", "incomplete");
 	                        break;
 	                    default:
-	                        if (API.data.completion_status === '') {
+	                        if(API.data.completion_status === ''){
 	                            triggerException("LMS compatibility issue, Please notify a administrator.  Completion Status is empty.");
 	                        }
 	                        break;
@@ -1059,8 +1143,8 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    this.terminate = function(){
 	        var s = false, lms = API.path, ec = 0;
 	        debug(settings.prefix + ": Terminating " + API.isActive + " " + lms, 4);
-	        if (API.isActive) {
-	            if (lms) {
+	        if(API.isActive){
+	            if(lms){
 	                // if not completed or passed, suspend the content.
 	                debug(settings.prefix + ": completion_status = " + API.data.completion_status + "|| success_status = " + API.data.success_status, 3);
 	                self.commit(); // Store Data before Terminating
@@ -1075,14 +1159,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    // handle non-LMS?
 	                    break;
 	                }
-	                if (makeBoolean(s)) {
+	                if(makeBoolean(s)){
 	                    debug(settings.prefix + ": Terminated.", 3);
 	                    API.isActive = false;
-	                } else {
+	                }else{
 	                    ec = getLastErrorCode();
 	                    debug(settings.prefix + ": Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Commit.\nDiagnostic: " + getDiagnostic(ec), 1);
 	                }
-	            } else {
+	            }else{
 	                debug(settings.prefix + ": Lost connection to LMS", 2);
 	            }
 	        } else {

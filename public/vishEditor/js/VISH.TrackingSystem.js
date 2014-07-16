@@ -23,8 +23,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 
 	var init = function(animation,callback){
-		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
+		_timeReference = new Date().getTime();
+		_currentTimeReference = _timeReference;
 
+		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
 		if((typeof _apiKey == "undefined")||(V.Status.getIsPreview())){
 			_enabled = false;
 			return;
@@ -37,9 +39,6 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		} else {
 			_app_id = "ViSH Editor";
 		}
-
-		_timeReference = new Date().getTime();
-		_currentTimeReference = _timeReference;
 
 		_lo = new LO();
 		if(V.User.isLogged()){

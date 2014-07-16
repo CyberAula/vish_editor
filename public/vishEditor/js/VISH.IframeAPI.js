@@ -10,6 +10,7 @@ VISH.Constant = VISH.Constant || {};
 VISH.Constant.Event = VISH.Constant.Event || {};
 VISH.Constant.Event.onMessage = "onMessage";
 VISH.Constant.Event.onGoToSlide = "onGoToSlide";
+VISH.Constant.Event.onEnterSlide = "onEnterSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";

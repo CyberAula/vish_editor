@@ -124,6 +124,7 @@ VISH.Viewer = (function(V,$,undefined){
 	*/
 	var onSlideEnterViewer = function(e){
 		var slide = e.target;
+		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 		var isSubslide = V.Slides.isSubslide(slide);
 		var isSlideset = ((!isSubslide)&&(V.Slideset.isSlideset(slide)));
 
@@ -135,7 +136,6 @@ VISH.Viewer = (function(V,$,undefined){
 
 		if(!isSubslide){
 			V.ViewerAdapter.decideIfPageSwitcher();
-			var cSlideNumber = V.Slides.getCurrentSlideNumber();
 		} else {
 			timeToLoadObjects = 1000;
 		}
@@ -172,6 +172,8 @@ VISH.Viewer = (function(V,$,undefined){
 		if(!isSubslide){
 			V.Recommendations.checkForRecommendations();
 		}
+
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onEnterSlide,{"id": slide.id, "slideNumber": cSlideNumber},false);
 	};
 
 	/**

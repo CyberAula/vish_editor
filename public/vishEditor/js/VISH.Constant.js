@@ -115,6 +115,7 @@ VISH.Constant.Animations.Default = "animation1";
 VISH.Constant.Event = {};
 VISH.Constant.Event.onMessage = "onMessage";
 VISH.Constant.Event.onGoToSlide = "onGoToSlide";
+VISH.Constant.Event.onEnterSlide = "onEnterSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";
 VISH.Constant.Event.onPauseVideo = "onPauseVideo";
 VISH.Constant.Event.onSeekVideo = "onSeekVideo";
@@ -138,6 +139,7 @@ VISH.Constant.Event.onAcceptRecommendation = "onAcceptRecommendation";
 VISH.Constant.Event.onEvaluate = "onEvaluate";
 VISH.Constant.Event.onEvaluateCompletion = "onEvaluateCompletion";
 VISH.Constant.Event.onViewportResize = "onViewportResize";
+VISH.Constant.Event.onProgressObjectiveUpdated = "onProgressObjectiveUpdated";
 
 //Storage
 VISH.Constant.Storage = {};
