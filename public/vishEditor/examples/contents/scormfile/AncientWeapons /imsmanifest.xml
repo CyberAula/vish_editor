@@ -1,0 +1,63 @@
+<?xml version="1.0" standalone="no"?>
+<manifest identifier="Ancient_Weapons_" version="1.3" xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_v1p3" xmlns:adlseq="http://www.adlnet.org/xsd/adlseq_v1p3" xmlns:adlnav="http://www.adlnet.org/xsd/adlnav_v1p3" xmlns:imsss="http://www.imsglobal.org/xsd/imsss" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd
+                        http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd
+                        http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd
+                        http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd
+                        http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>2004 3rd Edition</schemaversion>
+    <adlcp:location>metadata.xml</adlcp:location>
+  </metadata>
+  <organizations default="Ancient_Weapons__ORG">
+    <organization identifier="Ancient_Weapons__ORG" adlseq:objectivesGlobalToSystem="false">
+      <title>Ancient Weapons </title>
+      <item identifier="Ancient_Weapons__SCO" identifierref="_Ancient_Weapons__RES" isvisible="true">
+        <title>Ancient Weapons </title>
+        <imsss:sequencing>
+          <imsss:controlMode choice="true" flow="true" />
+          <imsss:deliveryControls tracked="true" completionSetByContent="false" objectiveSetByContent="false" />
+        </imsss:sequencing>
+      </item>
+      <metadata>
+        <adlcp:location>metadata.xml</adlcp:location>
+      </metadata>
+      <imsss:sequencing>
+        <imsss:controlMode choice="true" flow="true" />
+        <imsss:deliveryControls tracked="true" completionSetByContent="false" objectiveSetByContent="false" />
+      </imsss:sequencing>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="_Ancient_Weapons__RES" type="webcontent" adlcp:scormType="sco" href="index_lms.html">
+      <file href="quiz.swf" />
+      <file href="quiz_content/data.swf" />
+      <file href="quiz_content/Slide455eeb96-9383-4b6a-b6df-c0d159c18054.swf" />
+      <file href="quiz_content/_ButtonClick.mp3" />
+      <file href="quiz_content/_ButtonHover.mp3" />
+      <file href="quiz_content/_ControlClick.mp3" />
+      <file href="quiz_content/_WindowClose.mp3" />
+      <file href="quiz_content/_WindowOpen.mp3" />
+      <file href="quiz.html" />
+      <file href="quiz_content/blank.html" />
+      <file href="quiz_content/quiz.js" />
+      <file href="quiz_content/zoom.html" />
+      <file href="index_lms.html" />
+      <file href="lms/AICCComm.html" />
+      <file href="lms/AICCFunctions.js" />
+      <file href="lms/API.js" />
+      <file href="lms/APIConstants.js" />
+      <file href="lms/blank.html" />
+      <file href="lms/browsersniff.js" />
+      <file href="lms/Configuration.js" />
+      <file href="lms/goodbye.html" />
+      <file href="lms/lms.js" />
+      <file href="lms/LMSAPI.js" />
+      <file href="lms/NONEFunctions.js" />
+      <file href="lms/SCORM2004Functions.js" />
+      <file href="lms/SCORMDiscovery.js" />
+      <file href="lms/SCORMFunctions.js" />
+      <file href="lms/UtilityFunctions.js" />
+    </resource>
+  </resources>
+</manifest>

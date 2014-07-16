@@ -1,0 +1,33 @@
+
+<!--/* Copyright ? 2003-2007 Rustici Software, LLC  All Rights Reserved. */-->
+<HTML>
+	<HEAD>
+		<TITLE>Ancient Weapons </TITLE>
+		<script language="JavaScript1.2" src="lms/APIConstants.js"></script>
+		<script language="JavaScript1.2" src="lms/Configuration.js"></script>
+		<script language="JavaScript1.2" src="lms/UtilityFunctions.js"></script>
+		<script language="JavaScript1.2" src="lms/SCORM2004Functions.js"></script>
+		<script language="JavaScript1.2" src="lms/SCORMFunctions.js"></script>
+		<script language="JavaScript1.2" src="lms/AICCFunctions.js"></script>
+		<script language="JavaScript1.2" src="lms/NONEFunctions.js"></script>
+		<script language="JavaScript1.2" src="lms/LMSAPI.js"></script>
+		<script language="JavaScript1.2" src="lms/API.js"></script>
+		<script language="JavaScript1.2">
+		
+		strContentLocation = "quiz.html";  //Put the link to the start of the content here.
+		
+		function LoadContent(){
+			window.scormdriver_content.document.location.href = strContentLocation;
+		}
+		</script>
+	</HEAD>
+	<frameset rows="100%,0%,0%,0%" onload="Start()" border="0" onbeforeunload="Unload()" onunload="Unload()">
+		<frame name="scormdriver_content" src="lms/blank.html" scrolling="false">
+		<frame name="AICCComm" src="lms/AICCComm.html">
+		<frame name="rusticisoftware_aicc_results" src="lms/blank.html">
+		<frame name="NothingFrame" src="lms/blank.html">
+	</frameset>
+	<noframes>
+		Your browser must be able to view frames for this content to display.
+	</noframes>
+</HTML>

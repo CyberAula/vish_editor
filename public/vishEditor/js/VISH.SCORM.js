@@ -1,11 +1,21 @@
 VISH.SCORM = (function(V,$,undefined){
 
+	var _API;
+
+	///////////////
+	// SCORM RTE API Management
+	///////////////
+
 	var init = function(){
-		_init_RTE_API();
+		if(V.Utils.getOptions().scorm==true){
+			//Do not init SCORM API if the LO is not a SCORM SCO.
+			V.SCORM.API.init();
+		}
 	};
 
-	var _init_RTE_API = function(){
-	};
+	///////////////
+	// Renderer for SCORM components
+	///////////////
 
 	var renderSCORMFromJSON = function(scormJSON,options){
 		var style = (scormJSON['style'])? scormJSON['style'] : "";
