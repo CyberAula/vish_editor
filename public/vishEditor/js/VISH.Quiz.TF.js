@@ -119,7 +119,12 @@ VISH.Quiz.TF = (function(V,$,undefined){
 			}
 		});
 
-		V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.TF, "correct":answeredQuizCorrectly, "correctStatements": correctStatements, "incorrectStatements": incorrectStatements});
+		var totalStatements = correctStatements+incorrectStatements;
+		if(totalStatements > 0){
+			var quizScore = (correctStatements/totalStatements)*10;
+		}
+		
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"type": V.Constant.QZ_TYPE.TF, "correct":answeredQuizCorrectly, "correctStatements": correctStatements, "incorrectStatements": incorrectStatements, "score": quizScore},true);
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 

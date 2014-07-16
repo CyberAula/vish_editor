@@ -89,7 +89,9 @@ VISH.Viewer = (function(V,$,undefined){
 		//This way we prevent undesired behaviours 
 		V.Slides.updateSlides();
 
-		V.Quiz.init(); //initQuizAfterRender
+		//Init some modules (and submodules) after render
+		V.Quiz.init();
+		V.SCORM.initAfterRender();
 
 		//Init ViSH Editor Addons
 		if(options.addons){

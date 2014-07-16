@@ -26,6 +26,12 @@ VISH.ProgressTracking = (function(V,$,undefined){
 			objectives["slide_average_time"].progress = 1;
 			V.EventsNotifier.notifyEvent(V.Constant.Event.onProgressObjectiveUpdated,objectives["slide_average_time"],false);
 		},minRequiredTime*1000);
+
+		//Quizzes
+		V.EventsNotifier.registerCallback(V.Constant.Event.onAnswerQuiz, function(params){
+			V.Debugging.log("onAnswerQuiz");
+			V.Debugging.log(params);
+		});
 	};
 
 	var _getMinRequiredTime = function(){
@@ -65,6 +71,10 @@ VISH.ProgressTracking = (function(V,$,undefined){
 		return hasScore;
 	};
 
+	var getObjectives = function(){
+		return objectives;
+	};
+
 
 	/////////////
 	// Helpers
@@ -76,8 +86,28 @@ VISH.ProgressTracking = (function(V,$,undefined){
 		var slidesL = presentation.slides.length;
 		for(var i=0; i<slidesL; i++){
 			var slide = presentation.slides[i];
-			//TODO: Create one objective per quiz
-			//TODO: put hasScore=true when a quiz is found
+			if(slide.containsQuiz==true){
+				var slideElementsL = slide.elements.length;
+				for(var j=0; j<slideElementsL; j++){
+					var element = slide.elements[j];
+					if(element.type===V.Constant.QUIZ){
+						if(element.selfA===true){
+							//Self-assessed quiz
+							hasScore = true;
+
+							//Create objective
+							var quizScore = 10;
+							if((typeof element.settings == "object")&&(typeof element.settings.score != "undefined")){
+								quizScore = parseInt(element.settings.score);
+							}
+
+							//Quiz score is the score_weight. Later all these weights will be normalized to sum to one.
+							var quizObjective = new Objective(element.quizId,undefined,quizScore);
+							objectives[quizObjective.id] = quizObjective;
+						}
+					}
+				}
+			}
 		}
 
 		//Create an objective that requires to spent a minimum average time viewing the slides.
@@ -152,7 +182,8 @@ VISH.ProgressTracking = (function(V,$,undefined){
 		init					: init,
 		getProgressMeasure		: getProgressMeasure,
 		getScore				: getScore,
-		getHasScore				: getHasScore
+		getHasScore				: getHasScore,
+		getObjectives			: getObjectives
 	};
 
 }) (VISH, jQuery);

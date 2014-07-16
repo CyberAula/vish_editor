@@ -93,7 +93,8 @@ VISH.Quiz.Open = (function(V,$,undefined){
 				$(textArea).addClass("openQ_wrong_answer");
 			}
 
-			V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.OPEN, "correct":answeredQuizCorrectly});
+			var quizScore = (answeredQuizCorrectly==true ? 10 : 0);
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"type": V.Constant.QZ_TYPE.OPEN, "correct": answeredQuizCorrectly, "score": quizScore},true);
 
 			var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 
@@ -135,7 +136,8 @@ VISH.Quiz.Open = (function(V,$,undefined){
 					break;
 			};
 
-			V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.OPEN});
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"type": V.Constant.QZ_TYPE.OPEN},true);
+
 		}
 	};
 

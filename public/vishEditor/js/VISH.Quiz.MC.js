@@ -104,8 +104,9 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		});
 
 		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
+		var quizScore = (answeredQuizCorrectly==true ? 10 : 0);
 
-		V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.MCHOICE, "correct": answeredQuizCorrectly, "multipleAnswer": multipleAnswer});
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"type": V.Constant.QZ_TYPE.MCHOICE, "correct": answeredQuizCorrectly, "multipleAnswer": multipleAnswer, "score": quizScore},true);
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 

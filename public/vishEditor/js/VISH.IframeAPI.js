@@ -19,6 +19,7 @@ VISH.Constant.Event.onPauseAudio = "onPauseAudio";
 VISH.Constant.Event.onSeekAudio = "onSeekAudio";
 VISH.Constant.Event.onSubslideOpen = "onSubslideOpen";
 VISH.Constant.Event.onSubslideClosed = "onSubslideClosed";
+VISH.Constant.Event.onAnswerQuiz = "onAnswerQuiz";
 VISH.Constant.Event.onSetSlave = "onSetSlave";
 VISH.Constant.Event.onPreventDefault = "onPreventDefault";
 VISH.Constant.Event.allowExitWithoutConfirmation = "allowExitWithoutConfirmation";

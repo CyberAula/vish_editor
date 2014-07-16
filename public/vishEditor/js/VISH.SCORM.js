@@ -7,6 +7,9 @@ VISH.SCORM = (function(V,$,undefined){
 	///////////////
 
 	var init = function(){
+	};
+
+	var initAfterRender = function(){
 		if(V.Utils.getOptions().scorm==true){
 			//Do not init SCORM API if the LO is not a SCORM SCO.
 			V.SCORM.API.init();
@@ -39,6 +42,7 @@ VISH.SCORM = (function(V,$,undefined){
 
 	return {
 		init 					: init,
+		initAfterRender			: initAfterRender,
 		renderSCORMFromJSON		: renderSCORMFromJSON
 	};
 

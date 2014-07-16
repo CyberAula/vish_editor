@@ -107,6 +107,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			registerAction(V.Constant.Event.onSeekAudio,params);
 		});
 
+		V.EventsNotifier.registerCallback(V.Constant.Event.onAnswerQuiz, function(params){
+			registerAction(V.Constant.Event.onAnswerQuiz,params);
+		});
+
 		V.EventsNotifier.registerCallback(V.Constant.Event.onShowRecommendations, function(params){
 			_rs.shown = true;
 			//Get and store RS data
