@@ -5,7 +5,7 @@
 VISH.SCORM.API = (function(V,$,undefined){
 
 	var init = function(){
-		var scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), exit_type: 'suspend'});
+		var scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: true, exit_type: 'suspend'});
 		var lmsconnected = scorm.initialize();
 		scorm.debug("Connected: " + lmsconnected,4);
 		// scorm.getvalue('cmi.location');
@@ -66,10 +66,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    "use strict";
 	    // Please edit run time options or override them when you instantiate this object.
 	    var defaults = {
-	            version:           "3.1.0",
+	            version:           "3.1.1",
 	            createDate:        "04/05/2011 08:56AM",
-	            modifiedDate:      "01/16/2014 03:57PM",
+	            modifiedDate:      "07/16/2014 09:40AM",
 	            debug:             false,
+	            windowDebug: 	   false,
 	            isActive:          false,
 	            throw_alerts:      false,
 	            prefix:            "SCORM_API",
@@ -111,6 +112,58 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    // End Constructor ////////
 	    
 	    // Private ////////////////
+
+	    /**
+	     * Debug
+	     * Built-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)
+	     * @param msg {String} Debug Message
+	     * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
+	     */
+	    function debug(msg,lvl){
+	        if(settings.debug){
+	        	if(settings.windowDebug==true){
+	        		windowDebug(msg,lvl);
+	        	} else {
+	        		_debug(msg,lvl);
+	        	}
+	        }
+	        if(lvl < 3 && settings.throw_alerts){
+	            alert(msg);
+	        }
+	        return false;
+	    };
+
+	   	function _debug(msg,lvl){
+	   		// IE 7 probably 6 was throwing a error if 'console undefined'
+            if(!window.console){
+                window.console = {};
+                window.console.info = noconsole;
+                window.console.log = noconsole;
+                window.console.warn = noconsole;
+                window.console.error = noconsole;
+                window.console.trace = noconsole;
+            }
+            switch(lvl){
+            case 1:
+                console.error(msg);
+                break;
+            case 2:
+                console.warn(msg);
+                break;
+            case 4:
+                console.info(msg);
+                break;
+            case 3:
+                console.log(msg);
+                break;
+            default:
+                console.log(msg);
+                return false;
+            }
+
+            return true;
+	    };
+
 	    /**
 	     * No Console
 	     * Lack of support in older browsers forced this
@@ -127,49 +180,6 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        });
 	    };
 
-	    /**
-	     * Debug
-	     * Built-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)
-	     * @param msg {String} Debug Message
-	     * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
-	     */
-	    function debug(msg,lvl){
-			// WriteToDebug(msg);
-
-	        if (settings.debug) {// default is false
-	            if (!window.console) {// IE 7 probably 6 was throwing a error if 'console undefined'
-	                window.console = {};
-	                window.console.info = noconsole;
-	                window.console.log = noconsole;
-	                window.console.warn = noconsole;
-	                window.console.error = noconsole;
-	                window.console.trace = noconsole;
-	            }
-	            switch (lvl){
-	            case 1:
-	                console.error(msg);
-	                break;
-	            case 2:
-	                console.warn(msg);
-	                break;
-	            case 4:
-	                console.info(msg);
-	                break;
-	            case 3:
-	                console.log(msg);
-	                break;
-	            default:
-	                console.log(msg);
-	                return false;
-	            }
-	            return true;
-	        }
-	        if(lvl < 3 && settings.throw_alerts){
-	            alert(msg);
-	        }
-	        return false;
-	    };
-
 
 	    //Debug in a new window
 		//debug info
@@ -177,20 +187,34 @@ VISH.SCORM.API = (function(V,$,undefined){
 		var strDebug = "";
 		var winDebug;
 
-		function WriteToDebug(strInfo){
-			if (!winDebug || winDebug.closed){
-				ShowDebugWindow();
+		function windowDebug(strInfo,lvl){
+
+			var isDebugWindowShown = false;
+			if(!winDebug || winDebug.closed){
+				isDebugWindowShown = ShowDebugWindow();
+			} else {
+				isDebugWindowShown = true;
+			}
+
+			if(isDebugWindowShown==false){
+				//pop-up window blocked
+				//Disable windowDebug
+				settings.windowDebug = false
+				debug("Window debug has been blocked",1);
+				debug("Debugging messages will be displayed in the console",2);
+				debug(strInfo,lvl);
+				return false;
 			}
 
 			var strLine;
-			strLine = aryDebug.length + ":" + + strInfo;
+			strLine = (aryDebug.length+1) + ": " + strInfo;
 			aryDebug[aryDebug.length] = strLine;
 
-			if (winDebug && !winDebug.closed){
+			if(winDebug && !winDebug.closed){
 				winDebug.document.write(strLine + "<br>\n");
 			}
 
-			return;
+			return true;
 		};
 
 		function ShowDebugWindow(){
@@ -200,13 +224,18 @@ VISH.SCORM.API = (function(V,$,undefined){
 
 			winDebug = window.open("", "Debug", "width=600,height=300,resizable,scrollbars");
 
+			if(typeof winDebug == "undefined"){
+				//pop-up window blocked
+				return false;
+			}
+
 			winDebug.document.write(aryDebug.join("<br>\n"));
 
 			winDebug.document.close();
 
 			winDebug.focus();
 
-			return;
+			return true;
 		};
 
 	    /**
