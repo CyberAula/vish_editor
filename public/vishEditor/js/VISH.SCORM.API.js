@@ -4,14 +4,144 @@
 
 VISH.SCORM.API = (function(V,$,undefined){
 
+	//SCORM API Instance
+	var scorm;
+	var connected;
+
+	//Vars
+	var COMPLETION_THRESHOLD = 0.9;
+	var COMPLETION_ATTEMPT_THRESHOLD = 0.1;
+	var SCORE_THRESHOLD = 0.5;
+
+	var hasScore = false;
+
+
 	var init = function(){
-		var scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: true, exit_type: 'suspend'});
-		var lmsconnected = scorm.initialize();
-		scorm.debug("Connected: " + lmsconnected,4);
-		// scorm.getvalue('cmi.location');
-		// scorm.setvalue('cmi.location', '4');
-		// scorm.commit();
-		// scorm.terminate();
+		scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: false, exit_type: ""});
+		connected = scorm.initialize();
+		scorm.debug("Connected: " + connected,4);
+		
+		if(!connected){
+			return;
+		}
+
+		//Init progress tracking
+		V.ProgressTracking.init();
+
+		//Init User model
+		var learnerName = scorm.getvalue('cmi.learner_name');
+		var learnerId = scorm.getvalue('cmi.learner_id');
+		var myUser = V.User.getUser();
+		if(typeof myUser == "object"){
+			if(_isValidAPIResponse(learnerName)){
+				myUser.name = learnerName;
+			}
+			if(_isValidAPIResponse(learnerId)){
+				myUser.id = learnerId;
+			}
+			V.User.setUser(myUser);
+		}
+
+		//Initial progress value
+		_updateProgressMeasure(0);
+
+		hasScore = V.ProgressTracking.getHasScore();
+		if(hasScore){
+			//Initial score values
+			scorm.setvalue('cmi.score.min',(0).toString());
+			scorm.setvalue('cmi.score.max',(100).toString());
+			_updateScore(0);
+		}
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
+			var updateProgress = (typeof objective.progress != "undefined");
+			var updateScore = (typeof objective.score != "undefined");
+
+			if(updateProgress){
+				_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
+			}
+			if(updateScore){
+				_updateScore(V.ProgressTracking.getScore());
+			}
+
+			if(updateProgress||updateScore){
+				scorm.commit();
+			}
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
+			_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
+			// scorm.commit(); terminate will call commit
+			scorm.terminate();
+		});
+	};
+
+	var _updateProgressMeasure = function(progressMeasure){
+		if(typeof progressMeasure == "number"){
+			scorm.setvalue('cmi.progress_measure',progressMeasure.toString());
+			_updateCompletionStatus(progressMeasure);
+		}
+	};
+
+	var _updateCompletionStatus = function(progressMeasure){
+		var completionStatus;
+
+		if(progressMeasure >= COMPLETION_THRESHOLD){
+			completionStatus = "completed";
+		} else if (progressMeasure>=COMPLETION_ATTEMPT_THRESHOLD){
+			completionStatus = "incomplete";
+		} else {
+			completionStatus = "not attempted";
+		}
+
+		scorm.setvalue('cmi.completion_status',completionStatus);
+	};
+
+	var _updateScore = function(score){
+		if(typeof score == "number"){
+			score = Math.max(0,Math.min(1,score));
+			scorm.setvalue('cmi.score.scaled',score.toString());
+			scorm.setvalue('cmi.score.raw',(score*100).toString());
+			_updateSuccessStatus(score);
+		}
+	};
+
+	var _updateSuccessStatus = function(score){
+		var successStatus;
+
+		if(typeof score != "number"){
+			successStatus = "unknown";
+		} else if(score >= SCORE_THRESHOLD){
+			successStatus = "passed";
+		} else {
+			successStatus = "failed";
+		}
+
+		scorm.setvalue('cmi.success_status',successStatus);
+	};
+
+	var _isValidAPIResponse = function(string){
+		if((typeof string == "string")&&(string.trim()!="")&&(string!="false")){
+			return true;
+		} else {
+			return false;
+		}
+	};
+
+	var getAPIInstance = function(){
+		if(connected){
+			return scorm;
+		} else {
+			return undefined;
+		}		
+	};
+
+	var getLMSAPIInstance = function(){
+		if((connected)&&(scorm)&&(scorm.API)&&((scorm.API.path))){
+			return scorm.API.path;
+		} else {
+			return undefined;
+		}		
 	};
 
 
@@ -56,11 +186,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	 * @param options {Object} override default values
 	 * @constructor
 	 */
-	/*!
-	 * SCORM_API, Updated January 3rd, 2014
-	 * Copyright (c) 2009-2013, Cybercussion Interactive LLC.
-	 * As of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.
-	 */
+
 	function SCORM_API(options){
 	    // Constructor ////////////
 	    "use strict";
@@ -120,16 +246,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
 	     */
 	    function debug(msg,lvl){
-	        if(settings.debug){
-	        	if(settings.windowDebug==true){
-	        		windowDebug(msg,lvl);
-	        	} else {
-	        		_debug(msg,lvl);
-	        	}
-	        }
-	        if(lvl < 3 && settings.throw_alerts){
-	            alert(msg);
-	        }
+	    	if(settings){
+	    		msg = settings.prefix + ": " + msg;
+		    	if(settings.debug){
+		        	if(settings.windowDebug==true){
+		        		windowDebug(msg,lvl);
+		        	} else {
+		        		_debug(msg,lvl);
+		        	}
+		        }
+		        if(lvl < 3 && settings.throw_alerts){
+		            alert(msg);
+		        }
+	    	}
 	        return false;
 	    };
 
@@ -545,7 +674,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     */
 	    function makeBoolean(str){
 	        if (str === undefined) {
-	            debug(settings.prefix + " : makeBoolean was given empty string, converting to false", 2);
+	            debug("makeBoolean was given empty string, converting to false", 2);
 	            return false;
 	        }
 	        if (str === true || str === false) {
@@ -785,10 +914,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                }
 	                return String(v);
 	            }
-	            debug(settings.prefix + ": Error\nError Code: " + ec + "\nError Message: " + m + "\nDiagnostic: " + d, 1);
+	            debug("Error\nError Code: " + ec + "\nError Message: " + m + "\nDiagnostic: " + d, 1);
 	            return 'false';
 	        }
-	        debug(settings.prefix + ": " + n + " Get Aborted, connection not initialized! " + API.isActive, 2);
+	        debug(n + " Get Aborted, connection not initialized! " + API.isActive, 2);
 	        return 'false';
 	    };
 
@@ -810,7 +939,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            ig = false; // ignore
 	        // Security Consideration?
 	        // It may be worth some minor security later to validate this is being set from a authorized source.  This is lacking support old versions of IE however.
-	        //debug(settings.prefix + ": The caller of this method is " + arguments.callee.caller.caller.name, 4);  //arguments.callee.caller
+	        //debug("The caller of this method is " + arguments.callee.caller.caller.name, 4);  //arguments.callee.caller
 	        if (API.isActive) {// it has initialized
 	            // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
 	            // Handy if you don't want to go through all your content calls...
@@ -821,7 +950,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    switch (n) {
 	                    case "cmi.location":
 	                        if (v.length > 255) {
-	                            debug(settings.prefix + ": Warning, your bookmark is over the limit!!", 2);
+	                            debug("Warning, your bookmark is over the limit!!", 2);
 	                        }
 	                        nn = "cmi.core.lesson_location";
 	                        break;
@@ -874,7 +1003,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        break;
 	                    case "cmi.suspend_data":
 	                        if (v.length > 4096) {
-	                            debug(settings.prefix + ": Warning, your suspend data is over the limit!!", 2);
+	                            debug("Warning, your suspend data is over the limit!!", 2);
 	                        }
 	                        nn = n;
 	                        break;
@@ -885,9 +1014,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    if (ig) {
 	                        return 'false';
 	                    }
+	                    debug("SCORM 1.2 LMS SetValue with n: " + nn + " and v: " + v, 3);
 	                    s = lms.LMSSetValue(nn, v); //makeBoolean(lms.LMSSetValue(nn, v));
 	                } else {
-	                    debug(settings.prefix + ": Warning, you are not in normal mode.  Ignoring 'set' requests.", 2);
+	                    debug("Warning, you are not in normal mode.  Ignoring 'set' requests.", 2);
 	                    return 'false';
 	                }
 	                break;
@@ -897,7 +1027,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    switch (n) {
 	                    case "cmi.location":
 	                        if (v.length > 1000) {
-	                            debug(settings.prefix + ": Warning, your bookmark is over the limit!!", 2);
+	                            debug("Warning, your bookmark is over the limit!!", 2);
 	                        }
 	                        break;
 	                    case "cmi.completion_status":
@@ -914,16 +1044,17 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        break;
 	                    case "suspend_data":
 	                        if (v.length > 64000) {
-	                            debug(settings.prefix + ": Warning, your suspend data is over the limit!!", 2);
+	                            debug("Warning, your suspend data is over the limit!!", 2);
 	                        }
 	                        break;
 	                    default:
 	                        // any other handling?
 	                        break;
 	                    }
+	                    debug("SCORM 2004 LMS SetValue with n: " + n + " and v: " + v, 3);
 	                    s = lms.SetValue(n, v); //makeBoolean(lms.SetValue(n, v));
 	                } else {
-	                    debug(settings.prefix + ": Warning, you are not in normal mode.  Ignoring 'set' requests.", 2);
+	                    debug("Warning, you are not in normal mode.  Ignoring 'set' requests.", 2);
 	                    return 'false';
 	                }
 	                break;
@@ -949,10 +1080,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            if (ec === 0 || ec === 403) {
 	                return s;
 	            }
-	            debug(settings.prefix + ": Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for " + n + "\nDiagnostic: " + getDiagnostic(ec), 1);
+	            debug("Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for " + n + "\nDiagnostic: " + getDiagnostic(ec), 1);
 	            return s;
 	        }
-	        debug(settings.prefix + ": " + n + " Set Aborted, connection not initialized! Locate where you called it after you Terminated.", 2);
+	        debug(n + " Set Aborted, connection not initialized! Locate where you called it after you Terminated.", 2);
 	        return 'false';
 	    };
 
@@ -969,7 +1100,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            saveDate = new Date();
 	        session_secs = (saveDate.getTime() - settings.startDate.getTime()) / 1000;
 	        if (API.isActive) {// it has initialized
-	            debug(settings.prefix + ": Committing data", 3);
+	            debug("Committing data", 3);
 	            switch (API.version) {
 	            case "1.2":
 	                self.setvalue("cmi.core.session_time", centisecsToSCORM12Duration(session_secs * 100));
@@ -987,10 +1118,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            if (ec === 0) {
 	                return s;
 	            }
-	            debug(settings.prefix + ": Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Commit.\nDiagnostic: " + getDiagnostic(ec), 1);
+	            debug("Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Commit.\nDiagnostic: " + getDiagnostic(ec), 1);
 	            return 'false';
 	        }
-	        debug(settings.prefix + ": Commit Aborted, connection not initialized!", 2);
+	        debug("Commit Aborted, connection not initialized!", 2);
 	        return 'false';
 	    };
 
@@ -1000,7 +1131,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @returns {String} 'true' or 'false'
 	     */
 	    this.initialize = function(){
-	        debug(settings.prefix + ": Initialize Called. \n\tversion: " + settings.version + "\n\tModified: " + settings.modifiedDate, 3);
+	        debug("Initialize Called. \n\tversion: " + settings.version + "\n\tModified: " + settings.modifiedDate, 3);
 	        var s = false, // success boo
 	            lms = API.path, // shortcut
 	            ec = 0;
@@ -1027,26 +1158,26 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    settings.startDate = new Date();
 	                    //self.setvalue('cmi.exit', settings.exit_type); // Consider setting exit type sooner by default?
 	                    // Need to set Start Date
-	                    debug(settings.prefix + ": SCO is initialized.", 3);
+	                    debug("SCO is initialized.", 3);
 	                    switch (API.data.completion_status) {
 	                    case "not attempted":
 	                    case "unknown":
 	                        self.setvalue("cmi.completion_status", "incomplete");
 	                        break;
 	                    default:
-	                        if (API.data.completion_status === '') {
+	                        if(API.data.completion_status === ''){
 	                            triggerException("LMS compatibility issue, Please notify a administrator.  Completion Status is empty.");
 	                        }
 	                        break;
 	                    }
 	                    return 'true';
 	                }
-	                debug(settings.prefix + ": Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Initialize.\nDiagnostic: " + getDiagnostic(ec), 1);
+	                debug("Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Initialize.\nDiagnostic: " + getDiagnostic(ec), 1);
 	            } else {
-	                debug(settings.prefix + ": Aborted, LMS could not be located!.", 2);
+	                debug("Aborted, LMS could not be located!.", 2);
 	            }
 	        } else {
-	            debug(settings.prefix + ": Aborted, connection already initialized!.", 2);
+	            debug("Aborted, connection already initialized!.", 2);
 	        }
 	        return 'false';
 	    };
@@ -1058,11 +1189,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     */
 	    this.terminate = function(){
 	        var s = false, lms = API.path, ec = 0;
-	        debug(settings.prefix + ": Terminating " + API.isActive + " " + lms, 4);
-	        if (API.isActive) {
-	            if (lms) {
+	        debug("Terminating " + API.isActive + " " + lms, 4);
+	        if(API.isActive){
+	            if(lms){
 	                // if not completed or passed, suspend the content.
-	                debug(settings.prefix + ": completion_status = " + API.data.completion_status + "|| success_status = " + API.data.success_status, 3);
+	                debug("completion_status = " + API.data.completion_status + "|| success_status = " + API.data.success_status, 3);
 	                self.commit(); // Store Data before Terminating
 	                switch (API.version) {
 	                case "1.2":
@@ -1075,18 +1206,18 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    // handle non-LMS?
 	                    break;
 	                }
-	                if (makeBoolean(s)) {
-	                    debug(settings.prefix + ": Terminated.", 3);
+	                if(makeBoolean(s)){
+	                    debug("Terminated.", 3);
 	                    API.isActive = false;
-	                } else {
+	                }else{
 	                    ec = getLastErrorCode();
-	                    debug(settings.prefix + ": Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Commit.\nDiagnostic: " + getDiagnostic(ec), 1);
+	                    debug("Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Commit.\nDiagnostic: " + getDiagnostic(ec), 1);
 	                }
-	            } else {
-	                debug(settings.prefix + ": Lost connection to LMS", 2);
+	            }else{
+	                debug("Lost connection to LMS", 2);
 	            }
 	        } else {
-	            debug(settings.prefix + ": Terminate Aborted, connection not initialized!", 2);
+	            debug("Terminate Aborted, connection not initialized!", 2);
 	        }
 	        return s;
 	    };
@@ -1108,7 +1239,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        var count = self.getvalue("cmi.objectives._count"), // obtain total objectives
 	            i,
 	            tID;
-	        scorm.debug(settings.prefix + ": Set Objective - Begin search, Objective count is " + count, 4);
+	        scorm.debug("Set Objective - Begin search, Objective count is " + count, 4);
 	        if (count === '' || count === 'false' || count === '-1') {
 	            return 'false';
 	        }
@@ -1117,9 +1248,9 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        //for (i = count; i >= 0; i -= 1) {
 	        while (i >= 0) {
 	            tID = self.getvalue("cmi.objectives." + i + ".id");
-	            //scorm.debug(settings.prefix + ": Objective ID Check for " + i + " : " + id + " vs " + tID, 4);
+	            //scorm.debug("Objective ID Check for " + i + " : " + id + " vs " + tID, 4);
 	            if (id === tID) {
-	                scorm.debug(settings.prefix + ": Objective ID Match on " + i, 4);
+	                scorm.debug("Objective ID Match on " + i, 4);
 	                return i;
 	            }
 	            i -= 1;
@@ -1143,14 +1274,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            return 'false';
 	        }
 	        count = parseInt(count, 10) - 1; // convert from string
-	        scorm.debug(settings.prefix + ": Getting interactions from count " + count, 4);
+	        scorm.debug("Getting interactions from count " + count, 4);
 	        i = count;
 	        //for (i = count; i >= 0; i -= 1) {
 	        while (i >= 0) {
 	            tID = this.getvalue("cmi.interactions." + i + ".id");
-	            //scorm.debug(settings.prefix + ": Interaction ID Check for " + i + " : " + tID + " vs " + id, 4);
+	            //scorm.debug("Interaction ID Check for " + i + " : " + tID + " vs " + id, 4);
 	            if (id === tID) {
-	                scorm.debug(settings.prefix + ": Interaction By ID Returning " + i);
+	                scorm.debug("Interaction By ID Returning " + i);
 	                return i;
 	            }
 	            i -= 1;
@@ -1170,14 +1301,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            return '0';
 	        }
 	        count = parseInt(count, 10) - 1; // convert from string
-	        scorm.debug(settings.prefix + ": Getting interaction objectives from count " + count, 4);
+	        scorm.debug("Getting interaction objectives from count " + count, 4);
 	        i = count;
 	        //for (i = count; i >= 0; i -= 1) {
 	        while (i >= 0) {
 	            tID = self.getvalue("cmi.interactions." + n + ".objectives." + i + ".id");
-	            //scorm.debug(settings.prefix + ": Interaction Objective ID Check for " + i + " : " + tID + " vs " + id, 4);
+	            //scorm.debug("Interaction Objective ID Check for " + i + " : " + tID + " vs " + id, 4);
 	            if (id === tID) {
-	                scorm.debug(settings.prefix + ": Interaction Objective By ID Returning " + i);
+	                scorm.debug("Interaction Objective By ID Returning " + i);
 	                return i;
 	            }
 	            i -= 1;
@@ -1194,18 +1325,18 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            i,
 	            p;
 	        if (count === "" || count === 'false') {
-	            scorm.debug(settings.prefix + ": Correct Responses pattern was empty or false", 4);
+	            scorm.debug("Correct Responses pattern was empty or false", 4);
 	            return '0'; // never created before so go with 0
 	        }
 	        count = parseInt(count, 10) - 1; // convert from string
-	        scorm.debug(settings.prefix + ": Getting interaction correct responses from count " + count, 4);
+	        scorm.debug("Getting interaction correct responses from count " + count, 4);
 	        i = count;
 	        //for (i = count; i >= 0; i -= 1) {
 	        while (i >= 0) {
 	            p = self.getvalue("cmi.interactions." + n + ".correct_responses." + i + ".pattern");
-	            //scorm.debug(settings.prefix + ": Interaction Correct Responses Pattern Check for " + i + " : " + p + " vs " + pattern, 4);
+	            //scorm.debug("Interaction Correct Responses Pattern Check for " + i + " : " + p + " vs " + pattern, 4);
 	            if (pattern === p) {
-	                scorm.debug(settings.prefix + ": Interaction Correct Responses By Pattern Returning " + i);
+	                scorm.debug("Interaction Correct Responses By Pattern Returning " + i);
 	                return "match";
 	            }
 	            i -= 1;
@@ -1245,10 +1376,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            API.connection = true;
 	            return true;
 	        }
-	        debug(settings.prefix + ": I was unable to locate an API for communication", 2);
+	        debug("I was unable to locate an API for communication", 2);
 	        if (settings.use_standalone) {
 	            // Create Local API in SCORM 2004
-	            debug(settings.prefix + ": If you included Local_API_1484_11 I'll mimic the LMS.  If not, all SCORM calls will fail.", 4);
+	            debug("If you included Local_API_1484_11 I'll mimic the LMS.  If not, all SCORM calls will fail.", 4);
 	            settings.standalone = true;
 	            API.version = "2004";
 	            // May or may not be provided (standalone) if not, this is null (DOA)
@@ -1290,7 +1421,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @param v (String,Number,Object,Array,Boolean} value
 	     */
 	    this.set = function(n,v){
-	        //debug(settings.prefix + ": set " + n, 3);
+	        //debug("set " + n, 3);
 	        // May need to maintain read-only perms here, case them out as needed.
 	        switch (n) {
 	        case "version":
@@ -1322,7 +1453,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @returns {*} value or {Boolean} false
 	     */
 	    this.get = function(n){
-	        //debug(settings.prefix + ": get " + n, 3);
+	        //debug("get " + n, 3);
 	        if (settings[n] === undefined) {
 	            triggerWarning(404);
 	            return false;
@@ -1342,13 +1473,17 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    this.isoStringToDate = isoStringToDate;
 	    this.makeBoolean = makeBoolean;
 	    this.debug = debug;
+	    this.settings = settings;
+	    this.API = API;
 	    // Self Initialize, note you could make this call outside, but later I decided to do it by default.
 	    this.init();
 	};
 
 
 	return {
-		init 	: init
+		init 				: init,
+		getAPIInstance		: getAPIInstance,
+		getLMSAPIInstance	: getLMSAPIInstance
 	};
 
 })(VISH,jQuery);

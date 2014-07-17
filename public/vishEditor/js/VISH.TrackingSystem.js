@@ -20,12 +20,17 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	//Tracking API Key
 	var _app_id;
 	var _apiKey;
+	var _apiUrl;
 
 
 	var init = function(animation,callback){
-		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
+		_timeReference = new Date().getTime();
+		_currentTimeReference = _timeReference;
 
-		if((typeof _apiKey == "undefined")||(V.Status.getIsPreview())){
+		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
+		_apiUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
+
+		if((typeof _apiKey == "undefined")||(typeof _apiUrl == "undefined")||(V.Status.getIsPreview())){
 			_enabled = false;
 			return;
 		} else {
@@ -37,9 +42,6 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		} else {
 			_app_id = "ViSH Editor";
 		}
-
-		_timeReference = new Date().getTime();
-		_currentTimeReference = _timeReference;
 
 		_lo = new LO();
 		if(V.User.isLogged()){
@@ -105,6 +107,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			registerAction(V.Constant.Event.onSeekAudio,params);
 		});
 
+		V.EventsNotifier.registerCallback(V.Constant.Event.onAnswerQuiz, function(params){
+			registerAction(V.Constant.Event.onAnswerQuiz,params);
+		});
+
 		V.EventsNotifier.registerCallback(V.Constant.Event.onShowRecommendations, function(params){
 			_rs.shown = true;
 			//Get and store RS data
@@ -113,12 +119,16 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onHideRecommendations, function(params){
-			_rs.accepted = false;
+			if(typeof _rs.accepted == "undefined"){
+				_rs.accepted = false;
+			}
 			registerAction(V.Constant.Event.onHideRecommendations,params);
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onAcceptRecommendation, function(params){
-			_rs.accepted = params.id;
+			if((typeof _rs.accepted == "undefined")||(_rs.accepted===false)){
+				_rs.accepted = params.id;
+			}
 			registerAction(V.Constant.Event.onAcceptRecommendation,params);
 		});
 
@@ -188,20 +198,13 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		var data = _composeTrackingObject();
 
-		if(typeof V.Configuration.getConfiguration().TrackingSystemAPIURL == "string"){
-			var trackerAPIUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
-		} else {
-			//Default tracker: Vishub.org
-			var trackerAPIUrl = "http://vishub.org/tracking_system_entries";
-		}
-
 		if(V.User.isLogged() && typeof V.User.getToken() != "undefined"){
 			data["authenticity_token"] = V.User.getToken();
 		}
 
 		$.ajax({
 			type    : 'POST',
-			url     : trackerAPIUrl,
+			url     : _apiUrl,
 			data    : data,
 			async	: false
 		});

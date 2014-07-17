@@ -4,6 +4,7 @@
 
 var options;
 
+//Allow getOptions method to be used by Node.js
 if(typeof module != 'undefined'){
 	module.exports.getOptions = function(env) {
 		return getOptions();
@@ -155,8 +156,8 @@ var getOptions = function(){
 		}
 		
 		if((typeof window != "undefined")&&(window.console) && (window.console.log)){
-			console.log("ViSH Editor Configured Options")
-			console.log(options)
+			console.log("ViSH Editor Configured Options");
+			console.log(options);
 		}
 
 	}

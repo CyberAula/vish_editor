@@ -168,7 +168,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 							$(this.attributes).each(function(index,attribute){
 								if(attribute.name == "identifier"){
 									ident = attribute.textContent;
-									console.log(ident);
 								}
 							})
 							
@@ -189,7 +188,6 @@ VISH.Editor.IMSQTI = (function(V,$,undefined){
 							if(myRandomHash[attribute.textContent] != undefined){
 								$(xml).find('itemBody').each(function(){
 									$(this).find('printedVariable').replaceWith(myRandomHash[attribute.textContent].toString());
-									console.log("itemBody");
 									itemBodyContent = $(xml).find('itemBody');
 									//itemBodyContent= $(this)[0].innerHTML;
 								});

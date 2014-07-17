@@ -69,9 +69,10 @@ VISH.Quiz.MC = (function(V,$,undefined){
 		var afterAnswerAction = ((typeof options.afterAnswerAction != "undefined")&&(typeof options.afterAnswerAction == "string")) ? options.afterAnswerAction : "disabled";
 		var canRetry = ((typeof options.canRetry != "undefined")&&(typeof options.canRetry == "boolean")) ? options.canRetry : false;
 		
-		var answeredQuiz = false;
 		var answeredQuizCorrectly = false;
-		var answeredQuizWrong = false;
+		var correctStatements = 0;
+		var incorrectStatements = 0;
+		var totalCorrectStatements = 0;
 
 		var quizJSON = V.Quiz.getQuiz($(quiz).attr("id"));
 		var quizChoices = quizJSON.choices;
@@ -87,6 +88,10 @@ VISH.Quiz.MC = (function(V,$,undefined){
 			var choiceId = $(tr).attr("choiceid");
 			var choice = quizChoicesById[choiceId];
 
+			if(choice.answer===true){
+				totalCorrectStatements += 1;
+			}
+
 			var radioBox = $(tr).find("input[name='mc_option']");
 			var answerValue = parseInt($(radioBox).attr("value"));
 
@@ -94,18 +99,25 @@ VISH.Quiz.MC = (function(V,$,undefined){
 				var trAnswer = $("tr.mc_option").has(radioBox);
 				if(choice.answer===true){
 					$(trAnswer).addClass("mc_correct_choice");
-					answeredQuizCorrectly = true;
+					correctStatements += 1;
 				} else if(choice.answer===false){
 					$(trAnswer).addClass("mc_wrong_choice");
-					answeredQuizWrong = true;
+					incorrectStatements += 1;
 				}
-				answeredQuiz = true;
 			}
 		});
 
-		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
+		var answeredQuiz = (correctStatements+incorrectStatements>0);
+		answeredQuizCorrectly = ((correctStatements>0)&&(incorrectStatements==0));
 
-		V.TrackingSystem.registerAction("answerQuiz",{"type": V.Constant.QZ_TYPE.MCHOICE, "correct": answeredQuizCorrectly, "multipleAnswer": multipleAnswer});
+		if(multipleAnswer){
+			totalCorrectStatements = Math.max(1,totalCorrectStatements);
+			var quizScore = (Math.max(0,(correctStatements-incorrectStatements))/totalCorrectStatements)*100;
+		} else {
+			var quizScore = (answeredQuizCorrectly==true ? 100 : 0);
+		}
+
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"id": quizJSON.id, "quizId": quizJSON.quizId, "type": V.Constant.QZ_TYPE.MCHOICE, "correct": answeredQuizCorrectly, "multipleAnswer": multipleAnswer, "score": quizScore},true);
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 

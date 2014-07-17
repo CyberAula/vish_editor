@@ -29,20 +29,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "scorm/SCOBot.js": {
-            "name": "scorm/SCOBot.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
-        "scorm/SCORM_API.js": {
-            "name": "scorm/SCORM_API.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
         "VISH.AppletPlayer.js": {
             "name": "VISH.AppletPlayer.js",
             "modules": {},
@@ -245,6 +231,13 @@
         },
         "VISH.Recommendations.js": {
             "name": "VISH.Recommendations.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.SCORM.API.js": {
+            "name": "VISH.SCORM.API.js",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -538,1087 +531,6 @@
             "file": "libs/jquery.form.js",
             "line": 1036,
             "description": "Checks/unchecks any matching checkboxes or radio buttons and\nselects/deselects and matching option elements.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 3,
-            "description": "This is a sample SCORM Startup sequence and handicap API's for ease of use.\nGeneral Concept: When the LMS connects, call var SB = new SCOBot();\nSCOBot\nThis only works with the SCORM_API, but has the basis to work with other API's.\nSeveral public API's will call one to many SCORM Calls and this will make every attempt to\ndo common SCORM Tasks or boil down SCORM tasks into a smaller easy to use method.\nMode: {get} Browse, Review, Normal\nBookmark: {get/set} SCO Progress\nSuspend Data: {get/set} Suspend Data Object\nInteractions: {set} Interaction(s)\nObjectives: {set} Objective(s)\n\nJSLint recently complained about  tabs.  Switched to spaces.\n\nhttps://github.com/cybercussion/SCOBot",
-            "author": "Mark Statkus <mark@cybercussion.com>",
-            "license": "Copyright (c) 2009-2014, Cybercussion Interactive LLC\nAs of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.",
-            "requires": [
-                "scorm",
-                "JQuery"
-            ],
-            "version": "3.1.0",
-            "params": [
-                {
-                    "name": "options",
-                    "description": "override default values",
-                    "type": "Object"
-                }
-            ],
-            "is_constructor": 1,
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 35,
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 71,
-            "description": "Initialize SCO\nThis is commonly done on load of the web page.\nDefault behavior",
-            "itemtype": "event",
-            "name": "load",
-            "return": {
-                "description": "true or false if established LMS connection",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 91,
-            "description": "Exit SCO\nCommonly done when unload or beforeunload is triggered\nDefault behavior",
-            "itemtype": "event",
-            "name": "unload",
-            "return": {
-                "description": "true or false if successfully exited",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 125,
-            "description": "Trigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 135,
-            "description": "Trigger Exception\nThrows an event the player can listen to in order to handle an exception.\nThis would be common to a non-compliance in an LMS and loss of student data.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 147,
-            "description": "Is Performing\nThis is based on cmi.success_status",
-            "return": {
-                "description": "based on if this value has been set (true) or (false) if not",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 157,
-            "description": "Verify cmi score scaled\nValidates if success_status is passed, and exit_type is normal.  Checks that score.max is 1.\nMay need to tighten this up later, its mostly for SCO's that default to normal and expect them to be complete.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 173,
-            "description": "Is Bad Value\nWe get a variety of responses from an LMS",
-            "return": {
-                "description": "true if its bad.",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 182,
-            "description": "Cleanse Data\nThis will escape out characters that may of been cross-contaminated from other proprietary sources.\nThese can often result in UTF-8 and other encoding issues and may result in errors.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 192,
-            "description": "Is ISO 8601\nI've got a RegEx to validate ISO 8601 time based on SCORM 2004 Formats.\nThis is a great common way to do this so regardless of time zone you can reflect the\ntime this time stamp was referring to.\nAcceptable Format GMT 2012-02-28T15:00:00.0-8:00, UTC 2012-02-28T15:00:00.0-8:00Z, Plain 2012-02-28T15:00:00",
-            "params": [
-                {
-                    "name": "v",
-                    "description": "ISO 8601 timestamp",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "true or false",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 217,
-            "description": "is ISO 8601 Duration\nThis is a PT0H0M0S format",
-            "params": [
-                {
-                    "name": "v",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 228,
-            "description": "Not Started Yet\nYou should never see this message, but I found I may need to trace this more than once.",
-            "return": {
-                "description": "'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 238,
-            "description": "Current Time",
-            "return": {
-                "description": "Milliseconds",
-                "type": "Number"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 246,
-            "description": "True Round\nMay consider using this to fit within real(10,7) scoring in the event the decimal goes over 7 digits",
-            "params": [
-                {
-                    "name": "v",
-                    "description": "value",
-                    "type": "Number"
-                },
-                {
-                    "name": "dec",
-                    "description": "decimal places",
-                    "type": "Number"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Number"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 258,
-            "description": "Find Response Type (May not use this)\nThis is designed to check for {case_matters: true/false}, {order_matters: true/false} or {lang: x}",
-            "params": [
-                {
-                    "name": "type",
-                    "description": "order_matters, case_matters, lang",
-                    "type": "String"
-                },
-                {
-                    "name": "str",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Number"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 284,
-            "description": "Times Up",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 309,
-            "description": "Set Value By Interaction Type\nThis is a data filter to convert input formats into SCORM standard strings.  Please review each interaction for what it expects.\nThis will not enforce SCORM char limits, so please mind your logs if your doing something your not suppose to.",
-            "params": [
-                {
-                    "name": "type",
-                    "description": "Expects true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other",
-                    "type": "String"
-                },
-                {
-                    "name": "value",
-                    "description": "May take Array or Object of arrays depending",
-                    "type": "*"
-                }
-            ],
-            "return": {
-                "description": "formatted value for interaction type or Boolean false",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 542,
-            "description": "Numeric\ncomments coming",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 581,
-            "description": "Decode Value By Interaction Type\nThis is a data filter to convert input formats from SCORM standard strings to there native JS equivalent.",
-            "params": [
-                {
-                    "name": "type",
-                    "description": "Expects true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other",
-                    "type": "String"
-                },
-                {
-                    "name": "value",
-                    "description": "SCORM 2004 Format for Interaction learner response, or pattern",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "formatted value for interaction type",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 742,
-            "description": "Numeric\nThis falls into a simple hand off",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 767,
-            "description": "Set Suspend Data\nThis will set existing suspend data managed by escaping the values",
-            "return": {
-                "description": "true (success) false (fail)",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 784,
-            "description": "Check Progress\nThis should be used sparingly.  Its going to total up the scoring real-time based on any interactions and objectives.\ncmi.score.scaled,\ncmi.success_status,\ncmi.completion_status,\ncmi.progress_measure",
-            "return": {
-                "description": "object or false string\n{\n score_scaled      = '0',\n success_status    = 'failed',\n progress_measure  = '0',\n completion_status = 'incomplete'\n}",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 872,
-            "description": "Get Comments From LMS\nChecks to see if there are any comments from the LMS, and will\nreturn a complete object back for use with a display.",
-            "return": {
-                "description": "object or 'false'",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 905,
-            "description": "Update Status\nRolled up success/completion status functionality",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 931,
-            "description": "Start (Internal API)\nInitializes the SCORM Startup, and communicates with SCORM (cruise control)\nand will begin to store some common used parameters for use later. Like:\n1. mode\n2. location (bookmark)\n3. scaled_passing_score\n4. suspend_data\n5. completion_status\n6. success_status\nThese can be obtained by asking SB.get('location'); i.e. the name space for these after you start,\nand during the session.",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1055,
-            "description": "Set Totals\nThis will take in total objectives, interactions, score max and score min to aid\nin the calculation of a score rollup.",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "\n{\n totalInteractions: '0',\n totalObjectives: '0',\n scoreMin: '0',\n scoreMax: '0'\n}",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1088,
-            "description": "Start Timer\nThis will begin the timer based on the time provided by max_time_allowed.  This depends on the time_limit_action.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1096,
-            "description": "Debug\nRelay so you don't have to say scorm vs SB",
-            "type": "{*} *see SCORM_API debug",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1102,
-            "description": "Get Value\nRelay so you can keep talking to SCOBot for one-to-one SCORM calls.",
-            "type": "{*|Function} *see SCORM_API getvalue",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1108,
-            "description": "Set Value\nRelay so you can keep talking to SCObot for one-to-one SCORM calls.",
-            "type": "{*|Function} *see SCORM_API setvalue",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1114,
-            "description": "Get Mode\nThis will return the current SCO Mode we are in (normal, browse, review)",
-            "return": {
-                "description": "normal, browse, review",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1125,
-            "description": "Get Entry\nThis will return the entry type (ab-initio, resume or \"\")",
-            "return": {
-                "description": "ab-initio, resume , \"\"",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1136,
-            "description": "Set Bookmark\nThis will update the local snap shot, and update SCORM (commit still required)",
-            "params": [
-                {
-                    "name": "v",
-                    "description": "value\nreturns {String} 'true' or 'false'.",
-                    "type": "String"
-                }
-            ],
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1149,
-            "description": "Get Bookmark\nThis will return the local snapshot, but is in sync with cmi.location",
-            "return": {
-                "description": "bookmark",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1160,
-            "description": "Progress\nHooks to Private method used possibly elsewhere in this API\ncmi.score.scaled,\ncmi.success_status,\ncmi.completion_status,\ncmi.progress_measure",
-            "return": {
-                "description": "",
-                "type": "Object"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1170,
-            "description": "Set Suspend Data By Page ID\nThis will set the suspend data by id (could be a page ID as long as its unique)\nSuspend data is a 64,000 character string.  In this case it will be a JSON Object that\nfreely converts to a JSON String or Object.\nNow you could require that the end user have a id in their data object, or in this case keep it\nseparate for search ability.  Either way you'll have to verify they are passing a id.\nI've opted to make them pass the ID.  I'm also opting to keep this as a object instead of\njust a page array.  You may want to add more things to suspend data than just pages.\nExample structure of this:\n{\n sco_id: '12345',\n name: 'value',\n pages: [\n     {\n         id: 1,\n         title: 'Presentation',\n         data: {data object for a page}\n     },\n     {\n         id: 2,\n         title: 'Match Game',\n         data: {data object for a page}\n    }\n ]\n};\nCalling commit will still be needed to truly save it.",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "",
-                    "type": "*"
-                },
-                {
-                    "name": "title",
-                    "description": "",
-                    "type": "String"
-                },
-                {
-                    "name": "data",
-                    "description": "",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1228,
-            "description": "Get Suspend Data By Page ID\nThis will get the suspend data by id",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "",
-                    "type": "*"
-                }
-            ],
-            "return": {
-                "description": "object, but false if empty.",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1250,
-            "description": "Get Time From Start",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1257,
-            "description": "Set Interaction\nThis will set an interaction based on Journaling or State.\nParameter for choosing a version is located in the defaults.\nNote: If you are recording Journaling make sure its something the LMS\nsupports or plans to support, or your just blimping out your interactions array\nfor no reason.\nYou may ask what is \"real(10,7)\".  This is a binary floating point with a precision up to 7 characters to the right of the decimal.\nExample Data Object:\n{\n id: '1',                             // 4000 chars\n type: 'true-false',                  // (true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other)\n objectives: [\n   {\n      id: '12'\n   }\n ],\n timestamp: 'expects date object when interaction starts',  // second(10,0) Pass a date object\n correct_responses: [\n     {\n         pattern: ''                  // depends on interaction type\n     }\n ],\n weighting: '1',\n learner_response: 'true',\n result: 'correct',                   // (correct, incorrect, unanticipated, neutral, real (10,7) )\n latency: 'expects date object after interaction is done',  // second(10,2)\n description: \"The question commonly\" // 250 chars\n}",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "Interaction Object from SCORM",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1425,
-            "description": "Get Interaction\nReturns the full Interaction object",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "object or string 'false'\n{\n id: '1',                             // 4000 chars\n type: 'true-false',                  // (true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other)\n objectives: [\n     {\n         id: '12'\n     }\n ],\n timestamp: 'expects date object when interaction starts',  // second(10,0) Pass a date object\n correct_responses: [\n     {\n         pattern: ''                  // depends on interaction type\n     }\n ],\n weighting: '1',\n learner_response: 'true',\n result: 'correct',                   // (correct, incorrect, unanticipated, neutral, real (10,7) )\n latency: 'expects date object after interaction is done',  // second(10,2)\n description: \"The question commonly\" // 250 chars\n}\nor\n'false'",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1514,
-            "description": "Set Objective\nSets the data for the scorm objective.  ID's have to be set first and must be unique.\nExample data object\n{\n id: '1',                            // 4000 chars\n score: {\n     scaled: '0',                    // real(10,7) *\n     raw: '0',\n     min: '0',\n     max: '0'\n }\n success_status: 'failed',            // (passed, failed, unknown)\n completion_status: 'incomplete',     // (completed, incomplete, not attempted, unknown)\n progress_measure: '0',               // real(10,7)\n description: 'This is the objective' // 250 Chars\n}",
-            "params": [
-                {
-                    "name": "data",
-                    "description": "Objective object from SCORM",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1585,
-            "description": "Get Objective\nReturns the Objective object by ID",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "object or string 'false'\n{\n id: '1',                            // 4000 chars\n score: {\n     scaled: '0',                    // real(10,7) *\n     raw: '0',\n     min: '0',\n     max: '0'\n }\n success_status: 'failed',            // (passed, failed, unknown)\n completion_status: 'incomplete',     // (completed, incomplete, not attempted, unknown)\n progress_measure: '0',               // real(10,7)\n description: 'This is the objective' // 250 Chars\n}\nor\n'false'",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1631,
-            "description": "Set Comment From Learner\nThis will set the comment, location and time the student made a comment",
-            "params": [
-                {
-                    "name": "msg",
-                    "description": "comment",
-                    "type": "String"
-                },
-                {
-                    "name": "loc",
-                    "description": "location",
-                    "type": "String"
-                },
-                {
-                    "name": "date",
-                    "description": "New Date object (for timestamp)",
-                    "type": "Object"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1657,
-            "description": "Grade It\nThis method will set cmi.score.scaled, cmi.success_status, and cmi.completion_status.  This is for situations\nwhere you are doing simple scoring, with NO objectives or interactions.\nPrereq for this would be to have passed in scaled_passing_score and completion_threshold in to SCOBot\nIf none are provided it will default to 'passed' and 'completed'\nSpecial Note: If you are using Objectives, Interactions and set the totals, you do not need to use this method.",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1690,
-            "description": "Happy Ending\nThis will auto-score the student to passed, completed, and scored",
-            "return": {
-                "description": "",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1707,
-            "description": "Commit\nThis will commit the data stored at the LMS Level to the backend.  Please use sparingly.",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1718,
-            "description": "Suspend\nThis will suspend the SCO and ends with terminating.  No data can be saved after this.",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1733,
-            "description": "Finish\nThis will set success status, exit and completion",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1749,
-            "description": "Timeout\nThis will set success status, exit and completion",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1765,
-            "description": "Is ISO 8601 UTC",
-            "return": {
-                "description": "true/false",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1770,
-            "description": "Set\nThis locally sets values local to this API",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "name",
-                    "type": "String"
-                },
-                {
-                    "name": "v",
-                    "description": "(String,Number,Object,Array,Boolean} value"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1792,
-            "description": "Get\nThis locally gets values local to this API",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "name",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "value or {Boolean} false",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCOBot.js",
-            "line": 1806,
-            "description": "Wrap up Constructor\nCertain versions of mozilla had an issue with not firing the window unload event.\nAt the time, I used window.top to get around this.  Later I started seeing with JQuery\ndifferent behavior once I incorporated it.  So at this point I'm using window not window.top.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 3,
-            "description": "SCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\n    lmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
-            "author": "Mark Statkus <mark@cybercussion.com>",
-            "license": "Copyright (c) 2009-2014, Cybercussion Interactive LLC\nAs of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.",
-            "requires": [
-                "JQuery"
-            ],
-            "version": "3.1.0",
-            "params": [
-                {
-                    "name": "options",
-                    "description": "override default values",
-                    "type": "Object"
-                }
-            ],
-            "is_constructor": 1,
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 97,
-            "description": "No Console\nLack of support in older browsers forced this",
-            "params": [
-                {
-                    "name": "msg",
-                    "description": "Debug Message",
-                    "type": "String"
-                },
-                {
-                    "name": "lvl",
-                    "description": "1=Error, 2=Warning, 3=Log, 4=Info",
-                    "type": "*"
-                }
-            ],
-            "itemtype": "event",
-            "name": "debug fired when no console is available.  You could listen to this to put it in an alternative log.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 113,
-            "description": "Debug\nBuilt-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)",
-            "params": [
-                {
-                    "name": "msg",
-                    "description": "Debug Message",
-                    "type": "String"
-                },
-                {
-                    "name": "lvl",
-                    "description": "1=Error, 2=Warning, 3=Log, 4=Info",
-                    "type": "Integer"
-                }
-            ],
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 154,
-            "description": "Find API\nAPI_1484_11 or API for SCORM 2004 or 1.2",
-            "params": [
-                {
-                    "name": "win",
-                    "description": "Window level",
-                    "type": "Object"
-                }
-            ],
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 180,
-            "description": "Centiseconds To ISO Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "Total Seconds",
-                    "type": "Number"
-                },
-                {
-                    "name": "bPrecise",
-                    "description": "Only Set true if were dealing with months, years (highly unlikely)",
-                    "type": "Boolean"
-                }
-            ],
-            "return": {
-                "description": "SCORM 2004 Time PT0H0M0S Format",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 259,
-            "description": "ISO Duration to Centisecond",
-            "params": [
-                {
-                    "name": "str",
-                    "description": ""
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Number"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 329,
-            "description": "Pad Time\nPads time with proper formatting (double digits)",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 337,
-            "description": "ISO 8601 Date String UTC\nConverts date object into ISO 8601 standard\nreturns {String} ISO 8601 + UTC",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 346,
-            "description": "ISO 8601 Date String\nConcerts date into ISO 8601 Standard",
-            "return": {
-                "description": "ISO 8601",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 357,
-            "description": "ISO 8601 String to Date\nNot extremely clear yet if this is needed at a SCO level.  If not I'll remove it later.",
-            "params": [
-                {
-                    "name": "str",
-                    "description": "ISO8601",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "Date Object or false",
-                "type": "Object"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 403,
-            "description": "Centiseconds To SCORM 1.2 Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "Total Seconds",
-                    "type": "Number"
-                }
-            ],
-            "return": {
-                "description": "SCORM 2004 Time PT0H0M0S Format",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 452,
-            "description": "Make Boolean\nTurns 'yes', 'no', 'true', 'false', '0', '1' into true/false",
-            "params": [
-                {
-                    "name": "str",
-                    "description": "value to turn to boolean",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 481,
-            "description": "Trigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 491,
-            "description": "Trigger Exception",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 501,
-            "description": "Get Last LMS Error Code\nError Code should be 0 if its anything else, a error has occurred",
-            "return": {
-                "description": "",
-                "type": "Number"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 526,
-            "description": "Get Last LMS Error Message\nError Message associated by error code",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "error code",
-                    "type": "Number"
-                }
-            ],
-            "return": {
-                "description": "error message",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 575,
-            "description": "Get Value (SCORM Call)\nGets the cmi object value requested",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "CMI Object Path as String",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "String"
-            },
-            "itemtype": "event",
-            "name": "'getvalue'",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 705,
-            "description": "Set Value (SCORM Call)\nSets the cmi object value by name",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "CMI Object Path as String",
-                    "type": "String"
-                },
-                {
-                    "name": "v",
-                    "description": "Value",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "",
-                "type": "String"
-            },
-            "itemtype": "event",
-            "name": "'setvalue'",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 868,
-            "description": "Commit (SCORM Call)\nCommits the Data to the Server via the LMS API.  SCORM Time done by default.",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 905,
-            "description": "Initialize  (SCORM Call)\nInitializes the SCO",
-            "return": {
-                "description": "'true' or 'false'",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 961,
-            "description": "Terminate (SCORM Call)\nTerminates the SCO",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1002,
-            "description": "Get Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "Alpha-Numeric Identification of the Interaction you're looking for",
-                    "type": "*"
-                }
-            ],
-            "return": {
-                "description": "'false' if nothing found or id",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1033,
-            "description": "Get Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
-            "params": [
-                {
-                    "name": "id",
-                    "description": "Alpha-Numeric Identification of the Interaction you're looking for",
-                    "type": "*"
-                }
-            ],
-            "return": {
-                "description": "'false' if nothing found or id",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1063,
-            "description": "Get interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1089,
-            "description": "Get interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1118,
-            "description": "Init (Internal API)\nInitializes the SCORM API, and locates the LMS API",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1164,
-            "description": "Get Last Error (Internal API)\nConverts error integer to Message String",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "name",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "value",
-                "type": "String"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1173,
-            "description": "Is LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
-            "return": {
-                "description": "",
-                "type": "Boolean"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1181,
-            "description": "Set (Internal API)\nThis locally sets values local to this API",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "name",
-                    "type": "String"
-                },
-                {
-                    "name": "v",
-                    "description": "(String,Number,Object,Array,Boolean} value"
-                }
-            ],
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1212,
-            "description": "Get (Internal API)\nThis locally gets values local to this API",
-            "params": [
-                {
-                    "name": "n",
-                    "description": "name",
-                    "type": "String"
-                }
-            ],
-            "return": {
-                "description": "value or {Boolean} false",
-                "type": "*"
-            },
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "scorm/SCORM_API.js",
-            "line": 1226,
-            "description": "Hook for External Plugins like Flash to set Time\nPublic to Private API's",
             "class": "VISH.Editor"
         },
         {
@@ -2150,6 +1062,458 @@
             "namespace": "VISH"
         },
         {
+            "file": "VISH.SCORM.API.js",
+            "line": 145,
+            "description": "SCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\nlmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
+            "author": "Mark Statkus <mark@cybercussion.com>",
+            "license": "Copyright (c) 2009-2014, Cybercussion Interactive LLC\nAs of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.",
+            "requires": [
+                "JQuery"
+            ],
+            "version": "3.1.0",
+            "params": [
+                {
+                    "name": "options",
+                    "description": "override default values",
+                    "type": "Object"
+                }
+            ],
+            "is_constructor": 1,
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 238,
+            "description": "Debug\nBuilt-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Debug Message",
+                    "type": "String"
+                },
+                {
+                    "name": "lvl",
+                    "description": "1=Error, 2=Warning, 3=Log, 4=Info",
+                    "type": "Integer"
+                }
+            ],
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 292,
+            "description": "No Console\nLack of support in older browsers forced this",
+            "params": [
+                {
+                    "name": "msg",
+                    "description": "Debug Message",
+                    "type": "String"
+                },
+                {
+                    "name": "lvl",
+                    "description": "1=Error, 2=Warning, 3=Log, 4=Info",
+                    "type": "*"
+                }
+            ],
+            "itemtype": "event",
+            "name": "debug fired when no console is available.  You could listen to this to put it in an alternative log.",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 366,
+            "description": "Find API\nAPI_1484_11 or API for SCORM 2004 or 1.2",
+            "params": [
+                {
+                    "name": "win",
+                    "description": "Window level",
+                    "type": "Object"
+                }
+            ],
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 392,
+            "description": "Centiseconds To ISO Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "Total Seconds",
+                    "type": "Number"
+                },
+                {
+                    "name": "bPrecise",
+                    "description": "Only Set true if were dealing with months, years (highly unlikely)",
+                    "type": "Boolean"
+                }
+            ],
+            "return": {
+                "description": "SCORM 2004 Time PT0H0M0S Format",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 471,
+            "description": "ISO Duration to Centisecond",
+            "params": [
+                {
+                    "name": "str",
+                    "description": ""
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 541,
+            "description": "Pad Time\nPads time with proper formatting (double digits)",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 549,
+            "description": "ISO 8601 Date String UTC\nConverts date object into ISO 8601 standard\nreturns {String} ISO 8601 + UTC",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 558,
+            "description": "ISO 8601 Date String\nConcerts date into ISO 8601 Standard",
+            "return": {
+                "description": "ISO 8601",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 569,
+            "description": "ISO 8601 String to Date\nNot extremely clear yet if this is needed at a SCO level.  If not I'll remove it later.",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "ISO8601",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "Date Object or false",
+                "type": "Object"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 614,
+            "description": "Centiseconds To SCORM 1.2 Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "Total Seconds",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "SCORM 2004 Time PT0H0M0S Format",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 665,
+            "description": "Make Boolean\nTurns 'yes', 'no', 'true', 'false', '0', '1' into true/false",
+            "params": [
+                {
+                    "name": "str",
+                    "description": "value to turn to boolean",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 694,
+            "description": "Trigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 704,
+            "description": "Trigger Exception",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 714,
+            "description": "Get Last LMS Error Code\nError Code should be 0 if its anything else, a error has occurred",
+            "return": {
+                "description": "",
+                "type": "Number"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 739,
+            "description": "Get Last LMS Error Message\nError Message associated by error code",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "error code",
+                    "type": "Number"
+                }
+            ],
+            "return": {
+                "description": "error message",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 789,
+            "description": "Get Value (SCORM Call)\nGets the cmi object value requested",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "CMI Object Path as String",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "itemtype": "event",
+            "name": "'getvalue'",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 920,
+            "description": "Set Value (SCORM Call)\nSets the cmi object value by name",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "CMI Object Path as String",
+                    "type": "String"
+                },
+                {
+                    "name": "v",
+                    "description": "Value",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "",
+                "type": "String"
+            },
+            "itemtype": "event",
+            "name": "'setvalue'",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1086,
+            "description": "Commit (SCORM Call)\nCommits the Data to the Server via the LMS API.  SCORM Time done by default.",
+            "return": {
+                "description": "'true' or 'false'",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1124,
+            "description": "Initialize  (SCORM Call)\nInitializes the SCO",
+            "return": {
+                "description": "'true' or 'false'",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1181,
+            "description": "Terminate (SCORM Call)\nTerminates the SCO",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1225,
+            "description": "Get Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Alpha-Numeric Identification of the Interaction you're looking for",
+                    "type": "*"
+                }
+            ],
+            "return": {
+                "description": "'false' if nothing found or id",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1257,
+            "description": "Get Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
+            "params": [
+                {
+                    "name": "id",
+                    "description": "Alpha-Numeric Identification of the Interaction you're looking for",
+                    "type": "*"
+                }
+            ],
+            "return": {
+                "description": "'false' if nothing found or id",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1288,
+            "description": "Get interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1315,
+            "description": "Get interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1347,
+            "description": "Init (Internal API)\nInitializes the SCORM API, and locates the LMS API",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1394,
+            "description": "Get Last Error (Internal API)\nConverts error integer to Message String",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "value",
+                "type": "String"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1404,
+            "description": "Is LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
+            "return": {
+                "description": "",
+                "type": "Boolean"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1413,
+            "description": "Set (Internal API)\nThis locally sets values local to this API",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "name",
+                    "type": "String"
+                },
+                {
+                    "name": "v",
+                    "description": "(String,Number,Object,Array,Boolean} value"
+                }
+            ],
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1445,
+            "description": "Get (Internal API)\nThis locally gets values local to this API",
+            "params": [
+                {
+                    "name": "n",
+                    "description": "name",
+                    "type": "String"
+                }
+            ],
+            "return": {
+                "description": "value or {Boolean} false",
+                "type": "*"
+            },
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.SCORM.API.js",
+            "line": 1460,
+            "description": "Hook for External Plugins like Flash to set Time\nPublic to Private API's",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
             "file": "VISH.Slides.js",
             "line": 263,
             "description": "Function to go to next slide",
@@ -2305,21 +1669,21 @@
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 122,
+            "line": 124,
             "description": "Function called when entering slide in viewer, we have to show the objects",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 177,
+            "line": 181,
             "description": "Function called when leaving a slide in viewer",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 202,
+            "line": 206,
             "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
             "class": "",
             "namespace": "VISH"
@@ -2369,211 +1733,79 @@
         },
         {
             "message": "unknown tag: license",
-            "line": " scorm/SCOBot.js:3"
+            "line": " VISH.SCORM.API.js:145"
         },
         {
             "message": "unknown tag: version",
-            "line": " scorm/SCOBot.js:3"
+            "line": " VISH.SCORM.API.js:145"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:71"
+            "line": " VISH.SCORM.API.js:392"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:91"
+            "line": " VISH.SCORM.API.js:558"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:125"
+            "line": " VISH.SCORM.API.js:614"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:147"
+            "line": " VISH.SCORM.API.js:665"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:173"
+            "line": " VISH.SCORM.API.js:694"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:192"
+            "line": " VISH.SCORM.API.js:714"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:228"
+            "line": " VISH.SCORM.API.js:739"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:238"
+            "line": " VISH.SCORM.API.js:789"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:258"
+            "line": " VISH.SCORM.API.js:920"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:309"
+            "line": " VISH.SCORM.API.js:1086"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:581"
+            "line": " VISH.SCORM.API.js:1124"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:767"
+            "line": " VISH.SCORM.API.js:1181"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:784"
+            "line": " VISH.SCORM.API.js:1225"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:931"
+            "line": " VISH.SCORM.API.js:1257"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1055"
+            "line": " VISH.SCORM.API.js:1347"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1114"
+            "line": " VISH.SCORM.API.js:1394"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1125"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1149"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1160"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1170"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1228"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1257"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1425"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1514"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1585"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1707"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1718"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1733"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1749"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1765"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCOBot.js:1792"
-        },
-        {
-            "message": "unknown tag: license",
-            "line": " scorm/SCORM_API.js:3"
-        },
-        {
-            "message": "unknown tag: version",
-            "line": " scorm/SCORM_API.js:3"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:180"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:346"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:403"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:452"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:481"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:501"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:526"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:575"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:705"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:868"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:905"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:961"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:1002"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:1033"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:1118"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:1164"
-        },
-        {
-            "message": "replacing incorrect tag: returns with return",
-            "line": " scorm/SCORM_API.js:1212"
+            "line": " VISH.SCORM.API.js:1445"
         },
         {
             "message": "Missing item type",
@@ -2670,326 +1902,6 @@
         {
             "message": "Missing item type\nChecks/unchecks any matching checkboxes or radio buttons and\nselects/deselects and matching option elements.",
             "line": " libs/jquery.form.js:1036"
-        },
-        {
-            "message": "Missing item type\nThis is a sample SCORM Startup sequence and handicap API's for ease of use.\nGeneral Concept: When the LMS connects, call var SB = new SCOBot();\nSCOBot\nThis only works with the SCORM_API, but has the basis to work with other API's.\nSeveral public API's will call one to many SCORM Calls and this will make every attempt to\ndo common SCORM Tasks or boil down SCORM tasks into a smaller easy to use method.\nMode: {get} Browse, Review, Normal\nBookmark: {get/set} SCO Progress\nSuspend Data: {get/set} Suspend Data Object\nInteractions: {set} Interaction(s)\nObjectives: {set} Objective(s)\n\nJSLint recently complained about  tabs.  Switched to spaces.\n\nhttps://github.com/cybercussion/SCOBot",
-            "line": " scorm/SCOBot.js:3"
-        },
-        {
-            "message": "Missing item type",
-            "line": " scorm/SCOBot.js:35"
-        },
-        {
-            "message": "Missing item type\nTrigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
-            "line": " scorm/SCOBot.js:125"
-        },
-        {
-            "message": "Missing item type\nTrigger Exception\nThrows an event the player can listen to in order to handle an exception.\nThis would be common to a non-compliance in an LMS and loss of student data.",
-            "line": " scorm/SCOBot.js:135"
-        },
-        {
-            "message": "Missing item type\nIs Performing\nThis is based on cmi.success_status",
-            "line": " scorm/SCOBot.js:147"
-        },
-        {
-            "message": "Missing item type\nVerify cmi score scaled\nValidates if success_status is passed, and exit_type is normal.  Checks that score.max is 1.\nMay need to tighten this up later, its mostly for SCO's that default to normal and expect them to be complete.",
-            "line": " scorm/SCOBot.js:157"
-        },
-        {
-            "message": "Missing item type\nIs Bad Value\nWe get a variety of responses from an LMS",
-            "line": " scorm/SCOBot.js:173"
-        },
-        {
-            "message": "Missing item type\nCleanse Data\nThis will escape out characters that may of been cross-contaminated from other proprietary sources.\nThese can often result in UTF-8 and other encoding issues and may result in errors.",
-            "line": " scorm/SCOBot.js:182"
-        },
-        {
-            "message": "Missing item type\nIs ISO 8601\nI've got a RegEx to validate ISO 8601 time based on SCORM 2004 Formats.\nThis is a great common way to do this so regardless of time zone you can reflect the\ntime this time stamp was referring to.\nAcceptable Format GMT 2012-02-28T15:00:00.0-8:00, UTC 2012-02-28T15:00:00.0-8:00Z, Plain 2012-02-28T15:00:00",
-            "line": " scorm/SCOBot.js:192"
-        },
-        {
-            "message": "Missing item type\nis ISO 8601 Duration\nThis is a PT0H0M0S format",
-            "line": " scorm/SCOBot.js:217"
-        },
-        {
-            "message": "Missing item type\nNot Started Yet\nYou should never see this message, but I found I may need to trace this more than once.",
-            "line": " scorm/SCOBot.js:228"
-        },
-        {
-            "message": "Missing item type\nCurrent Time",
-            "line": " scorm/SCOBot.js:238"
-        },
-        {
-            "message": "Missing item type\nTrue Round\nMay consider using this to fit within real(10,7) scoring in the event the decimal goes over 7 digits",
-            "line": " scorm/SCOBot.js:246"
-        },
-        {
-            "message": "Missing item type\nFind Response Type (May not use this)\nThis is designed to check for {case_matters: true/false}, {order_matters: true/false} or {lang: x}",
-            "line": " scorm/SCOBot.js:258"
-        },
-        {
-            "message": "Missing item type\nTimes Up",
-            "line": " scorm/SCOBot.js:284"
-        },
-        {
-            "message": "Missing item type\nSet Value By Interaction Type\nThis is a data filter to convert input formats into SCORM standard strings.  Please review each interaction for what it expects.\nThis will not enforce SCORM char limits, so please mind your logs if your doing something your not suppose to.",
-            "line": " scorm/SCOBot.js:309"
-        },
-        {
-            "message": "Missing item type\nNumeric\ncomments coming",
-            "line": " scorm/SCOBot.js:542"
-        },
-        {
-            "message": "Missing item type\nDecode Value By Interaction Type\nThis is a data filter to convert input formats from SCORM standard strings to there native JS equivalent.",
-            "line": " scorm/SCOBot.js:581"
-        },
-        {
-            "message": "Missing item type\nNumeric\nThis falls into a simple hand off",
-            "line": " scorm/SCOBot.js:742"
-        },
-        {
-            "message": "Missing item type\nSet Suspend Data\nThis will set existing suspend data managed by escaping the values",
-            "line": " scorm/SCOBot.js:767"
-        },
-        {
-            "message": "Missing item type\nCheck Progress\nThis should be used sparingly.  Its going to total up the scoring real-time based on any interactions and objectives.\ncmi.score.scaled,\ncmi.success_status,\ncmi.completion_status,\ncmi.progress_measure",
-            "line": " scorm/SCOBot.js:784"
-        },
-        {
-            "message": "Missing item type\nGet Comments From LMS\nChecks to see if there are any comments from the LMS, and will\nreturn a complete object back for use with a display.",
-            "line": " scorm/SCOBot.js:872"
-        },
-        {
-            "message": "Missing item type\nUpdate Status\nRolled up success/completion status functionality",
-            "line": " scorm/SCOBot.js:905"
-        },
-        {
-            "message": "Missing item type\nStart (Internal API)\nInitializes the SCORM Startup, and communicates with SCORM (cruise control)\nand will begin to store some common used parameters for use later. Like:\n1. mode\n2. location (bookmark)\n3. scaled_passing_score\n4. suspend_data\n5. completion_status\n6. success_status\nThese can be obtained by asking SB.get('location'); i.e. the name space for these after you start,\nand during the session.",
-            "line": " scorm/SCOBot.js:931"
-        },
-        {
-            "message": "Missing item type\nSet Totals\nThis will take in total objectives, interactions, score max and score min to aid\nin the calculation of a score rollup.",
-            "line": " scorm/SCOBot.js:1055"
-        },
-        {
-            "message": "Missing item type\nStart Timer\nThis will begin the timer based on the time provided by max_time_allowed.  This depends on the time_limit_action.",
-            "line": " scorm/SCOBot.js:1088"
-        },
-        {
-            "message": "Missing item type\nDebug\nRelay so you don't have to say scorm vs SB",
-            "line": " scorm/SCOBot.js:1096"
-        },
-        {
-            "message": "Missing item type\nGet Value\nRelay so you can keep talking to SCOBot for one-to-one SCORM calls.",
-            "line": " scorm/SCOBot.js:1102"
-        },
-        {
-            "message": "Missing item type\nSet Value\nRelay so you can keep talking to SCObot for one-to-one SCORM calls.",
-            "line": " scorm/SCOBot.js:1108"
-        },
-        {
-            "message": "Missing item type\nGet Mode\nThis will return the current SCO Mode we are in (normal, browse, review)",
-            "line": " scorm/SCOBot.js:1114"
-        },
-        {
-            "message": "Missing item type\nGet Entry\nThis will return the entry type (ab-initio, resume or \"\")",
-            "line": " scorm/SCOBot.js:1125"
-        },
-        {
-            "message": "Missing item type\nSet Bookmark\nThis will update the local snap shot, and update SCORM (commit still required)",
-            "line": " scorm/SCOBot.js:1136"
-        },
-        {
-            "message": "Missing item type\nGet Bookmark\nThis will return the local snapshot, but is in sync with cmi.location",
-            "line": " scorm/SCOBot.js:1149"
-        },
-        {
-            "message": "Missing item type\nProgress\nHooks to Private method used possibly elsewhere in this API\ncmi.score.scaled,\ncmi.success_status,\ncmi.completion_status,\ncmi.progress_measure",
-            "line": " scorm/SCOBot.js:1160"
-        },
-        {
-            "message": "Missing item type\nSet Suspend Data By Page ID\nThis will set the suspend data by id (could be a page ID as long as its unique)\nSuspend data is a 64,000 character string.  In this case it will be a JSON Object that\nfreely converts to a JSON String or Object.\nNow you could require that the end user have a id in their data object, or in this case keep it\nseparate for search ability.  Either way you'll have to verify they are passing a id.\nI've opted to make them pass the ID.  I'm also opting to keep this as a object instead of\njust a page array.  You may want to add more things to suspend data than just pages.\nExample structure of this:\n{\n sco_id: '12345',\n name: 'value',\n pages: [\n     {\n         id: 1,\n         title: 'Presentation',\n         data: {data object for a page}\n     },\n     {\n         id: 2,\n         title: 'Match Game',\n         data: {data object for a page}\n    }\n ]\n};\nCalling commit will still be needed to truly save it.",
-            "line": " scorm/SCOBot.js:1170"
-        },
-        {
-            "message": "Missing item type\nGet Suspend Data By Page ID\nThis will get the suspend data by id",
-            "line": " scorm/SCOBot.js:1228"
-        },
-        {
-            "message": "Missing item type\nGet Time From Start",
-            "line": " scorm/SCOBot.js:1250"
-        },
-        {
-            "message": "Missing item type\nSet Interaction\nThis will set an interaction based on Journaling or State.\nParameter for choosing a version is located in the defaults.\nNote: If you are recording Journaling make sure its something the LMS\nsupports or plans to support, or your just blimping out your interactions array\nfor no reason.\nYou may ask what is \"real(10,7)\".  This is a binary floating point with a precision up to 7 characters to the right of the decimal.\nExample Data Object:\n{\n id: '1',                             // 4000 chars\n type: 'true-false',                  // (true-false, choice, fill-in, long-fill-in, matching, performance, sequencing, likert, numeric, other)\n objectives: [\n   {\n      id: '12'\n   }\n ],\n timestamp: 'expects date object when interaction starts',  // second(10,0) Pass a date object\n correct_responses: [\n     {\n         pattern: ''                  // depends on interaction type\n     }\n ],\n weighting: '1',\n learner_response: 'true',\n result: 'correct',                   // (correct, incorrect, unanticipated, neutral, real (10,7) )\n latency: 'expects date object after interaction is done',  // second(10,2)\n description: \"The question commonly\" // 250 chars\n}",
-            "line": " scorm/SCOBot.js:1257"
-        },
-        {
-            "message": "Missing item type\nGet Interaction\nReturns the full Interaction object",
-            "line": " scorm/SCOBot.js:1425"
-        },
-        {
-            "message": "Missing item type\nSet Objective\nSets the data for the scorm objective.  ID's have to be set first and must be unique.\nExample data object\n{\n id: '1',                            // 4000 chars\n score: {\n     scaled: '0',                    // real(10,7) *\n     raw: '0',\n     min: '0',\n     max: '0'\n }\n success_status: 'failed',            // (passed, failed, unknown)\n completion_status: 'incomplete',     // (completed, incomplete, not attempted, unknown)\n progress_measure: '0',               // real(10,7)\n description: 'This is the objective' // 250 Chars\n}",
-            "line": " scorm/SCOBot.js:1514"
-        },
-        {
-            "message": "Missing item type\nGet Objective\nReturns the Objective object by ID",
-            "line": " scorm/SCOBot.js:1585"
-        },
-        {
-            "message": "Missing item type\nSet Comment From Learner\nThis will set the comment, location and time the student made a comment",
-            "line": " scorm/SCOBot.js:1631"
-        },
-        {
-            "message": "Missing item type\nGrade It\nThis method will set cmi.score.scaled, cmi.success_status, and cmi.completion_status.  This is for situations\nwhere you are doing simple scoring, with NO objectives or interactions.\nPrereq for this would be to have passed in scaled_passing_score and completion_threshold in to SCOBot\nIf none are provided it will default to 'passed' and 'completed'\nSpecial Note: If you are using Objectives, Interactions and set the totals, you do not need to use this method.",
-            "line": " scorm/SCOBot.js:1657"
-        },
-        {
-            "message": "Missing item type\nHappy Ending\nThis will auto-score the student to passed, completed, and scored",
-            "line": " scorm/SCOBot.js:1690"
-        },
-        {
-            "message": "Missing item type\nCommit\nThis will commit the data stored at the LMS Level to the backend.  Please use sparingly.",
-            "line": " scorm/SCOBot.js:1707"
-        },
-        {
-            "message": "Missing item type\nSuspend\nThis will suspend the SCO and ends with terminating.  No data can be saved after this.",
-            "line": " scorm/SCOBot.js:1718"
-        },
-        {
-            "message": "Missing item type\nFinish\nThis will set success status, exit and completion",
-            "line": " scorm/SCOBot.js:1733"
-        },
-        {
-            "message": "Missing item type\nTimeout\nThis will set success status, exit and completion",
-            "line": " scorm/SCOBot.js:1749"
-        },
-        {
-            "message": "Missing item type\nIs ISO 8601 UTC",
-            "line": " scorm/SCOBot.js:1765"
-        },
-        {
-            "message": "Missing item type\nSet\nThis locally sets values local to this API",
-            "line": " scorm/SCOBot.js:1770"
-        },
-        {
-            "message": "Missing item type\nGet\nThis locally gets values local to this API",
-            "line": " scorm/SCOBot.js:1792"
-        },
-        {
-            "message": "Missing item type\nWrap up Constructor\nCertain versions of mozilla had an issue with not firing the window unload event.\nAt the time, I used window.top to get around this.  Later I started seeing with JQuery\ndifferent behavior once I incorporated it.  So at this point I'm using window not window.top.",
-            "line": " scorm/SCOBot.js:1806"
-        },
-        {
-            "message": "Missing item type\nSCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\n    lmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
-            "line": " scorm/SCORM_API.js:3"
-        },
-        {
-            "message": "Missing item type\nDebug\nBuilt-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)",
-            "line": " scorm/SCORM_API.js:113"
-        },
-        {
-            "message": "Missing item type\nFind API\nAPI_1484_11 or API for SCORM 2004 or 1.2",
-            "line": " scorm/SCORM_API.js:154"
-        },
-        {
-            "message": "Missing item type\nCentiseconds To ISO Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
-            "line": " scorm/SCORM_API.js:180"
-        },
-        {
-            "message": "Missing item type\nISO Duration to Centisecond",
-            "line": " scorm/SCORM_API.js:259"
-        },
-        {
-            "message": "Missing item type\nPad Time\nPads time with proper formatting (double digits)",
-            "line": " scorm/SCORM_API.js:329"
-        },
-        {
-            "message": "Missing item type\nISO 8601 Date String UTC\nConverts date object into ISO 8601 standard\nreturns {String} ISO 8601 + UTC",
-            "line": " scorm/SCORM_API.js:337"
-        },
-        {
-            "message": "Missing item type\nISO 8601 Date String\nConcerts date into ISO 8601 Standard",
-            "line": " scorm/SCORM_API.js:346"
-        },
-        {
-            "message": "Missing item type\nISO 8601 String to Date\nNot extremely clear yet if this is needed at a SCO level.  If not I'll remove it later.",
-            "line": " scorm/SCORM_API.js:357"
-        },
-        {
-            "message": "Missing item type\nCentiseconds To SCORM 1.2 Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
-            "line": " scorm/SCORM_API.js:403"
-        },
-        {
-            "message": "Missing item type\nMake Boolean\nTurns 'yes', 'no', 'true', 'false', '0', '1' into true/false",
-            "line": " scorm/SCORM_API.js:452"
-        },
-        {
-            "message": "Missing item type\nTrigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
-            "line": " scorm/SCORM_API.js:481"
-        },
-        {
-            "message": "Missing item type\nTrigger Exception",
-            "line": " scorm/SCORM_API.js:491"
-        },
-        {
-            "message": "Missing item type\nGet Last LMS Error Code\nError Code should be 0 if its anything else, a error has occurred",
-            "line": " scorm/SCORM_API.js:501"
-        },
-        {
-            "message": "Missing item type\nGet Last LMS Error Message\nError Message associated by error code",
-            "line": " scorm/SCORM_API.js:526"
-        },
-        {
-            "message": "Missing item type\nCommit (SCORM Call)\nCommits the Data to the Server via the LMS API.  SCORM Time done by default.",
-            "line": " scorm/SCORM_API.js:868"
-        },
-        {
-            "message": "Missing item type\nInitialize  (SCORM Call)\nInitializes the SCO",
-            "line": " scorm/SCORM_API.js:905"
-        },
-        {
-            "message": "Missing item type\nTerminate (SCORM Call)\nTerminates the SCO",
-            "line": " scorm/SCORM_API.js:961"
-        },
-        {
-            "message": "Missing item type\nGet Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
-            "line": " scorm/SCORM_API.js:1002"
-        },
-        {
-            "message": "Missing item type\nGet Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
-            "line": " scorm/SCORM_API.js:1033"
-        },
-        {
-            "message": "Missing item type\nGet interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
-            "line": " scorm/SCORM_API.js:1063"
-        },
-        {
-            "message": "Missing item type\nGet interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
-            "line": " scorm/SCORM_API.js:1089"
-        },
-        {
-            "message": "Missing item type\nInit (Internal API)\nInitializes the SCORM API, and locates the LMS API",
-            "line": " scorm/SCORM_API.js:1118"
-        },
-        {
-            "message": "Missing item type\nGet Last Error (Internal API)\nConverts error integer to Message String",
-            "line": " scorm/SCORM_API.js:1164"
-        },
-        {
-            "message": "Missing item type\nIs LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
-            "line": " scorm/SCORM_API.js:1173"
-        },
-        {
-            "message": "Missing item type\nSet (Internal API)\nThis locally sets values local to this API",
-            "line": " scorm/SCORM_API.js:1181"
-        },
-        {
-            "message": "Missing item type\nGet (Internal API)\nThis locally gets values local to this API",
-            "line": " scorm/SCORM_API.js:1212"
-        },
-        {
-            "message": "Missing item type\nHook for External Plugins like Flash to set Time\nPublic to Private API's",
-            "line": " scorm/SCORM_API.js:1226"
         },
         {
             "message": "Missing item type\nFunction to add an applet element to the slide\nthe applet is inside the archive, width, height and params attributes of the div",
@@ -3304,6 +2216,118 @@
             "line": " VISH.Recommendations.js:116"
         },
         {
+            "message": "Missing item type\nSCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\nlmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
+            "line": " VISH.SCORM.API.js:145"
+        },
+        {
+            "message": "Missing item type\nDebug\nBuilt-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)",
+            "line": " VISH.SCORM.API.js:238"
+        },
+        {
+            "message": "Missing item type\nFind API\nAPI_1484_11 or API for SCORM 2004 or 1.2",
+            "line": " VISH.SCORM.API.js:366"
+        },
+        {
+            "message": "Missing item type\nCentiseconds To ISO Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
+            "line": " VISH.SCORM.API.js:392"
+        },
+        {
+            "message": "Missing item type\nISO Duration to Centisecond",
+            "line": " VISH.SCORM.API.js:471"
+        },
+        {
+            "message": "Missing item type\nPad Time\nPads time with proper formatting (double digits)",
+            "line": " VISH.SCORM.API.js:541"
+        },
+        {
+            "message": "Missing item type\nISO 8601 Date String UTC\nConverts date object into ISO 8601 standard\nreturns {String} ISO 8601 + UTC",
+            "line": " VISH.SCORM.API.js:549"
+        },
+        {
+            "message": "Missing item type\nISO 8601 Date String\nConcerts date into ISO 8601 Standard",
+            "line": " VISH.SCORM.API.js:558"
+        },
+        {
+            "message": "Missing item type\nISO 8601 String to Date\nNot extremely clear yet if this is needed at a SCO level.  If not I'll remove it later.",
+            "line": " VISH.SCORM.API.js:569"
+        },
+        {
+            "message": "Missing item type\nCentiseconds To SCORM 1.2 Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
+            "line": " VISH.SCORM.API.js:614"
+        },
+        {
+            "message": "Missing item type\nMake Boolean\nTurns 'yes', 'no', 'true', 'false', '0', '1' into true/false",
+            "line": " VISH.SCORM.API.js:665"
+        },
+        {
+            "message": "Missing item type\nTrigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
+            "line": " VISH.SCORM.API.js:694"
+        },
+        {
+            "message": "Missing item type\nTrigger Exception",
+            "line": " VISH.SCORM.API.js:704"
+        },
+        {
+            "message": "Missing item type\nGet Last LMS Error Code\nError Code should be 0 if its anything else, a error has occurred",
+            "line": " VISH.SCORM.API.js:714"
+        },
+        {
+            "message": "Missing item type\nGet Last LMS Error Message\nError Message associated by error code",
+            "line": " VISH.SCORM.API.js:739"
+        },
+        {
+            "message": "Missing item type\nCommit (SCORM Call)\nCommits the Data to the Server via the LMS API.  SCORM Time done by default.",
+            "line": " VISH.SCORM.API.js:1086"
+        },
+        {
+            "message": "Missing item type\nInitialize  (SCORM Call)\nInitializes the SCO",
+            "line": " VISH.SCORM.API.js:1124"
+        },
+        {
+            "message": "Missing item type\nTerminate (SCORM Call)\nTerminates the SCO",
+            "line": " VISH.SCORM.API.js:1181"
+        },
+        {
+            "message": "Missing item type\nGet Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
+            "line": " VISH.SCORM.API.js:1225"
+        },
+        {
+            "message": "Missing item type\nGet Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
+            "line": " VISH.SCORM.API.js:1257"
+        },
+        {
+            "message": "Missing item type\nGet interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
+            "line": " VISH.SCORM.API.js:1288"
+        },
+        {
+            "message": "Missing item type\nGet interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
+            "line": " VISH.SCORM.API.js:1315"
+        },
+        {
+            "message": "Missing item type\nInit (Internal API)\nInitializes the SCORM API, and locates the LMS API",
+            "line": " VISH.SCORM.API.js:1347"
+        },
+        {
+            "message": "Missing item type\nGet Last Error (Internal API)\nConverts error integer to Message String",
+            "line": " VISH.SCORM.API.js:1394"
+        },
+        {
+            "message": "Missing item type\nIs LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
+            "line": " VISH.SCORM.API.js:1404"
+        },
+        {
+            "message": "Missing item type\nSet (Internal API)\nThis locally sets values local to this API",
+            "line": " VISH.SCORM.API.js:1413"
+        },
+        {
+            "message": "Missing item type\nGet (Internal API)\nThis locally gets values local to this API",
+            "line": " VISH.SCORM.API.js:1445"
+        },
+        {
+            "message": "Missing item type\nHook for External Plugins like Flash to set Time\nPublic to Private API's",
+            "line": " VISH.SCORM.API.js:1460"
+        },
+        {
             "message": "Missing item type\nFunction to go to next slide",
             "line": " VISH.Slides.js:263"
         },
@@ -3393,15 +2417,15 @@
         },
         {
             "message": "Missing item type\nFunction called when entering slide in viewer, we have to show the objects",
-            "line": " VISH.Viewer.js:122"
+            "line": " VISH.Viewer.js:124"
         },
         {
             "message": "Missing item type\nFunction called when leaving a slide in viewer",
-            "line": " VISH.Viewer.js:177"
+            "line": " VISH.Viewer.js:181"
         },
         {
             "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
-            "line": " VISH.Viewer.js:202"
+            "line": " VISH.Viewer.js:206"
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
