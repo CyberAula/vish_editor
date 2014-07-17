@@ -25,6 +25,20 @@ VISH.SCORM.API = (function(V,$,undefined){
 			return;
 		}
 
+		//Init User model
+		var learnerName = scorm.getvalue('cmi.learner_name');
+		var learnerId = scorm.getvalue('cmi.learner_id');
+		var myUser = V.User.getUser();
+		if(typeof myUser == "object"){
+			if(_isValidAPIResponse(learnerName)){
+				myUser.name = learnerName;
+			}
+			if(_isValidAPIResponse(learnerId)){
+				myUser.id = learnerId;
+			}
+			V.User.setUser(myUser);
+		}
+
 		V.ProgressTracking.init();
 		hasScore = V.ProgressTracking.getHasScore();
 
@@ -102,6 +116,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 		}
 
 		scorm.setvalue('cmi.success_status',successStatus);
+	};
+
+	var _isValidAPIResponse = function(string){
+		if((typeof string == "string")&&(string.trim()!="")&&(string!="false")){
+			return true;
+		} else {
+			return false;
+		}
 	};
 
 

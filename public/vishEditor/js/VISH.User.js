@@ -4,9 +4,13 @@ VISH.User = (function(V,$,undefined){
 
 	var init = function(options){
 		_user= {};
-		if(typeof options['user'] == "object") {
-			_user= options['user'];
+
+		if(options.scorm===true){
+			//SCORM do not allow user token on option params
+			delete options['user']['token'];
 		}
+
+		setUser(options['user']);
 	};
 
 	var isUser = function(){
@@ -26,6 +30,14 @@ VISH.User = (function(V,$,undefined){
 			return _user;
 		} else {
 			return null;
+		}
+	};
+
+	var setUser = function(userObject){
+		if(typeof userObject == "object") {
+			_user= userObject;
+		} else {
+			_user= {};
 		}
 	};
 
@@ -58,6 +70,7 @@ VISH.User = (function(V,$,undefined){
 		isUser:			isUser,
 		isLogged: 		isLogged,
 		getUser: 		getUser,
+		setUser: 		setUser,
 		getName:  		getName,
 		getId: 			getId,
 		getToken:   	getToken
