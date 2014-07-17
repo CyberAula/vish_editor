@@ -109,7 +109,7 @@ VISH.Slides = (function(V,$,undefined){
 	 * Slides Management
 	 *&#x2F;
 	var updateSlides = function(){
-		setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
+		setSlides($(&#x27;section.slides &gt; article&#x27;));
 		_updateSlideClasses();
 
 		if(!V.Editing){
@@ -275,7 +275,7 @@ VISH.Slides = (function(V,$,undefined){
 	};
 
 	var getSlidesQuantity = function(){
-		return document.querySelectorAll(&#x27;section.slides &gt; article&#x27;).length;
+		return $(&#x27;section.slides &gt; article&#x27;).length;
 	};
 
 	var getSlideType = function(slideEl){
@@ -335,16 +335,38 @@ VISH.Slides = (function(V,$,undefined){
 
 	var triggerEnterEventById = function(slide_id) {
 		var el = $(&quot;#&quot; +slide_id)[0];
-		var evt = document.createEvent(&#x27;Event&#x27;);
-		evt.initEvent(&#x27;slideenter&#x27;, true, true);
-		el.dispatchEvent(evt);
+
+		if(typeof el == &quot;undefined&quot;){
+			return
+		};
+
+		if(document.createEvent){
+			var evt = document.createEvent(&#x27;Event&#x27;);
+			evt.initEvent(&#x27;slideenter&#x27;, true, true); &#x2F;&#x2F; event type,bubbling,cancelable
+			el.dispatchEvent(evt);
+		} else if(document.createEventObject){
+			&#x2F;&#x2F;IE 8 and below
+			var evt = document.createEventObject();
+			el.fireEvent(&#x27;onslideenter&#x27;,evt);
+		}
 	};
 
 	var triggerLeaveEventById = function(slide_id) {
 		var el = $(&quot;#&quot; + slide_id)[0];
-		var evt = document.createEvent(&#x27;Event&#x27;);
-		evt.initEvent(&#x27;slideleave&#x27;, true, true);
-		el.dispatchEvent(evt);
+
+		if(typeof el == &quot;undefined&quot;){
+			return
+		};
+
+		if(document.createEvent){
+			var evt = document.createEvent(&#x27;Event&#x27;);
+			evt.initEvent(&#x27;slideleave&#x27;, true, true);
+			el.dispatchEvent(evt);
+		} else if(document.createEventObject){
+			&#x2F;&#x2F;IE 8 and below
+			var evt = document.createEventObject();
+			el.fireEvent(&#x27;onslideleave&#x27;,evt);
+		}
 	};
 
 

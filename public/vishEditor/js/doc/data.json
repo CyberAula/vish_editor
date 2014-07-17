@@ -1063,7 +1063,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 145,
+            "line": 149,
             "description": "SCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\nlmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
             "author": "Mark Statkus <mark@cybercussion.com>",
             "license": "Copyright (c) 2009-2014, Cybercussion Interactive LLC\nAs of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.",
@@ -1084,7 +1084,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 238,
+            "line": 242,
             "description": "Debug\nBuilt-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)",
             "params": [
                 {
@@ -1103,7 +1103,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 292,
+            "line": 296,
             "description": "No Console\nLack of support in older browsers forced this",
             "params": [
                 {
@@ -1124,7 +1124,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 366,
+            "line": 370,
             "description": "Find API\nAPI_1484_11 or API for SCORM 2004 or 1.2",
             "params": [
                 {
@@ -1138,7 +1138,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 392,
+            "line": 396,
             "description": "Centiseconds To ISO Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
             "params": [
                 {
@@ -1161,7 +1161,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 471,
+            "line": 475,
             "description": "ISO Duration to Centisecond",
             "params": [
                 {
@@ -1178,21 +1178,21 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 541,
+            "line": 545,
             "description": "Pad Time\nPads time with proper formatting (double digits)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 549,
+            "line": 553,
             "description": "ISO 8601 Date String UTC\nConverts date object into ISO 8601 standard\nreturns {String} ISO 8601 + UTC",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 558,
+            "line": 562,
             "description": "ISO 8601 Date String\nConcerts date into ISO 8601 Standard",
             "return": {
                 "description": "ISO 8601",
@@ -1203,7 +1203,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 569,
+            "line": 573,
             "description": "ISO 8601 String to Date\nNot extremely clear yet if this is needed at a SCO level.  If not I'll remove it later.",
             "params": [
                 {
@@ -1221,7 +1221,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 614,
+            "line": 618,
             "description": "Centiseconds To SCORM 1.2 Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
             "params": [
                 {
@@ -1239,7 +1239,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 665,
+            "line": 669,
             "description": "Make Boolean\nTurns 'yes', 'no', 'true', 'false', '0', '1' into true/false",
             "params": [
                 {
@@ -1257,7 +1257,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 694,
+            "line": 698,
             "description": "Trigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
             "return": {
                 "description": "",
@@ -1268,14 +1268,14 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 704,
+            "line": 708,
             "description": "Trigger Exception",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 714,
+            "line": 718,
             "description": "Get Last LMS Error Code\nError Code should be 0 if its anything else, a error has occurred",
             "return": {
                 "description": "",
@@ -1286,7 +1286,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 739,
+            "line": 743,
             "description": "Get Last LMS Error Message\nError Message associated by error code",
             "params": [
                 {
@@ -1304,7 +1304,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 789,
+            "line": 793,
             "description": "Get Value (SCORM Call)\nGets the cmi object value requested",
             "params": [
                 {
@@ -1324,7 +1324,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 920,
+            "line": 924,
             "description": "Set Value (SCORM Call)\nSets the cmi object value by name",
             "params": [
                 {
@@ -1349,7 +1349,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1086,
+            "line": 1090,
             "description": "Commit (SCORM Call)\nCommits the Data to the Server via the LMS API.  SCORM Time done by default.",
             "return": {
                 "description": "'true' or 'false'",
@@ -1360,7 +1360,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1124,
+            "line": 1128,
             "description": "Initialize  (SCORM Call)\nInitializes the SCO",
             "return": {
                 "description": "'true' or 'false'",
@@ -1371,7 +1371,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1181,
+            "line": 1185,
             "description": "Terminate (SCORM Call)\nTerminates the SCO",
             "return": {
                 "description": "",
@@ -1382,7 +1382,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1225,
+            "line": 1229,
             "description": "Get Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
             "params": [
                 {
@@ -1400,7 +1400,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1257,
+            "line": 1261,
             "description": "Get Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
             "params": [
                 {
@@ -1418,21 +1418,21 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1288,
+            "line": 1292,
             "description": "Get interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1315,
+            "line": 1319,
             "description": "Get interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1347,
+            "line": 1351,
             "description": "Init (Internal API)\nInitializes the SCORM API, and locates the LMS API",
             "return": {
                 "description": "",
@@ -1443,7 +1443,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1394,
+            "line": 1398,
             "description": "Get Last Error (Internal API)\nConverts error integer to Message String",
             "params": [
                 {
@@ -1461,7 +1461,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1404,
+            "line": 1408,
             "description": "Is LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
             "return": {
                 "description": "",
@@ -1472,7 +1472,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1413,
+            "line": 1417,
             "description": "Set (Internal API)\nThis locally sets values local to this API",
             "params": [
                 {
@@ -1490,7 +1490,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1445,
+            "line": 1449,
             "description": "Get (Internal API)\nThis locally gets values local to this API",
             "params": [
                 {
@@ -1508,56 +1508,56 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1460,
+            "line": 1464,
             "description": "Hook for External Plugins like Flash to set Time\nPublic to Private API's",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 263,
+            "line": 285,
             "description": "Function to go to next slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 270,
+            "line": 292,
             "description": "Function to go to previous slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 277,
+            "line": 299,
             "description": "Function to move n slides and change the thumbnails and focus\nn > 0 (advance slides)\nn < 0 (go back)",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 299,
+            "line": 321,
             "description": "Go to the slide no",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 343,
+            "line": 365,
             "description": "Go to the last slide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 377,
+            "line": 399,
             "description": "Function to open a subslide",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Slides.js",
-            "line": 406,
+            "line": 428,
             "description": "Function to close a subslide",
             "class": "",
             "namespace": "VISH"
@@ -1592,42 +1592,42 @@
         },
         {
             "file": "VISH.Utils.js",
-            "line": 135,
+            "line": 154,
             "description": "Return a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 177,
+            "line": 196,
             "description": "Fix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 207,
+            "line": 226,
             "description": "Check slide types and fix it",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 682,
+            "line": 701,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 690,
+            "line": 709,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 699,
+            "line": 718,
             "description": "Function to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
             "class": "",
             "namespace": "VISH"
@@ -1733,79 +1733,79 @@
         },
         {
             "message": "unknown tag: license",
-            "line": " VISH.SCORM.API.js:145"
+            "line": " VISH.SCORM.API.js:149"
         },
         {
             "message": "unknown tag: version",
-            "line": " VISH.SCORM.API.js:145"
+            "line": " VISH.SCORM.API.js:149"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:392"
+            "line": " VISH.SCORM.API.js:396"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:558"
+            "line": " VISH.SCORM.API.js:562"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:614"
+            "line": " VISH.SCORM.API.js:618"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:665"
+            "line": " VISH.SCORM.API.js:669"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:694"
+            "line": " VISH.SCORM.API.js:698"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:714"
+            "line": " VISH.SCORM.API.js:718"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:739"
+            "line": " VISH.SCORM.API.js:743"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:789"
+            "line": " VISH.SCORM.API.js:793"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:920"
+            "line": " VISH.SCORM.API.js:924"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1086"
+            "line": " VISH.SCORM.API.js:1090"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1124"
+            "line": " VISH.SCORM.API.js:1128"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1181"
+            "line": " VISH.SCORM.API.js:1185"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1225"
+            "line": " VISH.SCORM.API.js:1229"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1257"
+            "line": " VISH.SCORM.API.js:1261"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1347"
+            "line": " VISH.SCORM.API.js:1351"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1394"
+            "line": " VISH.SCORM.API.js:1398"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1445"
+            "line": " VISH.SCORM.API.js:1449"
         },
         {
             "message": "Missing item type",
@@ -2217,143 +2217,143 @@
         },
         {
             "message": "Missing item type\nSCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\nlmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
-            "line": " VISH.SCORM.API.js:145"
+            "line": " VISH.SCORM.API.js:149"
         },
         {
             "message": "Missing item type\nDebug\nBuilt-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)",
-            "line": " VISH.SCORM.API.js:238"
+            "line": " VISH.SCORM.API.js:242"
         },
         {
             "message": "Missing item type\nFind API\nAPI_1484_11 or API for SCORM 2004 or 1.2",
-            "line": " VISH.SCORM.API.js:366"
+            "line": " VISH.SCORM.API.js:370"
         },
         {
             "message": "Missing item type\nCentiseconds To ISO Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
-            "line": " VISH.SCORM.API.js:392"
+            "line": " VISH.SCORM.API.js:396"
         },
         {
             "message": "Missing item type\nISO Duration to Centisecond",
-            "line": " VISH.SCORM.API.js:471"
+            "line": " VISH.SCORM.API.js:475"
         },
         {
             "message": "Missing item type\nPad Time\nPads time with proper formatting (double digits)",
-            "line": " VISH.SCORM.API.js:541"
+            "line": " VISH.SCORM.API.js:545"
         },
         {
             "message": "Missing item type\nISO 8601 Date String UTC\nConverts date object into ISO 8601 standard\nreturns {String} ISO 8601 + UTC",
-            "line": " VISH.SCORM.API.js:549"
+            "line": " VISH.SCORM.API.js:553"
         },
         {
             "message": "Missing item type\nISO 8601 Date String\nConcerts date into ISO 8601 Standard",
-            "line": " VISH.SCORM.API.js:558"
+            "line": " VISH.SCORM.API.js:562"
         },
         {
             "message": "Missing item type\nISO 8601 String to Date\nNot extremely clear yet if this is needed at a SCO level.  If not I'll remove it later.",
-            "line": " VISH.SCORM.API.js:569"
+            "line": " VISH.SCORM.API.js:573"
         },
         {
             "message": "Missing item type\nCentiseconds To SCORM 1.2 Duration\nBorrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil \"with\" statement",
-            "line": " VISH.SCORM.API.js:614"
+            "line": " VISH.SCORM.API.js:618"
         },
         {
             "message": "Missing item type\nMake Boolean\nTurns 'yes', 'no', 'true', 'false', '0', '1' into true/false",
-            "line": " VISH.SCORM.API.js:665"
+            "line": " VISH.SCORM.API.js:669"
         },
         {
             "message": "Missing item type\nTrigger Warning (internal to this API)\nThrows a console log when a SCORM API Error occurs",
-            "line": " VISH.SCORM.API.js:694"
+            "line": " VISH.SCORM.API.js:698"
         },
         {
             "message": "Missing item type\nTrigger Exception",
-            "line": " VISH.SCORM.API.js:704"
+            "line": " VISH.SCORM.API.js:708"
         },
         {
             "message": "Missing item type\nGet Last LMS Error Code\nError Code should be 0 if its anything else, a error has occurred",
-            "line": " VISH.SCORM.API.js:714"
+            "line": " VISH.SCORM.API.js:718"
         },
         {
             "message": "Missing item type\nGet Last LMS Error Message\nError Message associated by error code",
-            "line": " VISH.SCORM.API.js:739"
+            "line": " VISH.SCORM.API.js:743"
         },
         {
             "message": "Missing item type\nCommit (SCORM Call)\nCommits the Data to the Server via the LMS API.  SCORM Time done by default.",
-            "line": " VISH.SCORM.API.js:1086"
+            "line": " VISH.SCORM.API.js:1090"
         },
         {
             "message": "Missing item type\nInitialize  (SCORM Call)\nInitializes the SCO",
-            "line": " VISH.SCORM.API.js:1124"
+            "line": " VISH.SCORM.API.js:1128"
         },
         {
             "message": "Missing item type\nTerminate (SCORM Call)\nTerminates the SCO",
-            "line": " VISH.SCORM.API.js:1181"
+            "line": " VISH.SCORM.API.js:1185"
         },
         {
             "message": "Missing item type\nGet Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
-            "line": " VISH.SCORM.API.js:1225"
+            "line": " VISH.SCORM.API.js:1229"
         },
         {
             "message": "Missing item type\nGet Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
-            "line": " VISH.SCORM.API.js:1257"
+            "line": " VISH.SCORM.API.js:1261"
         },
         {
             "message": "Missing item type\nGet interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
-            "line": " VISH.SCORM.API.js:1288"
+            "line": " VISH.SCORM.API.js:1292"
         },
         {
             "message": "Missing item type\nGet interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
-            "line": " VISH.SCORM.API.js:1315"
+            "line": " VISH.SCORM.API.js:1319"
         },
         {
             "message": "Missing item type\nInit (Internal API)\nInitializes the SCORM API, and locates the LMS API",
-            "line": " VISH.SCORM.API.js:1347"
+            "line": " VISH.SCORM.API.js:1351"
         },
         {
             "message": "Missing item type\nGet Last Error (Internal API)\nConverts error integer to Message String",
-            "line": " VISH.SCORM.API.js:1394"
+            "line": " VISH.SCORM.API.js:1398"
         },
         {
             "message": "Missing item type\nIs LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
-            "line": " VISH.SCORM.API.js:1404"
+            "line": " VISH.SCORM.API.js:1408"
         },
         {
             "message": "Missing item type\nSet (Internal API)\nThis locally sets values local to this API",
-            "line": " VISH.SCORM.API.js:1413"
+            "line": " VISH.SCORM.API.js:1417"
         },
         {
             "message": "Missing item type\nGet (Internal API)\nThis locally gets values local to this API",
-            "line": " VISH.SCORM.API.js:1445"
+            "line": " VISH.SCORM.API.js:1449"
         },
         {
             "message": "Missing item type\nHook for External Plugins like Flash to set Time\nPublic to Private API's",
-            "line": " VISH.SCORM.API.js:1460"
+            "line": " VISH.SCORM.API.js:1464"
         },
         {
             "message": "Missing item type\nFunction to go to next slide",
-            "line": " VISH.Slides.js:263"
+            "line": " VISH.Slides.js:285"
         },
         {
             "message": "Missing item type\nFunction to go to previous slide",
-            "line": " VISH.Slides.js:270"
+            "line": " VISH.Slides.js:292"
         },
         {
             "message": "Missing item type\nFunction to move n slides and change the thumbnails and focus\nn > 0 (advance slides)\nn < 0 (go back)",
-            "line": " VISH.Slides.js:277"
-        },
-        {
-            "message": "Missing item type\nGo to the slide no",
             "line": " VISH.Slides.js:299"
         },
         {
+            "message": "Missing item type\nGo to the slide no",
+            "line": " VISH.Slides.js:321"
+        },
+        {
             "message": "Missing item type\nGo to the last slide",
-            "line": " VISH.Slides.js:343"
+            "line": " VISH.Slides.js:365"
         },
         {
             "message": "Missing item type\nFunction to open a subslide",
-            "line": " VISH.Slides.js:377"
+            "line": " VISH.Slides.js:399"
         },
         {
             "message": "Missing item type\nFunction to close a subslide",
-            "line": " VISH.Slides.js:406"
+            "line": " VISH.Slides.js:428"
         },
         {
             "message": "Missing item type\nLoad web snapshots",
@@ -2373,27 +2373,27 @@
         },
         {
             "message": "Missing item type\nReturn a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
-            "line": " VISH.Utils.js:135"
+            "line": " VISH.Utils.js:154"
         },
         {
             "message": "Missing item type\nFix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
-            "line": " VISH.Utils.js:177"
+            "line": " VISH.Utils.js:196"
         },
         {
             "message": "Missing item type\nCheck slide types and fix it",
-            "line": " VISH.Utils.js:207"
+            "line": " VISH.Utils.js:226"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:682"
+            "line": " VISH.Utils.js:701"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:690"
+            "line": " VISH.Utils.js:709"
         },
         {
             "message": "Missing item type\nFunction to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
-            "line": " VISH.Utils.js:699"
+            "line": " VISH.Utils.js:718"
         },
         {
             "message": "Missing item type\nFunction to play all videos and audios of a slide",

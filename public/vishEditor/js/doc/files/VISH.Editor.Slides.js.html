@@ -262,7 +262,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Utils.removeTempShown(article_to_move);
 
 		&#x2F;&#x2F;Update slideEls
-		V.Slides.setSlides(document.querySelectorAll(&#x27;section.slides &gt; article&#x27;));
+		V.Slides.setSlides($(&#x27;section.slides &gt; article&#x27;));
 
 		&#x2F;&#x2F;Update scrollbar params and counters
 		$(&quot;#slides_list&quot;).find(&quot;div.wrapper_barbutton:has(img[slidenumber])&quot;).each(function(index,div){

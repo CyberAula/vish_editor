@@ -156,7 +156,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		} else if(movement=="before") {
 			$(article_reference).before(article_to_move);
 		} else {
-			V.Debugging.log("V.Slides: Error. Movement not defined... !");
+			// V.Debugging.log("V.Slides: Error. Movement not defined... !");
 			return;
 		}
 
@@ -172,7 +172,7 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		V.Utils.removeTempShown(article_to_move);
 
 		//Update slideEls
-		V.Slides.setSlides(document.querySelectorAll('section.slides > article'));
+		V.Slides.setSlides($('section.slides > article'));
 
 		//Update scrollbar params and counters
 		$("#slides_list").find("div.wrapper_barbutton:has(img[slidenumber])").each(function(index,div){

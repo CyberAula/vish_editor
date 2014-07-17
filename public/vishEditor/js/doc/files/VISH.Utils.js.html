@@ -179,7 +179,26 @@ VISH.Utils = (function(V,undefined){
 
 				return res;
 			};
-		}
+		};
+
+		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;indexOf#Compatibility
+		if (!Array.prototype.indexOf){
+			Array.prototype.indexOf = function(elt &#x2F;*, from*&#x2F;){
+				var len = this.length &gt;&gt;&gt; 0;
+				var from = Number(arguments[1]) || 0;
+				from = (from &lt; 0)
+					? Math.ceil(from)
+					: Math.floor(from);
+				if (from &lt; 0)
+					from += len;
+
+				for (; from &lt; len; from++){
+					if (from in this &amp;&amp;	this[from] === elt)
+						return from;
+				}
+				return -1;
+			};
+		};
 
 		&#x2F;&#x2F;Disable watermark for IE
 		jQuery.fn.vewatermark = function(text){
