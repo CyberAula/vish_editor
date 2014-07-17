@@ -39,10 +39,10 @@ VISH.ProgressTracking = (function(V,$,undefined){
 				objectives[params.quizId].completed = true;
 
 				if(typeof params.score == "number"){
-					//params.score (i.e. the scaled quiz score) is number in a 0-10 scale.
-					//If a customized score weight has been assigned to the quiz in the settings (field score), this should be reflected in the score_weight param.
-					//objectives[params.quizId].score should be a score in a 0-1 scale. So, we will divide params.score/10
-					var scaledScore = params.score/10;
+					//params.score (i.e. the scaled quiz score) is number in a 0-100 scale.
+					//If a customized score weight has been assigned to the quiz in the settings, this should be reflected in the score_weight param.
+					//objectives[params.quizId].score should be a score in a 0-1 scale. So, we will divide params.score/100
+					var scaledScore = params.score/100;
 					objectives[params.quizId].score = scaledScore;
 
 					if(scaledScore >= SCORE_THRESHOLD){
@@ -122,13 +122,13 @@ VISH.ProgressTracking = (function(V,$,undefined){
 							hasScore = true;
 
 							//Create objective
-							var quizScore = 10;
+							var scoreWeight = 10;
 							if((typeof element.settings == "object")&&(typeof element.settings.score != "undefined")){
-								quizScore = parseInt(element.settings.score);
+								scoreWeight = parseInt(element.settings.score);
 							}
 
-							//Quiz score is the score_weight. Later all these weights will be normalized to sum to one.
-							var quizObjective = new Objective(element.quizId,undefined,quizScore);
+							//'scoreWeight' is the 'score points' assigned to the quiz (10 by default). Later all these score weights will be normalized to sum to one.
+							var quizObjective = new Objective(element.quizId,undefined,scoreWeight);
 							objectives[quizObjective.id] = quizObjective;
 						}
 					}

@@ -93,7 +93,7 @@ VISH.Quiz.Open = (function(V,$,undefined){
 				$(textArea).addClass("openQ_wrong_answer");
 			}
 
-			var quizScore = (answeredQuizCorrectly==true ? 10 : 0);
+			var quizScore = (answeredQuizCorrectly==true ? 100 : 0);
 			V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"id": quizJSON.id, "quizId": quizJSON.quizId, "type": V.Constant.QZ_TYPE.OPEN, "correct": answeredQuizCorrectly, "score": quizScore},true);
 
 			var willRetry = (canRetry)&&(answeredQuizCorrectly===false);

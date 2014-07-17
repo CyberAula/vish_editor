@@ -120,8 +120,9 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		});
 
 		var totalStatements = correctStatements+incorrectStatements;
+		var quizScore;
 		if(totalStatements > 0){
-			var quizScore = (correctStatements/totalStatements)*10;
+			quizScore = (correctStatements/totalStatements)*100;
 		}
 		
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"id": quizJSON.id, "quizId": quizJSON.quizId, "type": V.Constant.QZ_TYPE.TF, "correct":answeredQuizCorrectly, "correctStatements": correctStatements, "incorrectStatements": incorrectStatements, "score": quizScore},true);

@@ -107,7 +107,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 
 
 	var init = function(){
-		scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: true, exit_type: &quot;&quot;});
+		scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: false, exit_type: &quot;&quot;});
 		connected = scorm.initialize();
 		scorm.debug(&quot;Connected: &quot; + connected,4);
 		
@@ -133,9 +133,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 		hasScore = V.ProgressTracking.getHasScore();
 
 		if(hasScore){
-			&#x2F;&#x2F;Init score values
+			&#x2F;&#x2F;Initial score values
 			scorm.setvalue(&#x27;cmi.score.min&#x27;,(0).toString());
-			scorm.setvalue(&#x27;cmi.score.max&#x27;,(10).toString());
+			scorm.setvalue(&#x27;cmi.score.max&#x27;,(100).toString());
+			_updateScore(0);
 		}
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
@@ -156,9 +157,6 @@ VISH.SCORM.API = (function(V,$,undefined){
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
 			_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
-
-			&#x2F;&#x2F;TODO: Add cmi.session_time
-
 			&#x2F;&#x2F; scorm.commit(); terminate will call commit
 			scorm.terminate();
 		});
@@ -189,7 +187,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 		if(typeof score == &quot;number&quot;){
 			score = Math.max(0,Math.min(1,score));
 			scorm.setvalue(&#x27;cmi.score.scaled&#x27;,score.toString());
-			scorm.setvalue(&#x27;cmi.score.raw&#x27;,(score*10).toString());
+			scorm.setvalue(&#x27;cmi.score.raw&#x27;,(score*100).toString());
 			_updateSuccessStatus(score);
 		}
 	};
@@ -214,6 +212,22 @@ VISH.SCORM.API = (function(V,$,undefined){
 		} else {
 			return false;
 		}
+	};
+
+	var getAPIInstance = function(){
+		if(connected){
+			return scorm;
+		} else {
+			return undefined;
+		}		
+	};
+
+	var getLMSAPIInstance = function(){
+		if((connected)&amp;&amp;(scorm)&amp;&amp;(scorm.API)&amp;&amp;((scorm.API.path))){
+			return scorm.API.path;
+		} else {
+			return undefined;
+		}		
 	};
 
 
@@ -318,16 +332,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
 	     *&#x2F;
 	    function debug(msg,lvl){
-	        if(settings.debug){
-	        	if(settings.windowDebug==true){
-	        		windowDebug(msg,lvl);
-	        	} else {
-	        		_debug(msg,lvl);
-	        	}
-	        }
-	        if(lvl &lt; 3 &amp;&amp; settings.throw_alerts){
-	            alert(msg);
-	        }
+	    	if(settings){
+	    		msg = settings.prefix + &quot;: &quot; + msg;
+		    	if(settings.debug){
+		        	if(settings.windowDebug==true){
+		        		windowDebug(msg,lvl);
+		        	} else {
+		        		_debug(msg,lvl);
+		        	}
+		        }
+		        if(lvl &lt; 3 &amp;&amp; settings.throw_alerts){
+		            alert(msg);
+		        }
+	    	}
 	        return false;
 	    };
 
@@ -743,7 +760,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     *&#x2F;
 	    function makeBoolean(str){
 	        if (str === undefined) {
-	            debug(settings.prefix + &quot; : makeBoolean was given empty string, converting to false&quot;, 2);
+	            debug(&quot;makeBoolean was given empty string, converting to false&quot;, 2);
 	            return false;
 	        }
 	        if (str === true || str === false) {
@@ -983,10 +1000,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                }
 	                return String(v);
 	            }
-	            debug(settings.prefix + &quot;: Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + m + &quot;\nDiagnostic: &quot; + d, 1);
+	            debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + m + &quot;\nDiagnostic: &quot; + d, 1);
 	            return &#x27;false&#x27;;
 	        }
-	        debug(settings.prefix + &quot;: &quot; + n + &quot; Get Aborted, connection not initialized! &quot; + API.isActive, 2);
+	        debug(n + &quot; Get Aborted, connection not initialized! &quot; + API.isActive, 2);
 	        return &#x27;false&#x27;;
 	    };
 
@@ -1008,7 +1025,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            ig = false; &#x2F;&#x2F; ignore
 	        &#x2F;&#x2F; Security Consideration?
 	        &#x2F;&#x2F; It may be worth some minor security later to validate this is being set from a authorized source.  This is lacking support old versions of IE however.
-	        &#x2F;&#x2F;debug(settings.prefix + &quot;: The caller of this method is &quot; + arguments.callee.caller.caller.name, 4);  &#x2F;&#x2F;arguments.callee.caller
+	        &#x2F;&#x2F;debug(&quot;The caller of this method is &quot; + arguments.callee.caller.caller.name, 4);  &#x2F;&#x2F;arguments.callee.caller
 	        if (API.isActive) {&#x2F;&#x2F; it has initialized
 	            &#x2F;&#x2F; This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
 	            &#x2F;&#x2F; Handy if you don&#x27;t want to go through all your content calls...
@@ -1019,7 +1036,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    switch (n) {
 	                    case &quot;cmi.location&quot;:
 	                        if (v.length &gt; 255) {
-	                            debug(settings.prefix + &quot;: Warning, your bookmark is over the limit!!&quot;, 2);
+	                            debug(&quot;Warning, your bookmark is over the limit!!&quot;, 2);
 	                        }
 	                        nn = &quot;cmi.core.lesson_location&quot;;
 	                        break;
@@ -1072,7 +1089,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        break;
 	                    case &quot;cmi.suspend_data&quot;:
 	                        if (v.length &gt; 4096) {
-	                            debug(settings.prefix + &quot;: Warning, your suspend data is over the limit!!&quot;, 2);
+	                            debug(&quot;Warning, your suspend data is over the limit!!&quot;, 2);
 	                        }
 	                        nn = n;
 	                        break;
@@ -1083,9 +1100,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    if (ig) {
 	                        return &#x27;false&#x27;;
 	                    }
+	                    debug(&quot;SCORM 1.2 LMS SetValue with n: &quot; + nn + &quot; and v: &quot; + v, 3);
 	                    s = lms.LMSSetValue(nn, v); &#x2F;&#x2F;makeBoolean(lms.LMSSetValue(nn, v));
 	                } else {
-	                    debug(settings.prefix + &quot;: Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
+	                    debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
 	                    return &#x27;false&#x27;;
 	                }
 	                break;
@@ -1095,7 +1113,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    switch (n) {
 	                    case &quot;cmi.location&quot;:
 	                        if (v.length &gt; 1000) {
-	                            debug(settings.prefix + &quot;: Warning, your bookmark is over the limit!!&quot;, 2);
+	                            debug(&quot;Warning, your bookmark is over the limit!!&quot;, 2);
 	                        }
 	                        break;
 	                    case &quot;cmi.completion_status&quot;:
@@ -1112,16 +1130,17 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        break;
 	                    case &quot;suspend_data&quot;:
 	                        if (v.length &gt; 64000) {
-	                            debug(settings.prefix + &quot;: Warning, your suspend data is over the limit!!&quot;, 2);
+	                            debug(&quot;Warning, your suspend data is over the limit!!&quot;, 2);
 	                        }
 	                        break;
 	                    default:
 	                        &#x2F;&#x2F; any other handling?
 	                        break;
 	                    }
+	                    debug(&quot;SCORM 2004 LMS SetValue with n: &quot; + n + &quot; and v: &quot; + v, 3);
 	                    s = lms.SetValue(n, v); &#x2F;&#x2F;makeBoolean(lms.SetValue(n, v));
 	                } else {
-	                    debug(settings.prefix + &quot;: Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
+	                    debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
 	                    return &#x27;false&#x27;;
 	                }
 	                break;
@@ -1147,10 +1166,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            if (ec === 0 || ec === 403) {
 	                return s;
 	            }
-	            debug(settings.prefix + &quot;: Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for &quot; + n + &quot;\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+	            debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for &quot; + n + &quot;\nDiagnostic: &quot; + getDiagnostic(ec), 1);
 	            return s;
 	        }
-	        debug(settings.prefix + &quot;: &quot; + n + &quot; Set Aborted, connection not initialized! Locate where you called it after you Terminated.&quot;, 2);
+	        debug(n + &quot; Set Aborted, connection not initialized! Locate where you called it after you Terminated.&quot;, 2);
 	        return &#x27;false&#x27;;
 	    };
 
@@ -1167,7 +1186,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            saveDate = new Date();
 	        session_secs = (saveDate.getTime() - settings.startDate.getTime()) &#x2F; 1000;
 	        if (API.isActive) {&#x2F;&#x2F; it has initialized
-	            debug(settings.prefix + &quot;: Committing data&quot;, 3);
+	            debug(&quot;Committing data&quot;, 3);
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
 	                self.setvalue(&quot;cmi.core.session_time&quot;, centisecsToSCORM12Duration(session_secs * 100));
@@ -1185,10 +1204,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            if (ec === 0) {
 	                return s;
 	            }
-	            debug(settings.prefix + &quot;: Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+	            debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
 	            return &#x27;false&#x27;;
 	        }
-	        debug(settings.prefix + &quot;: Commit Aborted, connection not initialized!&quot;, 2);
+	        debug(&quot;Commit Aborted, connection not initialized!&quot;, 2);
 	        return &#x27;false&#x27;;
 	    };
 
@@ -1198,7 +1217,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
 	     *&#x2F;
 	    this.initialize = function(){
-	        debug(settings.prefix + &quot;: Initialize Called. \n\tversion: &quot; + settings.version + &quot;\n\tModified: &quot; + settings.modifiedDate, 3);
+	        debug(&quot;Initialize Called. \n\tversion: &quot; + settings.version + &quot;\n\tModified: &quot; + settings.modifiedDate, 3);
 	        var s = false, &#x2F;&#x2F; success boo
 	            lms = API.path, &#x2F;&#x2F; shortcut
 	            ec = 0;
@@ -1225,7 +1244,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    settings.startDate = new Date();
 	                    &#x2F;&#x2F;self.setvalue(&#x27;cmi.exit&#x27;, settings.exit_type); &#x2F;&#x2F; Consider setting exit type sooner by default?
 	                    &#x2F;&#x2F; Need to set Start Date
-	                    debug(settings.prefix + &quot;: SCO is initialized.&quot;, 3);
+	                    debug(&quot;SCO is initialized.&quot;, 3);
 	                    switch (API.data.completion_status) {
 	                    case &quot;not attempted&quot;:
 	                    case &quot;unknown&quot;:
@@ -1239,12 +1258,12 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    }
 	                    return &#x27;true&#x27;;
 	                }
-	                debug(settings.prefix + &quot;: Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Initialize.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+	                debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Initialize.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
 	            } else {
-	                debug(settings.prefix + &quot;: Aborted, LMS could not be located!.&quot;, 2);
+	                debug(&quot;Aborted, LMS could not be located!.&quot;, 2);
 	            }
 	        } else {
-	            debug(settings.prefix + &quot;: Aborted, connection already initialized!.&quot;, 2);
+	            debug(&quot;Aborted, connection already initialized!.&quot;, 2);
 	        }
 	        return &#x27;false&#x27;;
 	    };
@@ -1256,11 +1275,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     *&#x2F;
 	    this.terminate = function(){
 	        var s = false, lms = API.path, ec = 0;
-	        debug(settings.prefix + &quot;: Terminating &quot; + API.isActive + &quot; &quot; + lms, 4);
+	        debug(&quot;Terminating &quot; + API.isActive + &quot; &quot; + lms, 4);
 	        if(API.isActive){
 	            if(lms){
 	                &#x2F;&#x2F; if not completed or passed, suspend the content.
-	                debug(settings.prefix + &quot;: completion_status = &quot; + API.data.completion_status + &quot;|| success_status = &quot; + API.data.success_status, 3);
+	                debug(&quot;completion_status = &quot; + API.data.completion_status + &quot;|| success_status = &quot; + API.data.success_status, 3);
 	                self.commit(); &#x2F;&#x2F; Store Data before Terminating
 	                switch (API.version) {
 	                case &quot;1.2&quot;:
@@ -1274,17 +1293,17 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    break;
 	                }
 	                if(makeBoolean(s)){
-	                    debug(settings.prefix + &quot;: Terminated.&quot;, 3);
+	                    debug(&quot;Terminated.&quot;, 3);
 	                    API.isActive = false;
 	                }else{
 	                    ec = getLastErrorCode();
-	                    debug(settings.prefix + &quot;: Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+	                    debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
 	                }
 	            }else{
-	                debug(settings.prefix + &quot;: Lost connection to LMS&quot;, 2);
+	                debug(&quot;Lost connection to LMS&quot;, 2);
 	            }
 	        } else {
-	            debug(settings.prefix + &quot;: Terminate Aborted, connection not initialized!&quot;, 2);
+	            debug(&quot;Terminate Aborted, connection not initialized!&quot;, 2);
 	        }
 	        return s;
 	    };
@@ -1306,7 +1325,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        var count = self.getvalue(&quot;cmi.objectives._count&quot;), &#x2F;&#x2F; obtain total objectives
 	            i,
 	            tID;
-	        scorm.debug(settings.prefix + &quot;: Set Objective - Begin search, Objective count is &quot; + count, 4);
+	        scorm.debug(&quot;Set Objective - Begin search, Objective count is &quot; + count, 4);
 	        if (count === &#x27;&#x27; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
 	            return &#x27;false&#x27;;
 	        }
@@ -1315,9 +1334,9 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            tID = self.getvalue(&quot;cmi.objectives.&quot; + i + &quot;.id&quot;);
-	            &#x2F;&#x2F;scorm.debug(settings.prefix + &quot;: Objective ID Check for &quot; + i + &quot; : &quot; + id + &quot; vs &quot; + tID, 4);
+	            &#x2F;&#x2F;scorm.debug(&quot;Objective ID Check for &quot; + i + &quot; : &quot; + id + &quot; vs &quot; + tID, 4);
 	            if (id === tID) {
-	                scorm.debug(settings.prefix + &quot;: Objective ID Match on &quot; + i, 4);
+	                scorm.debug(&quot;Objective ID Match on &quot; + i, 4);
 	                return i;
 	            }
 	            i -= 1;
@@ -1341,14 +1360,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            return &#x27;false&#x27;;
 	        }
 	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
-	        scorm.debug(settings.prefix + &quot;: Getting interactions from count &quot; + count, 4);
+	        scorm.debug(&quot;Getting interactions from count &quot; + count, 4);
 	        i = count;
 	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            tID = this.getvalue(&quot;cmi.interactions.&quot; + i + &quot;.id&quot;);
-	            &#x2F;&#x2F;scorm.debug(settings.prefix + &quot;: Interaction ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
+	            &#x2F;&#x2F;scorm.debug(&quot;Interaction ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
 	            if (id === tID) {
-	                scorm.debug(settings.prefix + &quot;: Interaction By ID Returning &quot; + i);
+	                scorm.debug(&quot;Interaction By ID Returning &quot; + i);
 	                return i;
 	            }
 	            i -= 1;
@@ -1368,14 +1387,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            return &#x27;0&#x27;;
 	        }
 	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
-	        scorm.debug(settings.prefix + &quot;: Getting interaction objectives from count &quot; + count, 4);
+	        scorm.debug(&quot;Getting interaction objectives from count &quot; + count, 4);
 	        i = count;
 	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            tID = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives.&quot; + i + &quot;.id&quot;);
-	            &#x2F;&#x2F;scorm.debug(settings.prefix + &quot;: Interaction Objective ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
+	            &#x2F;&#x2F;scorm.debug(&quot;Interaction Objective ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
 	            if (id === tID) {
-	                scorm.debug(settings.prefix + &quot;: Interaction Objective By ID Returning &quot; + i);
+	                scorm.debug(&quot;Interaction Objective By ID Returning &quot; + i);
 	                return i;
 	            }
 	            i -= 1;
@@ -1392,18 +1411,18 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            i,
 	            p;
 	        if (count === &quot;&quot; || count === &#x27;false&#x27;) {
-	            scorm.debug(settings.prefix + &quot;: Correct Responses pattern was empty or false&quot;, 4);
+	            scorm.debug(&quot;Correct Responses pattern was empty or false&quot;, 4);
 	            return &#x27;0&#x27;; &#x2F;&#x2F; never created before so go with 0
 	        }
 	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
-	        scorm.debug(settings.prefix + &quot;: Getting interaction correct responses from count &quot; + count, 4);
+	        scorm.debug(&quot;Getting interaction correct responses from count &quot; + count, 4);
 	        i = count;
 	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            p = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses.&quot; + i + &quot;.pattern&quot;);
-	            &#x2F;&#x2F;scorm.debug(settings.prefix + &quot;: Interaction Correct Responses Pattern Check for &quot; + i + &quot; : &quot; + p + &quot; vs &quot; + pattern, 4);
+	            &#x2F;&#x2F;scorm.debug(&quot;Interaction Correct Responses Pattern Check for &quot; + i + &quot; : &quot; + p + &quot; vs &quot; + pattern, 4);
 	            if (pattern === p) {
-	                scorm.debug(settings.prefix + &quot;: Interaction Correct Responses By Pattern Returning &quot; + i);
+	                scorm.debug(&quot;Interaction Correct Responses By Pattern Returning &quot; + i);
 	                return &quot;match&quot;;
 	            }
 	            i -= 1;
@@ -1443,10 +1462,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            API.connection = true;
 	            return true;
 	        }
-	        debug(settings.prefix + &quot;: I was unable to locate an API for communication&quot;, 2);
+	        debug(&quot;I was unable to locate an API for communication&quot;, 2);
 	        if (settings.use_standalone) {
 	            &#x2F;&#x2F; Create Local API in SCORM 2004
-	            debug(settings.prefix + &quot;: If you included Local_API_1484_11 I&#x27;ll mimic the LMS.  If not, all SCORM calls will fail.&quot;, 4);
+	            debug(&quot;If you included Local_API_1484_11 I&#x27;ll mimic the LMS.  If not, all SCORM calls will fail.&quot;, 4);
 	            settings.standalone = true;
 	            API.version = &quot;2004&quot;;
 	            &#x2F;&#x2F; May or may not be provided (standalone) if not, this is null (DOA)
@@ -1488,7 +1507,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @param v (String,Number,Object,Array,Boolean} value
 	     *&#x2F;
 	    this.set = function(n,v){
-	        &#x2F;&#x2F;debug(settings.prefix + &quot;: set &quot; + n, 3);
+	        &#x2F;&#x2F;debug(&quot;set &quot; + n, 3);
 	        &#x2F;&#x2F; May need to maintain read-only perms here, case them out as needed.
 	        switch (n) {
 	        case &quot;version&quot;:
@@ -1520,7 +1539,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * @returns {*} value or {Boolean} false
 	     *&#x2F;
 	    this.get = function(n){
-	        &#x2F;&#x2F;debug(settings.prefix + &quot;: get &quot; + n, 3);
+	        &#x2F;&#x2F;debug(&quot;get &quot; + n, 3);
 	        if (settings[n] === undefined) {
 	            triggerWarning(404);
 	            return false;
@@ -1540,13 +1559,17 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    this.isoStringToDate = isoStringToDate;
 	    this.makeBoolean = makeBoolean;
 	    this.debug = debug;
+	    this.settings = settings;
+	    this.API = API;
 	    &#x2F;&#x2F; Self Initialize, note you could make this call outside, but later I decided to do it by default.
 	    this.init();
 	};
 
 
 	return {
-		init 	: init
+		init 				: init,
+		getAPIInstance		: getAPIInstance,
+		getLMSAPIInstance	: getLMSAPIInstance
 	};
 
 })(VISH,jQuery);

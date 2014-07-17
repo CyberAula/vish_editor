@@ -104,7 +104,7 @@ VISH.Quiz.Sorting = (function(V,$,undefined){
 		});
 
 		answeredQuizCorrectly = (answeredQuizCorrectly)&&(!answeredQuizWrong);
-		var quizScore = (answeredQuizCorrectly==true ? 10 : 0);
+		var quizScore = (answeredQuizCorrectly==true ? 100 : 0);
 
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"id": quizJSON.id, "quizId": quizJSON.quizId, "type": V.Constant.QZ_TYPE.SORTING, "correct": answeredQuizCorrectly, "score": quizScore},true);
 

@@ -112,9 +112,9 @@ VISH.Quiz.MC = (function(V,$,undefined){
 
 		if(multipleAnswer){
 			totalCorrectStatements = Math.max(1,totalCorrectStatements);
-			var quizScore = (Math.max(0,(correctStatements-incorrectStatements))/totalCorrectStatements)*10;
+			var quizScore = (Math.max(0,(correctStatements-incorrectStatements))/totalCorrectStatements)*100;
 		} else {
-			var quizScore = (answeredQuizCorrectly==true ? 10 : 0);
+			var quizScore = (answeredQuizCorrectly==true ? 100 : 0);
 		}
 
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"id": quizJSON.id, "quizId": quizJSON.quizId, "type": V.Constant.QZ_TYPE.MCHOICE, "correct": answeredQuizCorrectly, "multipleAnswer": multipleAnswer, "score": quizScore},true);

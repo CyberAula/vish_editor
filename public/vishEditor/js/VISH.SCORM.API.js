@@ -43,9 +43,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 		hasScore = V.ProgressTracking.getHasScore();
 
 		if(hasScore){
-			//Init score values
+			//Initial score values
 			scorm.setvalue('cmi.score.min',(0).toString());
-			scorm.setvalue('cmi.score.max',(10).toString());
+			scorm.setvalue('cmi.score.max',(100).toString());
+			_updateScore(0);
 		}
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
@@ -96,7 +97,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 		if(typeof score == "number"){
 			score = Math.max(0,Math.min(1,score));
 			scorm.setvalue('cmi.score.scaled',score.toString());
-			scorm.setvalue('cmi.score.raw',(score*10).toString());
+			scorm.setvalue('cmi.score.raw',(score*100).toString());
 			_updateSuccessStatus(score);
 		}
 	};
