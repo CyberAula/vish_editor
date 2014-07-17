@@ -66,9 +66,6 @@ VISH.SCORM.API = (function(V,$,undefined){
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
 			_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
-
-			//TODO: Add cmi.session_time
-
 			// scorm.commit(); terminate will call commit
 			scorm.terminate();
 		});

@@ -119,12 +119,16 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onHideRecommendations, function(params){
-			_rs.accepted = false;
+			if(typeof _rs.accepted == "undefined"){
+				_rs.accepted = false;
+			}
 			registerAction(V.Constant.Event.onHideRecommendations,params);
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onAcceptRecommendation, function(params){
-			_rs.accepted = params.id;
+			if((typeof _rs.accepted == "undefined")||(_rs.accepted===false)){
+				_rs.accepted = params.id;
+			}
 			registerAction(V.Constant.Event.onAcceptRecommendation,params);
 		});
 
