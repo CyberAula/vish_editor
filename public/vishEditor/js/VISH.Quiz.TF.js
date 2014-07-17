@@ -124,7 +124,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 			var quizScore = (correctStatements/totalStatements)*10;
 		}
 		
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"type": V.Constant.QZ_TYPE.TF, "correct":answeredQuizCorrectly, "correctStatements": correctStatements, "incorrectStatements": incorrectStatements, "score": quizScore},true);
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onAnswerQuiz,{"id": quizJSON.id, "quizId": quizJSON.quizId, "type": V.Constant.QZ_TYPE.TF, "correct":answeredQuizCorrectly, "correctStatements": correctStatements, "incorrectStatements": incorrectStatements, "score": quizScore},true);
 
 		var willRetry = (canRetry)&&(answeredQuizCorrectly===false);
 

@@ -35,13 +35,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 		}
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
-			if(typeof objective.progress != "undefined"){
+			var updateProgress = (typeof objective.progress != "undefined");
+			var updateScore = (typeof objective.score != "undefined");
+
+			if(updateProgress){
 				_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
 			}
-			if(typeof objective.score != "undefined"){
+			if(updateScore){
 				_updateScore(V.ProgressTracking.getScore());
 			}
-			scorm.commit();
+
+			if(updateProgress||updateScore){
+				scorm.commit();
+			}
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
@@ -140,11 +146,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	 * @param options {Object} override default values
 	 * @constructor
 	 */
-	/*!
-	 * SCORM_API, Updated January 3rd, 2014
-	 * Copyright (c) 2009-2013, Cybercussion Interactive LLC.
-	 * As of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.
-	 */
+
 	function SCORM_API(options){
 	    // Constructor ////////////
 	    "use strict";
