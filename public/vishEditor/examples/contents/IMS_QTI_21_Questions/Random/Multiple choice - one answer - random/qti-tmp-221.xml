@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd" identifier="choiceMultiple" title="AssesmentItem 222" timeDependent="false" adaptive="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="identifier">
+    <correctResponse>
+      <value>A0</value>
+    </correctResponse>
+    <mapping lowerBound="0" upperBound="1" defaultValue="0">
+      <mapEntry mapKey="A0" mappedValue="1.0"/>
+      <mapEntry mapKey="A1" mappedValue="0.0"/>
+      <mapEntry mapKey="A2" mappedValue="0.0"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="SCORE" cardinality="single" baseType="float">
+  </outcomeDeclaration>
+  <templateDeclaration identifier="CITIES" cardinality="single" baseType="string"
+        mathVariable="false" paramVariable="false"/>
+  <templateProcessing>
+    <setTemplateValue identifier="CITIES">
+            <random>
+                <ordered>
+                    <baseValue baseType="string">Menorca</baseValue>
+                    <baseValue baseType="string">Mallorca</baseValue>
+                    <baseValue baseType="string">Barcelona</baseValue>
+                </ordered>
+            </random>
+        </setTemplateValue>
+  </templateProcessing>
+  <itemBody>
+    <choiceInteraction responseIdentifier="RESPONSE" shuffle="false" maxChoices="1" minChoices="0">
+      <prompt>¿Cuál es la capital de España?­</prompt>
+      <simpleChoice identifier="A0">Madrid</simpleChoice>
+      <simpleChoice identifier="A1">­<printedVariable identifier="CITIES"/></simpleChoice>
+      <simpleChoice identifier="A2">​Lugo­</simpleChoice>
+    </choiceInteraction>
+  </itemBody>
+  <responseProcessing/>
+</assessmentItem>
