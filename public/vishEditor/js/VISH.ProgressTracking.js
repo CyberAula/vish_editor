@@ -4,6 +4,9 @@
  */
 VISH.ProgressTracking = (function(V,$,undefined){
 
+	//Constants
+	var SCORE_THRESHOLD = 0.5;
+
 	//Auxiliar vars
 	var objectives = {};
 	var minRequiredTime = 1;
@@ -29,8 +32,28 @@ VISH.ProgressTracking = (function(V,$,undefined){
 
 		//Quizzes
 		V.EventsNotifier.registerCallback(V.Constant.Event.onAnswerQuiz, function(params){
-			V.Debugging.log("onAnswerQuiz");
-			V.Debugging.log(params);
+
+			//Find Objective
+			if((params.quizId)&&(typeof objectives[params.quizId] != "undefined")){
+				objectives[params.quizId].progress = 1;
+				objectives[params.quizId].completed = true;
+
+				if(typeof params.score == "number"){
+					//params.score (i.e. the scaled quiz score) is number in a 0-10 scale.
+					//If a customized score weight has been assigned to the quiz in the settings (field score), this should be reflected in the score_weight param.
+					//objectives[params.quizId].score should be a score in a 0-1 scale. So, we will divide params.score/10
+					var scaledScore = params.score/10;
+					objectives[params.quizId].score = scaledScore;
+
+					if(scaledScore >= SCORE_THRESHOLD){
+						objectives[params.quizId].success = true;
+					} else {
+						objectives[params.quizId].success = false;
+					}
+				}
+
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onProgressObjectiveUpdated,objectives[params.quizId],false);
+			}
 		});
 	};
 
@@ -56,15 +79,18 @@ VISH.ProgressTracking = (function(V,$,undefined){
 			overallProgressMeasure += objectives[key].progress * objectives[key].completion_weight;
 		});
 
-		return overallProgressMeasure;
+		return +(overallProgressMeasure).toFixed(6);
 	};
 
 	//Return a value in a [0,1] scale
 	var getScore = function(){
-		//TODO. Take into account objectives with scores.
-		//
 		var overallScore = 0;
-		return 0;
+		Object.keys(objectives).forEach(function(key){
+			if(typeof objectives[key].score == "number"){
+				overallScore += objectives[key].score * objectives[key].score_weight;
+			}
+		});
+		return +(overallScore).toFixed(6);
 	};
 
 	var getHasScore = function(){
