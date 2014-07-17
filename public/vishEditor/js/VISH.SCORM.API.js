@@ -25,6 +25,9 @@ VISH.SCORM.API = (function(V,$,undefined){
 			return;
 		}
 
+		//Init progress tracking
+		V.ProgressTracking.init();
+
 		//Init User model
 		var learnerName = scorm.getvalue('cmi.learner_name');
 		var learnerId = scorm.getvalue('cmi.learner_id');
@@ -39,9 +42,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 			V.User.setUser(myUser);
 		}
 
-		V.ProgressTracking.init();
-		hasScore = V.ProgressTracking.getHasScore();
+		//Initial progress value
+		_updateProgressMeasure(0);
 
+		hasScore = V.ProgressTracking.getHasScore();
 		if(hasScore){
 			//Initial score values
 			scorm.setvalue('cmi.score.min',(0).toString());
