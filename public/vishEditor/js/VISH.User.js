@@ -6,8 +6,10 @@ VISH.User = (function(V,$,undefined){
 		_user= {};
 
 		if(options.scorm===true){
-			//SCORM do not allow user token on option params
-			delete options['user']['token'];
+			if(typeof options['user'] == "object"){
+				//SCORM do not allow user token on option params
+				delete options['user']['token'];
+			}
 		}
 
 		setUser(options['user']);

@@ -115,6 +115,20 @@ VISH.SCORM.API = (function(V,$,undefined){
 			return;
 		}
 
+		&#x2F;&#x2F;Init User model
+		var learnerName = scorm.getvalue(&#x27;cmi.learner_name&#x27;);
+		var learnerId = scorm.getvalue(&#x27;cmi.learner_id&#x27;);
+		var myUser = V.User.getUser();
+		if(typeof myUser == &quot;object&quot;){
+			if(_isValidAPIResponse(learnerName)){
+				myUser.name = learnerName;
+			}
+			if(_isValidAPIResponse(learnerId)){
+				myUser.id = learnerId;
+			}
+			V.User.setUser(myUser);
+		}
+
 		V.ProgressTracking.init();
 		hasScore = V.ProgressTracking.getHasScore();
 
@@ -125,13 +139,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 		}
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
-			if(typeof objective.progress != &quot;undefined&quot;){
+			var updateProgress = (typeof objective.progress != &quot;undefined&quot;);
+			var updateScore = (typeof objective.score != &quot;undefined&quot;);
+
+			if(updateProgress){
 				_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
 			}
-			if(typeof objective.score != &quot;undefined&quot;){
+			if(updateScore){
 				_updateScore(V.ProgressTracking.getScore());
 			}
-			scorm.commit();
+
+			if(updateProgress||updateScore){
+				scorm.commit();
+			}
 		});
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
@@ -188,6 +208,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 		scorm.setvalue(&#x27;cmi.success_status&#x27;,successStatus);
 	};
 
+	var _isValidAPIResponse = function(string){
+		if((typeof string == &quot;string&quot;)&amp;&amp;(string.trim()!=&quot;&quot;)&amp;&amp;(string!=&quot;false&quot;)){
+			return true;
+		} else {
+			return false;
+		}
+	};
+
 
 	&#x2F;* Base code provided by https:&#x2F;&#x2F;github.com&#x2F;cybercussion&#x2F;SCOBot *&#x2F;
 	&#x2F;**
@@ -230,11 +258,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	 * @param options {Object} override default values
 	 * @constructor
 	 *&#x2F;
-	&#x2F;*!
-	 * SCORM_API, Updated January 3rd, 2014
-	 * Copyright (c) 2009-2013, Cybercussion Interactive LLC.
-	 * As of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.
-	 *&#x2F;
+
 	function SCORM_API(options){
 	    &#x2F;&#x2F; Constructor &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	    &quot;use strict&quot;;
