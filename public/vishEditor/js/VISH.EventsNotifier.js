@@ -17,7 +17,7 @@ VISH.EventsNotifier = (function(V,$,undefined){
 				V.Messenger.init();
 			}
 		}
-	}
+	};
 
 	var unRegisterCallback = function(listenedEvent,callback){
 		if((listenedEvent in listeners)){
@@ -25,7 +25,7 @@ VISH.EventsNotifier = (function(V,$,undefined){
 				listeners[listenedEvent].splice(listeners[listenedEvent].indexOf(callback),1);
 			}
 		}
-	}
+	};
 
 	var notifyEvent = function(triggeredEvent,params,triggeredByUser){
 		if(!listeners){
@@ -39,7 +39,7 @@ VISH.EventsNotifier = (function(V,$,undefined){
 				eventListeners[i](params);
 			}
 		}
-	}
+	};
 
 	return {
 			init 				: init,
