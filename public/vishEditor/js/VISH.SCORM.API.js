@@ -1098,9 +1098,12 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            ec = 0,
 	            session_secs,
 	            saveDate = new Date();
-	        session_secs = (saveDate.getTime() - settings.startDate.getTime()) / 1000;
-	        if (API.isActive) {// it has initialized
+
+	        if(API.isActive){
+	        	// it has been initialized
+	        	session_secs = (saveDate.getTime() - settings.startDate.getTime()) / 1000;
 	            debug("Committing data", 3);
+
 	            switch (API.version) {
 	            case "1.2":
 	                self.setvalue("cmi.core.session_time", centisecsToSCORM12Duration(session_secs * 100));
@@ -1114,6 +1117,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                // handle non-LMS?
 	                break;
 	            }
+
 	            ec = getLastErrorCode();
 	            if (ec === 0) {
 	                return s;
@@ -1121,6 +1125,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            debug("Error\nError Code: " + ec + "\nError Message: " + getLastErrorMessage(ec) + " for Commit.\nDiagnostic: " + getDiagnostic(ec), 1);
 	            return 'false';
 	        }
+
 	        debug("Commit Aborted, connection not initialized!", 2);
 	        return 'false';
 	    };
