@@ -94,6 +94,9 @@ VISH.VirtualTour = (function(V,$,undefined){
 		//Store map
 		virtualTours[vtJSON.id].map = map;
 
+		//Store current center
+		virtualTours[vtJSON.id].currentCenter = center;
+
 		//Add markers
 		$(vtJSON.pois).each(function(index,poi){
 			_addMarkerToCoordinates(canvasId,map,poi.lat,poi.lng,poi.slide_id);
@@ -118,10 +121,13 @@ VISH.VirtualTour = (function(V,$,undefined){
 		var vtId = $(slideset).attr("id");
 		var canvas = $("#"+vtId).find(".map_canvas");
 		$(canvas).show();
+		_triggerOnResizeMap(vtId);
 	};
 
 	var onLeaveSlideset = function(slideset){
 		var vtId = $(slideset).attr("id");
+		virtualTours[vtId].currentCenter = virtualTours[vtId].map.getCenter();
+
 		var canvas = $("#"+vtId).find(".map_canvas");
 		$(canvas).hide();
 	};
@@ -160,14 +166,19 @@ VISH.VirtualTour = (function(V,$,undefined){
 
 
 	var afterSetupSize = function(increase){
-		// Object.keys(virtualTours).forEach(function(key){
-		// 	var vt = virtualTours[key];
-		// 	if(typeof vt.map == "object"){
-		// 		var center = vt.map.getCenter();
-		// 		google.maps.event.trigger(vt.map, "resize");
-		// 		vt.map.setCenter(center);
-		// 	}
-		// });
+		var currentSlideId = $(V.Slides.getCurrentSlide()).attr("id");
+		if(typeof virtualTours[currentSlideId] == "object"){
+			virtualTours[currentSlideId].currentCenter = virtualTours[currentSlideId].map.getCenter();
+			_triggerOnResizeMap(currentSlideId);
+		}
+	};
+
+	var _triggerOnResizeMap = function(vtId){
+		var vt = virtualTours[vtId];
+		if((typeof vt == "object")&&(typeof vt.map == "object")){
+			google.maps.event.trigger(vt.map, "resize");
+			vt.map.setCenter(vt.currentCenter);
+		}
 	};
 
 
