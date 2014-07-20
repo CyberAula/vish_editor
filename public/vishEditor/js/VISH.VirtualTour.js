@@ -9,14 +9,11 @@ VISH.VirtualTour = (function(V,$,undefined){
 	var gMlLoaded = false;
 	var gMlLoading = false;
 
-	//Keep last increase param to manage resizing
-	var lastIncrease;
-
 
 	var init = function(){
 		if(!initialized){
 			initialized = true;
-			virtualTours = new Array();
+			virtualTours = {};
 			_loadEvents();
 		}
 	};
@@ -163,34 +160,14 @@ VISH.VirtualTour = (function(V,$,undefined){
 
 
 	var afterSetupSize = function(increase){
-		// if(typeof lastIncrease == "undefined"){
-		// 	lastIncrease = increase;
-		// 	return;
-		// }
-
-		// var increaseDiff = increase - lastIncrease;
-
-		// for(key in virtualTours){
+		// Object.keys(virtualTours).forEach(function(key){
 		// 	var vt = virtualTours[key];
-		// 	var newZoom = _getZoomForIncreaseDiff(vt.map.zoom,increaseDiff);
-		// 	if(newZoom !== vt.map.zoom){
-		// 		vt.map.setZoom(newZoom);
-		// 		lastIncrease = increase;
+		// 	if(typeof vt.map == "object"){
+		// 		var center = vt.map.getCenter();
+		// 		google.maps.event.trigger(vt.map, "resize");
+		// 		vt.map.setCenter(center);
 		// 	}
-		// }
-	};
-
-	var _getZoomForIncreaseDiff = function(zoom, increaseDiff){
-		//+-1 zoom for each 30%
-		var absIncreaseDiff = Math.floor(Math.abs(increaseDiff)/0.3);
-
-		if(increaseDiff > 0){
-			var newZoom = zoom + absIncreaseDiff;
-		} else {
-			var newZoom = zoom - absIncreaseDiff;
-		}
-		//Zoom always between 1 and 20
-		return Math.max(Math.min(newZoom,20),1);
+		// });
 	};
 
 
