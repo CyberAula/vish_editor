@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd" identifier="Sorting Quiz" title="Sorting Quiz" timeDependent="false" adaptive="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="ordered" baseType="identifier">
+    <correctResponse>
+      <value>A0</value>
+      <value>A1</value>
+      <value>A2</value>
+      <value>A3</value>
+    </correctResponse>
+  </responseDeclaration>
+  <outcomeDeclaration cardinality="single" baseType="identifier" identifier="FEEDBACK">
+  </outcomeDeclaration>
+  <itemBody>
+    <orderInteraction responseIdentifier="RESPONSE" shuffle="true" orientation="vertical">
+      <prompt>­Ordena las siguientes capitales Europeas de mayor a menor número de habitantes.</prompt>
+      <simpleChoice identifier="A0" showHide="show">Londres­</simpleChoice>
+      <simpleChoice identifier="A1" showHide="show">Berlín­</simpleChoice>
+      <simpleChoice identifier="A2" showHide="show">Madrid­</simpleChoice>
+      <simpleChoice identifier="A3" showHide="show">Roma­</simpleChoice>
+    </orderInteraction>
+  </itemBody>
+  <responseProcessing/>
+</assessmentItem>

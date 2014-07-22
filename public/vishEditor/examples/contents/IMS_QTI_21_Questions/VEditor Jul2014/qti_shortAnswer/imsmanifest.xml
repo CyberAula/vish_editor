@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest xmlns="http://www.imsglobal.org/xsd/imscp_v1p1" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_v1p2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:imsqti="http://www.imsglobal.org/xsd/imsqti_metadata_v2p1" identifier="VISH_QUIZ_TmpIMSQTI_106" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.imsglobal.org/xsd/imsmd_v1p2 imsmd_v1p2p4.xsd http://www.imsglobal.org/xsd/imsqti_metadata_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_metadata_v2p1p1.xsd">
+  <metadata>
+    <schema>IMS Content</schema>
+    <schemaversion>1.1</schemaversion>
+    <imsmd:lom>
+      <imsmd:general>
+        <imsmd:title>
+          <imsmd:langstring xml:lang="en">
+Content package including QTI v2.1. items          </imsmd:langstring>
+        </imsmd:title>
+      </imsmd:general>
+      <imsmd:technical>
+        <imsmd:format>
+text/x-imsqti-item-xml        </imsmd:format>
+      </imsmd:technical>
+      <imsmd:rights>
+        <imsmd:description>
+          <imsmd:langstring xml:lang="en">
+Copyright (C) Virtual Science Hub 2014          </imsmd:langstring>
+        </imsmd:description>
+      </imsmd:rights>
+    </imsmd:lom>
+  </metadata>
+  <organizations>
+  </organizations>
+  <resources>
+    <resource identifier="resource-item-quiz-107" type="imsqti_item_xmlv2p1" href="qti-tmp-105.xml">
+      <metadata>
+        <imsmd:lom>
+          <imsmd:general>
+            <imsmd:title>
+              <imsmd:langstring xml:lang="en">OpenAnswer</imsmd:langstring>
+            </imsmd:title>
+          </imsmd:general>
+          <imsmd:technical>
+            <imsmd:format>text/x-imsqti-item-xml</imsmd:format>
+          </imsmd:technical>
+        </imsmd:lom>
+        <imsqti:qtiMetadata>
+          <imsqti:interactionType>extendedTextInteraction</imsqti:interactionType>
+        </imsqti:qtiMetadata>
+      </metadata>
+      <file href="qti-tmp-105.xml"/>
+    </resource>
+  </resources>
+</manifest>

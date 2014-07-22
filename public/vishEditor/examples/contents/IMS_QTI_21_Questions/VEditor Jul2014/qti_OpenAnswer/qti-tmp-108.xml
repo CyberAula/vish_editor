@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assessmentItem xmlns="http://www.imsglobal.org/xsd/imsqti_v2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsqti_v2p1  http://www.imsglobal.org/xsd/qti/qtiv2p1/imsqti_v2p1p1.xsd" identifier="openAnswer" title="Open Answer Quiz" timeDependent="false" adaptive="false">
+  <responseDeclaration identifier="RESPONSE" cardinality="single" baseType="string">
+    <correctResponse>
+      <value>­Madrid es un municipio y una ciudad de España. La localidad, con categoría histórica de villa, es la capital de España y de la Comunidad de Madrid. También conocida como la Villa y Corte, es la más poblada del estado, con 3 207 247 de habitantes en el año 2013, mientras que, con la inclusión de su área metropolitana8 la cifra de población asciende a 6 543 031 habitantes, siendo por ello la cuarta área metropolitana, por detrás de las de París, Londres y Región del Ruhr, y la tercera ciudad más poblada de la Unión Europea, por detrás de Berlín y Londres.
+Como capital del Estado, Madrid alberga las sedes del gobierno, Cortes Generales, ministerios, instituciones y organismos asociados, así como la residencia oficial de losreyes de España y del Presidente del Gobierno. En el plano económico, es la cuarta ciudad más rica de Europa, tras Londres, París y Moscú. Para el 2009, el 50,1 % de los ingresos de las 5000 principales empresas españolas son generados por sociedades con sede social en Madrid, las cuales representan el 31,8 % de ellas. Es sede del 3er mayor mercado de valores de Europa, del 2º de ámbito latinoamericano (Latibex) y de varias de las más grandes corporaciones del mundo.  Es la 8.ª ciudad del mundo con mayor presencia de multinacionales, tras Pekín y por delante de Dubái, París y Nueva York.</value>
+    </correctResponse>
+    <mapping defaultValue="0">
+      <mapEntry mapKey="­Madrid es un municipio y una ciudad de España. La localidad, con categoría histórica de villa, es la capital de España y de la Comunidad de Madrid. También conocida como la Villa y Corte, es la más poblada del estado, con 3 207 247 de habitantes en el año 2013, mientras que, con la inclusión de su área metropolitana8 la cifra de población asciende a 6 543 031 habitantes, siendo por ello la cuarta área metropolitana, por detrás de las de París, Londres y Región del Ruhr, y la tercera ciudad más poblada de la Unión Europea, por detrás de Berlín y Londres.&#10;Como capital del Estado, Madrid alberga las sedes del gobierno, Cortes Generales, ministerios, instituciones y organismos asociados, así como la residencia oficial de losreyes de España y del Presidente del Gobierno. En el plano económico, es la cuarta ciudad más rica de Europa, tras Londres, París y Moscú. Para el 2009, el 50,1 % de los ingresos de las 5000 principales empresas españolas son generados por sociedades con sede social en Madrid, las cuales representan el 31,8 % de ellas. Es sede del 3er mayor mercado de valores de Europa, del 2º de ámbito latinoamericano (Latibex) y de varias de las más grandes corporaciones del mundo.  Es la 8.ª ciudad del mundo con mayor presencia de multinacionales, tras Pekín y por delante de Dubái, París y Nueva York." mappedValue="1"/>
+    </mapping>
+  </responseDeclaration>
+  <outcomeDeclaration identifier="FEEDBACK" cardinality="multiple" baseType="identifier"/>
+  <itemBody>
+    <p>¿Qué opinas de Madrid?­</p>
+    <div>
+      <extendedTextInteraction responseIdentifier="RESPONSE" expectedLength="120" expectedLines="5"/>
+    </div>
+  </itemBody>
+  <responseProcessing>
+    <setOutcomeValue identifier="FEEDBACK">
+      <multiple>
+        <variable identifier="FEEDBACK"/>
+        <baseValue baseType="identifier">
+FEEDBACK_QUIZ        </baseValue>
+      </multiple>
+    </setOutcomeValue>
+  </responseProcessing>
+  <modalFeedback outcomeIdentifier="FEEDBACK" showHide="show" identifier="FEEDBACK_QUIZ">
+­Madrid es un municipio y una ciudad de España. La localidad, con categoría histórica de villa, es la capital de España y de la Comunidad de Madrid. También conocida como la Villa y Corte, es la más poblada del estado, con 3 207 247 de habitantes en el año 2013, mientras que, con la inclusión de su área metropolitana8 la cifra de población asciende a 6 543 031 habitantes, siendo por ello la cuarta área metropolitana, por detrás de las de París, Londres y Región del Ruhr, y la tercera ciudad más poblada de la Unión Europea, por detrás de Berlín y Londres.
+Como capital del Estado, Madrid alberga las sedes del gobierno, Cortes Generales, ministerios, instituciones y organismos asociados, así como la residencia oficial de losreyes de España y del Presidente del Gobierno. En el plano económico, es la cuarta ciudad más rica de Europa, tras Londres, París y Moscú. Para el 2009, el 50,1 % de los ingresos de las 5000 principales empresas españolas son generados por sociedades con sede social en Madrid, las cuales representan el 31,8 % de ellas. Es sede del 3er mayor mercado de valores de Europa, del 2º de ámbito latinoamericano (Latibex) y de varias de las más grandes corporaciones del mundo.  Es la 8.ª ciudad del mundo con mayor presencia de multinacionales, tras Pekín y por delante de Dubái, París y Nueva York.  </modalFeedback>
+</assessmentItem>
