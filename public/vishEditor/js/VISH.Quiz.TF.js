@@ -26,7 +26,7 @@ VISH.Quiz.TF = (function(V,$,undefined){
 		//Shuffle choices?
 		var quizChoices;
 		if((quizJSON.settings)&&(quizJSON.settings.shuffleChoices===true)){
-			quizChoices = V.Utils.shuffle(quizJSON.choices);
+			quizChoices = V.Utils.shuffle((jQuery.extend(true, [], quizJSON.choices)));
 		} else {
 			quizChoices = quizJSON.choices;
 		}
