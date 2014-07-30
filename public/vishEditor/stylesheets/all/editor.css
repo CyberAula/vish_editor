@@ -3119,14 +3119,13 @@ div.elSettingsButtonsWrapper {
 	left: 0;
 	width: 94%;
 	padding: 3%;
-	height: 7% !important;
 }
 
 div.disableSettingsField {
 	color: #ccc;
 }
 
-#exportQuizToIMSQTI {
+#exportQuizToIMSQTI, #exportQuizToMoodleXML {
 	cursor: pointer;
 }
 
