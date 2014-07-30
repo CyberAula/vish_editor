@@ -204,7 +204,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			//Element Settings
 			$(document).on("click", "#quizSettingsDone", V.Editor.Quiz.onQuizSettingsDone);
 			$(document).on("click", "#exportQuizToIMSQTI", function(){ V.Editor.Quiz.onExportTo("QTI") });
-
+			$(document).on("click", "#exportQuizToMoodleXML", function(){ V.Editor.Quiz.onExportTo("MoodleXML") });
 			//onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
 			confirmOnExit = true;

@@ -316,6 +316,7 @@ var i18n =
 				"i.Elements"				: "Elementos",
 				"i.Enable"					: "Habilitar",
 				"i.ExportToIMSQTI"			: "Exportar a IMS QTI 2.1",
+				"i.ExportToMoodleXML"		: "Exportar a Moodle Quiz XML",
 				"i.Rotate"					: "Rotar",
 				"i.Diagonal1"				: "Diagonal #1",
 				"i.Diagonal2"				: "Diagonal #2",
