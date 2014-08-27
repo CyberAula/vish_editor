@@ -15,7 +15,7 @@ var i18n =
 				// "i.welcome_message": "Hello %{name}, welcome to ViSH Editor.", -> "i.welcome_message": "Hola %{name}, bienvenido a ViSH Editor.",
 				// In the above example, %{name} should not be translated as it will be replaced by the name of the user.
 
-				// The symbol "&#8209;" means "-". So, e-Learning, may be represented as e&#8209;Learning .
+				// Some symbols are represented by codes. For instance, "&#8209;" means "-". So, "e-Learning", may be represented as "e&#8209;Learning". Please, keep the symbols.
 
 
 				// About screen
