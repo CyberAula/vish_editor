@@ -863,16 +863,17 @@ VISH.Utils = (function(V,undefined){
 			return;
 		}
 		var ft = null;
-	    $.each(style.split(";"), function(index, property){
-	    	 //We need to redefine the var in each iteration (due to Android browser issues)
-	    	 var font_style_pattern = /font-size:\s?([0-9]+)px/g;
-		     if(property.match(font_style_pattern) != null){
-			   	var result = font_style_pattern.exec(property);
-			   	if ((result!==null)&&(result[1]!==null)) {
-			   		ft = parseFloat(result[1]);
-			   		return false;
-			   	}
-			 }
+		$.each(style.split(";"), function(index, property){
+			//We need to redefine the var in each iteration (due to some browsers (e.g. Android browser) issues)
+			// var font_style_pattern = /font-size:\s?([0-9]+)px/g;
+			var font_style_pattern = /font-size\s*:\s*((\d*\.)?\d+)px/i;
+			if(property.match(font_style_pattern) != null){
+				var result = font_style_pattern.exec(property);
+				if ((result!==null)&&(result[1]!==null)) {
+					ft = parseFloat(result[1]);
+					return false;
+				}
+			}
 		});
 		return ft;
 	};

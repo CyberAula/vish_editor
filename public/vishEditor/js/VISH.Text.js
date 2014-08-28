@@ -2,7 +2,10 @@ VISH.Text = (function(V,$,undefined){
 
 	var disableConversion = false;
 
-	//Convert <p><span> from px to rems (http://caniuse.com/rem)
+	/*
+	 * Translate font-size params of HTML tags (<p>,<span>,...) from px to rems (http://caniuse.com/rem)
+	 * Also convert <font> tags into <span> tags with the font-size param specified in rems
+	 */
 	var init = function(){
 
 		//Disable conversions for IE8-
@@ -15,20 +18,20 @@ VISH.Text = (function(V,$,undefined){
 		}
 
 		//Adapt area text fields
-		_adaptPs($("article > div.VEtextArea > p"));
+		_makeTextResponsive($("article > div.VEtextArea"));
 
 		//Adapt quiz questions
-		_adaptPs($("article div.quizContainer > div > p"));
+		_makeTextResponsive($("article div.quizContainer > div"));
 		//Adapt quiz answers
-		_adaptPs($("article div.quizContainer").find("td > p"));
+		_makeTextResponsive($("article div.quizContainer").find("td"));
 
 		//Make Tables responsive
 		$("article > div.VEtextArea > table").each(function(index,table){
 			//Table text
-			_adaptSpans($(table).find("caption").find("span"));
+			_makeTextResponsive($(table).find("caption"));
+
 			$(table).find("td").each(function(index,td){
-				_adaptSpans($(td).find("span"));
-				_adaptFonts($(td).find("font"));
+				_makeTextResponsive(td);
 			});
 
 			//Table dimensions
@@ -55,31 +58,30 @@ VISH.Text = (function(V,$,undefined){
 		});
 	};
 
-	var _adaptPs = function(selector){
-		$(selector).each(function(index,p){
-			_setStyleInRem(p);
-			_adaptSpans($(p).find("span"));
-			_adaptFonts($(p).find("font"));
-		});
-	}
+	var _makeTextResponsive = function(container){
+		_adaptFonts($(container).find("font"));
+		_setStyleInRem($(container).find("[style]"));
+	};
 
-	var _adaptSpans = function(spans){
-		$(spans).each(function(index,span){
-			var oldStyle = $(span).attr("style");
-			if(typeof oldStyle == "undefined"){
+	var _setStyleInRem = function(els){
+		$(els).each(function(index,el){
+
+			var oldStyle = $(el).attr("style");
+			if(typeof oldStyle !== "string"){
 				return;
 			}
 
-			fontSize = parseInt(V.Utils.getFontSizeFromStyle(oldStyle));
+			var fontSize = V.Utils.getFontSizeFromStyle(oldStyle);
 			if((typeof fontSize != "number")||(isNaN(fontSize))){
 				return;
 			}
 
+			//Convert to rem (http://pxtoem.com/)
 			var rem = (fontSize/V.Constant.TextBase) + "rem";
-			newStyle = V.Utils.addFontSizeToStyle(oldStyle,rem);
-			$(span).attr("style",newStyle);
+			var newStyle = V.Utils.addFontSizeToStyle(oldStyle,rem);
+			$(el).attr("style",newStyle);
 		});
-	}
+	};
 
 	var _adaptFonts = function(fonts){
 		$(fonts).each(function(index,font){
@@ -99,27 +101,10 @@ VISH.Text = (function(V,$,undefined){
 			var rem = (pxfontSize/V.Constant.TextBase) + "rem";
 			var span = $("<span style='font-size:"+rem+"'></span>");
 			$(span).html($(font).html());
-			$(font).parent().prepend(span);
+			$(font).parent().prepend(span); //TODO: Test with before instead of prepend.
 			$(font).remove();
 		});
-	}
-
-	var _setStyleInRem = function(el){
-		var oldStyle = $(el).attr("style");
-		if(typeof oldStyle !== "string"){
-			return;
-		}
-
-		var fontSize = V.Utils.getFontSizeFromStyle(oldStyle);
-		if((typeof fontSize != "number")||(isNaN(fontSize))){
-			return;
-		}
-
-		//Convert to rem (http://pxtoem.com/)
-		var rem = (fontSize/V.Constant.TextBase) + "rem";
-		var newStyle = V.Utils.addFontSizeToStyle(oldStyle,rem);
-		$(el).attr("style",newStyle);
-	}
+	};
 
     /*
      * Update Text-base size
@@ -129,7 +114,7 @@ VISH.Text = (function(V,$,undefined){
 		var reference_font_size = V.Constant.TextBase;
 		var texts = $("html");
 		$(texts).css("font-size", reference_font_size*increase + "px");
-	}
+	};
 
 	/*
 	 * A correction factor to better adapt text to screens size.
@@ -163,11 +148,11 @@ VISH.Text = (function(V,$,undefined){
 		}
 
 		return 1; //Default
-	}
+	};
 
 	var _isInRange = function(number, min, max){
 		return number > min && number <= max;
-	}
+	};
 
 	/* Convert <font size="x"> tags to <span style="font-size:y px"> tags
 	 * Where 'x' is fz and 'y' is px.
@@ -202,7 +187,7 @@ VISH.Text = (function(V,$,undefined){
 			default:
 				break;
 		}
-	}
+	};
 
     return {
         init			: init,
