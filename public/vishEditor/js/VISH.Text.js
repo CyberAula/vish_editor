@@ -101,7 +101,7 @@ VISH.Text = (function(V,$,undefined){
 			var rem = (pxfontSize/V.Constant.TextBase) + "rem";
 			var span = $("<span style='font-size:"+rem+"'></span>");
 			$(span).html($(font).html());
-			$(font).parent().prepend(span); //TODO: Test with before instead of prepend.
+			$(font).before(span);
 			$(font).remove();
 		});
 	};
