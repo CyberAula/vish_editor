@@ -48,6 +48,15 @@ var getOptions = function(){
 		// configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
 		// configuration["TrackingSystemAPIURL"] = "http://vishub.org/tracking_system_entries";
 
+		//LOEP configuration (For evaluations)
+		// configuration["loepSettings"] = {
+		// 	tokenURL: "http://localhost:3000/loep/session_token.json",
+		// 	domain: "http://localhost:8080",
+		// 	app: "Vish",
+		// 	loId: "Excursion:1085",
+		// 	evmethod: "wbltses"
+		// };
+
 		configuration["Upload"] = true;
 
 		//Posible values: noserver, node, vish
@@ -140,15 +149,6 @@ var getOptions = function(){
 
 			//Custom player for videos (needed for video synchronization)
 			// options["videoCustomPlayer"]  = true;
-
-			//LOEP configuration (For evaluations) (See http://loep.global.dit.upm.es for more info)
-			// options["loepSettings"] = {
-			// 	tokenURL: "http://localhost:3000/loep/session_token.json",
-			// 	domain: "http://localhost:8080",
-			// 	app: "Vish",
-			// 	loId: "Excursion:1085",
-			// 	evmethod: "wbltts"
-			// };
 
 			//Addons
 			options.addons = [];
