@@ -5,6 +5,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	var _requesting;
 	var _generated;
 	var _isRecVisible;
+	var _isEvalVisible;
 	var _showFancyboxTimer;
 
 	//Recommendations API
@@ -80,6 +81,53 @@ VISH.Recommendations = (function(V,$,undefined){
 				V.ViewerAdapter.decideIfPageSwitcher();
 			}
 		});
+
+		$("#fancyEvaluations").fancybox({
+			'type'	: 'inline',
+			'autoDimensions' : false,
+			'scrolling': 'no',
+			'autoScale' : false,
+			'width': '100%',
+			'height': '100%',
+			'padding': 0,
+			'overlayOpacity': 0,
+			'center': false,
+			'onStart' : function(){
+				$("#fancybox-outer").css("display","none");
+			},
+			'onComplete'  : function(data) {
+				$("#fancybox-outer").css("background", "rgba(0,0,0,.7)");
+				$("#fancybox-wrap").css("margin-top", "0px");
+				_isRecVisible = true;
+				_isEvalVisible = true;
+				V.ViewerAdapter.updateFancyboxAfterSetupSize();
+				$("#fancybox-outer").css("display","block");
+				V.ViewerAdapter.decideIfPageSwitcher();
+
+				var loepSettings = _getLOEPSettings();
+				loepSettings.domain = loepSettings.domain.replace("http://","").replace("https://","");
+				loepSettings.language = V.Utils.getOptions()["lang"];
+				loepSettings.containerDOM = $('#fancy_evaluations');
+				loepSettings.successCallback = function(){
+					//Sucesfully loaded"
+				};
+				loepSettings.submitCallback = function(){
+					//"Sucesfully submitted"
+					$.fancybox.close();
+				};
+				loepSettings.debug = false;
+				LOEP.IframeAPI.init(loepSettings);
+			},
+			'onClosed' : function(data) {
+				$('#fancy_evaluations').html("");
+				$("#fancybox-outer").css("background", "white");
+				$("#fancybox-wrap").css("margin-top", "-14px");
+				V.Slides.triggerEnterEvent(V.Slides.getCurrentSlideNumber());
+				_isEvalVisible = false;
+				_isRecVisible = false;
+				V.ViewerAdapter.decideIfPageSwitcher();
+			}
+		});
 	};
 
 	var canShowRecommendations = function(){
@@ -87,7 +135,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = V.Status.getIsInVishSite() || (V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER && !V.Status.getIsScorm() && !V.Status.getIsEmbed());
+		var _showEvaluateButton = V.Status.getIsInVishSite() || _hasLOEPSettings() || (V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER && !V.Status.getIsScorm() && !V.Status.getIsEmbed());
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
 		//Not available in the .full
@@ -313,7 +361,9 @@ VISH.Recommendations = (function(V,$,undefined){
 	}
 
 
-	//Evaluations in recommendation panel
+	//////////////////////////
+	//Evaluations (displayed in the recommendation panel)
+	//////////////////////////
 
 	var onClickEvaluateButton = function(){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
@@ -321,9 +371,23 @@ VISH.Recommendations = (function(V,$,undefined){
 		if(V.Status.getIsInVishSite()){
 			V.FullScreen.exitFromNativeFullScreen();
 			window.parent.document.getElementById('evaluation-button-id').click();
+		} else if(_hasLOEPSettings()){
+			_showEvaluationsFancybox();
 		} else if(V.Debugging.isDevelopping()){
 			window.alert("Evaluate!");
 		}
+	};
+
+	var _hasLOEPSettings = function(){
+		return (typeof _getLOEPSettings() == "object");
+	};
+
+	var _getLOEPSettings = function(){
+		return V.Utils.getOptions()["loepSettings"];
+	};
+
+	var _showEvaluationsFancybox = function(){
+		$("#fancyEvaluations").trigger('click');
 	};
 
 	return {

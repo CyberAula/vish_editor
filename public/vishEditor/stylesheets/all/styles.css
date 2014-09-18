@@ -2007,3 +2007,10 @@ div.loadingEVideoContainerWrapper > div:not(.loadingEVideoContainer){
 div.loadingEVideoContainer img.loading_fancy_img {
 	margin-top: 45% !important;
 }
+
+/* Evaluation */
+
+div#fancy_evaluations{
+	height: 100%;
+	width: 100%;
+}

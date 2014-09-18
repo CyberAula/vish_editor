@@ -141,6 +141,14 @@ var getOptions = function(){
 			//Custom player for videos (needed for video synchronization)
 			// options["videoCustomPlayer"]  = true;
 
+			//LOEP configuration (For evaluations) (See http://loep.global.dit.upm.es for more info)
+			// options["loepSettings"] = {
+			// 	tokenURL: "http://localhost:3000/loep/session_token.json",
+			// 	domain: "http://localhost:8080",
+			// 	app: "Vish",
+			// 	loId: "Excursion:1085",
+			// 	evmethod: "wbltts"
+			// };
 
 			//Addons
 			options.addons = [];
