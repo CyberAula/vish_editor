@@ -120,7 +120,7 @@ VISH.Recommendations = (function(V,$,undefined){
 					$.fancybox.close();
 				};
 				loepSettings.debug = V.Debugging.isDevelopping();
-				LOEP.IframeAPI.init(loepSettings);
+				new LOEP.IframeAPI.instance(loepSettings);
 			},
 			'onClosed' : function(data) {
 				$('#fancy_evaluations').html("");
