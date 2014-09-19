@@ -105,17 +105,21 @@ VISH.Recommendations = (function(V,$,undefined){
 				V.ViewerAdapter.decideIfPageSwitcher();
 
 				var loepSettings = _getLOEPSettings();
-				loepSettings.domain = loepSettings.domain.replace("http://","").replace("https://","");
 				loepSettings.language = V.Utils.getOptions()["lang"];
 				loepSettings.containerDOM = $('#fancy_evaluations');
-				loepSettings.successCallback = function(){
-					//Sucesfully loaded"
+				loepSettings.loadCallback = function(){
+					//LOEP form loaded
 				};
 				loepSettings.submitCallback = function(){
 					//"Sucesfully submitted"
 					$.fancybox.close();
 				};
-				loepSettings.debug = false;
+				loepSettings.errorCallback = function(errorMsg){
+					//"Error loading the evaluation form"
+					hideEvaluations();
+					$.fancybox.close();
+				};
+				loepSettings.debug = V.Debugging.isDevelopping();
 				LOEP.IframeAPI.init(loepSettings);
 			},
 			'onClosed' : function(data) {
@@ -135,11 +139,9 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = V.Status.getIsInVishSite() || _hasLOEPSettings() || (V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER && !V.Status.getIsScorm() && !V.Status.getIsEmbed());
+		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.getIsInVishSite()&&V.Status.getIsInIframe()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
-		//Not available in the .full
-		_showEvaluateButton = _showEvaluateButton && V.Status.getIsInIframe();
 		return _showEvaluateButton;
 	};
 
@@ -368,12 +370,20 @@ VISH.Recommendations = (function(V,$,undefined){
 	var onClickEvaluateButton = function(){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
 
-		if(V.Status.getIsInVishSite()){
-			V.FullScreen.exitFromNativeFullScreen();
-			window.parent.document.getElementById('evaluation-button-id').click();
-		} else if(_hasLOEPSettings()){
+		try {
+			if(V.Status.getIsInVishSite()&&V.Status.getIsInIframe()&&(typeof window.parent.triggerEvaluation == "function")){
+				//VE in the ViSH site. Trigger ViSH evaluation. This case is not triggered when we access the .full in ViSH.
+				V.FullScreen.exitFromNativeFullScreen();
+				window.parent.triggerEvaluation();
+				return;
+			}
+		} catch(e){}
+
+		if(_hasLOEPSettings()){
+			//Show evaluations inside the VE through LOEP
 			_showEvaluationsFancybox();
-		} else if(V.Debugging.isDevelopping()){
+		} else {
+			//Otherwise (testing)
 			window.alert("Evaluate!");
 		}
 	};
@@ -394,6 +404,16 @@ VISH.Recommendations = (function(V,$,undefined){
 		$("#fancyEvaluations").trigger('click');
 	};
 
+	var showEvaluations = function(){
+		$(".rec-first-row").show();
+		// $(".rec-second-row").css("margin-top","0%"); //Center second row vertically
+	};
+
+	var hideEvaluations = function(){
+		$(".rec-first-row").hide();
+		$(".rec-second-row").css("margin-top","10%"); //Center second row vertically
+	};
+
 	return {
 		init          			: init,
 		canShowRecommendations	: canShowRecommendations,
@@ -405,6 +425,8 @@ VISH.Recommendations = (function(V,$,undefined){
 		isEnabled				: isEnabled,
 		getData					: getData,
 		onClickEvaluateButton	: onClickEvaluateButton,
+		showEvaluations 		: showEvaluations,
+		hideEvaluations 		: hideEvaluations,
 		aftersetupSize			: aftersetupSize
 	};
 

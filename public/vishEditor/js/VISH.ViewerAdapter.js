@@ -110,10 +110,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Evaluations (in recommendation window)
 		if(_showEval){
-			$(".rec-first-row").show();
+			V.Recommendations.showEvaluations();
 		} else {
-			$(".rec-first-row").hide();
-			$(".rec-second-row").css("margin-top","10%"); //Center second row vertically
+			V.Recommendations.hideEvaluations();
 		}
 
 		if(_closeButton){
@@ -132,6 +131,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		updateInterface();
 		V.Text.init();
 	};
+
 
 	///////////////
 	// PAGER
