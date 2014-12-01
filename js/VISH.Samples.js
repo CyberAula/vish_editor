@@ -245,7 +245,7 @@ VISH.Samples = (function(V,undefined){
 						"id"     : "article12_zone2",
 						"type"   : "object",
 						"areaid" : "left",
-						"body"	 : "<embed width=\"99%\" height=\"99%\" src=\"examples/contents/swf/virtualexperiment.swf\" type=\"application/x-shockwave-flash\" id=\"resizableunicID8\" class=\"t3_object\" wmode=\"opaque\">",
+						"body"	 : "<embed width=\"99%\" height=\"99%\" src=\"/examples/contents/swf/virtualexperiment.swf\" type=\"application/x-shockwave-flash\" id=\"resizableunicID8\" class=\"t3_object\" wmode=\"opaque\">",
 						"style"  : "position: relative; width:100%; height:100%; top:0%; left:0%;"
 					}
 				]
@@ -327,7 +327,7 @@ VISH.Samples = (function(V,undefined){
 						"id":"article9_zone2",
 						"type":"video",
 						"areaid":"left",
-						"poster":"https://raw.github.com/ging/vish_editor/master/public/images/vicons/example_poster_image.jpg",
+						"poster":"https://raw.githubusercontent.com/ging/vish_editor/master/images/vicons/example_poster_image.jpg",
 						"style":"position: relative; width:100%; height:100%; top:-3.125%; left:0.14326647564469913%;",
 						"sources":"[{ \"type\": \"video/webm\", \"src\": \"http://vishub.org/videos/325.webm\"},{ \"type\": \"video/mp4\", \"src\": \"http://vishub.org/videos/325.mp4\"}]"
 					}
@@ -576,7 +576,7 @@ VISH.Samples = (function(V,undefined){
 			          			'id'     : 'article14_article2_zone2',
 								'type'   : 'object',
 								'areaid' : 'left',
-								'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+								'body'   : '<embed width="99%" height="99%" src="/examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
 			        		}
 			    		]
 			    	}, 
@@ -851,7 +851,7 @@ VISH.Samples = (function(V,undefined){
 					"id":"article18_zone1",
 					"type":"object",
 					"areaid":"left",
-					"body":"<iframe objecttype=\"scormpackage\" src=\"examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html?wmode=opaque\" wmode=\"opaque\" id=\"resizableunicID55\" class=\"t2_object\"></iframe>",
+					"body":"<iframe objecttype=\"scormpackage\" src=\"/examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html?wmode=opaque\" wmode=\"opaque\" id=\"resizableunicID55\" class=\"t2_object\"></iframe>",
 					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
 					"subtype":"scormpackage"
 				}]
@@ -863,7 +863,7 @@ VISH.Samples = (function(V,undefined){
 					"id":"article19_zone1",
 					"type":"object",
 					"areaid":"left",
-					"body":"<iframe src=\"examples/contents/webappcode/11/index.html\" width=\"800\" height=\"600\" objecttype=\"webapp\" id=\"resizableunicID53\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
+					"body":"<iframe src=\"/examples/contents/webappcode/11/index.html\" width=\"800\" height=\"600\" objecttype=\"webapp\" id=\"resizableunicID53\" class=\"t2_object\" wmode=\"opaque\"></iframe>",
 					"style":"position: relative; width:100%; height:100%; top:0%; left:0%;",
 					"subtype":"webapp"
 				}]
@@ -1072,7 +1072,7 @@ VISH.Samples = (function(V,undefined){
 			          			'id'     : 'article5_article2_zone2',
 								'type'   : 'object',
 								'areaid' : 'left',
-								// 'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+								// 'body'   : '<embed width="99%" height="99%" src="/examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
 			        			"body"   : '<embed id="resizableunicID12" class="t10_object" src="http://localhost/examples/contents/swf/virtualexperiment.swf" wmode="opaque">',
 			        			"style"  : 'position: relative; width:64.53634085213032%; height:64.71571906354515%; top:15.719063545150501%; left:15.288220551378446%;'
 			        		}
@@ -1421,7 +1421,7 @@ VISH.Samples = (function(V,undefined){
 					'id'     : '7335',
 					'type'   : 'object',
 					'areaid' : 'left',
-					'body'   : '<embed width="99%" height="99%" src="examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
+					'body'   : '<embed width="99%" height="99%" src="/examples/contents/swf/virtualexperiment.swf" type="application/x-shockwave-flash"></embed>'
         }]
         }, {
 			"id" : "articlearticle4",
@@ -1550,7 +1550,7 @@ VISH.Samples = (function(V,undefined){
 		"author": "Aldo",
 		"description": "Uploaded by Aldo via ViSH Editor",
 		"id" 	: 48,
-		"src" 	: "examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html",
+		"src" 	: "/examples/contents/scormappcode/41/vishubcode_scorm_wrapper.html",
 		"title" : "AncientWeapons.zip",
 		"type"	: "scormpackage"
 	};
@@ -1559,7 +1559,7 @@ VISH.Samples = (function(V,undefined){
 		"author": "Aldo",
 		"description": "Uploaded by Aldo via ViSH Editor",
 		"id" 	: 52,
-		"src" 	: "examples/contents/webappcode/11/index.html",
+		"src" 	: "/examples/contents/webappcode/11/index.html",
 		"title" : "HelloWorld.zip",
 		"type"	: "webapp"
 	};
