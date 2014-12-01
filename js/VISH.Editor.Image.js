@@ -46,6 +46,11 @@ VISH.Editor.Image = (function(V,$,undefined){
 					$("#" + uploadDivId + " input[name='document[description]']").val(description);
 					$("#" + uploadDivId + " input[name='document[owner_id]']").val(V.User.getId());
 					$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
+					if(contentAddMode == V.Constant.THUMBNAIL){
+						$("#" + uploadDivId + " input[name='preferred_conversion']").val("avatar");
+					} else {
+						$("#" + uploadDivId + " input[name='preferred_conversion']").val("");
+					}
 					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadImagePath);
 
 					var tagList = $("#" + uploadDivId + " .tagList");
@@ -71,13 +76,10 @@ VISH.Editor.Image = (function(V,$,undefined){
 				switch(V.Configuration.getConfiguration()["mode"]){
 					case V.Constant.NOSERVER:
 						processResponse("{\"src\":\"/images/excursion_thumbnails/excursion-01.png\"}");
-					break;
+						break;
 					case V.Constant.VISH:
 						processResponse(xhr.responseText);
-					break;
-					case V.Constant.STANDALONE:
-						processResponse(xhr.responseText);
-					break;
+						break;
 				}
 				var percentVal = '100%';
 				bar.width(percentVal)
