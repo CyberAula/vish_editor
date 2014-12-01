@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ViSH Viewer: Synchronization example</title>
+</head>
+<body>
+	<script type="text/javascript" src="/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			VISH.IframeAPI.init();
+			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
+				VISH.IframeAPI.sendMessage(VEMessage,"*");
+			});
+		};
+		function setSlave(slave){
+			if(slave==="true"){
+				document.getElementById("p1").style.display = 'none';
+				document.getElementById("p2").style.display = 'block';
+				VISH.IframeAPI.setSlave(true,"presentation_iframe_2");
+			} else {
+				document.getElementById("p2").style.display = 'none';
+				document.getElementById("p1").style.display = 'block';
+				VISH.IframeAPI.setSlave(false,"presentation_iframe_2");
+			}
+		}
+	</script>
+
+    <div style="width:900px;height:300px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_1" style="border:0" width="910" height="300" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+    <br/>
+     <div>
+    	<p id="p1" onclick="setSlave('true')"> Click to slave Presentation 2 </p>
+    	<p id="p2" onclick="setSlave('false')" style="display:none"> Click to master Presentation 2 </p>
+    </div>
+    <div style="width:900px;height:300px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_2" style="border:0" width="910" height="300" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+  
+</body>
+</html>

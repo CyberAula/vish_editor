@@ -1,29 +1,174 @@
-var configuration;
+/*
+ * Configure Standalone ViSH Editor
+ */
 
-module.exports.getConfiguration = function() {
-	return getConfiguration();
+var options;
+
+//Allow getOptions method to be used by Node.js
+if(typeof module != 'undefined'){
+	module.exports.getOptions = function(env) {
+		return getOptions();
+	}
 }
 
-var getConfiguration = function(){
-	if(!configuration){
-		configuration = {};
+var getOptions = function(){
+	if(!options){
 
-		//Application settings
-		configuration["appName"]="VishEditor"
-		configuration["appVersion"]="0.1"
-		configuration["feedbackEmail"]="visheditor@outlook.com"
+		options = {};
+		var configuration = {};
 
-		configuration["secret_key"] = "session_secret_key";
-		configuration["db"] = "vishEditorStandalone"; //your database name
+		//Specified VISH Editor Configuration
 
-		//Developer API Keys
+		//Paths
+		configuration["ImagesPath"] = "/images/";
+		configuration["StylesheetsPath"] = "/stylesheets/";
+		configuration["uploadImagePath"] = "/image";
+		configuration["uploadObjectPath"] = "/object";
+		configuration["uploadPresentationPath"] = "/presentation/";
+		configuration["uploadPDF2PPath"] = "/pdfex/";		
+		configuration["SearchLREPath"] = "http://vishub.org/lre/search";
+		// configuration["SearchLREPath"] = "/lre/search"; To work with ViSH in localhost
 
-		//Twitter: Register your app in https://dev.twitter.com/
-		configuration["twitterConsumerKey"] = "";
-		configuration["twitterConsumerSecret"] = "";
-		//Facebook: Register your app in https://developers.facebook.com
-		configuration["facebookConsumerKey"] = "";
-		configuration["facebookConsumerSecret"] = "";
+		configuration["presentationSettings"] = false;
+		configuration["presentationTags"] = true;
+		configuration["presentationThumbnails"] = true;
+
+		configuration["VishLives"] = true;
+		configuration["VishRepo"] = true;
+
+		configuration["Flickr"] = true;
+		configuration["Youtube"] = true;
+		configuration["Vimeo"] = false;
+		configuration["LRE"] = true;
+
+		configuration["SoundCloud"] = true;
+		configuration["SoundCloudAPIKEY"] = "SoundcloudAPIKey";
+
+		// Do not use the Tracking System on development
+		// configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
+		// configuration["TrackingSystemAPIURL"] = "http://vishub.org/tracking_system_entries";
+
+		//LOEP configuration (For evaluations)
+		// configuration["loepSettings"] = {
+		// 	tokenURL: "http://localhost:3000/loep/session_token.json",
+		// 	domain: "http://localhost:8080",
+		// 	app: "Vish",
+		// 	loId: "Excursion:1085",
+		// 	evmethod: "wbltses"
+		// };
+
+		configuration["Upload"] = true;
+
+		//Posible values: noserver, node, vish
+		configuration["mode"] = "noserver";
+
+		options["configuration"] = configuration;
+
+		if(typeof env != 'undefined'){
+			if(env=="development"){
+				options["developping"] = true;
+			} else if(env=="production"){
+				options["developping"] = false;
+			}
+		} else {
+			options["developping"] = true;
+		}
+
+		if(options["developping"]==true){
+			//Setting developping options
+			var developmentSettings = new Object();
+
+			//Possible action: "nothing" or "loadSamples".
+			developmentSettings.actionInit = "loadSamples";
+			
+			//Select your samples
+			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
+				developmentSettings.samples = VISH.Samples.basic_samples;
+				// developmentSettings.samples = VISH.Samples.full_samples;
+				// developmentSettings.samples = VISH.Samples.fc_sample;
+				// developmentSettings.samples = VISH.Samples.vt_sample;
+				// developmentSettings.samples = VISH.Samples.evideo_sample;
+				// developmentSettings.samples = VISH.Samples.quiz_samples;
+				//quiz_simple_sample
+				// developmentSettings.samples = VISH.Samples.quiz_samples.slides[0].elements[0].quiz_simple_json
+				// developmentSettings.samples = VISH.Samples.text_samples;
+				// developmentSettings.samples = VISH.Samples.VE01_samples;
+				// developmentSettings.samples = VISH.Samples.mooc_samples;
+				// developmentSettings.samples = VISH.Samples.test;
+
+				// Activate insertMode
+				// developmentSettings.samples.insertMode = true;
+				// options["preview"] = true;
+			}
+
+			//Possible actions: "preview"
+			developmentSettings.actionSave = "preview";
+
+			options["developmentSettings"] = developmentSettings;
+
+			//Also you can define a user
+			options["user"] = {
+				name: "agordillo",
+				id: "24",
+				token: "12xfDgR345x6"
+			}
+
+			//URL to access to the Recommendation API
+			options["recommendationsAPI"] = {
+				rootURL: "/excursions/last_slide.js"
+				// rootURL: "http://vishub.org/excursions/last_slide.js"
+			};
+			
+			//URL to access to the Quiz Session API
+			options["quizSessionAPI"] = {
+				rootURL: 'http://localhost:3000/quiz_sessions/'
+			};
+
+			//QuizSessionId to answer the quiz
+			options["quizSessionId"] = "1";
+
+			options["watermarkURL"] = "http://localhost/viewer.html";
+			
+			// options["preview"] = true;
+        	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
+
+			options["fullScreenFallback"] = {
+				// enterFullscreenURL: "http://localhost:3000/excursions/83.full",
+				enterFullscreenURL: "http://localhost/viewer.html",
+				exitFullscreenURL: "http://localhost/framed_viewer.html"
+			};
+
+        	//Draft presentations
+        	options["draft"] = false;
+
+			//SCORM package
+			// options["scorm"] = true;
+
+			//And a default landguage
+			options["lang"] = "en";
+
+			//Custom player for videos (needed for video synchronization)
+			// options["videoCustomPlayer"]  = true;
+
+			//Addons
+			options.addons = [];
+
+			var addon = new Object();
+			addon.id = "IframeMessenger";
+			addon.target = "Both";
+			addon.url = "";
+			addon.config = new Object();
+			addon.config.enable = true;
+
+			options.addons.push(addon);
+		}
+		
+		if((typeof window != "undefined")&&(window.console) && (window.console.log)){
+			console.log("ViSH Editor Configured Options");
+			console.log(options);
+		}
+
 	}
-	return configuration;
+
+	return options;
 }

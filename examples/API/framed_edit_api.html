@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ViSH Editor: API Test</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+<body>
+	<script type="text/javascript" src="/configuration/configuration.js"></script>
+	<script type="text/javascript" src="/js/VISH.js"></script>
+	<script type="text/javascript" src="/js/VISH.Samples.js"></script>
+	<script type="text/javascript" src="/configuration/configuration.js"></script>
+	<script type="text/javascript" src="/js/VISH.js"></script>
+	<script type="text/javascript" src="/js/VISH.Samples.js"></script>
+	<script>
+		getOptions();
+	</script>
+    <div style="width:1200px;height:750px;margin:0 auto; display:block">
+        <iframe src="/edit.html" class="vishEditorIframe" style="border:0" width="1200" height="750" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0; id="presentation_iframe1"></iframe>
+    </div>
+
+    <script type="text/javascript" src="/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			VISH.IframeAPI.init({callback: onConnect});
+		};
+		function onConnect(origin){
+			console.log("Communication stablished with " + origin);
+			VISH.IframeAPI.allowExitWithoutConfirmation(origin);
+			VISH.IframeAPI.registerCallback("onVEFocusChange",function(focus,origin){
+				console.log("focusChange: " + focus);
+			});
+		}
+	</script>
+
+
+</body>
+</html>

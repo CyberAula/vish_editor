@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ViSH Viewer: Synchronization example</title>
+</head>
+<body>
+	<script type="text/javascript" src="/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript">
+	    var timer;
+		window.onload = function(){
+			VISH.IframeAPI.init({preventDefault: true, callback: onConnect});
+			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
+				var delay = parseInt(document.getElementById("p3").value);
+				var variation = parseInt(document.getElementById("p4").value);
+				var middleRange = delay*variation/100;
+				delay = (delay-middleRange) + (middleRange*2) * Math.random();
+				delay = Math.max(0,delay);
+				document.getElementById("p5").innerHTML = delay;
+				timer = setTimeout(function(){
+					VISH.IframeAPI.sendMessage(VEMessage,"*");
+				},delay)
+			});
+		};
+		function onConnect(origin){
+			console.log("Communication stablished with " + origin);
+		}
+		function setSlave(slave){
+			if(slave==="true"){
+				document.getElementById("p1").style.display = 'none';
+				document.getElementById("p2").style.display = 'block';
+				VISH.IframeAPI.setSlave(true,"presentation_iframe_2");
+			} else {
+				document.getElementById("p2").style.display = 'none';
+				document.getElementById("p1").style.display = 'block';
+				VISH.IframeAPI.setSlave(false,"presentation_iframe_2");
+			}
+		}
+	</script>
+
+    <div style="width:900px;height:300px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_1" style="border:0" width="910" height="300" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+    <br/>
+     <div>
+     	<p> Channel delay (ms): <input id="p3" value="1000"/>
+     	 Variation (%): <input id="p4" value="0"/>%
+     	 &nbsp;&nbsp;Current: <span id="p5"></span>
+     	</p>
+    	<p id="p1" onclick="setSlave('true')"> Click to slave Presentation 2 </p>
+    	<p id="p2" onclick="setSlave('false')" style="display:none"> Click to master Presentation 2 </p>
+    </div>
+    <div style="width:900px;height:300px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_2" style="border:0" width="910" height="300" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+  
+</body>
+</html>

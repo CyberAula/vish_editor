@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ViSH Viewer: API Testing</title>
+</head>
+<body>
+	<script type="text/javascript" src="/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			VISH.IframeAPI.init();
+			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
+				VISH.IframeAPI.sendMessage(VEMessage,"*");
+			});
+			VISH.IframeAPI.setMaster("presentation_iframe_1");
+		};
+	</script>
+
+    <div style="width:900px;height:200px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_1" style="border:0" width="910" height="200" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+    <br/>
+    <div style="width:900px;height:200px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_2" style="border:0" width="910" height="200" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+    <br/>
+    <div style="width:900px;height:200px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_3" style="border:0" width="910" height="200" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+        <br/>
+    <div style="width:900px;height:200px;margin:0 auto; display:block">
+        <iframe class="vishEditorIframe" src="/viewer.html" id="presentation_iframe_4" style="border:0" width="910" height="200" iframeborder="0" frameborder="0" iframeElement.frameBorder = 0;></iframe>
+    </div>
+    
+</body>
+</html>
