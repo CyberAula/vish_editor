@@ -4,20 +4,12 @@
 
 var options;
 
-//Allow getOptions method to be used by Node.js
-if(typeof module != 'undefined'){
-	module.exports.getOptions = function(env) {
-		return getOptions();
-	}
-}
-
 var getOptions = function(){
 	if(!options){
-
 		options = {};
-		var configuration = {};
-
+		
 		//Specified VISH Editor Configuration
+		var configuration = {};
 
 		//Paths
 		configuration["ImagesPath"] = "/images/";
@@ -25,76 +17,75 @@ var getOptions = function(){
 		configuration["uploadImagePath"] = "/image";
 		configuration["uploadObjectPath"] = "/object";
 		configuration["uploadPresentationPath"] = "/presentation/";
-		configuration["uploadPDF2PPath"] = "/pdfex/";		
-		configuration["SearchLREPath"] = "http://vishub.org/lre/search";
-		// configuration["SearchLREPath"] = "/lre/search"; To work with ViSH in localhost
+		configuration["uploadPDF2PPath"] = "/pdfex/";
 
-		configuration["presentationSettings"] = false;
-		configuration["presentationTags"] = true;
-		configuration["presentationThumbnails"] = true;
+		//Behaviour customization
+		configuration["presentationSettings"] = true;
 
-		configuration["VishLives"] = true;
-		configuration["VishRepo"] = true;
-
+		//Sources enabled
+		configuration["Upload"] = true;
+		configuration["ViSH"] = true;
 		configuration["Flickr"] = true;
 		configuration["Youtube"] = true;
 		configuration["Vimeo"] = false;
 		configuration["LRE"] = true;
-
+		configuration["SearchLREPath"] = "http://vishub.org/lre/search";
+		// configuration["SearchLREPath"] = "/lre/search"; To work with ViSH in localhost
 		configuration["SoundCloud"] = true;
-		configuration["SoundCloudAPIKEY"] = "SoundcloudAPIKey";
+		// configuration["SoundCloudAPIKEY"] = "SoundcloudAPIKey";
 
-		// Do not use the Tracking System on development
-		// configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
-		// configuration["TrackingSystemAPIURL"] = "http://vishub.org/tracking_system_entries";
+		//Features enabled
 
+		// Tracking System
+		// configuration["TrackingSystemAPIKEY"] = "trackingSystemAPIKey";
+		// configuration["TrackingSystemAPIURL"] = "http://localhost:3000/tracking_system_entries";
+
+		// Evaluation System
 		//LOEP configuration (For evaluations)
 		// configuration["loepSettings"] = {
 		// 	tokenURL: "http://localhost:3000/loep/session_token.json",
 		// 	domain: "http://localhost:8080",
 		// 	app: "Vish",
-		// 	loId: "Excursion:1085",
+		// 	loId: "Excursion:1057",
 		// 	evmethod: "wbltses"
 		// };
 
-		configuration["Upload"] = true;
-
-		//Posible values: noserver, node, vish
+		/*
+		 * Mode. Possible values:
+		 * noserver: for developping.
+		 * vish: working with the vish server.
+		 */
 		configuration["mode"] = "noserver";
+		// configuration["mode"] = "vish";
 
 		options["configuration"] = configuration;
 
-		if(typeof env != 'undefined'){
-			if(env=="development"){
-				options["developping"] = true;
-			} else if(env=="production"){
-				options["developping"] = false;
-			}
-		} else {
-			options["developping"] = true;
-		}
+
+		//More options
+
+		options["developping"] = true;
 
 		if(options["developping"]==true){
 			//Setting developping options
 			var developmentSettings = new Object();
 
-			//Possible action: "nothing" or "loadSamples".
+			// Possible action: "nothing" or "loadSamples".
 			developmentSettings.actionInit = "loadSamples";
-			
+			// developmentSettings.actionInit = "nothing";
+
 			//Select your samples
 			if((typeof VISH != "undefined")&&(typeof VISH.Samples != "undefined")){
-				developmentSettings.samples = VISH.Samples.basic_samples;
-				// developmentSettings.samples = VISH.Samples.full_samples;
+				// developmentSettings.samples = VISH.Samples.basic_samples;
+				developmentSettings.samples = VISH.Samples.full_samples;
 				// developmentSettings.samples = VISH.Samples.fc_sample;
 				// developmentSettings.samples = VISH.Samples.vt_sample;
 				// developmentSettings.samples = VISH.Samples.evideo_sample;
 				// developmentSettings.samples = VISH.Samples.quiz_samples;
 				//quiz_simple_sample
 				// developmentSettings.samples = VISH.Samples.quiz_samples.slides[0].elements[0].quiz_simple_json
-				// developmentSettings.samples = VISH.Samples.text_samples;
+				//developmentSettings.samples = VISH.Samples.text_samples;
 				// developmentSettings.samples = VISH.Samples.VE01_samples;
 				// developmentSettings.samples = VISH.Samples.mooc_samples;
-				// developmentSettings.samples = VISH.Samples.test;
 
 				// Activate insertMode
 				// developmentSettings.samples.insertMode = true;
@@ -106,31 +97,27 @@ var getOptions = function(){
 
 			options["developmentSettings"] = developmentSettings;
 
-			//Also you can define a user
+			//User data
 			options["user"] = {
 				name: "agordillo",
-				id: "24",
+				id: "20",
 				token: "12xfDgR345x6"
 			}
 
 			//URL to access to the Recommendation API
 			options["recommendationsAPI"] = {
-				rootURL: "/excursions/last_slide.js"
+				rootURL: "http://localhost:3000/excursions/last_slide.json"
 				// rootURL: "http://vishub.org/excursions/last_slide.js"
 			};
-			
+
 			//URL to access to the Quiz Session API
 			options["quizSessionAPI"] = {
-				rootURL: 'http://localhost:3000/quiz_sessions/'
+				rootURL: "http://localhost:3000/quiz_sessions/"
 			};
-
 			//QuizSessionId to answer the quiz
 			options["quizSessionId"] = "1";
 
-			options["watermarkURL"] = "http://localhost/viewer.html";
-			
-			// options["preview"] = true;
-        	// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
+			// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
 			options["fullScreenFallback"] = {
 				// enterFullscreenURL: "http://localhost:3000/excursions/83.full",
@@ -138,17 +125,26 @@ var getOptions = function(){
 				exitFullscreenURL: "http://localhost/framed_viewer.html"
 			};
 
-        	//Draft presentations
-        	options["draft"] = false;
+			options["exitURL"]  = "http://localhost/framed_edit.html";
 
-			//SCORM package
-			// options["scorm"] = true;
+			//Draft presentations
+			options["draft"] = false;
+
+			//Preview mode
+			// options["preview"] = true;
+
+        	//SCORM package
+        	// options["scorm"] = true;
 
 			//And a default landguage
 			options["lang"] = "en";
+			// languagesWithCSS = ["es", "fr", "hu", "nl", "de"];
 
 			//Custom player for videos (needed for video synchronization)
 			// options["videoCustomPlayer"]  = true;
+
+			//Add a Watermark
+			options["watermarkURL"] = "http://localhost/viewer.html";
 
 			//Addons
 			options.addons = [];
@@ -171,4 +167,4 @@ var getOptions = function(){
 	}
 
 	return options;
-}
+};

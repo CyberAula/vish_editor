@@ -45,7 +45,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$("#difficulty_range").val(LOM_Difficulty[V.Constant.DIFFICULTY].text);
 
 		//Tags
-		if((V.Configuration.getConfiguration()["presentationTags"])&&(!tagsLoaded)){
+		if(!tagsLoaded){
 			$("#tagBoxIntro").attr("HTMLcontent", $("#tagBoxIntro").html());
 			V.Utils.Loader.startLoadingInContainer($("#tagBoxIntro"),{style: "loading_tags"});
 			V.Editor.API.requestTags(_onInitialTagsReceived);

@@ -294,7 +294,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			&#x2F;&#x2F;Element Settings
 			$(document).on(&quot;click&quot;, &quot;#quizSettingsDone&quot;, V.Editor.Quiz.onQuizSettingsDone);
 			$(document).on(&quot;click&quot;, &quot;#exportQuizToIMSQTI&quot;, function(){ V.Editor.Quiz.onExportTo(&quot;QTI&quot;) });
-
+			$(document).on(&quot;click&quot;, &quot;#exportQuizToMoodleXML&quot;, function(){ V.Editor.Quiz.onExportTo(&quot;MoodleXML&quot;) });
 			&#x2F;&#x2F;onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
 			confirmOnExit = true;
@@ -514,19 +514,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
 				V.Editor.Utils.loadTab(&#x27;tab_quizzes&#x27;);
-			}
-		});
-
-		$(container).find(&quot;a.addLive&quot;).fancybox({
-			&#x27;autoDimensions&#x27; : false,
-			&#x27;width&#x27;: 800,
-			&#x27;scrolling&#x27;: &#x27;no&#x27;,
-			&#x27;height&#x27;: 600,
-			&#x27;padding&#x27; : 0,
-			&quot;onStart&quot;  : function(data) {
-				var clickedZoneId = $(data).attr(&quot;zone&quot;);
-				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
-				V.Editor.Utils.loadTab(&#x27;tab_live_resource&#x27;);
 			}
 		});
 	};

@@ -200,10 +200,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		&#x2F;&#x2F;Evaluations (in recommendation window)
 		if(_showEval){
-			$(&quot;.rec-first-row&quot;).show();
+			V.Recommendations.showEvaluations();
 		} else {
-			$(&quot;.rec-first-row&quot;).hide();
-			$(&quot;.rec-second-row&quot;).css(&quot;margin-top&quot;,&quot;10%&quot;); &#x2F;&#x2F;Center second row vertically
+			V.Recommendations.hideEvaluations();
 		}
 
 		if(_closeButton){
@@ -222,6 +221,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		updateInterface();
 		V.Text.init();
 	};
+
 
 	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
 	&#x2F;&#x2F; PAGER

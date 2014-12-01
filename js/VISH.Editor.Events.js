@@ -426,19 +426,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 				V.Editor.Utils.loadTab('tab_quizzes');
 			}
 		});
-
-		$(container).find("a.addLive").fancybox({
-			'autoDimensions' : false,
-			'width': 800,
-			'scrolling': 'no',
-			'height': 600,
-			'padding' : 0,
-			"onStart"  : function(data) {
-				var clickedZoneId = $(data).attr("zone");
-				V.Editor.setCurrentArea($("#" + clickedZoneId));
-				V.Editor.Utils.loadTab('tab_live_resource');
-			}
-		});
 	};
 
 

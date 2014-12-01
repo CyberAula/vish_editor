@@ -1042,21 +1042,21 @@
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 24,
+            "line": 25,
             "description": "Function to initialize the Recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 98,
+            "line": 148,
             "description": "Function to check if this is the appropiate moment to request the recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 116,
+            "line": 166,
             "description": "Function to call ViSH via AJAX to get recommendation of excursions",
             "class": "",
             "namespace": "VISH"
@@ -1360,7 +1360,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1128,
+            "line": 1133,
             "description": "Initialize  (SCORM Call)\nInitializes the SCO",
             "return": {
                 "description": "'true' or 'false'",
@@ -1371,7 +1371,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1185,
+            "line": 1190,
             "description": "Terminate (SCORM Call)\nTerminates the SCO",
             "return": {
                 "description": "",
@@ -1382,7 +1382,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1229,
+            "line": 1234,
             "description": "Get Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
             "params": [
                 {
@@ -1400,7 +1400,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1261,
+            "line": 1266,
             "description": "Get Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
             "params": [
                 {
@@ -1418,21 +1418,21 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1292,
+            "line": 1297,
             "description": "Get interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1319,
+            "line": 1324,
             "description": "Get interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1351,
+            "line": 1356,
             "description": "Init (Internal API)\nInitializes the SCORM API, and locates the LMS API",
             "return": {
                 "description": "",
@@ -1443,7 +1443,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1398,
+            "line": 1403,
             "description": "Get Last Error (Internal API)\nConverts error integer to Message String",
             "params": [
                 {
@@ -1461,7 +1461,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1408,
+            "line": 1413,
             "description": "Is LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
             "return": {
                 "description": "",
@@ -1472,7 +1472,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1417,
+            "line": 1422,
             "description": "Set (Internal API)\nThis locally sets values local to this API",
             "params": [
                 {
@@ -1490,7 +1490,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1449,
+            "line": 1454,
             "description": "Get (Internal API)\nThis locally gets values local to this API",
             "params": [
                 {
@@ -1508,7 +1508,7 @@
         },
         {
             "file": "VISH.SCORM.API.js",
-            "line": 1464,
+            "line": 1469,
             "description": "Hook for External Plugins like Flash to set Time\nPublic to Private API's",
             "class": "",
             "namespace": "VISH"
@@ -1592,42 +1592,42 @@
         },
         {
             "file": "VISH.Utils.js",
-            "line": 154,
+            "line": 235,
             "description": "Return a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 196,
+            "line": 277,
             "description": "Fix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 226,
+            "line": 307,
             "description": "Check slide types and fix it",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 701,
+            "line": 782,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 709,
+            "line": 790,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 718,
+            "line": 799,
             "description": "Function to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
             "class": "",
             "namespace": "VISH"
@@ -1781,31 +1781,31 @@
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1128"
+            "line": " VISH.SCORM.API.js:1133"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1185"
+            "line": " VISH.SCORM.API.js:1190"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1229"
+            "line": " VISH.SCORM.API.js:1234"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1261"
+            "line": " VISH.SCORM.API.js:1266"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1351"
+            "line": " VISH.SCORM.API.js:1356"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1398"
+            "line": " VISH.SCORM.API.js:1403"
         },
         {
             "message": "replacing incorrect tag: returns with return",
-            "line": " VISH.SCORM.API.js:1449"
+            "line": " VISH.SCORM.API.js:1454"
         },
         {
             "message": "Missing item type",
@@ -2205,15 +2205,15 @@
         },
         {
             "message": "Missing item type\nFunction to initialize the Recommendations",
-            "line": " VISH.Recommendations.js:24"
+            "line": " VISH.Recommendations.js:25"
         },
         {
             "message": "Missing item type\nFunction to check if this is the appropiate moment to request the recommendations",
-            "line": " VISH.Recommendations.js:98"
+            "line": " VISH.Recommendations.js:148"
         },
         {
             "message": "Missing item type\nFunction to call ViSH via AJAX to get recommendation of excursions",
-            "line": " VISH.Recommendations.js:116"
+            "line": " VISH.Recommendations.js:166"
         },
         {
             "message": "Missing item type\nSCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\nlmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",
@@ -2281,51 +2281,51 @@
         },
         {
             "message": "Missing item type\nInitialize  (SCORM Call)\nInitializes the SCO",
-            "line": " VISH.SCORM.API.js:1128"
+            "line": " VISH.SCORM.API.js:1133"
         },
         {
             "message": "Missing item type\nTerminate (SCORM Call)\nTerminates the SCO",
-            "line": " VISH.SCORM.API.js:1185"
+            "line": " VISH.SCORM.API.js:1190"
         },
         {
             "message": "Missing item type\nGet Objective By ID\nThis is fun, they make you go fish the objectives array integer by the ID.\nObjectives do not appear to be 'journaled' as object identifiers have to be unique.\nAs this method is seeking information it may trigger SCORM Errors on the LMS that hint that\nobjects haven't been defined yet.  This is perfectly normal.",
-            "line": " VISH.SCORM.API.js:1229"
+            "line": " VISH.SCORM.API.js:1234"
         },
         {
             "message": "Missing item type\nGet Interaction By ID\nThis is fun, they make you go fish the interactions array integer by the ID.\nI included this in the main SCORM API because this functionality should be stock.  You're\neither going to journal these (history) or treat them like states that you update.  You must decide that.",
-            "line": " VISH.SCORM.API.js:1261"
+            "line": " VISH.SCORM.API.js:1266"
         },
         {
             "message": "Missing item type\nGet interaction.n.objective By ID\nYou can have multiple objectives assigned to a interaction.",
-            "line": " VISH.SCORM.API.js:1292"
+            "line": " VISH.SCORM.API.js:1297"
         },
         {
             "message": "Missing item type\nGet interaction.n.correct_responses By pattern\nYou can have multiple correct responses assigned to a interaction.",
-            "line": " VISH.SCORM.API.js:1319"
+            "line": " VISH.SCORM.API.js:1324"
         },
         {
             "message": "Missing item type\nInit (Internal API)\nInitializes the SCORM API, and locates the LMS API",
-            "line": " VISH.SCORM.API.js:1351"
+            "line": " VISH.SCORM.API.js:1356"
         },
         {
             "message": "Missing item type\nGet Last Error (Internal API)\nConverts error integer to Message String",
-            "line": " VISH.SCORM.API.js:1398"
+            "line": " VISH.SCORM.API.js:1403"
         },
         {
             "message": "Missing item type\nIs LMS Connected\nWill tell you if LMS is truly connected or not.  You may be running locally.",
-            "line": " VISH.SCORM.API.js:1408"
+            "line": " VISH.SCORM.API.js:1413"
         },
         {
             "message": "Missing item type\nSet (Internal API)\nThis locally sets values local to this API",
-            "line": " VISH.SCORM.API.js:1417"
+            "line": " VISH.SCORM.API.js:1422"
         },
         {
             "message": "Missing item type\nGet (Internal API)\nThis locally gets values local to this API",
-            "line": " VISH.SCORM.API.js:1449"
+            "line": " VISH.SCORM.API.js:1454"
         },
         {
             "message": "Missing item type\nHook for External Plugins like Flash to set Time\nPublic to Private API's",
-            "line": " VISH.SCORM.API.js:1464"
+            "line": " VISH.SCORM.API.js:1469"
         },
         {
             "message": "Missing item type\nFunction to go to next slide",
@@ -2373,27 +2373,27 @@
         },
         {
             "message": "Missing item type\nReturn a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
-            "line": " VISH.Utils.js:154"
+            "line": " VISH.Utils.js:235"
         },
         {
             "message": "Missing item type\nFix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
-            "line": " VISH.Utils.js:196"
+            "line": " VISH.Utils.js:277"
         },
         {
             "message": "Missing item type\nCheck slide types and fix it",
-            "line": " VISH.Utils.js:226"
+            "line": " VISH.Utils.js:307"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:701"
+            "line": " VISH.Utils.js:782"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:709"
+            "line": " VISH.Utils.js:790"
         },
         {
             "message": "Missing item type\nFunction to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
-            "line": " VISH.Utils.js:718"
+            "line": " VISH.Utils.js:799"
         },
         {
             "message": "Missing item type\nFunction to play all videos and audios of a slide",

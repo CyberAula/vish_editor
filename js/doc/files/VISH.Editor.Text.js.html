@@ -650,11 +650,17 @@ VISH.Editor.Text = (function(V,$,undefined){
 
 	var _getPlainText = function(){
 		var _plainText = &quot;&quot;;
+		var validIndex = 0;
+
 		$(this.getSnapshot()).each(function(index,p){
-			if(index!=0){
-				_plainText = _plainText + &quot;\n&quot;
+			if(p.tagName==&quot;SCRIPT&quot;){
+				return;
+			}
+			if(validIndex!=0){
+				_plainText = _plainText + &quot;\n&quot;;
 			}
 			_plainText = _plainText + $(p).text();
+			validIndex += 1;
 		});
 
 		&#x2F;&#x2F; return $(this.getSnapshot()).text();

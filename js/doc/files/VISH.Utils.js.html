@@ -115,14 +115,37 @@ VISH.Utils = (function(V,undefined){
 			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
 		};
 
-		Array.prototype.select = function(selectFunction){
-			for(var n = 0; n &lt; this.length; n++) {
-				if(selectFunction(this[n])){
-					return this[n];
+		&#x2F;&#x2F; if (!Array.prototype.filter){
+			Array.prototype.filter = function(fun &#x2F;*, thisArg *&#x2F;){
+				&quot;use strict&quot;;
+
+				if (this === void 0 || this === null)
+					throw new TypeError();
+
+				var t = Object(this);
+				var len = t.length &gt;&gt;&gt; 0;
+				if (typeof fun !== &quot;function&quot;)
+					throw new TypeError();
+
+				var res = [];
+				var thisArg = arguments.length &gt;= 2 ? arguments[1] : void 0;
+				for (var i = 0; i &lt; len; i++){
+					if (i in t){
+						var val = t[i];
+
+						&#x2F;&#x2F; NOTE: Technically this should Object.defineProperty at
+						&#x2F;&#x2F;       the next index, as push can be affected by
+						&#x2F;&#x2F;       properties on Object.prototype and Array.prototype.
+						&#x2F;&#x2F;       But that method&#x27;s new, and collisions should be
+						&#x2F;&#x2F;       rare, so use the more-compatible alternative.
+						if (fun.call(thisArg, val, i, t))
+							res.push(val);
+					}
 				}
-			}
-			return null;
-		};
+
+				return res;
+			};
+		&#x2F;&#x2F; };
 
 		if(!Array.prototype.filter){
 			Array.prototype.filter = function(fun &#x2F;*, thisp *&#x2F;){
@@ -198,6 +221,64 @@ VISH.Utils = (function(V,undefined){
 				}
 				return -1;
 			};
+		};
+
+		&#x2F;&#x2F; From https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Object&#x2F;keys
+		if (!Object.keys) {
+			Object.keys = (function () {
+				&#x27;use strict&#x27;;
+				var hasOwnProperty = Object.prototype.hasOwnProperty,
+					hasDontEnumBug = !({toString: null}).propertyIsEnumerable(&#x27;toString&#x27;),
+					dontEnums = [
+					&#x27;toString&#x27;,
+					&#x27;toLocaleString&#x27;,
+					&#x27;valueOf&#x27;,
+					&#x27;hasOwnProperty&#x27;,
+					&#x27;isPrototypeOf&#x27;,
+					&#x27;propertyIsEnumerable&#x27;,
+					&#x27;constructor&#x27;
+					],
+					dontEnumsLength = dontEnums.length;
+
+				return function (obj) {
+					if (typeof obj !== &#x27;object&#x27; &amp;&amp; (typeof obj !== &#x27;function&#x27; || obj === null)) {
+						throw new TypeError(&#x27;Object.keys called on non-object&#x27;);
+					}
+
+					var result = [], prop, i;
+
+					for (prop in obj) {
+						if (hasOwnProperty.call(obj, prop)) {
+							result.push(prop);
+						}
+					}
+
+					if (hasDontEnumBug) {
+						for (i = 0; i &lt; dontEnumsLength; i++) {
+							if (hasOwnProperty.call(obj, dontEnums[i])) {
+								result.push(dontEnums[i]);
+							}
+						}
+					}
+					return result;
+				};
+			}());
+		};
+
+		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;forEach
+		if (typeof Array.prototype.forEach !== &#x27;function&#x27;) {
+			Array.prototype.forEach = function(callback){
+				for (var i = 0; i &lt; this.length; i++){
+					callback.apply(this, [this[i], i, this]);
+				}
+			};
+		};
+
+		&#x2F;&#x2F;Polifill for trim function
+		if(typeof String.prototype.trim !== &#x27;function&#x27;) {
+			String.prototype.trim = function() {
+				return this.replace(&#x2F;^\s+|\s+$&#x2F;g, &#x27;&#x27;); 
+			}
 		};
 
 		&#x2F;&#x2F;Disable watermark for IE
@@ -872,16 +953,17 @@ VISH.Utils = (function(V,undefined){
 			return;
 		}
 		var ft = null;
-	    $.each(style.split(&quot;;&quot;), function(index, property){
-	    	 &#x2F;&#x2F;We need to redefine the var in each iteration (due to Android browser issues)
-	    	 var font_style_pattern = &#x2F;font-size:\s?([0-9]+)px&#x2F;g;
-		     if(property.match(font_style_pattern) != null){
-			   	var result = font_style_pattern.exec(property);
-			   	if ((result!==null)&amp;&amp;(result[1]!==null)) {
-			   		ft = parseFloat(result[1]);
-			   		return false;
-			   	}
-			 }
+		$.each(style.split(&quot;;&quot;), function(index, property){
+			&#x2F;&#x2F;We need to redefine the var in each iteration (due to some browsers (e.g. Android browser) issues)
+			&#x2F;&#x2F; var font_style_pattern = &#x2F;font-size:\s?([0-9]+)px&#x2F;g;
+			var font_style_pattern = &#x2F;font-size\s*:\s*((\d*\.)?\d+)px&#x2F;i;
+			if(property.match(font_style_pattern) != null){
+				var result = font_style_pattern.exec(property);
+				if ((result!==null)&amp;&amp;(result[1]!==null)) {
+					ft = parseFloat(result[1]);
+					return false;
+				}
+			}
 		});
 		return ft;
 	};
