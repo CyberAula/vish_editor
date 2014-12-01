@@ -262,11 +262,14 @@ VISH.Editor.Image = (function(V,$,undefined){
 		V.Editor.Utils.hideNonDefaultTabs();
 		switch(mode){
 			case V.Constant.THUMBNAIL:
+				//When choosing thumbnail, only allow upload and thumbnail tabs.
+				$("#picture_fancybox div.fancy_tabs a.fancy_tab").hide();
+				$("#tab_pic_upload").show();
 				$("#tab_pic_thumbnails").show();
 				break;
 			case V.Constant.NONE:
 			case V.Constant.FLASHCARD:
-				break;	
+				break;
 		}
 		contentAddMode = mode;
 	};

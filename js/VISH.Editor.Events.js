@@ -189,7 +189,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'padding' : 0,
 				"onStart"  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
-					V.Editor.Utils.loadTab('tab_pic_thumbnails');
+					V.Editor.Utils.loadTab('tab_pic_upload');
 				},
 				"onClosed" : function(data){
 					if(V.Editor.Image.getAddContentMode()===V.Constant.THUMBNAIL){
