@@ -73,56 +73,64 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		var carrouselImagesTitles = [];
 	
 		$.each(data, function(index, objectItem){
-			if(typeof objectItem.object == "string"){
-				objectItem.object = V.Editor.Utils.autocompleteUrls(objectItem.object);
-			}
+			//Get type defined by the server
+			var objectType;
+			var imageSource = undefined;
 
-			var objectInfo = V.Object.getObjectInfo(objectItem.object);
-			//Ignore type if its explicitly defined in the objectItem provided by the server API
-			var objectType = (typeof objectItem.type != "undefined") ? objectItem.type : objectInfo.type;
-
-			var imageSource = null;
-			switch (objectType){
-				case V.Constant.MEDIA.IMAGE:
+			switch (objectItem.type){
+				case "Picture":
+					objectType = V.Constant.MEDIA.IMAGE;
 					imageSource = V.ImagesPath + "carrousel/image.png";
 					break;
-				case V.Constant.MEDIA.WEB:
-					if(objectInfo.wrapper=="IFRAME"){
-						imageSource = V.ImagesPath + "carrousel/iframe.png";
-					} else {
-						imageSource = V.ImagesPath + "carrousel/object.png";
-					}
+				case "Link":
+					objectType = V.Constant.MEDIA.WEB;
+					imageSource = V.ImagesPath + "carrousel/iframe.png";
 					break;
-				case V.Constant.MEDIA.HTML5_VIDEO:
-				case V.Constant.MEDIA.YOUTUBE_VIDEO:
+				case "Video":
+					objectType = V.Constant.MEDIA.HTML5_VIDEO;
 					imageSource = V.ImagesPath + "carrousel/video.png";
+					objectItem.objectToDraw = V.Video.HTML5.renderVideoFromJSON(objectItem,{loadSources: true, id: V.Utils.getId(), extraClasses: ["preview_video"]});
 					break;
-				case V.Constant.MEDIA.HTML5_AUDIO:
+				case "Audio":
+					objectType = V.Constant.MEDIA.HTML5_AUDIO;
 					imageSource = V.ImagesPath + "carrousel/audio.png";
+					objectItem.objectToDraw = V.Audio.HTML5.renderAudioFromJSON(objectItem,{loadSources: true, id: V.Utils.getId()});
 					break;
-				case V.Constant.MEDIA.FLASH:
+				case "Swf":
+					objectType = V.Constant.MEDIA.FLASH;
 					imageSource = V.ImagesPath + "carrousel/swf.png";
 					break;
-
-				//Special types defined by the repository
-				case V.Constant.MEDIA.SCORM_PACKAGE:
+				case "Scormfile":
+					objectType = V.Constant.MEDIA.SCORM_PACKAGE;
 					imageSource = V.ImagesPath + "carrousel/scorm.png";
 					break;
-				case V.Constant.MEDIA.WEB_APP:
+				case "Webapp":
+					objectType = V.Constant.MEDIA.WEB_APP;
 					imageSource = V.ImagesPath + "carrousel/webapp.png";
 					break;
-				case V.Constant.MEDIA.IMS_QTI_QUIZ:
+				case "IMS_QTI_QUIZ":
+					objectType = V.Constant.MEDIA.IMS_QTI_QUIZ;
 					imageSource = V.ImagesPath + "carrousel/quizxml.png";
+					// objectItem.objectToDraw = ...
 					break;
-				
 				default:
+					//Unrecognized. Use VE object module.
+					objectType = V.Object.getObjectInfo(objectItem.url_full).type;
 					imageSource = V.ImagesPath + "carrousel/object.png";
 			};
 
-			var myImg = $("<img src='" + imageSource + "' objectId='" + objectItem.id + "' title='"+objectItem.title+"' objectType='" + objectType + "'>");
+			objectItem.vetype = objectType;
+			if(typeof objectItem.objectToDraw == "undefined"){
+				objectItem.objectToDraw = objectItem.url_full;
+			}
+			if(typeof objectItem.avatar_url != "undefined"){
+				imageSource = objectItem.avatar_url;
+			}
+			var objectId = "objectCarrousel_" + index;
+			var myImg = $("<img src='" + imageSource + "' objectId='" + objectId + "' title='"+objectItem.title+"' objectType='" + objectType + "'>");
 			carrouselImages.push(myImg);
 			carrouselImagesTitles.push(objectItem.title);
-			currentObject[objectItem.id]=objectItem;
+			currentObject[objectId]=objectItem;
 		});
 
 		var options = {};
@@ -187,12 +195,12 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 		var objectId = $(event.target).attr("objectid");
 		if(typeof objectId != "undefined"){
 			var options = {};
-			if(typeof currentObject[objectId].type != "undefined"){
-				options.forceType = currentObject[objectId].type;
+			if(typeof currentObject[objectId].vetype != "undefined"){
+				options.forceType = currentObject[objectId].vetype;
 			}
-			var renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].object,options);
+			renderedObject = V.Editor.Object.renderObjectPreview(currentObject[objectId].objectToDraw,options);
 			_renderObjectPreview(renderedObject,currentObject[objectId]);
-			selectedObject = currentObject[objectId]; 
+			selectedObject = currentObject[objectId];
 		}
 	};
 
@@ -224,8 +232,7 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 
 			var objectTagName = $(renderedObject)[0].tagName;
 			if((objectTagName === "AUDIO")||(objectTagName === "VIDEO")){
-				var objectInfo = V.Object.getObjectInfo(object.object);
-				var sources = (typeof objectInfo.source == "object") ? objectInfo.source : [{src: objectInfo.source}];
+				var sources = object.sources;
 				if(objectTagName == "VIDEO"){
 					V.Video.HTML5.addSourcesToVideoTag(sources,renderedObject,{timestamp:true});
 				} else if(objectTagName == "AUDIO"){
@@ -250,12 +257,45 @@ VISH.Editor.Object.Repository = (function(V,$,undefined){
 	var addSelectedObject = function(){
 		if(selectedObject!=null){
 			var options = {};
-			if(typeof selectedObject.type != "undefined"){
-				options.forceType = selectedObject.type;
+			if(typeof selectedObject.vetype != "undefined"){
+				options.forceType = selectedObject.vetype;
 			}
-			V.Editor.Object.drawObject(selectedObject.object,options);
+			V.Editor.Object.drawObject(selectedObject.objectToDraw,options);
 			$.fancybox.close();
 		}
+	};
+
+	var _translateViSHEntityType = function(vishObjectType){
+		switch (vishObjectType){
+			case "Picture":
+				objectType = V.Constant.MEDIA.IMAGE;
+				break;
+			case "Link":
+				objectType = V.Constant.MEDIA.WEB;
+				break;
+			case "Video":
+				objectType = V.Constant.MEDIA.HTML5_VIDEO;
+				break;
+			case "Audio":
+				objectType = V.Constant.MEDIA.HTML5_AUDIO;
+				break;
+			case "Swf":
+				objectType = V.Constant.MEDIA.FLASH;
+				break;
+			case "Scormfile":
+				objectType = V.Constant.MEDIA.SCORM_PACKAGE;
+				break;
+			case "Webapp":
+				objectType = V.Constant.MEDIA.WEB_APP;
+				break;
+			case "IMS_QTI_QUIZ":
+				objectType = V.Constant.MEDIA.IMS_QTI_QUIZ;
+				break;
+			default:
+				//Unrecognized. Use VE object module.
+				objectType = V.Object.getObjectInfo(objectItem.url_full).type;
+		};
+		return objectType;
 	};
 	
 	return {

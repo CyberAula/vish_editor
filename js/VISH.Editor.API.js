@@ -1,392 +1,195 @@
- /**
-  * Provide an API with ViSH (Virtual Science Hub)
+ /*
+  * Wrapper to communicate with the ViSH Search API, and other ViSH services (eg: tags, thumbnails, ...)
   */
 
 VISH.Editor.API = (function(V,$,undefined){
 	
-	var init = function(){}
+	var mainViSHInstanceDomain;
 
-	/**
-	 * Request IMAGES in json format
-	 * The request is: GET /search.json?type=picture&q=text
+	var init = function(){
+		queriesCounter = 0;
+		queriesData = [];
+		searchId = -1;
+		sessionSearchs = {};
+		if(V.Utils.getOptions().configuration.mode==V.Constant.VISH) {
+			mainViSHInstanceDomain = "http://vishub.org";
+		} else {
+			mainViSHInstanceDomain = "http://localhost:3000";
+		}
+	};
+
+
+	// ViSH Search API (https://github.com/ging/vish/wiki/Using-the-ViSH-Search-API)
+
+	//Constants and internal vars
+	var QUERY_TIMEOUT = 20000;
+	var queriesCounter;
+	var queriesData ;
+	var searchId;
+	var sessionSearchs;
+
+	/*
+	 * Search general method
 	 */
-	var requestImages = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			var result = jQuery.extend({}, V.Samples.API.imageList);
-			switch(text){
-				case "dummy":
-					result['pictures'] = V.Samples.API.imageListDummy['pictures'];
-					break;
-				case "little":
-					result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageListLittle['pictures']);
-					break;
-				case "server error":
-					result = undefined;
-					break;
-				default:
-					result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
-			}
+	var _search = function(types, searchTerms, successCallback, failCallback){
+		//1. Build Query
+		var settings = {};
+		settings.n = 20;
+		settings.entities_type = types;
+		// delete settings.sort_by //Sort by relevance
+		// settings.language = ? //Filter by language
+		settings.qualityThreshold = 5 //Filter by quality
+		var query = _buildQuery(searchTerms,settings);
 
-			setTimeout(function(){
-				if((typeof result == "undefined")&&(typeof failCallback == "function")){
-					failCallback();
-				} else if(typeof successCallback == "function"){
-					successCallback(result);
+		//2. Peform the search in the instances
+		var instances = [mainViSHInstanceDomain];
+		var instancesL = instances.length;
+
+		searchId =_getSearchId();
+		sessionSearchs[searchId] = {};
+		queriesCounter = 0;
+		queriesData = [];
+		
+		for(var i=0; i<instancesL; i++){
+			var instanceDomain = instances[i];
+			sessionSearchs[searchId][instanceDomain] = {completed: false};
+
+			_searchInViSHInstance(searchId,instanceDomain,query,function(data){
+				if((typeof data.searchId == "undefined")||(data.searchId != searchId)){
+					//Result of an old search
+					return;
 				}
-			}, 2000);
 
-			return;
+				queriesCounter += 1;
+				if((data.success===true)&&(typeof data.response != "undefined")&&(typeof data.response.results != "undefined")&&(typeof data.instanceDomain != "undefined")){
+					queryResults = [];
+					$(data.response.results).each(function(index,result){
+						result.instance = data.instanceDomain;
+						// result.avatar_url = (typeof result.avatar_url == "string" ? result.avatar_url : "lo.png");
+						result.sorting_weight = (typeof result.weights != "undefined" && typeof result.weights.sorting_weight == "number") ? result.weights.sorting_weight : 0;
+						queryResults.push(result);
+					});
+					queriesData = queriesData.concat(queryResults);
+				}
+
+				if(queriesCounter===instancesL){
+					//All searches finished
+					//Sort the results from different instances
+					if(instancesL>1){
+						queriesData = queriesData.sort(function(a,b){
+							return b.sorting_weight-a.sorting_weight;
+						});
+					}
+					if(typeof successCallback == "function"){
+						successCallback(queriesData);
+					}
+				}
+			});
 		}
-
-		_requestByType("picture", text, successCallback, failCallback);		
 	};
 	
-	/**
-	* function to call VISH and request recommended images
-	*/
-	var requestRecomendedImages = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.imageList;
-				result['pictures'] = V.Debugging.shuffleJson(V.Samples.API.imageList['pictures']);
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
+	var _buildQuery = function(searchTerms,settings){
+		searchTerms = (typeof searchTerms == "string" ? searchTerms : "");
+
+		var query = "/apis/search?n="+settings.n+"&q="+searchTerms+"&type="+settings.entities_type;
+
+		if(settings.sort_by){
+			query += "&sort_by="+settings.sort_by;
 		}
 
-		_requestByType("picture", "", successCallback, failCallback);
+		if(settings.startDate){
+			query += "&startDate="+settings.startDate;
+		}
+
+		if(settings.endDate){
+			query += "&endDate="+settings.endDate;
+		}
+
+		if(settings.language){
+			query += "&language="+settings.language;
+		}
+
+		if(settings.qualityThreshold){
+			query += "&qualityThreshold="+settings.qualityThreshold;
+		}
+
+		return query;
 	};
 
-
-	/**
-	 * Request VIDEOS in json format
-	 * The request is: GET /search.json?type=video&q=text
-	 */
-	var requestVideos = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			var result = jQuery.extend({}, V.Samples.API.videoList);
-			switch(text){
-				case "dummy":
-					result['videos'] = V.Samples.API.videoListDummy['videos'];
-					break;
-				case "little":
-					result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoListLittle['videos']);
-					break;
-				case "server error":
-					result = undefined;
-					break;
-				default:
-					result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
-			}
-
-			setTimeout(function(){
-				if((typeof result == "undefined")&&(typeof failCallback == "function")){
-					failCallback();
-				} else if(typeof successCallback == "function"){
-					successCallback(result);
-				}
-			}, 2000);
-
-			return;
-		}
-
-		_requestByType("video", text, successCallback, failCallback);		
-	};
-	
-	
-	/**
-	 * function to call VISH and request recommended videos
-	 */
-	var requestRecomendedVideos = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.videoList;
-				result['videos'] = V.Debugging.shuffleJson(V.Samples.API.videoList['videos']);
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-		_requestByType("video", "", successCallback, failCallback);
-	};
-	
-				  
-	/**
-	 * Request OBJECTS in json format
-	 * The request is: GET /search.json?object=1&q=text
-	 */
-	var requestObjects = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			var result = jQuery.extend({}, V.Samples.API.objectList);
-			switch(text){
-				case "dummy":
-					result = V.Samples.API.objectListDummy;
-					break;
-				case "little":
-					result = V.Debugging.shuffleJson(V.Samples.API.objectListLittle);
-					break;
-				case "server error":
-					result = undefined;
-					break;
-				default:
-					result = V.Debugging.shuffleJson(V.Samples.API.objectList);
-			}
-
-			setTimeout(function(){
-				if((typeof result == "undefined")&&(typeof failCallback == "function")){
-					failCallback();
-				} else if(typeof successCallback == "function"){
-					successCallback(result);
-				}
-			}, 2000);
-
-			return;
-		}
-
-		_requestByType("object", text, successCallback, failCallback);  
-	};
-
-	/**
-	* function to call VISH and request recommended objects
-	*/
-	var requestRecomendedObjects = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Debugging.shuffleJson(V.Samples.API.objectList);
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("object", "", successCallback, failCallback);
-	};
-	
-
-	/**
-	* function to call VISH and request live objects in json format
-	* The request is:
-	* GET /search.json?live=1&q=
-	*/
-	var requestLives = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			var result = jQuery.extend({}, V.Samples.API.liveList);
-			switch(text){
-				case "dummy":
-				result = V.Samples.API.liveListDummy;
-				break;
-			case "little":
-				result = V.Debugging.shuffleJson(V.Samples.API.liveListLittle);
-				break;
-			case "server error":
-				result = undefined;
-				break;
-			default:
-				result = V.Debugging.shuffleJson(V.Samples.API.liveList);
-			}
-
-			setTimeout(function(){
-				if((typeof result == "undefined")&&(typeof failCallback == "function")){
-					failCallback();
-				} else if(typeof successCallback == "function"){
-					successCallback(result);
-				}
-			}, 2000);
-
-			return;
-		}
-
-		_requestByType("live", text, successCallback, failCallback);  
-	};
-  
-  
-	/**
-	* function to call VISH and request recommended lives objects
-	*/
-	var requestRecomendedLives = function(successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Debugging.shuffleJson(V.Samples.API.liveList);
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("live", "", successCallback, failCallback);
-	};
-
-
-	/**
-	* function to call VISH and request excursions in json format
-	* The request is:
-	* GET /excursions/search.json?type=&q=text
-	*/
-	var requestExcursions = function(text, successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			var result = V.Samples.API.excursionList;
-			switch(text){
-				case "dummy":
-				result = V.Samples.API.excursionListDummy;
-				break;
-			case "little":
-				result = V.Debugging.shuffleJson(V.Samples.API.excursionListLittle);
-				break;
-			case "server error":
-				result = undefined;
-				break;
-			default:
-				result = V.Debugging.shuffleJson(V.Samples.API.excursionList);
-			}
-
-			setTimeout(function(){
-				if((typeof result == "undefined")&&(typeof failCallback == "function")){
-					failCallback();
-				} else if(typeof successCallback == "function"){
-					successCallback(result);
-				}
-			}, 2000);
-
-			return;
-		}
-
-		_requestByType("excursion", text, successCallback, failCallback);
-	};
-
-
-	/**
-	* function to call VISH and request recommended excursions
-	*/
-	var requestRecomendedExcursions = function(successCallback, failCallback){
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof successCallback == "function"){
-				var result = V.Samples.API.excursionList;
-				setTimeout(function(){
-					successCallback(result);
-				}, 2000);
-			}
-			return;
-		}
-
-		_requestByType("excursion", "", successCallback, failCallback);
-	};
-
-
-	/**
-	* generic function to call VISH and request by query and type
-	* The request is:
-	* GET /search.json?type=type&q=query
-	*/    
-	var _requestByType = function(type, query, successCallback, failCallback){
-		if((type==="live")||(type==="object")){
-			_requestResourceType(type,query, successCallback, failCallback);
-			return;
-		} else if(type==="excursion"){
-			_requestExcursionType(type,query, successCallback, failCallback);
-			return;
-		}
+	var _searchInViSHInstance = function(searchId,domain,query,callback){
+		var ViSHSearchAPIURL = domain + query;
+		ViSHSearchAPIURL = ViSHSearchAPIURL.replace("//apis","/apis");
 
 		$.ajax({
-			type: "GET",
-			url: "/search.json?type="+ type +"&q="+ query,
-			//url: "/tmp.json",
-			dataType:"html",
-			success:function(response){
-				if(typeof successCallback == "function"){
-					var resp = JSON.parse(response);
-					successCallback(resp);
+			type    : 'GET',
+			url     : ViSHSearchAPIURL,
+			success : function(data) {
+				if(sessionSearchs[searchId][domain].completed == false){
+					sessionSearchs[searchId][domain].completed = true;
+					callback({success:true, searchId:searchId, instanceDomain:domain, response:data});
 				}
 			},
-			error:function (xhr, ajaxOptions, thrownError){
-				if(typeof failCallback == "function"){
-					failCallback();
+			error: function(error){
+				if(sessionSearchs[searchId][domain].completed == false){
+					sessionSearchs[searchId][domain].completed = true;
+					callback({success:false, searchId:searchId, instanceDomain:domain});
 				}
+				V.Debugging.log("Error connecting with the ViSH API of " + domain);
 			}
 		});
+
+		setTimeout(function(){
+			if(sessionSearchs[searchId][domain].completed == false){
+				sessionSearchs[searchId][domain].completed = true;
+				callback({success:false, searchId:searchId});
+			}
+		},QUERY_TIMEOUT);
+	};
+
+	var _searchId = 0;
+	var _getSearchId = function(){
+		_searchId += 1;
+		return _searchId;
+	};
+
+	/*
+	 * Request resource methods (public methods of the V.Editor.API module)
+	 */
+	var requestImages = function(searchTerms, successCallback, failCallback){
+		_search(["Picture"],searchTerms,successCallback,failCallback);
 	};
 	
+	var requestVideos = function(searchTerms,successCallback,failCallback){
+		_search(["Video"],searchTerms,successCallback,failCallback);
+	};
 	
-	/**
-	* Specific function to call VISH and request lives
-	* The request is:
-	* GET /resources/search.json?live=1&q=
-	*/    
-	var _requestResourceType = function(type, query, successCallback, failCallback){
-		$.ajax({
-			type: "GET",
-			url: "/resources/search.json?" + type + "=1&q="+ query,
-			dataType:"html",
-			success:function(response){
-				if(typeof successCallback == "function"){
-					var resp = JSON.parse(response);
-					successCallback(resp);
-				}
-			},
-			error:function (xhr, ajaxOptions, thrownError){
-				if(typeof failCallback == "function"){
-					failCallback();
-				}
-			}
-		});
+	var requestObjects = function(searchTerms, successCallback, failCallback){
+		_search(["Link","Scormfile","Webapp","Video","Audio","Swf"],searchTerms,successCallback,failCallback);
+	};
+	
+	var requestExcursions = function(searchTerms, successCallback, failCallback){
+		_search(["Excursion"],searchTerms,successCallback,failCallback);
 	};
 
 
-	/**
-	* Specific function to call VISH and request excursions
-	* The request is:
-	* GET /excursions/search.json?type=&q=query
-	*/    
-	var _requestExcursionType = function(type, query, successCallback, failCallback){
-		if(type === "excursion"){
-			type = "";
-		}
+	/*
+	 * Handles APIs to another ViSH services
+	 */
 
-		$.ajax({
-			type: "GET",
-			url: "/excursions/search.json?type=" + type + "&q="+ query,
-			dataType:"html",
-			success:function(response){
-				if(typeof successCallback == "function"){
-					var resp = JSON.parse(response);
-					successCallback(resp);
-				}
-			},
-			error:function (xhr, ajaxOptions, thrownError){
-				if(typeof failCallback == "function"){
-					failCallback();
-				}
-			}
-		});
-	};
-	
-	/**
-	* Function to call VISH and request tags
-	*/
+	/*
+	 * Function to call ViSH and request tags
+	 */
 	var requestTags = function(successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-			if(typeof successCallback == "function"){
-				setTimeout(function(){
-					successCallback(V.Samples.API.tagsList['tags']);
-				}, 2000);
-			};
-			return;
-		}
-
 		$.ajax({
 			type: "GET",
-			url: "/tags.json?mode=popular&limit=100",
+			url: mainViSHInstanceDomain + "/tags.json?mode=popular&limit=100",
 			dataType:"html",
 			success:function(response){
 				if(typeof successCallback == "function"){
 					var tagsJSON = JSON.parse(response);
 					var tags = [];
 					if(tagsJSON.length>0){
-						$.each(tagsJSON, function(index, tagJSON) {
+						$.each(tagsJSON, function(index,tagJSON){
 							tags.push(tagJSON.name);
 						});
 					};
@@ -401,23 +204,13 @@ VISH.Editor.API = (function(V,$,undefined){
 		});
 	};
 	
-	
-	/**
-	* Function to get the available avatars from the server, they should be at /excursion_thumbnails.json
-	*/
+	/*
+	 * Function to get the available avatars
+	 */
 	var requestThumbnails = function(successCallback, failCallback){
-		if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-			if(typeof successCallback == "function"){
-				setTimeout(function(){
-					successCallback(V.Samples.API.thumbnailsList);
-				}, 1000);
-			};
-			return;
-		};
-
 		$.ajax({
 			type: 'GET',
-			url: '/excursion_thumbnails.json',
+			url: mainViSHInstanceDomain + '/excursion_thumbnails.json',
 			dataType: 'json',
 			success: function(data) {
 				if(typeof successCallback == "function"){
@@ -435,20 +228,9 @@ VISH.Editor.API = (function(V,$,undefined){
 	var uploadTmpJSON = function(json, responseFormat, successCallback, failCallback){
 		responseFormat = (typeof responseFormat=="string") ? responseFormat : "json"
 
-		if(V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER){
-			if(typeof failCallback == "function"){
-				setTimeout(function(){
-					// var iframe = $("#hiddenIframeForAjaxDownloads");
-					// $(iframe).attr("src",'http://vishub.org/excursions/tmpJson.json?fileId=1');
-					failCallback();
-				},100);
-			}
-			return;
-		}
-
 		$.ajax({
 			type: 'POST',
-			url: '/excursions/tmpJson.json',
+			url: mainViSHInstanceDomain + '/excursions/tmpJson.json',
 			dataType: 'json',
 			data: { 
 				"authenticity_token" : V.User.getToken(),
@@ -482,15 +264,9 @@ VISH.Editor.API = (function(V,$,undefined){
 	return {
 		init						: init,
 		requestExcursions           : requestExcursions,
-		requestRecomendedExcursions : requestRecomendedExcursions,
 		requestVideos               : requestVideos,
-		requestRecomendedVideos     : requestRecomendedVideos,
 		requestImages               : requestImages,
-		requestRecomendedImages     : requestRecomendedImages,
 		requestObjects              : requestObjects,
-		requestRecomendedObjects    : requestRecomendedObjects,
-		requestLives                : requestLives,
-		requestRecomendedLives      : requestRecomendedLives,
 		requestTags                 : requestTags,
 		requestThumbnails           : requestThumbnails,
 		uploadTmpJSON               : uploadTmpJSON

@@ -53,16 +53,16 @@ VISH.Editor.Image.Repository = (function(V,$,undefined){
 			return;
 		}
 
-		//The received data has an array called "pictures", see V.Samples.API.imageList for an example
-		if((!data)||(!data.pictures)||(data.pictures.length==0)){
+		//The received data is an array of pictures
+		if((!data)||(data.length==0)){
 			_onSearchFinished();
 			_drawData(true);
 			return;
 		}
 
 		var carrouselImages = [];
-		$.each(data.pictures, function(index, image){
-			var myImg = $("<img src='" + image.src + "' title='"+image.title+"' >");
+		$.each(data, function(index, image){
+			var myImg = $("<img src='" + image.url_full + "' title='"+image.title+"' >");
 			carrouselImages.push(myImg);
 		});
 

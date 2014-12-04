@@ -142,14 +142,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var tagList = $("#" + uploadDivId + " .tagList");
 
 		if ($(tagList).children().length == 0){
-			// //Insert the three first tags. //DEPRECATED
-			// $.each(data, function(index, tag) {
-			//   if(index==3){
-			//     return false; //break the bucle
-			//   }
-			//   $(tagList).append("<li>" + tag + "</li>")
-			// });
-
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}

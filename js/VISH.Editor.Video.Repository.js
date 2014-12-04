@@ -61,8 +61,8 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			return;
 		}
 
-		//The received data has an array called "videos"
-		if((!data)||(!data.videos)||(data.videos.length==0)){
+		//The received data is an array of videos
+		if((!data)||(data.length==0)){
 			_onSearchFinished();
 			_drawData(true);
 			return;
@@ -70,11 +70,13 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 
 		var carrouselImages = [];
 		currentVideos = new Array();
-		$.each(data.videos, function(index, video) {
+		$.each(data, function(index,video){
 			if(video){
-				var myImg = $("<img src='" + video.poster + "' videoId='" + video.id + "' title='"+video.title+"'/>")
+				var videoPoster = (typeof video.avatar_url == "string") ? video.avatar_url : (V.ImagesPath + "icons/example_poster_image.jpg");
+				var videoId = "videoCarrousel_" + index;
+				var myImg = $("<img src='" + videoPoster + "' videoId='" + videoId + "' title='"+ video.title +"'/>")
 				carrouselImages.push(myImg);
-				currentVideos[video.id] = video;
+				currentVideos[videoId] = video;
 			}
 		});
 
