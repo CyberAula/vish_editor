@@ -25,8 +25,8 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 
 		previewButton = $("#" + previewDivId).find("button.okButton2");
 		$(previewButton).click(function(){
-			if(selectedPres){
-				V.Editor.Presentation.previewPresentation(selectedPres);
+			if((selectedPres)&&(selectedPres["loModel"])){
+				V.Editor.Presentation.previewPresentation(selectedPres["loModel"]);
 			}
 		})
 	};
@@ -36,12 +36,11 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	};
 	
 	var onLoadTab = function(){
-		
 	};
 	
 	var _requestData = function(text){
 		_prepareRequest();
-		V.Editor.API.requestExcursions(text, _onDataReceived, _onAPIError);
+		V.Editor.API.requestPresentations(text,_onDataReceived,_onAPIError);
 	};
 
 	var _prepareRequest = function(){
@@ -70,26 +69,24 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 			return;
 		}
 
-		//The received data has an array called "videos"
-		if((!data)||(!data.excursions)||(data.excursions.length==0)){
+		//The received data is an array of presentations
+		if((!data)||(data.length==0)){
 			_onSearchFinished();
 			_drawData(true);
 			return;
 		}
 
 		var carrouselImages = [];
-		currentExcursions = new Array();
-		$.each(data.excursions, function(index, pres){
+		currentPresentations = new Array();
+		$.each(data, function(index, pres){
 			if(typeof pres != "undefined"){
-				if(typeof pres.id == "undefined"){
-					pres.id = V.Utils.getId("tmp");
+				var presId = "presentationCarrousel_" + index;
+				if(typeof pres.avatar_url == "undefined"){
+					pres.avatar_url = V.ImagesPath + "icons/defaultAvatar.png";
 				}
-				if(typeof pres.avatar == "undefined"){
-					pres.avatar = V.ImagesPath + "icons/defaultAvatar.png";
-				}
-				var myImg = $("<img excursionId ='"+pres.id+"'' src=" + pres.avatar + " />");
+				var myImg = $("<img presentationId ='"+presId+"'' src=" + pres.avatar_url + " />");
 				carrouselImages.push(myImg);
-				currentExcursions[pres.id] = pres;
+				currentPresentations[presId] = pres;
 			}
 		});
 
@@ -152,11 +149,11 @@ VISH.Editor.Presentation.Repository = (function(V,$,undefined){
 	};
 	
 	var _onClickCarrouselElement = function(event){
-		var excursionId = $(event.target).attr("excursionId");
-		if(excursionId){
+		var presentationId = $(event.target).attr("presentationId");
+		if(presentationId){
 			$(".excursionSelectedInCarrousel").removeClass("excursionSelectedInCarrousel");
 			$(event.target).addClass("excursionSelectedInCarrousel");
-			selectedPres = currentExcursions[excursionId];
+			selectedPres = currentPresentations[presentationId];
 			_renderObjectMetadata(selectedPres);
 		}
 	};

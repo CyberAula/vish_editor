@@ -36,13 +36,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "VISH.Editor.API.js": {
-            "name": "VISH.Editor.API.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
         "VISH.Editor.Dummies.js": {
             "name": "VISH.Editor.Dummies.js",
             "modules": {},
@@ -546,102 +539,6 @@
             "class": "VISH.Editor"
         },
         {
-            "file": "VISH.Editor.API.js",
-            "line": 1,
-            "description": "Provide an API with ViSH (Virtual Science Hub)",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 9,
-            "description": "Request IMAGES in json format\nThe request is: GET /search.json?type=picture&q=text",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 44,
-            "description": "function to call VISH and request recommended images",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 63,
-            "description": "Request VIDEOS in json format\nThe request is: GET /search.json?type=video&q=text",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 99,
-            "description": "function to call VISH and request recommended videos",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 117,
-            "description": "Request OBJECTS in json format\nThe request is: GET /search.json?object=1&q=text",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 152,
-            "description": "function to call VISH and request recommended objects",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 170,
-            "description": "function to call VISH and request live objects in json format\nThe request is:\nGET /search.json?live=1&q=",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 207,
-            "description": "function to call VISH and request recommended lives objects",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 225,
-            "description": "function to call VISH and request excursions in json format\nThe request is:\nGET /excursions/search.json?type=&q=text",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 262,
-            "description": "function to call VISH and request recommended excursions",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 280,
-            "description": "generic function to call VISH and request by query and type\nThe request is:\nGET /search.json?type=type&q=query",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 314,
-            "description": "Specific function to call VISH and request lives\nThe request is:\nGET /resources/search.json?live=1&q=",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 339,
-            "description": "Specific function to call VISH and request excursions\nThe request is:\nGET /excursions/search.json?type=&q=query",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 367,
-            "description": "Function to call VISH and request tags",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.API.js",
-            "line": 405,
-            "description": "Function to get the available avatars from the server, they should be at /excursion_thumbnails.json",
-            "class": "VISH.Editor"
-        },
-        {
             "file": "VISH.Editor.Dummies.js",
             "line": 97,
             "description": "Function to replace dummy ids",
@@ -655,7 +552,7 @@
         },
         {
             "file": "VISH.Editor.Image.js",
-            "line": 187,
+            "line": 189,
             "description": "Function to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -721,13 +618,13 @@
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 399,
+            "line": 391,
             "description": "Returns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 500,
+            "line": 492,
             "description": "param style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -881,77 +778,77 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 211,
+            "line": 212,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 266,
+            "line": 267,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 312,
+            "line": 313,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 344,
+            "line": 345,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 383,
+            "line": 384,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 392,
+            "line": 393,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 456,
+            "line": 457,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 468,
+            "line": 469,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 494,
+            "line": 495,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 519,
+            "line": 520,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 879,
+            "line": 880,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1912,70 +1809,6 @@
             "line": " VISH.AppletPlayer.js:15"
         },
         {
-            "message": "Missing item type\nProvide an API with ViSH (Virtual Science Hub)",
-            "line": " VISH.Editor.API.js:1"
-        },
-        {
-            "message": "Missing item type\nRequest IMAGES in json format\nThe request is: GET /search.json?type=picture&q=text",
-            "line": " VISH.Editor.API.js:9"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request recommended images",
-            "line": " VISH.Editor.API.js:44"
-        },
-        {
-            "message": "Missing item type\nRequest VIDEOS in json format\nThe request is: GET /search.json?type=video&q=text",
-            "line": " VISH.Editor.API.js:63"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request recommended videos",
-            "line": " VISH.Editor.API.js:99"
-        },
-        {
-            "message": "Missing item type\nRequest OBJECTS in json format\nThe request is: GET /search.json?object=1&q=text",
-            "line": " VISH.Editor.API.js:117"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request recommended objects",
-            "line": " VISH.Editor.API.js:152"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request live objects in json format\nThe request is:\nGET /search.json?live=1&q=",
-            "line": " VISH.Editor.API.js:170"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request recommended lives objects",
-            "line": " VISH.Editor.API.js:207"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request excursions in json format\nThe request is:\nGET /excursions/search.json?type=&q=text",
-            "line": " VISH.Editor.API.js:225"
-        },
-        {
-            "message": "Missing item type\nfunction to call VISH and request recommended excursions",
-            "line": " VISH.Editor.API.js:262"
-        },
-        {
-            "message": "Missing item type\ngeneric function to call VISH and request by query and type\nThe request is:\nGET /search.json?type=type&q=query",
-            "line": " VISH.Editor.API.js:280"
-        },
-        {
-            "message": "Missing item type\nSpecific function to call VISH and request lives\nThe request is:\nGET /resources/search.json?live=1&q=",
-            "line": " VISH.Editor.API.js:314"
-        },
-        {
-            "message": "Missing item type\nSpecific function to call VISH and request excursions\nThe request is:\nGET /excursions/search.json?type=&q=query",
-            "line": " VISH.Editor.API.js:339"
-        },
-        {
-            "message": "Missing item type\nFunction to call VISH and request tags",
-            "line": " VISH.Editor.API.js:367"
-        },
-        {
-            "message": "Missing item type\nFunction to get the available avatars from the server, they should be at /excursion_thumbnails.json",
-            "line": " VISH.Editor.API.js:405"
-        },
-        {
             "message": "Missing item type\nFunction to replace dummy ids",
             "line": " VISH.Editor.Dummies.js:97"
         },
@@ -1985,7 +1818,7 @@
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Image.js:187"
+            "line": " VISH.Editor.Image.js:189"
         },
         {
             "message": "Missing item type\nfunction to call to LRE and request images\nsuccessCallback: function to pass the results if everything goes well.\nfailCallback: function to pass the error if something fails. Format: {\"error\":\"cnf cannot be null!\"}",
@@ -2029,11 +1862,11 @@
         },
         {
             "message": "Missing item type\nReturns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:399"
+            "line": " VISH.Editor.Object.js:391"
         },
         {
             "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:500"
+            "line": " VISH.Editor.Object.js:492"
         },
         {
             "message": "Missing item type\nInsert the selected slides of a slide presentation in JSON",
@@ -2113,47 +1946,47 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:211"
+            "line": " VISH.Editor.js:212"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:266"
+            "line": " VISH.Editor.js:267"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:312"
+            "line": " VISH.Editor.js:313"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:344"
+            "line": " VISH.Editor.js:345"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:383"
+            "line": " VISH.Editor.js:384"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:392"
+            "line": " VISH.Editor.js:393"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:456"
+            "line": " VISH.Editor.js:457"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:468"
+            "line": " VISH.Editor.js:469"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:494"
+            "line": " VISH.Editor.js:495"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:519"
+            "line": " VISH.Editor.js:520"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:879"
+            "line": " VISH.Editor.js:880"
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",

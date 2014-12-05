@@ -167,7 +167,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		_search(["Link","Scormfile","Webapp","Video","Audio","Swf"],searchTerms,successCallback,failCallback);
 	};
 	
-	var requestExcursions = function(searchTerms, successCallback, failCallback){
+	var requestPresentations = function(searchTerms, successCallback, failCallback){
 		_search(["Excursion"],searchTerms,successCallback,failCallback);
 	};
 
@@ -263,7 +263,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	
 	return {
 		init						: init,
-		requestExcursions           : requestExcursions,
+		requestPresentations        : requestPresentations,
 		requestVideos               : requestVideos,
 		requestImages               : requestImages,
 		requestObjects              : requestObjects,

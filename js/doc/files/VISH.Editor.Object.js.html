@@ -232,14 +232,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
 
 		if ($(tagList).children().length == 0){
-			&#x2F;&#x2F; &#x2F;&#x2F;Insert the three first tags. &#x2F;&#x2F;DEPRECATED
-			&#x2F;&#x2F; $.each(data, function(index, tag) {
-			&#x2F;&#x2F;   if(index==3){
-			&#x2F;&#x2F;     return false; &#x2F;&#x2F;break the bucle
-			&#x2F;&#x2F;   }
-			&#x2F;&#x2F;   $(tagList).append(&quot;&lt;li&gt;&quot; + tag + &quot;&lt;&#x2F;li&gt;&quot;)
-			&#x2F;&#x2F; });
-
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans(&quot;i.AddTags&quot;), watermarkDenyMessage: V.I18n.getTrans(&quot;i.limitReached&quot;)});
 		}

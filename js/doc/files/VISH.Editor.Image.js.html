@@ -136,6 +136,11 @@ VISH.Editor.Image = (function(V,$,undefined){
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[description]&#x27;]&quot;).val(description);
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[owner_id]&#x27;]&quot;).val(V.User.getId());
 					$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;authenticity_token&#x27;]&quot;).val(V.User.getToken());
+					if(contentAddMode == V.Constant.THUMBNAIL){
+						$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;preferred_conversion&#x27;]&quot;).val(&quot;avatar&quot;);
+					} else {
+						$(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;preferred_conversion&#x27;]&quot;).val(&quot;&quot;);
+					}
 					$(&quot;#&quot; + uploadDivId + &quot; .documentsForm&quot;).attr(&quot;action&quot;, V.UploadImagePath);
 
 					var tagList = $(&quot;#&quot; + uploadDivId + &quot; .tagList&quot;);
@@ -161,13 +166,10 @@ VISH.Editor.Image = (function(V,$,undefined){
 				switch(V.Configuration.getConfiguration()[&quot;mode&quot;]){
 					case V.Constant.NOSERVER:
 						processResponse(&quot;{\&quot;src\&quot;:\&quot;&#x2F;images&#x2F;excursion_thumbnails&#x2F;excursion-01.png\&quot;}&quot;);
-					break;
+						break;
 					case V.Constant.VISH:
 						processResponse(xhr.responseText);
-					break;
-					case V.Constant.STANDALONE:
-						processResponse(xhr.responseText);
-					break;
+						break;
 				}
 				var percentVal = &#x27;100%&#x27;;
 				bar.width(percentVal)
@@ -352,11 +354,14 @@ VISH.Editor.Image = (function(V,$,undefined){
 		V.Editor.Utils.hideNonDefaultTabs();
 		switch(mode){
 			case V.Constant.THUMBNAIL:
+				&#x2F;&#x2F;When choosing thumbnail, only allow upload and thumbnail tabs.
+				$(&quot;#picture_fancybox div.fancy_tabs a.fancy_tab&quot;).hide();
+				$(&quot;#tab_pic_upload&quot;).show();
 				$(&quot;#tab_pic_thumbnails&quot;).show();
 				break;
 			case V.Constant.NONE:
 			case V.Constant.FLASHCARD:
-				break;	
+				break;
 		}
 		contentAddMode = mode;
 	};
