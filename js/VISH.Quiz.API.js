@@ -1,14 +1,14 @@
 VISH.Quiz.API = (function(V,$,undefined){
 	
 	// URL in the form: "http://localhost:3000/quiz_sessions/"
-	var quizSessionAPIrootURL;
+	var ARS_API_RootURL;
 
 	// Just for developping
 	var getResultsCount = 0;
 
-	var init = function(quizSessionAPI){
-		if((typeof quizSessionAPI == "object")&&(typeof quizSessionAPI.rootURL == "string")){
-			quizSessionAPIrootURL = quizSessionAPI.rootURL;
+	var init = function(ARS_API){
+		if((typeof ARS_API == "object")&&(typeof ARS_API.rootURL == "string")){
+			ARS_API_RootURL = ARS_API.rootURL;
 		}
 	};
 	
@@ -27,7 +27,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : quizSessionAPIrootURL,
+				url     : ARS_API_RootURL,
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -42,7 +42,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 			});
 		} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
 			var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
-			var url = quizSessionAPIrootURL + quizSessionId;
+			var url = ARS_API_RootURL + quizSessionId;
 			var quiz_session = {id: quizSessionId, url: url};
 			
 			if((typeof successCallback=="function")&&(typeof failCallback=="function")){
@@ -73,7 +73,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : quizSessionAPIrootURL + quizSessionId + '/close',
+				url     : ARS_API_RootURL + quizSessionId + '/close',
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -121,7 +121,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : quizSessionAPIrootURL + quizSessionId + '/delete',
+				url     : ARS_API_RootURL + quizSessionId + '/delete',
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -162,7 +162,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 				type    : send_type,
-				url     : quizSessionAPIrootURL + quizSessionId + '/results.json',
+				url     : ARS_API_RootURL + quizSessionId + '/results.json',
 				data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){
@@ -235,7 +235,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 			$.ajax({
 			  type    : send_type,
-			  url     : quizSessionAPIrootURL + quizSessionId + '/answer',
+			  url     : ARS_API_RootURL + quizSessionId + '/answer',
 			  data    : params,
 				success : function(data) {
 					if(typeof successCallback=="function"){

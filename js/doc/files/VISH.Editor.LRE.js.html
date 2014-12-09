@@ -93,92 +93,80 @@ VISH.Editor.LRE =  (function(V,$,undefined){
 	var VISH_LRE_URL = &quot;&quot;;
 	&#x2F;&#x2F;the thumbnails url is http:&#x2F;&#x2F;lrethumbnails.eun.org&#x2F;995&#x2F;445995.png where 445995 is the object id
 	&#x2F;&#x2F;and 995 are the last three digits
-	var LRE_THUMBNAILS_URL = &quot;http:&#x2F;&#x2F;lrethumbnails.eun.org&#x2F;&quot;; 
+	var LRE_THUMBNAILS_URL = &quot;http:&#x2F;&#x2F;lrethumbnails.eun.org&#x2F;&quot;;
 	var DEFAULT_LIMIT = 40; &#x2F;&#x2F;number of items to search
 	var DEFAULT_MAXAGE = 20;
 	var DEFAULT_MINAGE = 4;
 	var DEFAULT_LANGUAGE = &quot;en&quot;;
-	&#x2F;&#x2F;these providers have &#x27;X-Frame-Options&#x27; to &#x27;SAMEORIGIN&#x27;, we remove them from the list of results
-	&#x2F;&#x2F;the othe possibility to detect x-frame-options is with timeouts. See http:&#x2F;&#x2F;siderite.blogspot.com&#x2F;2013&#x2F;04&#x2F;detecting-if-url-can-be-loaded-in-iframe.html
+
+	&#x2F;&#x2F;These providers have &#x27;X-Frame-Options&#x27; to &#x27;SAMEORIGIN&#x27;, we remove them from the list of results
+	&#x2F;&#x2F;The othe possibility to detect x-frame-options is with timeouts. See http:&#x2F;&#x2F;siderite.blogspot.com&#x2F;2013&#x2F;04&#x2F;detecting-if-url-can-be-loaded-in-iframe.html
 	var PROVIDERS_TO_REMOVE = [&quot;KHAN&quot;, &quot;OPENLEARN&quot;];
 
 	var init = function(lang){
-		VISH_LRE_URL = V.SearchLREPath;
+		VISH_LRE_URL = V.LREPath;
 		if(lang!=&quot;en&quot;){
 			DEFAULT_LANGUAGE = &quot;x-mt-&quot; + lang;
-		}
-		else{
+		} else {
 			DEFAULT_LANGUAGE = lang;
 		}
-		
 	};
 
 	&#x2F;**
-   	 * function to call to LRE and request images
-   	 * successCallback: function to pass the results if everything goes well.
+	 * function to call to LRE and request images
+	 * successCallback: function to pass the results if everything goes well.
 	 * failCallback: function to pass the error if something fails. Format: {&quot;error&quot;:&quot;cnf cannot be null!&quot;}
-   	 *&#x2F;
-  	var requestImages = function(text, successCallback, failCallback){
-  	&#x2F;&#x2F; 	if (V.Utils.getOptions().configuration.mode==V.Constant.NOSERVER) {
-	  &#x2F;&#x2F;     if(typeof successCallback == &quot;function&quot;){
-			&#x2F;&#x2F; var result = jQuery.extend({}, V.Samples.API.imageList);
-		 &#x2F;&#x2F;    result[&#x27;pictures&#x27;] = V.Debugging.shuffleJson(V.Samples.API.imageList[&#x27;pictures&#x27;]);
-			&#x2F;&#x2F; setTimeout(function(){
-	  &#x2F;&#x2F;         successCallback(result);
-	  &#x2F;&#x2F;       }, 2000);
-	  &#x2F;&#x2F;     }
-	  &#x2F;&#x2F;     return;
-	  &#x2F;&#x2F;   }
-
+	 *&#x2F;
+	var requestImages = function(text, successCallback, failCallback){
 		var query = _composeLREQuery(text.split(&quot; &quot;), [&quot;image&quot;]);		     
-	    _requestLRE(query, DEFAULT_LIMIT, &quot;image&quot;, successCallback, failCallback);
-  	};
-
-	&#x2F;**
-   	 * function to call to LRE and request objects (webs, etc.)
-   	 * successCallback: function to pass the results if everything goes well.
-	 * failCallback: function to pass the error if something fails. Format: {&quot;error&quot;:&quot;cnf cannot be null!&quot;}
-   	 *&#x2F;
-  	var requestObjects = function(text, successCallback, failCallback){
-  		var query = _composeLREQuery(text.split(&quot; &quot;), [&quot;audio&quot;, &quot;video&quot;, &quot;data&quot;, &quot;text&quot;]);		     
-	    _requestLRE(query, DEFAULT_LIMIT, &quot;object&quot;, successCallback, failCallback);
-  	};
-
-	&#x2F;**
-     * Generic function to call LRE and request for content with some params
-     * VISH acts as a proxy, so this method sends it the query and the number of objects to receive
-     * VISH will call the LRE server and will take the returned ids and will ask for them
-     *      returning the array with the metadata for the results, so this client do not need to do two requests
-     * limit: number of items to return
-     * response_type: the type of array that we want as response (it can be &quot;image&quot; or &quot;object&quot;)
-     * successCallback: function to pass the results if everything goes well
-	 * failCallback: function to pass the error if something fails. Format: {&quot;error&quot;:&quot;cnf cannot be null!&quot;}
-     * The request is:
-	 * GET &#x2F;lre&#x2F;search?q=query&amp;limit=10
-     *&#x2F;    
-  	var _requestLRE = function(query, limit, response_type, successCallback, failCallback){
-  		$.ajax({
-	          type: &quot;GET&quot;,
-	          url: VISH_LRE_URL + &quot;?q=&quot;+ query +&quot;&amp;limit=&quot;+ limit,
-	          dataType: &quot;json&quot;,
-	          success:function(response){
-	              if(typeof successCallback == &quot;function&quot;){
-	              	var formatedResponse = formatLREResponse(response, response_type);
-				    successCallback(formatedResponse);
-				  }
-	          },
-	          error:function (xhr, ajaxOptions, thrownError){
-	              if(typeof failCallback == &quot;function&quot;){
-	              	failCallback();
-	              }
-	          }
-	 	});
+		_requestLRE(query, DEFAULT_LIMIT, &quot;image&quot;, successCallback, failCallback);
 	};
 
 	&#x2F;**
-     * generic function to compose a valid query to send to the LRE
-     * explanations of params:
-     *
+	 * function to call to LRE and request objects (webs, etc.)
+	 * successCallback: function to pass the results if everything goes well.
+	 * failCallback: function to pass the error if something fails. Format: {&quot;error&quot;:&quot;cnf cannot be null!&quot;}
+	 *&#x2F;
+	var requestObjects = function(text, successCallback, failCallback){
+		var query = _composeLREQuery(text.split(&quot; &quot;), [&quot;audio&quot;, &quot;video&quot;, &quot;data&quot;, &quot;text&quot;]);		     
+		_requestLRE(query, DEFAULT_LIMIT, &quot;object&quot;, successCallback, failCallback);
+	};
+
+	&#x2F;**
+	 * Generic function to call LRE and request for content with some params
+	 * VISH acts as a proxy, so this method sends it the query and the number of objects to receive
+	 * VISH will call the LRE server and will take the returned ids and will ask for them
+	 *      returning the array with the metadata for the results, so this client do not need to do two requests
+	 * limit: number of items to return
+	 * response_type: the type of array that we want as response (it can be &quot;image&quot; or &quot;object&quot;)
+	 * successCallback: function to pass the results if everything goes well
+	 * failCallback: function to pass the error if something fails. Format: {&quot;error&quot;:&quot;cnf cannot be null!&quot;}
+	 * The request is:
+	 * GET &#x2F;lre&#x2F;search?q=query&amp;limit=10
+	 *&#x2F;
+	var _requestLRE = function(query, limit, response_type, successCallback, failCallback){
+		$.ajax({
+			type: &quot;GET&quot;,
+			url: VISH_LRE_URL + &quot;?q=&quot;+ query +&quot;&amp;limit=&quot;+ limit,
+			dataType: &quot;json&quot;,
+			success:function(response){
+				if(typeof successCallback == &quot;function&quot;){
+					var formatedResponse = formatLREResponse(response, response_type);
+					successCallback(formatedResponse);
+				}
+			},
+			error:function (xhr, ajaxOptions, thrownError){
+				if(typeof failCallback == &quot;function&quot;){
+					failCallback();
+				}
+			}
+		});
+	};
+
+	&#x2F;**
+	 * generic function to compose a valid query to send to the LRE
+	 * explanations of params:
+	 *
 	 * terms: array of terms to be searched. Example [&quot;biology&quot;, &quot;nature&quot;] -&gt; search in LRE content containing &quot;biology&quot; AND &quot;nature&quot;
 	 * lrt: array of learning resource types. See the LRE Metadata Application Profile at page 35 of http:&#x2F;&#x2F;lreforschools.eun.org&#x2F;c&#x2F;document_library&#x2F;get_file?
 	 *		p_l_id=10970&amp;folderId=12073&amp;name=DLFE-1.pdf (i.e: audio, data, image, text, video)
@@ -186,7 +174,7 @@ VISH.Editor.LRE =  (function(V,$,undefined){
 	 * language: language of the learning object searched as ISO639-1 code -&gt; example: en, es, pt
 	 * NOT USED MAXAGE AND MINAGE BECAUSE LRE RETURNED NO RESULTS:
 	 *
-	 *&#x2F;    
+	 *&#x2F;
 	var _composeLREQuery = function(terms, lrt){
 		var query = &quot;&quot;;
 		if(terms.length==0){
@@ -194,57 +182,55 @@ VISH.Editor.LRE =  (function(V,$,undefined){
 		}
 		
 		for(var i=0;i&lt;terms.length;i++){
-     		query += &quot;((content[&quot;+terms[i]+&quot;]))&quot;;			
-     	}
-     	if(lrt &amp;&amp; lrt.length&gt;0){
-     		&#x2F;&#x2F;this is an or clause, we search for lrt &quot;image&quot; or &quot;video&quot; or ...
-     		query += &quot;(&quot;;
-     		for(var j=0;j&lt;lrt.length;j++){
-     			query += &quot;(lrt[&quot;+lrt[j]+&quot;])&quot;;			
-     		}
-     		query += &quot;)&quot;;
-     	}     	     	
-     	return query;	
+			query += &quot;((content[&quot;+terms[i]+&quot;]))&quot;;			
+		}
+		if(lrt &amp;&amp; lrt.length&gt;0){
+			&#x2F;&#x2F;this is an or clause, we search for lrt &quot;image&quot; or &quot;video&quot; or ...
+			query += &quot;(&quot;;
+			for(var j=0;j&lt;lrt.length;j++){
+				query += &quot;(lrt[&quot;+lrt[j]+&quot;])&quot;;			
+			}
+			query += &quot;)&quot;;
+		}     	     	
+		return query;	
 	};
 
 	&#x2F;**
 	 * function to change the metadata returned by the 
 	 * LRE to a simple format similar to the one that we use in VISH repository
-	 * This method is public so I can call it from command line to test it with 
-	 * V.Editor.LRE.formatLREResponse(VISH.Samples.API.LREImageList)
 	 * IMPORTANT: THIS METHOD REMOVES FROM THE ARRAY THE &quot;PROVIDERS_TO_REMOVE&quot; PROVIDERS
 	 *&#x2F;
 	 var formatLREResponse = function(lre_response, type){
-	 	var the_array = new Array();;
-	 	var the_return_list = {};
-	 	if(lre_response &amp;&amp; lre_response[&quot;results&quot;]){	 		 
-	 		var results_array = lre_response[&quot;results&quot;];
-	 		for(var i=0;i&lt;results_array.length;i++){
-     			var the_elem = _formatLREElem(results_array[i], type);	
+		var the_array = new Array();;
+		var the_return_list = {};
+		if(lre_response &amp;&amp; lre_response[&quot;results&quot;]){	 		 
+			var results_array = lre_response[&quot;results&quot;];
+			for(var i=0;i&lt;results_array.length;i++){
+				var the_elem = _formatLREElem(results_array[i], type);	
 				if(the_elem){
 					&#x2F;&#x2F;it can be null if it can&#x27;t be represented as an image, because sometimes it is a website or other thing
 					&#x2F;&#x2F;also will be null if the provider is in &quot;PROVIDERS_TO_REMOVE&quot; array
 					the_array.push(the_elem);
 				}
-     		}
-     		switch (type){
-		        case &quot;image&quot;:
-		          the_return_list.pictures = the_array;
-			      break;
-			    case &quot;object&quot;:
-			      the_return_list = the_array;
-			      break;				
-     	 	}
-	 	}
-	 	return the_return_list;
+			}
+			switch (type){
+				case &quot;image&quot;:
+				  the_return_list.pictures = the_array;
+				  break;
+				case &quot;object&quot;:
+				  the_return_list = the_array;
+				  break;				
+			}
+		}
+		return the_return_list;
 	 };
 
 	 &#x2F;**
 	  * Function to format one element from LRE to our format
 	  * if type is &quot;image&quot; returns null if not a raw image (sometimes it is a website or other thing)
 	  * The final format is for &quot;image&quot;: 
-	  	{
-	  		&quot;id&quot;:54,
+		{
+			&quot;id&quot;:54,
 			&quot;title&quot;:&quot;ClintEastwood.jpg&quot;,
 			&quot;description&quot;:null,
 			&quot;author&quot;:&quot;Demo&quot;,
@@ -252,117 +238,117 @@ VISH.Editor.LRE =  (function(V,$,undefined){
 		}
 		and for &quot;object&quot;:
 		{
-	      &#x27;id&#x27;     : &#x27;1534&#x27;,
-	      &#x27;title&#x27;         :  &#x27;Game Strauss&#x27;,
-	      &#x27;description&#x27;   :  &#x27;Fichero PDF&#x27;,
-	      &#x27;author&#x27;        :  &#x27;Conspirazzi&#x27;,
-	      &#x27;object&#x27;        :  &#x27;http:&#x2F;&#x2F;www.conspirazzi.com&#x2F;e-books&#x2F;game-strauss.pdf&#x27;,
-	      &#x27;thumbnail&#x27;	  : &#x27;http:&#x2F;&#x2F;lrethumbnails.eun.org&#x2F;995&#x2F;445995.png&#x27;
-	    }
+		  &#x27;id&#x27;     : &#x27;1534&#x27;,
+		  &#x27;title&#x27;         :  &#x27;Game Strauss&#x27;,
+		  &#x27;description&#x27;   :  &#x27;Fichero PDF&#x27;,
+		  &#x27;author&#x27;        :  &#x27;Conspirazzi&#x27;,
+		  &#x27;object&#x27;        :  &#x27;http:&#x2F;&#x2F;www.conspirazzi.com&#x2F;e-books&#x2F;game-strauss.pdf&#x27;,
+		  &#x27;thumbnail&#x27;	  : &#x27;http:&#x2F;&#x2F;lrethumbnails.eun.org&#x2F;995&#x2F;445995.png&#x27;
+		}
 	  *
 	  *&#x2F;
 	 var _formatLREElem = function(the_element, type){
-	 	if(type===&quot;object&quot; || (type===&quot;image&quot; &amp;&amp; _checkValidImgElem(the_element))){
-	 		var tmp_elem = {};
-	 		tmp_elem.id = the_element.meta.id;
-	 		if($.inArray(the_element.meta.provider, PROVIDERS_TO_REMOVE)&gt;=0){
-	 			&#x2F;&#x2F;This element is in the black list, return null
-	 			return null;
-	 		}
-	 		tmp_elem.author = the_element.meta.provider;
-	 		var title_and_desc = _getTitleAndDescInMyLang(the_element.meta.langBlocks);
-	 		tmp_elem.title = title_and_desc.title;
-	 		tmp_elem.description = title_and_desc.description;
-	 		switch (type){
-		        case &quot;image&quot;:
-		          tmp_elem.src = _getValidSRC(the_element, type);
-		          if(!tmp_elem.src){
-		          	return null;
-		          }
-			      break;
-			    case &quot;object&quot;:
-			      tmp_elem.object = _getValidSRC(the_element, type);
-			      if(!tmp_elem.object){
-		          	return null;
-		          }
-			      break;				
-     	 	}
-     	 	tmp_elem.thumbnail = LRE_THUMBNAILS_URL + tmp_elem.id.toString().slice(-3) + &quot;&#x2F;&quot; + tmp_elem.id.toString() + &quot;.png&quot;;
-	 		return tmp_elem;
-	 	};
+		if(type===&quot;object&quot; || (type===&quot;image&quot; &amp;&amp; _checkValidImgElem(the_element))){
+			var tmp_elem = {};
+			tmp_elem.id = the_element.meta.id;
+			if($.inArray(the_element.meta.provider, PROVIDERS_TO_REMOVE)&gt;=0){
+				&#x2F;&#x2F;This element is in the black list, return null
+				return null;
+			}
+			tmp_elem.author = the_element.meta.provider;
+			var title_and_desc = _getTitleAndDescInMyLang(the_element.meta.langBlocks);
+			tmp_elem.title = title_and_desc.title;
+			tmp_elem.description = title_and_desc.description;
+			switch (type){
+				case &quot;image&quot;:
+				  tmp_elem.src = _getValidSRC(the_element, type);
+				  if(!tmp_elem.src){
+					return null;
+				}
+				break;
+				case &quot;object&quot;:
+				tmp_elem.object = _getValidSRC(the_element, type);
+				if(!tmp_elem.object){
+					return null;
+				}
+				break;
+			}
+			tmp_elem.thumbnail = LRE_THUMBNAILS_URL + tmp_elem.id.toString().slice(-3) + &quot;&#x2F;&quot; + tmp_elem.id.toString() + &quot;.png&quot;;
+			return tmp_elem;
+		};
 	 };
 
 	var _isValidImageUrl = function (url, callback) {
-	    var img = new Image();
-	    img.onerror = function() { 
-	    	V.Debugger(&quot;This is not an image: &quot; + url );
-	    	callback(url, false); };
-	    img.onload =  function() { callback(url, true); };
-	    img.src = url;
+		var img = new Image();
+		img.onerror = function() { 
+			V.Debugger(&quot;This is not an image: &quot; + url );
+			callback(url, false); };
+		img.onload =  function() { callback(url, true); };
+		img.src = url;
 	};
 
 	 &#x2F;**
 	  * function to get the SRC from the my_element
 	  *&#x2F;
-	  var _getValidSRC = function(my_element, type){
+	var _getValidSRC = function(my_element, type){
 		if(!my_element){
-	 		return &quot;&quot;;
-	 	}
+			return &quot;&quot;;
+		}
 
-	 	if(my_element.meta &amp;&amp; my_element.meta.expressions){
-	 		&#x2F;&#x2F;expressions is an array
-	 		for(var i=0;i&lt;my_element.meta.expressions.length;i++){
-	 			var exp = my_element.meta.expressions[i];
-	 			&#x2F;&#x2F;manifestations inside expessions is also an array
-	 			for(var j=0;j&lt;exp.manifestations.length;j++){ 		
-		 			if(type===&quot;image&quot; &amp;&amp; exp.manifestations[j].player == &quot;webBrowser&quot;){
-		 				return exp.manifestations[j].urls[0];
-		 			}
-		 			else if(type===&quot;object&quot; &amp;&amp; (exp.manifestations[j].player == &quot;webBrowser&quot; || exp.manifestations[j].player == &quot;landingPage&quot; || exp.manifestations[j].player == &quot;printable&quot;) ){
-		 				return exp.manifestations[j].urls[0];
-		 			}
-		 		}
-	 		}
-	 		
-	 	}
-	 	return &quot;&quot;;
-	  };
+		if(my_element.meta &amp;&amp; my_element.meta.expressions){
+			&#x2F;&#x2F;expressions is an array
+			for(var i=0;i&lt;my_element.meta.expressions.length;i++){
+				var exp = my_element.meta.expressions[i];
+				&#x2F;&#x2F;manifestations inside expessions is also an array
+				for(var j=0;j&lt;exp.manifestations.length;j++){ 		
+					if(type===&quot;image&quot; &amp;&amp; exp.manifestations[j].player == &quot;webBrowser&quot;){
+						return exp.manifestations[j].urls[0];
+					}
+					else if(type===&quot;object&quot; &amp;&amp; (exp.manifestations[j].player == &quot;webBrowser&quot; || exp.manifestations[j].player == &quot;landingPage&quot; || exp.manifestations[j].player == &quot;printable&quot;) ){
+						return exp.manifestations[j].urls[0];
+					}
+				}
+			}
+			
+		}
+		return &quot;&quot;;
+	};
 
 	 &#x2F;**
 	  * function to check if a returned image element has any manifestation as webBrowser
 	  *&#x2F;
 	 var _checkValidImgElem = function(img_element){
-	 	if(!img_element){
-	 		return false;
-	 	}
-	 	if(img_element.meta &amp;&amp; img_element.meta.expressions){
-	 		&#x2F;&#x2F;expressions is an array
-	 		for(var i=0;i&lt;img_element.meta.expressions.length;i++){
-	 			var exp = img_element.meta.expressions[i];
-	 			&#x2F;&#x2F;manifestations inside expessions is also an array
-	 			for(var j=0;j&lt;exp.manifestations.length;j++){ 		
-		 			if(exp.manifestations[j].player == &quot;webBrowser&quot;){
-		 				return true;
-		 			}
-		 		}
-	 		}	 		
-	 	}
-	 	return false;
+		if(!img_element){
+			return false;
+		}
+		if(img_element.meta &amp;&amp; img_element.meta.expressions){
+			&#x2F;&#x2F;expressions is an array
+			for(var i=0;i&lt;img_element.meta.expressions.length;i++){
+				var exp = img_element.meta.expressions[i];
+				&#x2F;&#x2F;manifestations inside expessions is also an array
+				for(var j=0;j&lt;exp.manifestations.length;j++){ 		
+					if(exp.manifestations[j].player == &quot;webBrowser&quot;){
+						return true;
+					}
+				}
+			}	 		
+		}
+		return false;
 	 };
 
 	 &#x2F;**
 	  * function to get title and description in your lang or in english if not your lang present
 	  *&#x2F;
 	 var _getTitleAndDescInMyLang = function(langBlocks){
-	 	var filled_lang = false;
-	 	var title_and_desc = {};
-	 	var default_title_and_desc = {};
-	 	if(langBlocks.length==1){
-	 		default_title_and_desc.title = langBlocks[0].title;
+		var filled_lang = false;
+		var title_and_desc = {};
+		var default_title_and_desc = {};
+		if(langBlocks.length==1){
+			default_title_and_desc.title = langBlocks[0].title;
 			default_title_and_desc.description = langBlocks[0].description;
 			return default_title_and_desc;	
-	 	}
- 		for(var i=0;i&lt;langBlocks.length;i++){ 			
+		}
+		for(var i=0;i&lt;langBlocks.length;i++){ 			
 			if(langBlocks[i].language==DEFAULT_LANGUAGE){
 				title_and_desc.title = langBlocks[i].title;
 				title_and_desc.description = langBlocks[i].description;
@@ -372,20 +358,20 @@ VISH.Editor.LRE =  (function(V,$,undefined){
 				default_title_and_desc.title = langBlocks[i].title;
 				default_title_and_desc.description = langBlocks[i].description;				
 			} 			
- 		}
- 		if(filled_lang){
- 			return title_and_desc;
- 		}
- 		else{
- 			return default_title_and_desc;
- 		}
-	 };
+		}
+		if(filled_lang){
+			return title_and_desc;
+		}
+		else{
+			return default_title_and_desc;
+		}
+	};
 
 	return {
 		init						: init,
-		requestImages  				: requestImages,
-		requestObjects  			: requestObjects,
-		formatLREResponse   		: formatLREResponse
+		requestImages				: requestImages,
+		requestObjects				: requestObjects,
+		formatLREResponse			: formatLREResponse
 	};
 
 }) (VISH, jQuery);

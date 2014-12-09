@@ -4,22 +4,17 @@
 
 VISH.Editor.API = (function(V,$,undefined){
 	
-	var mainViSHInstanceDomain;
-
 	var init = function(){
 		queriesCounter = 0;
 		queriesData = [];
 		searchId = -1;
 		sessionSearchs = {};
-		if(V.Utils.getOptions().configuration.mode==V.Constant.VISH) {
-			mainViSHInstanceDomain = "http://vishub.org";
-		} else {
-			mainViSHInstanceDomain = "http://localhost:3000";
-		}
 	};
 
 
+	//////////////////////
 	// ViSH Search API (https://github.com/ging/vish/wiki/Using-the-ViSH-Search-API)
+	//////////////////////
 
 	//Constants and internal vars
 	var QUERY_TIMEOUT = 20000;
@@ -42,7 +37,7 @@ VISH.Editor.API = (function(V,$,undefined){
 		var query = _buildQuery(searchTerms,settings);
 
 		//2. Peform the search in the instances
-		var instances = [mainViSHInstanceDomain];
+		var instances = V.ViSHInstances;
 		var instancesL = instances.length;
 
 		searchId =_getSearchId();
@@ -172,9 +167,10 @@ VISH.Editor.API = (function(V,$,undefined){
 	};
 
 
-	/*
-	 * Handles APIs to another ViSH services
-	 */
+
+	//////////////////////
+	// Handles APIs to another ViSH services
+	//////////////////////
 
 	/*
 	 * Function to call ViSH and request tags
@@ -182,7 +178,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	var requestTags = function(successCallback, failCallback){
 		$.ajax({
 			type: "GET",
-			url: mainViSHInstanceDomain + "/tags.json?mode=popular&limit=100",
+			url: V.RootPath + "/tags.json?mode=popular&limit=100",
 			dataType:"html",
 			success:function(response){
 				if(typeof successCallback == "function"){
@@ -210,7 +206,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	var requestThumbnails = function(successCallback, failCallback){
 		$.ajax({
 			type: 'GET',
-			url: mainViSHInstanceDomain + '/excursion_thumbnails.json',
+			url: V.RootPath + '/thumbnails.json',
 			dataType: 'json',
 			success: function(data) {
 				if(typeof successCallback == "function"){
@@ -230,7 +226,7 @@ VISH.Editor.API = (function(V,$,undefined){
 
 		$.ajax({
 			type: 'POST',
-			url: mainViSHInstanceDomain + '/excursions/tmpJson.json',
+			url: V.RootPath + '/excursions/tmpJson.json',
 			dataType: 'json',
 			data: { 
 				"authenticity_token" : V.User.getToken(),

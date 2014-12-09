@@ -122,8 +122,8 @@ VISH.Recommendations = (function(V,$,undefined){
 		_generated = false;
 
 		var options = V.Utils.getOptions();
-		if((options)&amp;&amp;(!options.preview)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;] == &quot;string&quot;)){
-			_recommendationAPIUrl = options[&quot;recommendationsAPI&quot;][&quot;rootURL&quot;];
+		if((options)&amp;&amp;(!options.preview)&amp;&amp;(typeof options[&quot;configuration&quot;][&quot;recommendationsAPI&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof options[&quot;configuration&quot;][&quot;recommendationsAPI&quot;][&quot;rootURL&quot;] == &quot;string&quot;)){
+			_recommendationAPIUrl = options[&quot;configuration&quot;][&quot;recommendationsAPI&quot;][&quot;rootURL&quot;];
 			_enabled = true;
 		} else {
 			return;
@@ -254,45 +254,36 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	&#x2F;**
-	 * Function to call ViSH via AJAX to get recommendation of excursions
+	 * Function to call ViSH via AJAX to get recommendations
 	 *&#x2F;
 	var _requestRecommendations = function(){
 		if((_enabled)&amp;&amp;(typeof _recommendationAPIUrl != &quot;undefined&quot;)&amp;&amp;(!_generated)&amp;&amp;(_requesting != true)){
-
 			_requesting = true;
 
-			if(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.VISH){
-
-				var params = {};
-				params[&quot;quantity&quot;] = 6;
-				if(_searchTerms){
-					params[&quot;q&quot;] = _searchTerms;
-				}
-				if(user_id){
-					params[&quot;user_id&quot;] = user_id;
-				}
-				if(vishub_pres_id){
-					params[&quot;excursion_id&quot;] = vishub_pres_id;
-				}
-
-				$.ajax({
-					type    : &quot;GET&quot;,
-					url     : _recommendationAPIUrl,
-					data    : params,
-					success : function(data) {
-						_fillFancyboxWithData(data);
-					},
-					error: function(error){
-						_enabled = false; &#x2F;&#x2F;Disable recommendations when API fail
-						_requesting = false;
-					}
-				});
-
-			} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-				setTimeout(function(){
-					_fillFancyboxWithData(V.Samples.API.recommendationList);
-				},1000);
+			var params = {};
+			params[&quot;quantity&quot;] = 6;
+			if(_searchTerms){
+				params[&quot;q&quot;] = _searchTerms;
 			}
+			if(user_id){
+				params[&quot;user_id&quot;] = user_id;
+			}
+			if(vishub_pres_id){
+				params[&quot;excursion_id&quot;] = vishub_pres_id;
+			}
+
+			$.ajax({
+				type    : &quot;GET&quot;,
+				url     : _recommendationAPIUrl,
+				data    : params,
+				success : function(data) {
+					_fillFancyboxWithData(data);
+				},
+				error: function(error){
+					_enabled = false; &#x2F;&#x2F;Disable recommendations when API fail
+					_requesting = false;
+				}
+			});
 		}
 	};
 

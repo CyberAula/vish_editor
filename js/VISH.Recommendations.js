@@ -32,8 +32,8 @@ VISH.Recommendations = (function(V,$,undefined){
 		_generated = false;
 
 		var options = V.Utils.getOptions();
-		if((options)&&(!options.preview)&&(typeof options["recommendationsAPI"] != "undefined")&&(typeof options["recommendationsAPI"]["rootURL"] == "string")){
-			_recommendationAPIUrl = options["recommendationsAPI"]["rootURL"];
+		if((options)&&(!options.preview)&&(typeof options["configuration"]["recommendationsAPI"] != "undefined")&&(typeof options["configuration"]["recommendationsAPI"]["rootURL"] == "string")){
+			_recommendationAPIUrl = options["configuration"]["recommendationsAPI"]["rootURL"];
 			_enabled = true;
 		} else {
 			return;
@@ -164,45 +164,36 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	/**
-	 * Function to call ViSH via AJAX to get recommendation of excursions
+	 * Function to call ViSH via AJAX to get recommendations
 	 */
 	var _requestRecommendations = function(){
 		if((_enabled)&&(typeof _recommendationAPIUrl != "undefined")&&(!_generated)&&(_requesting != true)){
-
 			_requesting = true;
 
-			if(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH){
-
-				var params = {};
-				params["quantity"] = 6;
-				if(_searchTerms){
-					params["q"] = _searchTerms;
-				}
-				if(user_id){
-					params["user_id"] = user_id;
-				}
-				if(vishub_pres_id){
-					params["excursion_id"] = vishub_pres_id;
-				}
-
-				$.ajax({
-					type    : "GET",
-					url     : _recommendationAPIUrl,
-					data    : params,
-					success : function(data) {
-						_fillFancyboxWithData(data);
-					},
-					error: function(error){
-						_enabled = false; //Disable recommendations when API fail
-						_requesting = false;
-					}
-				});
-
-			} else if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
-				setTimeout(function(){
-					_fillFancyboxWithData(V.Samples.API.recommendationList);
-				},1000);
+			var params = {};
+			params["quantity"] = 6;
+			if(_searchTerms){
+				params["q"] = _searchTerms;
 			}
+			if(user_id){
+				params["user_id"] = user_id;
+			}
+			if(vishub_pres_id){
+				params["excursion_id"] = vishub_pres_id;
+			}
+
+			$.ajax({
+				type    : "GET",
+				url     : _recommendationAPIUrl,
+				data    : params,
+				success : function(data) {
+					_fillFancyboxWithData(data);
+				},
+				error: function(error){
+					_enabled = false; //Disable recommendations when API fail
+					_requesting = false;
+				}
+			});
 		}
 	};
 

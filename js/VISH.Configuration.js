@@ -8,17 +8,25 @@ VISH.Configuration = (function(V,$,undefined){
 	};
 
 	var _initPaths = function(){
+		//Assets paths
 		V.ImagesPath = configuration["ImagesPath"];
 		V.StylesheetsPath = configuration["StylesheetsPath"];
+
+		//Services
+		V.RootPath = configuration["rootPath"];
+
+		//Upload paths
 		V.UploadImagePath = configuration["uploadImagePath"];
 		V.UploadObjectPath = configuration["uploadObjectPath"];
 		V.UploadPresentationPath = configuration["uploadPresentationPath"];
 		V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
-		V.SearchLREPath = configuration["SearchLREPath"];
+
+		//Source paths
+		V.LREPath = configuration["LRE_path"];
+		V.ViSHInstances = configuration["ViSH_instances"];
 	};
 	
 	var applyConfiguration = function(){
-
 		//Sources
 		if(!configuration["Upload"]){
 			$("#tab_pic_upload").css("display","none");
@@ -51,7 +59,7 @@ VISH.Configuration = (function(V,$,undefined){
 	
 	var getConfiguration = function(){
 		return configuration;
-	}
+	};
 	
 	return {
     	init                : init,

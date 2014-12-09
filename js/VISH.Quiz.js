@@ -37,7 +37,7 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var init = function(){
 		$("#quizSessionNameInput").vewatermark((V.I18n.getTrans("i.QuizSessionName")));
-		V.Quiz.API.init(V.Utils.getOptions().quizSessionAPI);
+		V.Quiz.API.init(V.Configuration.getConfiguration().ARS_API);
 		V.Quiz.MC.init();
 		V.Quiz.TF.init();
 		V.Quiz.Sorting.init();
