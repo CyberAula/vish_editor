@@ -112,11 +112,6 @@ VISH.I18n = (function(V,$,undefined){
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
-			case V.Constant.STANDALONE:
-				if (typeof(i18n[&quot;standalone&quot;][&quot;default&quot;])!=&#x27;undefined&#x27;){
-					defaultTranslations = i18n[&quot;standalone&quot;][&quot;default&quot;];
-				}
-				break;
 		}
 
 		&#x2F;&#x2F;Set lang specific translation
@@ -127,21 +122,15 @@ VISH.I18n = (function(V,$,undefined){
 		}
 		
 		switch(V.Configuration.getConfiguration().mode){
-			case V.Constant.NOSERVER:
-				if (typeof(i18n[&quot;vish&quot;][language])!=&#x27;undefined&#x27;){
-					translations = i18n[&quot;vish&quot;][language];
-				}
-				break;
 			case V.Constant.VISH:
 				if (typeof(i18n[&quot;vish&quot;][language])!=&#x27;undefined&#x27;){
 					translations = i18n[&quot;vish&quot;][language];
 					defaultTranslations = i18n[&quot;vish&quot;][&quot;default&quot;];
 				}
 				break;
-			case V.Constant.STANDALONE:
-				if (typeof(i18n[&quot;standalone&quot;][language])!=&#x27;undefined&#x27;){
-					translations = i18n[&quot;standalone&quot;][language];
-					defaultTranslations = i18n[&quot;standalone&quot;][&quot;default&quot;];
+			case V.Constant.NOSERVER:
+				if (typeof(i18n[&quot;vish&quot;][language])!=&#x27;undefined&#x27;){
+					translations = i18n[&quot;vish&quot;][language];
 				}
 				break;
 		}

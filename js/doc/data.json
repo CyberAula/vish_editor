@@ -618,13 +618,13 @@
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 391,
+            "line": 388,
             "description": "Returns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 492,
+            "line": 489,
             "description": "param style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -848,7 +848,7 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 880,
+            "line": 874,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -869,14 +869,14 @@
         },
         {
             "file": "VISH.I18n.js",
-            "line": 141,
+            "line": 130,
             "description": "Function to translate a text",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 185,
+            "line": 174,
             "description": "Return the current language",
             "class": "",
             "namespace": "VISH"
@@ -1862,11 +1862,11 @@
         },
         {
             "message": "Missing item type\nReturns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:391"
+            "line": " VISH.Editor.Object.js:388"
         },
         {
             "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:492"
+            "line": " VISH.Editor.Object.js:489"
         },
         {
             "message": "Missing item type\nInsert the selected slides of a slide presentation in JSON",
@@ -1986,7 +1986,7 @@
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:880"
+            "line": " VISH.Editor.js:874"
         },
         {
             "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
@@ -1998,11 +1998,11 @@
         },
         {
             "message": "Missing item type\nFunction to translate a text",
-            "line": " VISH.I18n.js:141"
+            "line": " VISH.I18n.js:130"
         },
         {
             "message": "Missing item type\nReturn the current language",
-            "line": " VISH.I18n.js:185"
+            "line": " VISH.I18n.js:174"
         },
         {
             "message": "Missing item type\nFunction to reload a gifs in the slide for Mobile devices",

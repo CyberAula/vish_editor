@@ -48,9 +48,6 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 					case V.Constant.VISH:
 						processResponse(responseText);
 						break;
-					case V.Constant.STANDALONE:
-						processResponse(responseText);
-						break;
 					default:
 						break;
 				}
@@ -60,6 +57,8 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 			},
 			complete: function(xhr){
 				switch(V.Configuration.getConfiguration()["mode"]){
+					case V.Constant.VISH:
+						break;
 					case V.Constant.NOSERVER:
 						setTimeout(function(){
 							var responseTest = {};
@@ -71,8 +70,6 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 							processResponse(responseTest);
 						},10000);
 						break;
-					case V.Constant.VISH:
-					case V.Constant.STANDALONE:
 					default:
 						break;
 				}

@@ -74,11 +74,11 @@ VISH.Editor.Image = (function(V,$,undefined){
 			},
 			complete: function(xhr) {
 				switch(V.Configuration.getConfiguration()["mode"]){
-					case V.Constant.NOSERVER:
-						processResponse("{\"src\":\"/images/excursion_thumbnails/excursion-01.png\"}");
-						break;
 					case V.Constant.VISH:
 						processResponse(xhr.responseText);
+						break;
+					case V.Constant.NOSERVER:
+						processResponse("{\"src\":\"/images/excursion_thumbnails/excursion-01.png\"}");
 						break;
 				}
 				var percentVal = '100%';

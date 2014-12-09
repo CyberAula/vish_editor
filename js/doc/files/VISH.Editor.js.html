@@ -905,26 +905,20 @@ VISH.Editor = (function(V,$,undefined){
 				});
 				break;
 			case V.Constant.NOSERVER:
-				if((V.Debugging)&amp;&amp;(V.Debugging.isDevelopping())){
-
-					if(order != &quot;unpublish&quot;){
-						lastStoredPresentationStringify = JSON.stringify(presentation);
-						if(order==&quot;publish&quot;){
-							_isDraft = false;
-						}
-					} else {
-						&#x2F;&#x2F;Order == &quot;unpublish&quot;
-						_isDraft = true;
+				if(order != &quot;unpublish&quot;){
+					lastStoredPresentationStringify = JSON.stringify(presentation);
+					if(order==&quot;publish&quot;){
+						_isDraft = false;
 					}
-
-					setTimeout(function(){
-						successCallback();
-					},5000);
+				} else {
+					&#x2F;&#x2F;Order == &quot;unpublish&quot;
+					_isDraft = true;
 				}
-				break;
-			case V.Constant.STANDALONE:
-				&#x2F;&#x2F;Ignore order param
-				_uploadPresentationWithNode(presentation);
+
+				setTimeout(function(){
+					successCallback();
+				},5000);
+				
 				break;
 		}
 	};

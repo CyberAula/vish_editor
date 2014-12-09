@@ -168,12 +168,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 						window.top.location.href = data.url;
 						break;
 					case V.Constant.NOSERVER:
-						// V.Debugging.log("Published presentation");
-						// V.Debugging.log(presentation);
 						V.Editor.Preview.preview();
 						V.Editor.Tools.changePublishButtonStatus("unpublish");
-						break;
-					case V.Constant.STANDALONE:
 						break;
 				}
 			}, function(){

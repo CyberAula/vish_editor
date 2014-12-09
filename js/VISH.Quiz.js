@@ -112,7 +112,7 @@ VISH.Quiz = (function(V,$,undefined){
 		
 		var quizButtons = $("<div class='quizButtons'></div>");
 
-		if((quizMode === V.Constant.QZ_MODE.SELFA)&&(ARSEnabled==true)&&((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER))&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
+		if((quizMode === V.Constant.QZ_MODE.SELFA)&&(ARSEnabled==true)&&(V.User.isLogged())&&(!V.Utils.getOptions().preview)){
 			var startButton = $("<input type='button' class='buttonQuiz quizStartButton' value='"+V.I18n.getTrans("i.QuizLaunch")+"'/>");
 			$(quizButtons).append(startButton);
 		}

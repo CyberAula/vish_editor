@@ -58,8 +58,6 @@ VISH.Editor.Preview = (function(V,$,undefined){
 			$("#preview_action").attr("href",  "/excursions/preview#" + slideNumberToPreview);
 		} else if(V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
 			$("#preview_action").attr("href", "/viewer.html#" + slideNumberToPreview);
-		} else if(V.Configuration.getConfiguration().mode==V.Constant.STANDALONE){
-			//Code here
 		}
 
 		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] != "object")){

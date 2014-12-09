@@ -568,22 +568,19 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var _saveLORData = function(presentation){
-		switch(V.Configuration.getConfiguration().mode){
-			case V.Constant.VISH:
-			case V.Constant.NOSERVER:
-				var LORPresentation = getDraftPresentation();
-				var LORMetadata;
-				if(LORPresentation && LORPresentation["vishMetadata"]){
-					LORMetadata = LORPresentation["vishMetadata"];
-				} else {
-					LORMetadata = {};
-				}
-				
-				LORMetadata["draft"] = isPresentationDraft().toString();
+		var LORPresentation = getDraftPresentation();
+		var LORMetadata;
+		
+		if(LORPresentation && LORPresentation["vishMetadata"]){
+			LORMetadata = LORPresentation["vishMetadata"];
+		} else {
+			LORMetadata = {};
+		}
+		
+		LORMetadata["draft"] = isPresentationDraft().toString();
 
-				presentation["vishMetadata"] = LORMetadata;
-				break;
-		};
+		presentation["vishMetadata"] = LORMetadata;
+
 		return presentation;
 	};
 	
@@ -815,26 +812,20 @@ VISH.Editor = (function(V,$,undefined){
 				});
 				break;
 			case V.Constant.NOSERVER:
-				if((V.Debugging)&&(V.Debugging.isDevelopping())){
-
-					if(order != "unpublish"){
-						lastStoredPresentationStringify = JSON.stringify(presentation);
-						if(order=="publish"){
-							_isDraft = false;
-						}
-					} else {
-						//Order == "unpublish"
-						_isDraft = true;
+				if(order != "unpublish"){
+					lastStoredPresentationStringify = JSON.stringify(presentation);
+					if(order=="publish"){
+						_isDraft = false;
 					}
-
-					setTimeout(function(){
-						successCallback();
-					},5000);
+				} else {
+					//Order == "unpublish"
+					_isDraft = true;
 				}
-				break;
-			case V.Constant.STANDALONE:
-				//Ignore order param
-				_uploadPresentationWithNode(presentation);
+
+				setTimeout(function(){
+					successCallback();
+				},5000);
+				
 				break;
 		}
 	};

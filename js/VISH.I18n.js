@@ -10,25 +10,8 @@ VISH.I18n = (function(V,$,undefined){
 	var init = function(lang){
 		// var initTime = new Date().getTime();
 
-		//Set default translation
-		switch(V.Configuration.getConfiguration().mode){
-			case V.Constant.NOSERVER:
-				if (typeof(i18n["vish"]["default"])!='undefined'){
-					defaultTranslations = i18n["vish"]["default"];
-				}
-				break;
-			case V.Constant.VISH:
-				if (typeof(i18n["vish"]["default"])!='undefined'){
-					defaultTranslations = i18n["vish"]["default"];
-				}
-				break;
-			case V.Constant.STANDALONE:
-				if (typeof(i18n["standalone"]["default"])!='undefined'){
-					defaultTranslations = i18n["standalone"]["default"];
-				}
-				break;
-		}
-
+		defaultTranslations = i18n["vish"]["default"];
+		
 		//Set lang specific translation
 		if(typeof lang != "undefined"){
 			language = lang;
@@ -36,27 +19,9 @@ VISH.I18n = (function(V,$,undefined){
 			return;
 		}
 		
-		switch(V.Configuration.getConfiguration().mode){
-			case V.Constant.NOSERVER:
-				if (typeof(i18n["vish"][language])!='undefined'){
-					translations = i18n["vish"][language];
-				}
-				break;
-			case V.Constant.VISH:
-				if (typeof(i18n["vish"][language])!='undefined'){
-					translations = i18n["vish"][language];
-					defaultTranslations = i18n["vish"]["default"];
-				}
-				break;
-			case V.Constant.STANDALONE:
-				if (typeof(i18n["standalone"][language])!='undefined'){
-					translations = i18n["standalone"][language];
-					defaultTranslations = i18n["standalone"]["default"];
-				}
-				break;
-		}
-
-		if (typeof(translations)=='undefined'){
+		if(typeof(i18n["vish"][language])!='undefined'){
+			translations = i18n["vish"][language];
+		} else {
 			return;
 		}
 

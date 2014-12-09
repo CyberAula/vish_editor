@@ -8,7 +8,6 @@ VISH.Constant.AnyMode  = "Both";
 //VE Server Modes
 VISH.Constant.NOSERVER = "noserver";
 VISH.Constant.VISH = "vish";
-VISH.Constant.STANDALONE = "node";
 
 //User agents and browsers
 VISH.Constant.UA_IE = 'Microsoft Internet Explorer';

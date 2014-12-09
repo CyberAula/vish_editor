@@ -49,16 +49,11 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			},
 			complete: function(xhr) {
 				switch(V.Configuration.getConfiguration()["mode"]){
-					case V.Constant.NOSERVER:
-						// _processResponse(JSON.stringify(V.Samples.SCORMexample));
-						// _processResponse(JSON.stringify(V.Samples.Webappexample));
-					break;
 					case V.Constant.VISH:
 						_processResponse(xhr.responseText);
-					break;
-					case V.Constant.STANDALONE:
-						_processResponse(xhr.responseText);
-					break;
+						break;
+					default:
+						break;
 				}
 				var percentVal = '100%';
 				bar.width(percentVal)
