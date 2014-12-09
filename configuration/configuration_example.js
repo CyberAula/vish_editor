@@ -12,6 +12,16 @@ var getOptions = function(){
 		var configuration = {};
 
 		/////////////////////
+		// Operation Modes
+		// Possible values:
+		// noserver: working with a HTTP server like apache for developping.
+		// vish: working with a vish server.
+		/////////////////////
+		configuration["mode"] = "noserver";
+		// configuration["mode"] = "vish";
+
+
+		/////////////////////
 		// Assets paths (use relative paths)
 		/////////////////////
 		configuration["ImagesPath"] = "/images/";
@@ -74,15 +84,6 @@ var getOptions = function(){
 		// 	evmethod: "wbltses"
 		// };
 
-
-		/////////////////////
-		// Operation Modes
-		// Possible values:
-		// noserver: working with a HTTP server like apache for developping.
-		// vish: working with a vish server.
-		/////////////////////
-		configuration["mode"] = "noserver";
-		// configuration["mode"] = "vish";
 
 		/////////////////////
 		// Behaviour customization
