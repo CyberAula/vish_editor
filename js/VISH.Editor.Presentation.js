@@ -99,7 +99,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 	/*
 	 * Generate presentation scaffold for elements
-	 * element JSON example: { body: "myimage.jpg", type: V.Constant.IMAGE}
+	 * element JSON example: {body: "myimage.jpg", type: V.Constant.IMAGE}
 	 * options JSON example: {template : "t2", pdfexId: "22"}
 	 */
 	var generatePresentationScaffold = function(elements,options){
@@ -118,21 +118,26 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 	var _generateSlideScaffold = function(index,element,options){
 		var slide = {};
+		var element = element || {};
+
 		slide.id = "article"+index;
 		slide.type = V.Constant.STANDARD;
 
 		var defaultTemplate = "t10";
 		if(element.template){
-			slide.template = options.template;
+			slide.template = element.template;
 		} else if((options)&&(options.template)){
 			slide.template = options.template;
 		} else {
 			slide.template = defaultTemplate;
 		}
 
+		if(element.type = V.Constant.QUIZ){
+			slide.containsQuiz =true;
+		}
+
 		slide.elements = [];
 
-		var element = element || {};
 		element.id = slide.id + "_zone1";
 		switch(slide.template){
 			case "t2":
