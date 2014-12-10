@@ -1,11 +1,12 @@
 VISH.Editor.Renderer = (function(V,$,undefined){
 	
-	var slides = null;
-	
+	var _isRendering;
+
 	/**
 	 * Function to initialize the renderer 
 	 */
 	var init = function(presentation){
+		_isRendering = false;
 		V.Editor.Animations.setCurrentAnimation(presentation.animation);
 		
 		if(presentation.type===V.Constant.PRESENTATION){
@@ -13,14 +14,16 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		} else if(presentation.type===V.Constant.QUIZ_SIMPLE){
 			// Presentation stored in the quiz_simple_json field of quizzes;
 			// Edit this kind of presentations makes no sense, just for testing
-			//Edit as standard presentation
+			// Edit as standard presentation
 			presentation.type = V.Constant.PRESENTATION;
 			renderPresentation(presentation);
 		}
 	};
 
 	var renderPresentation = function(presentation){
-		slides = presentation.slides;
+		_isRendering = true;
+
+		var slides = presentation.slides;
 		for(var i=0;i<slides.length;i++){
 			var slideNumber = V.Slides.getSlidesQuantity()+1;
 			var type = slides[i].type;
@@ -34,6 +37,8 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 				}
 			}
 		}
+
+		_isRendering = false;
 	};
 
 	
@@ -150,10 +155,15 @@ VISH.Editor.Renderer = (function(V,$,undefined){
 		}
 	};
 
+	var isRendering = function(){
+		return _isRendering;
+	};
+
 
 	return {
 		init				: init,
-		renderPresentation	: renderPresentation
+		renderPresentation	: renderPresentation,
+		isRendering			: isRendering
 	};
 
 }) (VISH, jQuery);

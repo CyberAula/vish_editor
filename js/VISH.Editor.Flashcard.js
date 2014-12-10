@@ -45,9 +45,11 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 	var unloadSlideset = function(fc){
 		//Unload flashcard
 
-		//Save POI info
-		_savePoisToDom(fc);
-
+		if(!V.Editor.Renderer.isRendering()){
+			//Save POI info
+			_savePoisToDom(fc);
+		}
+		
 		//Hide POIs
 		$("#subslides_list").find("div.draggable_sc_div[ddend='background']").hide();
 	};
