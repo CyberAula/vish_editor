@@ -169,7 +169,7 @@ VISH.Object = (function(V,$,undefined){
 			return V.Constant.MEDIA.JSON;
 		}
 
-		if(extension=="doc"){
+		if((extension=="doc")||(extension=="docx")){
 			return V.Constant.MEDIA.DOC;
 		}
 
