@@ -11,6 +11,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		V.Editor.Object.Live.init();
 		V.Editor.Object.Web.init();
 		V.Editor.Object.GoogleDOC.init();
+		V.Editor.Object.PDF.init();
 		V.Editor.Object.Snapshot.init();
 		V.Editor.Object.Scorm.init();
 		V.Editor.Object.Webapp.init();
@@ -311,6 +312,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return "<embed class='objectPreview' src='" + object + "'></embed>";
 						break;
 					case V.Constant.MEDIA.PDF:
+						return V.Editor.Object.PDF.generatePreviewWrapper(object);
+						break;
 					case V.Constant.MEDIA.DOC:
 					case V.Constant.MEDIA.PPT:
 						return V.Editor.Object.GoogleDOC.generatePreviewWrapper(object);
@@ -429,6 +432,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
 					case V.Constant.MEDIA.PDF:
+						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapper(object));
+						break;
 					case V.Constant.MEDIA.DOC:
 					case V.Constant.MEDIA.PPT:
 						V.Editor.Object.drawObject(V.Editor.Object.GoogleDOC.generateWrapper(object));
