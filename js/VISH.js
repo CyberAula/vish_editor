@@ -7,6 +7,6 @@
  */
 var VISH = VISH || {};
 
-VISH.VERSION = '0.8.9';
+VISH.VERSION = '0.9.0';
 VISH.AUTHORS = 'GING';
 VISH.URL = "http://github.com/ging/vish_editor";

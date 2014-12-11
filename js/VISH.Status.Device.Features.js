@@ -34,8 +34,12 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		//Iframe sandbox
 		features.sandbox = "sandbox" in document.createElement("iframe");
 
-		//PDF native reader (TODO)
+		//PDF native reader
 		features.pdfReader = false;
+		if((typeof navigator.mimeTypes == "object")&&("application/pdf" in navigator.mimeTypes)){
+			features.pdfReader = true;
+		}
+		
 
 		return features;
 	};
