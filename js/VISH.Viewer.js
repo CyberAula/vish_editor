@@ -50,7 +50,8 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferStatusLoaded = function(options,presentation){
-		V.EventsNotifier.init();	
+		V.EventsNotifier.init();
+		V.Object.init();
 		V.Slideset.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();

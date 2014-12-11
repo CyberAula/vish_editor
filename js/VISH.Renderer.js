@@ -152,6 +152,9 @@ VISH.Renderer = (function(V,$,undefined){
 			case V.Constant.MEDIA.WEB_APP:
 				return V.Object.Webapp.renderWebappFromJSON(element,{extraClasses: "" + template +"_" + element['areaid']});
 				break;
+			case V.Constant.MEDIA.PDF:
+				return V.Object.PDF.renderPDFFromJSON(element,{extraClasses: "" + template +"_" + element['areaid'], source: objectInfo.source});
+				break;
 			default:
 				var style = (element['style'])? element['style'] : "";
 				var body = element['body'];

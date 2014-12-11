@@ -394,12 +394,12 @@ VISH.Editor.Object = (function(V,$,undefined){
 	* param options.style: optional param with the style, used in editing presentation
 	*/
 	var drawObject = function(object,options){
-
 		if(!V.Police.validateObject(object)[0]){
 			return;
 		}
 
 		//Defaults
+		options = (typeof options == "undefined" ? {} : options);
 		var objectInfo = V.Object.getObjectInfo(object);
 		var current_area = V.Editor.getCurrentArea();
 		var object_style = "";
@@ -432,15 +432,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Object.Flash.drawFlashObjectWithSource(object, object_style);
 						break;
 					case V.Constant.MEDIA.PDF:
-						V.Editor.Object.drawObject(V.Editor.Object.PDF.generateWrapper(object));
-						break;
+						options.wrapperGenerated = true;
+						return drawObject(V.Editor.Object.PDF.generateWrapper(objectInfo.source),options);
 					case V.Constant.MEDIA.DOC:
 					case V.Constant.MEDIA.PPT:
-						V.Editor.Object.drawObject(V.Editor.Object.GoogleDOC.generateWrapper(object));
-						break;
+						return drawObject(V.Editor.Object.GoogleDOC.generateWrapper(object),options);
 					case V.Constant.MEDIA.YOUTUBE_VIDEO:
-						V.Editor.Object.drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object));
-						break;
+						return drawObject(V.Editor.Video.Youtube.generateWrapperForYoutubeVideoUrl(object),options);
 					case V.Constant.MEDIA.HTML5_VIDEO:
 						V.Editor.Video.HTML5.drawVideoWithUrl(object);
 						break;
@@ -448,14 +446,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 						V.Editor.Audio.HTML5.drawAudioWithUrl(object);
 						break;
 					case V.Constant.MEDIA.WEB:
-						V.Editor.Object.drawObject(V.Editor.Object.Web.generateWrapperForWeb(object));
-						break;
+						return drawObject(V.Editor.Object.Web.generateWrapperForWeb(object),options);
 					case V.Constant.MEDIA.SCORM_PACKAGE:
-						V.Editor.Object.drawObject(V.Editor.Object.Scorm.generateWrapperForScorm(object));
-						break;
+						return drawObject(V.Editor.Object.Scorm.generateWrapperForScorm(object),options);
 					case V.Constant.MEDIA.WEB_APP:
-						V.Editor.Object.drawObject(V.Editor.Object.Webapp.generateWrapper(object));
-						break;
+						return drawObject(V.Editor.Object.Webapp.generateWrapper(object),options);
 					default:
 						V.Debugging.log("Unrecognized object source type: " + objectInfo.type);
 						break;
@@ -463,14 +458,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 				break;
 
 			case V.Constant.WRAPPER.EMBED:
-				drawObjectWithWrapper(object, current_area, object_style);
-				break;
-
 			case V.Constant.WRAPPER.OBJECT:
-				drawObjectWithWrapper(object, current_area, object_style);
-				break;
-
 			case V.Constant.WRAPPER.IFRAME:
+				if(([V.Constant.MEDIA.PDF].indexOf(objectInfo.type)!=-1)&&(!options.wrapperGenerated)){
+					return drawObject(objectInfo.source,options);
+				}
 				drawObjectWithWrapper(object, current_area, object_style, zoomInStyle);
 				break;
 

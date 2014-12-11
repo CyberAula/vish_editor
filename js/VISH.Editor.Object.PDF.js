@@ -1,31 +1,23 @@
 VISH.Editor.Object.PDF = (function(V,$,undefined){
 
-	var _pdfSupport = false;
-
 	var init = function(){
-		_pdfSupport = V.Status.getDevice().features.pdfReader;
 	};
 
 	var generateWrapper = function(url){
-		if(_pdfSupport){
-			return "<iframe src='" + url + "'></iframe>";
-		} else {
-			return V.Editor.Object.GoogleDOC.generateWrapper(url);
-		}
+		return V.Object.PDF.generateWrapper(url);
 	};
 	
 	var generatePreviewWrapper = function(url){
-		if(_pdfSupport){
-			return "<iframe class='objectPreview' src='" + url + "'></iframe>";
-		} else {
-			return V.Editor.Object.GoogleDOC.generatePreviewWrapper(url);
-		}
+		var objectWrapper = V.Object.PDF.generateWrapper(url);
+		previewWrapper = $(objectWrapper);
+		$(previewWrapper).addClass("objectPreview");
+		return V.Utils.getOuterHTML(previewWrapper);
 	};
 		
 	return {
 		init					: init,
-		generatePreviewWrapper 	: generatePreviewWrapper,
-		generateWrapper 		: generateWrapper
+		generateWrapper 		: generateWrapper,
+		generatePreviewWrapper 	: generatePreviewWrapper
 	};
 
 }) (VISH, jQuery);

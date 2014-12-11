@@ -4,11 +4,14 @@ VISH.Editor.Object.GoogleDOC = (function(V,$,undefined){
 	};
 
 	var generateWrapper = function(url){
-		return "<iframe src='http://docs.google.com/viewer?url=" + url + "&embedded=true'></iframe>";
+		return V.Object.GoogleDOC.generateWrapper(url);
 	};
 	
 	var generatePreviewWrapper = function(url){
-		return "<iframe class='objectPreview' src='http://docs.google.com/viewer?url=" + url + "&embedded=true'></iframe>";
+		var objectWrapper = V.Object.GoogleDOC.generateWrapper(url);
+		previewWrapper = $(objectWrapper);
+		$(previewWrapper).addClass("objectPreview");
+		return V.Utils.getOuterHTML(previewWrapper);
 	};
 		
 	return {

@@ -86,6 +86,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
+		V.Object.init();
+		V.Editor.IMSQTI.init();
 		V.Editor.Dummies.init();
 		V.Editor.API.init();
 		V.EventsNotifier.init();
@@ -159,7 +161,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
-		//V.Editor.ISMQTI.init();
 		V.Editor.Preview.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();

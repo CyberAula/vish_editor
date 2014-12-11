@@ -1,6 +1,8 @@
 VISH.Object = (function(V,$,undefined){
 			
 	var init = function(){
+		V.Object.PDF.init();
+		V.Object.GoogleDOC.init();
 		V.Object.Webapp.init();
 	};
 
@@ -12,7 +14,7 @@ VISH.Object = (function(V,$,undefined){
 	 * Wrapper can be: "embed","object, "iframe", "video" or null if the object is a source url without wrapper.
 	 * Type is the source type and can be: "swf" , "youtube" , etc.
 	 */
-	function objectInfo(wrapper,source,sourceType) {
+	function objectInfo(wrapper,source,sourceType){
 		this.wrapper=wrapper;
 		this.source = source;
 		this.type=sourceType;
@@ -74,30 +76,42 @@ VISH.Object = (function(V,$,undefined){
 	};
 	
 	var _getSourceFromObject = function(object,wrapper){
+		var source = null;
+
 		switch (wrapper){
 			case null:
-				return object;
+				source = object;
+				break;
 			case V.Constant.WRAPPER.EMBED:
-				return $(object).attr("src");
+				source = $(object).attr("src");
+				break;
 			case V.Constant.WRAPPER.OBJECT:
 				if (typeof $(object).attr("src") != 'undefined'){
-				  return $(object).attr("src");
+					source = $(object).attr("src");
+				} else if (typeof $(object).attr("data") != 'undefined'){
+					source = $(object).attr("data");
 				}
-				if (typeof $(object).attr("data") != 'undefined'){
-				  return $(object).attr("data");
-				}
-				return "source not founded";
+				break;
 			case V.Constant.WRAPPER.IFRAME:
-				return $(object).attr("src");
+				source = $(object).attr("src");
+				break;
 			case V.Constant.WRAPPER.VIDEO:
 				return V.Video.HTML5.getSources(object);
 			case V.Constant.WRAPPER.AUDIO:
 				return V.Audio.HTML5.getSources(object);
 			default:
 				V.Debugging.log("Unrecognized object wrapper: " + wrapper);
-				return null;
-			break;
+				break;
 		}
+
+		if((wrapper==null)||(wrapper==V.Constant.WRAPPER.IFRAME)){
+			var googledoc_pattern=/(^http:\/\/docs.google.com\/viewer\?url=)/g
+			if(source.match(googledoc_pattern)!=null){
+				source = source.replace("http://docs.google.com/viewer?url=","").replace("&embedded=true","");
+			}
+		}
+		
+		return source;
 	};
 	
 	
@@ -113,12 +127,13 @@ VISH.Object = (function(V,$,undefined){
 		var http_urls_pattern=/(http(s)?:\/\/)([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var www_urls_pattern = /(www[.])([aA-zZ0-9%=_&+?])+([./-][aA-zZ0-9%=_&+?]+)*[/]?/g
 		var youtube_video_pattern=/(http(s)?:\/\/)?(((youtu.be\/)([aA-zZ0-9-]+))|((www.youtube.com\/((watch\?v=)|(embed\/)|(v\/)))([aA-z0-9-Z&=.])+))/g
+		
 		var html5VideoFormats = ["mp4","webm","ogg"];
 		var imageFormats = ["jpg","jpeg","png","gif","bmp","svg"];
 		var audioFormats = ["mp3", "wav","ogg"];
 
 		if(typeof source != "string"){
-			return null
+			return null;
 		}
 
 		if(source.match(youtube_video_pattern)!=null){
