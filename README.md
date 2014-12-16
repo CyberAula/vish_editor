@@ -26,6 +26,7 @@ Edit /etc/apache2/sites-enabled/default
 	<Directory />
 		Options FollowSymLinks
 		AllowOverride None
+		Require all granted
 	</Directory>
 	<Directory ~/vish_editor//>
 		Options Indexes FollowSymLinks MultiViews
