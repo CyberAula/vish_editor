@@ -380,7 +380,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 			$(wrapperPreview).attr("scrolling","auto");
 		}
 		return wrapperPreview;
-	}
+	};
 	
 	
 	
@@ -416,7 +416,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 				zoomInStyle = options.zoomInStyle;
 			}
 			if(options.forceType){
-				objectInfo.wrapper = null;
 				objectInfo.type = options.forceType;
 			}
 		}
@@ -481,7 +480,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		//Finally load the tools in the toolbar
 		V.Editor.Tools.loadToolsForZone(current_area);
-	}
+	};
 	
 	/**
 	 * param style: optional param with the style, used in editing presentation
