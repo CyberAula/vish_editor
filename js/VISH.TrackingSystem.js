@@ -16,6 +16,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _chronology;
 	//Stores specific information about the RecommenderSystem (RS)
 	var _rs;
+	//Related Tracking System Entry (if any)
+	var _rTrse;
 
 	//Tracking API Key
 	var _app_id;
@@ -29,6 +31,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
 		_apiUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
+
+		_rTrse = V.Utils.getOptions().TrackingSystemRelatedEntryId;
 
 		if((typeof _apiKey == "undefined")||(typeof _apiUrl == "undefined")||(V.Status.getIsPreview())){
 			_enabled = false;
@@ -200,6 +204,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		if(V.User.isLogged() && typeof V.User.getToken() != "undefined"){
 			data["authenticity_token"] = V.User.getToken();
+		}
+
+		if(typeof _rTrse != "undefined"){
+			data["tracking_system_entry_id"] = _rTrse;
 		}
 
 		$.ajax({

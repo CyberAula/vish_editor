@@ -73,6 +73,7 @@ var getOptions = function(){
 		// Tracking System
 		// configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
 		// configuration["TrackingSystemAPIURL"] = "http://localhost:3000/tracking_system_entries";
+		// options["TrackingSystemRelatedEntryId"] = "1"
 
 		// Evaluation System
 		//LOEP configuration (For evaluations)
