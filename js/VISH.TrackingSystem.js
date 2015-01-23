@@ -12,6 +12,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _device;
 	//Any additional data (e.g. relevant session ViSH Viewer options)
 	var _environment;
+	//User agent (used to filter bots)
+	var _user_agent;
 	//Stores the cronology
 	var _chronology;
 	//Stores specific information about the RecommenderSystem (RS)
@@ -52,6 +54,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			_user = new User();
 		}
 		_device = V.Status.getDevice();
+		_user_agent = _device.userAgent;
 		_rs = new RS();
 		_environment = {};
 
@@ -222,6 +225,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		return {
 			"app_id": _app_id,
 			"app_key": _apiKey,
+			"user_agent": _user_agent,
 			"data": _composeData()
 		}
 	};
