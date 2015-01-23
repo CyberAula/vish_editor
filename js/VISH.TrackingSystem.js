@@ -209,6 +209,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			data["authenticity_token"] = V.User.getToken();
 		}
 
+		if((typeof _user != "undefined")&&(typeof _user.id != "undefined")){
+			data["actor_id"] = _user.id;
+		}
+
 		if(typeof _rTrse != "undefined"){
 			data["tracking_system_entry_id"] = _rTrse;
 		}
