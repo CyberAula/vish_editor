@@ -14,6 +14,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _environment;
 	//User agent (used to filter bots)
 	var _user_agent;
+	//Referrer
+	var _referrer;
 	//Stores the cronology
 	var _chronology;
 	//Stores specific information about the RecommenderSystem (RS)
@@ -66,6 +68,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			_environment.vish = V.Status.getIsInVishSite();
 			_environment.iframe = V.Status.getIsInIframe();
 			_environment.developping = sessionOptions.developping;
+			_referrer = sessionOptions.referrer;
 		}
 		
 		_chronology = [];
@@ -211,6 +214,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		if((typeof _user != "undefined")&&(typeof _user.id != "undefined")){
 			data["actor_id"] = _user.id;
+		}
+
+		if(typeof _referrer != "undefined"){
+			data["referrer"] = _referrer;
 		}
 
 		if(typeof _rTrse != "undefined"){
