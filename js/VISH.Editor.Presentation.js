@@ -132,7 +132,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			slide.template = defaultTemplate;
 		}
 
-		if(element.type = V.Constant.QUIZ){
+		if(element.type == V.Constant.QUIZ){
 			slide.containsQuiz =true;
 		}
 
