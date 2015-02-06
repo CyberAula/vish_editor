@@ -91,10 +91,12 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 		//Add sortable
 		$( "#" + thumbnailsDivId).sortable({
 			items: 'div.wrapper_barbutton:has(img[action="goToSlide"])',
+			delay: 400,
 			change: function(event, ui) {
 				//Do nothing
 			},
 			start: function(event, ui) { 
+				console.log("start sorting");
 				//Do nothing
 			},
 			stop: function(event, ui) {
@@ -133,6 +135,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	}
 
 	var _onClickSlideElement = function(event){
+		console.log("click _onClickSlideElement");
 		switch($(event.target).attr("action")){
 			case "goToSlide":
 				V.Slides.goToSlide($(event.target).attr("slideNumber"));

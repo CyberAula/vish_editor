@@ -125,6 +125,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	var _touchDuration = 0;
 
 	var _handleTouchStart = function(event){
+		console.log("touchstart");
 		_resetTouchVars();
 		var touches = _getTouches(event);
 		_touchesLength = touches.length;
@@ -165,6 +166,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _handleTouchEnd = function(event){
+		console.log("touchend");
 		if(_checkClickTouches(event)){
 			return;
 		}
@@ -217,11 +219,13 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _simpleClick = function(event){
+		console.log("_simpleClick");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onSimpleClick,{event: event},true);
 		return true;
 	};
 
 	var _longClick = function(event){
+		console.log("_longClick");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onLongClick,{event: event},true);
 		return true;
 	};
@@ -260,6 +264,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _checkOtherTouches = function(event){
+		console.log("_checkOtherTouches");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onUnknownTouchMovement,{event: event, touchParams: _getTouchParams()},true);
 		return false;
 	};
