@@ -10,7 +10,7 @@ A server side implementation has been developed in **Ruby on Rails**. The source
 # Features and components
   
 * Creation of interactive web presentations.  
-* Multi-device support (desktops, laptopts, tablets, mobile phones, ...).  
+* Multi-device support (desktops, laptops, tablets, mobile phones, ...).  
 * Available resources:  
   * Text  
   * Pictures  
