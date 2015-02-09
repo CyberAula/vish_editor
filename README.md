@@ -76,7 +76,7 @@ Visit our [wiki](http://github.com/ging/vish_editor/wiki) to see all the availab
 
 # Copyright
 
-Copyright 2011-2015 Universidad Politécnica de Madrid
+Copyright 2015 Universidad Politécnica de Madrid
 
 ViSH Editor is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
