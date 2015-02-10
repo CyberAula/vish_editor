@@ -176,6 +176,13 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * Function to call ViSH and request tags
 	 */
 	var requestTags = function(successCallback, failCallback){
+		if(typeof V.RootPath != "string"){
+			if(typeof failCallback == "function"){
+				failCallback();
+			}
+			return;
+		}
+
 		$.ajax({
 			type: "GET",
 			url: V.RootPath + "/tags.json?mode=popular&limit=100",
