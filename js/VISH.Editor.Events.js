@@ -1,26 +1,24 @@
+/*
+ * Events for ViSH Editor (the events of the Viewer are handled in VISH.Events.js)
+ */
 VISH.Editor.Events = (function(V,$,undefined){
 	
-	var bindedEventListeners = false;
-	//Confirm on exit web app
-	var confirmOnExit;
-	//Ctrl key
-	var ctrlDown = false;
-
-	//Dependencies
-	var _eMobile;
+	var _bindedEditorEventListeners = false;
+	var _confirmOnExit;
+	var _isCtrlKeyPressed = false;
 	var _mobile;
 
 	var init = function(){
 		_mobile = (!V.Status.getDevice().desktop);
 		if(_mobile){
-			_eMobile = V.Editor.Events.Mobile;
-			_eMobile.init();
+			V.Editor.Events.Mobile.init();
 		}
 		bindEditorEventListeners();
 	};
 
 	var bindEditorEventListeners = function(){
-		if((!bindedEventListeners)&&(V.Editing)){
+		if(!_bindedEditorEventListeners){
+
 			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
 			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
@@ -243,7 +241,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			
 			//onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
-			confirmOnExit = true;
+			_confirmOnExit = true;
 
 			//Allow keyboard events with the first click
 			$(window.document).on('click', function(ev){
@@ -257,10 +255,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 			});
 
 			if(_mobile){
-				_eMobile.bindEditorMobileEventListeners();
+				V.Editor.Events.Mobile.bindEditorMobileEventListeners();
 			}
 
-			bindedEventListeners = true;
+			_bindedEditorEventListeners = true;
 		}
 	};
 
@@ -485,7 +483,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			break;
 		case 40: //down arrow	    
 			if(V.Editor.Slides.isSlideFocused()){
-				if(!ctrlDown){
+				if(!_isCtrlKeyPressed){
 					V.Slides.forwardOneSlide();
 				} else {
 					V.Slides.moveSlides(10);
@@ -503,7 +501,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			break;
 		case 38: //up arrow	
 			if(V.Editor.Slides.isSlideFocused()){
-				if(!ctrlDown){
+				if(!_isCtrlKeyPressed){
 					V.Slides.backwardOneSlide();
 				} else {
 					V.Slides.moveSlides(-10);
@@ -512,11 +510,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 			break;
 		case 17: //ctrl key
-			ctrlDown = true;
+			_isCtrlKeyPressed = true;
 			break;	
 		case 67: //cKey
 			if(V.Editor.Slides.isSlideFocused()){
-				if(ctrlDown){
+				if(_isCtrlKeyPressed){
 					if(V.Slides.getCurrentSlideNumber()){
 						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
 					}
@@ -525,7 +523,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			break;	
 		case 86: //vKey
 		    if(V.Editor.Slides.isSlideFocused()){
-			    if(ctrlDown){
+			    if(_isCtrlKeyPressed){
 			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
@@ -541,7 +539,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var handleBodyKeyUp = function(event) {
 	  switch (event.keyCode) {
 	    case 17: //ctrl key
-	    	ctrlDown = false;
+	    	_isCtrlKeyPressed = false;
 	    	break;	     
 	  }
 	};
@@ -549,7 +547,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var _exitConfirmation = function(){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.exit);
 		
-		if(confirmOnExit){
+		if(_confirmOnExit){
 			if(V.Editor.hasPresentationChanged()){
 				if((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(true)){
 					var confirmationMsg = V.I18n.getTrans("i.exitConfirmation");
@@ -562,7 +560,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 
 	var allowExitWithoutConfirmation = function(){
-		confirmOnExit = false;
+		_confirmOnExit = false;
 	};
 
 
@@ -571,7 +569,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	////////////////
 
 	var unbindEditorEventListeners = function(){
-		if(bindedEventListeners){
+		if(_bindedEditorEventListeners){
 			$(document).unbind('keydown', handleBodyKeyDown);
 			$(document).unbind('keyup', handleBodyKeyUp);
 
@@ -580,10 +578,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 			});
 
 			if (_mobile){
-				_eMobile.unbindEditorMobileEventListeners();
+				V.Editor.Events.Mobile.unbindEditorMobileEventListeners();
 			}
 
-			bindedEventListeners = false;
+			_bindedEditorEventListeners = false;
 		}
 	};
 	

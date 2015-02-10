@@ -45,7 +45,7 @@ VISH.EVideo = (function(V,$,undefined){
 		if(V.Status.getDevice().desktop){
 			$(document).on("click", '.evideoPlayButtonWrapper', onClickToggleVideo);
 		} else {
-			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
+			V.EventsNotifier.registerCallback(V.Constant.Event.Touchable.onSimpleClick, function(params){
 				var target = params.event.target;
 				if($(target).hasClass("evideoPlayButtonWrapper") || $(target).hasClass("evideoPlayButton")){
 					onClickToggleVideo(params.event);

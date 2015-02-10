@@ -29,7 +29,7 @@ VISH.Flashcard = (function(V,$,undefined){
 		var isIphoneAndSafari = ((device.iPhone)&&(device.browser.name===V.Constant.SAFARI));
 		if(isIphoneAndSafari){
 			//Fix for Iphone With Safari
-			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
+			V.EventsNotifier.registerCallback(V.Constant.Event.Touchable.onSimpleClick, function(params){
 				var event = params.event;
 				var target = event.target;
 				if($(target).hasClass("fc_poi")){
