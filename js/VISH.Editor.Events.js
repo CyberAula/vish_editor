@@ -6,8 +6,17 @@ VISH.Editor.Events = (function(V,$,undefined){
 	//Ctrl key
 	var ctrlDown = false;
 
+	//Dependencies
+	var _eMobile;
+
+	var _mobile;
 
 	var init = function(){
+		_mobile = (!V.Status.getDevice().desktop);
+		if(_mobile){
+			_eMobile = V.Editor.Events.Mobile;
+			_eMobile.init();
+		}
 		bindEditorEventListeners();
 	};
 
@@ -219,6 +228,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 				window.focus();
 			});
+
+			if(_mobile){
+				_eMobile.bindEditorMobileEventListeners();
+			}
 
 			bindedEventListeners = true;
 		}
@@ -538,6 +551,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(window.document).off('click', function(){
 				window.focus();
 			});
+
+			if (_mobile){
+				_eMobile.unbindEditorMobileEventListeners();
+			}
 
 			bindedEventListeners = false;
 		}

@@ -1,14 +1,8 @@
-/*
- * Events for mobile devices (mobile phones and tablets)
- * Touch, orientation events and fixes
- */
-VISH.Events.Mobile = (function(V,$,undefined){
+VISH.Editor.Events.Mobile = (function(V,$,undefined){
 
 	//Touch params
-	var PM_TOUCH_SENSITIVITY = 20;
-	var PM_TOUCH_DESVIATION = 60;
+	var PM_TOUCH_SENSITIVITY = 40;
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2;
-	var PM_TOUCH_SENSITIVITY_FOR_PAGER_FALLBACK = 15;
 	var LONG_TOUCH_DURATION = 1000;
 
 	//Internal vars
@@ -17,7 +11,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	var init = function(){
 	};
 
-	var bindViewerMobileEventListeners = function(){
+	var bindEditorMobileEventListeners = function(){
 		if(_bindedEventListeners){
 			return;
 		} else {
@@ -29,12 +23,6 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		document.body.addEventListener('touchmove', _handleTouchMove, true);
 		document.body.addEventListener('touchend', _handleTouchEnd, true);
 		document.body.addEventListener('touchcancel', _handleTouchCancel, true);
-
-		//Other mobile events
-		$(window).on('orientationchange',function(){			
-			$(window).trigger('resize'); //Will call V.ViewerAdapter.updateInterface();
-		});
-
 
 		//Additional events for mobile devices: Close subslide, ...
 		var device = V.Status.getDevice();
@@ -58,34 +46,25 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		}
 
 		if(device.tablet){
-			//Enhancement for tablets
-			V.EventsNotifier.registerCallback(V.Constant.Event.onLongClick, function(params){
+			//In tablets clicks on thumbnails carousel do not work, fix it:
+			V.EventsNotifier.registerCallback(V.Constant.Event.onSimpleClick, function(params){
 				var event = params.event;
 				var target = event.target;
-				if(_checkPaginatorClick(event.target.id)){
-					event.preventDefault();
-					event.stopPropagation();
-					_applyPaginatorClick(event.target.id);
+				if($(target).parents("#slides_list").length > 0){
+					console.log("click on slides_list");
+					var slide_number = $(target).attr("slidenumber");
+					V.Slides.goToSlide(slide_number);
+				} else if($(target).parents("#subslides_list").length > 0){
+					console.log("click on subslides_list");
+					var subslide_number = $(target).attr("slidenumber");
+					V.Editor.Slideset.openSubslideWithNumber(subslide_number);
 				}
 			});
-
-			V.EventsNotifier.registerCallback(V.Constant.Event.onUnknownTouchMovement, function(params){
-				var event = params.event;
-				var id = event.target.id;
-				var touchParams = params.touchParams;
-
-				//Paginator fallback (treat minor movements as simple clicks)
-				if(_checkPaginatorClick(id)){
-					if(((touchParams.absTouchDX)+(touchParams.absTouchDY))/2<PM_TOUCH_SENSITIVITY_FOR_PAGER_FALLBACK){
-						event.preventDefault();
-						_applyPaginatorClick(id);
-					}
-				}
-			});
+			
 		};
 	};
 
-	var unbindViewerMobileEventListeners = function(){
+	var unbindEditorMobileEventListeners = function(){
 		if(!_bindedEventListeners){
 			return;
 		} else {
@@ -96,12 +75,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		document.body.removeEventListener('touchmove', _handleTouchMove, true);
 	  	document.body.removeEventListener('touchend', _handleTouchEnd, true);
 	  	document.body.removeEventListener('touchcancel', _handleTouchCancel, true);
-
-	  	$(window).off('orientationchange',function(){
-			window.onresize(); //Will call V.ViewerAdapter.updateInterface();
-		});
 	};
-
 
 	////////////////
 	// Touch Events
@@ -121,6 +95,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	var _touchDuration = 0;
 
 	var _handleTouchStart = function(event){
+		console.log("touchstart");
 		_resetTouchVars();
 		var touches = _getTouches(event);
 		_touchesLength = touches.length;
@@ -146,6 +121,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _handleTouchMove = function(event){
+		console.log("touchmove");
 		var touches = _getTouches(event);
 		if(touches.length===1){
 			_touchCX = touches[0].pageX;
@@ -161,11 +137,8 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _handleTouchEnd = function(event){
+		console.log("touchend");
 		if(_checkClickTouches(event)){
-			return;
-		}
-
-		if(_checkAdvanceSlidesTouches(event)){
 			return;
 		}
 
@@ -176,7 +149,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		_resetTouchVars();
 	};
 
-
+	
 	////////////////
 	// TOUCH HELPERS
 	///////////////
@@ -186,7 +159,22 @@ VISH.Events.Mobile = (function(V,$,undefined){
 			return false;
 		}
 
-		var click = (_touchCX==-1) && (_touchCY==-1);
+		//var click = (_touchCX==-1) && (_touchCY==-1);
+		var click;
+
+		if((_touchCX==-1) && (_touchCY==-1)){
+			click = true;
+		}else{
+			//touchmove event with final x and y
+			_touchDX = _touchCX - _touchStartX;
+			_touchDY = _touchCY - _touchStartY;
+			_absTouchDX = Math.abs(_touchDX);
+			_absTouchDY = Math.abs(_touchDY);
+			console.log("_absTouchDX: " + _absTouchDX + " and _absTouchDY: " + _absTouchDY);
+			if(_absTouchDX < PM_TOUCH_SENSITIVITY && _absTouchDX < PM_TOUCH_SENSITIVITY){
+				click = true;
+			}	
+		}
 		if(click){
 			//Get click duration
 			_touchDuration = new Date().getTime() - _touchStartTime;
@@ -200,49 +188,21 @@ VISH.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _simpleClick = function(event){
+		console.log("_simpleClick");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onSimpleClick,{event: event},true);
 		return true;
 	};
 
 	var _longClick = function(event){
+		console.log("_longClick");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onLongClick,{event: event},true);
 		return true;
 	};
 
-	var _checkAdvanceSlidesTouches = function(event){
-		if(_touchesLength!=1){
-			return false;
-		}
-
-		_touchDX = _touchCX - _touchStartX;
-		_touchDY = _touchCY - _touchStartY;
-		_absTouchDX = Math.abs(_touchDX);
-		_absTouchDY = Math.abs(_touchDY);
-
-		var move_slide = ((_absTouchDX > PM_TOUCH_SENSITIVITY)&&(_absTouchDY < PM_TOUCH_DESVIATION));
-		//Prevent no handleTouchMove touchs
-		move_slide = move_slide && (_touchCX!==-1);
-
-		if(move_slide){
-			event.preventDefault();
-
-			//Avoid move slide on zoom
-			var zoom = document.documentElement.clientWidth / window.innerWidth;
-			if (zoom > MINIMUM_ZOOM_TO_ENABLE_SCROLL){
-				return;
-			}
-
-			if(_touchDX > 0){
-				V.Slides.backwardOneSlide();
-			} else {
-				V.Slides.forwardOneSlide();
-			}
-		} 
-			
-		return move_slide;
-	};
+	
 
 	var _checkOtherTouches = function(event){
+		console.log("_checkOtherTouches");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onUnknownTouchMovement,{event: event, touchParams: _getTouchParams()},true);
 		return false;
 	};
@@ -287,8 +247,8 @@ VISH.Events.Mobile = (function(V,$,undefined){
 
 	return {
 			init 								: init,
-			bindViewerMobileEventListeners		: bindViewerMobileEventListeners,
-			unbindViewerMobileEventListeners	: unbindViewerMobileEventListeners
+			bindEditorMobileEventListeners		: bindEditorMobileEventListeners,
+			unbindEditorMobileEventListeners	: unbindEditorMobileEventListeners
 	};
 
 }) (VISH,jQuery);

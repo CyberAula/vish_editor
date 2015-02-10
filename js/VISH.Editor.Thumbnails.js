@@ -89,9 +89,8 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	
 	var _afterCreateSlidesScrollbar = function(){
 		//Add sortable
-		$( "#" + thumbnailsDivId).sortable({
+		$("#" + thumbnailsDivId).sortable({
 			items: 'div.wrapper_barbutton:has(img[action="goToSlide"])',
-			delay: 400,
 			change: function(event, ui) {
 				//Do nothing
 			},
@@ -128,6 +127,12 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		});
 
+		var _mobile = (!V.Status.getDevice().desktop);
+		if(_mobile){
+			console.log("Mobile detected. DELAY 500 added to sortable");
+			$("#" + thumbnailsDivId).sortable( "option", "delay", 500 );
+		}
+
 		if(typeof redrawThumbnailsCallback == "function"){
 			redrawThumbnailsCallback();
 			redrawThumbnailsCallback = undefined;
@@ -135,7 +140,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	}
 
 	var _onClickSlideElement = function(event){
-		console.log("click _onClickSlideElement");
 		switch($(event.target).attr("action")){
 			case "goToSlide":
 				V.Slides.goToSlide($(event.target).attr("slideNumber"));
