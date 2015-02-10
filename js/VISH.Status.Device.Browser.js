@@ -5,43 +5,43 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 
 	var fillBrowser = function(){
 		var browser = {};
-		var version;
-		var android;
+		var _version;
+		var _isAndroid;
 
-		version = _getInternetExplorerVersion();
-		if(version!=-1){
+		_version = _getInternetExplorerVersion();
+		if(_version!=-1){
 			browser.name = V.Constant.IE;
-			browser.version = version;
+			browser.version = _version;
 			return browser;
 		}
 
-		version = _getFirefoxVersion();
-		if(version!=-1){
+		_version = _getFirefoxVersion();
+		if(_version!=-1){
 			browser.name = V.Constant.FIREFOX;
-			browser.version = version;
+			browser.version = _version;
 			return browser;
 		}
 
-		//Google Chrome and Chrome for android
-		version = _getGoogleChromeVersion();
-		if(version!=-1){
+		//Google Chrome and Chrome for Android
+		_version = _getGoogleChromeVersion();
+		if(_version!=-1){
 			browser.name = V.Constant.CHROME;
-			browser.version = version;
+			browser.version = _version;
 			return browser;
 		}
 
 		//Look for Safari and Android Native browser
 		//They have the same user agent type
-		android = /android/i.test(navigator.userAgent);
+		_isAndroid = /android/i.test(navigator.userAgent);
 
-		version = _getSafariVersion();
-		if(version!=-1){
-			if(android){
+		_version = _getSafariVersion();
+		if(_version!=-1){
+			if(_isAndroid){
 				browser.name = V.Constant.ANDROID_BROWSER;
 			} else {
 				browser.name = V.Constant.SAFARI;
 			}
-			browser.version = version;
+			browser.version = _version;
 			return browser;
 		}
 
@@ -50,7 +50,7 @@ VISH.Status.Device.Browser = (function(V,$,undefined){
 		browser.version = -1;
 
 		//We assume native android browser by default
-		if(android){
+		if(_isAndroid){
 			browser.name = V.Constant.ANDROID_BROWSER;
 		}
 

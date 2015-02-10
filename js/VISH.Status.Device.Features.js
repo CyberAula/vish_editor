@@ -3,7 +3,7 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 	var init = function(){
 	};
 
-	var fillFeatures = function(){
+	var fillFeatures = function(browser){
 		var features = {};
 
 		//Fullscreen support
@@ -39,7 +39,12 @@ VISH.Status.Device.Features = (function(V,$,undefined){
 		if((typeof navigator.mimeTypes == "object")&&("application/pdf" in navigator.mimeTypes)){
 			features.pdfReader = true;
 		}
-		
+
+		//Support for CSS3 3D Transforms (feature detection based on browser: http://caniuse.com/#feat=transforms3d)
+		features.css3d = false;
+		if(((browser.name===V.Constant.CHROME)&&(browser.version>12))||((browser.name===V.Constant.FIREFOX)&&(browser.version>16))||((browser.name===V.Constant.SAFARI)&&(browser.version>4))){
+			features.css3d = true;
+		}
 
 		return features;
 	};

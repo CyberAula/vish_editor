@@ -34,7 +34,7 @@ VISH.Status.Device = (function(V,$,undefined){
 			//On viewport loaded
 			_fillUserAgentAfterViewport(device);
 			fillScreen(device);
-			device.features = V.Status.Device.Features.fillFeatures();
+			device.features = V.Status.Device.Features.fillFeatures(device.browser);
 
 			//Store device
 			V.Storage.add(V.Constant.Storage.Device,device,false);

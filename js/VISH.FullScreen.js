@@ -53,9 +53,9 @@ VISH.FullScreen = (function(V,$,undefined){
 
 	var canFullScreen = function(){
 		if(!V.Editing){
-			return (_canUseNativeFs())||(_fallbackFs);
+			return ((_canUseNativeFs())||(_fallbackFs));
 		} else {
-			return (_canUseNativeFs());
+			return ((_canUseNativeFs())&&(V.Status.getDevice().features.css3d));
 		}
 	};
 
