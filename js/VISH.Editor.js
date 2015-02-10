@@ -86,6 +86,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
+		V.Editor.ViewerAdapter.init();
 		V.Object.init();
 		V.Editor.IMSQTI.init();
 		V.Editor.Dummies.init();

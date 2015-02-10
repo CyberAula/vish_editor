@@ -853,6 +853,8 @@ button.downimport {
 
 section.slides_editor {
 	overflow: hidden;
+	width: 1200px;
+	height: 750px;
 }
 
 section.slides_editor > article:not(.current) {
@@ -3129,8 +3131,11 @@ div.disableSettingsField {
 	cursor: pointer;
 }
 
-#request_fullscreen_button{
-	position: absolute;
-	right: 0px;
-	bottom: 0px;
+
+/* Fullscreen */
+body.ViSHEditorBody #page-fullscreen {
+	height: 40px;
+	bottom: -5px;
+	right: -2px;
+	z-index: 1120;
 }

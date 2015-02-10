@@ -31,7 +31,7 @@ VISH.Events.Mobile = (function(V,$,undefined){
 		document.body.addEventListener('touchcancel', _handleTouchCancel, true);
 
 		//Other mobile events
-		$(window).on('orientationchange',function(){			
+		$(window).on('orientationchange',function(){
 			$(window).trigger('resize'); //Will call V.ViewerAdapter.updateInterface();
 		});
 

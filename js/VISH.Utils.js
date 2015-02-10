@@ -931,6 +931,16 @@ VISH.Utils = (function(V,undefined){
 		return bp;
 	};
 
+	var addScale3DToElement = function(elem,scale){
+		$(elem).css("transform-origin","0 0");
+		$(elem).css("-ms-transform-origin","0 0");
+		$(elem).css("-webkit-transform-origin","0 0");
+		
+		$(elem).css("transform","scale3d("+scale+","+scale+",1)");
+		$(elem).css("-ms-transform","scale3d("+scale+","+scale+",1)");
+		$(elem).css("-webkit-transform","scale3d("+scale+","+scale+",1)");
+	};
+	
 
 	/*
 	 * Helper to show validation dialogs
@@ -1448,6 +1458,7 @@ VISH.Utils = (function(V,undefined){
 		removeParamFromUrl		: removeParamFromUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
+		addScale3DToElement		: addScale3DToElement,
 		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog,
 		isObseleteVersion		: isObseleteVersion,

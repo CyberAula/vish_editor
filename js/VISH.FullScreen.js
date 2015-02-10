@@ -52,7 +52,11 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var canFullScreen = function(){
-		return (_canUseNativeFs())||(_fallbackFs);
+		if(!V.Editing){
+			return (_canUseNativeFs())||(_fallbackFs);
+		} else {
+			return (_canUseNativeFs());
+		}
 	};
 
 	var _canUseNativeFs = function(){
@@ -76,10 +80,14 @@ VISH.FullScreen = (function(V,$,undefined){
 				setTimeout(function(){
 					_pageIsFullScreen = !_pageIsFullScreen;
 					_updateFsButtons();
-					V.ViewerAdapter.updateInterface();
+					if(!V.Editing){
+						V.ViewerAdapter.updateInterface();
+					} else {
+						V.Editor.ViewerAdapter.updateInterface();
+					}
 				}, 400);
 			});
-		} else if(_fallbackFs) {
+		} else if((_fallbackFs)&&(!V.Editing)) {
 			//Use FullScreen fallback
 			if((_pageIsFullScreen)&&(_exitFsButton)){
 				$(document).on('click', '#page-fullscreen', function(){
@@ -203,7 +211,6 @@ VISH.FullScreen = (function(V,$,undefined){
 		init						: init,
 		isFullScreenSupported		: isFullScreenSupported,
 		canFullScreen 				: canFullScreen,
-		_launchFullscreenForElement : _launchFullscreenForElement,
 		enableFullScreen			: enableFullScreen,
 		isFullScreen 				: isFullScreen,
 		exitFromNativeFullScreen	: exitFromNativeFullScreen

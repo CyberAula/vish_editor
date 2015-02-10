@@ -8,7 +8,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	//Dependencies
 	var _eMobile;
-
 	var _mobile;
 
 	var init = function(){
@@ -91,6 +90,33 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}).blur(function(){
 				V.Status.setWindowFocus(false);
 			});
+
+			//Load onresize event
+			//Prevent multiple consecutively calls
+			var multipleOnResize = undefined;
+			window.onresize = function(){
+				if(typeof multipleOnResize == "undefined"){
+					multipleOnResize = false;
+					setTimeout(function(){
+						if(!multipleOnResize){
+							multipleOnResize = undefined;
+
+							//After Resize actions
+							V.Status.refreshDeviceAfterResize();
+
+							var currentDevice = V.Status.getDevice();
+							V.EventsNotifier.notifyEvent(V.Constant.Event.onViewportResize,{screen: currentDevice.screen, viewport: currentDevice.viewport});
+							
+							V.Editor.ViewerAdapter.updateInterface();
+						} else {
+							multipleOnResize = undefined;
+							window.onresize();
+						}
+					},600);
+				} else {
+					multipleOnResize = true;
+				}
+			};
 
 			//Tutorial events
 			_addTutorialEvents();
@@ -214,6 +240,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on("click", "#quizSettingsDone", V.Editor.Quiz.onQuizSettingsDone);
 			$(document).on("click", "#exportQuizToIMSQTI", function(){ V.Editor.Quiz.onExportTo("QTI") });
 			$(document).on("click", "#exportQuizToMoodleXML", function(){ V.Editor.Quiz.onExportTo("MoodleXML") });
+			
 			//onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
 			confirmOnExit = true;
@@ -237,7 +264,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 		}
 	};
 
-	
+
 	/**
 	* Tutorial
 	* Function to add the events to the help buttons to launch joy ride bubbles

@@ -51,11 +51,9 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 				var event = params.event;
 				var target = event.target;
 				if($(target).parents("#slides_list").length > 0){
-					console.log("click on slides_list");
 					var slide_number = $(target).attr("slidenumber");
 					V.Slides.goToSlide(slide_number);
 				} else if($(target).parents("#subslides_list").length > 0){
-					console.log("click on subslides_list");
 					var subslide_number = $(target).attr("slidenumber");
 					V.Editor.Slideset.openSubslideWithNumber(subslide_number);
 				}

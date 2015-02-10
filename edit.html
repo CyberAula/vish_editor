@@ -108,10 +108,11 @@
 	<script type="text/javascript" src="/js/VISH.SCORM.API.js"></script>
 
 	<script type="text/javascript" src="/js/VISH.Editor.js"></script>
-	<script type="text/javascript" src="/js/VISH.Editor.Slides.js"></script>	
+	<script type="text/javascript" src="/js/VISH.Editor.Slides.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Dummies.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Filter.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Renderer.js"></script>
+	<script type="text/javascript" src="/js/VISH.Editor.ViewerAdapter.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Carrousel.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Scrollbar.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Video.js"></script>
@@ -172,19 +173,15 @@
 	<script type="text/javascript" src="/js/VISH.Editor.Events.Mobile.js"></script>	
 	<script type="text/javascript" src="/js/VISH.Editor.IMSQTI.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.EPackage.js"></script>
-
 </head>
 
 <body onload="start()" style="display: none" class="loaded">
 
 	<!-- Copy HTML from here -->
-	<div id="extra_header_for_tablet_fullscreen" class="extra_header" style="display:none"/>
 
-	</div>
-	<div id="extra_header_for_chrome_desktop_fullscreen" class="extra_header" style="display:none"/>
-			
-	</div>
 	<section id="slides_panel" class="slides slides_editor layout-regular template-default">
+
+		<button id="page-fullscreen" class="fullscreen" style="display: none;"></button>
 
 		<!-- Force browser to preload some Editor icons -->
 		<img src="/images/zonethumbs/text_hover.png" style="display:none"/>
@@ -201,6 +198,7 @@
 		<img src="/images/icons/evideo_add_button_hover.png" style="display:none"/>
 		<img src="/images/icons/opcion.png" style="display:none"/>
 		<img src="/images/carrousel/carrousel_sprite.png" style="display:none"/>
+		<img src="/images/vicons/fullscreen.png" style="display:none"/>
 
 		
 		<!-- Toolbar -->
@@ -413,17 +411,6 @@
 				</div>
 				<div id="subslides_list"></div>
 			</div>
-		</div>
-
-		<div id="menubar-viewer" style="display:none">
-			<div id="viewbar" class="viewbar">
-				<button id="page-switcher-start" class="page-switcher" tabindex="2"></button>
-				<div id="slide-counter"></div>
-				<button id="page-switcher-end" class="page-switcher" tabindex="2" ></button>
-			</div>
-		</div>
-		<div>
-			<input type="button" class="btn btn-primary" id="request_fullscreen_button" data-loading-text="" value="Fullscreen">
 		</div>
 	</section>
 
@@ -2533,64 +2520,7 @@
 				getOptions();
 				VISH.Editor.init(options);
 			}
-			if (document.fullscreenEnabled || document.webkitFullscreenEnabled || document.mozFullScreenEnabled || document.msFullscreenEnabled) {
-				document.getElementById("request_fullscreen_button").addEventListener("click", function(){
-					VISH.FullScreen._launchFullscreenForElement(document, document.documentElement);
-
-				});	
-			}
 		}
-
-
-
-// Entering fullscreen mode
-$(document).on('webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange', function(e) {
-    setTimeout(scale_editor, 300);
-
-});
-
-function scale_editor(){
-    console.log("scale!!");
-	var state = document.fullScreen || document.mozFullScreen || document.webkitIsFullScreen || document.msFullscreenElement;
-    var event = state ? 'FullscreenOn' : 'FullscreenOff';
-
-    // Now do something interesting
-    console.log('Event: ' + event); 
-    if(event == 'FullscreenOn'){
-    	var fs_width = $(document).width();
-    	var fs_height = $(document).height();
-    	var w_height = $(window).height();
-    	console.log("width: " + fs_width + " and height: " + fs_height + ". Window.height(): " + w_height);
-    	var fs_factor = fs_width/fs_height;
-    	var original_width = 1200;
-    	var original_height = 750;
-    	var original_factor = original_width/original_height; //from the fixed iframe
-    	var scale = 1;
-
-    	if(fs_factor>original_factor){
-    		//fullscreen is wider -> adapt height
-    		scale = fs_height/original_height;
-    	} else {
-    		//fullscreen is higher -> adapt width
-    		scale = fs_width/original_width;
-    	}
-    	add_scale_prop_to_elem($("section.slides"),scale);    	
-
-    } else {
-    	add_scale_prop_to_elem($("section.slides"),1); 
-    }	
-};
-
-function add_scale_prop_to_elem(elem, scale_factor){
-	$(elem).css("transform-origin","0 0");
-	$(elem).css("-ms-transform-origin","0 0");
-	$(elem).css("-webkit-transform-origin","0 0");
-	
-	$(elem).css("transform","scale3d("+scale_factor+","+scale_factor+",1)");
-	$(elem).css("-ms-transform","scale3d("+scale_factor+","+scale_factor+",1)");
-	$(elem).css("-webkit-transform","scale3d("+scale_factor+","+scale_factor+",1)");
-};
-
 	</script>
 		
 </body>
