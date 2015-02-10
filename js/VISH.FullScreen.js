@@ -203,6 +203,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		init						: init,
 		isFullScreenSupported		: isFullScreenSupported,
 		canFullScreen 				: canFullScreen,
+		_launchFullscreenForElement : _launchFullscreenForElement,
 		enableFullScreen			: enableFullScreen,
 		isFullScreen 				: isFullScreen,
 		exitFromNativeFullScreen	: exitFromNativeFullScreen
