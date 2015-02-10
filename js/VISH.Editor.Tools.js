@@ -688,8 +688,29 @@ VISH.Editor.Tools = (function(V,$,undefined){
   		V.Editor.Quiz.showQuizSettings();
   	};
 
+  	/*function to show an extra header for the editor to be usable in fullscreen in tablet or in chrome desktop. 
+  	In both cases the upper part of the screen is used by the browser.*/
+  	var showExtraHeader = function(){
+  		var device = V.Status.getDevice();
+  		if(device.tablet){
+  			$("#extra_header_for_tablet_fullscreen").show();	
+  		} else if(device.browser.name===V.Constant.CHROME) {
+			$("#extra_header_for_chrome_desktop_fullscreen").show();
+  		}
+  		var header_height = $(".extra_header:visible").height();
+  		if(header_height){
+  			//one header shown, we have to move the section.slides down
+  			$("section.slides").css("top", header_height);
+  		}
+  	};
 
-	return {
+  	/*function to hide the extra header. */
+  	var hideExtraHeader = function(){
+  		$(".extra_header").hide();
+  		$("section.slides").css("top", 0);
+  	};
+
+	return {		
 		init							: init,
 		loadToolsForSlide				: loadToolsForSlide,
 		loadToolsForZone				: loadToolsForZone,
@@ -721,6 +742,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		setAllTooltipMargins			: setAllTooltipMargins,
 		changePublishButtonStatus		: changePublishButtonStatus,
 		changeSaveButtonStatus			: changeSaveButtonStatus,
+		hideExtraHeader					: hideExtraHeader,
+		showExtraHeader					: showExtraHeader,
 		quizSettings 					: quizSettings
 	};
 
