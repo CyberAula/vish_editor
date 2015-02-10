@@ -93,7 +93,6 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 	var _touchDuration = 0;
 
 	var _handleTouchStart = function(event){
-		console.log("touchstart");
 		_resetTouchVars();
 		var touches = _getTouches(event);
 		_touchesLength = touches.length;
@@ -119,7 +118,6 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _handleTouchMove = function(event){
-		console.log("touchmove");
 		var touches = _getTouches(event);
 		if(touches.length===1){
 			_touchCX = touches[0].pageX;
@@ -135,7 +133,6 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _handleTouchEnd = function(event){
-		console.log("touchend");
 		if(_checkClickTouches(event)){
 			return;
 		}
@@ -168,7 +165,6 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 			_touchDY = _touchCY - _touchStartY;
 			_absTouchDX = Math.abs(_touchDX);
 			_absTouchDY = Math.abs(_touchDY);
-			console.log("_absTouchDX: " + _absTouchDX + " and _absTouchDY: " + _absTouchDY);
 			if(_absTouchDX < PM_TOUCH_SENSITIVITY && _absTouchDX < PM_TOUCH_SENSITIVITY){
 				click = true;
 			}	
@@ -186,13 +182,11 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 	};
 
 	var _simpleClick = function(event){
-		console.log("_simpleClick");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onSimpleClick,{event: event},true);
 		return true;
 	};
 
 	var _longClick = function(event){
-		console.log("_longClick");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onLongClick,{event: event},true);
 		return true;
 	};
@@ -200,7 +194,6 @@ VISH.Editor.Events.Mobile = (function(V,$,undefined){
 	
 
 	var _checkOtherTouches = function(event){
-		console.log("_checkOtherTouches");
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onUnknownTouchMovement,{event: event, touchParams: _getTouchParams()},true);
 		return false;
 	};

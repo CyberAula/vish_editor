@@ -95,7 +95,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 				//Do nothing
 			},
 			start: function(event, ui) { 
-				console.log("start sorting");
 				//Do nothing
 			},
 			stop: function(event, ui) {
@@ -127,9 +126,7 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 			}
 		});
 
-		var _mobile = (!V.Status.getDevice().desktop);
-		if(_mobile){
-			console.log("Mobile detected. DELAY 500 added to sortable");
+		if(!V.Status.getDevice().desktop){
 			$("#" + thumbnailsDivId).sortable( "option", "delay", 500 );
 		}
 
