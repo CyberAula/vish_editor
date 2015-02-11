@@ -5,7 +5,8 @@
 VISH.Events.Touchable = (function(V,$,undefined){
 
 	//Touch params
-	var PM_TOUCH_SENSITIVITY = 20;
+	var PM_TOUCH_SENSITIVITY_FOR_CLICK = 7;
+	var PM_TOUCH_SENSITIVITY_FOR_SHIFT = 20;
 	var PM_TOUCH_DESVIATION = 60;
 	var MINIMUM_ZOOM_TO_ENABLE_SCROLL = 1.2;
 	var LONG_TOUCH_DURATION = 1000;
@@ -125,7 +126,21 @@ VISH.Events.Touchable = (function(V,$,undefined){
 			return false;
 		}
 
-		var click = (_touchCX==-1) && (_touchCY==-1);
+		var click;
+
+		if((_touchCX==-1) && (_touchCY==-1)){
+			click = true;
+		} else {
+			//Click with minor shift
+			_touchDX = _touchCX - _touchStartX;
+			_touchDY = _touchCY - _touchStartY;
+			_absTouchDX = Math.abs(_touchDX);
+			_absTouchDY = Math.abs(_touchDY);
+			if(_absTouchDX < PM_TOUCH_SENSITIVITY_FOR_CLICK && _absTouchDX < PM_TOUCH_SENSITIVITY_FOR_CLICK){
+				click = true;
+			}
+		}
+
 		if(click){
 			//Get click duration
 			_touchDuration = new Date().getTime() - _touchStartTime;
@@ -135,6 +150,7 @@ VISH.Events.Touchable = (function(V,$,undefined){
 				_longClick(event);
 			}
 		}
+
 		return click;
 	};
 
@@ -158,7 +174,7 @@ VISH.Events.Touchable = (function(V,$,undefined){
 		_absTouchDX = Math.abs(_touchDX);
 		_absTouchDY = Math.abs(_touchDY);
 
-		var significantTouch = ((_absTouchDX > PM_TOUCH_SENSITIVITY)&&(_absTouchDY < PM_TOUCH_DESVIATION));
+		var significantTouch = ((_absTouchDX > PM_TOUCH_SENSITIVITY_FOR_SHIFT)&&(_absTouchDY < PM_TOUCH_DESVIATION));
 		//Prevent no handleTouchMove touchs
 		significantTouch = significantTouch && (_touchCX!==-1);
 
