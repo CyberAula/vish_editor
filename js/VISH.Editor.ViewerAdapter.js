@@ -39,9 +39,7 @@ VISH.Editor.ViewerAdapter = (function(V,$,undefined){
 		var document_height = $(document).height();
 		var document_aspectRatio = document_width/document_height;
 
-		var original_width = 1200;
-		var original_height = 750;
-		var original_aspectRatio = original_width/original_height;
+		
 
 		
 		//Apply Scale (needed for fullscreen)
@@ -49,14 +47,6 @@ VISH.Editor.ViewerAdapter = (function(V,$,undefined){
 		var extraHeaderHeight = 0;
 
 		if(V.FullScreen.isFullScreen()){
-			if(document_aspectRatio>original_aspectRatio){
-				//Adapt height
-				scale = document_height/original_height;
-			} else {
-				//Adapt width
-				scale = document_width/original_width;
-			}
-
 			//Extra header
 			if(device.desktop){
 				if(device.browser.name===V.Constant.CHROME){
@@ -66,14 +56,24 @@ VISH.Editor.ViewerAdapter = (function(V,$,undefined){
 			} else if (device.features.touchScreen===true) {
 				//Add a header to prevent native text tools to hide VE tools on some devices
 				if(device.browser.name===V.Constant.CHROME){
-					extraHeaderHeight = 50;
+					extraHeaderHeight = 55;
 				}
 			}
+			var original_width = 1200;
+			var original_height = 750 + extraHeaderHeight;
+			var original_aspectRatio = original_width/original_height;
+
+			if(document_aspectRatio>original_aspectRatio){
+				//Adapt height
+				scale = document_height/original_height;
+			} else {
+				//Adapt width
+				scale = document_width/original_width;
+			}			
 		}
 
 		//Show/Hide Extra header
 		$(editorDOM).css("top", extraHeaderHeight);
-		$(editorDOM).css("height", (750 - extraHeaderHeight) + "px");
 		
 		V.Utils.addScale3DToElement($(editorDOM),scale);
 
