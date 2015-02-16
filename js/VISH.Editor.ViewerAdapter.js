@@ -39,9 +39,6 @@ VISH.Editor.ViewerAdapter = (function(V,$,undefined){
 		var document_height = $(document).height();
 		var document_aspectRatio = document_width/document_height;
 
-		
-
-		
 		//Apply Scale (needed for fullscreen)
 		var scale = 1;
 		var extraHeaderHeight = 0;
@@ -59,6 +56,7 @@ VISH.Editor.ViewerAdapter = (function(V,$,undefined){
 					extraHeaderHeight = 55;
 				}
 			}
+			
 			var original_width = 1200;
 			var original_height = 750 + extraHeaderHeight;
 			var original_aspectRatio = original_width/original_height;
