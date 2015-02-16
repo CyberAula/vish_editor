@@ -12,10 +12,16 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _device;
 	//Any additional data (e.g. relevant session ViSH Viewer options)
 	var _environment;
+	//User agent (used to filter bots)
+	var _user_agent;
+	//Referrer
+	var _referrer;
 	//Stores the cronology
 	var _chronology;
 	//Stores specific information about the RecommenderSystem (RS)
 	var _rs;
+	//Related Tracking System Entry (if any)
+	var _rTrse;
 
 	//Tracking API Key
 	var _app_id;
@@ -29,6 +35,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		_apiKey = V.Configuration.getConfiguration().TrackingSystemAPIKEY;
 		_apiUrl = V.Configuration.getConfiguration().TrackingSystemAPIURL;
+
+		_rTrse = V.Utils.getOptions().TrackingSystemRelatedEntryId;
 
 		if((typeof _apiKey == "undefined")||(typeof _apiUrl == "undefined")||(V.Status.getIsPreview())){
 			_enabled = false;
@@ -48,6 +56,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			_user = new User();
 		}
 		_device = V.Status.getDevice();
+		_user_agent = _device.userAgent;
 		_rs = new RS();
 		_environment = {};
 
@@ -59,6 +68,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			_environment.vish = V.Status.getIsInVishSite();
 			_environment.iframe = V.Status.getIsInIframe();
 			_environment.developping = sessionOptions.developping;
+			_referrer = sessionOptions.referrer;
 		}
 		
 		_chronology = [];
@@ -202,6 +212,18 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			data["authenticity_token"] = V.User.getToken();
 		}
 
+		if((typeof _user != "undefined")&&(typeof _user.id != "undefined")){
+			data["actor_id"] = _user.id;
+		}
+
+		if(typeof _referrer != "undefined"){
+			data["referrer"] = _referrer;
+		}
+
+		if(typeof _rTrse != "undefined"){
+			data["tracking_system_entry_id"] = _rTrse;
+		}
+
 		$.ajax({
 			type    : 'POST',
 			url     : _apiUrl,
@@ -214,6 +236,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		return {
 			"app_id": _app_id,
 			"app_key": _apiKey,
+			"user_agent": _user_agent,
 			"data": _composeData()
 		}
 	};

@@ -291,7 +291,6 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			draggable: true,
 			icon: pinImage,
 			slide_id: slide_id,
-			label : label,
 			title:"("+myLatlng.lat().toFixed(3)+","+myLatlng.lng().toFixed(3)+")"
 		});
 
