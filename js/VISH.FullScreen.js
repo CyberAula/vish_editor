@@ -60,7 +60,7 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _canUseNativeFs = function(){
-		return (V.Status.getDevice().features.fullscreen)&&(_getFsEnabled(document));
+		return (V.Status.getDevice().features.fullscreen)&&(_getFsEnabled());
 	};
 
 	var isFullScreen  = function(){
@@ -78,6 +78,10 @@ VISH.FullScreen = (function(V,$,undefined){
 			$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",function(event){
 				//Give some time...
 				setTimeout(function(){
+					if(isSomeElementInFullScreen()){
+						//Prevent VV to be resized when a element enters in fullscreen.
+						return;
+					}
 					_pageIsFullScreen = !_pageIsFullScreen;
 					_updateFsButtons();
 					if(!V.Editing){
@@ -106,18 +110,15 @@ VISH.FullScreen = (function(V,$,undefined){
 			return;
 		}
 
-		var myDoc = document;
-		var myElem = document.documentElement;
-		
-		if(!_isDocInFullScreen(myDoc)){
-			_launchFullscreenForElement(myDoc,myElem);
+		if(!_isDocumentFullScreen()){
+			_launchFullscreenForElement(document.documentElement);
 		} else {
-			_cancelFullscreen(myDoc);
+			_cancelFullscreen();
 		}
 	};
 
 	var exitFromNativeFullScreen = function(){
-		if((_canUseNativeFs())&&(_isDocInFullScreen(document))){
+		if((_canUseNativeFs())&&(_isDocumentFullScreen())){
 			_toggleFullScreen();
 		}
 	};
@@ -142,27 +143,33 @@ VISH.FullScreen = (function(V,$,undefined){
 	/*
 	 * Wrapper for HTML5 FullScreen API. Make it cross-browser
 	 */
-
-	var _isDocInFullScreen = function(myDoc){
-		if(typeof myDoc.mozFullScreen == "boolean"){
-			return myDoc.mozFullScreen;
-		} else if(typeof myDoc.webkitIsFullScreen == "boolean"){
-			return myDoc.webkitIsFullScreen;
-		} else {
-			var fsElement = _getFsElement(myDoc);
-			return ((typeof fsElement != "undefined")&&(fsElement!=null));
-		}
+	 var _isBrowserInFullScreen = function(){
+	 	var fsElement = _getFsElement();
+		return ((typeof fsElement !== "undefined")&&(fsElement !== null));
 	};
 
-	var _getFsElement = function(myDoc){
-		return myDoc.fullscreenElement || myDoc.mozFullScreenElement || myDoc.webkitFullscreenElement || myDoc.msFullscreenElement;
+	/* To test if the application is in fullscreen */
+	var _isDocumentFullScreen = function(){
+		return $(_getFsElement()).is("html");
 	};
 
-	var _getFsEnabled = function(myDoc){
-		return myDoc.fullscreenEnabled || myDoc.mozFullScreenEnabled || myDoc.webkitFullscreenEnabled || myDoc.msFullscreenEnabled;
+	var isSomeElementInFullScreen = function(){
+		return (_isBrowserInFullScreen()&&!_isDocumentFullScreen());
 	};
 
-	var _launchFullscreenForElement = function(myDoc,element){
+	var _isElementInFullScreen = function(elem){
+		return ((typeof elem !== "undefined")&&(elem !== null)&&(elem===_getFsElement()));
+	};
+
+	var _getFsElement = function(){
+		return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+	};
+
+	var _getFsEnabled = function(){
+		return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled;
+	};
+
+	var _launchFullscreenForElement = function(element){
 		if(element.requestFullscreen) {
 			element.requestFullscreen();
 		} else if(element.mozRequestFullScreen) {
@@ -170,7 +177,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		} else if(element.webkitRequestFullscreen) {
 			element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 			setTimeout(function(){
-				if (!myDoc.webkitCurrentFullScreenElement){
+				if (!document.webkitCurrentFullScreenElement){
 					// Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
 					//Fix known Safari bug
 					element.webkitRequestFullScreen();
@@ -181,19 +188,23 @@ VISH.FullScreen = (function(V,$,undefined){
 		}
 	};
 
-	var _cancelFullscreen = function(myDoc) {
-		if(myDoc.exitFullscreen) {
-			myDoc.exitFullscreen();
-		} else if(myDoc.cancelFullScreen) {
-			myDoc.cancelFullScreen();
-		} else if(myDoc.mozCancelFullScreen) {
-			myDoc.mozCancelFullScreen();
-		} else if(myDoc.webkitExitFullscreen) {
-			myDoc.webkitExitFullscreen();
-		} else if (myDoc.webkitCancelFullScreen) {
-			myDoc.webkitCancelFullScreen();
-		} else if(myDoc.msExitFullscreen) {
-			myDoc.msExitFullscreen();
+	var _cancelFullscreen = function() {
+		_cancelFullscreenForElement(document)
+	};
+
+	var _cancelFullscreenForElement = function(elem) {
+		if(elem.exitFullscreen) {
+			elem.exitFullscreen();
+		} else if(elem.cancelFullScreen) {
+			elem.cancelFullScreen();
+		} else if(elem.mozCancelFullScreen) {
+			elem.mozCancelFullScreen();
+		} else if(elem.webkitExitFullscreen) {
+			elem.webkitExitFullscreen();
+		} else if (elem.webkitCancelFullScreen) {
+			elem.webkitCancelFullScreen();
+		} else if(elem.msExitFullscreen) {
+			elem.msExitFullscreen();
 		}
 	};
 
@@ -213,6 +224,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		canFullScreen 				: canFullScreen,
 		enableFullScreen			: enableFullScreen,
 		isFullScreen 				: isFullScreen,
+		isSomeElementInFullScreen	: isSomeElementInFullScreen,
 		exitFromNativeFullScreen	: exitFromNativeFullScreen
 	};
     

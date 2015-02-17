@@ -99,6 +99,11 @@ VISH.Events = (function(V,$,undefined){
 					if(!multipleOnResize){
 						multipleOnResize = undefined;
 
+						if(V.FullScreen.isSomeElementInFullScreen()){
+							//Prevent VV to be resized when a element enters in fullscreen.
+							return;
+						}
+
 						//After Resize actions
 						V.Status.refreshDeviceAfterResize();
 
