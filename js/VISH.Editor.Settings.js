@@ -280,19 +280,23 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
 
 		var tagList = $("#tagBoxIntro .tagList");
-		var draftPresentation = V.Editor.getDraftPresentation();
 
 		if ($(tagList).children().length == 0){
 			var options = V.Utils.getOptions();
-			if((options)&&(typeof options["default_tag"] == "string")){
-				$(tagList).append("<li>" + options["default_tag"] + "</li>")
-			}			
-			if(draftPresentation && draftPresentation.tags){
-				//Insert draftPresentation tags
-				$.each(draftPresentation.tags, function(index, tag) {
+			if((options)&&(options["extra_tags"] instanceof Array)){
+				$(options["extra_tags"]).each(function(index,tag){
 					$(tagList).append("<li>" + tag + "</li>");
 				});
 			}
+
+			var draftPresentation = V.Editor.getDraftPresentation();
+			if(draftPresentation && draftPresentation.tags){
+				//Insert draftPresentation tags
+				$.each(draftPresentation.tags, function(index,tag){
+					$(tagList).append("<li>" + tag + "</li>");
+				});
+			}
+
 			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
