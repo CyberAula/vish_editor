@@ -98,19 +98,7 @@ VISH.Events = (function(V,$,undefined){
 				setTimeout(function(){
 					if(!multipleOnResize){
 						multipleOnResize = undefined;
-
-						if(V.FullScreen.isSomeElementInFullScreen()){
-							//Prevent VV to be resized when a element enters in fullscreen.
-							return;
-						}
-
-						//After Resize actions
-						V.Status.refreshDeviceAfterResize();
-
-						var currentDevice = V.Status.getDevice();
-						V.EventsNotifier.notifyEvent(V.Constant.Event.onViewportResize,{screen: currentDevice.screen, viewport: currentDevice.viewport});
-						
-						V.ViewerAdapter.updateInterface();
+						_onResizeActions();
 					} else {
 						multipleOnResize = undefined;
 						window.onresize();
@@ -130,6 +118,38 @@ VISH.Events = (function(V,$,undefined){
 		}
 
 		_bindedViewerEventListeners = true;
+	};
+
+
+	var _onResizeActions = function(){
+		var fsParams = V.FullScreen.getFSParams();
+
+		if(typeof fsParams.currentFSElement == "undefined"){
+			//Browser is not in fullscreen
+			if((typeof fsParams.lastFSElement != "undefined")&&(fsParams.lastFSElement != document.documentElement)&&((new Date() - fsParams.lastFSTimestamp)<1000)){
+				//Another element was in fs before.
+
+				// setTimeout(function(){
+				// 	$(window).trigger('resize');
+				// },500);
+
+				return;
+			}
+		} else {
+			//Browser is in fullscreen
+			if((typeof fsParams.currentFSElement != "undefined")&&(fsParams.currentFSElement != document.documentElement)){
+				//Another element is in fs now.
+				return;
+			}
+		}
+
+		//After Resize actions
+		V.Status.refreshDeviceAfterResize();
+
+		var currentDevice = V.Status.getDevice();
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onViewportResize,{screen: currentDevice.screen, viewport: currentDevice.viewport});
+		
+		V.ViewerAdapter.updateInterface();
 	};
 
 	/**

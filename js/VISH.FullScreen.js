@@ -1,59 +1,48 @@
 /* 
  * Enable FullScreen for ViSH Viewer
- * IE documentation: http://msdn.microsoft.com/en-us/library/ie/dn265028(v=vs.85).aspx
  */
 
 VISH.FullScreen = (function(V,$,undefined){
 
-	//Internals
-	var _pageIsFullScreen;
+	//Native FS params
+	var _currentFSElement;
+	var _lastFSElement;
+	var _lastFSTimestamp;
 
-	//Fullscreen fallbacks
+	//Fullscreen fallback params
+	var _pageIsFullScreen;
 	var _fallbackFs;
 	var _enterFsButton;
-	var _enterFsUrl;
 	var _exitFsButton;
-	var _exitFsUrl;
 
 
 	var init = function(){
-		//Defaults
-		_pageIsFullScreen = false;
-		_enterFsButton = false;
-		_exitFsButton = false;
-		_fallbackFs = false;
-
 		// If FullScreen native support is not available try to use fallback options
-		// Fallback is not possible in embeds...
-		if((!_canUseNativeFs())&&(!V.Status.getIsEmbed())){
-
-			var options = V.Utils.getOptions();
-			if((options)&&(typeof options["fullScreenFallback"] == "object")){
-				
-				_enterFsButton = (V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string");
-				if(_enterFsButton){
-					_enterFsUrl = options["fullScreenFallback"]["enterFullscreenURL"];
-				}
-				_exitFsButton = (!V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["exitFullscreenURL"] == "string");
-				if(_exitFsButton){
-					_exitFsUrl = options["fullScreenFallback"]["exitFullscreenURL"];
-				}
-
-				if(V.Status.getIsInIframe()){
-					_fallbackFs = _enterFsButton;
-				} else {			
-					_fallbackFs = _exitFsButton;
-					_pageIsFullScreen = true;
-				}
-			}
+		if((!_canUseNativeFs())&&(_canUseFallbackFs())){
+			_fallbackFs = true;
+			_initFallback();
+		} else {
+			_fallbackFs = false;
 		}
 
 		_updateFsButtons();
 	};
 
+	var _initFallback = function(){
+		_pageIsFullScreen = false;
+
+		if(V.Status.getIsInIframe()){
+			_enterFsButton = options["fullScreenFallback"]["enterFullscreenURL"];
+		} else {
+			_exitFsButton = options["fullScreenFallback"]["exitFullscreenURL"];
+			_pageIsFullScreen = true;
+		}
+	};
+
 	var canFullScreen = function(){
 		if(!V.Editing){
-			return ((_canUseNativeFs())||(_fallbackFs));
+			//Viewer
+			return ((_canUseNativeFs())||(_canUseFallbackFs()));
 		} else {
 			return ((false)&&(_canUseNativeFs())&&(V.Status.getDevice().features.css3d));
 		}
@@ -63,45 +52,73 @@ VISH.FullScreen = (function(V,$,undefined){
 		return (V.Status.getDevice().features.fullscreen)&&(_getFsEnabled());
 	};
 
-	var isFullScreen  = function(){
-		return _pageIsFullScreen;
+	var _canUseFallbackFs = function(){
+		// Fallback is not possible in embeds...
+		if(!V.Status.getIsEmbed()){
+			return false;
+		}
+
+		if(V.Editing){
+			return false;
+		}
+
+		var options = V.Utils.getOptions();
+		if ((typeof options == "object")&&(typeof options["fullScreenFallback"] == "object")) {
+ 
+			if ((V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string")){
+				return true;
+			}
+
+			if(V.Status.getIsInIframe()){
+				if (typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string"){
+					return true;
+				}
+			} else {
+				if(typeof options["fullScreenFallback"]["exitFullscreenURL"] == "string"){
+					return true;
+				}
+			}
+		}
+
+		return false;
 	};
 
-	var _setFullScreen = function(page_is_fullscreen){
-		_pageIsFullScreen = page_is_fullscreen;
+	var isFullScreen  = function(){
+		if(_fallbackFs===true){
+			return _pageIsFullScreen;
+		}
+		return _isDocumentFullScreen();
 	};
 
 	var enableFullScreen = function(){
 		if(_canUseNativeFs()){
-			//if we have Native FullScreen feature, use it
-			$(document).on('click', '#page-fullscreen', _toggleFullScreen);
-			$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",function(event){
-				//Give some time...
-				setTimeout(function(){
-					if(isSomeElementInFullScreen()){
-						//Prevent VV to be resized when a element enters in fullscreen.
-						return;
-					}
-					_pageIsFullScreen = !_pageIsFullScreen;
-					_updateFsButtons();
-					if(!V.Editing){
-						V.ViewerAdapter.updateInterface();
-					} else {
-						V.Editor.ViewerAdapter.updateInterface();
-					}
-				}, 400);
+			_enableNativeFS();
+		} else if(_fallbackFs) {
+			_enableFallbackFS();
+		}
+	};
+
+	var _enableNativeFS = function(){
+		$(document).on('click', '#page-fullscreen', _toggleFullScreen);
+		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",function(event){
+			_lastFSElement = _currentFSElement;
+			// _currentFSElement = event.target;
+			_currentFSElement = _getFsElement(); //Use the HTML5 FS API Wrapper
+			_lastFSTimestamp = new Date();
+
+			_updateFsButtons();
+		});
+	};
+
+	var _enableFallbackFS = function(){
+		if((_pageIsFullScreen)&&(_exitFsButton)){
+			$(document).on('click', '#page-fullscreen', function(){
+				window.location = V.Utils.removeHashFromUrlString(_exitFsUrl) + '#' + V.Slides.getCurrentSlideNumber();
 			});
-		} else if((_fallbackFs)&&(!V.Editing)) {
-			//Use FullScreen fallback
-			if((_pageIsFullScreen)&&(_exitFsButton)){
-				$(document).on('click', '#page-fullscreen', function(){
-					window.location = V.Utils.removeHashFromUrlString(_exitFsUrl) + '#' + V.Slides.getCurrentSlideNumber();
-				});
-			} else if((!_pageIsFullScreen)&&(_enterFsButton)){
-				$(document).on('click', '#page-fullscreen', function(){
-					V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsUrl) + "?orgUrl="+V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
-				});
-			}
+		} else if((!_pageIsFullScreen)&&(_enterFsButton)){
+			$(document).on('click', '#page-fullscreen', function(){
+				V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsUrl) + "?orgUrl=" + V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
+			});
 		}
 	};
 
@@ -110,10 +127,10 @@ VISH.FullScreen = (function(V,$,undefined){
 			return;
 		}
 
-		if(!_isDocumentFullScreen()){
-			_launchFullscreenForElement(document.documentElement);
-		} else {
+		if(_isDocumentFullScreen()){
 			_cancelFullscreen();
+		} else {
+			_launchFullscreenForElement(document.documentElement);
 		}
 	};
 
@@ -124,7 +141,7 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _updateFsButtons = function(){
-		if(_pageIsFullScreen){
+		if(isFullScreen()){
 			_enableFsEnterButon();
 		} else {
 			_enableFsLeaveButon();
@@ -153,8 +170,12 @@ VISH.FullScreen = (function(V,$,undefined){
 		return $(_getFsElement()).is("html");
 	};
 
-	var isSomeElementInFullScreen = function(){
+	var isOtherElementInFullScreen = function(){
 		return (_isBrowserInFullScreen()&&!_isDocumentFullScreen());
+	};
+
+	var getFSParams = function(){
+		return {currentFSElement: _currentFSElement, lastFSElement:_lastFSElement, lastFSTimestamp: _lastFSTimestamp };
 	};
 
 	var _isElementInFullScreen = function(elem){
@@ -219,13 +240,14 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	return {
-		init						: init,
-		isFullScreenSupported		: isFullScreenSupported,
-		canFullScreen 				: canFullScreen,
-		enableFullScreen			: enableFullScreen,
-		isFullScreen 				: isFullScreen,
-		isSomeElementInFullScreen	: isSomeElementInFullScreen,
-		exitFromNativeFullScreen	: exitFromNativeFullScreen
+		init							: init,
+		isFullScreenSupported			: isFullScreenSupported,
+		canFullScreen 					: canFullScreen,
+		enableFullScreen				: enableFullScreen,
+		isFullScreen 					: isFullScreen,
+		isOtherElementInFullScreen		: isOtherElementInFullScreen,
+		getFSParams						: getFSParams,
+		exitFromNativeFullScreen		: exitFromNativeFullScreen
 	};
     
 }) (VISH, jQuery);
