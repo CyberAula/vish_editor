@@ -12,8 +12,8 @@ VISH.FullScreen = (function(V,$,undefined){
 	//Fullscreen fallback params
 	var _pageIsFullScreen;
 	var _fallbackFs;
-	var _enterFsButton;
-	var _exitFsButton;
+	var _enterFsURL;
+	var _exitFsURL;
 
 
 	var init = function(){
@@ -32,9 +32,9 @@ VISH.FullScreen = (function(V,$,undefined){
 		_pageIsFullScreen = false;
 
 		if(V.Status.getIsInIframe()){
-			_enterFsButton = options["fullScreenFallback"]["enterFullscreenURL"];
+			_enterFsURL = options["fullScreenFallback"]["enterFullscreenURL"];
 		} else {
-			_exitFsButton = options["fullScreenFallback"]["exitFullscreenURL"];
+			_exitFsURL = options["fullScreenFallback"]["exitFullscreenURL"];
 			_pageIsFullScreen = true;
 		}
 	};
@@ -54,7 +54,7 @@ VISH.FullScreen = (function(V,$,undefined){
 
 	var _canUseFallbackFs = function(){
 		// Fallback is not possible in embeds...
-		if(!V.Status.getIsEmbed()){
+		if(V.Status.getIsEmbed()){
 			return false;
 		}
 
@@ -111,13 +111,13 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _enableFallbackFS = function(){
-		if((_pageIsFullScreen)&&(_exitFsButton)){
+		if((_pageIsFullScreen)&&(typeof _exitFsURL == "string")){
 			$(document).on('click', '#page-fullscreen', function(){
-				window.location = V.Utils.removeHashFromUrlString(_exitFsUrl) + '#' + V.Slides.getCurrentSlideNumber();
+				window.location = V.Utils.removeHashFromUrlString(_exitFsURL) + '#' + V.Slides.getCurrentSlideNumber();
 			});
-		} else if((!_pageIsFullScreen)&&(_enterFsButton)){
+		} else if((!_pageIsFullScreen)&&(typeof _enterFsURL == "string")){
 			$(document).on('click', '#page-fullscreen', function(){
-				V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsUrl) + "?orgUrl=" + V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
+				V.Utils.sendParentToURL(V.Utils.removeHashFromUrlString(_enterFsURL) + "?orgUrl=" + V.Utils.removeHashFromUrlString(window.parent.location.href) + '#' + V.Slides.getCurrentSlideNumber());
 			});
 		}
 	};
