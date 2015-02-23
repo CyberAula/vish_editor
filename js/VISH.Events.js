@@ -127,13 +127,11 @@ VISH.Events = (function(V,$,undefined){
 		if(typeof fsParams.currentFSElement == "undefined"){
 			//Browser is not in fullscreen
 			if((typeof fsParams.lastFSElement != "undefined")&&(fsParams.lastFSElement != document.documentElement)&&((new Date() - fsParams.lastFSTimestamp)<1000)){
-				//Another element was in fs before.
-
-				// setTimeout(function(){
-				// 	$(window).trigger('resize');
-				// },500);
-
-				return;
+				//Try to prevent Chrome bug
+				if($("body").is(":-webkit-full-screen-ancestor")){
+					// do something to fix Chrome bug...
+					return;
+				}
 			}
 		} else {
 			//Browser is in fullscreen
