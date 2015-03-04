@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Quiz.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,93 +25,87 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Quiz.js</h1>
+<h1 class="file-heading">File: VISH.Quiz.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 VISH.Quiz = (function(V,$,undefined){
  
-	var quizMode; &#x2F;&#x2F;selfA (for Self-assesment quizzes) or realTime (for real time quizzes)
+	var quizMode; //selfA (for Self-assesment quizzes) or realTime (for real time quizzes)
 	
-	&#x2F;*
+	/*
 	 * Self-assesment quizzes
-	 *&#x2F;
-	&#x2F;&#x2F;Store the JSON of the quizzes
+	 */
+	//Store the JSON of the quizzes
 	var quizzes = {};
 	var quizChoicesIds = {};
 
-	&#x2F;*
+	/*
 	 * Real Time Quizzes
-	 *&#x2F;
-	&#x2F;&#x2F;Current quiz DOM element
+	 */
+	//Current quiz DOM element
 	var currentQuizDOM;
-	&#x2F;&#x2F;JSON of the current quiz session
+	//JSON of the current quiz session
 	var currentQuizSession;
 	var currentPolling;
-	&#x2F;&#x2F;Quiz session ID to answer the quiz in real time
+	//Quiz session ID to answer the quiz in real time
 	var quizSessionId;
 
 
-	&#x2F;*
+	/*
 	 * Common methods (both for Self-assesment quizzes and real time quizzes)
-	 *&#x2F;
+	 */
 	var initBeforeRender = function(presentation){
 		if(presentation.type===V.Constant.QUIZ_SIMPLE){
 			quizMode = V.Constant.QZ_MODE.RT;
@@ -136,9 +128,9 @@ VISH.Quiz = (function(V,$,undefined){
 		_loadEvents();
 	};
 
-	&#x2F;*
+	/*
 	* Load common events of Quizzes: answer, start live quiz, etc
-	*&#x2F;
+	*/
 	var _loadEvents = function(){
 		$(document).on(&#x27;click&#x27;, &quot;.quizAnswerButton&quot;,_onAnswerQuiz);
 		$(document).on(&#x27;click&#x27;, &quot;.quizStartButton&quot;,_onStartQuiz);
@@ -171,13 +163,13 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;Render methods
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	////////////////
+	//Render methods
+	///////////////
 
-   &#x2F;**
+   /**
 	* Function to render a quiz inside an article (a slide)
-	*&#x2F;
+	*/
 	var render = function(elJSON,template){
 		var quizModule = _getQuizModule(elJSON.quiztype);
 		if(quizModule){
@@ -187,7 +179,7 @@ VISH.Quiz = (function(V,$,undefined){
 			elJSON = _changeQuizChoicesIds(elJSON);
 			quizzes[quizId] = elJSON;
 			var quizDOM = quizModule.render(elJSON,template);
-			return &quot;&lt;div id=&#x27;&quot;+zoneId+&quot;&#x27; class=&#x27;quizWrapper &quot;+template+&quot;_&quot;+elJSON[&#x27;areaid&#x27;]+&quot; &quot;+template+&quot;_quiz&quot;+&quot;&#x27;&gt;&quot;+quizDOM+&quot;&lt;&#x2F;div&gt;&quot;;
+			return &quot;&lt;div id=&#x27;&quot;+zoneId+&quot;&#x27; class=&#x27;quizWrapper &quot;+template+&quot;_&quot;+elJSON[&#x27;areaid&#x27;]+&quot; &quot;+template+&quot;_quiz&quot;+&quot;&#x27;&gt;&quot;+quizDOM+&quot;&lt;/div&gt;&quot;;
 		}
 	};
 
@@ -200,14 +192,14 @@ VISH.Quiz = (function(V,$,undefined){
 			}
 		}
 		
-		var quizButtons = $(&quot;&lt;div class=&#x27;quizButtons&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		var quizButtons = $(&quot;&lt;div class=&#x27;quizButtons&#x27;&gt;&lt;/div&gt;&quot;);
 
-		if((quizMode === V.Constant.QZ_MODE.SELFA)&amp;&amp;(ARSEnabled==true)&amp;&amp;((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(V.Configuration.getConfiguration()[&quot;mode&quot;]===V.Constant.NOSERVER))&amp;&amp;(V.User.isLogged())&amp;&amp;(!V.Utils.getOptions().preview)){
-			var startButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizStartButton&#x27; value=&#x27;&quot;+V.I18n.getTrans(&quot;i.QuizLaunch&quot;)+&quot;&#x27;&#x2F;&gt;&quot;);
+		if((quizMode === V.Constant.QZ_MODE.SELFA)&amp;&amp;(ARSEnabled==true)&amp;&amp;(V.User.isLogged())&amp;&amp;(!V.Utils.getOptions().preview)){
+			var startButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizStartButton&#x27; value=&#x27;&quot;+V.I18n.getTrans(&quot;i.QuizLaunch&quot;)+&quot;&#x27;/&gt;&quot;);
 			$(quizButtons).append(startButton);
 		}
 		if((selfA||(quizJSON.quiztype===V.Constant.QZ_TYPE.OPEN))||(quizMode === V.Constant.QZ_MODE.RT)){
-			var answerButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizAnswerButton&#x27; value=&#x27;&quot;+V.I18n.getTrans(&quot;i.QuizButtonAnswer&quot;)+&quot;&#x27;&#x2F;&gt;&quot;);
+			var answerButton = $(&quot;&lt;input type=&#x27;button&#x27; class=&#x27;buttonQuiz quizAnswerButton&#x27; value=&#x27;&quot;+V.I18n.getTrans(&quot;i.QuizButtonAnswer&quot;)+&quot;&#x27;/&gt;&quot;);
 			$(quizButtons).append(answerButton);
 		}
 
@@ -215,9 +207,9 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 
-	&#x2F;*
+	/*
 	* Answer button states: Enabled, Retry, Continue, Loading and Disabled
-	*&#x2F;
+	*/
 	var enableAnswerButton = function(quiz){
 		var answerButton = $(quiz).find(&quot;input.quizAnswerButton&quot;);
 		$(answerButton).removeAttr(&quot;disabled&quot;);
@@ -230,7 +222,7 @@ VISH.Quiz = (function(V,$,undefined){
 		var answerButton = $(quiz).find(&quot;input.quizAnswerButton&quot;);
 		$(answerButton).removeAttr(&quot;disabled&quot;);
 		$(answerButton).removeClass(&quot;quizStartButtonLoading&quot;);
-		&#x2F;&#x2F; $(answerButton).addClass(&quot;quizAnswerButtonRetry&quot;);
+		// $(answerButton).addClass(&quot;quizAnswerButtonRetry&quot;);
 		$(answerButton).attr(&quot;quizStatus&quot;,&quot;retry&quot;);
 		$(answerButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizRetry&quot;));
 	};
@@ -258,9 +250,9 @@ VISH.Quiz = (function(V,$,undefined){
 		$(answerButton).attr(&quot;quizStatus&quot;,&quot;disabled&quot;);
 	};
 
-	&#x2F;*
+	/*
 	* Handle onAnswerQuiz Event
-	*&#x2F;
+	*/
 	var _onAnswerQuiz = function(event){
 		var quizDOM = $(&quot;div.quizContainer&quot;).has(event.target);
 		var quizModule = _getQuizModule($(quizDOM).attr(&quot;type&quot;));
@@ -274,9 +266,9 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 
-	&#x2F;*
+	/*
 	 * Self-assesment quizzes
-	 *&#x2F;
+	 */
 	_onAnswerSAQuiz = function(quizDOM,quizModule){
 		var quizStatus = $(quizDOM).find(&quot;.quizAnswerButton&quot;).attr(&quot;quizstatus&quot;);
 		if(quizStatus === &quot;retry&quot;){
@@ -285,12 +277,12 @@ VISH.Quiz = (function(V,$,undefined){
 		} else if(quizStatus === &quot;continue&quot;){
 			var slideDOM = V.Slides.getTargetSlide();
 			if((V.Slides.isSubslide(slideDOM))&amp;&amp;($(slideDOM).parent().attr(&quot;type&quot;)===V.Constant.EVIDEO)){
-				&#x2F;&#x2F; &#x2F;&#x2F;Reset quiz
-				&#x2F;&#x2F; var quizWrapper = $(&quot;div.quizWrapper&quot;).has(event.target);
-				&#x2F;&#x2F; quizzes[$(quizWrapper).attr(&quot;id&quot;)].cnAttempts = undefined;
-				&#x2F;&#x2F; quizModule.onRetryQuiz(quizDOM);
+				// //Reset quiz
+				// var quizWrapper = $(&quot;div.quizWrapper&quot;).has(event.target);
+				// quizzes[$(quizWrapper).attr(&quot;id&quot;)].cnAttempts = undefined;
+				// quizModule.onRetryQuiz(quizDOM);
 
-				&#x2F;&#x2F;Close subslide
+				//Close subslide
 				var closeButtonId = &quot;close&quot; + $(slideDOM).attr(&quot;id&quot;);
 				$(&quot;#&quot;+closeButtonId).trigger(&quot;click&quot;);
 			}
@@ -298,7 +290,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var _canRetry = false;
 			var _afterAnswerAction = &quot;disable&quot;;
 
-			&#x2F;&#x2F;If the quiz is contained in a EVideo, allow continue option
+			//If the quiz is contained in a EVideo, allow continue option
 			var slideDOM = V.Slides.getTargetSlide();
 			if((V.Slides.isSubslide(slideDOM))&amp;&amp;($(slideDOM).parent().attr(&quot;type&quot;)===V.Constant.EVIDEO)){
 				_afterAnswerAction = &quot;continue&quot;;
@@ -307,7 +299,7 @@ VISH.Quiz = (function(V,$,undefined){
 			var quizId = $(quizDOM).attr(&quot;id&quot;);
 			var quizJSON = quizzes[quizId];
 
-			&#x2F;&#x2F;Get nAttempts
+			//Get nAttempts
 			var nAttempts = 1;
 			if(typeof quizJSON.settings == &quot;object&quot;){
 				var settingsNAttempts = quizJSON.settings.nAttempts;
@@ -340,9 +332,9 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 
-	&#x2F;*
+	/*
 	 * Real Time Quizzes
-	 *&#x2F;
+	 */
 	var _answerRTQuiz = function(quizDOM,quizModule){
 		if(!quizSessionId){
 			return;
@@ -449,7 +441,7 @@ VISH.Quiz = (function(V,$,undefined){
 	var _onQuizSessionReceivedError = function(quizDOM,error){
 		_enableLaunchButton(quizDOM);
 
-		&#x2F;&#x2F;Show error message
+		//Show error message
 		var options = {};
 		options.width = &#x27;80%&#x27;;
 		options.text = V.I18n.getTrans(&quot;i.QuizCreateSessionError&quot;);
@@ -537,10 +529,10 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _closeQuizSession = function(name){
 		V.Quiz.API.closeQuizSession(currentQuizSession.id,name,function(data){
-			&#x2F;&#x2F;Success
+			//Success
 			_afterCloseQuizSession();
 		}, function(){
-			&#x2F;&#x2F;Failure
+			//Failure
 			_afterCloseQuizSession();
 		});
 	};
@@ -557,21 +549,21 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _deleteQuizSession = function(){
 		V.Quiz.API.deleteQuizSession(currentQuizSession.id);
-		&#x2F;&#x2F;Don&#x27;t wait for the callback in this case
+		//Don&#x27;t wait for the callback in this case
 		_afterCloseQuizSession();
 	};
 
-	&#x2F;*
+	/*
 	 * Utils for Real Time Quizzes
-	 *&#x2F;
+	 */
 	var _getQuizSimpleJSONForQuiz = function(quizDOM){
 		var quizId = $(quizDOM).attr(&quot;id&quot;);
 		return quizzes[quizId].quiz_simple_json;
 	};
 
-	&#x2F;*
+	/*
 	* Launch button states: Enabled, Loading and Running
-	*&#x2F;
+	*/
 	var _enableLaunchButton = function(quiz){
 		var startButton = $(quiz).find(&quot;input.quizStartButton&quot;);
 		$(startButton).removeAttr(&quot;disabled&quot;);
@@ -596,21 +588,21 @@ VISH.Quiz = (function(V,$,undefined){
 		$(startButton).attr(&quot;value&quot;,V.I18n.getTrans(&quot;i.QuizButtonOptions&quot;));
 	};
 
-   &#x2F;*
+   /*
 	*  Fancybox
-	*&#x2F;
+	*/
 	var loadTab = function(tab_id){
-		&#x2F;&#x2F;hide previous tab
+		//hide previous tab
 		$(&quot;.fancy_viewer_tab_content&quot;).hide();
-		&#x2F;&#x2F;show content
+		//show content
 		$(&quot;#&quot; + tab_id + &quot;_content&quot;).show();
-		&#x2F;&#x2F;deselect all of them
+		//deselect all of them
 		$(&quot;.fancy_viewer_tab&quot;).removeClass(&quot;fancy_selected&quot;);
-		&#x2F;&#x2F;select the correct one
+		//select the correct one
 		$(&quot;#&quot; + tab_id).addClass(&quot;fancy_selected&quot;);
-		&#x2F;&#x2F;hide previous help button
+		//hide previous help button
 		$(&quot;.help_in_fancybox_viewer&quot;).hide();
-		&#x2F;&#x2F;show correct one
+		//show correct one
 		$(&quot;#&quot;+ tab_id + &quot;_help&quot;).show();
 
 		switch(tab_id){
@@ -633,21 +625,21 @@ VISH.Quiz = (function(V,$,undefined){
 
 		var myA = $(&quot;#tab_quiz_session_url_link&quot;);
 		$(myA).attr(&quot;href&quot;,currentQuizSession.url);
-		$(myA).html(&quot;&lt;p id=&#x27;tab_quiz_session_url&#x27;&gt;&quot;+currentQuizSession.url+&quot;&lt;&#x2F;p&gt;&quot;);
+		$(myA).html(&quot;&lt;p id=&#x27;tab_quiz_session_url&#x27;&gt;&quot;+currentQuizSession.url+&quot;&lt;/p&gt;&quot;);
 
 		var sharingText = $(currentQuizDOM).find(&quot;.mc_question_wrapper_viewer&quot;).text().trim();
 
 		var twitter = $(&quot;#tab_quiz_session_share_twitter&quot;);
-		$(twitter).attr(&quot;href&quot;,&quot;https:&#x2F;&#x2F;twitter.com&#x2F;share?url=&quot;+currentQuizSession.url+&quot;&amp;text=&quot;+sharingText+&quot;&quot;);
+		$(twitter).attr(&quot;href&quot;,&quot;https://twitter.com/share?url=&quot;+currentQuizSession.url+&quot;&amp;text=&quot;+sharingText+&quot;&quot;);
 
 		var facebook = $(&quot;#tab_quiz_session_share_facebook&quot;);
-		var facebookUrl = &quot;http:&#x2F;&#x2F;www.facebook.com&#x2F;sharer.php?s=100&amp;p[url]=&quot;+currentQuizSession.url+&quot;&amp;p[title]=&quot;+sharingText;
-		&#x2F;&#x2F; &amp;p[summary]=the description&#x2F;summary you want to share&quot;;
-		&#x2F;&#x2F;&amp;p[images][0]=the image you want to share
+		var facebookUrl = &quot;http://www.facebook.com/sharer.php?s=100&amp;p[url]=&quot;+currentQuizSession.url+&quot;&amp;p[title]=&quot;+sharingText;
+		// &amp;p[summary]=the description/summary you want to share&quot;;
+		//&amp;p[images][0]=the image you want to share
 		$(facebook).attr(&quot;href&quot;,facebookUrl);
 
 		var gPlus = $(&quot;#tab_quiz_session_share_gPlus&quot;);
-		$(gPlus).attr(&quot;href&quot;,&quot;https:&#x2F;&#x2F;plus.google.com&#x2F;share?url=&quot;+currentQuizSession.url);
+		$(gPlus).attr(&quot;href&quot;,&quot;https://plus.google.com/share?url=&quot;+currentQuizSession.url);
 	};
 
 	var _loadStats = function(){
@@ -662,7 +654,7 @@ VISH.Quiz = (function(V,$,undefined){
 			return;
 		}
 
-		&#x2F;&#x2F;Draw QR for fancybox
+		//Draw QR for fancybox
 		var container = $(&quot;.quizQr&quot;);
 		$(container).html(&quot;&quot;);
 		var tabQuizSessionContent = $(&quot;#tab_quiz_session_content&quot;);
@@ -674,21 +666,21 @@ VISH.Quiz = (function(V,$,undefined){
 		var width = height;
 
 		var qrOptions = {
-			&#x2F;&#x2F; render method: &#x27;canvas&#x27; or &#x27;div&#x27;
+			// render method: &#x27;canvas&#x27; or &#x27;div&#x27;
 			render: &#x27;canvas&#x27;, 
-			&#x2F;&#x2F; width and height in pixel
+			// width and height in pixel
 			width: width,
 			height: height,
-			&#x2F;&#x2F; QR code color
+			// QR code color
 			color: &#x27;#000&#x27;,
-			&#x2F;&#x2F; background color, null for transparent background
+			// background color, null for transparent background
 			bgColor: &#x27;#fff&#x27;,
-			&#x2F;&#x2F; the encoded text
+			// the encoded text
 			text: url.toString()
 		}
 		$(container).qrcode(qrOptions);
 
-		&#x2F;&#x2F;Draw QR for overlay
+		//Draw QR for overlay
 		var overlayHeight = $(&quot;#qr_overlay&quot;).height();
 		var qrOptions = {
 			render: &#x27;canvas&#x27;, 
@@ -746,43 +738,43 @@ VISH.Quiz = (function(V,$,undefined){
 
 	var _drawResults = function(results){
 
-		&#x2F;&#x2F;Prevent redraw when is not neccesary
+		//Prevent redraw when is not neccesary
 		if (currentQuizSession) {
 			if((typeof currentQuizSession.lastDrawedResults != &quot;undefined&quot;)&amp;&amp;(results.length === currentQuizSession.lastDrawedResults.length)){
-				&#x2F;&#x2F;No new results, redraw is not needed
+				//No new results, redraw is not needed
 				return;
 			}
-			&#x2F;&#x2F;Empty results, redraw is not needed
+			//Empty results, redraw is not needed
 			if(results.length===0){
 				return;
 			}
 		} else {
-			&#x2F;&#x2F;No quiz session...
+			//No quiz session...
 			return;
 		}
 
 		var options = {};
 
-		&#x2F;&#x2F;Not redraw while first chart is drawing with animation
+		//Not redraw while first chart is drawing with animation
 		if(typeof currentQuizSession.firstDrawed == &quot;undefined&quot;){
-			&#x2F;&#x2F;Case: Draw first chart
-			currentQuizSession.firstDrawed = false; &#x2F;&#x2F;Drawing first
+			//Case: Draw first chart
+			currentQuizSession.firstDrawed = false; //Drawing first
 			options.animation = true;
 			options.callback = function(){
-				&#x2F;&#x2F;First chart drawed
+				//First chart drawed
 				currentQuizSession.firstDrawed = true;
 			}
 		} else if(currentQuizSession.firstDrawed == false){
-			&#x2F;&#x2F;Case: Drawing first, wait for it, not redraw
+			//Case: Drawing first, wait for it, not redraw
 			return;
 		}
 
-		&#x2F;&#x2F;Draw
+		//Draw
 
-		&#x2F;&#x2F;Store drawed results
+		//Store drawed results
 		currentQuizSession.lastDrawedResults = results;
 
-		&#x2F;&#x2F;Prepare canvas
+		//Prepare canvas
 		_cleanResults();
 		var canvas = $(&quot;#quiz_chart&quot;);
 		var desiredWidth = $(&quot;#fancybox-content&quot;).width();
@@ -805,9 +797,9 @@ VISH.Quiz = (function(V,$,undefined){
 	};
 
 
-   &#x2F;*
+   /*
 	* Common Quiz Utils
-	*&#x2F;
+	*/
 
 	var getQuiz = function(quizId){
 		return quizzes[quizId];
@@ -861,7 +853,7 @@ VISH.Quiz = (function(V,$,undefined){
 			check = check.toString();
 		}
 
-		var imagePathRoot = V.ImagesPath+ &quot;quiz&#x2F;checkbox&quot;;
+		var imagePathRoot = V.ImagesPath+ &quot;quiz/checkbox&quot;;
 		switch(check){
 			case &quot;true&quot;:
 				$(checkbox).attr(&quot;check&quot;,&quot;true&quot;);
@@ -910,20 +902,19 @@ VISH.Quiz = (function(V,$,undefined){
  
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

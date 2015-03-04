@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Editor.Events.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,89 +25,89 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Editor.Events.js</h1>
+<h1 class="file-heading">File: VISH.Editor.Events.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
+/*
+ * Events for ViSH Editor (the events of the Viewer are handled in VISH.Events.js)
+ */
 VISH.Editor.Events = (function(V,$,undefined){
 	
-	var bindedEventListeners = false;
-	&#x2F;&#x2F;Confirm on exit web app
-	var confirmOnExit;
-	&#x2F;&#x2F;Ctrl key
-	var ctrlDown = false;
-
+	var _bindedEditorEventListeners = false;
+	var _confirmOnExit;
+	var _isCtrlKeyPressed = false;
+	var _mobile;
 
 	var init = function(){
+		_mobile = (!V.Status.getDevice().desktop);
+		if(_mobile){
+			V.Editor.Events.Mobile.init();
+		}
 		bindEditorEventListeners();
 	};
 
 	var bindEditorEventListeners = function(){
-		if((!bindedEventListeners)&amp;&amp;(V.Editing)){
+		if(!_bindedEditorEventListeners){
+
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
 			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
 
 			$(document).on(&#x27;click&#x27;, &#x27;#slideset_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
 			
-			&#x2F;&#x2F;Settings events
+			//Settings events
 			$(document).on(&#x27;click&#x27;, &#x27;#presentation_details_preview_thumbnail&#x27;, V.Editor.Settings.onChangeThumbnailClicked);
 			$(document).on(&#x27;hover&#x27;, &#x27;#presentation_details_preview_thumbnail&#x27;, function(event){
 				var thumbnail = $(&quot;#presentation_details_preview_thumbnail_img&quot;);
@@ -137,7 +135,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			
 			$(document).on(&#x27;click&#x27;,&#x27;div.templatethumb&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;div.stthumb&#x27;, V.Editor.onSlideThumbClicked);
-			$(document).on(&#x27;click&#x27;,&#x27;#animation_fancybox div.slidethumb&#x27;, V.Editor.onAnimationThumbClicked); &#x2F;&#x2F;animations thumb
+			$(document).on(&#x27;click&#x27;,&#x27;#animation_fancybox div.slidethumb&#x27;, V.Editor.onAnimationThumbClicked); //animations thumb
 
 			$(document).on(&#x27;click&#x27;,&#x27;.stthumb_wrapper p&#x27;, V.Editor.onSlideThumbClicked);
 			$(document).on(&#x27;click&#x27;,&#x27;.editable&#x27;, V.Editor.onEditableClicked);
@@ -156,29 +154,56 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).bind(&#x27;keydown&#x27;, handleBodyKeyDown);
 			$(document).bind(&#x27;keyup&#x27;, handleBodyKeyUp);
 
-			&#x2F;&#x2F; Slide Enter and Leave events
+			// Slide Enter and Leave events
 			$(&#x27;article&#x27;).live(&#x27;slideenter&#x27;, V.Editor.onSlideEnterEditor);
 			$(&#x27;article&#x27;).live(&#x27;slideleave&#x27;, V.Editor.onSlideLeaveEditor);
 
-			&#x2F;&#x2F;Waiting overlay
+			//Waiting overlay
 			$(document).on(&#x27;click&#x27;,&quot;#waiting_overlay&quot;, function(event){
 				event.stopPropagation();
 				event.preventDefault();
 			});
 
-			&#x2F;&#x2F;Focus
+			//Focus
 			$(window).focus(function(){
 				V.Status.setWindowFocus(true);
 			}).blur(function(){
 				V.Status.setWindowFocus(false);
 			});
 
-			&#x2F;&#x2F;Tutorial events
+			//Load onresize event
+			//Prevent multiple consecutively calls
+			var multipleOnResize = undefined;
+			window.onresize = function(){
+				if(typeof multipleOnResize == &quot;undefined&quot;){
+					multipleOnResize = false;
+					setTimeout(function(){
+						if(!multipleOnResize){
+							multipleOnResize = undefined;
+
+							//After Resize actions
+							V.Status.refreshDeviceAfterResize();
+
+							var currentDevice = V.Status.getDevice();
+							V.EventsNotifier.notifyEvent(V.Constant.Event.onViewportResize,{screen: currentDevice.screen, viewport: currentDevice.viewport});
+							
+							V.Editor.ViewerAdapter.updateInterface();
+						} else {
+							multipleOnResize = undefined;
+							window.onresize();
+						}
+					},600);
+				} else {
+					multipleOnResize = true;
+				}
+			};
+
+			//Tutorial events
 			_addTutorialEvents();
 
-			&#x2F;&#x2F;Fancyboxes
+			//Fancyboxes
 
-			&#x2F;&#x2F; fancybox to create a new slide
+			// fancybox to create a new slide
 			$(&quot;a#addSlideFancybox&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;scrolling&#x27;: &#x27;no&#x27;,
@@ -192,12 +217,12 @@ VISH.Editor.Events = (function(V,$,undefined){
 					}
 
 					if(slidesAddMode===V.Constant.SLIDESET){
-						&#x2F;&#x2F;Show slides only
+						//Show slides only
 						$(&quot;#tab_pdfex&quot;).parent().hide();
 						$(&quot;#tab_presentations_repo&quot;).parent().hide();
 						$(&quot;#tab_json_file&quot;).parent().hide();
 
-						&#x2F;&#x2F;Inside slides, show templates only
+						//Inside slides, show templates only
 						$(&quot;.tab_slides_smartcards&quot;).hide();
 					}
 
@@ -216,7 +241,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			&#x2F;&#x2F;Select theme fancybox
+			//Select theme fancybox
 			$(&quot;#hidden_button_to_launch_theme_fancybox&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;width&#x27;: 600,
@@ -225,7 +250,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;padding&#x27; : 0
 			});
 
-			&#x2F;&#x2F;Select animation fancybox
+			//Select animation fancybox
 			$(&quot;#hidden_button_to_launch_animation_fancybox&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;width&#x27;: 600,
@@ -234,7 +259,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;padding&#x27; : 0
 			});
 
-			&#x2F;&#x2F;Loading fancybox
+			//Loading fancybox
 			$(&quot;#fancyLoad&quot;).fancybox({
 				&#x27;type&#x27;		   : &#x27;inline&#x27;,
 				&#x27;autoDimensions&#x27; : false,
@@ -254,7 +279,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			&#x2F;&#x2F;Change background
+			//Change background
 			$(&quot;#hidden_button_to_change_slide_background&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;width&#x27;: 800,
@@ -270,7 +295,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			&#x2F;&#x2F;Fancybox to select presentation Thumbnail
+			//Fancybox to select presentation Thumbnail
 			$(&quot;#hidden_button_to_uploadThumbnail&quot;).fancybox({
 				&#x27;autoDimensions&#x27; : false,
 				&#x27;width&#x27;: 800,
@@ -291,18 +316,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 				}
 			});
 
-			&#x2F;&#x2F;Element Settings
+			//Element Settings
 			$(document).on(&quot;click&quot;, &quot;#quizSettingsDone&quot;, V.Editor.Quiz.onQuizSettingsDone);
 			$(document).on(&quot;click&quot;, &quot;#exportQuizToIMSQTI&quot;, function(){ V.Editor.Quiz.onExportTo(&quot;QTI&quot;) });
 			$(document).on(&quot;click&quot;, &quot;#exportQuizToMoodleXML&quot;, function(){ V.Editor.Quiz.onExportTo(&quot;MoodleXML&quot;) });
-			&#x2F;&#x2F;onbeforeunload event
+			
+			//onbeforeunload event
 			window.onbeforeunload = _exitConfirmation;
-			confirmOnExit = true;
+			_confirmOnExit = true;
 
-			&#x2F;&#x2F;Allow keyboard events with the first click
+			//Allow keyboard events with the first click
 			$(window.document).on(&#x27;click&#x27;, function(ev){
 				if(V.Status.getDevice().browser.name === V.Constant.IE){
-					&#x2F;&#x2F;Prevent inputs to lose the focus when IE
+					//Prevent inputs to lose the focus when IE
 					if((ev.target)&amp;&amp;($(ev.target).is(&quot;:input&quot;))){
 						return;
 					}
@@ -310,92 +336,96 @@ VISH.Editor.Events = (function(V,$,undefined){
 				window.focus();
 			});
 
-			bindedEventListeners = true;
+			if(_mobile){
+				V.Editor.Events.Mobile.bindEditorMobileEventListeners();
+			}
+
+			_bindedEditorEventListeners = true;
 		}
 	};
 
-	
-	&#x2F;**
+
+	/**
 	* Tutorial
 	* Function to add the events to the help buttons to launch joy ride bubbles
-	*&#x2F;
+	*/
 	var _addTutorialEvents = function(){
-		&#x2F;&#x2F;Help in menu
+		//Help in menu
 		$(document).on(&#x27;click&#x27;,&#x27;#help_right&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;menubar_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in standard slide
+		//Help in standard slide
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_sslide&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;sslide_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in Flashcards
+		//Help in Flashcards
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_flashcard&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;fc_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in Virtual Tours
+		//Help in Virtual Tours
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_vt&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;vt_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in Enriched Videos
+		//Help in Enriched Videos
 		$(document).on(&#x27;click&#x27;,&#x27;.help_in_evideo&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;evideo_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in slide templates selection
+		//Help in slide templates selection
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_slides_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_template_selection_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help inserting a PDF presentation
+		//Help inserting a PDF presentation
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pdfex_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_pdfex_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help inserting e-Learning packages
+		//Help inserting e-Learning packages
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_epackage_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_epackage_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help importing external files (e.g. JSON)
+		//Help importing external files (e.g. JSON)
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_efile_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_efile_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in presentation carrousel
+		//Help in presentation carrousel
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_repo_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_excursion_selection_help&#x27;, &#x27;bottom&#x27;);
 		});	
 
-		&#x2F;&#x2F;Help in LRE carrousel
+		//Help in LRE carrousel
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_presentations_lre_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;tab_presentations_lre_help&#x27;, &#x27;bottom&#x27;);
 		});	
 
-		&#x2F;&#x2F;Help in themes templates
+		//Help in themes templates
 		$(document).on(&#x27;click&#x27;,&#x27;#help_themes_selection&#x27;, function(){			
 			V.Tour.startTourWithId(&#x27;themes_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in animation templates
+		//Help in animation templates
 		$(document).on(&#x27;click&#x27;,&#x27;#help_animation_selection&#x27;, function(){		
 			V.Tour.startTourWithId(&#x27;animation_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in Settings
+		//Help in Settings
 		$(document).on(&#x27;click&#x27;,&#x27;#help_in_settings&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_in_settings_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in pedagogical options settings	
+		//Help in pedagogical options settings	
 		$(document).on(&#x27;click&#x27;,&#x27;#help_pedagogical_selection&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;help_pedagogical_selection_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help inserting images [URL, Upload, ViSH, Flickr, LRE]
+		//Help inserting images [URL, Upload, ViSH, Flickr, LRE]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_from_url_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
 		});	
@@ -412,7 +442,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;search_lre_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		&#x2F;&#x2F;Help inserting objects [Web, Snapshot, URL&#x2F;Embed, Upload, ViSH, LRE]
+		//Help inserting objects [Web, Snapshot, URL/Embed, Upload, ViSH, LRE]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_object_from_web_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
@@ -432,7 +462,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;Help inserting videos [URL, ViSH, YouTube, Vimeo]
+		//Help inserting videos [URL, ViSH, YouTube, Vimeo]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_from_url_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
@@ -446,20 +476,20 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 
-		&#x2F;&#x2F;Help in Quiz Templates
+		//Help in Quiz Templates
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_quizzes_help&#x27;, function(){			
 			V.Tour.startTourWithId(&#x27;quiz_help&#x27;, &#x27;bottom&#x27;);
 		});
 		
-		&#x2F;&#x2F;Help inserting live objects
+		//Help inserting live objects
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_live_resource_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;tab_live_resource_id&#x27;, &#x27;bottom&#x27;);
 		});
 	};
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; Event Listeners
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	//////////////
+	// Event Listeners
+	//////////////
 	var addZoneThumbsEvents = function(container){
 
 		$(container).find(&quot;a.addpicture&quot;).fancybox({
@@ -469,7 +499,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			&#x27;height&#x27;: 600,
 			&#x27;padding&#x27; : 0,
 			&quot;onStart&quot;  : function(data) {
-				&#x2F;&#x2F;re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
+				//re-set the current area to the clicked zone, because maybe the user have clicked in another editable zone before this one
 				var clickedZoneId = $(data).attr(&quot;zone&quot;);
 				V.Editor.setCurrentArea($(&quot;#&quot; + clickedZoneId));
 				V.Editor.Image.setAddContentMode(V.Constant.NONE);
@@ -503,7 +533,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			}
 		});
 
-		&#x2F;&#x2F;Fancybox to create a new quiz
+		//Fancybox to create a new quiz
 		$(container).find(&quot;a.addQuiz&quot;).fancybox({
 			&#x27;autoDimensions&#x27; : false,
 			&#x27;width&#x27;: 800,
@@ -519,13 +549,13 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; Event Listeners
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	//////////////
+	// Event Listeners
+	//////////////
 	
 	var handleBodyKeyDown = function(event){
 		switch (event.keyCode) {
-		case 39: &#x2F;&#x2F; right arrow
+		case 39: // right arrow
 			if(V.Editor.Slides.isSlideFocused()){
 				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
 					V.Editor.Slides.forwardOneSubslide();
@@ -533,9 +563,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();
 			}
 			break;
-		case 40: &#x2F;&#x2F;down arrow	    
+		case 40: //down arrow	    
 			if(V.Editor.Slides.isSlideFocused()){
-				if(!ctrlDown){
+				if(!_isCtrlKeyPressed){
 					V.Slides.forwardOneSlide();
 				} else {
 					V.Slides.moveSlides(10);
@@ -543,7 +573,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();
 			}
 			break;
-		case 37: &#x2F;&#x2F; left arrow
+		case 37: // left arrow
 			if(V.Editor.Slides.isSlideFocused()){
 				if(V.Editor.Slideset.isSlideset(V.Slides.getCurrentSlide())){
 					V.Editor.Slides.backwardOneSubslide();
@@ -551,9 +581,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();
 			}
 			break;
-		case 38: &#x2F;&#x2F;up arrow	
+		case 38: //up arrow	
 			if(V.Editor.Slides.isSlideFocused()){
-				if(!ctrlDown){
+				if(!_isCtrlKeyPressed){
 					V.Slides.backwardOneSlide();
 				} else {
 					V.Slides.moveSlides(-10);
@@ -561,26 +591,26 @@ VISH.Editor.Events = (function(V,$,undefined){
 				event.preventDefault();    		
 			}
 			break;
-		case 17: &#x2F;&#x2F;ctrl key
-			ctrlDown = true;
+		case 17: //ctrl key
+			_isCtrlKeyPressed = true;
 			break;	
-		case 67: &#x2F;&#x2F;cKey
+		case 67: //cKey
 			if(V.Editor.Slides.isSlideFocused()){
-				if(ctrlDown){
+				if(_isCtrlKeyPressed){
 					if(V.Slides.getCurrentSlideNumber()){
 						V.Editor.Clipboard.copy(V.Slides.getCurrentSlide(),V.Constant.Clipboard.Slide);
 					}
 				}
 			}
 			break;	
-		case 86: &#x2F;&#x2F;vKey
+		case 86: //vKey
 		    if(V.Editor.Slides.isSlideFocused()){
-			    if(ctrlDown){
+			    if(_isCtrlKeyPressed){
 			    	V.Editor.Clipboard.paste();
 		    	}
 		    }
 		    break;
-		case 46: &#x2F;&#x2F;Supr key
+		case 46: //Supr key
 			if(V.Editor.Slides.isSlideFocused()){
 				V.Editor.Slides.removeSlideKeyboard();
 			}
@@ -590,8 +620,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var handleBodyKeyUp = function(event) {
 	  switch (event.keyCode) {
-	    case 17: &#x2F;&#x2F;ctrl key
-	    	ctrlDown = false;
+	    case 17: //ctrl key
+	    	_isCtrlKeyPressed = false;
 	    	break;	     
 	  }
 	};
@@ -599,7 +629,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 	var _exitConfirmation = function(){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.exit);
 		
-		if(confirmOnExit){
+		if(_confirmOnExit){
 			if(V.Editor.hasPresentationChanged()){
 				if((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(true)){
 					var confirmationMsg = V.I18n.getTrans(&quot;i.exitConfirmation&quot;);
@@ -612,16 +642,16 @@ VISH.Editor.Events = (function(V,$,undefined){
 	};
 
 	var allowExitWithoutConfirmation = function(){
-		confirmOnExit = false;
+		_confirmOnExit = false;
 	};
 
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; Unbind events
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	////////////////
+	// Unbind events
+	////////////////
 
 	var unbindEditorEventListeners = function(){
-		if(bindedEventListeners){
+		if(_bindedEditorEventListeners){
 			$(document).unbind(&#x27;keydown&#x27;, handleBodyKeyDown);
 			$(document).unbind(&#x27;keyup&#x27;, handleBodyKeyUp);
 
@@ -629,7 +659,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 				window.focus();
 			});
 
-			bindedEventListeners = false;
+			if (_mobile){
+				V.Editor.Events.Mobile.unbindEditorMobileEventListeners();
+			}
+
+			_bindedEditorEventListeners = false;
 		}
 	};
 	
@@ -645,20 +679,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 }) (VISH,jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

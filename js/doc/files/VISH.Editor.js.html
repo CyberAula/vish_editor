@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Editor.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,98 +25,92 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Editor.js</h1>
+<h1 class="file-heading">File: VISH.Editor.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&#x2F;**
+/**
  * ViSH Editor
  * @namespace VISH
  * @class Editor
- *&#x2F;
+ */
 VISH.Editor = (function(V,$,undefined){
 	
-	&#x2F;&#x2F;Store the initialOptions
+	//Store the initialOptions
 	var initOptions;
 
-	&#x2F;&#x2F;boolean to indicate if we are editing a previous presentation.
+	//boolean to indicate if we are editing a previous presentation.
 	var initialPresentation = false;
-	&#x2F;&#x2F;drafPresentation stores the initial presentation
+	//drafPresentation stores the initial presentation
 	var draftPresentation;
-	&#x2F;&#x2F;isDraft indicate if the presentation is a draft
+	//isDraft indicate if the presentation is a draft
 	var _isDraft;
 
-	&#x2F;&#x2F;last presentation stored in the server
+	//last presentation stored in the server
 	var lastStoredPresentationStringify;
 
-	&#x2F;&#x2F;Pointers to the current and last zone
+	//Pointers to the current and last zone
 	var currentZone;
 	var lastZone;
 
-	&#x2F;&#x2F;Pointer to the current draw container (it can not be an area)
+	//Pointer to the current draw container (it can not be an area)
 	var currentContainer;
 
-	&#x2F;&#x2F;Content mode to add slides
+	//Content mode to add slides
 	var contentAddModeForSlides = V.Constant.NONE;
 
-	&#x2F;**
+	/**
 	 * VISH Editor initializer.
 	 * Adds the listeners to the click events in the different images and buttons of the UI.
 	 * Call submodule initializers.
@@ -127,7 +119,7 @@ VISH.Editor = (function(V,$,undefined){
 	 * @param {JSONObject} presentation Presentation to edit (if not present, a new presentation is created).
 	 *
 	 * @method init
-	 *&#x2F;
+	 */
 	var init = function(options,presentation){
 		$(&quot;#waiting_overlay&quot;).show();
 
@@ -158,11 +150,11 @@ VISH.Editor = (function(V,$,undefined){
 
 		_isDraft = _initPresentationDraft();
 
-		&#x2F;&#x2F; V.Storage.setTestingMode(true);
+		// V.Storage.setTestingMode(true);
 		
 		V.Utils.init();
 		V.Status.init(function(){
-			&#x2F;&#x2F;Status loading finishes
+			//Status loading finishes
 			_initAferStatusLoaded(options,presentation);
 		});
 	}
@@ -176,6 +168,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.Loader.loadDeviceCSS();
 		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
+		V.Editor.ViewerAdapter.init();
+		V.Object.init();
+		V.Editor.IMSQTI.init();
 		V.Editor.Dummies.init();
 		V.Editor.API.init();
 		V.EventsNotifier.init();
@@ -191,10 +186,10 @@ VISH.Editor = (function(V,$,undefined){
 		V.Video.init();
 		V.Audio.init();
 		V.Editor.LRE.init(options.lang);
-		V.Editor.Settings.init(); &#x2F;&#x2F;Settings must be initialize before V.Editor.Renderer.init(presentation);
+		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 		V.SCORM.init();
 
-		&#x2F;&#x2F;If we have to edit
+		//If we have to edit
 		if(initialPresentation){
 			presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
@@ -206,13 +201,13 @@ VISH.Editor = (function(V,$,undefined){
 			draftPresentation = presentation;
 			V.Editor.Settings.loadPresentationSettings(presentation);
 			if(!isPresentationDraft()){
-				&#x2F;&#x2F; V.Editor.Tools.changePublishButtonStatus(&quot;disabled&quot;);
+				// V.Editor.Tools.changePublishButtonStatus(&quot;disabled&quot;);
 				V.Editor.Tools.changePublishButtonStatus(&quot;unpublish&quot;);
 			}
 			V.Editor.Themes.selectTheme(presentation.theme,false,function(){
-				&#x2F;&#x2F;Theme loaded
+				//Theme loaded
 				V.Editor.Renderer.init(presentation);
-				&#x2F;&#x2F;remove focus from any zone
+				//remove focus from any zone
 				_removeSelectableProperties();
 				_initAferPresentationLoaded(options,presentation);
 			});
@@ -234,11 +229,11 @@ VISH.Editor = (function(V,$,undefined){
 		});
 		
 		if(initialPresentation){
-			&#x2F;&#x2F;hide objects (the onSlideEnterEditor event will show the objects in the current slide)
+			//hide objects (the onSlideEnterEditor event will show the objects in the current slide)
 			$(&#x27;.object_wrapper&#x27;).hide();
 		}
 		
-		&#x2F;&#x2F;Init submodules
+		//Init submodules
 		V.Editor.Text.init();
 		V.Editor.Image.init();
 		V.Editor.Video.init();
@@ -249,7 +244,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Presentation.Repository.init();
 		V.Editor.Thumbnails.init();
 		V.Editor.Quiz.init();
-		&#x2F;&#x2F;V.Editor.ISMQTI.init();
 		V.Editor.Preview.init();
 		V.Editor.Tools.init();
 		V.Editor.Filter.init();
@@ -257,52 +251,52 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Clipboard.init();
 		V.Editor.Events.init();
 		
-		&#x2F;&#x2F;Init ViSH Editor Addons
+		//Init ViSH Editor Addons
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}
 
-		&#x2F;&#x2F;Clean hash
-		&#x2F;&#x2F; V.Utils.cleanHash();
+		//Clean hash
+		// V.Utils.cleanHash();
 
-		&#x2F;&#x2F;Unload all objects
+		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 
-		&#x2F;&#x2F;Enter in currentSlide (this will cause that objects will be shown)
+		//Enter in currentSlide (this will cause that objects will be shown)
 		if(V.Slides.getCurrentSlideNumber()&gt;0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 		}
 
-		&#x2F;&#x2F;Add the first slide
+		//Add the first slide
 		if(!initialPresentation){
 			var slide = V.Editor.Dummies.getDummy(V.Constant.STANDARD, {template:&quot;1&quot;, slideNumber:1});
 			V.Editor.Slides.addSlide(slide);
 			V.Slides.goToSlide(1);
 		}
 
-		&#x2F;&#x2F;Init settings
+		//Init settings
 		if((V.Configuration.getConfiguration().presentationSettings) &amp;&amp; (!initialPresentation)){
 			V.Editor.Settings.displaySettings();
 		}
 
-		&#x2F;&#x2F;Fill About screen
+		//Fill About screen
 		$(&quot;#VEversion&quot;).html(V.VERSION);
 
-		&#x2F;&#x2F;Try to win focus
+		//Try to win focus
 		window.focus();
 
 		$(&quot;#waiting_overlay&quot;).hide();
 	}
   
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; UI EVENTS
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	////////////
+	// UI EVENTS
+	////////////
 
-	&#x2F;**
+	/**
 	 * function called when user clicks on template
 	 * Includes a new slide following the template selected
-	 *&#x2F;
+	 */
 	var onSlideThumbClicked = function(event){
 		var slideThumb;
 		if(event.currentTarget.tagName === &quot;P&quot;){
@@ -316,11 +310,11 @@ VISH.Editor = (function(V,$,undefined){
 			type = V.Constant.STANDARD;
 		}
 
-		&#x2F;&#x2F;Get slideMode before close fancybox!
+		//Get slideMode before close fancybox!
 		var slideMode = contentAddModeForSlides;
 
 		if(slideMode===V.Constant.STANDARD){
-			&#x2F;&#x2F;Add a new slide to the presentation
+			//Add a new slide to the presentation
 
 			var options = {};
 			if(type===V.Constant.STANDARD){
@@ -331,11 +325,11 @@ VISH.Editor = (function(V,$,undefined){
 			V.Editor.Slides.addSlide(slide);
 
 		} else if(slideMode===V.Constant.SLIDESET){
-			&#x2F;&#x2F;Add a new subslide to a slideset (flashcard or virtual tour)
+			//Add a new subslide to a slideset (flashcard or virtual tour)
 
 			var slideset = V.Slides.getCurrentSlide();
 
-			&#x2F;&#x2F;Add a subslide (slide[type=&#x27;standard&#x27;]) to a slideset
+			//Add a subslide (slide[type=&#x27;standard&#x27;]) to a slideset
 			if((type === V.Constant.STANDARD)&amp;&amp;(V.Slideset.isSlideset(slideset))){
 				var options = {};
 				options.subslide = true;
@@ -354,17 +348,17 @@ VISH.Editor = (function(V,$,undefined){
 		$.fancybox.close();
 	};
 
-	&#x2F;**
+	/**
 	 * Function called when user clicks on an editable element
 	 * Event launched when an editable element belonging to the slide is clicked
-	 *&#x2F;
+	 */
 	var onEditableClicked = function(event){
-		&#x2F;&#x2F;first remove the &quot;editable&quot; class because we are going to add clickable icons there and we don´t want it to be editable any more
+		//first remove the &quot;editable&quot; class because we are going to add clickable icons there and we don´t want it to be editable any more
 		$(this).removeClass(&quot;editable&quot;);
 		setCurrentArea($(this));
 				
-		&#x2F;&#x2F;need to clone it, because we need to show it many times, not only the first one
-		&#x2F;&#x2F;so we need to remove its id
+		//need to clone it, because we need to show it many times, not only the first one
+		//so we need to remove its id
 		var content = $(&quot;#menuselect&quot;).clone();
 		$(content).removeAttr(&quot;id&quot;);
 
@@ -400,16 +394,16 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Events.addZoneThumbsEvents(this);
 	}; 
 
-	&#x2F;**
+	/**
 	* function called when user clicks on the delete icon of the zone
-	*&#x2F;
+	*/
 	var onDeleteItemClicked = function(){
 		setCurrentArea($(this).parent());
 
 		var options = {};
 		options.width = 375;
 		options.height = 135;
-		options.notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;&quot; + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;;
+		options.notificationIconSrc = V.ImagesPath + &quot;zonethumbs/&quot; + getCurrentArea().attr(&quot;type&quot;) + &quot;.png&quot;;
 		options.text = V.I18n.getTrans(&quot;i.areyousureNotification&quot;);
 		var button1 = {};
 		button1.text = V.I18n.getTrans(&quot;i.no&quot;);
@@ -432,9 +426,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
   
-  &#x2F;**
+  /**
    * Function called when user delete a slide
-   *&#x2F;
+   */
 	var onDeleteSlideClicked = function(){
 		var article_to_delete = $(this).parent()[0];
 
@@ -464,42 +458,42 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-	&#x2F;*
+	/*
 	 * Selectable elements are zones which can be selected.
 	 * Add class &#x27;noSelectableElement&#x27; to a element to call _onNoSelectableClicked without restrictions
 	 * Add class &#x27;preventNoselectable&#x27; to a element to never call _onNoSelectableClicked
 	 * Add class &#x27;selectable&#x27; to a element to call onSelectableClicked and never call _onNoSelectableClicked
-	*&#x2F;
+	*/
 
-	&#x2F;**
+	/**
 	* function called when user clicks on template zone with class selectable
-	*&#x2F;
+	*/
 	var onSelectableClicked = function(event){
 		selectArea($(this));
 		event.stopPropagation();
 		event.preventDefault();
 	};
   
-   &#x2F;**
+   /**
 	* Function called when user clicks on any element without class selectable
-	*&#x2F;
+	*/
 	var onNoSelectableClicked = function(event){
 		var target = $(event.target);
 		var targetParent = $(target).parent();
 
 		if(!$(target).hasClass(&quot;noSelectableElement&quot;)){
 
-			&#x2F;&#x2F;No hide toolbar when we are working in a fancybox
+			//No hide toolbar when we are working in a fancybox
 			if($(&quot;#fancybox-content&quot;).is(&quot;:visible&quot;)){
 				return;
 			}
 
-			&#x2F;&#x2F;No hide toolbar for selectable or preventNoselectable childrens
+			//No hide toolbar for selectable or preventNoselectable childrens
 			if($(targetParent).hasClass(&quot;selectable&quot;) || $(targetParent).hasClass(&quot;preventNoselectable&quot;)){
 				return;
 			}
 
-			&#x2F;&#x2F;Enable toolbar actions
+			//Enable toolbar actions
 			if (jQuery.contains($(&quot;#toolbar_wrapper&quot;)[0],event.target)){
 				return;
 			}
@@ -507,7 +501,7 @@ VISH.Editor = (function(V,$,undefined){
 				return;
 			}
 
-			&#x2F;&#x2F;No hide toolbar when we are working in a wysiwyg fancybox
+			//No hide toolbar when we are working in a wysiwyg fancybox
 			var isWysiwygFancyboxEnabled = false;
 			$(&quot;.cke_dialog&quot;).each(function(index,cke_dialog){
 				if((cke_dialog)&amp;&amp;(jQuery.contains(cke_dialog,event.target))){
@@ -544,34 +538,34 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
-	&#x2F;**
+	/**
 	* Function to add a delete button to the element
-	*&#x2F;
+	*/
 	var addDeleteButton = function(element){
-		element.append(&quot;&lt;div class=&#x27;delete_content&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		element.append(&quot;&lt;div class=&#x27;delete_content&#x27;&gt;&lt;/div&gt;&quot;);
 	};
 
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; CORE methods
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	/////////////////
+	// CORE methods
+	/////////////////
 
-	&#x2F;**
+	/**
 	* Function called when entering slide in editor, we have to show the objects
-	*&#x2F;
+	*/
 	var onSlideEnterEditor = function(e){
 		var slide = $(e.target);
 
-		&#x2F;&#x2F;Prevent parent to trigger onSlideEnterEditor
-		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
+		//Prevent parent to trigger onSlideEnterEditor
+		//Use to prevent slidesets to be called when enter in one of their subslides
 		e.stopPropagation();
 
 		if(V.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onEnterSlideset(slide);
 		} else {
-			&#x2F;&#x2F;Standard slide
+			//Standard slide
 			V.Editor.Utils.Loader.loadObjectsInEditorSlide(slide);
-			&#x2F;&#x2F;Show objects
+			//Show objects
 			setTimeout(function(){
 				$(slide).find(&#x27;.object_wrapper&#x27;).show();
 			},500);
@@ -582,9 +576,9 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.loadToolsForSlide(slide);
 	};
   
-	&#x2F;**
+	/**
 	* Function called when leaving slide in editor, we have to hide the objects
-	*&#x2F;
+	*/
 	var onSlideLeaveEditor = function(e){
 		var slide = $(e.target);
 
@@ -593,9 +587,9 @@ VISH.Editor = (function(V,$,undefined){
 		if(V.Slideset.isSlideset(slide)){
 			V.Editor.Slideset.onLeaveSlideset(slide);
 		} else {
-			&#x2F;&#x2F;Standard slide
+			//Standard slide
 			V.Editor.Utils.Loader.unloadObjectsInEditorSlide(slide);
-			&#x2F;&#x2F;Hide objects
+			//Hide objects
 			$(&#x27;.object_wrapper&#x27;).hide();
 		}
 	};
@@ -607,22 +601,22 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.Tools.loadToolsForZone(area);
 	};
 	
-	&#x2F;**
+	/**
 	* Function to save the presentation
-	*&#x2F;
+	*/
 	var savePresentation = function(){
-		&#x2F;&#x2F;Save the presentation in JSON
+		//Save the presentation in JSON
 		var presentation = {};
 
-		&#x2F;&#x2F;Save settings (metadata, theme, animation, ...)
+		//Save settings (metadata, theme, animation, ...)
 		presentation = V.Editor.Settings.saveSettings();
 
 		presentation = _saveLORData(presentation);
 
-		&#x2F;&#x2F;Slides of the presentation
+		//Slides of the presentation
 		presentation.slides = [];
 
-		&#x2F;&#x2F;Load and show all objects
+		//Load and show all objects
 		V.Editor.Utils.Loader.loadAllObjects();
 		$(&quot;.object_wrapper, .snapshot_wrapper&quot;).show();
 
@@ -635,7 +629,7 @@ VISH.Editor = (function(V,$,undefined){
 				var slidesetModule = V.Editor.Slideset.getCreatorModule(slideDOM);
 				V.Utils.addTempShown(slideDOM);
 				slide = slidesetModule.getSlideHeader(slideDOM);
-				&#x2F;&#x2F;Save subslides
+				//Save subslides
 				$(slideDOM).find(&quot;article&quot;).each(function(index,subslideDOM){
 					var subslide = _saveStandardSlide(subslideDOM,presentation,true);
 					slide.slides.push(subslide);
@@ -646,34 +640,31 @@ VISH.Editor = (function(V,$,undefined){
 			presentation.slides.push(slide);	
 		});
 
-		&#x2F;&#x2F;Unload all objects
+		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
-		&#x2F;&#x2F;Reload current slide objects
+		//Reload current slide objects
 		V.Editor.Utils.Loader.loadObjectsInEditorSlide(V.Slides.getCurrentSlide());
 
-		&#x2F;&#x2F; V.Debugging.log(&quot;\n\nViSH Editor save the following presentation:\n&quot;);
-		&#x2F;&#x2F; V.Debugging.log(JSON.stringify(presentation));
+		// V.Debugging.log(&quot;\n\nViSH Editor save the following presentation:\n&quot;);
+		// V.Debugging.log(JSON.stringify(presentation));
 
 		return presentation;
 	};
 
 	var _saveLORData = function(presentation){
-		switch(V.Configuration.getConfiguration().mode){
-			case V.Constant.VISH:
-			case V.Constant.NOSERVER:
-				var LORPresentation = getDraftPresentation();
-				var LORMetadata;
-				if(LORPresentation &amp;&amp; LORPresentation[&quot;vishMetadata&quot;]){
-					LORMetadata = LORPresentation[&quot;vishMetadata&quot;];
-				} else {
-					LORMetadata = {};
-				}
-				
-				LORMetadata[&quot;draft&quot;] = isPresentationDraft().toString();
+		var LORPresentation = getDraftPresentation();
+		var LORMetadata;
+		
+		if(LORPresentation &amp;&amp; LORPresentation[&quot;vishMetadata&quot;]){
+			LORMetadata = LORPresentation[&quot;vishMetadata&quot;];
+		} else {
+			LORMetadata = {};
+		}
+		
+		LORMetadata[&quot;draft&quot;] = isPresentationDraft().toString();
 
-				presentation[&quot;vishMetadata&quot;] = LORMetadata;
-				break;
-		};
+		presentation[&quot;vishMetadata&quot;] = LORMetadata;
+
 		return presentation;
 	};
 	
@@ -684,7 +675,7 @@ VISH.Editor = (function(V,$,undefined){
 		slide.template = $(slideDOM).attr(&#x27;template&#x27;);
 		slide.elements = [];
 
-		&#x2F;&#x2F;important show it (the browser does not know the height and width if it is hidden)
+		//important show it (the browser does not know the height and width if it is hidden)
 		V.Utils.addTempShown(slideDOM);
 
 		$(slideDOM).find(&#x27;div&#x27;).each(function(i,div){
@@ -695,7 +686,7 @@ VISH.Editor = (function(V,$,undefined){
 				element.type	=	$(div).attr(&#x27;type&#x27;);
 				element.areaid	=	$(div).attr(&#x27;areaid&#x27;);
 
-				&#x2F;&#x2F;Save element settings
+				//Save element settings
 				var elSettings = $(div).attr(&quot;elSettings&quot;);
 				if(typeof elSettings == &quot;string&quot;){
 					try {
@@ -724,7 +715,7 @@ VISH.Editor = (function(V,$,undefined){
 					var video = $(div).find(&quot;video&quot;);
 					element.poster = $(video).attr(&quot;poster&quot;);
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(video));
-					&#x2F;&#x2F;Sources
+					//Sources
 					var sources= &#x27;&#x27;;		
 					$(video).find(&#x27;source&#x27;).each(function(index, source) {
 						if(index!==0){
@@ -739,7 +730,7 @@ VISH.Editor = (function(V,$,undefined){
 				} else if(element.type==V.Constant.AUDIO){
 					var audio = $(div).find(&quot;audio&quot;);
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div),$(audio));
-					&#x2F;&#x2F;Sources
+					//Sources
 					var sources= &#x27;&#x27;;				
 					$(audio).find(&#x27;source&#x27;).each(function(index, source) {
 						if(index!==0){
@@ -763,7 +754,7 @@ VISH.Editor = (function(V,$,undefined){
 					if(zoom!=1){
 						element.zoomInStyle = V.Utils.getZoomInStyle(zoom);
 					}
-					&#x2F;&#x2F;Save subtype
+					//Save subtype
 					element.subtype = V.Object.getObjectInfo(myObject).type;
 				} else if (element.type === V.Constant.QUIZ) {
 					var quizJSON = VISH.Editor.Quiz.save(div);
@@ -787,20 +778,20 @@ VISH.Editor = (function(V,$,undefined){
 					element.body   = V.Utils.getOuterHTML(snapshotIframe);
 					element.style  = V.Editor.Utils.getStylesInPercentages($(div),snapshotWrapper);
 
-					&#x2F;&#x2F;Save scrolls
+					//Save scrolls
 					var scrollTopAttr = $(snapshotWrapper).attr(&quot;scrollTop&quot;);
 					if(typeof scrollTopAttr !== &quot;undefined&quot;){
 						element.scrollTop = scrollTopAttr;
 						element.scrollLeft = $(snapshotWrapper).attr(&quot;scrollLeft&quot;);
 					} else {
-						&#x2F;&#x2F;Fallback. Ideally never execute
-						&#x2F;&#x2F;It only works for visible slides, otherwise returns 0,0
+						//Fallback. Ideally never execute
+						//It only works for visible slides, otherwise returns 0,0
 						element.scrollTop = $(snapshotWrapper).scrollTop();
 						element.scrollLeft = $(snapshotWrapper).scrollLeft();
 					}
 					element.subtype = V.Constant.MEDIA.WEB;
 				} else if(typeof element.type == &quot;undefined&quot;){
-					&#x2F;&#x2F;Empty element
+					//Empty element
 				}
 
 				slide.elements.push(element);
@@ -808,11 +799,11 @@ VISH.Editor = (function(V,$,undefined){
 		});
 
 		if(slide.containsQuiz){
-			&#x2F;&#x2F;Before save a slide with quiz
-			&#x2F;&#x2F;Add a presentation to answer the quiz in live mode
+			//Before save a slide with quiz
+			//Add a presentation to answer the quiz in live mode
 			var quizSlide = $.extend(true, {}, slide);
 			quizSlide.type = V.Constant.QUIZ_SIMPLE;
-			&#x2F;&#x2F;Build a presentation Wrapper
+			//Build a presentation Wrapper
 			var quizPresentation = {};
 			quizPresentation.title = presentation.title;
 			quizPresentation.description = presentation.description;
@@ -840,9 +831,9 @@ VISH.Editor = (function(V,$,undefined){
 				
 				var send_type;
 				if(createNewPresentation){
-					send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new presentation
+					send_type = &#x27;POST&#x27;; //if it is a new presentation
 				} else {
-					send_type = &#x27;PUT&#x27;;  &#x2F;&#x2F;if we are editing an existing prsesentation or resaving a new presentation
+					send_type = &#x27;PUT&#x27;;  //if we are editing an existing prsesentation or resaving a new presentation
 				}
 
 				var params = {
@@ -864,7 +855,7 @@ VISH.Editor = (function(V,$,undefined){
 					}
 				}
 
-				&#x2F;&#x2F;POST to http:&#x2F;&#x2F;server&#x2F;excursions&#x2F; or PUT to http:&#x2F;&#x2F;server&#x2F;excursions&#x2F;id
+				//POST to http://server/excursions/ or PUT to http://server/excursions/id
 				$.ajax({
 					type    : send_type,
 					url     : V.UploadPresentationPath,
@@ -873,8 +864,8 @@ VISH.Editor = (function(V,$,undefined){
 						if(order != &quot;unpublish&quot;){
 							lastStoredPresentationStringify = jsonPresentation;
 							if((createNewPresentation)&amp;&amp;(typeof data != &quot;undefined&quot;)&amp;&amp;(data.uploadPath)){
-								&#x2F;&#x2F;Update V.UploadPresentationPath because the presentation exists now
-								&#x2F;&#x2F;Future saves will update the existing presentation
+								//Update V.UploadPresentationPath because the presentation exists now
+								//Future saves will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
 								if(V.Status.getDevice().features.historypushState){
 									if(data.editPath){
@@ -886,10 +877,10 @@ VISH.Editor = (function(V,$,undefined){
 								_isDraft = false;
 							}
 						} else {
-							&#x2F;&#x2F;Order == &quot;unpublish&quot;
+							//Order == &quot;unpublish&quot;
 							_isDraft = true;
 							if((typeof data != &quot;undefined&quot;)&amp;&amp;(data.exitPath)){
-								&#x2F;&#x2F;Update exit path
+								//Update exit path
 								V.exitPath = data.exitPath;
 							}
 						}
@@ -911,7 +902,7 @@ VISH.Editor = (function(V,$,undefined){
 						_isDraft = false;
 					}
 				} else {
-					&#x2F;&#x2F;Order == &quot;unpublish&quot;
+					//Order == &quot;unpublish&quot;
 					_isDraft = true;
 				}
 
@@ -928,13 +919,13 @@ VISH.Editor = (function(V,$,undefined){
 		var url = V.UploadPresentationPath;
 
 		if(draftPresentation){
-			send_type = &#x27;PUT&#x27;; &#x2F;&#x2F;if we are editing
+			send_type = &#x27;PUT&#x27;; //if we are editing
 			url = url + draftPresentation.id;
 		} else {
-			send_type = &#x27;POST&#x27;; &#x2F;&#x2F;if it is a new
+			send_type = &#x27;POST&#x27;; //if it is a new
 		} 
 
-		&#x2F;&#x2F;POST to &#x2F;server&#x2F;presentation&#x2F;
+		//POST to /server/presentation/
 		var jsonPresentation = JSON.stringify(presentation);   
 		var params = {
 			&quot;presentation[json]&quot;: jsonPresentation
@@ -945,7 +936,7 @@ VISH.Editor = (function(V,$,undefined){
 			url     : url,
 			data    : params,
 			success : function(data) {
-				&#x2F;&#x2F;Redirect
+				//Redirect
 				V.Editor.Events.allowExitWithoutConfirmation();
 				window.top.location.href = data.url;
 			}
@@ -953,18 +944,18 @@ VISH.Editor = (function(V,$,undefined){
 	};
 	
 	
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F;  Getters and Setters
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	//////////////////
+	///  Getters and Setters
+	//////////////////
 
 	var getOptions = function(){
 		return initOptions;
 	};
 
-	&#x2F;**
+	/**
 	 * function to get the template of the slide of current_el
 	 * param area: optional param indicating the area to get the template, used for editing presentations
-	 *&#x2F;
+	 */
 	var getTemplate = function(area) {
 		if(area){
 			return area.parent().attr(&#x27;template&#x27;);
@@ -1008,7 +999,7 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var hasInitialPresentation = function(){
-		&#x2F;&#x2F; return (typeof draftPresentation != &quot;undefined&quot;);
+		// return (typeof draftPresentation != &quot;undefined&quot;);
 		return initialPresentation;
 	};
 
@@ -1024,9 +1015,9 @@ VISH.Editor = (function(V,$,undefined){
 		contentAddModeForSlides = mode;
 	}
 
-	&#x2F;*
+	/*
 	 * Type can be &quot;presentation&quot; or &quot;quiz_simple&quot;
-	 *&#x2F;
+	 */
 	var getPresentationType = function(){
 		if((!draftPresentation)||(!draftPresentation.type)){
 			return V.Constant.PRESENTATION;
@@ -1035,9 +1026,9 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 
-	&#x2F;*
+	/*
 	 * Returns if the server has checked the presentation has a draft.
-	 *&#x2F;
+	 */
 	var isPresentationDraft = function(){
 		return _isDraft;
 	};
@@ -1049,11 +1040,11 @@ VISH.Editor = (function(V,$,undefined){
 			} else if(typeof initOptions.draft === &quot;string&quot;){
 				return !(initOptions.draft==&quot;false&quot;);
 			} else {
-				&#x2F;&#x2F;Server must indicate explicity that this presentation is not a draft with the &quot;draft&quot; option.
+				//Server must indicate explicity that this presentation is not a draft with the &quot;draft&quot; option.
 				return true;
 			}
 		} else {
-			&#x2F;&#x2F;New presentation created, draft by default.
+			//New presentation created, draft by default.
 			return true;
 		}
 	};
@@ -1113,20 +1104,19 @@ VISH.Editor = (function(V,$,undefined){
 }) (VISH, jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

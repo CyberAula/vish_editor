@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Viewer.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,79 +25,73 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Viewer.js</h1>
+<h1 class="file-heading">File: VISH.Viewer.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 VISH.Viewer = (function(V,$,undefined){
 
-	&#x2F;&#x2F;Initial options
+	//Initial options
 	var initOptions;
-	&#x2F;&#x2F;Pointer to the current presentation
+	//Pointer to the current presentation
 	var current_presentation;
 
 
-	&#x2F;**
+	/**
 	 * Function to initialize the Viewer, saves the slides object and init the presentation with it
 	 * options is a hash with params and options from the server.
-	 *&#x2F;
+	 */
 	var init = function(options, presentation){
 		V.Editing = false;
 		$(&quot;body&quot;).addClass(&quot;ViSHViewerBody&quot;);
@@ -134,13 +126,14 @@ VISH.Viewer = (function(V,$,undefined){
 		current_presentation = presentation;
 		
 		V.Status.init(function(){
-			&#x2F;&#x2F;Status loading finishes
+			//Status loading finishes
 			_initAferStatusLoaded(options,presentation);
 		});
 	};
 
 	var _initAferStatusLoaded = function(options,presentation){
-		V.EventsNotifier.init();	
+		V.EventsNotifier.init();
+		V.Object.init();
 		V.Slideset.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();
@@ -175,34 +168,34 @@ VISH.Viewer = (function(V,$,undefined){
 
 	var _initAferAnimationLoaded = function(options,presentation){
 		V.Slides.updateCurrentSlideFromHash();
-		&#x2F;&#x2F;we have to update slides AFTER load theme and before anything
-		&#x2F;&#x2F;This way we prevent undesired behaviours 
+		//we have to update slides AFTER load theme and before anything
+		//This way we prevent undesired behaviours 
 		V.Slides.updateSlides();
 
-		&#x2F;&#x2F;Init some modules (and submodules) after render
+		//Init some modules (and submodules) after render
 		V.Quiz.init();
 		V.SCORM.initAfterRender();
 
-		&#x2F;&#x2F;Init ViSH Editor Addons
+		//Init ViSH Editor Addons
 		if(options.addons){
 			V.Addons.init(options.addons);
 		}
 
-		V.ViewerAdapter.init(options); &#x2F;&#x2F;Also init texts
+		V.ViewerAdapter.init(options); //Also init texts
 
-		&#x2F;&#x2F;Clean hash
-		&#x2F;&#x2F; V.Utils.cleanHash();
+		//Clean hash
+		// V.Utils.cleanHash();
 
 		if(V.Slides.getCurrentSlideNumber()&gt;0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 		}
 
 		if(!V.Status.getIsEmbed()){
-			&#x2F;&#x2F;Try to win focus
+			//Try to win focus
 			window.focus();
 		}
 
-		&#x2F;&#x2F;After all, init tracking system
+		//After all, init tracking system
 		V.TrackingSystem.init();
 	};
 
@@ -211,17 +204,17 @@ VISH.Viewer = (function(V,$,undefined){
 		return initOptions;
 	};
 
-	&#x2F;**
+	/**
 	* Function called when entering slide in viewer, we have to show the objects
-	*&#x2F;
+	*/
 	var onSlideEnterViewer = function(e){
 		var slide = e.target;
 		var cSlideNumber = V.Slides.getCurrentSlideNumber();
 		var isSubslide = V.Slides.isSubslide(slide);
 		var isSlideset = ((!isSubslide)&amp;&amp;(V.Slideset.isSlideset(slide)));
 
-		&#x2F;&#x2F;Prevent parent to trigger onSlideEnterViewer
-		&#x2F;&#x2F;Use to prevent slidesets to be called when enter in one of their subslides
+		//Prevent parent to trigger onSlideEnterViewer
+		//Use to prevent slidesets to be called when enter in one of their subslides
 		e.stopPropagation();
 
 		var timeToLoadObjects = 500;
@@ -235,7 +228,7 @@ VISH.Viewer = (function(V,$,undefined){
 		setTimeout(function(){
 			if(!isSubslide){
 				if(cSlideNumber!==V.Slides.getCurrentSlideNumber()){
-					&#x2F;&#x2F;Prevent objects to load when the slide isn&#x27;t focused
+					//Prevent objects to load when the slide isn&#x27;t focused
 					return;
 				}
 			}
@@ -249,9 +242,9 @@ VISH.Viewer = (function(V,$,undefined){
 			}
 		},timeToLoadObjects);
 
-		&#x2F;&#x2F; if(V.Status.getDevice().mobile){
-		&#x2F;&#x2F; 	V.ImagePlayer.reloadGifs($(slide));
-		&#x2F;&#x2F; }
+		// if(V.Status.getDevice().mobile){
+		// 	V.ImagePlayer.reloadGifs($(slide));
+		// }
 
 		if(!isSlideset){
 			V.Video.HTML5.playMultimedia(slide);
@@ -268,9 +261,9 @@ VISH.Viewer = (function(V,$,undefined){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEnterSlide,{&quot;id&quot;: slide.id, &quot;slideNumber&quot;: cSlideNumber},false);
 	};
 
-	&#x2F;**
+	/**
 	* Function called when leaving a slide in viewer
-	*&#x2F;
+	*/
 	var onSlideLeaveViewer = function(e){
 		var slide = e.target;
 		var isSubslide = V.Slides.isSubslide(slide);
@@ -293,10 +286,10 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 	};
 	
-	&#x2F;**
+	/**
 	 * function to update the number that indicates what slide is diplayed
-	 * with this format: 1&#x2F;12 2&#x2F;12
-	 *&#x2F;
+	 * with this format: 1/12 2/12
+	 */
 	var updateSlideCounter = function(){
 		var number_of_slides = V.Slides.getSlides().length;
 		var slide_number = V.Slides.getCurrentSlideNumber();
@@ -304,7 +297,7 @@ VISH.Viewer = (function(V,$,undefined){
 			slide_number = 0;
 		}
 		$(&quot;#slide-counter-input&quot;).val(slide_number);
-		$(&quot;#slide-counter-span&quot;).html(&quot;&#x2F;&quot; + number_of_slides);
+		$(&quot;#slide-counter-span&quot;).html(&quot;/&quot; + number_of_slides);
 	};
 	
 	var getCurrentPresentation = function(){
@@ -334,20 +327,19 @@ VISH.Viewer = (function(V,$,undefined){
 }) (VISH,jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

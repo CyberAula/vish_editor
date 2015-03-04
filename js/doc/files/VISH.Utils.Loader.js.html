@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Utils.Loader.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,64 +25,58 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Utils.Loader.js</h1>
+<h1 class="file-heading">File: VISH.Utils.Loader.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -139,7 +131,7 @@ VISH.Utils.Loader = (function(V,undefined){
 			});
 			$(image).error(function(response){
 				if((options)&amp;&amp;(options.defaultOnError)){
-					&#x2F;&#x2F;Try to load the default image
+					//Try to load the default image
 					var defaultSrc = $(image).attr(&quot;defaultsrc&quot;);
 					if(typeof defaultSrc == &quot;string&quot;){
 						$(image).removeAttr(&quot;defaultsrc&quot;);
@@ -149,8 +141,8 @@ VISH.Utils.Loader = (function(V,undefined){
 							options.onImageErrorCallback(image);
 						}
 
-						&#x2F;&#x2F;Only return when the first time we load a default source
-						&#x2F;&#x2F;The same image will call load or error callback again.
+						//Only return when the first time we load a default source
+						//The same image will call load or error callback again.
 						return;
 					}
 				}
@@ -177,15 +169,15 @@ VISH.Utils.Loader = (function(V,undefined){
 	var _insertElementOnContainer = function(image,imagesArray,containerId,options){
 		var titleArray = options.titleArray;
 		if((titleArray)&amp;&amp;(titleArray[imagesArray.indexOf(image)])){
-			$(&quot;#&quot; + containerId).append(&quot;&lt;div&gt;&lt;p&gt;&quot;+titleArray[imagesArray.indexOf(image)]+&quot;&lt;&#x2F;p&gt;&quot; + V.Utils.getOuterHTML(image) + &quot;&lt;&#x2F;div&gt;&quot;);
+			$(&quot;#&quot; + containerId).append(&quot;&lt;div&gt;&lt;p&gt;&quot;+titleArray[imagesArray.indexOf(image)]+&quot;&lt;/p&gt;&quot; + V.Utils.getOuterHTML(image) + &quot;&lt;/div&gt;&quot;);
 		} else {
-			$(&quot;#&quot; + containerId).append(&#x27;&lt;div&gt;&#x27; + V.Utils.getOuterHTML(image) + &#x27;&lt;&#x2F;div&gt;&#x27;);
+			$(&quot;#&quot; + containerId).append(&#x27;&lt;div&gt;&#x27; + V.Utils.getOuterHTML(image) + &#x27;&lt;/div&gt;&#x27;);
 		}
 	};
 
-	&#x2F;*
+	/*
 	* Load a script asynchronously
-	*&#x2F;
+	*/
 	var loadScript = function(scriptSrc,callback){
 		if((typeof scriptSrc !== &quot;string&quot;)||(typeof callback !== &quot;function&quot;)){
 			return;
@@ -195,9 +187,9 @@ VISH.Utils.Loader = (function(V,undefined){
 		if(head){
 			var script = document.createElement(&#x27;script&#x27;);
 			script.setAttribute(&#x27;src&#x27;,scriptSrc);
-			script.setAttribute(&#x27;type&#x27;,&#x27;text&#x2F;javascript&#x27;);
+			script.setAttribute(&#x27;type&#x27;,&#x27;text/javascript&#x27;);
 
-			&#x2F;&#x2F;Only call callback once
+			//Only call callback once
 			var callbackCalled = false;
 
 			var callCallback = function(){
@@ -214,10 +206,10 @@ VISH.Utils.Loader = (function(V,undefined){
 					callCallback();
 				}
 			};
-			&#x2F;&#x2F;calling a function after the js is loaded (IE)
+			//calling a function after the js is loaded (IE)
 			script.onreadystatechange = loadFunction;
 
-			&#x2F;&#x2F;calling a function after the js is loaded (Firefox &amp; GChrome)
+			//calling a function after the js is loaded (Firefox &amp; GChrome)
 			script.onload = callCallback;
 
 			head.appendChild(script);
@@ -233,9 +225,9 @@ VISH.Utils.Loader = (function(V,undefined){
 
 		var fullScriptSrc = scriptSrc + &quot;&amp;callback=VISH.Utils.Loader.onGoogleLibraryLoaded&quot;;
 		loadScript(fullScriptSrc,function(){
-			&#x2F;&#x2F; We should wait for onGoogleLibraryLoaded callback.
-			&#x2F;&#x2F; We can not use this callback, because the loaded script would load more scripts internally
-			&#x2F;&#x2F; So, despite the script is loaded, the full library may be not
+			// We should wait for onGoogleLibraryLoaded callback.
+			// We can not use this callback, because the loaded script would load more scripts internally
+			// So, despite the script is loaded, the full library may be not
 		});
 	};
 
@@ -246,21 +238,21 @@ VISH.Utils.Loader = (function(V,undefined){
 		_loadGoogleLibraryCallback = undefined;
 	};
 
-	&#x2F;**
+	/**
 	* Function to dinamically add a css
-	*&#x2F;
+	*/
 	var loadCSS = function(path, callback){
 		var url = V.StylesheetsPath + path;
 		var head = document.getElementsByTagName(&#x27;head&#x27;)[0];
 		var link = document.createElement(&#x27;link&#x27;);
-		link.type = &quot;text&#x2F;css&quot;;
+		link.type = &quot;text/css&quot;;
 		link.rel = &quot;stylesheet&quot;
 		link.href = url;
 
-		&#x2F;&#x2F;Callback
+		//Callback
 		if(typeof callback == &quot;function&quot;){
 
-			&#x2F;&#x2F;Only call callback once
+			//Only call callback once
 			var callbackCalled = false;
 
 			var callCallback = function(){
@@ -270,7 +262,7 @@ VISH.Utils.Loader = (function(V,undefined){
 				}
 			}
 
-			&#x2F;&#x2F;calling a function after the css is loaded (Firefox &amp; Google Chrome)
+			//calling a function after the css is loaded (Firefox &amp; Google Chrome)
 			link.onload = callCallback;
 			link.onerror = callCallback;
 
@@ -279,14 +271,14 @@ VISH.Utils.Loader = (function(V,undefined){
 					callCallback();
 				}
 			};
-			&#x2F;&#x2F;calling a function after the css is loaded (IE)
+			//calling a function after the css is loaded (IE)
 			link.onreadystatechange = loadFunction;
 		};
 
 		head.appendChild(link);
 
 		if(typeof callback == &quot;function&quot;){
-			&#x2F;&#x2F;Workaround for browsers that don&#x27;t support LINK onload functions
+			//Workaround for browsers that don&#x27;t support LINK onload functions
 			var img = document.createElement(&#x27;img&#x27;);
 			img.onerror = function(){
 				callCallback();
@@ -296,25 +288,25 @@ VISH.Utils.Loader = (function(V,undefined){
 	};
 
 	var loadDeviceCSS = function(){
-		&#x2F;&#x2F;Set device CSS
+		//Set device CSS
 		if(V.Status.getDevice().desktop){
-			loadCSS(&quot;device&#x2F;desktop.css&quot;);
+			loadCSS(&quot;device/desktop.css&quot;);
 		} else if(V.Status.getDevice().mobile){
-			loadCSS(&quot;device&#x2F;mobile.css&quot;);
+			loadCSS(&quot;device/mobile.css&quot;);
 		} else if(V.Status.getDevice().tablet){
-			loadCSS(&quot;device&#x2F;tablet.css&quot;);
+			loadCSS(&quot;device/tablet.css&quot;);
 		}
 
-		&#x2F;&#x2F;Set browser CSS
+		//Set browser CSS
 		switch(V.Status.getDevice().browser.name){
 			case V.Constant.FIREFOX:
-				loadCSS(&quot;browser&#x2F;firefox.css&quot;);
+				loadCSS(&quot;browser/firefox.css&quot;);
 				break;
 			case V.Constant.IE:
-				loadCSS(&quot;browser&#x2F;ie.css&quot;);
+				loadCSS(&quot;browser/ie.css&quot;);
 				break;
 			case V.Constant.CHROME:
-				loadCSS(&quot;browser&#x2F;chrome.css&quot;);
+				loadCSS(&quot;browser/chrome.css&quot;);
 				break;
 		}
 	};
@@ -323,19 +315,19 @@ VISH.Utils.Loader = (function(V,undefined){
 		var languagesWithCSS = [&quot;es&quot;, &quot;fr&quot;, &quot;hu&quot;, &quot;nl&quot;, &quot;de&quot;];
 		var language = V.I18n.getLanguage();
 		if(languagesWithCSS.indexOf(language)!=-1){
-			&#x2F;&#x2F;Load CSS for this language
-			loadCSS(&quot;language&#x2F;&quot; + language + &quot;.css&quot;);
+			//Load CSS for this language
+			loadCSS(&quot;language/&quot; + language + &quot;.css&quot;);
 		}
 	};
 
 
-	&#x2F;*
+	/*
 	* Loading dialogs
-	*&#x2F;
+	*/
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; Full Loading
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	///////////////////
+	// Full Loading
+	///////////////////
 
 	var t1Loading;
 
@@ -419,20 +411,19 @@ VISH.Utils.Loader = (function(V,undefined){
 }) (VISH);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

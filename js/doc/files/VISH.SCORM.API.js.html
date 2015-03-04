@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.SCORM.API.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,78 +25,72 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.SCORM.API.js</h1>
+<h1 class="file-heading">File: VISH.SCORM.API.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&#x2F;*
+/*
  * SCORM RTE API Management
-*&#x2F;
+*/
 
 VISH.SCORM.API = (function(V,$,undefined){
 
-	&#x2F;&#x2F;SCORM API Instance
+	//SCORM API Instance
 	var scorm;
 	var connected;
 
-	&#x2F;&#x2F;Vars
+	//Vars
 	var COMPLETION_THRESHOLD = 0.9;
 	var COMPLETION_ATTEMPT_THRESHOLD = 0.1;
 	var SCORE_THRESHOLD = 0.5;
@@ -115,10 +107,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 			return;
 		}
 
-		&#x2F;&#x2F;Init progress tracking
+		//Init progress tracking
 		V.ProgressTracking.init();
 
-		&#x2F;&#x2F;Init User model
+		//Init User model
 		var learnerName = scorm.getvalue(&#x27;cmi.learner_name&#x27;);
 		var learnerId = scorm.getvalue(&#x27;cmi.learner_id&#x27;);
 		var myUser = V.User.getUser();
@@ -132,12 +124,12 @@ VISH.SCORM.API = (function(V,$,undefined){
 			V.User.setUser(myUser);
 		}
 
-		&#x2F;&#x2F;Initial progress value
+		//Initial progress value
 		_updateProgressMeasure(0);
 
 		hasScore = V.ProgressTracking.getHasScore();
 		if(hasScore){
-			&#x2F;&#x2F;Initial score values
+			//Initial score values
 			scorm.setvalue(&#x27;cmi.score.min&#x27;,(0).toString());
 			scorm.setvalue(&#x27;cmi.score.max&#x27;,(100).toString());
 			_updateScore(0);
@@ -161,7 +153,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
 			_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
-			&#x2F;&#x2F; scorm.commit(); terminate will call commit
+			// scorm.commit(); terminate will call commit
 			scorm.terminate();
 		});
 	};
@@ -235,8 +227,8 @@ VISH.SCORM.API = (function(V,$,undefined){
 	};
 
 
-	&#x2F;* Base code provided by https:&#x2F;&#x2F;github.com&#x2F;cybercussion&#x2F;SCOBot *&#x2F;
-	&#x2F;**
+	/* Base code provided by https://github.com/cybercussion/SCOBot */
+	/**
 	 * SCORM API
 	 * This is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.
 	 * Switch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations
@@ -265,9 +257,9 @@ VISH.SCORM.API = (function(V,$,undefined){
 	 * $(window).bind(&#x27;unload&#x27;, YOUR_EXIT_METHOD);
 	 *
 	 * JSLint was recently changed and its throwing a &quot;use spaces, not tabs&quot; error.  I decided to switch to spaces.
-	 * https:&#x2F;&#x2F;github.com&#x2F;douglascrockford&#x2F;JSLint&#x2F;pull&#x2F;140
+	 * https://github.com/douglascrockford/JSLint/pull/140
 	 *
-	 * https:&#x2F;&#x2F;github.com&#x2F;cybercussion&#x2F;SCOBot
+	 * https://github.com/cybercussion/SCOBot
 	 * @author Mark Statkus &lt;mark@cybercussion.com&gt;
 	 * @license Copyright (c) 2009-2014, Cybercussion Interactive LLC
 	 * As of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.
@@ -275,66 +267,66 @@ VISH.SCORM.API = (function(V,$,undefined){
 	 * @version 3.1.0
 	 * @param options {Object} override default values
 	 * @constructor
-	 *&#x2F;
+	 */
 
 	function SCORM_API(options){
-	    &#x2F;&#x2F; Constructor &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	    // Constructor ////////////
 	    &quot;use strict&quot;;
-	    &#x2F;&#x2F; Please edit run time options or override them when you instantiate this object.
+	    // Please edit run time options or override them when you instantiate this object.
 	    var defaults = {
 	            version:           &quot;3.1.1&quot;,
-	            createDate:        &quot;04&#x2F;05&#x2F;2011 08:56AM&quot;,
-	            modifiedDate:      &quot;07&#x2F;16&#x2F;2014 09:40AM&quot;,
+	            createDate:        &quot;04/05/2011 08:56AM&quot;,
+	            modifiedDate:      &quot;07/16/2014 09:40AM&quot;,
 	            debug:             false,
 	            windowDebug: 	   false,
 	            isActive:          false,
 	            throw_alerts:      false,
 	            prefix:            &quot;SCORM_API&quot;,
-	            exit_type:         &quot;suspend&quot;, &#x2F;&#x2F; suspend, finish, or &quot;&quot; (undetermined)
-	            success_status:    &quot;unknown&quot;, &#x2F;&#x2F; passed, failed, unknown
+	            exit_type:         &quot;suspend&quot;, // suspend, finish, or &quot;&quot; (undetermined)
+	            success_status:    &quot;unknown&quot;, // passed, failed, unknown
 	            use_standalone:    true,
 	            standalone:        false,
-	            completion_status: &quot;unknown&quot;, &#x2F;&#x2F; completed, incomplete, unknown
+	            completion_status: &quot;unknown&quot;, // completed, incomplete, unknown
 	            time_type:         &quot;GMT&quot;,
 	            cmi:               null
 	        },
-	    	&#x2F;&#x2F; Settings merged with defaults and extended options
+	    	// Settings merged with defaults and extended options
 	        settings = $.extend(defaults, options),
-	    	&#x2F;&#x2F; Internal API Error Boolean, Error Code object
+	    	// Internal API Error Boolean, Error Code object
 	        isError = 0,
 	        error = {
 	            0:   &quot;No Error&quot;,
 	            404: &quot;Not Found&quot;,
 	            405: &quot;Prevented on a read only resource&quot;
 	        },
-	    	&#x2F;&#x2F; API Object
+	    	// API Object
 	        API = {
 	            connection: false,
-	            version:    &quot;none&quot;, &#x2F;&#x2F; 2004, 1.2 or none
+	            version:    &quot;none&quot;, // 2004, 1.2 or none
 	            mode:       &quot;&quot;,
-	            path:       false, &#x2F;&#x2F; Set Path to LMS API or maybe something local later by default?
-	            data:       {&#x2F;&#x2F; Defaults, I&#x27;m moving a few of the SCORM defaults into this data object, they will be maintained here thereafter.
+	            path:       false, // Set Path to LMS API or maybe something local later by default?
+	            data:       {// Defaults, I&#x27;m moving a few of the SCORM defaults into this data object, they will be maintained here thereafter.
 	                completion_status: settings.completion_status,
 	                success_status:    settings.success_status,
 	                exit_type:         settings.exit_type
 	            },
-	            isActive:   settings.isActive  &#x2F;&#x2F; If SCO is initialized already, this was added for a page by page concept where pages unload and load.
+	            isActive:   settings.isActive  // If SCO is initialized already, this was added for a page by page concept where pages unload and load.
 	        },
 	        self = this;
-	    &#x2F;&#x2F; Public to Public call hook within the internal API
-	    &#x2F;&#x2F; Set some more &#x27;settings&#x27;
-	    settings.error = error; &#x2F;&#x2F; Inherit
-	    settings.startDate = {}; &#x2F;&#x2F; Set on Success of Initialize aka &quot;the start time&quot;
-	    &#x2F;&#x2F; End Constructor &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	    // Public to Public call hook within the internal API
+	    // Set some more &#x27;settings&#x27;
+	    settings.error = error; // Inherit
+	    settings.startDate = {}; // Set on Success of Initialize aka &quot;the start time&quot;
+	    // End Constructor ////////
 	    
-	    &#x2F;&#x2F; Private &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	    // Private ////////////////
 
-	    &#x2F;**
+	    /**
 	     * Debug
 	     * Built-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)
 	     * @param msg {String} Debug Message
 	     * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
-	     *&#x2F;
+	     */
 	    function debug(msg,lvl){
 	    	if(settings){
 	    		msg = settings.prefix + &quot;: &quot; + msg;
@@ -353,7 +345,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    };
 
 	   	function _debug(msg,lvl){
-	   		&#x2F;&#x2F; IE 7 probably 6 was throwing a error if &#x27;console undefined&#x27;
+	   		// IE 7 probably 6 was throwing a error if &#x27;console undefined&#x27;
             if(!window.console){
                 window.console = {};
                 window.console.info = noconsole;
@@ -383,15 +375,15 @@ VISH.SCORM.API = (function(V,$,undefined){
             return true;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * No Console
 	     * Lack of support in older browsers forced this
 	     * @param msg {String} Debug Message
 	     * @param lvl {*} 1=Error, 2=Warning, 3=Log, 4=Info
 	     * @event debug fired when no console is available.  You could listen to this to put it in an alternative log.
-	     *&#x2F;
+	     */
 	    function noconsole(msg,lvl){
-	        &#x2F;&#x2F; ignore (IE 8 and prior or other browser that doesn&#x27;t support it).  Routing event out so it can be handled.
+	        // ignore (IE 8 and prior or other browser that doesn&#x27;t support it).  Routing event out so it can be handled.
 	        $(self).triggerHandler({
 	            &#x27;type&#x27;: &quot;debug&quot;,
 	            &#x27;msg&#x27;:  msg,
@@ -400,8 +392,8 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    };
 
 
-	    &#x2F;&#x2F;Debug in a new window
-		&#x2F;&#x2F;debug info
+	    //Debug in a new window
+		//debug info
 		var aryDebug = new Array();
 		var strDebug = &quot;&quot;;
 		var winDebug;
@@ -416,8 +408,8 @@ VISH.SCORM.API = (function(V,$,undefined){
 			}
 
 			if(isDebugWindowShown==false){
-				&#x2F;&#x2F;pop-up window blocked
-				&#x2F;&#x2F;Disable windowDebug
+				//pop-up window blocked
+				//Disable windowDebug
 				settings.windowDebug = false
 				debug(&quot;Window debug has been blocked&quot;,1);
 				debug(&quot;Debugging messages will be displayed in the console&quot;,2);
@@ -444,7 +436,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 			winDebug = window.open(&quot;&quot;, &quot;Debug&quot;, &quot;width=600,height=300,resizable,scrollbars&quot;);
 
 			if(typeof winDebug == &quot;undefined&quot;){
-				&#x2F;&#x2F;pop-up window blocked
+				//pop-up window blocked
 				return false;
 			}
 
@@ -457,24 +449,24 @@ VISH.SCORM.API = (function(V,$,undefined){
 			return true;
 		};
 
-	    &#x2F;**
+	    /**
 	     * Find API
 	     * API_1484_11 or API for SCORM 2004 or 1.2
 	     * @param win {object} Window level
-	     *&#x2F;
+	     */
 	    function findAPI(win){
 	        var attempts = 0, limit = 500;
 	        while ((!win.API &amp;&amp; !win.API_1484_11) &amp;&amp; (win.parent) &amp;&amp; (win.parent !== win) &amp;&amp; (attempts &lt;= limit)){
 	            attempts += 1;
 	            win = win.parent;
 	        }
-	        if(win.API_1484_11){ &#x2F;&#x2F;SCORM 2004-specific API.
+	        if(win.API_1484_11){ //SCORM 2004-specific API.
 	            API.version = &quot;2004&quot;;
-	            &#x2F;&#x2F;Set version
+	            //Set version
 	            API.path = win.API_1484_11;
-	        } else if(win.API){ &#x2F;&#x2F;SCORM 1.2-specific API
+	        } else if(win.API){ //SCORM 1.2-specific API
 	            API.version = &quot;1.2&quot;;
-	            &#x2F;&#x2F;Set version
+	            //Set version
 	            API.path = win.API;
 	        } else {
 	            return false;
@@ -482,20 +474,20 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return true;
 	    };
 
-	    &#x2F;&#x2F; SCORM Time centric to SCORM 2004 and 1.2 Compatibility
-	    &#x2F;**
+	    // SCORM Time centric to SCORM 2004 and 1.2 Compatibility
+	    /**
 	     * Centiseconds To ISO Duration
-	     * Borrowed from Claude Ostyn, but touched up for JSLint&#x2F;JavaScript and evil &quot;with&quot; statement
+	     * Borrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil &quot;with&quot; statement
 	     * @param n {Number} Total Seconds
 	     * @param bPrecise {Boolean} Only Set true if were dealing with months, years (highly unlikely)
 	     * @returns {String} SCORM 2004 Time PT0H0M0S Format
-	     *&#x2F;
+	     */
 	    function centisecsToISODuration(n,bPrecise){
-	        &#x2F;* Note: SCORM and IEEE 1484.11.1 require centisec precision
+	        /* Note: SCORM and IEEE 1484.11.1 require centisec precision
 	         Parameters:
 	         n = number of centiseconds
 	         bPrecise = optional parameter; if true, duration will
-	         be expressed without using year and&#x2F;or month fields.
+	         be expressed without using year and/or month fields.
 	         If bPrecise is not true, and the duration is long,
 	         months are calculated by approximation based on average number
 	         of days over 4 years (365*4+1), not counting the extra days
@@ -503,11 +495,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	         the calculation could be more precise, but becomes complex,
 	         since the exact result depends on where the reference date
 	         falls within the period (e.g. beginning, end or ???)
-	         1 year ~ (365*4+1)&#x2F;4*60*60*24*100 = 3155760000 centiseconds
-	         1 month ~ (365*4+1)&#x2F;48*60*60*24*100 = 262980000 centiseconds
+	         1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+	         1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
 	         1 day = 8640000 centiseconds
 	         1 hour = 360000 centiseconds
-	         1 minute = 6000 centiseconds *&#x2F;
+	         1 minute = 6000 centiseconds */
 	        var str = &quot;P&quot;,
 	            nCs = Math.max(n, 0),
 	            nY = 0,
@@ -515,25 +507,25 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            nD = 0,
 	            nH,
 	            nMin;
-	        &#x2F;&#x2F; Next set of operations uses whole seconds
-	        &#x2F;&#x2F;with (Math) { &#x2F;&#x2F;argumentatively considered harmful
+	        // Next set of operations uses whole seconds
+	        //with (Math) { //argumentatively considered harmful
 	        nCs = Math.round(nCs);
 	        if (bPrecise === true) {
-	            nD = Math.floor(nCs &#x2F; 8640000);
+	            nD = Math.floor(nCs / 8640000);
 	        } else {
-	            nY = Math.floor(nCs &#x2F; 3155760000);
+	            nY = Math.floor(nCs / 3155760000);
 	            nCs -= nY * 3155760000;
-	            nM = Math.floor(nCs &#x2F; 262980000);
+	            nM = Math.floor(nCs / 262980000);
 	            nCs -= nM * 262980000;
-	            nD = Math.floor(nCs &#x2F; 8640000);
+	            nD = Math.floor(nCs / 8640000);
 	        }
 	        nCs -= nD * 8640000;
-	        nH = Math.floor(nCs &#x2F; 360000);
+	        nH = Math.floor(nCs / 360000);
 	        nCs -= nH * 360000;
-	        nMin = Math.floor(nCs &#x2F; 6000);
+	        nMin = Math.floor(nCs / 6000);
 	        nCs -= nMin * 6000;
-	        &#x2F;&#x2F;}
-	        &#x2F;&#x2F; Now we can construct string
+	        //}
+	        // Now we can construct string
 	        if (nY &gt; 0) {
 	            str += nY + &quot;Y&quot;;
 	        }
@@ -552,34 +544,34 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                str += nMin + &quot;M&quot;;
 	            }
 	            if (nCs &gt; 0) {
-	                str += (nCs &#x2F; 100) + &quot;S&quot;;
+	                str += (nCs / 100) + &quot;S&quot;;
 	            }
 	        }
 	        if (str === &quot;P&quot;) {
 	            str = &quot;PT0H0M0S&quot;;
 	        }
-	        &#x2F;&#x2F; technically PT0S should do but SCORM test suite assumes longer form.
+	        // technically PT0S should do but SCORM test suite assumes longer form.
 	        return str;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * ISO Duration to Centisecond
 	     * @param str
 	     * @return {Number}
-	     *&#x2F;
+	     */
 	    function ISODurationToCentisec(str){
-	        &#x2F;&#x2F; Only gross syntax check is performed here
-	        &#x2F;&#x2F; Months calculated by approximation based on average number
-	        &#x2F;&#x2F; of days over 4 years (365*4+1), not counting the extra days
-	        &#x2F;&#x2F; in leap years. If a reference date was available,
-	        &#x2F;&#x2F; the calculation could be more precise, but becomes complex,
-	        &#x2F;&#x2F; since the exact result depends on where the reference date
-	        &#x2F;&#x2F; falls within the period (e.g. beginning, end or ???)
-	        &#x2F;&#x2F; 1 year ~ (365*4+1)&#x2F;4*60*60*24*100 = 3155760000 centiseconds
-	        &#x2F;&#x2F; 1 month ~ (365*4+1)&#x2F;48*60*60*24*100 = 262980000 centiseconds
-	        &#x2F;&#x2F; 1 day = 8640000 centiseconds
-	        &#x2F;&#x2F; 1 hour = 360000 centiseconds
-	        &#x2F;&#x2F; 1 minute = 6000 centiseconds
+	        // Only gross syntax check is performed here
+	        // Months calculated by approximation based on average number
+	        // of days over 4 years (365*4+1), not counting the extra days
+	        // in leap years. If a reference date was available,
+	        // the calculation could be more precise, but becomes complex,
+	        // since the exact result depends on where the reference date
+	        // falls within the period (e.g. beginning, end or ???)
+	        // 1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+	        // 1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
+	        // 1 day = 8640000 centiseconds
+	        // 1 hour = 360000 centiseconds
+	        // 1 minute = 6000 centiseconds
 	        var aV = [0, 0, 0, 0, 0, 0],
 	            bErr = !!((str.indexOf(&quot;P&quot;) !== 0)),
 	            bTFound = false,
@@ -588,10 +580,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            i = 0,
 	            len;
 	        if (!bErr) {
-	            str = str.substr(1); &#x2F;&#x2F;get past the P
+	            str = str.substr(1); //get past the P
 	            len = aT.length;
 	            i = 0;
-	            &#x2F;&#x2F;for (i = 0; i &lt; len; i += 1) {
+	            //for (i = 0; i &lt; len; i += 1) {
 	            while (i &lt; len) {
 	                if (str.indexOf(&quot;T&quot;) === 0) {
 	                    str = str.substr(1);
@@ -600,11 +592,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                }
 	                p = str.indexOf(aT[i]);
 	                if (p &gt; -1) {
-	                    &#x2F;*jslint continue: true *&#x2F;
+	                    /*jslint continue: true */
 	                    if ((i === 1) &amp;&amp; (str.indexOf(&quot;T&quot;) &gt; -1) &amp;&amp; (str.indexOf(&quot;T&quot;) &lt; p)) {
 	                        continue;
 	                    }
-	                    &#x2F;*jslint continue: false *&#x2F;
+	                    /*jslint continue: false */
 	                    if (aT[i] === &quot;S&quot;) {
 	                        aV[i] = parseFloat(str.substr(0, p));
 	                    } else {
@@ -632,40 +624,40 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            + Math.round(aV[5] * 100);
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Pad Time
 	     * Pads time with proper formatting (double digits)
-	     *&#x2F;
+	     */
 	    function padTime(n){
 	        return n &lt; 10 ? &#x27;0&#x27; + n : n;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * ISO 8601 Date String UTC
 	     * Converts date object into ISO 8601 standard
 	     * returns {String} ISO 8601 + UTC
-	     *&#x2F;
+	     */
 	    function isoDateToStringUTC(d){
-	        return d.getUTCFullYear() + &#x27;-&#x27; + padTime(d.getUTCMonth() + 1) + &#x27;-&#x27; + padTime(d.getUTCDate()) + &#x27;T&#x27; + padTime(d.getUTCHours()) + &#x27;:&#x27; + padTime(d.getUTCMinutes()) + &#x27;:&#x27; + padTime(d.getUTCSeconds()) + &quot;.&quot; + Math.round((d.getUTCMilliseconds() &#x2F; 1000) % 1000) + &#x27;Z&#x27;;
+	        return d.getUTCFullYear() + &#x27;-&#x27; + padTime(d.getUTCMonth() + 1) + &#x27;-&#x27; + padTime(d.getUTCDate()) + &#x27;T&#x27; + padTime(d.getUTCHours()) + &#x27;:&#x27; + padTime(d.getUTCMinutes()) + &#x27;:&#x27; + padTime(d.getUTCSeconds()) + &quot;.&quot; + Math.round((d.getUTCMilliseconds() / 1000) % 1000) + &#x27;Z&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * ISO 8601 Date String
 	     * Concerts date into ISO 8601 Standard
 	     * @returns {String} ISO 8601
-	     *&#x2F;
+	     */
 	    function isoDateToString(d){
 	        var offset = d.getTimezoneOffset() &gt; 0 ? &#x27;-&#x27; : &#x27;+&#x27;;
-	        return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds()) + &quot;.&quot; + Math.round((d.getMilliseconds() &#x2F; 1000) % 1000) + offset + padTime(d.getTimezoneOffset() &#x2F; 60) + &#x27;:00&#x27;;
-	        &#x2F;&#x2F;return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds());
+	        return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds()) + &quot;.&quot; + Math.round((d.getMilliseconds() / 1000) % 1000) + offset + padTime(d.getTimezoneOffset() / 60) + &#x27;:00&#x27;;
+	        //return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds());
 	    };
 
-	    &#x2F;**
+	    /**
 	     * ISO 8601 String to Date
 	     * Not extremely clear yet if this is needed at a SCO level.  If not I&#x27;ll remove it later.
 	     * @param str {String} ISO8601
 	     * @return {Object} Date Object or false
-	     *&#x2F;
+	     */
 	    function isoStringToDate(str){
 	        var MM = [&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;],
 	            d,
@@ -673,22 +665,22 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            offset = 0,
 	            mil = 0,
 	            dd;
-	        &#x2F;*jslint unparam: true*&#x2F;
+	        /*jslint unparam: true*/
 	        switch (settings.time_type) {
 	        case &quot;UTC&quot;:
-	            d = str.replace(&#x2F;(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))(|Z)&#x2F;, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
+	            d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))(|Z)/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
 	                return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
 	            });
 	            dd = new Date.UTC(d);
 	            return dd;
 	        case &quot;GMT&quot;:
-	            d = str.replace(&#x2F;(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))([\+|\-]\d+:\d+)&#x2F;, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec, $Ms, $Offset) {
+	            d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))([\+|\-]\d+:\d+)/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec, $Ms, $Offset) {
 	                offset = parseInt($Offset.substring(1, $Offset.length), 10) * 60 * 60 * 60;
 	                mil = $Ms;
 	                return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
-	                &#x2F;&#x2F;return $Year + &quot;,&quot; + ($Month - 1) + &quot;,&quot; + $Day + &quot;,&quot; + $Hour + &quot;,&quot; + $Min + &quot;,&quot; + $Sec + &quot;,&quot; + $Ms;
+	                //return $Year + &quot;,&quot; + ($Month - 1) + &quot;,&quot; + $Day + &quot;,&quot; + $Hour + &quot;,&quot; + $Min + &quot;,&quot; + $Sec + &quot;,&quot; + $Ms;
 	            });
-	            &#x2F;&#x2F; At this point we have to convert the users offset to the recorded offset to set the date properly.
+	            // At this point we have to convert the users offset to the recorded offset to set the date properly.
 	            dd = new Date(d);
 	            uoffset = dd.getTimezoneOffset() * 60 * 60;
 	            if (uoffset !== offset) {
@@ -697,7 +689,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            }
 	            return dd;
 	        default:
-	            d = str.replace(&#x2F;(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})&#x2F;, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
+	            d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
 	                return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
 	            });
 	            dd = new Date(d);
@@ -705,33 +697,33 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        }
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Centiseconds To SCORM 1.2 Duration
-	     * Borrowed from Claude Ostyn, but touched up for JSLint&#x2F;JavaScript and evil &quot;with&quot; statement
+	     * Borrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil &quot;with&quot; statement
 	     * @param n {Number} Total Seconds
 	     * @returns {String} SCORM 2004 Time PT0H0M0S Format
-	     *&#x2F;
+	     */
 	    function centisecsToSCORM12Duration(n){
-	        &#x2F;&#x2F; Format is [HH]HH:MM:SS[.SS]
-	        var &#x2F;&#x2F;bTruncated = false,
+	        // Format is [HH]HH:MM:SS[.SS]
+	        var //bTruncated = false,
 	            str,
 	            nH,
 	            nCs,
 	            nM,
 	            nS;
-	        &#x2F;&#x2F;with (Math) { agrumentavely considered harmful
+	        //with (Math) { agrumentavely considered harmful
 	        n = Math.round(n);
-	        nH = Math.floor(n &#x2F; 360000);
+	        nH = Math.floor(n / 360000);
 	        nCs = n - nH * 360000;
-	        nM = Math.floor(nCs &#x2F; 6000);
+	        nM = Math.floor(nCs / 6000);
 	        nCs = nCs - nM * 6000;
-	        nS = Math.floor(nCs &#x2F; 100);
+	        nS = Math.floor(nCs / 100);
 	        nCs = nCs - nS * 100;
-	        &#x2F;&#x2F;}
-	        &#x2F;*if (nH &gt; 9999) {
+	        //}
+	        /*if (nH &gt; 9999) {
 	         nH = 9999;
 	         bTruncated = true;
-	         }*&#x2F;
+	         }*/
 	        str = &quot;0000&quot; + nH + &quot;:&quot;;
 	        str = str.substr(str.length - 5, 5);
 	        if (nM &lt; 10) {
@@ -749,19 +741,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            }
 	            str += nCs;
 	        }
-	        &#x2F;&#x2F;if (bTruncated) alert (&quot;Hours truncated to 9999 to fit HHHH:MM:SS.SS format&quot;)
+	        //if (bTruncated) alert (&quot;Hours truncated to 9999 to fit HHHH:MM:SS.SS format&quot;)
 	        return str;
 	    };
 
 
-	    &#x2F;&#x2F; End SCORM Time Handlers &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	    // End SCORM Time Handlers /////////////////////////////
 	    
-	    &#x2F;**
+	    /**
 	     * Make Boolean
-	     * Turns &#x27;yes&#x27;, &#x27;no&#x27;, &#x27;true&#x27;, &#x27;false&#x27;, &#x27;0&#x27;, &#x27;1&#x27; into true&#x2F;false
+	     * Turns &#x27;yes&#x27;, &#x27;no&#x27;, &#x27;true&#x27;, &#x27;false&#x27;, &#x27;0&#x27;, &#x27;1&#x27; into true/false
 	     * @param str {String} value to turn to boolean
 	     * @returns {Boolean}
-	     *&#x2F;
+	     */
 	    function makeBoolean(str){
 	        if (str === undefined) {
 	            debug(&quot;makeBoolean was given empty string, converting to false&quot;, 2);
@@ -785,19 +777,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        }
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Trigger Warning (internal to this API)
 	     * Throws a console log when a SCORM API Error occurs
 	     * @returns {Boolean}
-	     *&#x2F;
+	     */
 	    function triggerWarning(n){
 	        debug(error[n],2);
 	        return true;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Trigger Exception
-	     *&#x2F;
+	     */
 	    function triggerException(msg){
 	        $(self).triggerHandler({
 	            &#x27;type&#x27;:  &#x27;exception&#x27;,
@@ -805,15 +797,15 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        });
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get Last LMS Error Code
 	     * Error Code should be 0 if its anything else, a error has occurred
 	     * @returns {Number}
-	     *&#x2F;
+	     */
 	    function getLastErrorCode(){
-	        var lms = API.path, &#x2F;&#x2F; shortcut
+	        var lms = API.path, // shortcut
 	            code = 0;
-	        &#x2F;&#x2F; default error code
+	        // default error code
 	        if (lms) {
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
@@ -823,23 +815,23 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                code = parseInt(lms.GetLastError(), 10);
 	                break;
 	            default:
-	                &#x2F;&#x2F; handle nonLMS?
+	                // handle nonLMS?
 	                break;
 	            }
 	        }
 	        return code;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get Last LMS Error Message
 	     * Error Message associated by error code
 	     * @param n {Number} error code
 	     * @returns {String} error message
-	     *&#x2F;
+	     */
 	    function getLastErrorMessage(n){
-	        var lms = API.path, &#x2F;&#x2F; shortcut
+	        var lms = API.path, // shortcut
 	            result = &#x27;No LMS Connectivity&#x27;;
-	        &#x2F;&#x2F; default message
+	        // default message
 	        if (lms) {
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
@@ -849,7 +841,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                result = lms.GetErrorString(n.toString());
 	                break;
 	            default:
-	                &#x2F;&#x2F; handle nonLMS?
+	                // handle nonLMS?
 	                break;
 	            }
 	        }
@@ -857,9 +849,9 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    };
 
 	    function getDiagnostic(n){
-	        var lms = API.path, &#x2F;&#x2F; shortcut
+	        var lms = API.path, // shortcut
 	            result = &#x27;No LMS Connectivity&#x27;;
-	        &#x2F;&#x2F; default message
+	        // default message
 	        if (lms) {
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
@@ -869,39 +861,39 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                result = lms.GetDiagnostic(n.toString());
 	                break;
 	            default:
-	                &#x2F;&#x2F; handle nonLMS?
+	                // handle nonLMS?
 	                break;
 	            }
 	        }
 	        return String(result);
 	    };
 
-	    &#x2F;&#x2F; End Private &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	    // End Private ////////////
 
 
-	    &#x2F;&#x2F; Public SCORM Calls &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	    &#x2F;**
+	    // Public SCORM Calls /////
+	    /**
 	     * Get Value (SCORM Call)
 	     * Gets the cmi object value requested
 	     * @param n {String} CMI Object Path as String
 	     * @returns {String}
 	     * @event &#x27;getvalue&#x27;
-	     *&#x2F;
+	     */
 	    this.getvalue = function(n){
-	        var v = null, &#x2F;&#x2F; success
-	            lms = API.path, &#x2F;&#x2F; lms shortcut
-	            ec = 0,&#x2F;&#x2F; error code
-	            m  = &#x27;&#x27;, &#x2F;&#x2F; error message
-	            d  = &#x27;&#x27;, &#x2F;&#x2F; error diagnostic
-	            nn = null, &#x2F;&#x2F; new number
-	            ig = false;&#x2F;&#x2F; ignore
-	        if (API.isActive) {&#x2F;&#x2F; it has initialized
-	            &#x2F;&#x2F; This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
-	            &#x2F;&#x2F; Handy if you don&#x27;t want to go through all your content calls...
+	        var v = null, // success
+	            lms = API.path, // lms shortcut
+	            ec = 0,// error code
+	            m  = &#x27;&#x27;, // error message
+	            d  = &#x27;&#x27;, // error diagnostic
+	            nn = null, // new number
+	            ig = false;// ignore
+	        if (API.isActive) {// it has initialized
+	            // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
+	            // Handy if you don&#x27;t want to go through all your content calls...
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
 	                switch (n) {
-	                &#x2F;&#x2F; SCORM 1.2 is just a comments string with a max char limit of 4096
+	                // SCORM 1.2 is just a comments string with a max char limit of 4096
 	                case &quot;cmi.comments_from_lms._count&quot;:
 	                case &quot;cmi.comments_from_learner._count&quot;:
 	                    ig = true;
@@ -913,7 +905,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    nn = &quot;cmi.core.lesson_location&quot;;
 	                    break;
 	                case &quot;cmi.completion_threshold&quot;:
-	                    &#x2F;&#x2F; unsupported
+	                    // unsupported
 	                    ig = true;
 	                    break;
 	                case &quot;cmi.entry&quot;:
@@ -962,7 +954,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                case &quot;cmi.session_time&quot;:
 	                    nn = &quot;cmi.core.session_time&quot;;
 	                    break;
-	                    &#x2F;&#x2F; Possibly need more here, review further later.
+	                    // Possibly need more here, review further later.
 	                case &quot;cmi.suspend_data&quot;:
 	                    nn = n;
 	                    break;
@@ -979,14 +971,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                v = lms.GetValue(n);
 	                break;
 	            default:
-	                &#x2F;&#x2F; handle non-LMS fail-over (will return &#x27;false&#x27; below otherwise)?
+	                // handle non-LMS fail-over (will return &#x27;false&#x27; below otherwise)?
 	                break;
 	            }
 	            ec = getLastErrorCode();
 	            m  = getLastErrorMessage(ec);
 	            d  = getDiagnostic(ec);
-	            &#x2F;&#x2F; Clean up Error Codes that are non-critical (like date element not initialized)
-	            &#x2F;&#x2F; Custom event Trigger getvalue
+	            // Clean up Error Codes that are non-critical (like date element not initialized)
+	            // Custom event Trigger getvalue
 	            $(self).triggerHandler({
 	                &#x27;type&#x27;: &quot;getvalue&quot;,
 	                &#x27;n&#x27;: n,
@@ -998,8 +990,8 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                }
 	            });
 	            if (ec === 0 || ec === 403) {
-	                &#x2F;&#x2F; Clean up differences in LMS responses
-	                if (v === &#x27;undefined&#x27; || v === null || v === &#x27;null&#x27;) { &#x2F;&#x2F; was typeof v
+	                // Clean up differences in LMS responses
+	                if (v === &#x27;undefined&#x27; || v === null || v === &#x27;null&#x27;) { // was typeof v
 	                    v = &quot;&quot;;
 	                }
 	                return String(v);
@@ -1011,28 +1003,28 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Set Value (SCORM Call)
 	     * Sets the cmi object value by name
 	     * @param n {String} CMI Object Path as String
 	     * @param v {String} Value
 	     * @returns {String}
 	     * @event &#x27;setvalue&#x27;
-	     *&#x2F;
+	     */
 	    this.setvalue = function(n,v){
-	        var s = &#x27;false&#x27;, &#x2F;&#x2F; success
-	            lms = API.path, &#x2F;&#x2F; lms shortcut
-	            ec = 0, &#x2F;&#x2F; error code
-	            m = &#x27;&#x27;, &#x2F;&#x2F; error message
-	            d = &#x27;&#x27;, &#x2F;&#x2F; error diagnostic
-	            nn = null, &#x2F;&#x2F; new number
-	            ig = false; &#x2F;&#x2F; ignore
-	        &#x2F;&#x2F; Security Consideration?
-	        &#x2F;&#x2F; It may be worth some minor security later to validate this is being set from a authorized source.  This is lacking support old versions of IE however.
-	        &#x2F;&#x2F;debug(&quot;The caller of this method is &quot; + arguments.callee.caller.caller.name, 4);  &#x2F;&#x2F;arguments.callee.caller
-	        if (API.isActive) {&#x2F;&#x2F; it has initialized
-	            &#x2F;&#x2F; This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
-	            &#x2F;&#x2F; Handy if you don&#x27;t want to go through all your content calls...
+	        var s = &#x27;false&#x27;, // success
+	            lms = API.path, // lms shortcut
+	            ec = 0, // error code
+	            m = &#x27;&#x27;, // error message
+	            d = &#x27;&#x27;, // error diagnostic
+	            nn = null, // new number
+	            ig = false; // ignore
+	        // Security Consideration?
+	        // It may be worth some minor security later to validate this is being set from a authorized source.  This is lacking support old versions of IE however.
+	        //debug(&quot;The caller of this method is &quot; + arguments.callee.caller.caller.name, 4);  //arguments.callee.caller
+	        if (API.isActive) {// it has initialized
+	            // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
+	            // Handy if you don&#x27;t want to go through all your content calls...
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
 	                API.mode = API.mode === &quot;&quot; ? lms.LMSGetValue(&#x27;cmi.core.lesson_mode&#x27;) : API.mode;
@@ -1067,7 +1059,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    case &quot;cmi.completion_status&quot;:
 	                        nn = &quot;cmi.core.lesson_status&quot;;
 	                        API.data.completion_status = v;
-	                        &#x2F;&#x2F; set local status
+	                        // set local status
 	                        break;
 	                    case &quot;cmi.scaled_passing_score&quot;:
 	                        nn = &quot;cmi.student_data.mastery_score&quot;;
@@ -1087,7 +1079,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    case &quot;cmi.session_time&quot;:
 	                        nn = &quot;cmi.core.session_time&quot;;
 	                        break;
-	                        &#x2F;&#x2F; Possibly need more here, review further later.
+	                        // Possibly need more here, review further later.
 	                    case &quot;cmi.total_time&quot;:
 	                        nn = &quot;cmi.core.total_time&quot;;
 	                        break;
@@ -1105,7 +1097,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        return &#x27;false&#x27;;
 	                    }
 	                    debug(&quot;SCORM 1.2 LMS SetValue with n: &quot; + nn + &quot; and v: &quot; + v, 3);
-	                    s = lms.LMSSetValue(nn, v); &#x2F;&#x2F;makeBoolean(lms.LMSSetValue(nn, v));
+	                    s = lms.LMSSetValue(nn, v); //makeBoolean(lms.LMSSetValue(nn, v));
 	                } else {
 	                    debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
 	                    return &#x27;false&#x27;;
@@ -1122,15 +1114,15 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        break;
 	                    case &quot;cmi.completion_status&quot;:
 	                        API.data.completion_status = v;
-	                        &#x2F;&#x2F; set local status
+	                        // set local status
 	                        break;
 	                    case &quot;cmi.success_status&quot;:
 	                        API.data.success_status = v;
-	                        &#x2F;&#x2F; set local status
+	                        // set local status
 	                        break;
 	                    case &quot;cmi.exit&quot;:
 	                        API.data.exit_type = v;
-	                        &#x2F;&#x2F; set local status
+	                        // set local status
 	                        break;
 	                    case &quot;suspend_data&quot;:
 	                        if (v.length &gt; 64000) {
@@ -1138,24 +1130,24 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                        }
 	                        break;
 	                    default:
-	                        &#x2F;&#x2F; any other handling?
+	                        // any other handling?
 	                        break;
 	                    }
 	                    debug(&quot;SCORM 2004 LMS SetValue with n: &quot; + n + &quot; and v: &quot; + v, 3);
-	                    s = lms.SetValue(n, v); &#x2F;&#x2F;makeBoolean(lms.SetValue(n, v));
+	                    s = lms.SetValue(n, v); //makeBoolean(lms.SetValue(n, v));
 	                } else {
 	                    debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
 	                    return &#x27;false&#x27;;
 	                }
 	                break;
 	            default:
-	                &#x2F;&#x2F; handle non-LMS?
+	                // handle non-LMS?
 	                break;
 	            }
 	            ec = getLastErrorCode();
 	            m = getLastErrorMessage(ec);
 	            d = getDiagnostic(ec);
-	            &#x2F;&#x2F; Custom Event Trigger setvalue
+	            // Custom Event Trigger setvalue
 	            $(self).triggerHandler({
 	                &#x27;type&#x27;: &quot;setvalue&quot;,
 	                &#x27;n&#x27;: n,
@@ -1166,7 +1158,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    &#x27;diagnostic&#x27;: d
 	                }
 	            });
-	            &#x2F;&#x2F; Ensure Error Codes not critical
+	            // Ensure Error Codes not critical
 	            if (ec === 0 || ec === 403) {
 	                return s;
 	            }
@@ -1177,11 +1169,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Commit (SCORM Call)
 	     * Commits the Data to the Server via the LMS API.  SCORM Time done by default.
 	     * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
-	     *&#x2F;
+	     */
 	    this.commit = function(){
 	        var s = &#x27;false&#x27;,
 	            lms = API.path,
@@ -1190,21 +1182,21 @@ VISH.SCORM.API = (function(V,$,undefined){
 	            saveDate = new Date();
 
 	        if(API.isActive){
-	        	&#x2F;&#x2F; it has been initialized
-	        	session_secs = (saveDate.getTime() - settings.startDate.getTime()) &#x2F; 1000;
+	        	// it has been initialized
+	        	session_secs = (saveDate.getTime() - settings.startDate.getTime()) / 1000;
 	            debug(&quot;Committing data&quot;, 3);
 
 	            switch (API.version) {
 	            case &quot;1.2&quot;:
 	                self.setvalue(&quot;cmi.core.session_time&quot;, centisecsToSCORM12Duration(session_secs * 100));
-	                s = lms.LMSCommit(&quot;&quot;); &#x2F;&#x2F;makeBoolean(lms.LMSCommit(&quot;&quot;));
+	                s = lms.LMSCommit(&quot;&quot;); //makeBoolean(lms.LMSCommit(&quot;&quot;));
 	                break;
 	            case &quot;2004&quot;:
 	                self.setvalue(&quot;cmi.session_time&quot;, centisecsToISODuration(session_secs * 100, true));
-	                s = lms.Commit(&quot;&quot;); &#x2F;&#x2F;makeBoolean(lms.Commit(&quot;&quot;));
+	                s = lms.Commit(&quot;&quot;); //makeBoolean(lms.Commit(&quot;&quot;));
 	                break;
 	            default:
-	                &#x2F;&#x2F; handle non-LMS?
+	                // handle non-LMS?
 	                break;
 	            }
 
@@ -1220,17 +1212,17 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Initialize  (SCORM Call)
 	     * Initializes the SCO
 	     * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
-	     *&#x2F;
+	     */
 	    this.initialize = function(){
 	        debug(&quot;Initialize Called. \n\tversion: &quot; + settings.version + &quot;\n\tModified: &quot; + settings.modifiedDate, 3);
-	        var s = false, &#x2F;&#x2F; success boo
-	            lms = API.path, &#x2F;&#x2F; shortcut
+	        var s = false, // success boo
+	            lms = API.path, // shortcut
 	            ec = 0;
-	        &#x2F;&#x2F; error code
+	        // error code
 	        if (!API.isActive) {
 	            if (lms) {
 	                switch (API.version) {
@@ -1241,18 +1233,18 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                    s = makeBoolean(lms.Initialize(&quot;&quot;));
 	                    break;
 	                default:
-	                    &#x2F;&#x2F; handle local mode ?
+	                    // handle local mode ?
 	                    break;
 	                }
 	                ec = getLastErrorCode();
 
-	                &#x2F;&#x2F; Check for any errors previously
+	                // Check for any errors previously
 	                if (s &amp;&amp; ec === 0) {
 	                    API.isActive = true;
 	                    API.data.completion_status = self.getvalue(&#x27;cmi.completion_status&#x27;);
 	                    settings.startDate = new Date();
-	                    &#x2F;&#x2F;self.setvalue(&#x27;cmi.exit&#x27;, settings.exit_type); &#x2F;&#x2F; Consider setting exit type sooner by default?
-	                    &#x2F;&#x2F; Need to set Start Date
+	                    //self.setvalue(&#x27;cmi.exit&#x27;, settings.exit_type); // Consider setting exit type sooner by default?
+	                    // Need to set Start Date
 	                    debug(&quot;SCO is initialized.&quot;, 3);
 	                    switch (API.data.completion_status) {
 	                    case &quot;not attempted&quot;:
@@ -1277,28 +1269,28 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Terminate (SCORM Call)
 	     * Terminates the SCO
 	     * @returns {Boolean}
-	     *&#x2F;
+	     */
 	    this.terminate = function(){
 	        var s = false, lms = API.path, ec = 0;
 	        debug(&quot;Terminating &quot; + API.isActive + &quot; &quot; + lms, 4);
 	        if(API.isActive){
 	            if(lms){
-	                &#x2F;&#x2F; if not completed or passed, suspend the content.
+	                // if not completed or passed, suspend the content.
 	                debug(&quot;completion_status = &quot; + API.data.completion_status + &quot;|| success_status = &quot; + API.data.success_status, 3);
-	                self.commit(); &#x2F;&#x2F; Store Data before Terminating
+	                self.commit(); // Store Data before Terminating
 	                switch (API.version) {
 	                case &quot;1.2&quot;:
-	                    s = lms.LMSFinish(&quot;&quot;); &#x2F;&#x2F;makeBoolean(lms.LMSFinish(&quot;&quot;));
+	                    s = lms.LMSFinish(&quot;&quot;); //makeBoolean(lms.LMSFinish(&quot;&quot;));
 	                    break;
 	                case &quot;2004&quot;:
-	                    s = lms.Terminate(&quot;&quot;); &#x2F;&#x2F;makeBoolean(lms.Terminate(&quot;&quot;));
+	                    s = lms.Terminate(&quot;&quot;); //makeBoolean(lms.Terminate(&quot;&quot;));
 	                    break;
 	                default:
-	                    &#x2F;&#x2F; handle non-LMS?
+	                    // handle non-LMS?
 	                    break;
 	                }
 	                if(makeBoolean(s)){
@@ -1317,11 +1309,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return s;
 	    };
 
-	    &#x2F;&#x2F; End SCORM Public Calls &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	    // End SCORM Public Calls /////////////
 
 
-	    &#x2F;&#x2F; Start Public Utility based Support for SCORM Calls
-	    &#x2F;**
+	    // Start Public Utility based Support for SCORM Calls
+	    /**
 	     * Get Objective By ID
 	     * This is fun, they make you go fish the objectives array integer by the ID.
 	     * Objectives do not appear to be &#x27;journaled&#x27; as object identifiers have to be unique.
@@ -1329,21 +1321,21 @@ VISH.SCORM.API = (function(V,$,undefined){
 	     * objects haven&#x27;t been defined yet.  This is perfectly normal.
 	     * @param id {*} Alpha-Numeric Identification of the Interaction you&#x27;re looking for
 	     * @returns {String} &#x27;false&#x27; if nothing found or id
-	     *&#x2F;
+	     */
 	    this.getObjectiveByID = function(id){
-	        var count = self.getvalue(&quot;cmi.objectives._count&quot;), &#x2F;&#x2F; obtain total objectives
+	        var count = self.getvalue(&quot;cmi.objectives._count&quot;), // obtain total objectives
 	            i,
 	            tID;
 	        scorm.debug(&quot;Set Objective - Begin search, Objective count is &quot; + count, 4);
 	        if (count === &#x27;&#x27; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
 	            return &#x27;false&#x27;;
 	        }
-	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
+	        count = parseInt(count, 10) - 1; // convert from string
 	        i = count;
-	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
+	        //for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            tID = self.getvalue(&quot;cmi.objectives.&quot; + i + &quot;.id&quot;);
-	            &#x2F;&#x2F;scorm.debug(&quot;Objective ID Check for &quot; + i + &quot; : &quot; + id + &quot; vs &quot; + tID, 4);
+	            //scorm.debug(&quot;Objective ID Check for &quot; + i + &quot; : &quot; + id + &quot; vs &quot; + tID, 4);
 	            if (id === tID) {
 	                scorm.debug(&quot;Objective ID Match on &quot; + i, 4);
 	                return i;
@@ -1353,28 +1345,28 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get Interaction By ID
 	     * This is fun, they make you go fish the interactions array integer by the ID.
 	     * I included this in the main SCORM API because this functionality should be stock.  You&#x27;re
 	     * either going to journal these (history) or treat them like states that you update.  You must decide that.
 	     * @param id {*} Alpha-Numeric Identification of the Interaction you&#x27;re looking for
 	     * @returns {String} &#x27;false&#x27; if nothing found or id
-	     *&#x2F;
+	     */
 	    this.getInteractionByID = function(id){
-	        var count = self.getvalue(&quot;cmi.interactions._count&quot;), &#x2F;&#x2F; obtain total objectives
+	        var count = self.getvalue(&quot;cmi.interactions._count&quot;), // obtain total objectives
 	            i,
 	            tID;
 	        if (count === &quot;&quot; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
 	            return &#x27;false&#x27;;
 	        }
-	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
+	        count = parseInt(count, 10) - 1; // convert from string
 	        scorm.debug(&quot;Getting interactions from count &quot; + count, 4);
 	        i = count;
-	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
+	        //for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            tID = this.getvalue(&quot;cmi.interactions.&quot; + i + &quot;.id&quot;);
-	            &#x2F;&#x2F;scorm.debug(&quot;Interaction ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
+	            //scorm.debug(&quot;Interaction ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
 	            if (id === tID) {
 	                scorm.debug(&quot;Interaction By ID Returning &quot; + i);
 	                return i;
@@ -1384,24 +1376,24 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get interaction.n.objective By ID
 	     * You can have multiple objectives assigned to a interaction.
-	     *&#x2F;
+	     */
 	    this.getInteractionObjectiveByID = function(n,id){
-	        var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives._count&quot;), &#x2F;&#x2F; obtain total objectives
+	        var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives._count&quot;), // obtain total objectives
 	            i,
 	            tID;
 	        if (count === &quot;&quot; || count === &#x27;false&#x27;) {
 	            return &#x27;0&#x27;;
 	        }
-	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
+	        count = parseInt(count, 10) - 1; // convert from string
 	        scorm.debug(&quot;Getting interaction objectives from count &quot; + count, 4);
 	        i = count;
-	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
+	        //for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            tID = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives.&quot; + i + &quot;.id&quot;);
-	            &#x2F;&#x2F;scorm.debug(&quot;Interaction Objective ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
+	            //scorm.debug(&quot;Interaction Objective ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
 	            if (id === tID) {
 	                scorm.debug(&quot;Interaction Objective By ID Returning &quot; + i);
 	                return i;
@@ -1411,25 +1403,25 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get interaction.n.correct_responses By pattern
 	     * You can have multiple correct responses assigned to a interaction.
-	     *&#x2F;
+	     */
 	    this.getInteractionCorrectResponsesByPattern = function(n,pattern){
-	        var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses._count&quot;), &#x2F;&#x2F; obtain total correct_responses
+	        var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses._count&quot;), // obtain total correct_responses
 	            i,
 	            p;
 	        if (count === &quot;&quot; || count === &#x27;false&#x27;) {
 	            scorm.debug(&quot;Correct Responses pattern was empty or false&quot;, 4);
-	            return &#x27;0&#x27;; &#x2F;&#x2F; never created before so go with 0
+	            return &#x27;0&#x27;; // never created before so go with 0
 	        }
-	        count = parseInt(count, 10) - 1; &#x2F;&#x2F; convert from string
+	        count = parseInt(count, 10) - 1; // convert from string
 	        scorm.debug(&quot;Getting interaction correct responses from count &quot; + count, 4);
 	        i = count;
-	        &#x2F;&#x2F;for (i = count; i &gt;= 0; i -= 1) {
+	        //for (i = count; i &gt;= 0; i -= 1) {
 	        while (i &gt;= 0) {
 	            p = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses.&quot; + i + &quot;.pattern&quot;);
-	            &#x2F;&#x2F;scorm.debug(&quot;Interaction Correct Responses Pattern Check for &quot; + i + &quot; : &quot; + p + &quot; vs &quot; + pattern, 4);
+	            //scorm.debug(&quot;Interaction Correct Responses Pattern Check for &quot; + i + &quot; : &quot; + p + &quot; vs &quot; + pattern, 4);
 	            if (pattern === p) {
 	                scorm.debug(&quot;Interaction Correct Responses By Pattern Returning &quot; + i);
 	                return &quot;match&quot;;
@@ -1439,31 +1431,31 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return &#x27;false&#x27;;
 	    };
 
-	    &#x2F;&#x2F; End SCORM Public Utilities
+	    // End SCORM Public Utilities
 
 
-	    &#x2F;&#x2F; Internal API Public Calls &#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	    &#x2F;**
+	    // Internal API Public Calls //////////
+	    /**
 	     * Init (Internal API)
 	     * Initializes the SCORM API, and locates the LMS API
 	     * @returns {Boolean}
-	     *&#x2F;
+	     */
 	    this.init = function(){
-	        &#x2F;&#x2F; Search for LMS API
+	        // Search for LMS API
 	        var win;
 	        try {
 	            win = window.parent;
 	            if (win &amp;&amp; win !== window) {
 	                findAPI(window.parent);
 	            }
-	        } catch (e) {&#x2F;* Cross Domain issue *&#x2F;
+	        } catch (e) {/* Cross Domain issue */
 	            debug(e, 1);
 	        }
 	        if (!API.path) {
 	            try {
 	                win = window.top.opener;
 	                findAPI(win);
-	            } catch (ee) {&#x2F;* Cross domain issue *&#x2F;
+	            } catch (ee) {/* Cross domain issue */
 	                debug(ee, 1);
 	            }
 	        }
@@ -1473,11 +1465,11 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        }
 	        debug(&quot;I was unable to locate an API for communication&quot;, 2);
 	        if (settings.use_standalone) {
-	            &#x2F;&#x2F; Create Local API in SCORM 2004
+	            // Create Local API in SCORM 2004
 	            debug(&quot;If you included Local_API_1484_11 I&#x27;ll mimic the LMS.  If not, all SCORM calls will fail.&quot;, 4);
 	            settings.standalone = true;
 	            API.version = &quot;2004&quot;;
-	            &#x2F;&#x2F; May or may not be provided (standalone) if not, this is null (DOA)
+	            // May or may not be provided (standalone) if not, this is null (DOA)
 	            API.path = typeof Local_API_1484_11 === &#x27;function&#x27; ? new Local_API_1484_11({cmi: settings.cmi}) : null;
 	            $(API.path).on(&#x27;StoreData&#x27;, function (e) {
 	                $(self).triggerHandler({
@@ -1490,34 +1482,34 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return false;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get Last Error (Internal API)
 	     * Converts error integer to Message String
 	     * @param n {String} name
 	     * @returns value {String}
-	     *&#x2F;
+	     */
 	    this.getLastError = function(n){
 	        return error[n];
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Is LMS Connected
 	     * Will tell you if LMS is truly connected or not.  You may be running locally.
 	     * @return {Boolean}
-	     *&#x2F;
+	     */
 	    this.isLMSConnected = function(){
 	        return API.connection;
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Set (Internal API)
 	     * This locally sets values local to this API
 	     * @param n {String} name
 	     * @param v (String,Number,Object,Array,Boolean} value
-	     *&#x2F;
+	     */
 	    this.set = function(n,v){
-	        &#x2F;&#x2F;debug(&quot;set &quot; + n, 3);
-	        &#x2F;&#x2F; May need to maintain read-only perms here, case them out as needed.
+	        //debug(&quot;set &quot; + n, 3);
+	        // May need to maintain read-only perms here, case them out as needed.
 	        switch (n) {
 	        case &quot;version&quot;:
 	        case &quot;createDate&quot;:
@@ -1525,14 +1517,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        case &quot;prefix&quot;:
 	            triggerWarning(405);
 	            return false;
-	            &#x2F;&#x2F;break;
+	            //break;
 	        case &quot;isActive&quot;:
 	            API.isActive = v;
 	            settings[n] = v;
 	            break;
 	        case &quot;startDate&quot;:
 	            settings[n] = new Date(v);
-	            &#x2F;&#x2F; Need to set Start Date if forcing isActive!
+	            // Need to set Start Date if forcing isActive!
 	            break;
 	        default:
 	            settings[n] = v;
@@ -1541,14 +1533,14 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return (isError !== 0);
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Get (Internal API)
 	     * This locally gets values local to this API
 	     * @param n {String} name
 	     * @returns {*} value or {Boolean} false
-	     *&#x2F;
+	     */
 	    this.get = function(n){
-	        &#x2F;&#x2F;debug(&quot;get &quot; + n, 3);
+	        //debug(&quot;get &quot; + n, 3);
 	        if (settings[n] === undefined) {
 	            triggerWarning(404);
 	            return false;
@@ -1556,10 +1548,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	        return settings[n];
 	    };
 
-	    &#x2F;**
+	    /**
 	     * Hook for External Plugins like Flash to set Time
 	     * Public to Private API&#x27;s
-	     *&#x2F;
+	     */
 	    this.centisecsToSCORM12Duration = centisecsToSCORM12Duration;
 	    this.centisecsToISODuration = centisecsToISODuration;
 	    this.ISODurationToCentisec = ISODurationToCentisec;
@@ -1570,7 +1562,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 	    this.debug = debug;
 	    this.settings = settings;
 	    this.API = API;
-	    &#x2F;&#x2F; Self Initialize, note you could make this call outside, but later I decided to do it by default.
+	    // Self Initialize, note you could make this call outside, but later I decided to do it by default.
 	    this.init();
 	};
 
@@ -1584,20 +1576,19 @@ VISH.SCORM.API = (function(V,$,undefined){
 })(VISH,jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

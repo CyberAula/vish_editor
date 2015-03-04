@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Utils.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,73 +25,67 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Utils.js</h1>
+<h1 class="file-heading">File: VISH.Utils.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 VISH.Utils = (function(V,undefined){
 	
 	var ids;
-	&#x2F;&#x2F; a list of all used ids
+	// a list of all used ids
 	var domIds;
-	&#x2F;&#x2F; myDomId = domIds[&#x27;prefix&#x27;] returns a unicId for the specified prefix
+	// myDomId = domIds[&#x27;prefix&#x27;] returns a unicId for the specified prefix
 
 	var init = function(){
 		if(!domIds){
@@ -101,7 +93,7 @@ VISH.Utils = (function(V,undefined){
 			ids = [];
 		}
 
-		&#x2F;&#x2F;Extend JQuery functionality
+		//Extend JQuery functionality
 		jQuery.fn.cssNumber = function(prop){
 			var v = parseInt(this.css(prop),10);
 			return isNaN(v) ? 0 : v;
@@ -109,14 +101,14 @@ VISH.Utils = (function(V,undefined){
 
 		jQuery.fn.reverse = [].reverse;
 
-		&#x2F;&#x2F;Extend primitives
+		//Extend primitives
 		String.prototype.replaceAll = function(find,replace){
 			var str = this;
-			return str.replace(new RegExp(find.replace(&#x2F;[-\&#x2F;\\^$*+?.()|[\]{}]&#x2F;g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
+			return str.replace(new RegExp(find.replace(/[-\/\\^$*+?.()|[\]{}]/g, &#x27;\\$&amp;&#x27;), &#x27;g&#x27;), replace);
 		};
 
-		&#x2F;&#x2F; if (!Array.prototype.filter){
-			Array.prototype.filter = function(fun &#x2F;*, thisArg *&#x2F;){
+		// if (!Array.prototype.filter){
+			Array.prototype.filter = function(fun /*, thisArg */){
 				&quot;use strict&quot;;
 
 				if (this === void 0 || this === null)
@@ -133,11 +125,11 @@ VISH.Utils = (function(V,undefined){
 					if (i in t){
 						var val = t[i];
 
-						&#x2F;&#x2F; NOTE: Technically this should Object.defineProperty at
-						&#x2F;&#x2F;       the next index, as push can be affected by
-						&#x2F;&#x2F;       properties on Object.prototype and Array.prototype.
-						&#x2F;&#x2F;       But that method&#x27;s new, and collisions should be
-						&#x2F;&#x2F;       rare, so use the more-compatible alternative.
+						// NOTE: Technically this should Object.defineProperty at
+						//       the next index, as push can be affected by
+						//       properties on Object.prototype and Array.prototype.
+						//       But that method&#x27;s new, and collisions should be
+						//       rare, so use the more-compatible alternative.
 						if (fun.call(thisArg, val, i, t))
 							res.push(val);
 					}
@@ -145,10 +137,10 @@ VISH.Utils = (function(V,undefined){
 
 				return res;
 			};
-		&#x2F;&#x2F; };
+		// };
 
 		if(!Array.prototype.filter){
-			Array.prototype.filter = function(fun &#x2F;*, thisp *&#x2F;){
+			Array.prototype.filter = function(fun /*, thisp */){
 				&quot;use strict&quot;;
 
 				if (this == null)
@@ -165,7 +157,7 @@ VISH.Utils = (function(V,undefined){
 				{
 					if (i in t)
 					{
-						var val = t[i]; &#x2F;&#x2F; in case fun mutates this
+						var val = t[i]; // in case fun mutates this
 						if (fun.call(thisp, val, i, t))
 							res.push(val);
 					}
@@ -174,9 +166,9 @@ VISH.Utils = (function(V,undefined){
 			};
 		};
 
-		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;map
+		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
 		if(!Array.prototype.map){
-			Array.prototype.map = function(fun &#x2F;*, thisArg *&#x2F;){
+			Array.prototype.map = function(fun /*, thisArg */){
 				&quot;use strict&quot;;
 
 				if (this === void 0 || this === null)
@@ -191,11 +183,11 @@ VISH.Utils = (function(V,undefined){
 				var thisArg = arguments.length &gt;= 2 ? arguments[1] : void 0;
 				for (var i = 0; i &lt; len; i++)
 				{
-					&#x2F;&#x2F; NOTE: Absolute correctness would demand Object.defineProperty
-					&#x2F;&#x2F;       be used.  But this method is fairly new, and failure is
-					&#x2F;&#x2F;       possible only if Object.prototype or Array.prototype
-					&#x2F;&#x2F;       has a property |i| (very unlikely), so use a less-correct
-					&#x2F;&#x2F;       but more portable alternative.
+					// NOTE: Absolute correctness would demand Object.defineProperty
+					//       be used.  But this method is fairly new, and failure is
+					//       possible only if Object.prototype or Array.prototype
+					//       has a property |i| (very unlikely), so use a less-correct
+					//       but more portable alternative.
 					if (i in t)
 						res[i] = fun.call(thisArg, t[i], i, t);
 				}
@@ -204,9 +196,9 @@ VISH.Utils = (function(V,undefined){
 			};
 		};
 
-		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;indexOf#Compatibility
+		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf#Compatibility
 		if (!Array.prototype.indexOf){
-			Array.prototype.indexOf = function(elt &#x2F;*, from*&#x2F;){
+			Array.prototype.indexOf = function(elt /*, from*/){
 				var len = this.length &gt;&gt;&gt; 0;
 				var from = Number(arguments[1]) || 0;
 				from = (from &lt; 0)
@@ -223,7 +215,7 @@ VISH.Utils = (function(V,undefined){
 			};
 		};
 
-		&#x2F;&#x2F; From https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Object&#x2F;keys
+		// From https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys
 		if (!Object.keys) {
 			Object.keys = (function () {
 				&#x27;use strict&#x27;;
@@ -265,7 +257,7 @@ VISH.Utils = (function(V,undefined){
 			}());
 		};
 
-		&#x2F;&#x2F;https:&#x2F;&#x2F;developer.mozilla.org&#x2F;en-US&#x2F;docs&#x2F;Web&#x2F;JavaScript&#x2F;Reference&#x2F;Global_Objects&#x2F;Array&#x2F;forEach
+		//https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
 		if (typeof Array.prototype.forEach !== &#x27;function&#x27;) {
 			Array.prototype.forEach = function(callback){
 				for (var i = 0; i &lt; this.length; i++){
@@ -274,14 +266,14 @@ VISH.Utils = (function(V,undefined){
 			};
 		};
 
-		&#x2F;&#x2F;Polifill for trim function
+		//Polifill for trim function
 		if(typeof String.prototype.trim !== &#x27;function&#x27;) {
 			String.prototype.trim = function() {
-				return this.replace(&#x2F;^\s+|\s+$&#x2F;g, &#x27;&#x27;); 
+				return this.replace(/^\s+|\s+$/g, &#x27;&#x27;); 
 			}
 		};
 
-		&#x2F;&#x2F;Disable watermark for IE
+		//Disable watermark for IE
 		jQuery.fn.vewatermark = function(text){
 			if(V.Status.getDevice().browser.name != V.Constant.IE){
 				$(this).watermark(text);
@@ -293,8 +285,8 @@ VISH.Utils = (function(V,undefined){
 
 	var dimentionsToDraw = function(w_zone, h_zone, w_content, h_content){
 		var dimentions = {width:  w_content, height: h_content};
-		var aspect_ratio_zone = w_zone&#x2F;h_zone;
-		var aspect_ratio_content = w_content&#x2F;h_content;
+		var aspect_ratio_zone = w_zone/h_zone;
+		var aspect_ratio_content = w_content/h_content;
 		
 		if (aspect_ratio_zone&gt;aspect_ratio_content) {
 			dimentions.width = aspect_ratio_content*h_zone;
@@ -302,7 +294,7 @@ VISH.Utils = (function(V,undefined){
 			return dimentions;
 		} else {
 			dimentions.width = w_zone;
-			dimentions.height = w_zone&#x2F;aspect_ratio_content;
+			dimentions.height = w_zone/aspect_ratio_content;
 			return  dimentions;
 		}
 	};
@@ -322,16 +314,16 @@ VISH.Utils = (function(V,undefined){
 		}
 	};
 
-   &#x2F;**
+   /**
 	* Return a unic id.
 	* full_id_prefix: Specify a prefix for the id, for example, article to get &quot;article_x&quot; ids.
 	* Specify a separator for nested ids.
 	* justCheck: only check if the id is really unic, if not generate a new id.
-	*&#x2F;
+	*/
 	var getId = function(full_id_prefix,justCheck,separator){
 		if(!justCheck){
 			if(typeof full_id_prefix !== &quot;string&quot;){
-				&#x2F;&#x2F;Default prefix
+				//Default prefix
 				full_id_prefix = &quot;unicID&quot;;
 			}
 
@@ -349,7 +341,7 @@ VISH.Utils = (function(V,undefined){
 			full_id_prefix = full_id_prefix.replace(full_id_prefix[full_id_prefix.length-1],&quot;&quot;);
 		}
 
-		&#x2F;&#x2F;Ensure that the id is unic.
+		//Ensure that the id is unic.
 		if(($(&quot;#&quot;+full_id).length===0)&amp;&amp;(ids.indexOf(full_id)===-1)){
 			ids.push(full_id);
 			return full_id;
@@ -364,11 +356,11 @@ VISH.Utils = (function(V,undefined){
 		}
 	};
 
-	&#x2F;**
+	/**
 	 * Fix presentations with old JSON format
 	 * Try to update them to current version
 	 * Return null if presentation is irretrievable
-	 *&#x2F;
+	 */
 	var fixPresentation = function(presentation){
 		if((typeof presentation == &quot;undefined&quot;)||(presentation === null)||(typeof presentation.slides == &quot;undefined&quot;)){
 			return null;
@@ -380,30 +372,30 @@ VISH.Utils = (function(V,undefined){
 
 		presentation = _fixTypes(presentation);
 
-		&#x2F;&#x2F;Fix old slidesets
+		//Fix old slidesets
 		if(V.Slideset.isSlideset(presentation.type)){
-			&#x2F;&#x2F;Force presentation standard
+			//Force presentation standard
 			presentation.type = V.Constant.PRESENTATION;
 		}
 
 		if(!_checkIds(presentation)){
 			presentation = _overwriteIds(presentation);
-			&#x2F;&#x2F; return null;
+			// return null;
 		}
 
 		return presentation;
 	};
 
-	&#x2F;**
+	/**
 	 * Check slide types and fix it
-	 *&#x2F;
+	 */
     var _fixTypes = function(presentation){
-    	&#x2F;&#x2F;Presentation type
+    	//Presentation type
     	if(typeof presentation.type == &quot;undefined&quot;){
 			presentation.type = V.Constant.PRESENTATION;
 		}
 
-		&#x2F;&#x2F;Slides type
+		//Slides type
 		var slides = presentation.slides;
 		var sL = slides.length;
 		for(var i=0; i&lt;sL; i++){
@@ -436,10 +428,10 @@ VISH.Utils = (function(V,undefined){
 		return presentation;
     };
 
-	&#x2F;*
+	/*
 	 * Look for errors in the presentation ids
 	 * Return false if ids are wrong
-	 *&#x2F;
+	 */
 	var _checkIds = function(presentation){
 		var slides = presentation.slides;
 		var sL = slides.length;
@@ -447,7 +439,7 @@ VISH.Utils = (function(V,undefined){
 		for(var i=0; i&lt;sL; i++){
 			var slide = slides[i];
 
-			if(!slide.id.match(&#x2F;^article[0-9]+&#x2F;g)){
+			if(!slide.id.match(/^article[0-9]+/g)){
 				return false;
 			}
 			
@@ -584,7 +576,7 @@ VISH.Utils = (function(V,undefined){
 		var subslides = slideset.slides;
 		
 		var subslidesIds = new Array();
-		&#x2F;&#x2F; subslidesIds[oldId] = newId
+		// subslidesIds[oldId] = newId
 
 		if(subslides){
 			var ssL = subslides.length;
@@ -629,20 +621,20 @@ VISH.Utils = (function(V,undefined){
 	};
 
 	var getOuterHTML = function(tag){
-		&#x2F;&#x2F;In some old browsers (before firefox 11 for example) outerHTML does not work
-		&#x2F;&#x2F;Trick to provide full browser support
+		//In some old browsers (before firefox 11 for example) outerHTML does not work
+		//Trick to provide full browser support
 		if (typeof($(tag)[0].outerHTML)==&#x27;undefined&#x27;){
-			return $(tag).clone().wrap(&#x27;&lt;div&gt;&lt;&#x2F;div&gt;&#x27;).parent().html();
+			return $(tag).clone().wrap(&#x27;&lt;div&gt;&lt;/div&gt;&#x27;).parent().html();
 		} else {
 			return $(tag)[0].outerHTML;
 		}
 	};
 
-	&#x2F;*
+	/*
 	 * Function to send the parent to the specified URL, used for fullscreen
 	 * We may be nested in more than one iframes
 	 * So, we need to use window.top instead of window.parent
-	 *&#x2F;
+	 */
 	var sendParentToURL = function(the_url){
 		window.top.location = the_url;
 	};
@@ -652,7 +644,7 @@ VISH.Utils = (function(V,undefined){
 			return url;
 		}
 
-		&#x2F;&#x2F;Remove hash
+		//Remove hash
 		var splitHash = url.split(&quot;#&quot;);
 		url = splitHash[0];
 
@@ -670,7 +662,7 @@ VISH.Utils = (function(V,undefined){
 					validParams.push({key: splitParam[0], value: splitParam[1]}); 
 				}
 			}
-			&#x2F;&#x2F;Add valid params
+			//Add valid params
 			var vPL = validParams.length;
 			for(var j=0; j&lt;vPL; j++){
 				var param = validParams[j];
@@ -683,7 +675,7 @@ VISH.Utils = (function(V,undefined){
 			}
 		}
 
-		&#x2F;&#x2F;Add hash (if present)
+		//Add hash (if present)
 		if(splitHash.length&gt;1){
 			url = url + &quot;#&quot; + splitHash[1];
 		}
@@ -696,10 +688,10 @@ VISH.Utils = (function(V,undefined){
 			return url;
 		}
 
-		&#x2F;&#x2F;Remove param (to overwrite it in case if exists)
+		//Remove param (to overwrite it in case if exists)
 		url = removeParamFromUrl(url,paramName);
 
-		&#x2F;&#x2F;Remove hash
+		//Remove hash
 		var splitHash = url.split(&quot;#&quot;);
 		url = splitHash[0];
 
@@ -710,7 +702,7 @@ VISH.Utils = (function(V,undefined){
 			url += &#x27;?&#x27;+param ;
 		}
 
-		&#x2F;&#x2F;Add hash (if present)
+		//Add hash (if present)
 		if(splitHash.length&gt;1){
 			url = url + &quot;#&quot; + splitHash[1];
 		}
@@ -727,12 +719,12 @@ VISH.Utils = (function(V,undefined){
 		if(split.length&lt;=1){
 			return params;
 		} else {
-			&#x2F;&#x2F;Remove hash if present
+			//Remove hash if present
 			var urlParams = split[1].split(&quot;#&quot;)[0].split(&quot;&amp;&quot;);
 			for(var i=0; i&lt;urlParams.length; i++){
 				var resultSplit = urlParams[i].split(&quot;=&quot;);
 				if(resultSplit.length===2){
-					&#x2F;&#x2F;key-value pairs
+					//key-value pairs
 					params[resultSplit[0]] = resultSplit[1];
 				}
 			}
@@ -741,7 +733,7 @@ VISH.Utils = (function(V,undefined){
 	};
 
 		
-	&#x2F;&#x2F;Check minium requirements to init vish editor
+	//Check minium requirements to init vish editor
 	var checkMiniumRequirements = function(){
 		var browserRequirements = true;
 		var device = V.Status.getDevice();
@@ -763,7 +755,7 @@ VISH.Utils = (function(V,undefined){
 			case V.Constant.CHROME:
 				break;
 			default:
-				&#x2F;&#x2F;Allow...
+				//Allow...
 			break;
 		}
 				
@@ -777,7 +769,7 @@ VISH.Utils = (function(V,undefined){
 					&#x27;showCloseButton&#x27; : false,
 					&#x27;padding&#x27;       : 0,
 					&#x27;onClosed&#x27;      : function(){
-						&#x2F;&#x2F;Do nothing!
+						//Do nothing!
 					}
 				}
 			);
@@ -788,10 +780,10 @@ VISH.Utils = (function(V,undefined){
 	};
 		
 
-	&#x2F;*
+	/*
 	* In the css we have url(&quot;image_path&quot;) and to use ir in an image src attribute we need to get the image_path
 	* this function does that
-	*&#x2F;
+	*/
 	var getSrcFromCSS = function(css){
 		try {
 			if((typeof css == &quot;string&quot;)&amp;&amp;(css.indexOf(&quot;url&quot;)===0)&amp;&amp;(css.length&gt;3)){
@@ -821,42 +813,42 @@ VISH.Utils = (function(V,undefined){
 	};
 
 	var getZoomFromStyle = function(style){
-		var zoom = 1; &#x2F;&#x2F;Initial or default zoom
+		var zoom = 1; //Initial or default zoom
 
 		if(!style){
 			return zoom;
 		}
 
-		&#x2F;&#x2F;Patterns
-		var moz_zoom_pattern = &#x2F;-moz-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
-		var webkit_zoom_pattern = &#x2F;-webkit-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
-		var opera_zoom_pattern = &#x2F;-o-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
-		var ie_zoom_pattern = &#x2F;-ms-transform: ?scale\(([0-9]+.[0-9]+)\)&#x2F;g
+		//Patterns
+		var moz_zoom_pattern = /-moz-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+		var webkit_zoom_pattern = /-webkit-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+		var opera_zoom_pattern = /-o-transform: ?scale\(([0-9]+.[0-9]+)\)/g
+		var ie_zoom_pattern = /-ms-transform: ?scale\(([0-9]+.[0-9]+)\)/g
 
 		$.each(style.split(&quot;;&quot;), function(index, property){
 			if (property.match(moz_zoom_pattern) != null) {
-				&#x2F;&#x2F;Mozilla Firefox
+				//Mozilla Firefox
 				var result = moz_zoom_pattern.exec(property);
 				if ((result!==null)&amp;&amp;(result[1])) {
 					zoom = parseFloat(result[1]);
 					return false;
 				}
 			} else if (property.match(webkit_zoom_pattern)!=null) {
-				&#x2F;&#x2F;Google Chrome
+				//Google Chrome
 				var result = webkit_zoom_pattern.exec(property);
 				if ((result!==null)&amp;&amp;(result[1])) {
 					zoom = parseFloat(result[1]);
 					return false;
 				}
 			} else if (property.match(opera_zoom_pattern)!=null) {
-				&#x2F;&#x2F;Opera
+				//Opera
 				var result = opera_zoom_pattern.exec(property);
 				if ((result!==null)&amp;&amp;(result[1])) {
 					zoom = parseFloat(result[1]);
 					return false;
 				}
 			} else if (property.match(ie_zoom_pattern)!=null) {
-				&#x2F;&#x2F;Iexplorer
+				//Iexplorer
 				var result = ie_zoom_pattern.exec(property);
 				if ((result!==null)&amp;&amp;(result[1])) {
 					zoom = parseFloat(result[1]);
@@ -869,27 +861,27 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
-   &#x2F;**
+   /**
 	* Function to get width in pixels from a style attribute.
 	* If width attribute is given by percent, area (parent container) attribute is needed.
-	*&#x2F;
+	*/
 	var getWidthFromStyle = function(style,area){
 		return getPixelDimensionsFromStyle(style,area)[0];
 	};
 	
-   &#x2F;**
+   /**
 	* Function to get width in pixels from a style attribute.
 	* If width attribute is given by percent, area (parent container) attribute is needed.
-	*&#x2F;
+	*/
 	var getHeightFromStyle = function(style,area){
 		return getPixelDimensionsFromStyle(style,area)[1];
 	};
 	
 
-	&#x2F;**
+	/**
 	* Function to get width and height in pixels from a style attribute.
 	* If widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.
-	*&#x2F;
+	*/
 	var getPixelDimensionsFromStyle = function(style,area){
 		var dimensions = [];
 		var width=null;
@@ -897,46 +889,46 @@ VISH.Utils = (function(V,undefined){
 
 		$.each(style.split(&quot;;&quot;), function(index, property){
 
-			&#x2F;&#x2F;We need to redefine the var in each iteration (due to Android browser issues)
-			var width_percent_pattern = &#x2F;width:\s?([0-9]+(\.[0-9]+)?)%&#x2F;g
-			var width_px_pattern = &#x2F;width:\s?([0-9]+(\.?[0-9]+)?)px&#x2F;g
-			var height_percent_pattern = &#x2F;height:\s?([0-9]+(\.[0-9]+)?)%&#x2F;g
-			var height_px_pattern = &#x2F;height:\s?([0-9]+(\.?[0-9]+)?)px&#x2F;g
+			//We need to redefine the var in each iteration (due to Android browser issues)
+			var width_percent_pattern = /width:\s?([0-9]+(\.[0-9]+)?)%/g
+			var width_px_pattern = /width:\s?([0-9]+(\.?[0-9]+)?)px/g
+			var height_percent_pattern = /height:\s?([0-9]+(\.[0-9]+)?)%/g
+			var height_px_pattern = /height:\s?([0-9]+(\.?[0-9]+)?)px/g
 
-			&#x2F;&#x2F;Look for property starting by width
+			//Look for property starting by width
 			if(property.indexOf(&quot;width&quot;) !== -1){
 
 				if(property.match(width_px_pattern)){
-					&#x2F;&#x2F;Width defined in px.
+					//Width defined in px.
 					var result = width_px_pattern.exec(property);
 					if(result[1]){
 						width = result[1];
 					}
 				} else if(property.match(width_percent_pattern)){
-					&#x2F;&#x2F;Width defined in %.
+					//Width defined in %.
 					var result = width_percent_pattern.exec(property);
 					if(result[1]){
 						var percent = result[1];
 						if(area){
-							width = $(area).width()*percent&#x2F;100;
+							width = $(area).width()*percent/100;
 						}
 					}
 				}
 			} else  if(property.indexOf(&quot;height&quot;) !== -1){
 
 				if(property.match(height_px_pattern)){
-					&#x2F;&#x2F;height defined in px.
+					//height defined in px.
 					var result = height_px_pattern.exec(property);
 					if(result[1]){
 						height = result[1];
 					}
 				} else if(property.match(height_percent_pattern)){
-					&#x2F;&#x2F;Width defined in %.
+					//Width defined in %.
 					var result = height_percent_pattern.exec(property);
 					if(result[1]){
 						var percent = result[1];
 						if(area){
-							height = $(area).height()*percent&#x2F;100;
+							height = $(area).height()*percent/100;
 						}
 					}
 				}
@@ -954,9 +946,9 @@ VISH.Utils = (function(V,undefined){
 		}
 		var ft = null;
 		$.each(style.split(&quot;;&quot;), function(index, property){
-			&#x2F;&#x2F;We need to redefine the var in each iteration (due to some browsers (e.g. Android browser) issues)
-			&#x2F;&#x2F; var font_style_pattern = &#x2F;font-size:\s?([0-9]+)px&#x2F;g;
-			var font_style_pattern = &#x2F;font-size\s*:\s*((\d*\.)?\d+)px&#x2F;i;
+			//We need to redefine the var in each iteration (due to some browsers (e.g. Android browser) issues)
+			// var font_style_pattern = /font-size:\s?([0-9]+)px/g;
+			var font_style_pattern = /font-size\s*:\s*((\d*\.)?\d+)px/i;
 			if(property.match(font_style_pattern) != null){
 				var result = font_style_pattern.exec(property);
 				if ((result!==null)&amp;&amp;(result[1]!==null)) {
@@ -1021,10 +1013,20 @@ VISH.Utils = (function(V,undefined){
 		return bp;
 	};
 
+	var addScale3DToElement = function(elem,scale){
+		$(elem).css(&quot;transform-origin&quot;,&quot;0 0&quot;);
+		$(elem).css(&quot;-ms-transform-origin&quot;,&quot;0 0&quot;);
+		$(elem).css(&quot;-webkit-transform-origin&quot;,&quot;0 0&quot;);
+		
+		$(elem).css(&quot;transform&quot;,&quot;scale3d(&quot;+scale+&quot;,&quot;+scale+&quot;,1)&quot;);
+		$(elem).css(&quot;-ms-transform&quot;,&quot;scale3d(&quot;+scale+&quot;,&quot;+scale+&quot;,1)&quot;);
+		$(elem).css(&quot;-webkit-transform&quot;,&quot;scale3d(&quot;+scale+&quot;,&quot;+scale+&quot;,1)&quot;);
+	};
+	
 
-	&#x2F;*
+	/*
 	 * Helper to show validation dialogs
-	 *&#x2F;
+	 */
 	var showDialog = function(options){
 		_cleanDialog();
 
@@ -1037,13 +1039,13 @@ VISH.Utils = (function(V,undefined){
 			return;
 		}
 		
-		&#x2F;&#x2F;*Defaults
+		//*Defaults
 		var width = &#x27;90%&#x27;;
-		var height; &#x2F;&#x2F;it will be calculated
+		var height; //it will be calculated
 		var showCloseButton = false;
 		var notificationIconSrc;
 		if(V.Editing){
-			notificationIconSrc = V.ImagesPath + &quot;zonethumbs&#x2F;content_fail.png&quot;;
+			notificationIconSrc = V.ImagesPath + &quot;zonethumbs/content_fail.png&quot;;
 		}
 		
 		if(options.width){
@@ -1056,22 +1058,22 @@ VISH.Utils = (function(V,undefined){
 			notificationIconSrc = options.notificationIconSrc;
 		}
 
-		&#x2F;&#x2F;Automatically center text when no image is specified in the notification
+		//Automatically center text when no image is specified in the notification
 		if(!notificationIconSrc){
 			options.textWrapperClass = &quot;forceCenter&quot;;
 		}
 
-		&#x2F;&#x2F;Transform width to px (if not)
+		//Transform width to px (if not)
 		if((typeof width == &quot;string&quot;)&amp;&amp;(width.indexOf(&quot;%&quot;)!=0)){
 			width = width.split(&quot;%&quot;)[0].trim();
-			width = (width*$(window).width())&#x2F;100;
+			width = (width*$(window).width())/100;
 		}
 
-		&#x2F;&#x2F;*Calculate Height (use root template)
+		//*Calculate Height (use root template)
 		var notificationParent = $(rootTemplate).parent();
 		$(rootTemplate).width(width);
 		
-		&#x2F;&#x2F;Fill template
+		//Fill template
 		var text_wrapper = $(rootTemplate).find(&quot;.notification_row1&quot;);
 		var buttons_wrapper = $(rootTemplate).find(&quot;.notification_row2&quot;);
 		var imgIcon = $(text_wrapper).find(&quot;.notificationIcon&quot;);
@@ -1098,7 +1100,7 @@ VISH.Utils = (function(V,undefined){
 			var obLength = options.buttons.length;
 			$(options.buttons).reverse().each(function(index,button){
 				var bNumber = obLength-index;
-				var buttonDOM = $(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;&#x2F;a&gt;&#x27;);
+				var buttonDOM = $(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;/a&gt;&#x27;);
 				if(button.extraclass){
 					$(buttonDOM).addClass(button.extraclass);
 				}
@@ -1106,7 +1108,7 @@ VISH.Utils = (function(V,undefined){
 			});
 		}
 
-		&#x2F;&#x2F;Look for additional HTML
+		//Look for additional HTML
 		if(options.middlerow){
 			var middlerow = document.createElement(&#x27;div&#x27;);
 			$(middlerow).addClass(&quot;notification_middlerow&quot;);
@@ -1125,26 +1127,26 @@ VISH.Utils = (function(V,undefined){
 		}
 		V.Utils.removeTempShown(notificationParent);
 
-		&#x2F;&#x2F;*Clone the root template
+		//*Clone the root template
 		var cloneTemplate = $(rootTemplate).clone();
 		$(cloneTemplate).attr(&quot;id&quot;,&quot;notification_template_cloned&quot;);
 		$(notificationParent).append(cloneTemplate);
 		var notification = $(&quot;#notification_template_cloned&quot;);
 
-		&#x2F;&#x2F;Replace buttons (we need to add the events)
+		//Replace buttons (we need to add the events)
 		if(options.buttons){
 			buttons_wrapper = $(notification).find(&quot;.notification_row2&quot;);
 			$(buttons_wrapper).html(&quot;&quot;);
 			var obLength = options.buttons.length;
 			$(options.buttons).reverse().each(function(index,button){
 				var bNumber = obLength-index;
-				var buttonDOM = $(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;&#x2F;a&gt;&#x27;);
+				var buttonDOM = $(&#x27;&lt;a href=&quot;#&quot; buttonNumber=&quot;&#x27;+bNumber+&#x27;&quot; class=&quot;button notification_button&quot;&gt;&#x27;+button.text+&#x27;&lt;/a&gt;&#x27;);
 				if(button.extraclass){
 					$(buttonDOM).addClass(button.extraclass);
 				}
 				$(buttons_wrapper).append(buttonDOM);
 
-				&#x2F;&#x2F;Add buttons callback
+				//Add buttons callback
 				$(buttons_wrapper).find(&quot;.button[buttonNumber=&#x27;&quot;+bNumber+&quot;&#x27;]&quot;).click(function(event){
 					event.preventDefault();
 					button.callback();
@@ -1202,9 +1204,9 @@ VISH.Utils = (function(V,undefined){
 		$(notificationWrapper).append(notificationTemplate);
 	};
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F; VERSION MANAGEMENT
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	/////////////
+	// VERSION MANAGEMENT
+	////////////
 
 	var isObseleteVersion = function(version){
 		return _getVersionValue(V.VERSION) &gt; _getVersionValue(version);
@@ -1225,7 +1227,7 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
-	&#x2F;* Hash Management *&#x2F;
+	/* Hash Management */
 
 	var getSlideNumberFromHash = function(){
 		try {
@@ -1253,7 +1255,7 @@ VISH.Utils = (function(V,undefined){
 	var updateHash = function(){
 		var newHash = &#x27;#&#x27; + V.Slides.getCurrentSlideNumber();
 
-		&#x2F;&#x2F;Propagate hash (slidenumber without params)
+		//Propagate hash (slidenumber without params)
 		if(getOptions()[&quot;readHashFromParent&quot;]===true){
 			window.parent.location.hash = newHash;
 		}
@@ -1272,7 +1274,7 @@ VISH.Utils = (function(V,undefined){
 			window.parent.location.hash = &quot;&quot;;
 		}
 
-		&#x2F;&#x2F;Try to remove # simbol
+		//Try to remove # simbol
 		if(V.Status.getDevice().features.historypushState){
 			var locationWithoutHash = removeHashFromUrlString(document.location.href);
 			window.history.replaceState(&quot;&quot;,&quot;&quot;,locationWithoutHash);
@@ -1307,9 +1309,9 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
-	&#x2F;* 
+	/* 
 	 * Multiple animation callback
-	 *&#x2F;
+	 */
 	var nAnimationsFinishedList = {};
 	var checkAnimationsFinish = function(animationId,nAnimations,callback,callbackParams){
 		if(typeof nAnimationsFinishedList[animationId] == &quot;undefined&quot;){
@@ -1326,16 +1328,16 @@ VISH.Utils = (function(V,undefined){
 	};
 
 
-	&#x2F;* Time Format for Multimedia *&#x2F;
+	/* Time Format for Multimedia */
 	var fomatTimeForMPlayer = function(s,sN){
 		sN = (typeof sN == &quot;number&quot; ? sN : -1);
 
-		&#x2F;&#x2F;Get whole hours
-		var h = Math.floor(s&#x2F;3600);
+		//Get whole hours
+		var h = Math.floor(s/3600);
 		s -= h*3600;
 
-		&#x2F;&#x2F;Get remaining minutes
-		var m = Math.floor(s&#x2F;60); 
+		//Get remaining minutes
+		var m = Math.floor(s/60); 
 		s -= m*60;
 		s = Math.round(s);
 
@@ -1352,16 +1354,16 @@ VISH.Utils = (function(V,undefined){
 	};
 	
 	
-	&#x2F;* 
+	/* 
 	 * Prevent multiple calls to the same function in a time period 
-	 *&#x2F;
+	 */
 	var delayedFunctionTimestamps = {};
 	var delayedFunctionTimers = {};
 
 	var delayFunction = function(functionId,callbackFunction,PERIOD){
 		var dN = Date.now();
-		&#x2F;&#x2F; var timeStamp = delayedFunctionTimestamps[functionId];
-		&#x2F;&#x2F; var timer = delayedFunctionTimers[functionId];
+		// var timeStamp = delayedFunctionTimestamps[functionId];
+		// var timer = delayedFunctionTimers[functionId];
 
 		if(typeof delayedFunctionTimestamps[functionId] != &quot;undefined&quot;){
 			var diff = dN - delayedFunctionTimestamps[functionId];
@@ -1392,8 +1394,8 @@ VISH.Utils = (function(V,undefined){
 		$(els).each(function(index,el){
 			var elId = $(el).attr(&quot;id&quot;);
 			if(typeof elId == &quot;undefined&quot;){
-				&#x2F;&#x2F; V.Debugging.log(&quot;WARNING: Element without id&quot;);
-				&#x2F;&#x2F; V.Debugging.log(el);
+				// V.Debugging.log(&quot;WARNING: Element without id&quot;);
+				// V.Debugging.log(el);
 				elId = V.Utils.getId(&quot;TmpShownId&quot;);
 				$(el).attr(&quot;id&quot;,elId);
 			}
@@ -1402,9 +1404,9 @@ VISH.Utils = (function(V,undefined){
 			if(tmpShownCount==0){
 				$(el).addClass(&quot;temp_shown&quot;);
 			}
-			&#x2F;&#x2F; if(tempShownCounts[elId] &gt; 1){
-			&#x2F;&#x2F; 	V.Debugging.log(&quot;tempShownCounts[elId] greater than 1: &quot; + elId);
-			&#x2F;&#x2F; }
+			// if(tempShownCounts[elId] &gt; 1){
+			// 	V.Debugging.log(&quot;tempShownCounts[elId] greater than 1: &quot; + elId);
+			// }
 		});
 	};
 
@@ -1428,7 +1430,7 @@ VISH.Utils = (function(V,undefined){
 		});
 	};
 
-	&#x2F;&#x2F; Shuffle an array
+	// Shuffle an array
 	var shuffle = function(o){
 		for(var j, x, i = o.length; i; j = parseInt(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
 		return o;
@@ -1438,22 +1440,22 @@ VISH.Utils = (function(V,undefined){
 		if(typeof str != &quot;string&quot;){
 			return str;
 		}
-		str = str.replace(&#x2F;â€‹&#x2F;g, &#x27;&#x27;);
-		str = str.replace(&#x2F;Â&#x2F;g, &#x27;&#x27;);
-		str = str.replace(&#x2F;&amp;shy&#x2F;g, &#x27;&#x27;);
+		str = str.replace(/â€‹/g, &#x27;&#x27;);
+		str = str.replace(/Â/g, &#x27;&#x27;);
+		str = str.replace(/&amp;shy/g, &#x27;&#x27;);
 		str = str.replace(String.fromCharCode(8203),&#x27;&#x27;);
 
-		&#x2F;&#x2F;Chars to filter at the begining and end of the string
-		&#x2F;&#x2F;See http:&#x2F;&#x2F;www.ascii-code.com&#x2F;
+		//Chars to filter at the begining and end of the string
+		//See http://www.ascii-code.com/
 		var charCodesToPurge = [32,160,173];
 
 		var strL = str.length;
 		var lastValidCharIndex = strL-1;
 		for(var i=strL-1; i&gt;-1; i--){
 			if(charCodesToPurge.indexOf(str.charCodeAt(i))!=-1){
-				&#x2F;&#x2F;Char to purge
+				//Char to purge
 			} else {
-				&#x2F;&#x2F;Valid char
+				//Valid char
 				lastValidCharIndex = i;
 				break;
 			}
@@ -1464,9 +1466,9 @@ VISH.Utils = (function(V,undefined){
 		lastValidCharIndex = 0;
 		for(var i=0; i&lt;strL; i++){
 			if(charCodesToPurge.indexOf(str.charCodeAt(i))!=-1){
-				&#x2F;&#x2F;Char to purge
+				//Char to purge
 			} else {
-				&#x2F;&#x2F;Valid char
+				//Valid char
 				lastValidCharIndex = i;
 				break;
 			}
@@ -1476,13 +1478,13 @@ VISH.Utils = (function(V,undefined){
 		return str;
 	};
 
-	&#x2F;&#x2F; Calculate the Levenshtein distance between a and b
+	// Calculate the Levenshtein distance between a and b
 	var getLevenshteinDistance = function(a,b) {
 		var cost;
 		var m = a.length;
 		var n = b.length;
 		
-		&#x2F;&#x2F; make sure a.length &gt;= b.length to use O(min(n,m)) space, whatever that is
+		// make sure a.length &gt;= b.length to use O(min(n,m)) space, whatever that is
 		if(m &lt; n){
 			var c=a;a=b;b=c;
 			var o=m;m=n;n=o;
@@ -1506,7 +1508,7 @@ VISH.Utils = (function(V,undefined){
 		return r[m][n];
 	};
 
-	&#x2F;&#x2F; return the smallest of the three values passed in
+	// return the smallest of the three values passed in
 	var _minimator = function(x,y,z){
 		if (x &lt; y &amp;&amp; x &lt; z) return x;
 		if (y &lt; x &amp;&amp; y &lt; z) return y;
@@ -1538,6 +1540,7 @@ VISH.Utils = (function(V,undefined){
 		removeParamFromUrl		: removeParamFromUrl,
 		getParamsFromUrl		: getParamsFromUrl,
 		fixPresentation			: fixPresentation,
+		addScale3DToElement		: addScale3DToElement,
 		showDialog 				: showDialog,
 		showPNotValidDialog		: showPNotValidDialog,
 		isObseleteVersion		: isObseleteVersion,
@@ -1559,20 +1562,19 @@ VISH.Utils = (function(V,undefined){
 }) (VISH);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

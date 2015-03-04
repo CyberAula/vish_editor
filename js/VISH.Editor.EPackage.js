@@ -93,7 +93,8 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 	var _onTagsReceived = function(data){
 		var tagList = $("#" + uploadDivId + " .tagList");
 		if ($(tagList).children().length == 0){
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
+			var config = V.Configuration.getConfiguration();
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:config.tagsSettings.maxLength, maxTags:config.tagsSettings.maxTags, triggerKeys:config.tagsSettings.triggerKeys, 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	};

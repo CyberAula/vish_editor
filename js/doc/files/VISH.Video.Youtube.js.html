@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Video.Youtube.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,78 +25,72 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Video.Youtube.js</h1>
+<h1 class="file-heading">File: VISH.Video.Youtube.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
-&#x2F;*
+/*
  * Current version uses the Iframe API based on HTML5
- * Doc: https:&#x2F;&#x2F;developers.google.com&#x2F;youtube&#x2F;iframe_api_reference
- *&#x2F;
+ * Doc: https://developers.google.com/youtube/iframe_api_reference
+ */
 
-&#x2F;&#x2F;Var to store youtube players associated with an iframe
+//Var to store youtube players associated with an iframe
 var youtubePlayers = {}; 
-&#x2F;&#x2F;Youtube Constants (also accesible in window[&#x27;YT&#x27;].PlayerState when API is loaded)
+//Youtube Constants (also accesible in window[&#x27;YT&#x27;].PlayerState when API is loaded)
 var YT = YT || {};
 
-&#x2F;* WE DEFINE CONSTANTS*&#x2F;
+/* WE DEFINE CONSTANTS*/
 YT.PlayerState = YT.PlayerState || {};
 YT.PlayerState.UNSTARTED = -1;
 YT.PlayerState.ENDED = 0;
@@ -107,7 +99,7 @@ YT.PlayerState.PAUSED = 2;
 YT.PlayerState.BUFFERING = 3;
 YT.PlayerState.CUED = 5;
 
-&#x2F;&#x2F;Callback from Youtube Iframe API
+//Callback from Youtube Iframe API
 var _youTubeIframeApiReady = false;
 function onYouTubeIframeAPIReady(){ _youTubeIframeApiReady = true; }
 
@@ -128,7 +120,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 	var _loadYouTubeIframeAPILibrary = function(){
 		var tag = document.createElement(&#x27;script&#x27;);
-		tag.src = &quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;iframe_api&quot;;
+		tag.src = &quot;https://www.youtube.com/iframe_api&quot;;
 		var firstScriptTag = document.getElementsByTagName(&#x27;script&#x27;)[0];
 		firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 	};
@@ -170,7 +162,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 			}
 		};
 
-		var video = &quot;&lt;div id=&#x27;&quot;+ videoId + &quot;&#x27; ytContainerId=&#x27;&quot; + ytContainerId + &quot;&#x27; class=&#x27;&quot; + videoClasses + &quot;&#x27; &quot; + objectStyle + zoomInStyle + &quot; source=&#x27;&quot; + source + &quot;&#x27;&gt;&quot; + &quot;&lt;&#x2F;div&gt;&quot;;
+		var video = &quot;&lt;div id=&#x27;&quot;+ videoId + &quot;&#x27; ytContainerId=&#x27;&quot; + ytContainerId + &quot;&#x27; class=&#x27;&quot; + videoClasses + &quot;&#x27; &quot; + objectStyle + zoomInStyle + &quot; source=&#x27;&quot; + source + &quot;&#x27;&gt;&quot; + &quot;&lt;/div&gt;&quot;;
 		return video;
 	};
 
@@ -198,23 +190,23 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 
 		if(V.Status.isOnline()===false){
-			$(container).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
+			$(container).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts/advert_new_grey_video.png&#x27;/&gt;&quot;);
 			_onPlayerError();
 			return;
 		}
 
-		&#x2F;&#x2F; If Youtube Iframe isn&#x27;t ready, load nothing
+		// If Youtube Iframe isn&#x27;t ready, load nothing
 		if(!_isYouTubeIframeAPIReady()){
 			if(_waitForLoadYouTubeAPI){
 				setTimeout(function(){
 					loadYoutubeObject(container,options);
 				},1000);
 			} else {
-				$(container).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_video.png&#x27;&#x2F;&gt;&quot;);
+				$(container).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts/advert_new_grey_video.png&#x27;/&gt;&quot;);
 				$(container).addClass(&quot;videoOfflineContainer&quot;);
 				var nonAvailableImg = $(container).find(&quot;img&quot;);
 				$(nonAvailableImg).load(function(response){
-					$(nonAvailableImg).css(&quot;margin-top&quot;,($(container).height()-$(nonAvailableImg).height())&#x2F;2 + &quot;px&quot;);
+					$(nonAvailableImg).css(&quot;margin-top&quot;,($(container).height()-$(nonAvailableImg).height())/2 + &quot;px&quot;);
 				});
 				_onPlayerError();
 			}
@@ -229,7 +221,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		
 		var iframeId = $(container).attr(&quot;ytContainerId&quot;);
 		var ytStyle = (typeof $(container).attr(&quot;objectStyle&quot;) != &quot;undefined&quot;) ? (&quot;style=&#x27;&quot; + $(container).attr(&quot;objectStyle&quot;) + &quot;&#x27; &quot;) : &quot;&quot;;
-		$(container).html(&quot;&lt;div id=&#x27;&quot; + iframeId + &quot;&#x27; videotype=&#x27;&quot;+ V.Constant.MEDIA.YOUTUBE_VIDEO + &quot;&#x27; &quot; + ytStyle + &quot;&#x27;&gt;&lt;&#x2F;div&gt;&quot;);
+		$(container).html(&quot;&lt;div id=&#x27;&quot; + iframeId + &quot;&#x27; videotype=&#x27;&quot;+ V.Constant.MEDIA.YOUTUBE_VIDEO + &quot;&#x27; &quot; + ytStyle + &quot;&#x27;&gt;&lt;/div&gt;&quot;);
 
 		youtubePlayers[iframeId] = new YT.Player(iframeId, {
 		  height: &#x27;100%&#x27;,
@@ -238,16 +230,16 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		  playerVars: { &#x27;autoplay&#x27;: 0, &#x27;controls&#x27;: controls, &#x27;enablejsapi&#x27;: 1, &#x27;showinfo&#x27;: 0, wmode: &quot;transparent&quot;, &#x27;rel&#x27;: 0 },
 		  events: {
 			 &#x27;onReady&#x27;: _onReadyCallback,
-			 &#x2F;&#x2F; &#x27;onStateChange&#x27;: onPlayerStateChange,
+			 // &#x27;onStateChange&#x27;: onPlayerStateChange,
 			 &#x27;onError&#x27; : _onPlayerError
 		  }
 		});
 
 		$(&quot;#&quot;+iframeId).attr(&quot;wmode&quot;,&quot;transparent&quot;);
 
-		&#x2F;&#x2F;Enable custom player only if its specified by options
+		//Enable custom player only if its specified by options
 		if(_enableCustomPlayer){
-			&#x2F;&#x2F;In current version player control events are loaded in onPlayerReady event
+			//In current version player control events are loaded in onPlayerReady event
 			V.Video.CustomPlayer.addCustomPlayerControls(iframeId,false);
 		}
 	};
@@ -255,8 +247,8 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	var onPlayerReady = function(event){
 		if(_enableCustomPlayer){
 			var iframe = event.target.getIframe();
-			&#x2F;&#x2F; var iframeId = iframe.id;
-			&#x2F;&#x2F; V.Debugging.log(&quot;onPlayerReady &quot; + iframe.id);
+			// var iframeId = iframe.id;
+			// V.Debugging.log(&quot;onPlayerReady &quot; + iframe.id);
 			V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 		}
 	};
@@ -268,35 +260,35 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
 		var newState = event.data;
 		var iframe = event.target.getIframe();
-		&#x2F;&#x2F; var player = youtubePlayers[iframe.id];
+		// var player = youtubePlayers[iframe.id];
 
 		switch(newState){
 			case -1:
-				&#x2F;&#x2F; V.Debugging.log(&quot;Not initialized&quot;);
-				&#x2F;&#x2F; V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
+				// V.Debugging.log(&quot;Not initialized&quot;);
+				// V.Video.CustomPlayer.loadCustomPlayerControlEvents(iframe);
 				break;
 			case 0:
-				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Ended&quot;);
+				// V.Debugging.log(playerId + &quot;: Ended&quot;);
 				V.Video.CustomPlayer.onEndVideo(iframe);
 				break;
 			case 1:
-				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Reproducing at &quot; + $(&quot;#&quot;+playerId)[0].getCurrentTime());
+				// V.Debugging.log(playerId + &quot;: Reproducing at &quot; + $(&quot;#&quot;+playerId)[0].getCurrentTime());
 				V.Video.CustomPlayer.onPlayVideo(iframe);
 				break;
 			case 2:
-				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Pause at &quot; + $(&quot;#&quot;+playerId)[0].getCurrentTime());
+				// V.Debugging.log(playerId + &quot;: Pause at &quot; + $(&quot;#&quot;+playerId)[0].getCurrentTime());
 				V.Video.CustomPlayer.onPauseVideo(iframe);
 				break;
 			case 3:
-				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Buffer Store&quot;);
+				// V.Debugging.log(playerId + &quot;: Buffer Store&quot;);
 				break;
 			case 4:
 				break;
 			case 5:
-				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Video Tail Store&quot;);
+				// V.Debugging.log(playerId + &quot;: Video Tail Store&quot;);
 				break;
 			default:
-				&#x2F;&#x2F; V.Debugging.log(playerId + &quot;: Unknown state: &quot; + newState);
+				// V.Debugging.log(playerId + &quot;: Unknown state: &quot; + newState);
 				break;
 		}
 	};
@@ -308,7 +300,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	var playVideo = function(iframeId,currentTime,triggeredByUser){
 		var ytPlayer = youtubePlayers[iframeId];
 
-		&#x2F;&#x2F;ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
+		//ytPlayer.getPlayerState must be defined to ensure that Youtube player has loaded properly.
 		if((ytPlayer)&amp;&amp;(ytPlayer.getPlayerState)){
 
 			var params = new Object();
@@ -330,9 +322,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 	};
 
-	&#x2F;**
+	/**
 	 * Function to pause a specific video
-	 *&#x2F;
+	 */
 	var pauseVideo = function(iframeId,currentTime,triggeredByUser){
 		var ytPlayer = youtubePlayers[iframeId];
 
@@ -357,9 +349,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 		}
 	};
 
-	&#x2F;**
+	/**
 	 * Function to pause a specific video
-	 *&#x2F;
+	 */
 	var seekVideo = function(iframeId,seekTime,triggeredByUser){
 		var ytPlayer = youtubePlayers[iframeId];
 		if((ytPlayer)&amp;&amp;(ytPlayer.getPlayerState)){
@@ -391,23 +383,23 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;Youtube Utils both from Viewer and Editor
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	/////////
+	//Youtube Utils both from Viewer and Editor
+	/////////
 
-	&#x2F;*
+	/*
 	 * Returns the youtube video id contained in the url
-	 *&#x2F;
+	 */
 	var getYoutubeIdFromURL = function(url){
 		var id = null;
 		if(!url){
 			return id;
 		}
 
-		var youtube_video_pattern_1 =&#x2F;https?:\&#x2F;\&#x2F;?youtu.be\&#x2F;([aA-zZ0-9-]+)&#x2F;g
-		var youtube_video_pattern_2 =&#x2F;(https?:\&#x2F;\&#x2F;)?(www.youtube.com\&#x2F;watch\?v=|embed\&#x2F;)([aA-zZ0-9-]+)[&amp;=.]*&#x2F;g
-		var youtube_video_pattern_3 =&#x2F;(https?:\&#x2F;\&#x2F;)?(www.youtube.com\&#x2F;v\&#x2F;)([aA-zZ0-9-]+)&#x2F;g
-		var youtube_video_pattern_4 =&#x2F;(https?:\&#x2F;\&#x2F;)?(www.youtube.com\&#x2F;embed\&#x2F;)([aA-zZ0-9-]+)&#x2F;g
+		var youtube_video_pattern_1 =/https?:\/\/?youtu.be\/([aA-zZ0-9-]+)/g
+		var youtube_video_pattern_2 =/(https?:\/\/)?(www.youtube.com\/watch\?v=|embed\/)([aA-zZ0-9-]+)[&amp;=.]*/g
+		var youtube_video_pattern_3 =/(https?:\/\/)?(www.youtube.com\/v\/)([aA-zZ0-9-]+)/g
+		var youtube_video_pattern_4 =/(https?:\/\/)?(www.youtube.com\/embed\/)([aA-zZ0-9-]+)/g
 
 		if(url.match(youtube_video_pattern_1)!=null){
 			var result = youtube_video_pattern_1.exec(url)
@@ -448,7 +440,7 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var getEmbedSource = function(youTubeVideoDOM){
-		return &quot;https:&#x2F;&#x2F;www.youtube.com&#x2F;embed&#x2F;&quot; + V.Video.Youtube.getYoutubeIdFromURL(V.Object.getObjectInfo(youTubeVideoDOM).source);
+		return &quot;https://www.youtube.com/embed/&quot; + V.Video.Youtube.getYoutubeIdFromURL(V.Object.getObjectInfo(youTubeVideoDOM).source);
 	};
 
 	return {
@@ -473,20 +465,19 @@ VISH.Video.Youtube = (function(V,$,undefined){
 
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

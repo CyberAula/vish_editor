@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.SnapshotPlayer.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,79 +25,73 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.SnapshotPlayer.js</h1>
+<h1 class="file-heading">File: VISH.SnapshotPlayer.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
 VISH.SnapshotPlayer = (function(V,$,undefined){
 
-    &#x2F;**
+    /**
      * Load web snapshots
-     *&#x2F;
+     */
     var loadSnapshot = function(element){
         $.each(element.children(&#x27;.snapshotelement&#x27;), function(index, value){
             var wrapper_class = &quot;snapshot_wrapper&quot; + &quot;_viewer&quot;;
             var content_class = &quot;snapshot_content&quot; + &quot;_viewer&quot;;
             var content = $(value).attr(&quot;objectWrapper&quot;);
             if(V.Status.isOnline()=== false){
-              $(value).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts&#x2F;advert_new_grey_iframe.png&#x27;&#x2F;&gt;&quot;);
+              $(value).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;adverts/advert_new_grey_iframe.png&#x27;/&gt;&quot;);
               return;
             }
             var iframe = $(V.Utils.getOuterHTML($(content)));
@@ -107,7 +99,7 @@ VISH.SnapshotPlayer = (function(V,$,undefined){
             $(iframe).addClass(content_class);
             var scrollTop = $(value).attr(&quot;scrollTop&quot;);
             var scrollLeft = $(value).attr(&quot;scrollLeft&quot;);
-            $(value).html(&quot;&lt;div class=&#x27;&quot; + wrapper_class + &quot;&#x27; style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(iframe) + &quot;&lt;&#x2F;div&gt;&quot;);
+            $(value).html(&quot;&lt;div class=&#x27;&quot; + wrapper_class + &quot;&#x27; style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(iframe) + &quot;&lt;/div&gt;&quot;);
 						if($(value).attr(&quot;zoom&quot;)){
 							$(value).find(&quot;.&quot; + content_class).attr(&quot;style&quot;,V.Utils.getZoomInStyle($(value).attr(&quot;zoom&quot;)));
 						}
@@ -116,9 +108,9 @@ VISH.SnapshotPlayer = (function(V,$,undefined){
         });
     };
     
-    &#x2F;**
+    /**
      * Unload websnapshots
-     *&#x2F;
+     */
     var unloadSnapshot = function(element){
         var element = $(&#x27;.past, .next&#x27;)
         $.each(element.children(&#x27;.snapshotelement&#x27;), function(index, value){
@@ -127,7 +119,7 @@ VISH.SnapshotPlayer = (function(V,$,undefined){
     }
 		
 		
-		&#x2F;&#x2F;Change zoom after setup size
+		//Change zoom after setup size
 		var aftersetupSize = function(increase){
 
 			$.each($(&quot;.snapshot_content_viewer&quot;), function(index, iframe) {
@@ -140,9 +132,9 @@ VISH.SnapshotPlayer = (function(V,$,undefined){
           var scrollLeft = $(area).attr(&quot;scrollLeftOrigin&quot;);
           var newScrollLeft = scrollLeft * increase;
 					
-&#x2F;&#x2F;          Width differente between original size and new size.
-&#x2F;&#x2F;          var widthDelta = $(iframe_wrapper).width()*(1-(1&#x2F;increase));
-&#x2F;&#x2F;          var newScrollLeft = scrollLeft * increase + widthDelta;
+//          Width differente between original size and new size.
+//          var widthDelta = $(iframe_wrapper).width()*(1-(1/increase));
+//          var newScrollLeft = scrollLeft * increase + widthDelta;
 					
 					var scrollTop = $(area).attr(&quot;scrollTopOrigin&quot;);
 					var newScrollTop = scrollTop * increase;
@@ -164,20 +156,19 @@ VISH.SnapshotPlayer = (function(V,$,undefined){
 })(VISH, jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

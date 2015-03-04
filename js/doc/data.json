@@ -29,6 +29,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "libs/jquery.ui.touch-punch.0.2.3.js": {
+            "name": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "VISH.AppletPlayer.js": {
             "name": "VISH.AppletPlayer.js",
             "modules": {},
@@ -527,6 +534,75 @@
             "class": "VISH.Editor"
         },
         {
+            "file": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "line": 26,
+            "description": "Simulate a mouse event based on a corresponding touch event",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "A touch event",
+                    "type": "Object"
+                },
+                {
+                    "name": "simulatedType",
+                    "description": "The corresponding mouse event",
+                    "type": "String"
+                }
+            ],
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "line": 67,
+            "description": "Handle the jQuery UI widget's touchstart events",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The widget element's touchstart event",
+                    "type": "Object"
+                }
+            ],
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "line": 96,
+            "description": "Handle the jQuery UI widget's touchmove events",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The document's touchmove event",
+                    "type": "Object"
+                }
+            ],
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "line": 114,
+            "description": "Handle the jQuery UI widget's touchend events",
+            "params": [
+                {
+                    "name": "event",
+                    "description": "The document's touchend event",
+                    "type": "Object"
+                }
+            ],
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "line": 142,
+            "description": "A duck punch of the $.ui.mouse _mouseInit method to support touch events.\nThis method extends the widget with bound touch event handlers that\ntranslate touch events to mouse events and pass them to the widget's\noriginal mouse event handling methods.",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "libs/jquery.ui.touch-punch.0.2.3.js",
+            "line": 163,
+            "description": "Remove the touch event handlers",
+            "class": "VISH.Editor"
+        },
+        {
             "file": "VISH.AppletPlayer.js",
             "line": 3,
             "description": "Function to add an applet element to the slide\nthe applet is inside the archive, width, height and params attributes of the div",
@@ -546,13 +622,13 @@
         },
         {
             "file": "VISH.Editor.Events.js",
-            "line": 228,
+            "line": 266,
             "description": "Tutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Image.js",
-            "line": 189,
+            "line": 181,
             "description": "Function to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -618,13 +694,13 @@
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 388,
+            "line": 391,
             "description": "Returns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 489,
+            "line": 485,
             "description": "param style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -642,19 +718,19 @@
         },
         {
             "file": "VISH.Editor.Renderer.js",
-            "line": 40,
+            "line": 45,
             "description": "function to render one slide in editor",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Renderer.js",
-            "line": 119,
+            "line": 124,
             "description": "Function to render slidesets",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 406,
+            "line": 408,
             "description": "function called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
             "class": "VISH.Editor"
         },
@@ -711,7 +787,7 @@
         },
         {
             "file": "VISH.Editor.Thumbnails.js",
-            "line": 145,
+            "line": 149,
             "description": "Function to select the thumbnail",
             "class": "VISH.Editor"
         },
@@ -778,85 +854,85 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 212,
+            "line": 214,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 267,
+            "line": 269,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 313,
+            "line": 315,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 345,
+            "line": 347,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 384,
+            "line": 386,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 393,
+            "line": 395,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 457,
+            "line": 459,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 469,
+            "line": 471,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 495,
+            "line": 497,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 520,
+            "line": 522,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 874,
+            "line": 873,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Events.js",
-            "line": 139,
-            "description": "function to add the events to the help buttons to launch joy ride bubbles",
+            "line": 153,
+            "description": "Function to add the events to the help buttons to launch joy ride bubbles",
             "class": "",
             "namespace": "VISH"
         },
@@ -869,14 +945,14 @@
         },
         {
             "file": "VISH.I18n.js",
-            "line": 130,
+            "line": 106,
             "description": "Function to translate a text",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 174,
+            "line": 150,
             "description": "Return the current language",
             "class": "",
             "namespace": "VISH"
@@ -890,7 +966,7 @@
         },
         {
             "file": "VISH.Object.js",
-            "line": 104,
+            "line": 118,
             "description": "Patterns",
             "class": "",
             "namespace": "VISH"
@@ -918,7 +994,7 @@
         },
         {
             "file": "VISH.Quiz.API.js",
-            "line": 219,
+            "line": 220,
             "description": "Send answers for real time quizzes\nPUT /quiz_sessions/X",
             "class": "",
             "namespace": "VISH"
@@ -1566,21 +1642,21 @@
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 124,
+            "line": 125,
             "description": "Function called when entering slide in viewer, we have to show the objects",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 181,
+            "line": 182,
             "description": "Function called when leaving a slide in viewer",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Viewer.js",
-            "line": 206,
+            "line": 207,
             "description": "function to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
             "class": "",
             "namespace": "VISH"
@@ -1801,6 +1877,30 @@
             "line": " libs/jquery.form.js:1036"
         },
         {
+            "message": "Missing item type\nSimulate a mouse event based on a corresponding touch event",
+            "line": " libs/jquery.ui.touch-punch.0.2.3.js:26"
+        },
+        {
+            "message": "Missing item type\nHandle the jQuery UI widget's touchstart events",
+            "line": " libs/jquery.ui.touch-punch.0.2.3.js:67"
+        },
+        {
+            "message": "Missing item type\nHandle the jQuery UI widget's touchmove events",
+            "line": " libs/jquery.ui.touch-punch.0.2.3.js:96"
+        },
+        {
+            "message": "Missing item type\nHandle the jQuery UI widget's touchend events",
+            "line": " libs/jquery.ui.touch-punch.0.2.3.js:114"
+        },
+        {
+            "message": "Missing item type\nA duck punch of the $.ui.mouse _mouseInit method to support touch events.\nThis method extends the widget with bound touch event handlers that\ntranslate touch events to mouse events and pass them to the widget's\noriginal mouse event handling methods.",
+            "line": " libs/jquery.ui.touch-punch.0.2.3.js:142"
+        },
+        {
+            "message": "Missing item type\nRemove the touch event handlers",
+            "line": " libs/jquery.ui.touch-punch.0.2.3.js:163"
+        },
+        {
             "message": "Missing item type\nFunction to add an applet element to the slide\nthe applet is inside the archive, width, height and params attributes of the div",
             "line": " VISH.AppletPlayer.js:3"
         },
@@ -1814,11 +1914,11 @@
         },
         {
             "message": "Missing item type\nTutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Editor.Events.js:228"
+            "line": " VISH.Editor.Events.js:266"
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Image.js:189"
+            "line": " VISH.Editor.Image.js:181"
         },
         {
             "message": "Missing item type\nfunction to call to LRE and request images\nsuccessCallback: function to pass the results if everything goes well.\nfailCallback: function to pass the error if something fails. Format: {\"error\":\"cnf cannot be null!\"}",
@@ -1862,11 +1962,11 @@
         },
         {
             "message": "Missing item type\nReturns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:388"
+            "line": " VISH.Editor.Object.js:391"
         },
         {
             "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:489"
+            "line": " VISH.Editor.Object.js:485"
         },
         {
             "message": "Missing item type\nInsert the selected slides of a slide presentation in JSON",
@@ -1878,15 +1978,15 @@
         },
         {
             "message": "Missing item type\nfunction to render one slide in editor",
-            "line": " VISH.Editor.Renderer.js:40"
+            "line": " VISH.Editor.Renderer.js:45"
         },
         {
             "message": "Missing item type\nFunction to render slidesets",
-            "line": " VISH.Editor.Renderer.js:119"
+            "line": " VISH.Editor.Renderer.js:124"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
-            "line": " VISH.Editor.Settings.js:406"
+            "line": " VISH.Editor.Settings.js:408"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the pedagogical options button",
@@ -1922,7 +2022,7 @@
         },
         {
             "message": "Missing item type\nFunction to select the thumbnail",
-            "line": " VISH.Editor.Thumbnails.js:145"
+            "line": " VISH.Editor.Thumbnails.js:149"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls V.Viewer with the generated json",
@@ -1946,51 +2046,51 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:212"
+            "line": " VISH.Editor.js:214"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:267"
+            "line": " VISH.Editor.js:269"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:313"
+            "line": " VISH.Editor.js:315"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:345"
+            "line": " VISH.Editor.js:347"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:384"
+            "line": " VISH.Editor.js:386"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:393"
+            "line": " VISH.Editor.js:395"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:457"
+            "line": " VISH.Editor.js:459"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:469"
+            "line": " VISH.Editor.js:471"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:495"
+            "line": " VISH.Editor.js:497"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:520"
+            "line": " VISH.Editor.js:522"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:874"
+            "line": " VISH.Editor.js:873"
         },
         {
-            "message": "Missing item type\nfunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Events.js:139"
+            "message": "Missing item type\nFunction to add the events to the help buttons to launch joy ride bubbles",
+            "line": " VISH.Events.js:153"
         },
         {
             "message": "Missing item type\nFunction to do the language translation",
@@ -1998,11 +2098,11 @@
         },
         {
             "message": "Missing item type\nFunction to translate a text",
-            "line": " VISH.I18n.js:130"
+            "line": " VISH.I18n.js:106"
         },
         {
             "message": "Missing item type\nReturn the current language",
-            "line": " VISH.I18n.js:174"
+            "line": " VISH.I18n.js:150"
         },
         {
             "message": "Missing item type\nFunction to reload a gifs in the slide for Mobile devices",
@@ -2010,7 +2110,7 @@
         },
         {
             "message": "Missing item type\nPatterns",
-            "line": " VISH.Object.js:104"
+            "line": " VISH.Object.js:118"
         },
         {
             "message": "Missing item type\nFunction to add an object to the slide\nthe object is in the wrapper attribute of the div",
@@ -2026,7 +2126,7 @@
         },
         {
             "message": "Missing item type\nSend answers for real time quizzes\nPUT /quiz_sessions/X",
-            "line": " VISH.Quiz.API.js:219"
+            "line": " VISH.Quiz.API.js:220"
         },
         {
             "message": "Missing item type\nFunction to render a quiz inside an article (a slide)",
@@ -2250,15 +2350,15 @@
         },
         {
             "message": "Missing item type\nFunction called when entering slide in viewer, we have to show the objects",
-            "line": " VISH.Viewer.js:124"
+            "line": " VISH.Viewer.js:125"
         },
         {
             "message": "Missing item type\nFunction called when leaving a slide in viewer",
-            "line": " VISH.Viewer.js:181"
+            "line": " VISH.Viewer.js:182"
         },
         {
             "message": "Missing item type\nfunction to update the number that indicates what slide is diplayed\nwith this format: 1/12 2/12",
-            "line": " VISH.Viewer.js:206"
+            "line": " VISH.Viewer.js:207"
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",

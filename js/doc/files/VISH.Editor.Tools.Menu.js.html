@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Editor.Tools.Menu.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,64 +25,58 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Editor.Tools.Menu.js</h1>
+<h1 class="file-heading">File: VISH.Editor.Tools.Menu.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -93,10 +85,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var _initialized = false;
 	var _hoverMenu = false;
 	
-	&#x2F;*
+	/*
 	 * Init singleton
 	 * Perform actions that must be executed only once
-	 *&#x2F;
+	 */
 	var init = function(){
 		if(!_initialized){
 			if(!V.Status.getDevice().desktop){
@@ -110,12 +102,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				_hoverMenu = true;
 			}
 
-			&#x2F;&#x2F;Add listeners to menu buttons
+			//Add listeners to menu buttons
 			$.each($(&quot;#menu a.menu_action&quot;), function(index, menuButton) {
 				$(menuButton).on(&quot;click&quot;, function(event){
 					event.preventDefault();
 					if($(menuButton).parent().hasClass(&quot;menu_item_disabled&quot;)){
-						&#x2F;&#x2F;Disabled button
+						//Disabled button
 						return false;
 					}
 					if(typeof V.Editor.Tools.Menu[$(menuButton).attr(&quot;action&quot;)] == &quot;function&quot;){
@@ -126,7 +118,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				});
 			});
 
-			&#x2F;&#x2F;Prevent iframe to move
+			//Prevent iframe to move
 			if(V.Status.getDevice().desktop){
 				$(&quot;a.menu_option_main, a.menu_option:not(&#x27;.menu_action&#x27;)&quot;).on(&quot;click&quot;, function(event){
 					event.preventDefault();
@@ -134,9 +126,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				});
 			}
 
-			&#x2F;&#x2F;EditorAdapter
+			//EditorAdapter
 			var options = V.Utils.getOptions();
-			&#x2F;&#x2F;Check exit option in menu
+			//Check exit option in menu
 			if(typeof options.exitURL != &quot;string&quot;){
 				$(&quot;.menu_option.menu_action[action=&#x27;exit&#x27;]&quot;).parent().hide();
 			} else {
@@ -149,12 +141,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	var _enableMenuItem = function(items){
-		&#x2F;&#x2F; $(items).show();
+		// $(items).show();
 		$(items).removeClass(&quot;menu_item_disabled&quot;).addClass(&quot;menu_item_enabled&quot;);
 	};
 
 	var _disableMenuItem = function(items){
-		&#x2F;&#x2F; $(items).hide();
+		// $(items).hide();
 		$(items).removeClass(&quot;menu_item_enabled&quot;).addClass(&quot;menu_item_disabled&quot;);
 	};
 
@@ -169,31 +161,31 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; SAVE
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	//////////////////
+	/// SAVE
+	/////////////////
 
 	var onSaveButtonClicked = function(){
 		V.Editor.Tools.changeSaveButtonStatus(&quot;loading&quot;);
 		var presentation = V.Editor.savePresentation();
 		V.Editor.sendPresentation(presentation,&quot;save&quot;,function(){
-			&#x2F;&#x2F;onSave succesfully
-			&#x2F;&#x2F; V.Debugging.log(&quot;onSave succesfully&quot;);
-			&#x2F;&#x2F; V.Debugging.log(presentation);
+			//onSave succesfully
+			// V.Debugging.log(&quot;onSave succesfully&quot;);
+			// V.Debugging.log(presentation);
 			V.Editor.Tools.changeSaveButtonStatus(&quot;disabled&quot;);
 		}, function(){
-			&#x2F;&#x2F;error onSave
-			&#x2F;&#x2F; V.Debugging.log(&quot;onSave failure&quot;);
+			//error onSave
+			// V.Debugging.log(&quot;onSave failure&quot;);
 			V.Editor.Tools.changeSaveButtonStatus(&quot;enabled&quot;);
 		});
 	};
 
-	&#x2F;**
+	/**
 	* function called when user clicks on save
 	* Generates the json for the current slides
 	* covers the section element and every article inside
 	* finally calls V.Viewer with the generated json
-	*&#x2F;
+	*/
 	var onPublishButtonClicked = function(){
 
 		if(!V.Editor.Settings.checkMandatoryFields()){
@@ -207,8 +199,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				V.Editor.Settings.displaySettings();
 			}
 			options.buttons = [button1];
-			&#x2F;&#x2F; options.onClosedCallback = function(){
-			&#x2F;&#x2F; };
+			// options.onClosedCallback = function(){
+			// };
 			V.Utils.showDialog(options);
 			return;
 		}
@@ -231,7 +223,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var options = {};
 		options.width = 600;
 		options.height = 200;
-		options.notificationIconSrc = V.ImagesPath + &quot;icons&#x2F;publish_icon.png&quot;;
+		options.notificationIconSrc = V.ImagesPath + &quot;icons/publish_icon.png&quot;;
 		options.notificationIconClass = &quot;publishNotificationIcon&quot;;
 		options.text = V.I18n.getTrans(&quot;i.Publish_confirmation&quot;);
 		options.buttons = [];
@@ -250,7 +242,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			V.Editor.Tools.changePublishButtonStatus(&quot;publishing&quot;);
 			var presentation = V.Editor.savePresentation();
 			V.Editor.sendPresentation(presentation,&quot;publish&quot;, function(data){
-				&#x2F;&#x2F;onSuccess
+				//onSuccess
 
 				switch(V.Configuration.getConfiguration().mode){
 					case V.Constant.VISH:
@@ -263,7 +255,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 						break;
 				}
 			}, function(){
-				&#x2F;&#x2F;onFail
+				//onFail
 				V.Editor.Tools.changePublishButtonStatus(&quot;publish&quot;);
 			});
 			$.fancybox.close();
@@ -277,7 +269,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var options = {};
 		options.width = 600;
 		options.height = 200;
-		options.notificationIconSrc = V.ImagesPath + &quot;icons&#x2F;unpublish_icon.png&quot;;
+		options.notificationIconSrc = V.ImagesPath + &quot;icons/unpublish_icon.png&quot;;
 		options.notificationIconClass = &quot;publishNotificationIcon&quot;;
 		options.text = V.I18n.getTrans(&quot;i.Unpublish_confirmation&quot;);
 		options.buttons = [];
@@ -296,10 +288,10 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			V.Editor.Tools.changePublishButtonStatus(&quot;unpublishing&quot;);
 			var presentation = V.Editor.savePresentation();
 			V.Editor.sendPresentation(null,&quot;unpublish&quot;, function(){
-				&#x2F;&#x2F;onSuccess
+				//onSuccess
 				V.Editor.Tools.changePublishButtonStatus(&quot;publish&quot;);
 			}, function(){
-				&#x2F;&#x2F;onFail
+				//onFail
 				V.Editor.Tools.changePublishButtonStatus(&quot;unpublish&quot;);
 			});
 			$.fancybox.close();
@@ -309,25 +301,25 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; PREVIEW
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	/////////////////////
+	/// PREVIEW
+	///////////////////////
 
 	var preview = function(){
 		V.Editor.Preview.preview();
 	};
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;&#x2F; HELP
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	/////////////////////
+	/// HELP
+	///////////////////////
 
 	var help = function(){
 		$(&quot;#help_right&quot;).trigger(&#x27;click&#x27;);
 	};
 
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
-	&#x2F;&#x2F;More Actions
-	&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;&#x2F;
+	////////////////
+	//More Actions
+	///////////////
 
 	var about = function(){
 		V.Tour.startTourWithId(&#x27;about_screen&#x27;, &#x27;top&#x27;);
@@ -339,8 +331,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			var options = {};
 			options.width = 600;
 			options.height = 200;
-			options.notificationIconSrc = V.ImagesPath + &quot;icons&#x2F;save_document.png&quot;;
-			&#x2F;&#x2F; options.notificationIconClass = &quot;publishNotificationIcon&quot;;
+			options.notificationIconSrc = V.ImagesPath + &quot;icons/save_document.png&quot;;
+			// options.notificationIconClass = &quot;publishNotificationIcon&quot;;
 			options.text = V.I18n.getTrans(&quot;i.exitConfirmationMenu&quot;);
 			options.buttons = [];
 
@@ -366,11 +358,11 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				V.Editor.Tools.changeSaveButtonStatus(&quot;loading&quot;);
 				var presentation = V.Editor.savePresentation();
 				V.Editor.sendPresentation(presentation,&quot;save&quot;,function(){
-					&#x2F;&#x2F;onSave succesfully
+					//onSave succesfully
 					V.Editor.Tools.changeSaveButtonStatus(&quot;disabled&quot;);
 					_exitFromVE();
 				}, function(){
-					&#x2F;&#x2F;error onSave
+					//error onSave
 					V.Editor.Tools.changeSaveButtonStatus(&quot;enabled&quot;);
 					$(&quot;#waiting_overlay&quot;).hide();
 				});
@@ -393,26 +385,26 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	var insertSlide = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
-		return false; &#x2F;&#x2F;Prevent iframe to move
+		return false; //Prevent iframe to move
 	};
 
 	var insertSubslide = function(){
 		V.Editor.setContentAddMode(V.Constant.SLIDESET);
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_slides&#x27;);
-		return false; &#x2F;&#x2F;Prevent iframe to move
+		return false; //Prevent iframe to move
 	};
 
 	var insertPDFex = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_pdfex&#x27;);
-		return false; &#x2F;&#x2F;Prevent iframe to move
+		return false; //Prevent iframe to move
 	};
 
 	var insertPackage = function(){
 		$(&quot;#addSlideFancybox&quot;).trigger(&#x27;click&#x27;);
 		V.Editor.Utils.loadTab(&#x27;tab_epackage&#x27;);
-		return false; &#x2F;&#x2F;Prevent iframe to move
+		return false; //Prevent iframe to move
 	};
 
 	var insertEFile = function(){
@@ -429,12 +421,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var t1 = Date.now();
 		V.Utils.Loader.startLoading();
 		V.Editor.Presentation.File.exportTo(format,function(){
-			&#x2F;&#x2F;on success
+			//on success
 			V.Utils.Loader.stopLoading();
 		}, function(){
 			var diff = Date.now() - t1;
 			setTimeout(function(){
-				&#x2F;&#x2F;on error
+				//on error
 				var options = {};
 				options.width = 600;
 				options.height = 185;
@@ -442,7 +434,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				if(format==&quot;scorm&quot;){
 					options.text = V.I18n.getTrans(&quot;i.exportPresToSCORMerrorNotification&quot;);
 				} else {
-					&#x2F;&#x2F;JSON
+					//JSON
 					options.text = V.I18n.getTrans(&quot;i.exportPresToJSONerrorNotification&quot;);
 				}
 				
@@ -503,20 +495,19 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 }) (VISH, jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>

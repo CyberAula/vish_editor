@@ -3,20 +3,18 @@
 <head>
     <meta charset="utf-8">
     <title>VISH.Editor.Presentation.js</title>
-    <link rel="stylesheet" href="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;3.8.0pr2&#x2F;build&#x2F;cssgrids&#x2F;cssgrids-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/vendor/prettify/prettify-min.css">
-    <link rel="stylesheet" href="..&#x2F;assets/css/main.css" id="site_styles">
-    <link rel="shortcut icon" type="image/png" href="..&#x2F;assets/favicon.png">
-    <script src="http:&#x2F;&#x2F;yui.yahooapis.com&#x2F;combo?3.8.0pr2&#x2F;build&#x2F;yui&#x2F;yui-min.js"></script>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
 </head>
 <body class="yui3-skin-sam">
 
 <div id="doc">
     <div id="hd" class="yui3-g header">
         <div class="yui3-u-3-4">
-            
-                <h1><img src="..&#x2F;assets/css/logo.png" title=""></h1>
-            
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
         </div>
         <div class="yui3-u-1-4 version">
             <em>API Docs for: </em>
@@ -27,64 +25,58 @@
         <div class="yui3-u-1-4">
             <div id="docs-sidebar" class="sidebar apidocs">
                 <div id="api-list">
-    <h2 class="off-left">APIs</h2>
-    <div id="api-tabview" class="tabview">
-        <ul class="tabs">
-            <li><a href="#api-classes">Classes</a></li>
-            <li><a href="#api-modules">Modules</a></li>
-        </ul>
-
-        <div id="api-tabview-filter">
-            <input type="search" id="api-filter" placeholder="Type to filter APIs">
-        </div>
-
-        <div id="api-tabview-panel">
-            <ul id="api-classes" class="apis classes">
-            
-                <li><a href="..&#x2F;classes/VISH.Editor.html">VISH.Editor</a></li>
-            
-            </ul>
-
-            <ul id="api-modules" class="apis modules">
-            
-                <li><a href="..&#x2F;modules/ViSH.html">ViSH</a></li>
-            
-            </ul>
-        </div>
-    </div>
-</div>
-
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="yui3-u-3-4">
                 <div id="api-options">
-        Show:
-        <label for="api-show-inherited">
-            <input type="checkbox" id="api-show-inherited" checked>
-            Inherited
-        </label>
-
-        <label for="api-show-protected">
-            <input type="checkbox" id="api-show-protected">
-            Protected
-        </label>
-
-        <label for="api-show-private">
-            <input type="checkbox" id="api-show-private">
-            Private
-        </label>
-        <label for="api-show-deprecated">
-            <input type="checkbox" id="api-show-deprecated">
-            Deprecated
-        </label>
-
-    </div>
-
-
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-                        <h1 class="file-heading">File: VISH.Editor.Presentation.js</h1>
+<h1 class="file-heading">File: VISH.Editor.Presentation.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -101,8 +93,8 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	var _onConnect = function(origin){
 		V.Debugging.log(&quot;Communication stablished with origin &quot; + origin);
 		V.IframeAPI.registerCallback(&quot;onMessage&quot;,function(VEMessage,origin){
-			&#x2F;&#x2F; V.Debugging.log(&quot;onMessage from &quot; + origin);
-			&#x2F;&#x2F; V.Debugging.log(VEMessage);
+			// V.Debugging.log(&quot;onMessage from &quot; + origin);
+			// V.Debugging.log(VEMessage);
 			var VEMessageObject = JSON.parse(VEMessage);
 			if(VEMessageObject.VEevent===V.Constant.Event.onSelectedSlides){
 				V.Messenger.Helper.processVEMessage(VEMessage);
@@ -110,17 +102,17 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		});
 	};
 
-	&#x2F;*
+	/*
 	 * Preview a presentation to insert its slides into the current presentation
-	 *&#x2F;
+	 */
 	var previewPresentation = function(presentation){
 		V.IframeAPI.init({callback: _onConnect});
 		V.Editor.Preview.preview({insertMode: true, slideNumberToPreview: 1, presentationJSON: presentation});
 	};
 
-	&#x2F;**
+	/**
 	 * Insert the selected slides of a slide presentation in JSON
-	 *&#x2F;
+	 */
 	var insertPresentation = function(presentationJSON,selectedSlideNumbers){
 		var snL = selectedSlideNumbers.length;
 
@@ -129,7 +121,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			return;
 		}
 
-		&#x2F;&#x2F;Fix presentation (for old versions)
+		//Fix presentation (for old versions)
 		presentationJSON = V.Utils.fixPresentation(presentationJSON);
 		if(presentationJSON===null){
 			V.Utils.showPNotValidDialog();
@@ -151,7 +143,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 				return null;
 			}
 
-			&#x2F;&#x2F;PRE-renderer actions
+			//PRE-renderer actions
 			switch(mySlide.type){
 				case V.Constant.FLASHCARD:
 					flashcards.push(mySlide);
@@ -176,10 +168,10 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			V.Editor.Thumbnails.selectThumbnail(V.Slides.getCurrentSlideNumber());
 		});
 
-		&#x2F;&#x2F;Unload all objects
+		//Unload all objects
 		V.Editor.Utils.Loader.unloadAllObjects();
 
-		&#x2F;&#x2F;Enter in currentSlide (this will cause that objects will be shown)
+		//Enter in currentSlide (this will cause that objects will be shown)
 		if(V.Slides.getCurrentSlideNumber()&gt;0){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 		}
@@ -187,11 +179,11 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 		$.fancybox.close();
 	};
 
-	&#x2F;*
+	/*
 	 * Generate presentation scaffold for elements
-	 * element JSON example: { body: &quot;myimage.jpg&quot;, type: V.Constant.IMAGE}
+	 * element JSON example: {body: &quot;myimage.jpg&quot;, type: V.Constant.IMAGE}
 	 * options JSON example: {template : &quot;t2&quot;, pdfexId: &quot;22&quot;}
-	 *&#x2F;
+	 */
 	var generatePresentationScaffold = function(elements,options){
 		var presentation = {};
 		presentation.VEVersion = V.VERSION;
@@ -208,21 +200,26 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 
 	var _generateSlideScaffold = function(index,element,options){
 		var slide = {};
+		var element = element || {};
+
 		slide.id = &quot;article&quot;+index;
 		slide.type = V.Constant.STANDARD;
 
 		var defaultTemplate = &quot;t10&quot;;
 		if(element.template){
-			slide.template = options.template;
+			slide.template = element.template;
 		} else if((options)&amp;&amp;(options.template)){
 			slide.template = options.template;
 		} else {
 			slide.template = defaultTemplate;
 		}
 
+		if(element.type == V.Constant.QUIZ){
+			slide.containsQuiz =true;
+		}
+
 		slide.elements = [];
 
-		var element = element || {};
 		element.id = slide.id + &quot;_zone1&quot;;
 		switch(slide.template){
 			case &quot;t2&quot;:
@@ -253,20 +250,19 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 }) (VISH, jQuery);
     </pre>
 </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script src="..&#x2F;assets/vendor/prettify/prettify-min.js"></script>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
 <script>prettyPrint();</script>
-<script src="..&#x2F;assets/js/yui-prettify.js"></script>
-<script src="..&#x2F;assets/../api.js"></script>
-<script src="..&#x2F;assets/js/api-filter.js"></script>
-<script src="..&#x2F;assets/js/api-list.js"></script>
-<script src="..&#x2F;assets/js/api-search.js"></script>
-<script src="..&#x2F;assets/js/apidocs.js"></script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
 </body>
 </html>
