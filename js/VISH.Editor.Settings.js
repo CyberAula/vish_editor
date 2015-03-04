@@ -280,25 +280,23 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		$("#tagBoxIntro").html($("#tagBoxIntro").attr("HTMLcontent"));
 
 		var tagList = $("#tagBoxIntro .tagList");
-		var draftPresentation = V.Editor.getDraftPresentation();
 
 		if ($(tagList).children().length == 0){
-			if(!draftPresentation){
-				// //Insert the two first tags. //DEPRECATED
-				// $.each(data, function(index, tag) {
-				// 	if(index==2){
-				// 		return false; //break the bucle
-				// 	}
-				// 	$(tagList).append("<li>" + tag + "</li>")
-				// });
-			} else {
-				if(draftPresentation.tags){
-					//Insert draftPresentation tags
-					$.each(draftPresentation.tags, function(index, tag) {
-						$(tagList).append("<li>" + tag + "</li>");
-					});
-				}
+			var options = V.Utils.getOptions();
+			if((options)&&(options["extra_tags"] instanceof Array)){
+				$(options["extra_tags"]).each(function(index,tag){
+					$(tagList).append("<li>" + tag + "</li>");
+				});
 			}
+
+			var draftPresentation = V.Editor.getDraftPresentation();
+			if(draftPresentation && draftPresentation.tags){
+				//Insert draftPresentation tags
+				$.each(draftPresentation.tags, function(index,tag){
+					$(tagList).append("<li>" + tag + "</li>");
+				});
+			}
+
 			var maxLength = 20;
 			var maxTags = 8;
 			var triggerKeys = ['enter', 'space', 'comma', 'tab'];
