@@ -90,7 +90,11 @@ var getOptions = function(){
 		// Behaviour customization
 		/////////////////////
 		configuration["presentationSettings"] = true;
-
+		var tagsSettings = new Object();
+		tagsSettings.maxLength = 20;
+		tagsSettings.maxTags = 8;
+		tagsSettings.triggerKeys = ['enter', 'space', 'comma', 'tab'];
+		configuration["tagsSettings"] = tagsSettings;
 
 		options["configuration"] = configuration;
 

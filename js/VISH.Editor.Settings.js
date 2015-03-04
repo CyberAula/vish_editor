@@ -299,7 +299,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 					});
 				}
 			}
-			$(tagList).tagit({tagSource:data, sortable:true, maxLength:20, maxTags:8 , 
+			var maxLength = 20;
+			var maxTags = 8;
+			var triggerKeys = ['enter', 'space', 'comma', 'tab'];
+			var config = V.Configuration.getConfiguration();
+			if(config.tagsSettings && config.tagsSettings.maxLength){
+				maxLength = config.tagsSettings.maxLength;
+			}
+			if(config.tagsSettings && config.tagsSettings.maxTags){
+				maxTags = config.tagsSettings.maxTags;
+			}
+			if(config.tagsSettings && config.tagsSettings.triggerKeys){
+				triggerKeys = config.tagsSettings.triggerKeys;
+			}
+			$(tagList).tagit({tagSource:data, sortable:true, maxLength:maxLength, maxTags:maxTags, triggerKeys:triggerKeys, 
 			watermarkAllowMessage: V.I18n.getTrans("i.AddTags"), watermarkDenyMessage: V.I18n.getTrans("i.limitReached")});
 		}
 	};
