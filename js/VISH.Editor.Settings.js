@@ -27,10 +27,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			max: 30,
 			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
 			slide: function( event, ui ) {
-				$( "#age_range" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+				_changeAgeRangeDisplayedValue(ui.values[0] + " - " + ui.values[1]);
 			}
 		});
-		$("#age_range").val(V.Constant.AGE_RANGE);
+		_changeAgeRangeDisplayedValue(V.Constant.AGE_RANGE);
 
 		$("#slider-difficulty").slider({
 			min: 0,
@@ -181,9 +181,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf("-")-1);
 			var end_range = presentation.age_range.substring(presentation.age_range.indexOf("-")+2);
 			$("#slider-age" ).slider( "values", [start_range, end_range] );
-			$("#age_range").val(presentation.age_range);
+			_changeAgeRangeDisplayedValue(presentation.age_range);
 		} else {
-			$("#age_range").val(V.Constant.AGE_RANGE);
+			_changeAgeRangeDisplayedValue(V.Constant.AGE_RANGE);
 		}
 
 		if(presentation.difficulty){
@@ -359,6 +359,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 	};
 
+	var _changeAgeRangeDisplayedValue = function(ageRange){
+		if(ageRange==="0 - 0"){
+			ageRange = V.I18n.getTrans("i.unspecified");
+		}
+		$("#age_range").val(ageRange);
+	};
+
 	var onTLTchange = function(event){
 		if((event)&&(event.keyCode===13)){
 			$(event.target).blur();
@@ -489,7 +496,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		var age_range = $("#age_range").val();
-		if(typeof age_range == "string"){
+		if((typeof age_range == "string")&&(age_range != V.I18n.getTrans("i.unspecified"))){
 			settings.age_range = age_range;
 		}
 		
