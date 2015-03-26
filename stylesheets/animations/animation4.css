@@ -46,10 +46,8 @@ section.slides:not(.slides_editor) > article.next {
 	display: block;
 }
 
+/*First div*/
 
-
-
-/*first div*/
 section.slides:not(.slides_editor) > article.past > div:nth-child(1) {
 	-webkit-transition: all 0.5s ease-intransition ;
 	-webkit-transition-delay: 0.5s;
@@ -276,8 +274,6 @@ section.slides:not(.slides_editor) > article.current > div:nth-child(7) {
 	opacity:1;
 	display: block;
 }
-
-
 
 
 /* Smartcards */

@@ -17,7 +17,7 @@ section.slides:not(.slides_editor) > article.past {
 	-ms-transition-duration: 1s,1s,1s,1s,1s,1s;
 	opacity: 1;
 	display: block;
-	z-index: -1;
+	z-index: 1;
 }
 
 section.slides:not(.slides_editor) > article.current {
@@ -41,7 +41,6 @@ section.slides:not(.slides_editor) > article.current {
 	-ms-transition-duration: 1s,1s,1s,1s,1s,1s;
 	opacity: 1;
 	display: block;
-	z-index: 1;
 }
 
 section.slides:not(.slides_editor) > article.next {
@@ -64,7 +63,7 @@ section.slides:not(.slides_editor) > article.next {
 	-ms-transition-duration: 1s,1s,1s,1s,1s,1s;
 	opacity: 1;
 	display: block;
-	z-index: -1;
+	z-index: 1;
 }
 
 section.slides:not(.slides_editor) > article.past > div {
