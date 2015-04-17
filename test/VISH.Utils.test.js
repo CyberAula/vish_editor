@@ -119,7 +119,7 @@ describe("VISH.Utils", function(){
 
     describe("#removeParamFromUrl", function(){
        it('should return internal object', function(){
-           VISH.Utils.removeParamFromUrl("url?paramName=paramValue", "paramName").should.eql("url");
+           VISH.Utils.removeParamFromUrl("url?paramName=paramValue&paramName2=paramValue2", "paramName").should.eql("url?paramName2=paramValue2");
        })
     });
 
