@@ -4,3 +4,4 @@ configuration/configuration.js
 .settings
 .gitignore~
 README.md~
+node_modules
