@@ -29,16 +29,21 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				//Load Settings
 				var qSettings = $(quiz).attr("elSettings");
 				var nAttempts = 1;
+				var quizScore = 10;
 				var shuffleChoices = false;
 				var disableShuffleChoices = false;
 				var ARSEnabled = false;
 				
 
 				if(typeof qSettings == "string"){
-					try{
+					try {
 						qSettings = JSON.parse(qSettings);
+
 						if(typeof qSettings.nAttempts != "undefined"){
 							nAttempts = qSettings.nAttempts;
+						}
+						if(typeof qSettings.quizScore != "undefined"){
+							quizScore = qSettings.quizScore;
 						}
 						if(qSettings.ARSEnabled===true){
 							ARSEnabled = true;
@@ -46,7 +51,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 						if(qSettings.shuffleChoices===true){
 							shuffleChoices = true;
 						}
-					}catch(e){}
+					} catch(e){}
 				}
 
 				//Force options by quiz type
@@ -85,6 +90,19 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 					$(nAttemptsDOM).prop('disabled',false);
 					$(nAttemptsDOM).parent().removeClass("disableSettingsField");
 					$(nAttemptsDOM).val(nAttempts);
+				}
+
+				//Quiz score
+				var quizScoreDOM = $(qSF).find("#quizSettings_quizScore");
+				if(!isSelfAssessment){
+					//Disable quizScore
+					$(quizScoreDOM).prop('disabled',true);
+					$(quizScoreDOM).parent().addClass("disableSettingsField");
+					$(quizScoreDOM).val(0);
+				} else {
+					$(quizScoreDOM).prop('disabled',false);
+					$(quizScoreDOM).parent().removeClass("disableSettingsField");
+					$(quizScoreDOM).val(quizScore);
 				}
 
 				//Shuffle Choices
@@ -127,7 +145,17 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		//Get Settings
 		var qSF = $("#quizSettings_fancybox");
 		var qSettings = {};
-		qSettings.nAttempts = $(qSF).find("#quizSettings_nAttempts").val();
+
+		var nAttemptsDOM = $(qSF).find("#quizSettings_nAttempts");
+		if(!$(nAttemptsDOM).is(":disabled")){
+			qSettings.nAttempts = $(nAttemptsDOM).val();
+		}
+
+		var quizScoreDOM = $(qSF).find("#quizSettings_quizScore");
+		if(!$(quizScoreDOM).is(":disabled")){
+			qSettings.quizScore = $(quizScoreDOM).val();
+		}
+
 		qSettings.shuffleChoices = $(qSF).find("input[type='checkbox'][name='shuffleChoices']").is(":checked");
 		qSettings.ARSEnabled = $(qSF).find("input[type='checkbox'][name='enableARS']").is(":checked");
 
