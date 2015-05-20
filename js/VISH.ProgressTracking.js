@@ -180,8 +180,8 @@ VISH.ProgressTracking = (function(V,$,undefined){
 
 			//Create objective
 			var scoreWeight = 10;
-			if((typeof quizJSON.settings == "object")&&(typeof quizJSON.settings.score != "undefined")){
-				scoreWeight = parseInt(quizJSON.settings.score);
+			if((typeof quizJSON.settings == "object")&&(typeof quizJSON.settings.quizScore != "undefined")){
+				scoreWeight = parseInt(quizJSON.settings.quizScore);
 			}
 
 			//'scoreWeight' is the 'score points' assigned to the quiz (10 by default). Later all these score weights will be normalized to sum to one.
