@@ -59,7 +59,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _searchInYoutube = function(text){
-		var url_youtube = "http://gdata.youtube.com/feeds/api/videos?q="+text+"&alt=json-in-script&callback=?&max-results="+MAX_VIDEOS+"&start-index=1";	 
+		var url_youtube = "https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults="+MAX_VIDEOS+"&q="+text+"&key="+ V.Configuration.getConfiguration()["YoutubeAPIKEY"] + "&videoEmbeddable=true&type=video";
 		$.getJSON(url_youtube, function(data){
 			_onDataReceived(data);
 		}).error(function(){
@@ -72,8 +72,8 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			return;
 		}
 
-		//The received data has an array called "feed"
-		if((!data)||(!data.feed)||(data.feed.length==0)||(!data.feed.entry)){
+		//The received data has an array called "items"
+		if((!data)||(!(data.items instanceof Array))||(data.items.length==0)){
 			_onSearchFinished();
 			_drawData(true);
 			return;
@@ -82,23 +82,31 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		currentVideos = new Array();
 		var carrouselImages = [];
 
-		$.each(data.feed.entry, function(i, item){
-			var video = item['id']['$t'];
-			var title = item['title']['$t']; //not used yet
-			var author = item.author[0].name.$t;
-			var subtitle = item.media$group.media$description.$t;
+		$.each(data.items, function(i, item){
+			var videoId = item['id']['videoId'];
+			var title = item['snippet']['title'];
+			var description = item['snippet']['description'];
+			var author = item['snippet']['channelTitle'];
+			
+			var thumbnail_url = V.ImagesPath + "vicons/example_poster_image.jpg";
+			if((item['snippet']['thumbnails'])&&(item['snippet']['thumbnails']['default'])&&(item['snippet']['thumbnails']['default']['url'])){
+				thumbnail_url = item['snippet']['thumbnails']['default']['url'];
+			};
+			
+			if((typeof author != "string")||(author.trim()==="")){
+				author = V.I18n.getTrans("i.Unknown");
+			}
 
-			video = video.replace('http://gdata.youtube.com/feeds/api/videos/', 'http://www.youtube.com/watch?v='); //replacement of link
-			var videoId = video.replace('http://www.youtube.com/watch?v=', ''); //removing link and getting the video ID
 			currentVideos[videoId] = new Object();
 			currentVideos[videoId].id = videoId;
 			currentVideos[videoId].title = title;
+			currentVideos[videoId].description = description;
 			currentVideos[videoId].author = author;
-			currentVideos[videoId].subtitle = subtitle;
-
-			var image_url = "http://img.youtube.com/vi/"+videoId+"/0.jpg";
-			var myImg = $("<img videoId='"+videoId+"' src='"+image_url+"' title='"+title+"'/>");
-			carrouselImages.push(myImg); 
+			
+			if(thumbnail_url){
+				var myImg = $("<img videoId='"+videoId+"' src='"+thumbnail_url+"' title='"+title+"'/>");
+				carrouselImages.push(myImg);
+			}
 		});
 			
 		var options = {};
@@ -194,7 +202,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 		$(metadataArea).html("");
 		if((renderedIframe) && (video)) {
 			$(videoArea).append(renderedIframe);
-			var table = V.Editor.Utils.generateTable({title:video.title, author:video.author, description:video.subtitle});
+			var table = V.Editor.Utils.generateTable({title:video.title, author:video.author, description:video.description});
 			$(metadataArea).html(table);
 			$(button).show();
 		}
