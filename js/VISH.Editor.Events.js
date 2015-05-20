@@ -447,13 +447,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			"onStart"  : function(data) {
 				var clickedZoneId = $(data).attr("zone");
 				V.Editor.setCurrentArea($("#" + clickedZoneId));
-
-				var defaultTab = 'tab_video_from_url';
-				if(V.Configuration.getConfiguration()["Youtube"]){
-					defaultTab = 'tab_video_youtube';
-				}
-
-				V.Editor.Utils.loadTab(defaultTab);
+				V.Editor.Utils.loadTab(V.Editor.Video.getDefaultTab());
 			}
 		});
 

@@ -39,7 +39,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 			'padding' : 0,
 			"onStart"  : function(data){
 				V.Editor.Video.setAddContentMode(V.Constant.EVIDEO);
-				V.Editor.Utils.loadTab('tab_video_youtube');
+				V.Editor.Utils.loadTab(V.Editor.Video.getDefaultTab());
 			},
 			"onClosed"  : function(data){
 				V.Editor.Video.setAddContentMode(V.Constant.NONE);
