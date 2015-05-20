@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>VISH.Editor.Utils.iso8601Parser.js</title>
+    <title>VISH.Utils.iso8601Parser.js</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
     <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
     <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
@@ -76,7 +76,7 @@
             <div class="apidocs">
                 <div id="docs-main">
                     <div class="content">
-<h1 class="file-heading">File: VISH.Editor.Utils.iso8601Parser.js</h1>
+<h1 class="file-heading">File: VISH.Utils.iso8601Parser.js</h1>
 
 <div class="file">
     <pre class="code prettyprint linenums">
@@ -97,7 +97,7 @@
 * @contributor Jason &quot;Palamedes&quot; Ellis -- https://github.com/palamedes
 */
 
-VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
+VISH.Utils.iso8601Parser = (function(V,$,undefined){
 
 	var multiplicators = [ 31104000,2592000,604800,86400,3600,60,1];
 	/*
@@ -106,8 +106,8 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 	*/
 
 
-	var getDuration = function(period){
-		var durationPerUnit = getDurationPerUnit(period,true);
+	var getDurationFromISO = function(period){
+		var durationPerUnit = getDurationFromISOPerUnit(period,true);
 		if(durationPerUnit){
 			var durationInSeconds = 0;
 			var dL = durationPerUnit.length;
@@ -120,7 +120,7 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 		return null;
 	};
 
-	var getDurationPerUnit = function(period,distributeOverflow){
+	var getDurationFromISOPerUnit = function(period,distributeOverflow){
 		var distributeOverflow = (typeof distributeOverflow == &quot;boolean&quot;) ? distributeOverflow : false;
 		try {
 			var durationPerUnit = _parsePeriodString(period,distributeOverflow);
@@ -177,9 +177,87 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 		return duration;
 	};
 
+
+	var getISODurationFromSecs = function(n,bPrecise){
+		//From centisecs to secs
+		n = n*100;
+
+		/* Note: SCORM and IEEE 1484.11.1 require centisec precision
+		 Parameters:
+		 n = number of centiseconds
+		 bPrecise = optional parameter; if true, duration will
+		 be expressed without using year and/or month fields.
+		 If bPrecise is not true, and the duration is long,
+		 months are calculated by approximation based on average number
+		 of days over 4 years (365*4+1), not counting the extra days
+		 for leap years. If a reference date was available,
+		 the calculation could be more precise, but becomes complex,
+		 since the exact result depends on where the reference date
+		 falls within the period (e.g. beginning, end or ???)
+		 1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+		 1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
+		 1 day = 8640000 centiseconds
+		 1 hour = 360000 centiseconds
+		 1 minute = 6000 centiseconds */
+		var str = &quot;P&quot;,
+		nCs = Math.max(n, 0),
+		nY = 0,
+		nM = 0,
+		nD = 0,
+		nH,
+		nMin;
+		// Next set of operations uses whole seconds
+		//with (Math) { //argumentatively considered harmful
+		nCs = Math.round(nCs);
+		if (bPrecise === true) {
+		    nD = Math.floor(nCs / 8640000);
+		} else {
+		    nY = Math.floor(nCs / 3155760000);
+		    nCs -= nY * 3155760000;
+		    nM = Math.floor(nCs / 262980000);
+		    nCs -= nM * 262980000;
+		    nD = Math.floor(nCs / 8640000);
+		}
+		nCs -= nD * 8640000;
+		nH = Math.floor(nCs / 360000);
+		nCs -= nH * 360000;
+		nMin = Math.floor(nCs / 6000);
+		nCs -= nMin * 6000;
+		//}
+		// Now we can construct string
+		if (nY &gt; 0) {
+		    str += nY + &quot;Y&quot;;
+		}
+		if (nM &gt; 0) {
+		    str += nM + &quot;M&quot;;
+		}
+		if (nD &gt; 0) {
+		    str += nD + &quot;D&quot;;
+		}
+		if ((nH &gt; 0) || (nMin &gt; 0) || (nCs &gt; 0)) {
+		    str += &quot;T&quot;;
+		    if (nH &gt; 0) {
+		        str += nH + &quot;H&quot;;
+		    }
+		    if (nMin &gt; 0) {
+		        str += nMin + &quot;M&quot;;
+		    }
+		    if (nCs &gt; 0) {
+		        str += (nCs / 100) + &quot;S&quot;;
+		    }
+		}
+		if (str === &quot;P&quot;) {
+		    str = &quot;PT0H0M0S&quot;;
+		}
+		// technically PT0S should do but SCORM test suite assumes longer form.
+		return str;
+	};
+
+
 	return {
-		getDuration			: getDuration,
-		getDurationPerUnit	: getDurationPerUnit
+		getDurationFromISO			: getDurationFromISO,
+		getDurationFromISOPerUnit	: getDurationFromISOPerUnit,
+		getISODurationFromSecs		: getISODurationFromSecs
 	};
 
 }) ();

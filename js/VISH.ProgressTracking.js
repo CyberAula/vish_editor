@@ -9,7 +9,7 @@ VISH.ProgressTracking = (function(V,$,undefined){
 
 	//Auxiliar vars
 	var objectives = {};
-	var minRequiredTime = 1;
+	var minRequiredTime = 10;
 	var hasScore = false;
 
 
@@ -25,9 +25,9 @@ VISH.ProgressTracking = (function(V,$,undefined){
 		// Check the average time viewing slides
 		minRequiredTime = _getMinRequiredTime();
 		setTimeout(function(){
-			objectives["slide_average_time"].completed = true;
-			objectives["slide_average_time"].progress = 1;
-			V.EventsNotifier.notifyEvent(V.Constant.Event.onProgressObjectiveUpdated,objectives["slide_average_time"],false);
+			objectives["lo_spent_time"].completed = true;
+			objectives["lo_spent_time"].progress = 1;
+			V.EventsNotifier.notifyEvent(V.Constant.Event.onProgressObjectiveUpdated,objectives["lo_spent_time"],false);
 		},minRequiredTime*1000);
 
 		//Quizzes
@@ -58,20 +58,24 @@ VISH.ProgressTracking = (function(V,$,undefined){
 	};
 
 	var _getMinRequiredTime = function(){
-		var AVERAGE_SLIDE_TIME = 4; //seg
-		try {
-			_minRequiredTime = V.Viewer.getCurrentPresentation().slides.length * AVERAGE_SLIDE_TIME;
-		} catch(e) {
-			_minRequiredTime = 1;
+		var _minRequiredTime = minRequiredTime; //Default
+
+		var currentPresentation = V.Viewer.getCurrentPresentation();
+		if(typeof currentPresentation.TLT != "undefined"){
+			var TLT = V.Utils.iso8601Parser.getDurationFromISO(currentPresentation.TLT);
+			if((typeof TLT == "number")&&(TLT > 0)){
+				_minRequiredTime = (0.5 * TLT);
+			}
 		}
+		
 		return _minRequiredTime;
 	};
 
 	//Return a value in a [0,1] scale
 	var getProgressMeasure = function(){
-		//Adjust slide_average_time progress if is not 100%
-		if (objectives["slide_average_time"].progress<1){
-			objectives["slide_average_time"].progress = Math.min(1,V.TrackingSystem.getAbsoluteTime()/minRequiredTime);
+		//Adjust lo_spent_time progress if is not 100%
+		if (objectives["lo_spent_time"].progress<1){
+			objectives["lo_spent_time"].progress = Math.min(1,V.TrackingSystem.getAbsoluteTime()/minRequiredTime);
 		}
 
 		var overallProgressMeasure = 0;
@@ -124,7 +128,7 @@ VISH.ProgressTracking = (function(V,$,undefined){
 		}
 
 		//Create an objective that requires to spent a minimum average time viewing the slides.
-		var timeObjective = new Objective("slide_average_time");
+		var timeObjective = new Objective("lo_spent_time");
 		if(hasScore){
 			timeObjective.completion_weight = 0.5;
 		} else {

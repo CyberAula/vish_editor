@@ -199,7 +199,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		if(presentation.TLT){
-			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
+			var durations = V.Utils.iso8601Parser.getDurationFromISOPerUnit(presentation.TLT);
 			$("#tlt_hours").val(durations[4].toString());
 			$("#tlt_minutes").val(durations[5].toString());
 			$("#tlt_seconds").val(durations[6].toString());

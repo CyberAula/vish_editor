@@ -109,10 +109,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			max: 30,
 			values: [ V.Constant.AGE_RANGE_MIN, V.Constant.AGE_RANGE_MAX ],
 			slide: function( event, ui ) {
-				$( &quot;#age_range&quot; ).val( ui.values[ 0 ] + &quot; - &quot; + ui.values[ 1 ] );
+				_changeAgeRangeDisplayedValue(ui.values[0] + &quot; - &quot; + ui.values[1]);
 			}
 		});
-		$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
+		_changeAgeRangeDisplayedValue(V.Constant.AGE_RANGE);
 
 		$(&quot;#slider-difficulty&quot;).slider({
 			min: 0,
@@ -263,9 +263,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			var start_range = presentation.age_range.substring(0, presentation.age_range.indexOf(&quot;-&quot;)-1);
 			var end_range = presentation.age_range.substring(presentation.age_range.indexOf(&quot;-&quot;)+2);
 			$(&quot;#slider-age&quot; ).slider( &quot;values&quot;, [start_range, end_range] );
-			$(&quot;#age_range&quot;).val(presentation.age_range);
+			_changeAgeRangeDisplayedValue(presentation.age_range);
 		} else {
-			$(&quot;#age_range&quot;).val(V.Constant.AGE_RANGE);
+			_changeAgeRangeDisplayedValue(V.Constant.AGE_RANGE);
 		}
 
 		if(presentation.difficulty){
@@ -281,7 +281,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		if(presentation.TLT){
-			var durations = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit(presentation.TLT);
+			var durations = V.Utils.iso8601Parser.getDurationFromISOPerUnit(presentation.TLT);
 			$(&quot;#tlt_hours&quot;).val(durations[4].toString());
 			$(&quot;#tlt_minutes&quot;).val(durations[5].toString());
 			$(&quot;#tlt_seconds&quot;).val(durations[6].toString());
@@ -441,6 +441,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 	};
 
+	var _changeAgeRangeDisplayedValue = function(ageRange){
+		if(ageRange===&quot;0 - 0&quot;){
+			ageRange = V.I18n.getTrans(&quot;i.unspecified&quot;);
+		}
+		$(&quot;#age_range&quot;).val(ageRange);
+	};
+
 	var onTLTchange = function(event){
 		if((event)&amp;&amp;(event.keyCode===13)){
 			$(event.target).blur();
@@ -571,7 +578,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		var age_range = $(&quot;#age_range&quot;).val();
-		if(typeof age_range == &quot;string&quot;){
+		if((typeof age_range == &quot;string&quot;)&amp;&amp;(age_range != V.I18n.getTrans(&quot;i.unspecified&quot;))){
 			settings.age_range = age_range;
 		}
 		

@@ -134,13 +134,6 @@
             "fors": {},
             "namespaces": {}
         },
-        "VISH.Editor.Utils.iso8601Parser.js": {
-            "name": "VISH.Editor.Utils.iso8601Parser.js",
-            "modules": {},
-            "classes": {},
-            "fors": {},
-            "namespaces": {}
-        },
         "VISH.Editor.Utils.js": {
             "name": "VISH.Editor.Utils.js",
             "modules": {},
@@ -266,6 +259,13 @@
         },
         "VISH.Utils.Loader.js": {
             "name": "VISH.Utils.Loader.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
+        "VISH.Utils.iso8601Parser.js": {
+            "name": "VISH.Utils.iso8601Parser.js",
             "modules": {},
             "classes": {},
             "fors": {},
@@ -730,19 +730,19 @@
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 408,
+            "line": 415,
             "description": "function called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 604,
+            "line": 611,
             "description": "function called when the user clicks on the pedagogical options button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 613,
+            "line": 620,
             "description": "function called when the user clicks on the done button in the pedagogical options panel",
             "class": "VISH.Editor"
         },
@@ -795,22 +795,6 @@
             "file": "VISH.Editor.Tools.Menu.js",
             "line": 101,
             "description": "function called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls V.Viewer with the generated json",
-            "class": "VISH.Editor"
-        },
-        {
-            "file": "VISH.Editor.Utils.iso8601Parser.js",
-            "line": 51,
-            "description": "Parses a ISO8601 period string.",
-            "params": [
-                {
-                    "name": "period",
-                    "description": "iso8601 period string"
-                },
-                {
-                    "name": "_distributeOverflow",
-                    "description": "if 'true', the unit overflows are merge into the next higher units."
-                }
-            ],
             "class": "VISH.Editor"
         },
         {
@@ -1564,43 +1548,60 @@
             "namespace": "VISH"
         },
         {
+            "file": "VISH.Utils.iso8601Parser.js",
+            "line": 51,
+            "description": "Parses a ISO8601 period string.",
+            "params": [
+                {
+                    "name": "period",
+                    "description": "iso8601 period string"
+                },
+                {
+                    "name": "_distributeOverflow",
+                    "description": "if 'true', the unit overflows are merge into the next higher units."
+                }
+            ],
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
             "file": "VISH.Utils.js",
-            "line": 235,
+            "line": 208,
             "description": "Return a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 277,
+            "line": 250,
             "description": "Fix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 307,
+            "line": 280,
             "description": "Check slide types and fix it",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 782,
+            "line": 755,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 790,
+            "line": 763,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 799,
+            "line": 772,
             "description": "Function to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
             "class": "",
             "namespace": "VISH"
@@ -1986,15 +1987,15 @@
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
-            "line": " VISH.Editor.Settings.js:408"
+            "line": " VISH.Editor.Settings.js:415"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the pedagogical options button",
-            "line": " VISH.Editor.Settings.js:604"
+            "line": " VISH.Editor.Settings.js:611"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the done button in the pedagogical options panel",
-            "line": " VISH.Editor.Settings.js:613"
+            "line": " VISH.Editor.Settings.js:620"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
@@ -2027,10 +2028,6 @@
         {
             "message": "Missing item type\nfunction called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls V.Viewer with the generated json",
             "line": " VISH.Editor.Tools.Menu.js:101"
-        },
-        {
-            "message": "Missing item type\nParses a ISO8601 period string.",
-            "line": " VISH.Editor.Utils.iso8601Parser.js:51"
         },
         {
             "message": "Missing item type\nfunction to get the styles in percentages",
@@ -2305,28 +2302,32 @@
             "line": " VISH.Utils.Loader.js:159"
         },
         {
+            "message": "Missing item type\nParses a ISO8601 period string.",
+            "line": " VISH.Utils.iso8601Parser.js:51"
+        },
+        {
             "message": "Missing item type\nReturn a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
-            "line": " VISH.Utils.js:235"
+            "line": " VISH.Utils.js:208"
         },
         {
             "message": "Missing item type\nFix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
-            "line": " VISH.Utils.js:277"
+            "line": " VISH.Utils.js:250"
         },
         {
             "message": "Missing item type\nCheck slide types and fix it",
-            "line": " VISH.Utils.js:307"
+            "line": " VISH.Utils.js:280"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:782"
+            "line": " VISH.Utils.js:755"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:790"
+            "line": " VISH.Utils.js:763"
         },
         {
             "message": "Missing item type\nFunction to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
-            "line": " VISH.Utils.js:799"
+            "line": " VISH.Utils.js:772"
         },
         {
             "message": "Missing item type\nFunction to play all videos and audios of a slide",

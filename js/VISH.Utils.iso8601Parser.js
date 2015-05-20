@@ -15,7 +15,7 @@
 * @contributor Jason "Palamedes" Ellis -- https://github.com/palamedes
 */
 
-VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
+VISH.Utils.iso8601Parser = (function(V,$,undefined){
 
 	var multiplicators = [ 31104000,2592000,604800,86400,3600,60,1];
 	/*
@@ -24,8 +24,8 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 	*/
 
 
-	var getDuration = function(period){
-		var durationPerUnit = getDurationPerUnit(period,true);
+	var getDurationFromISO = function(period){
+		var durationPerUnit = getDurationFromISOPerUnit(period,true);
 		if(durationPerUnit){
 			var durationInSeconds = 0;
 			var dL = durationPerUnit.length;
@@ -38,7 +38,7 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 		return null;
 	};
 
-	var getDurationPerUnit = function(period,distributeOverflow){
+	var getDurationFromISOPerUnit = function(period,distributeOverflow){
 		var distributeOverflow = (typeof distributeOverflow == "boolean") ? distributeOverflow : false;
 		try {
 			var durationPerUnit = _parsePeriodString(period,distributeOverflow);
@@ -95,9 +95,87 @@ VISH.Editor.Utils.iso8601Parser = (function(V,$,undefined){
 		return duration;
 	};
 
+
+	var getISODurationFromSecs = function(n,bPrecise){
+		//From centisecs to secs
+		n = n*100;
+
+		/* Note: SCORM and IEEE 1484.11.1 require centisec precision
+		 Parameters:
+		 n = number of centiseconds
+		 bPrecise = optional parameter; if true, duration will
+		 be expressed without using year and/or month fields.
+		 If bPrecise is not true, and the duration is long,
+		 months are calculated by approximation based on average number
+		 of days over 4 years (365*4+1), not counting the extra days
+		 for leap years. If a reference date was available,
+		 the calculation could be more precise, but becomes complex,
+		 since the exact result depends on where the reference date
+		 falls within the period (e.g. beginning, end or ???)
+		 1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+		 1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
+		 1 day = 8640000 centiseconds
+		 1 hour = 360000 centiseconds
+		 1 minute = 6000 centiseconds */
+		var str = "P",
+		nCs = Math.max(n, 0),
+		nY = 0,
+		nM = 0,
+		nD = 0,
+		nH,
+		nMin;
+		// Next set of operations uses whole seconds
+		//with (Math) { //argumentatively considered harmful
+		nCs = Math.round(nCs);
+		if (bPrecise === true) {
+		    nD = Math.floor(nCs / 8640000);
+		} else {
+		    nY = Math.floor(nCs / 3155760000);
+		    nCs -= nY * 3155760000;
+		    nM = Math.floor(nCs / 262980000);
+		    nCs -= nM * 262980000;
+		    nD = Math.floor(nCs / 8640000);
+		}
+		nCs -= nD * 8640000;
+		nH = Math.floor(nCs / 360000);
+		nCs -= nH * 360000;
+		nMin = Math.floor(nCs / 6000);
+		nCs -= nMin * 6000;
+		//}
+		// Now we can construct string
+		if (nY > 0) {
+		    str += nY + "Y";
+		}
+		if (nM > 0) {
+		    str += nM + "M";
+		}
+		if (nD > 0) {
+		    str += nD + "D";
+		}
+		if ((nH > 0) || (nMin > 0) || (nCs > 0)) {
+		    str += "T";
+		    if (nH > 0) {
+		        str += nH + "H";
+		    }
+		    if (nMin > 0) {
+		        str += nMin + "M";
+		    }
+		    if (nCs > 0) {
+		        str += (nCs / 100) + "S";
+		    }
+		}
+		if (str === "P") {
+		    str = "PT0H0M0S";
+		}
+		// technically PT0S should do but SCORM test suite assumes longer form.
+		return str;
+	};
+
+
 	return {
-		getDuration			: getDuration,
-		getDurationPerUnit	: getDurationPerUnit
+		getDurationFromISO			: getDurationFromISO,
+		getDurationFromISOPerUnit	: getDurationFromISOPerUnit,
+		getISODurationFromSecs		: getISODurationFromSecs
 	};
 
 }) ();

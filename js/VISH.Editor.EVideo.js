@@ -116,7 +116,7 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 						if(isNaN(cTime)){
 							cTime = 0;
 						}
-						var durationsPerUnit = VISH.Editor.Utils.iso8601Parser.getDurationPerUnit("PT"+ cTime + "S",true);
+						var durationsPerUnit = V.Utils.iso8601Parser.getDurationFromISOPerUnit("PT"+ cTime + "S",true);
 						$("#eVideochapters_hours").val(durationsPerUnit[4]);
 						$("#eVideochapters_minutes").val(durationsPerUnit[5]);
 						$("#eVideochapters_seconds").val(durationsPerUnit[6]);
