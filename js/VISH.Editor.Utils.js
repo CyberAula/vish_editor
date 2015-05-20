@@ -393,7 +393,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_live_resource":
 				V.Editor.Object.Live.beforeLoadTab();
 				break;
-				break;
 			default:
 				break;
 		}

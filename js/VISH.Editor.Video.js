@@ -26,7 +26,7 @@ VISH.Editor.Video = (function(V,$,undefined){
 
 	var onLoadTab = function(tab){
 		//Load Video from URL
-		$("#tab_video_from_url_content").find("input").val("")
+		$("#tab_video_from_url_content").find("input").val("");
 		V.Editor.Object.resetPreview("tab_video_from_url_content");
 	};
 	
