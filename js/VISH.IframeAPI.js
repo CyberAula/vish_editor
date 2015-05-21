@@ -14,7 +14,10 @@ VISH.IframeAPI = (function(V,undefined){
 	var _connected = false;
 	var _options;
 	var _type = "VE";
+	var _origin = "?";
+	var _originId = "?";
 	var _listeners;
+	var _wapplisteners;
 	// _listeners['event'] = callback;
 
 	//Constants
@@ -29,6 +32,11 @@ VISH.IframeAPI = (function(V,undefined){
 		if(_initialized) {
 			return;
 		}
+
+		try {
+			_origin = window.location.href;
+		} catch (e){}
+		_originId = _generateOriginId();
 
 		if (window.addEventListener){
 			window.addEventListener("message", _onIframeMessageReceived, false);
@@ -47,6 +55,7 @@ VISH.IframeAPI = (function(V,undefined){
 		}
 
 		_listeners = new Array();
+		_wapplisteners = new Array();
 
 		registerCallback("onConnect", function(origin){
 			//Communication stablished
@@ -75,7 +84,8 @@ VISH.IframeAPI = (function(V,undefined){
 		this.IframeMessage = true;
 		this.type = type || _type;
 		this.data = data || {};
-		this.origin = origin || "?";
+		this.origin = origin || _origin;
+		this.originId = _originId;
 		this.destination = destination || "*";
 	};
 
@@ -122,39 +132,35 @@ VISH.IframeAPI = (function(V,undefined){
 
 	// Iframe communication methods
 
-	var sendMessage = function(iframeMessage,destination){
+	var sendMessage = function(iframeMessage,iframeId){
 		if(!_connected){
 			return "Not connected";
 		}
 
-		return _sendMessage(iframeMessage,destination);
+		return _sendMessage(iframeMessage,iframeId);
 	};
 
-	var _sendMessage = function(iframeMessage,destination){
+	var _sendMessage = function(iframeMessage,iframeId){
 
 		if(!_validateIframeMessage(iframeMessage)){
 			return "Invalid message";
 		}
 		
-		if(typeof destination == "undefined"){
-			if(typeof iframeMessage.destination != "undefined"){
-				destination = iframeMessage.destination;
-			} else {
-				destination = "*";
-			}
+		if(typeof iframeId == "undefined"){
+			iframeId = "*";
 		}
 
-		if(typeof destination === "string"){
-			if(destination==="*"){
+		if(typeof iframeId === "string"){
+			if(iframeId==="*"){
 				_broadcastMessage(iframeMessage);
 			} else {
-				var iframe = document.getElementById(destination);
+				var iframe = document.getElementById(iframeId);
 				_sendMessageToIframe(iframeMessage,iframe);
 			}
-		} else if((destination instanceof Array)&&(destination.length > 0)){
-			for(var i=0; i<destination.length; i++){
-				if(typeof destination[i] == "string"){
-					var iframe = document.getElementById(destination[i]);
+		} else if((iframeId instanceof Array)&&(iframeId.length > 0)){
+			for(var i=0; i<iframeId.length; i++){
+				if(typeof iframeId[i] == "string"){
+					var iframe = document.getElementById(iframeId[i]);
 					_sendMessageToIframe(iframeMessage,iframe);
 				}
 			}
@@ -178,8 +184,17 @@ VISH.IframeAPI = (function(V,undefined){
 
 	var _onIframeMessageReceived = function(wrapperedIframeMessage){
 		if(_validateWrapperedIframeMessage(wrapperedIframeMessage)){
-			
+
 			var iframeMessage = JSON.parse(wrapperedIframeMessage.data);
+
+			if((iframeMessage.destination!=_origin)&&(iframeMessage.destination!=="*")){
+				return;
+			}
+
+			//Do not process own messages
+			if((iframeMessage.origin===_origin)&&(iframeMessage.originId===_originId)){
+				return false;
+			}
 
 			switch(iframeMessage.type) {
 				case "PROTOCOL":
@@ -187,11 +202,17 @@ VISH.IframeAPI = (function(V,undefined){
 				case "VE":
 					return _processVEMessage(iframeMessage);
 				case "WAPP":
-					//TODO
+					return _processWAPPMessage(iframeMessage);
 				default:
 					return;
 			}
 		}
+	};
+
+	var _generateOriginId = function(){
+		var timestamp = ((new Date()).getTime()).toString();
+		var random = (parseInt(Math.random()*1000000)).toString();
+		return parseInt(timestamp.substr(timestamp.length-7,timestamp.length-1) + random);
 	};
 
 
@@ -293,7 +314,7 @@ VISH.IframeAPI = (function(V,undefined){
 		var params = {};
 		params.preventDefaults = preventDefaults;
 		var VEMessage = _createVEMessage(VISH.Constant.Event.onPreventDefault,params,undefined,destination);
-		sendMessage(VEMessage,destination);
+		sendMessage(VEMessage);
 	};
 
 	var _processVEMessage = function(VEMessage){
@@ -369,59 +390,59 @@ VISH.IframeAPI = (function(V,undefined){
 	// VE API
 	///////////	
 
-	var goToSlide = function(slideNumber,destination){
+	var goToSlide = function(slideNumber){
 		var params = {};
 		params.slideNumber = slideNumber;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onGoToSlide,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onGoToSlide,params);
+		sendMessage(VEMessage);
 	};
 
-	var playVideo = function(videoId,currentTime,videoSlideNumber,destination){
+	var playVideo = function(videoId,currentTime,videoSlideNumber){
 		var params = {};
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onPlayVideo,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onPlayVideo,params);
+		sendMessage(VEMessage);
 	};
 
-	var pauseVideo = function(videoId,currentTime,videoSlideNumber,destination){
+	var pauseVideo = function(videoId,currentTime,videoSlideNumber){
 		var params = {};
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onPauseVideo,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onPauseVideo,params);
+		sendMessage(VEMessage);
 	};
 
-	var seekVideo = function(videoId,currentTime,videoSlideNumber,destination){
+	var seekVideo = function(videoId,currentTime,videoSlideNumber){
 		var params = {};
 		params.videoId = videoId;
 		params.currentTime = currentTime;
 		params.slideNumber = videoSlideNumber;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onSeekVideo,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onSeekVideo,params);
+		sendMessage(VEMessage);
 	};
 
-	var openSubslide = function(slideId,destination){
+	var openSubslide = function(slideId){
 		var params = {};
 		params.slideId = slideId;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onSubslideOpen,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onSubslideOpen,params);
+		sendMessage(VEMessage);
 	};
 
-	var closeSubslide = function(slideId,destination){
+	var closeSubslide = function(slideId){
 		var params = {};
 		params.slideId = slideId;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onSubslideClosed,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onSubslideClosed,params);
+		sendMessage(VEMessage);
 	};
 
-	var setSlave = function(slave,destination){
+	var setSlave = function(slave,iframeId){
 		var params = {};
 		params.slave = slave;
-		var VEMessage = _createVEMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.onSetSlave,params);
+		sendMessage(VEMessage,iframeId);
 	};
 
 	var setMaster = function(master){
@@ -433,16 +454,48 @@ VISH.IframeAPI = (function(V,undefined){
 			} else {
 				params.slave = false;
 			}
-			var destination = allVEIframes[i].id;
-			var VEMessage = _createVEMessage(VISH.Constant.Event.onSetSlave,params,null,destination);
-			sendMessage(VEMessage,destination);
+			var iframeId = allVEIframes[i].id;
+			var VEMessage = _createVEMessage(VISH.Constant.Event.onSetSlave,params);
+			sendMessage(VEMessage,iframeId);
 		}
 	};
 
-	var allowExitWithoutConfirmation = function(destination){
+	var allowExitWithoutConfirmation = function(){
 		var params = {};
-		var VEMessage = _createVEMessage(VISH.Constant.Event.allowExitWithoutConfirmation,params,null,destination);
-		sendMessage(VEMessage,destination);
+		var VEMessage = _createVEMessage(VISH.Constant.Event.allowExitWithoutConfirmation,params);
+		sendMessage(VEMessage);
+	};
+
+
+	///////////////
+	// WAPP Messages
+	//////////////
+
+	var _createWAPPMessage = function(method,params,origin,destination){
+		var data = {};
+		data.method = method;
+		data.params = params;
+		return _createMessage("WAPP",data,origin,destination);
+	};
+
+	var _processWAPPMessage = function(WAPPMessage){
+		var data = WAPPMessage.data;
+
+		if(typeof _wapplisteners[data.method] == "function"){
+			_wapplisteners[data.method](data.params);
+			_wapplisteners[data.method] = undefined;
+		};
+	};
+
+	///////////////
+	// WAPP API
+	//////////////
+
+	var getUser = function(callback){
+		_wapplisteners["getUser"] = callback;
+		var params = {};
+		var WAPPMessage = _createWAPPMessage("getUser",{});
+		sendMessage(WAPPMessage);
 	};
 
 
@@ -459,6 +512,8 @@ VISH.IframeAPI = (function(V,undefined){
 
 	return {
 			init 							: init,
+
+			//VE methods
 			registerCallback 				: registerCallback,
 			unRegisterCallback 				: unRegisterCallback,
 			sendMessage						: sendMessage,
@@ -470,7 +525,10 @@ VISH.IframeAPI = (function(V,undefined){
 			pauseVideo 						: pauseVideo,
 			seekVideo 						: seekVideo,
 			openSubslide					: openSubslide,
-			closeSubslide					: closeSubslide
+			closeSubslide					: closeSubslide,
+
+			//WAPP methods
+			getUser							: getUser
 	};
 
 }) (VISH);

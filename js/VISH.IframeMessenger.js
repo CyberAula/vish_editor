@@ -7,15 +7,20 @@ VISH.IframeMessenger = (function(V,undefined){
 	var _initialized = false;
 	var _connected = false;
 	var _origin = "?";
+	var _originId = "?";
+
+	var _iframeConections = {};
+	// _iframeConections["origin"] = iframeDOM
 
 	var init = function(config){
 		if(_initialized){
 			return;
 		}
 
-		if((V.Status.getIsInIframe())&&(V.Status.getIframe()!=null)){
-			_origin = V.Status.getIframe().id;
-		}
+		try {
+			_origin = window.location.href;
+		} catch (e){}
+		_originId = _generateOriginId();
 
 		if (window.addEventListener){
 			window.addEventListener("message", _onIframeMessageReceived, false);
@@ -23,19 +28,19 @@ VISH.IframeMessenger = (function(V,undefined){
 			window.attachEvent("message", _onIframeMessageReceived);
 		}
 
-		V.EventsNotifier.registerCallback(V.Constant.Event.onSendIframeMessage,_onSendIframeMessage);
+		V.EventsNotifier.registerCallback(V.Constant.Event.onSendIframeMessage,sendIframeMessage);
 
 		_initialized = true;
 	};
 
-	var _onSendIframeMessage = function(iframeMessage){
+	var sendIframeMessage = function(iframeMessage){
 		if((_initialized)&&(_connected)&&(validateIframeMessage(iframeMessage))){
 			_sendMessage(iframeMessage);
 		}
 	};
 
-	var _sendMessage = function(VEMessage){
-		window.parent.postMessage(VEMessage,'*');
+	var _sendMessage = function(iframeMessage){
+		window.parent.postMessage(iframeMessage,'*');
 	};
 
 	var _onIframeMessageReceived = function(wrapperedIframeMessage){
@@ -43,26 +48,29 @@ VISH.IframeMessenger = (function(V,undefined){
 
 			var iframeMessage = JSON.parse(wrapperedIframeMessage.data);
 
+			if((iframeMessage.destination!=_origin)&&(iframeMessage.destination!=="*")){
+				return;
+			}
+
+			if(iframeMessage.type!=="VE"){
+				//Do not process own messages
+				if((iframeMessage.origin===_origin)&&(iframeMessage.originId===_originId)){
+					return false;
+				}
+			}
+
 			switch(iframeMessage.type) {
 				case "PROTOCOL":
 					return _onProtocolMessage(iframeMessage);
 				case "VE":
 					//Process own messages only when default events are disabled.
 					var processSelfMessages = V.Status.isPreventDefaultMode();
-					if((processSelfMessages===false)&&(iframeMessage.origin===_origin)){
+					if((processSelfMessages===false)&&(iframeMessage.origin===_origin)&&(iframeMessage.originId===_originId)){
 						return false;
 					}
-
-					//Avoid messages from subiframes
-					if((typeof iframeMessage.origin != "undefined")&&(iframeMessage.origin!="?")){
-						if($.contains(document, $("#"+iframeMessage.origin)[0])){
-							return false;
-						}
-					}
-
 					return V.Messenger.VE.processVEMessage(iframeMessage);
 				case "WAPP":
-					return V.Messenger.WAPP.processVEMessage(iframeMessage);
+					return V.Messenger.WAPP.processWAPPMessage(iframeMessage);
 				default:
 					return;
 			}
@@ -78,6 +86,7 @@ VISH.IframeMessenger = (function(V,undefined){
 		this.type = type || _type;
 		this.data = data || {};
 		this.origin = _origin;
+		this.originId = _originId;
 		this.destination = destination || "*";
 	};
 
@@ -106,6 +115,16 @@ VISH.IframeMessenger = (function(V,undefined){
 		return true;
 	};
 
+	var _generateOriginId = function(){
+		var timestamp = ((new Date()).getTime()).toString();
+		var random = (parseInt(Math.random()*1000000)).toString();
+		return parseInt(timestamp.substr(timestamp.length-7,timestamp.length-1) + random);
+	};
+
+	var getIframeConnections = function(){
+		return _iframeConections;
+	};
+
 
 
 	//////////////
@@ -114,13 +133,23 @@ VISH.IframeMessenger = (function(V,undefined){
 
 	var _onProtocolMessage = function(protocolMessage){
 		if((protocolMessage.data)&&(protocolMessage.data.message === "onIframeMessengerHello")){
+			var helloMessage = protocolMessage;
+
 			// Reply Hello message
 			if(V.Status.getIsInIframe()){
-				_connected = true;
+				if(helloMessage.origin != "?"){
 
-				var helloMessage = protocolMessage;
-				helloMessage.origin = _origin;
-				_sendMessage(JSON.stringify(helloMessage));
+					var connectedIframe = $("iframe[src='" + helloMessage.origin + "']");
+					if($(connectedIframe).length > 0){
+						_iframeConections[helloMessage.origin] = $(connectedIframe)[0];
+					}
+
+					_connected = true;
+
+					helloMessage.destination = helloMessage.origin;
+					helloMessage.origin = _origin;
+					_sendMessage(JSON.stringify(helloMessage));
+				}
 			}
 		}
 	};
@@ -129,7 +158,9 @@ VISH.IframeMessenger = (function(V,undefined){
 	return {
 		init 						: 	init,
 		createMessage				: 	createMessage,
-		validateIframeMessage 		: 	validateIframeMessage
+		validateIframeMessage 		: 	validateIframeMessage,
+		getIframeConnections		: 	getIframeConnections,
+		sendIframeMessage 			: 	sendIframeMessage
 	};
 
 }) (VISH, jQuery);

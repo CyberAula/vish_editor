@@ -28,7 +28,15 @@ VISH.Messenger.WAPP = (function(V,undefined){
 
 	var processWAPPMessage = function(WAPPMessage){
 		data = WAPPMessage.data;
-		//TODO...
+
+		switch(data.method){
+			case "getUser":
+				var params = V.User.getUser();
+				V.IframeMessenger.sendIframeMessage(_createWAPPMessage(data.method,params,undefined,WAPPMessage.origin));
+				break;
+			default:
+				break;
+		}
 	};
 
 
