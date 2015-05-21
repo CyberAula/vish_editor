@@ -13,7 +13,7 @@ VISH.EventsNotifier = (function(V,$,undefined){
 		} else {
 			listeners[listenedEvent] = [];
 			listeners[listenedEvent].push(callback);
-			if(listenedEvent==V.Constant.Event.onMessage){
+			if(listenedEvent==V.Constant.Event.onSendIframeMessage){
 				V.Messenger.init();
 			}
 		}

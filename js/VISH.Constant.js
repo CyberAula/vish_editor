@@ -112,7 +112,7 @@ VISH.Constant.Animations.Default = "animation1";
 
 //Events
 VISH.Constant.Event = {};
-VISH.Constant.Event.onMessage = "onMessage";
+VISH.Constant.Event.onSendIframeMessage = "onSendIframeMessage";
 VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 VISH.Constant.Event.onEnterSlide = "onEnterSlide";
 VISH.Constant.Event.onPlayVideo = "onPlayVideo";

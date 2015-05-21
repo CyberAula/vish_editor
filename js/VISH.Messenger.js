@@ -37,9 +37,9 @@ VISH.Messenger = (function(V,undefined){
 			//Avoid bucles in synchronized comunications.
 			return;
 		}
-		var VEMessage = V.Messenger.Helper.createMessage(event,params);
-		V.EventsNotifier.notifyEvent(V.Constant.Event.onMessage,VEMessage,true);
-	}
+		var VEMessage = V.Messenger.VE.createVEMessage(event,params);
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onSendIframeMessage,VEMessage,true);
+	};
 
 	return {
 		init 				 : init,

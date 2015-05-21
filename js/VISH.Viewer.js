@@ -93,6 +93,7 @@ VISH.Viewer = (function(V,$,undefined){
 		//Init some modules (and submodules) after render
 		V.Quiz.init();
 		V.SCORM.initAfterRender();
+		V.IframeMessenger.init();
 
 		//Init ViSH Editor Addons
 		if(options.addons){

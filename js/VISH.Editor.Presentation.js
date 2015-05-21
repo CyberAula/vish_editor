@@ -14,8 +14,8 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			// V.Debugging.log("onMessage from " + origin);
 			// V.Debugging.log(VEMessage);
 			var VEMessageObject = JSON.parse(VEMessage);
-			if(VEMessageObject.VEevent===V.Constant.Event.onSelectedSlides){
-				V.Messenger.Helper.processVEMessage(VEMessage);
+			if(VEMessageObject.data.VEevent===V.Constant.Event.onSelectedSlides){
+				V.Messenger.VE.processVEMessage(VEMessageObject);
 			}
 		});
 	};

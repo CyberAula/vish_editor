@@ -168,6 +168,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.Storage.init();
 		V.Editor.Clipboard.init();
 		V.Editor.Events.init();
+		V.IframeMessenger.init();
 		
 		//Init ViSH Editor Addons
 		if(options.addons){

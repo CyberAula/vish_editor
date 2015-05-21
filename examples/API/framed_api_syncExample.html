@@ -9,6 +9,8 @@
 		window.onload = function(){
 			VISH.IframeAPI.init();
 			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
+				console.log("onMessage from " + origin);
+				console.log(VEMessage);
 				VISH.IframeAPI.sendMessage(VEMessage,"*");
 			});
 		};

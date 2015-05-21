@@ -17,7 +17,7 @@ VISH.Video = (function(V,$,undefined){
 
 
 	/*
-	 * Used for video synchronization (deprecated). Only used by Messenger.Helper
+	 * Used for video synchronization (deprecated). Only used by Messenger.VE
 	 */
 	var playVideo = function(videoId,currentTime,triggeredByUser){
 		switch(getTypeVideoWithId(videoId)){									 
