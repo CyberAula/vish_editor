@@ -9,7 +9,7 @@
 		window.onload = function(){
 			VISH.IframeAPI.init();
 			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
-				VISH.IframeAPI.sendMessage(VEMessage,"*");
+				VISH.IframeAPI.sendMessage(VEMessage);
 			});
 			VISH.IframeAPI.setMaster("presentation_iframe_1");
 		};

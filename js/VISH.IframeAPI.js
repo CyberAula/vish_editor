@@ -13,7 +13,7 @@ VISH.IframeAPI = (function(V,undefined){
 	var _initialized = false;
 	var _connected = false;
 	var _options;
-	var _type = "VE";
+	var _mode = "EXTERNAL"; //default
 	var _origin = "?";
 	var _originId = "?";
 	var _listeners;
@@ -46,25 +46,28 @@ VISH.IframeAPI = (function(V,undefined){
 
 		_options = initOptions || {};
 
-		if(VALID_TYPES.indexOf(_options.type)!=-1){
-			_type = _options.type;
+		if(["EXTERNAL","INTERNAL"].indexOf(_options.mode)!=-1){
+			_mode = _options.mode;
 		}
 
-		if(_type === "VE"){
-			_defineVEConstants();
+		if(_options.wapp===true){
+			_mode = "INTERNAL";
+		} else if(_options.ve===true){
+			_mode = "EXTERNAL";
 		}
+
+		_defineVEConstants();
 
 		_listeners = new Array();
 		_wapplisteners = new Array();
 
 		registerCallback("onConnect", function(origin){
+
 			//Communication stablished
-			_connected = true;
+			// _print(_originId + ": Communication stablished with: " + origin);
 
-			_print("Communication stablished with: " + origin);
-
-			if(_type==="VE"){
-				_afterConnectVE(origin);
+			if(_mode==="EXTERNAL"){
+				_afterConnectExternal(origin);
 			}
 
 			if((_options)&&(typeof _options.callback === "function")){
@@ -80,17 +83,21 @@ VISH.IframeAPI = (function(V,undefined){
 
 	// Messages
 
-	function IframeMessage(type,data,origin,destination){
+	function IframeMessage(type,data,destination,destinationId){
 		this.IframeMessage = true;
-		this.type = type || _type;
+		this.mode = _mode;
+		this.type = type || _mode;
 		this.data = data || {};
-		this.origin = origin || _origin;
+		this.origin = _origin;
 		this.originId = _originId;
 		this.destination = destination || "*";
+		if(destinationId){
+			this.destinationId = destinationId;
+		}
 	};
 
-	var _createMessage = function(type,data,origin,destination){
-		var iframeMessage = new IframeMessage(type,data,origin,destination);
+	var _createMessage = function(type,data,destination,destinationId){
+		var iframeMessage = new IframeMessage(type,data,destination,destinationId);
 		return JSON.stringify(iframeMessage);
 	};
 
@@ -141,36 +148,44 @@ VISH.IframeAPI = (function(V,undefined){
 	};
 
 	var _sendMessage = function(iframeMessage,iframeId){
-
 		if(!_validateIframeMessage(iframeMessage)){
 			return "Invalid message";
 		}
-		
-		if(typeof iframeId == "undefined"){
-			iframeId = "*";
-		}
 
-		if(typeof iframeId === "string"){
-			if(iframeId==="*"){
-				_broadcastMessage(iframeMessage);
-			} else {
-				var iframe = document.getElementById(iframeId);
-				_sendMessageToIframe(iframeMessage,iframe);
-			}
-		} else if((iframeId instanceof Array)&&(iframeId.length > 0)){
-			for(var i=0; i<iframeId.length; i++){
-				if(typeof iframeId[i] == "string"){
-					var iframe = document.getElementById(iframeId[i]);
-					_sendMessageToIframe(iframeMessage,iframe);
-				}
-			}
-		} else {
-			_broadcastMessage(iframeMessage);
+		switch(_mode){
+			case "EXTERNAL":
+				return _sendInternalMessage(iframeMessage,iframeId);
+			case "INTERNAL":
+				return _sendExternalMessage(iframeMessage);
+			default:
+				return;
 		}
 	};
 
-	var _broadcastMessage = function(iframeMessage){
-		var allVEIframes = document.querySelectorAll(".vishEditorIframe");
+	var _sendExternalMessage = function(iframeMessage) {
+		window.parent.postMessage(iframeMessage,'*');
+	};
+
+	var _sendInternalMessage = function(iframeMessage,iframeId){
+		if(typeof iframeId == "undefined"){
+			_broadcastInternalMessage(iframeMessage);
+		} else {
+			if(typeof iframeId === "string"){
+				var iframe = document.getElementById(iframeId);
+				_sendMessageToIframe(iframeMessage,iframe);
+			} else if((iframeId instanceof Array)&&(iframeId.length > 0)){
+				for(var i=0; i<iframeId.length; i++){
+					if(typeof iframeId[i] == "string"){
+						var iframe = document.getElementById(iframeId[i]);
+						_sendMessageToIframe(iframeMessage,iframe);
+					}
+				}
+			}
+		}
+	};
+
+	var _broadcastInternalMessage = function(iframeMessage){
+		var allVEIframes = document.querySelectorAll("iframe");
 		for(var i=0; i<allVEIframes.length; i++){
 			_sendMessageToIframe(iframeMessage,allVEIframes[i]);
 		}
@@ -183,11 +198,16 @@ VISH.IframeAPI = (function(V,undefined){
 	};
 
 	var _onIframeMessageReceived = function(wrapperedIframeMessage){
+
 		if(_validateWrapperedIframeMessage(wrapperedIframeMessage)){
 
 			var iframeMessage = JSON.parse(wrapperedIframeMessage.data);
 
 			if((iframeMessage.destination!=_origin)&&(iframeMessage.destination!=="*")){
+				return;
+			}
+
+			if((typeof iframeMessage.destinationId != "undefined")&&(iframeMessage.destinationId != _originId)){
 				return;
 			}
 
@@ -225,15 +245,9 @@ VISH.IframeAPI = (function(V,undefined){
 	var _helloTimeout;
 
 	var _initHelloExchange = function(){
-		registerCallback("onIframeMessengerHello", function(origin){
-			//Communication stablished
-
+		registerCallback("stopHelloExchange", function(){
 			if(_helloTimeout){
 				clearTimeout(_helloTimeout);
-			}
-
-			if(typeof _listeners["onConnect"] == "function"){
-				_listeners["onConnect"](origin);
 			}
 		});
 
@@ -247,23 +261,29 @@ VISH.IframeAPI = (function(V,undefined){
 
 	var _sayHello = function(){
 		var helloMessage = _createProtocolMessage("onIframeMessengerHello");
-		_sendMessage(helloMessage,"*");
+		_sendMessage(helloMessage);
 		_helloAttempts++;
 		if((_helloAttempts>=MAX_HELLO_ATTEMPTS)&&(_helloTimeout)){
 			clearTimeout(_helloTimeout);
 		}
 	};
 
-	var _createProtocolMessage = function(protocolMessage,origin,destination){
+	var _createProtocolMessage = function(protocolMessage,destination,destinationId){
 		var data = {};
 		data.message = protocolMessage;
-		return _createMessage("PROTOCOL",data,origin,destination);
+		return _createMessage("PROTOCOL",data,destination,destinationId);
 	};
 
 	var _processProtocolMessage = function(protocolMessage){
 		if((protocolMessage.data)&&(protocolMessage.data.message === "onIframeMessengerHello")){
-			if(typeof _listeners["onIframeMessengerHello"] == "function"){
-				_listeners["onIframeMessengerHello"](protocolMessage.origin);
+			if(!_connected){
+				_connected = true;
+				if(typeof _listeners["stopHelloExchange"] == "function"){
+					_listeners["stopHelloExchange"]();
+				}
+				if(typeof _listeners["onConnect"] == "function"){
+					_listeners["onConnect"](protocolMessage.origin);
+				}
 			}
 		}
 	};
@@ -272,17 +292,17 @@ VISH.IframeAPI = (function(V,undefined){
 	// VE Messages
 	//////////////
 
-	var _createVEMessage = function(VEevent,params,origin,destination){
+	var _createVEMessage = function(VEevent,params,origin,destination,destinationId){
 		var data = {};
 		data.VEevent = VEevent;
 		data.params = params;
-		return _createMessage("VE",data,origin,destination);
+		return _createMessage("VE",data,destination,destinationId);
 	};
 
 	var _defineVEConstants = function(){
 		VISH.Constant = VISH.Constant || {};
 		VISH.Constant.Event = VISH.Constant.Event || {};
-		VISH.Constant.Event.onSendIframeMessage = "onMessage";
+		VISH.Constant.Event.onSendIframeMessage = "onSendIframeMessage";
 		VISH.Constant.Event.onGoToSlide = "onGoToSlide";
 		VISH.Constant.Event.onEnterSlide = "onEnterSlide";
 		VISH.Constant.Event.onPlayVideo = "onPlayVideo";
@@ -302,7 +322,7 @@ VISH.IframeAPI = (function(V,undefined){
 		VISH.Constant.Event.onVEFocusChange = "onVEFocusChange";
 	};
 
-	var _afterConnectVE = function(origin){
+	var _afterConnectExternal = function(origin){
 		if(_options){
 			if(_options.preventDefault===true){
 				_sendPreventDefaults(true,origin);
@@ -322,8 +342,8 @@ VISH.IframeAPI = (function(V,undefined){
 		var data = VEMessage.data;
 
 		//"onMessage" callback
-		if(_listeners[VISH.Constant.Event.onSendIframeMessage]){
-			_listeners[VISH.Constant.Event.onSendIframeMessage](JSON.stringify(VEMessage),VEMessage.origin);
+		if(_listeners["onMessage"]){
+			_listeners["onMessage"](JSON.stringify(VEMessage),VEMessage.origin);
 		}
 
 		var callback = _listeners[data.VEevent];
@@ -375,9 +395,6 @@ VISH.IframeAPI = (function(V,undefined){
 				if(data.params){
 					callback(data.params.focus,VEMessage.origin);
 				}
-				break;
-			case "onIframeMessengerHello":
-				callback(VEMessage.origin);
 				break;
 			default:
 				_print("VISH.Messenger.Proceesor Error: Unrecognized event: " + data.VEevent);
@@ -471,11 +488,11 @@ VISH.IframeAPI = (function(V,undefined){
 	// WAPP Messages
 	//////////////
 
-	var _createWAPPMessage = function(method,params,origin,destination){
+	var _createWAPPMessage = function(method,params,origin,destination,destinationId){
 		var data = {};
 		data.method = method;
 		data.params = params;
-		return _createMessage("WAPP",data,origin,destination);
+		return _createMessage("WAPP",data,destination,destinationId);
 	};
 
 	var _processWAPPMessage = function(WAPPMessage){

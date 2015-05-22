@@ -1,10 +1,10 @@
 VISH.Messenger.VE = (function(V,undefined){
 
-	var createVEMessage = function(VEevent,params,origin,destination){
+	var createVEMessage = function(VEevent,params,destination,destinationId){
 		var data = {};
 		data.VEevent = VEevent;
 		data.params = params;
-		return V.IframeMessenger.createMessage("VE",data,origin,destination);
+		return V.IframeMessenger.createMessage("VE",data,destination,destinationId);
 	};
 
 

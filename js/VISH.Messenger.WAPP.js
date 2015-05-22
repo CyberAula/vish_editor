@@ -1,10 +1,14 @@
 VISH.Messenger.WAPP = (function(V,undefined){
 
-	var _createWAPPMessage = function(method,params,origin,destination){
+	var _createWAPPMessage = function(method,params,destination,destinationId,mode){
 		var data = {};
 		data.method = method;
 		data.params = params;
-		return V.IframeMessenger.createMessage("WAPP",data,origin,destination);
+		return V.IframeMessenger.createMessage("WAPP",data,destination,destinationId,mode);
+	};
+
+	var _createWAPPResponseMessage = function(method,params,WAPPMessage){
+		return _createWAPPMessage(method,params,WAPPMessage.origin,WAPPMessage.originId,WAPPMessage.mode);
 	};
 
 
@@ -31,8 +35,8 @@ VISH.Messenger.WAPP = (function(V,undefined){
 
 		switch(data.method){
 			case "getUser":
-				var params = V.User.getUser();
-				V.IframeMessenger.sendIframeMessage(_createWAPPMessage(data.method,params,undefined,WAPPMessage.origin));
+				var params = {username: V.User.getName(), logged: V.User.isLogged()};
+				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,params,WAPPMessage));
 				break;
 			default:
 				break;

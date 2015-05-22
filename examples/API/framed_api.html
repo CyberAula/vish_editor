@@ -7,7 +7,14 @@
 	<script type="text/javascript" src="/js/VISH.IframeAPI.js"></script>
 	<script type="text/javascript">
 		window.onload = function(){
-			VISH.IframeAPI.init();
+			VISH.IframeAPI.init(
+				{
+					ve: true,
+					callback: function(origin){
+						console.log("Communication stablished with " + origin);
+					}
+				}
+			);
 			VISH.IframeAPI.registerCallback("onGoToSlide",function(slideNumber,origin){
 				console.log("onGoToSlide: " + slideNumber + " from " + origin);
 			});

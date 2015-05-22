@@ -9,8 +9,6 @@ VISH.IframeMessenger = (function(V,undefined){
 	var _origin = "?";
 	var _originId = "?";
 
-	var _iframeConections = {};
-	// _iframeConections["origin"] = iframeDOM
 
 	var init = function(config){
 		if(_initialized){
@@ -40,7 +38,26 @@ VISH.IframeMessenger = (function(V,undefined){
 	};
 
 	var _sendMessage = function(iframeMessage){
-		window.parent.postMessage(iframeMessage,'*');
+		var parsedIframeMessage = JSON.parse(iframeMessage);
+
+		switch(parsedIframeMessage.mode){
+			case "EXTERNAL":
+				window.parent.postMessage(iframeMessage,'*');
+				break;
+			case "INTERNAL":
+				$("iframe[src='" + parsedIframeMessage.destination + "']").each(function(index,iframe){
+					_sendMessageToIframe(iframeMessage,iframe);
+				});
+				break;
+			default:
+				return;
+		}
+	};
+
+	var _sendMessageToIframe = function(iframeMessage,iframe){
+		if((iframe)&&(iframe.contentWindow)){
+			iframe.contentWindow.postMessage(iframeMessage,'*');
+		}
 	};
 
 	var _onIframeMessageReceived = function(wrapperedIframeMessage){
@@ -49,6 +66,10 @@ VISH.IframeMessenger = (function(V,undefined){
 			var iframeMessage = JSON.parse(wrapperedIframeMessage.data);
 
 			if((iframeMessage.destination!=_origin)&&(iframeMessage.destination!=="*")){
+				return;
+			}
+
+			if((typeof iframeMessage.destinationId != "undefined")&&(iframeMessage.destinationId != _originId)){
 				return;
 			}
 
@@ -81,17 +102,21 @@ VISH.IframeMessenger = (function(V,undefined){
 	// Messages
 	///////////////
 
-	function IframeMessage(type,data,origin,destination){
+	function IframeMessage(type,data,destination,destinationId,mode){
 		this.IframeMessage = true;
+		this.mode = mode || "EXTERNAL";
 		this.type = type || _type;
 		this.data = data || {};
 		this.origin = _origin;
 		this.originId = _originId;
 		this.destination = destination || "*";
+		if(destinationId){
+			this.destinationId = destinationId;
+		}
 	};
 
-	var createMessage = function(type,data,origin,destination){
-		var iframeMessage = new IframeMessage(type,data,origin,destination);
+	var createMessage = function(type,data,destination,destinationId,mode){
+		var iframeMessage = new IframeMessage(type,data,destination,destinationId,mode);
 		return JSON.stringify(iframeMessage);
 	};
 
@@ -121,11 +146,6 @@ VISH.IframeMessenger = (function(V,undefined){
 		return parseInt(timestamp.substr(timestamp.length-7,timestamp.length-1) + random);
 	};
 
-	var getIframeConnections = function(){
-		return _iframeConections;
-	};
-
-
 
 	//////////////
 	// Protocol
@@ -138,16 +158,12 @@ VISH.IframeMessenger = (function(V,undefined){
 			// Reply Hello message
 			if(V.Status.getIsInIframe()){
 				if(helloMessage.origin != "?"){
-
-					var connectedIframe = $("iframe[src='" + helloMessage.origin + "']");
-					if($(connectedIframe).length > 0){
-						_iframeConections[helloMessage.origin] = $(connectedIframe)[0];
-					}
-
 					_connected = true;
 
 					helloMessage.destination = helloMessage.origin;
+					helloMessage.destinationId = helloMessage.originId;
 					helloMessage.origin = _origin;
+					helloMessage.originId = _originId;
 					_sendMessage(JSON.stringify(helloMessage));
 				}
 			}
@@ -159,7 +175,6 @@ VISH.IframeMessenger = (function(V,undefined){
 		init 						: 	init,
 		createMessage				: 	createMessage,
 		validateIframeMessage 		: 	validateIframeMessage,
-		getIframeConnections		: 	getIframeConnections,
 		sendIframeMessage 			: 	sendIframeMessage
 	};
 

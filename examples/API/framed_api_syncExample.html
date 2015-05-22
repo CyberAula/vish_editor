@@ -7,11 +7,13 @@
 	<script type="text/javascript" src="/js/VISH.IframeAPI.js"></script>
 	<script type="text/javascript">
 		window.onload = function(){
-			VISH.IframeAPI.init();
+			VISH.IframeAPI.init({callback: function(origin){
+				console.log("Communication stablished with " + origin);
+			}});
 			VISH.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
 				console.log("onMessage from " + origin);
 				console.log(VEMessage);
-				VISH.IframeAPI.sendMessage(VEMessage,"*");
+				VISH.IframeAPI.sendMessage(VEMessage);
 			});
 		};
 		function setSlave(slave){

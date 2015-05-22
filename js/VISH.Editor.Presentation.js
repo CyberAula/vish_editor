@@ -9,7 +9,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	};
 
 	var _onConnect = function(origin){
-		V.Debugging.log("Communication stablished with origin " + origin);
+		// V.Debugging.log("Communication stablished with origin " + origin);
 		V.IframeAPI.registerCallback("onMessage",function(VEMessage,origin){
 			// V.Debugging.log("onMessage from " + origin);
 			// V.Debugging.log(VEMessage);

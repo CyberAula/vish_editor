@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ViSH Viewer: API Testing</title>
+</head>
+<body>
+	<script type="text/javascript" src="http://guepardo.dit.upm.es/js/VISH.IframeAPI.js"></script>
+	<script type="text/javascript">
+		window.onload = function(){
+			VISH.IframeAPI.init(
+				{
+					wapp: true,
+					callback: function(origin){
+						console.log("Communication stablished with " + origin);
+
+						VISH.IframeAPI.getUser(function(user){
+							if(user.logged){
+								document.getElementById("username").innerHTML = "Hola " + user.username;
+							}
+						});
+					}
+				}
+			);
+		};
+	</script>
+
+	<h1> ViSH Editor WebAPP Example </h1>
+	<p id="username"></p>
+</body>
+</html>
