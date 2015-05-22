@@ -511,7 +511,14 @@ VISH.IframeAPI = (function(V,undefined){
 	var getUser = function(callback){
 		_wapplisteners["getUser"] = callback;
 		var params = {};
-		var WAPPMessage = _createWAPPMessage("getUser",{});
+		var WAPPMessage = _createWAPPMessage("getUser",params);
+		sendMessage(WAPPMessage);
+	};
+
+	var setScore = function(score,callback){
+		_wapplisteners["setScore"] = callback;
+		var params = score;
+		var WAPPMessage = _createWAPPMessage("setScore",params);
 		sendMessage(WAPPMessage);
 	};
 
@@ -545,7 +552,8 @@ VISH.IframeAPI = (function(V,undefined){
 			closeSubslide					: closeSubslide,
 
 			//WAPP methods
-			getUser							: getUser
+			getUser							: getUser,
+			setScore						: setScore
 	};
 
 }) (VISH);

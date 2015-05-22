@@ -38,6 +38,12 @@ VISH.Messenger.WAPP = (function(V,undefined){
 				var params = {username: V.User.getName(), logged: V.User.isLogged()};
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,params,WAPPMessage));
 				break;
+			case "setScore":
+				var score = data.params;
+				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
+				V.Object.Webapp.Handler.onSetScore(score,iframe);
+				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,score,WAPPMessage));
+				break;
 			default:
 				break;
 		}

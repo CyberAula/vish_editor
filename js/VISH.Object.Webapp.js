@@ -1,6 +1,7 @@
 VISH.Object.Webapp = (function(V,$,undefined){
 
 	var init = function(){
+		V.Object.Webapp.Handler.init();
 	};
 
 	var renderWebappFromJSON = function(webappJSON,options){
