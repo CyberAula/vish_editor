@@ -522,6 +522,27 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(WAPPMessage);
 	};
 
+	var setProgress = function(progress,callback){
+		_wapplisteners["setProgress"] = callback;
+		var params = progress;
+		var WAPPMessage = _createWAPPMessage("setProgress",params);
+		sendMessage(WAPPMessage);
+	};
+
+	var setSuccessStatus = function(status,callback){
+		_wapplisteners["setSuccessStatus"] = callback;
+		var params = status;
+		var WAPPMessage = _createWAPPMessage("setSuccessStatus",params);
+		sendMessage(WAPPMessage);
+	};
+
+	var setCompletionStatus = function(status,callback){
+		_wapplisteners["setCompletionStatus"] = callback;
+		var params = status;
+		var WAPPMessage = _createWAPPMessage("setCompletionStatus",params);
+		sendMessage(WAPPMessage);
+	};
+
 
 	///////////
 	// Utils
@@ -553,7 +574,10 @@ VISH.IframeAPI = (function(V,undefined){
 
 			//WAPP methods
 			getUser							: getUser,
-			setScore						: setScore
+			setScore						: setScore,
+			setProgress						: setProgress,
+			setSuccessStatus				: setSuccessStatus,
+			setCompletionStatus				: setCompletionStatus
 	};
 
 }) (VISH);

@@ -44,6 +44,24 @@ VISH.Messenger.WAPP = (function(V,undefined){
 				V.Object.Webapp.Handler.onSetScore(score,iframe);
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,score,WAPPMessage));
 				break;
+			case "setProgress":
+				var progress = data.params;
+				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
+				V.Object.Webapp.Handler.onSetProgress(progress,iframe);
+				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,progress,WAPPMessage));
+				break;
+			case "setSuccessStatus":
+				var status = data.params;
+				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
+				V.Object.Webapp.Handler.onSetSuccessStatus(status,iframe);
+				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,status,WAPPMessage));
+				break;
+			case "setCompletionStatus":
+				var status = data.params;
+				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
+				V.Object.Webapp.Handler.onSetCompletionStatus(status,iframe);
+				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,status,WAPPMessage));
+				break;
 			default:
 				break;
 		}
