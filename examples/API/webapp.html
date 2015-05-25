@@ -8,36 +8,44 @@
 </head>
 <body>
 	<script type="text/javascript">
-		var connected = false;
-
-		var _afterSetScore = function(score){
-			alert("Has sacado un " + score);
-			console.log("Score fijado a: " + score);
-		};
 
 		window.onload = function(){
+			_loadEvents();
+
 			VISH.IframeAPI.init(
 				{
 					wapp: true,
 					tracking: true,
-					callback: function(origin){
-						console.log("Communication stablished with " + origin);
-						connected = true;
-
-						VISH.IframeAPI.getUser(function(user){
-							if(user.logged){
-								document.getElementById("username").innerHTML = "Hola " + user.username;
-								VISH.IframeAPI.getAuthToken(function(token){
-									console.log("Token es: " + token);
-								});
-							}
-						});
-					}
+					callback: _onConnect
 				}
 			);
+		};
 
+
+		//APP code
+
+		var _onConnect = function(origin){
+			console.log("Communication stablished with " + origin);
+
+			VISH.IframeAPI.getUser(function(user){
+				if(user.logged){
+					document.getElementById("username").innerHTML = "Hola " + user.username;
+					VISH.IframeAPI.getAuthToken(function(token){
+						console.log("Token es: " + token);
+					});
+				}
+			});
+		};
+
+		var _afterSetScore = function(score){
+			alert("Has sacado un " + score);
+			console.log("Score fijado a: " + score);
+			console.log(score);
+		};
+
+		var _loadEvents = function(){
 			$("#responder").click(function(){
-				if(connected){
+				if(VISH.IframeAPI.isConnected()){
 					if($("#quiz input[type='radio'][value='Madrid']").is(":checked")){
 						VISH.IframeAPI.setScore(10,_afterSetScore);
 						VISH.IframeAPI.setProgress(10,function(progress){
@@ -63,7 +71,6 @@
 					}
 				}
 			});
-
 		};
 	</script>
 

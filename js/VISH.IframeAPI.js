@@ -538,7 +538,9 @@ VISH.IframeAPI = (function(V,undefined){
 	};
 
 	var _callWAPPMethod = function(methodName,params,callback){
-		params = params || {};
+		if(typeof params == "undefined"){
+			params = {};
+		}
 
 		_wapplisteners[methodName] = callback;
 		var WAPPMessage = _createWAPPMessage(methodName,params);
@@ -607,6 +609,10 @@ VISH.IframeAPI = (function(V,undefined){
 		}
 	};
 
+	var isConnected = function(){
+		return _connected;
+	};
+
 
 	return {
 			init 							: init,
@@ -635,7 +641,10 @@ VISH.IframeAPI = (function(V,undefined){
 
 			//Tracking System
 			enableTracker					: enableTracker,
-			notifyTrackerAction				: notifyTrackerAction
+			notifyTrackerAction				: notifyTrackerAction,
+
+			//Utils
+			isConnected						: isConnected
 	};
 
 }) (VISH);
