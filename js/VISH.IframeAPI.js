@@ -509,37 +509,34 @@ VISH.IframeAPI = (function(V,undefined){
 	//////////////
 
 	var getUser = function(callback){
-		_wapplisteners["getUser"] = callback;
-		var params = {};
-		var WAPPMessage = _createWAPPMessage("getUser",params);
-		sendMessage(WAPPMessage);
+		_callWAPPMethod("getUser",{},callback);
+	};
+
+	var getAuthToken = function(callback){
+		_callWAPPMethod("getAuthToken",{},callback);
 	};
 
 	var setScore = function(score,callback){
-		_wapplisteners["setScore"] = callback;
-		var params = score;
-		var WAPPMessage = _createWAPPMessage("setScore",params);
-		sendMessage(WAPPMessage);
+		_callWAPPMethod("setScore",score,callback);
 	};
 
 	var setProgress = function(progress,callback){
-		_wapplisteners["setProgress"] = callback;
-		var params = progress;
-		var WAPPMessage = _createWAPPMessage("setProgress",params);
-		sendMessage(WAPPMessage);
+		_callWAPPMethod("setProgress",progress,callback);
 	};
 
 	var setSuccessStatus = function(status,callback){
-		_wapplisteners["setSuccessStatus"] = callback;
-		var params = status;
-		var WAPPMessage = _createWAPPMessage("setSuccessStatus",params);
-		sendMessage(WAPPMessage);
+		_callWAPPMethod("setSuccessStatus",status,callback);
 	};
 
 	var setCompletionStatus = function(status,callback){
-		_wapplisteners["setCompletionStatus"] = callback;
-		var params = status;
-		var WAPPMessage = _createWAPPMessage("setCompletionStatus",params);
+		_callWAPPMethod("setCompletionStatus",status,callback);
+	};
+
+	var _callWAPPMethod = function(methodName,params,callback){
+		params = params || {};
+
+		_wapplisteners[methodName] = callback;
+		var WAPPMessage = _createWAPPMessage(methodName,params);
 		sendMessage(WAPPMessage);
 	};
 
@@ -577,7 +574,8 @@ VISH.IframeAPI = (function(V,undefined){
 			setScore						: setScore,
 			setProgress						: setProgress,
 			setSuccessStatus				: setSuccessStatus,
-			setCompletionStatus				: setCompletionStatus
+			setCompletionStatus				: setCompletionStatus,
+			getAuthToken					: getAuthToken
 	};
 
 }) (VISH);

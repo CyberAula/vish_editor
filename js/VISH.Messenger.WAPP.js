@@ -62,6 +62,11 @@ VISH.Messenger.WAPP = (function(V,undefined){
 				V.Object.Webapp.Handler.onSetCompletionStatus(status,iframe);
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,status,WAPPMessage));
 				break;
+			case "getAuthToken":
+				V.Object.Webapp.Handler.getAuthToken(function(token){
+					V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,token,WAPPMessage));
+				});
+				break;
 			default:
 				break;
 		}
