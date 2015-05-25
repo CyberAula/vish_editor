@@ -4,7 +4,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var uploadDivId = "tab_object_upload_content";
 	var urlDivId = "tab_object_from_url_content";
 	var urlInputId = "object_embed_code";
+
+	var _hiddenLinkToInitObjectSettings;
 		
+
 	var init = function(){
 		V.Editor.Object.LRE.init();
 		V.Editor.Object.Repository.init();
@@ -90,7 +93,25 @@ VISH.Editor.Object = (function(V,$,undefined){
 				V.Debugging.log("Upload error");
 				V.Debugging.log(error);
 			}
-		});	
+		});
+
+		//Object Settings
+		_hiddenLinkToInitObjectSettings = $('<a href="#objectSettings_fancybox" style="display:none"></a>');
+		$(_hiddenLinkToInitObjectSettings).fancybox({
+			'autoDimensions' : false,
+			'height': 360,
+			'width': 400,
+			'scrolling': 'no',
+			'showCloseButton': false,
+			'padding' : 0,
+			"onStart"  : function(data){
+				_onStartObjectSettingsFancybox();
+			},
+			"onComplete" : function(data){
+			},
+			"onClosed"  : function(data){
+			}
+		});
 	};
 	
 	var onLoadTab = function(tab){
@@ -537,6 +558,100 @@ VISH.Editor.Object = (function(V,$,undefined){
 			V.Editor.Object.Webapp.afterDraw(wrapperTag);
 		}
 	};
+
+	/////////////////
+	// Object Settings
+	/////////////////
+
+	var showObjectSettings = function(){
+		$(_hiddenLinkToInitObjectSettings).trigger("click");
+	};
+
+	var _onStartObjectSettingsFancybox = function(){
+		var oSF = $("#objectSettings_fancybox");
+
+		//Get object
+		var area = V.Editor.getCurrentArea();
+		var object = $(area).find("div.object_wrapper").children().first();
+		var objectInfo = V.Object.getObjectInfo(object);
+
+		$(oSF).find("input[type='hidden'][name='elId']").val($(area).attr("id"));
+		
+		//Load Settings
+		var oSettings = {};
+		var unloadObject = true;
+		
+		try {
+			oSettings = JSON.parse($(area).attr("elSettings"));
+		} catch(e){}
+
+		if(typeof oSettings.unloadObject != "undefined"){
+			unloadObject = oSettings.unloadObject;
+		}
+
+		//WAPPs
+		var showWAPPSettings = (objectInfo.type===V.Constant.MEDIA.WEB_APP);
+		if(showWAPPSettings){
+			var wappAPI = oSettings.wappAPI_supported;
+
+			if(typeof oSettings.wappAPI != "undefined"){
+				wappAPI = oSettings.wappAPI;
+			}
+		}
+
+		//Fill and reset form
+
+		//Unload object
+		var unloadObjectCheckbox = $(oSF).find("input[type='checkbox'][name='unloadObject']");
+		$(unloadObjectCheckbox).prop('checked', unloadObject);
+
+		if(showWAPPSettings){
+			$(oSF).find("div.wapp_settings").show();
+			var wappAPICheckbox = $(oSF).find("input[type='checkbox'][name='wappAPI']");
+			$(wappAPICheckbox).prop('checked', wappAPI);
+			if(oSettings.wappAPI_supported!==true){
+				$(wappAPICheckbox).prop('checked', false);
+				$(wappAPICheckbox).parent().addClass("disableSettingsField");
+				$(wappAPICheckbox).attr('disabled', 'disabled');
+			} else {
+				$(wappAPICheckbox).parent().removeClass("disableSettingsField");
+				$(wappAPICheckbox).removeAttr('disabled');
+			}
+		} else {
+			$(oSF).find("div.wapp_settings").hide();
+		}
+	};
+
+	var onObjectSettingsDone = function(){
+		var oSF = $("#objectSettings_fancybox");
+
+		//Get area and object
+		var areaId = $(oSF).find("input[type='hidden'][name='elId']").val();
+		var area = $("#"+areaId);
+		var object = $(area).find("div.object_wrapper").children().first();
+		var objectInfo = V.Object.getObjectInfo(object);
+
+		//Get previous settings
+		var oSettings = {};
+		try {
+			oSettings = JSON.parse($(area).attr("elsettings"));
+		} catch(e) {}
+		
+		//Get new settings
+		oSettings.unloadObject = $(oSF).find("input[type='checkbox'][name='unloadObject']").is(":checked");
+
+		if(objectInfo.type===V.Constant.MEDIA.WEB_APP){
+			oSettings.wappAPI = $(oSF).find("input[type='checkbox'][name='wappAPI']").is(":checked");
+		} else {
+			delete oSettings.wappAPI;
+		}
+
+		//Save Settings
+		var oSSerialized = JSON.stringify(oSettings);
+		$(area).attr("elSettings",oSSerialized);
+
+		$.fancybox.close();
+	};
 	
 	
 	return {
@@ -549,7 +664,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		drawPreview 					: drawPreview,
 		resetPreview 					: resetPreview,
 		drawPreviewElement				: drawPreviewElement,
-		drawPreviewObject				: drawPreviewObject
+		drawPreviewObject				: drawPreviewObject,
+		showObjectSettings				: showObjectSettings,
+		onObjectSettingsDone			: onObjectSettingsDone
 	};
 
 }) (VISH, jQuery);

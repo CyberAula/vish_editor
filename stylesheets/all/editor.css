@@ -3073,6 +3073,11 @@ span.letterInChapterDialog {
 /* Element Settings */
 
 
+#toolbar_settings_wrapper {
+	vertical-align: top;
+	margin-top: 7px;
+}
+
 .elSettings_fancybox {
 	padding: 20px;
 }

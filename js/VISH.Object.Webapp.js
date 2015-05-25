@@ -20,8 +20,15 @@ VISH.Object.Webapp = (function(V,$,undefined){
 				classes = classes + " " + options.extraClasses;
 			}
 		}
+
+		var _settings = "";
+		if(typeof webappJSON['settings'] == "object"){
+			try {
+				_settings = JSON.stringify(webappJSON['settings']);
+			} catch(e){}
+		}
 		
-		return "<div id='"+webappJSON['id']+"' class='"+ classes +"' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + webappBody + "'>" + "" + "</div>";
+		return "<div id='"+webappJSON['id']+"' class='"+ classes +"' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + webappBody + "' settings='" + _settings + "'></div>";
 	};
 
 	return {

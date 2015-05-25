@@ -11,6 +11,13 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 		}
 	};
 
+	var onWAPPConnected = function(origin,originId){
+		if(V.Editing){
+			V.Editor.Object.Webapp.Handler.onWAPPConnected(origin,originId);
+		}
+	};
+
+
 	//TODO: methods implementation
 
 	var onSetScore = function(score,iframe){
@@ -72,6 +79,7 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 
 	return {
 		init					: init,
+		onWAPPConnected			: onWAPPConnected,
 		onSetScore 				: onSetScore,
 		onSetProgress			: onSetProgress,
 		onSetSuccessStatus		: onSetSuccessStatus,

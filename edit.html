@@ -88,7 +88,6 @@
 	<script type="text/javascript" src="/js/VISH.Utils.js"></script>
 	<script type="text/javascript" src="/js/VISH.Utils.iso8601Parser.js"></script>
 	<script type="text/javascript" src="/js/VISH.Utils.Loader.js"></script>
-	<script type="text/javascript" src="/js/VISH.WAPP_API_MANAGER.js"></script>
 	<script type="text/javascript" src="/js/VISH.IframeMessenger.js"></script>
 	<script type="text/javascript" src="/js/VISH.Messenger.js"></script>
 	<script type="text/javascript" src="/js/VISH.Messenger.VE.js"></script>
@@ -144,6 +143,7 @@
 	<script type="text/javascript" src="/js/VISH.Editor.Object.Snapshot.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Object.Scorm.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Object.Webapp.js"></script>
+	<script type="text/javascript" src="/js/VISH.Editor.Object.Webapp.Handler.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Text.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.PDFex.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.API.js"></script>
@@ -359,13 +359,13 @@
 				</div>
 			</div>
 			<div id="toolbar_element" class="withLeftBorder">
-				<div id="settings_quiz_wrapper" class="toolbar_presentation_wrapper withRightBorder toolbar_quiz" style="display:none">
-					<a id="settings_quiz" class="tool_action" action="quizSettings" href="#">
+				<div id="toolbar_settings_wrapper" class="toolbar_presentation_wrapper withRightBorder toolbar_quiz toolbar_object toolbar_web" style="display:none">
+					<a id="toolbar_settings" class="tool_action" action="showSettings" href="#">
 						<button type="button" class="btn btn-primary btn-small btn-toolbarElementWrapper">
 							<img src="/images/toolbar/quiz_settings.png"/>
 						</button>
 					</a>
-					<p class="toolbar_presentation_title" i18n-key="i.QuizSettingsToolbar">Quiz Settings</p>
+					<p class="toolbar_presentation_title" i18n-key="i.SettingsToolbar">Settings</p>
 				</div>
 				<img class="toolbar_icon toolbar_image" style="display:none" action="addLink" src="/images/toolbar/addLink.png"/>
 				<img class="toolbar_icon toolbar_web toolbar_image toolbar_video toolbar_object toolbar_snapshot" style="display:none" action="resizeLess" src="/images/toolbar/resizeLess.png"/>
@@ -1562,6 +1562,34 @@
 
 			<div class="elSettingsButtonsWrapper">
 				<button id="quizSettingsDone" type="button" class="button" i18n-key="i.Done">Done</button>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Object Settings -->
+	<div style='display:none'>
+		<div id="objectSettings_fancybox" class="elSettings_fancybox">
+			<p class="elsettings_fancybox_title" i18n-key="i.Settings">Settings</p>
+
+			<input type="hidden" name="elId">
+
+			<div class="new_elsettings_field">
+				<span i18n-key="i.OSettingsUnload">Unload the object when the slide disappears</span>
+				<input type="checkbox" name="unloadObject">
+			</div>
+
+			<div class="wapp_settings" style="display:none">
+				<br/><br/><br/>
+				<p class="elsettings_fancybox_title">Web Application Settings</p>
+				<div class="new_elsettings_field">
+					<span>Enable Web Application API</span>
+					<input type="checkbox" name="wappAPI">
+				</div>
+			</div>
+
+			<div class="elSettingsButtonsWrapper">
+				<button id="objectSettingsDone" type="button" class="button" i18n-key="i.Done">Done</button>
 			</div>
 
 		</div>

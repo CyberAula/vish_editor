@@ -434,8 +434,9 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var objectInfo = V.Object.getObjectInfo(object);
 
 		switch(objectInfo.type){
-			case "web":
-				_loadToolbarForElement(objectInfo.type);
+			case V.Constant.MEDIA.WEB:
+			case V.Constant.MEDIA.WEB_APP:
+				_loadToolbarForElement(V.Constant.MEDIA.WEB);
 				break;
 			default:
 				_loadToolbarForElement("object");
@@ -593,7 +594,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 				var parent = area.children(":first");
 				object = parent.children(":first");
 				objectInfo = V.Object.getObjectInfo(object);
-				if(objectInfo.type==="web"){
+				if([V.Constant.MEDIA.WEB,V.Constant.MEDIA.WEB_APP].indexOf(objectInfo.type)!=-1){
 					var iframe = $(area).find("iframe");
 					zoom = V.Utils.getZoomFromStyle($(iframe).attr("style"));
 
@@ -607,7 +608,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 					//Resize object to fix in its wrapper
 					V.Editor.Object.autofixWrapperedObjectAfterZoom(iframe,zoom);
-				}				
+				}		
 				break;
 			default:
 				break;
@@ -684,8 +685,17 @@ VISH.Editor.Tools = (function(V,$,undefined){
 
 
 	/* Element Settings */
-  	var quizSettings = function(event){
-  		V.Editor.Quiz.showQuizSettings();
+  	var showSettings = function(event){
+  		switch($(V.Editor.getCurrentArea()).attr("type")){
+  			case V.Constant.QUIZ:
+  				V.Editor.Quiz.showQuizSettings();
+  				break;
+  			case V.Constant.OBJECT:
+  				V.Editor.Object.showObjectSettings();
+  				break;
+  			default:
+  				break;
+  		}
   	};
 
 
@@ -721,7 +731,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		setAllTooltipMargins			: setAllTooltipMargins,
 		changePublishButtonStatus		: changePublishButtonStatus,
 		changeSaveButtonStatus			: changeSaveButtonStatus,
-		quizSettings 					: quizSettings
+		showSettings 					: showSettings
 	};
 
 }) (VISH, jQuery);

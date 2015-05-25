@@ -25,13 +25,13 @@
 		//APP code
 
 		var _onConnect = function(origin){
-			console.log("Communication stablished with " + origin);
+			// console.log("Communication stablished with " + origin);
 
 			VISH.IframeAPI.getUser(function(user){
 				if(user.logged){
 					document.getElementById("username").innerHTML = "Hola " + user.username;
 					VISH.IframeAPI.getAuthToken(function(token){
-						console.log("Token es: " + token);
+						// console.log("Token es: " + token);
 					});
 				}
 			});
