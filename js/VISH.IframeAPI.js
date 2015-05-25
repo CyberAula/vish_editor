@@ -58,6 +58,10 @@ VISH.IframeAPI = (function(V,undefined){
 
 		_defineVEConstants();
 
+		if((_options.tracking===true)&&(_mode = "INTERNAL")){
+			enableTracker();
+		}
+
 		_listeners = new Array();
 		_wapplisteners = new Array();
 
@@ -320,6 +324,7 @@ VISH.IframeAPI = (function(V,undefined){
 		VISH.Constant.Event.exit = "exit";
 		VISH.Constant.Event.onSelectedSlides = "onSelectedSlides";
 		VISH.Constant.Event.onVEFocusChange = "onVEFocusChange";
+		VISH.Constant.Event.onTrackedAction = "onTrackedAction";
 	};
 
 	var _afterConnectExternal = function(origin){
@@ -540,6 +545,57 @@ VISH.IframeAPI = (function(V,undefined){
 		sendMessage(WAPPMessage);
 	};
 
+	///////////////
+	// Tracker
+	//////////////
+
+	_trackerEnabled = false;
+	_trackerEventsLoaded = false;
+
+	var enableTracker = function(){
+		_trackerEnabled = true;
+		_loadTrackerEvents();
+	};
+
+	var _loadTrackerEvents = function(){
+		if(_trackerEventsLoaded){
+			return;
+		}
+		_trackerEventsLoaded = true;
+
+		$(document).bind('click', function(event){
+			var params = {};
+			params["x"] = event.clientX;
+			params["y"] = event.clientY;
+
+			if(event.target){
+				if(event.target.tagName){
+					params["tagName"] = event.target.tagName
+				}
+				if(event.target.id){
+					params["id"] = event.target.id
+				}
+			}
+
+			notifyTrackerAction("click",params);
+		});
+
+		$(document).bind('keydown', function(event){
+			var params = {};
+			params["keyCode"] = event.keyCode;
+			notifyTrackerAction("keydown",params);
+		});
+		
+	};
+
+	var notifyTrackerAction = function(action,actionParams){
+		var data = {};
+		data.action = action;
+		data.params = actionParams;
+		var WAPPMessage = _createWAPPMessage("notifyTrackerAction",data);
+		sendMessage(WAPPMessage);
+	};
+
 
 	///////////
 	// Utils
@@ -575,7 +631,11 @@ VISH.IframeAPI = (function(V,undefined){
 			setProgress						: setProgress,
 			setSuccessStatus				: setSuccessStatus,
 			setCompletionStatus				: setCompletionStatus,
-			getAuthToken					: getAuthToken
+			getAuthToken					: getAuthToken,
+
+			//Tracking System
+			enableTracker					: enableTracker,
+			notifyTrackerAction				: notifyTrackerAction
 	};
 
 }) (VISH);

@@ -28,6 +28,9 @@ VISH.TrackingSystem = (function(V,$,undefined){
 	var _apiKey;
 	var _apiUrl;
 
+	//Validations
+	var _validGenericTrackedActions = ["click",'keydown'];
+
 
 	var init = function(animation,callback){
 		_timeReference = new Date().getTime();
@@ -166,6 +169,12 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onViewportResize, function(params){
 			registerAction(V.Constant.Event.onViewportResize,params);
+		});
+
+		V.EventsNotifier.registerCallback(V.Constant.Event.onTrackedAction, function(data){
+			if(_validGenericTrackedActions.indexOf(data.action)!==-1){
+				registerAction(data.action,data.params);
+			}
 		});
 
 		//Custom Tracking Events

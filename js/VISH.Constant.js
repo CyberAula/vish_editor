@@ -137,6 +137,8 @@ VISH.Constant.Event.onEvaluate = "onEvaluate";
 VISH.Constant.Event.onEvaluateCompletion = "onEvaluateCompletion";
 VISH.Constant.Event.onViewportResize = "onViewportResize";
 VISH.Constant.Event.onProgressObjectiveUpdated = "onProgressObjectiveUpdated";
+VISH.Constant.Event.onTrackedAction = "onTrackedAction";
+
 //Touchable Events
 VISH.Constant.Event.Touchable = {};
 VISH.Constant.Event.Touchable.onSimpleClick = "onSimpleClick";

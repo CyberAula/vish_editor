@@ -67,6 +67,14 @@ VISH.Messenger.WAPP = (function(V,undefined){
 					V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,token,WAPPMessage));
 				});
 				break;
+			case "notifyTrackerAction":
+				var action = data.params;
+				if(typeof action.params != "object"){
+					action.params = {};
+				}
+				action.params["wapp"] = WAPPMessage.origin;
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onTrackedAction,action,true);
+				break;
 			default:
 				break;
 		}
