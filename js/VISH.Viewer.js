@@ -193,14 +193,11 @@ VISH.Viewer = (function(V,$,undefined){
 		if(!isSlideset){
 			if($(slide).hasClass(V.Constant.OBJECT)){
 				V.ObjectPlayer.unloadObject($(slide));
-			}
-			if($(slide).hasClass(V.Constant.SNAPSHOT)){
+			} else if($(slide).hasClass(V.Constant.SNAPSHOT)){
 				V.SnapshotPlayer.unloadSnapshot($(slide));
 			}
 			V.Video.HTML5.stopMultimedia(slide);
-		}
-
-		if(isSlideset){
+		} else {
 			V.Slideset.onLeaveSlideset(slide);
 		}
 	};

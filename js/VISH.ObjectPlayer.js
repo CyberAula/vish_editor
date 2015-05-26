@@ -5,27 +5,34 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 	 * the object is in the wrapper attribute of the div
 	 */
 	var loadObject = function(slide){
-		$.each(slide.children('.objectelement'),function(index,value){
-			if($(value).hasClass('youtubeelement')){
-				V.Video.Youtube.loadYoutubeObject(value);
+		$.each(slide.children('.objectelement'),function(index,objectWrapper){
+			if($(objectWrapper).hasClass('loadedObject')){
+				return;
+			} else {
+				$(objectWrapper).addClass('loadedObject');
+			}
+
+			if($(objectWrapper).hasClass('youtubeelement')){
+				V.Video.Youtube.loadYoutubeObject(objectWrapper);
 				return;
 			}
 
-			if($(value).attr("objectWrapper").match("^<iframe")!==null && V.Status.isOnline()=== false){
-				$(value).html("<img src='"+V.ImagesPath+"/adverts/advert_new_grey_iframe.png'/>");
+			if($(objectWrapper).attr("objectWrapper").match("^<iframe")!==null && V.Status.isOnline()=== false){
+				$(objectWrapper).html("<img src='"+V.ImagesPath+"/adverts/advert_new_grey_iframe.png'/>");
 				return;
 			}
 
-			var object = $($(value).attr("objectWrapper"));
-			$(object).attr("style",$(value).attr("zoomInStyle"));
-			$(value).html("<div style='" + $(value).attr("objectStyle") + "'>" + V.Utils.getOuterHTML(object) + "</div>");
-			adjustDimensionsAfterZoom($($(value).children()[0]).children()[0]);
+			var object = $($(objectWrapper).attr("objectWrapper"));
+			$(object).attr("style",$(objectWrapper).attr("zoomInStyle"));
+			$(objectWrapper).html("<div style='" + $(objectWrapper).attr("objectStyle") + "'>" + V.Utils.getOuterHTML(object) + "</div>");
+			adjustDimensionsAfterZoom($($(objectWrapper).children()[0]).children()[0]);
 		});
 	};
 
 	var unloadObject= function(slide){
-		$.each($(slide).children('.objectelement'),function(index,value){
-			$(value).html("");
+		$.each($(slide).children('.objectelement:not(".unloadableObject")'),function(index,objectWrapper){
+			$(objectWrapper).removeClass('loadedObject');
+			$(objectWrapper).html("");
 		});
 	};
 	

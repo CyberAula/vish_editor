@@ -141,25 +141,28 @@ VISH.Renderer = (function(V,$,undefined){
 	};
 	
 	var _renderObject = function(element,template){
+		var objectSettings = element.settings || {};
+		var loadingObjectClass = (objectSettings.unloadObject===false) ? "unloadableObject" : "";
+		
 		var objectInfo = V.Object.getObjectInfo(element.body);
 		switch(objectInfo.type){
 			case V.Constant.MEDIA.YOUTUBE_VIDEO:
-				return V.Video.Youtube.renderVideoFromJSON(element,{extraClasses: "objectelement youtubeelement " + template+"_"+ element['areaid']});
+				return V.Video.Youtube.renderVideoFromJSON(element,{extraClasses: "objectelement youtubeelement " + loadingObjectClass + " " + template + "_" + element['areaid']});
 				break;
 			case V.Constant.MEDIA.SCORM_PACKAGE:
-				return V.SCORM.renderSCORMFromJSON(element,{extraClasses: "" + template +"_" + element['areaid']});
+				return V.SCORM.renderSCORMFromJSON(element,{extraClasses: loadingObjectClass + " " + template + "_" + element['areaid']});
 				break;
 			case V.Constant.MEDIA.WEB_APP:
-				return V.Object.Webapp.renderWebappFromJSON(element,{extraClasses: "" + template +"_" + element['areaid']});
+				return V.Object.Webapp.renderWebappFromJSON(element,{extraClasses: loadingObjectClass + " " + template + "_" + element['areaid']});
 				break;
 			case V.Constant.MEDIA.PDF:
-				return V.Object.PDF.renderPDFFromJSON(element,{extraClasses: "" + template +"_" + element['areaid'], source: objectInfo.source});
+				return V.Object.PDF.renderPDFFromJSON(element,{extraClasses: loadingObjectClass + " " + template +"_" + element['areaid'], source: objectInfo.source});
 				break;
 			default:
 				var style = (element['style'])? element['style'] : "";
 				var body = element['body'];
 				var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
-				return "<div id='"+element['id']+"' class='objectelement "+template+"_"+ element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
+				return "<div id='"+ element['id'] +"' class='objectelement " + loadingObjectClass + " " + template + "_" + element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
 				break;
 		}
 	};
