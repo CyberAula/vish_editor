@@ -2,6 +2,9 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 
 	var _WAPP_TOKEN_API_URL;
 
+	var _validOrigins = {};
+	// _validOrigins["origin"] = {settings};
+
 
 	var init = function(){
 		if(typeof V.Configuration.getConfiguration()["WAPP_TOKEN_API"] == "object"){
@@ -11,29 +14,56 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 		}
 	};
 
-	var onWAPPConnected = function(origin,originId){
-		if(V.Editing){
-			V.Editor.Object.Webapp.Handler.onWAPPConnected(origin,originId);
+	var onWAPPConnected = function(origin){
+		console.log("Viewer: onWAPPConnected: " + origin);
+
+		var iframe = $("iframe[src='" + origin + "']");
+		var wrapper = $(iframe).parents("div.objectelement");
+		var settings = $(wrapper).attr("settings");
+
+		if(typeof settings == "string"){
+			try{
+				settings = JSON.parse(settings);
+				if(settings.wappAPI===true){
+					_validOrigins[origin] = settings;
+				}
+			} catch (e){}
 		}
 	};
 
 
 	//TODO: methods implementation
 
-	var onSetScore = function(score,iframe){
-		return;
+	var onSetScore = function(score,origin){
+		if((typeof origin == "undefined")||(typeof _validOrigins[origin] == "undefined")||(_validOrigins[origin]["wappScore"]!=true)){
+			return false; //WAPP not allowed to set score
+		}
+
+		return true;
 	};
 
-	var onSetProgress = function(progress,iframe){
-		return;
+	var onSetProgress = function(progress,origin){
+		if((typeof origin == "undefined")||(typeof _validOrigins[origin] == "undefined")||(_validOrigins[origin]["wappProgress"]!=true)){
+			return false; //WAPP not allowed to set progress
+		}
+
+		return true;
 	};
 
-	var onSetSuccessStatus = function(status,iframe){
-		return;
+	var onSetSuccessStatus = function(status,origin){
+		if((typeof origin == "undefined")||(typeof _validOrigins[origin] == "undefined")||(_validOrigins[origin]["wappScore"]!=true)){
+			return false; //WAPP not allowed to set success status
+		}
+
+		return true;
 	};
 
-	var onSetCompletionStatus = function(status,iframe){
-		return;
+	var onSetCompletionStatus = function(status,origin){
+		if((typeof origin == "undefined")||(typeof _validOrigins[origin] == "undefined")||(_validOrigins[origin]["wappProgress"]!=true)){
+			return false; //WAPP not allowed to set completion status
+		}
+
+		return true;
 	};
 
 	var getAuthToken = function(callback){

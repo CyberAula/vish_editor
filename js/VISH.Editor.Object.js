@@ -112,6 +112,19 @@ VISH.Editor.Object = (function(V,$,undefined){
 			"onClosed"  : function(data){
 			}
 		});
+
+		//Settings panel events
+		$("#objectSettings_fancybox").find("input[type='checkbox'][name='wappAPI']").change(function(){
+			var wappScoreCheckbox = $("#objectSettings_fancybox").find("input[type='checkbox'][name='wappScore']");
+			if(!$(this).is(':checked')){
+				$(wappScoreCheckbox).prop('checked', false);
+				$(wappScoreCheckbox).parent().addClass("disableSettingsField");
+				$(wappScoreCheckbox).attr('disabled', 'disabled');
+			} else {
+				$(wappScoreCheckbox).parent().removeClass("disableSettingsField");
+				$(wappScoreCheckbox).removeAttr('disabled');
+			}
+		});
 	};
 	
 	var onLoadTab = function(tab){
@@ -598,9 +611,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 		var showWAPPSettings = (objectInfo.type===V.Constant.MEDIA.WEB_APP);
 		if(showWAPPSettings){
 			var wappAPI = oSettings.wappAPI_supported;
+			var wappScore = false;
 
 			if(typeof oSettings.wappAPI != "undefined"){
 				wappAPI = oSettings.wappAPI;
+			}
+			if(typeof oSettings.wappScore != "undefined"){
+				wappScore = oSettings.wappScore && wappAPI;
 			}
 		}
 
@@ -620,16 +637,27 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		if(showWAPPSettings){
 			$(oSF).find("div.wapp_settings").show();
+
 			var wappAPICheckbox = $(oSF).find("input[type='checkbox'][name='wappAPI']");
 			$(wappAPICheckbox).prop('checked', wappAPI);
+
+			var wappScoreCheckbox = $(oSF).find("input[type='checkbox'][name='wappScore']");
+			$(wappScoreCheckbox).prop('checked', wappScore);
+
 			if(oSettings.wappAPI_supported!==true){
 				$(wappAPICheckbox).prop('checked', false);
 				$(wappAPICheckbox).parent().addClass("disableSettingsField");
 				$(wappAPICheckbox).attr('disabled', 'disabled');
+				$(wappScoreCheckbox).prop('checked', false);
+				$(wappScoreCheckbox).parent().addClass("disableSettingsField");
+				$(wappScoreCheckbox).attr('disabled', 'disabled');
 			} else {
 				$(wappAPICheckbox).parent().removeClass("disableSettingsField");
 				$(wappAPICheckbox).removeAttr('disabled');
+				$(wappScoreCheckbox).parent().removeClass("disableSettingsField");
+				$(wappScoreCheckbox).removeAttr('disabled');
 			}
+
 		} else {
 			$(oSF).find("div.wapp_settings").hide();
 		}
@@ -655,8 +683,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 
 		if(objectInfo.type===V.Constant.MEDIA.WEB_APP){
 			oSettings.wappAPI = $(oSF).find("input[type='checkbox'][name='wappAPI']").is(":checked");
+			oSettings.wappScore = (oSettings.wappAPI && $(oSF).find("input[type='checkbox'][name='wappScore']").is(":checked"));
 		} else {
 			delete oSettings.wappAPI;
+			delete oSettings.wappScore;
 		}
 
 		//Save Settings

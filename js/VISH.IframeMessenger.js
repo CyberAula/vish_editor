@@ -159,7 +159,12 @@ VISH.IframeMessenger = (function(V,undefined){
 			if(V.Status.getIsInIframe()){
 				if(helloMessage.origin != "?"){
 					_connected = true;
-					V.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
+
+					if(V.Editing){
+						V.Editor.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
+					} else {
+						V.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
+					}
 
 					helloMessage.destination = helloMessage.origin;
 					helloMessage.destinationId = helloMessage.originId;

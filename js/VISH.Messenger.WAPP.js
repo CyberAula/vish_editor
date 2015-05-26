@@ -40,26 +40,22 @@ VISH.Messenger.WAPP = (function(V,undefined){
 				break;
 			case "setScore":
 				var score = data.params;
-				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
-				V.Object.Webapp.Handler.onSetScore(score,iframe);
+				V.Object.Webapp.Handler.onSetScore(score,WAPPMessage.origin);
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,score,WAPPMessage));
 				break;
 			case "setProgress":
 				var progress = data.params;
-				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
-				V.Object.Webapp.Handler.onSetProgress(progress,iframe);
+				V.Object.Webapp.Handler.onSetProgress(progress,WAPPMessage.origin);
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,progress,WAPPMessage));
 				break;
 			case "setSuccessStatus":
 				var status = data.params;
-				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
-				V.Object.Webapp.Handler.onSetSuccessStatus(status,iframe);
+				V.Object.Webapp.Handler.onSetSuccessStatus(status,WAPPMessage.origin);
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,status,WAPPMessage));
 				break;
 			case "setCompletionStatus":
 				var status = data.params;
-				var iframe = $("iframe[src='" + WAPPMessage.origin + "']");
-				V.Object.Webapp.Handler.onSetCompletionStatus(status,iframe);
+				V.Object.Webapp.Handler.onSetCompletionStatus(status,WAPPMessage.origin);
 				V.IframeMessenger.sendIframeMessage(_createWAPPResponseMessage(data.method,status,WAPPMessage));
 				break;
 			case "getAuthToken":

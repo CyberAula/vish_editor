@@ -7,17 +7,11 @@ VISH.Editor.Object.Webapp.Handler = (function(V,$,undefined){
 		console.log("onWAPPConnected: " + origin);
 
 		var iframe = $("iframe[src='" + origin + "']");
-		var iframeLength = $(iframe).length;
 
-		if(iframeLength<1){
-			return;
-		} else if(iframeLength===1){
-			V.Editor.Object.Webapp.convertIframeToWebApp(iframe);
-		} else {
+		if($(iframe).length>0){
 			$(iframe).each(function(index,iframe){
-				if($(iframe).attr("wappid")==="undefined"){
+				if(typeof $(iframe).attr("wappid")==="undefined"){
 					V.Editor.Object.Webapp.convertIframeToWebApp(iframe);
-					return;
 				}
 			});
 		}
