@@ -589,6 +589,11 @@ VISH.Editor.Object = (function(V,$,undefined){
 			unloadObject = oSettings.unloadObject;
 		}
 
+		if(objectInfo.type===V.Constant.MEDIA.FLASH){
+			//Unload object should be true for flash files.
+			unloadObject = true;
+		}
+
 		//WAPPs
 		var showWAPPSettings = (objectInfo.type===V.Constant.MEDIA.WEB_APP);
 		if(showWAPPSettings){
@@ -604,6 +609,14 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//Unload object
 		var unloadObjectCheckbox = $(oSF).find("input[type='checkbox'][name='unloadObject']");
 		$(unloadObjectCheckbox).prop('checked', unloadObject);
+
+		if(objectInfo.type===V.Constant.MEDIA.FLASH){
+			$(unloadObjectCheckbox).parent().addClass("disableSettingsField");
+			$(unloadObjectCheckbox).attr('disabled', 'disabled');
+		} else {
+			$(unloadObjectCheckbox).parent().removeClass("disableSettingsField");
+			$(unloadObjectCheckbox).removeAttr('disabled');
+		}
 
 		if(showWAPPSettings){
 			$(oSF).find("div.wapp_settings").show();
