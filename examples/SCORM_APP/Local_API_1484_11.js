@@ -286,7 +286,9 @@ function Local_API_1484_11(options) {
             settings.errorCode = 405;
             settings.diagnostic = "Sorry, this has been specified as a read-only value for " + key;
             break;
-
+        case 'cmi.learner_name':
+            r = settings.CMI.learner_name;
+            break;
         default:
             r = getData(key.substr(4, key.length), cmi);
             //debug(settings.prefix + ": cmiGetValue got " + r, 4);
@@ -812,6 +814,12 @@ function Local_API_1484_11(options) {
     this.addListener = function(event,listener) {
         if((typeof event == "string")&&(typeof listener == "function")){
             settings.listeners[event] = listener;
+        }
+    };
+
+    this.setCMILMSValue = function(name,value){
+        if(typeof name == "string"){
+            settings.CMI[name] = value;
         }
     };
 }

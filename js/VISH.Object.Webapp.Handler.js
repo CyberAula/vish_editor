@@ -15,8 +15,6 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 	};
 
 	var onWAPPConnected = function(origin){
-		console.log("Viewer: onWAPPConnected: " + origin);
-
 		var iframe = $("iframe[src='" + origin + "']");
 		var wrapper = $(iframe).parents("div.objectelement");
 		var settings = $(wrapper).attr("settings");

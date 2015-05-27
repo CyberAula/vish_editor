@@ -3,29 +3,79 @@
 		<script src="jquery-1.11.1.min.js" type="text/javascript"></script>
 		<script src="Local_API_1484_11.js" type="text/javascript"></script>
 		<script src="SCORM_ContentAdaptor.js" type="text/javascript"></script>
+		<script src="../../js/VISH.IframeAPI.js" type="text/javascript"></script>
 </head>
 
 <body>
 	<style>
-		body { 
+		body {
 			margin: 0px !important
 		}
 	</style>
+
 	<script type="text/javascript">
-		var API_1484_11 = new Local_API_1484_11();
+		var scormpackageURL = "../contents/scormappcode/MedievalArmor/index_lms.html";
+
+		// Create LMS API
+		var API_1484_11 = new Local_API_1484_11({debug: false});
+
 		API_1484_11.addListener("cmi.progress_measure", function(value){
-			console.log("Progress measure: " + value);
+			if(VISH.IframeAPI.isConnected()){
+				VISH.IframeAPI.setProgress(value*100);
+			}
 		});
+
 		API_1484_11.addListener("cmi.completion_status", function(value){
-			console.log("Completion status: " + value);
+			if(VISH.IframeAPI.isConnected()){
+				VISH.IframeAPI.setCompletionStatus(value);
+			}
 		});
+
 		API_1484_11.addListener("cmi.score.scaled", function(value){
-			console.log("Scaled score: " + value);
+			if(VISH.IframeAPI.isConnected()){
+				VISH.IframeAPI.setScore(value*100);
+			}
 		});
+
 		API_1484_11.addListener("cmi.success_status", function(value){
-			console.log("Success status: " + value);
+			if(VISH.IframeAPI.isConnected()){
+				VISH.IframeAPI.setSuccessStatus(value);
+			}
 		});
+
+
+		var loadScormContent = function(){
+			if(typeof $("#scormcontent").attr("src") == "undefined"){
+				$("#scormcontent").attr("src",scormpackageURL);
+			}
+		};
+
+
+		window.onload = function(){
+			VISH.IframeAPI.init(
+				{
+					wapp: true,
+					tracking: true,
+					callback: function(origin){
+						// console.log("WAPP connnected with " + origin);
+						VISH.IframeAPI.getUser(function(user){
+							if((typeof user == "object")&&(typeof user.username == "string")){
+								API_1484_11.setCMILMSValue("learner_name",user.username);
+							}
+							loadScormContent();
+						});
+					}
+				}
+			);
+
+			//Ensure that SCORM content is loaded although VISH.Iframe.API connection fails
+			setTimeout(function(){
+				loadScormContent();
+			},1500);
+		};
 	</script>
-	<iframe style="width:100%; height:100%; border: none" src="http://localhost/viewer.html"></iframe>
+
+	<iframe id="scormcontent" style="width:100%; height:100%; border: none"></iframe>
+
 </body>
 </html>
