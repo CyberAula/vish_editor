@@ -2,7 +2,7 @@
  * VISH Iframe Messenger API
  * Provides an API that allows web applications to communicate with ViSH Editor
  * @author GING
- * @version 1.1
+ * @version 2.0
  */
 
 var VISH = VISH || {};
