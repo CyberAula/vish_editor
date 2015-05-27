@@ -25,13 +25,13 @@
 		//APP code
 
 		var _onConnect = function(origin){
-			// console.log("Communication stablished with " + origin);
+			// console.log("WAPP EXAMPLE: " + "Communication stablished with " + origin);
 
 			VISH.IframeAPI.getUser(function(user){
 				if(user.logged){
 					document.getElementById("username").innerHTML = "Hola " + user.username;
 					VISH.IframeAPI.getAuthToken(function(token){
-						// console.log("Token es: " + token);
+						// console.log("WAPP EXAMPLE: " + "Token es: " + token);
 					});
 				}
 			});
@@ -39,34 +39,34 @@
 
 		var _afterSetScore = function(score){
 			alert("Has sacado un " + score);
-			console.log("Score fijado a: " + score);
-			console.log(score);
+			console.log("WAPP EXAMPLE: " + "Score fijado a: " + score);
+			console.log("WAPP EXAMPLE: " + score);
 		};
 
 		var _loadEvents = function(){
 			$("#responder").click(function(){
 				if(VISH.IframeAPI.isConnected()){
 					if($("#quiz input[type='radio'][value='Madrid']").is(":checked")){
-						VISH.IframeAPI.setScore(10,_afterSetScore);
-						VISH.IframeAPI.setProgress(10,function(progress){
-							console.log("Progress fijado a: " + progress);
+						VISH.IframeAPI.setScore(100,_afterSetScore);
+						VISH.IframeAPI.setProgress(100,function(progress){
+							console.log("WAPP EXAMPLE: " + "Progress fijado a: " + progress);
 						});
 						VISH.IframeAPI.setSuccessStatus("passed",function(status){
-							console.log("Success status fijado a: " + status);
+							console.log("WAPP EXAMPLE: " + "Success status fijado a: " + status);
 						});
 						VISH.IframeAPI.setCompletionStatus("completed",function(status){
-							console.log("Completion status fijado a: " + status);
+							console.log("WAPP EXAMPLE: " + "Completion status fijado a: " + status);
 						});
 					} else {
 						VISH.IframeAPI.setScore(0,_afterSetScore);
-						VISH.IframeAPI.setProgress(10,function(progress){
-							console.log("Progress fijado a: " + progress);
+						VISH.IframeAPI.setProgress(100,function(progress){
+							console.log("WAPP EXAMPLE: " + "Progress fijado a: " + progress);
 						});
 						VISH.IframeAPI.setSuccessStatus("failed",function(status){
-							console.log("Success status fijado a: " + status);
+							console.log("WAPP EXAMPLE: " + "Success status fijado a: " + status);
 						});
 						VISH.IframeAPI.setCompletionStatus("completed",function(status){
-							console.log("Completion status fijado a: " + status);
+							console.log("WAPP EXAMPLE: " + "Completion status fijado a: " + status);
 						});
 					}
 				}

@@ -26,18 +26,28 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 				settings = JSON.parse(settings);
 				if(settings.wappAPI===true){
 					_validOrigins[origin] = settings;
+					_validOrigins[origin].wappId = $(iframe).attr("wappid");
 				}
 			} catch (e){}
 		}
 	};
 
 
-	//TODO: methods implementation
-
+	/*
+	 * score should be a number in a 0-100 scale.
+	 */
 	var onSetScore = function(score,origin){
 		if((typeof origin == "undefined")||(typeof _validOrigins[origin] == "undefined")||(_validOrigins[origin]["wappScore"]!=true)){
 			return false; //WAPP not allowed to set score
 		}
+
+		var params = {};
+		params.objectiveId = _validOrigins[origin].wappId;
+		if(typeof score == "number"){
+			params.score = score/100;
+		}
+		
+		V.EventsNotifier.notifyEvent(V.Constant.Event.onNewObjectiveScore,params,false);
 
 		return true;
 	};

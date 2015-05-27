@@ -116,13 +116,21 @@ VISH.Editor.Object = (function(V,$,undefined){
 		//Settings panel events
 		$("#objectSettings_fancybox").find("input[type='checkbox'][name='wappAPI']").change(function(){
 			var wappScoreCheckbox = $("#objectSettings_fancybox").find("input[type='checkbox'][name='wappScore']");
+			var wappScorePointsDOM = $("#objectSettings_fancybox").find("select[name='wappScorePoints']");
 			if(!$(this).is(':checked')){
-				$(wappScoreCheckbox).prop('checked', false);
-				$(wappScoreCheckbox).parent().addClass("disableSettingsField");
-				$(wappScoreCheckbox).attr('disabled', 'disabled');
+				V.Editor.Utils.enableElementSettingsField([wappScoreCheckbox,wappScorePointsDOM],false);
 			} else {
-				$(wappScoreCheckbox).parent().removeClass("disableSettingsField");
-				$(wappScoreCheckbox).removeAttr('disabled');
+				V.Editor.Utils.enableElementSettingsField([wappScoreCheckbox],true);
+			}
+		});
+
+		$("#objectSettings_fancybox").find("input[type='checkbox'][name='wappScore']").change(function(){
+			var wappScorePointsDOM = $("#objectSettings_fancybox").find("select[name='wappScorePoints']");
+			if(!$(this).is(':checked')){
+				V.Editor.Utils.enableElementSettingsField([wappScorePointsDOM],false);
+			} else {
+				V.Editor.Utils.enableElementSettingsField([wappScorePointsDOM],true);
+				$(wappScorePointsDOM).val(10);
 			}
 		});
 	};
@@ -612,12 +620,21 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(showWAPPSettings){
 			var wappAPI = oSettings.wappAPI_supported;
 			var wappScore = false;
+			var wappScorePoints = 0;
 
 			if(typeof oSettings.wappAPI != "undefined"){
 				wappAPI = oSettings.wappAPI;
 			}
 			if(typeof oSettings.wappScore != "undefined"){
 				wappScore = oSettings.wappScore && wappAPI;
+			}
+			
+			if((typeof oSettings.wappScorePoints != "undefined")&&(oSettings.wappScore===true)){
+				wappScorePoints = oSettings.wappScorePoints;
+			} else {
+				if(wappScore){
+					wappScorePoints = 10;
+				}
 			}
 		}
 
@@ -628,11 +645,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(unloadObjectCheckbox).prop('checked', unloadObject);
 
 		if(objectInfo.type===V.Constant.MEDIA.FLASH){
-			$(unloadObjectCheckbox).parent().addClass("disableSettingsField");
-			$(unloadObjectCheckbox).attr('disabled', 'disabled');
+			V.Editor.Utils.enableElementSettingsField(unloadObjectCheckbox,false);
 		} else {
-			$(unloadObjectCheckbox).parent().removeClass("disableSettingsField");
-			$(unloadObjectCheckbox).removeAttr('disabled');
+			V.Editor.Utils.enableElementSettingsField(unloadObjectCheckbox,true);
 		}
 
 		if(showWAPPSettings){
@@ -644,18 +659,13 @@ VISH.Editor.Object = (function(V,$,undefined){
 			var wappScoreCheckbox = $(oSF).find("input[type='checkbox'][name='wappScore']");
 			$(wappScoreCheckbox).prop('checked', wappScore);
 
+			var wappScorePointsDOM = $(oSF).find("select[name='wappScorePoints']");
+			$(wappScorePointsDOM).val(wappScorePoints);
+
 			if(oSettings.wappAPI_supported!==true){
-				$(wappAPICheckbox).prop('checked', false);
-				$(wappAPICheckbox).parent().addClass("disableSettingsField");
-				$(wappAPICheckbox).attr('disabled', 'disabled');
-				$(wappScoreCheckbox).prop('checked', false);
-				$(wappScoreCheckbox).parent().addClass("disableSettingsField");
-				$(wappScoreCheckbox).attr('disabled', 'disabled');
+				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox,wappScorePointsDOM],false);
 			} else {
-				$(wappAPICheckbox).parent().removeClass("disableSettingsField");
-				$(wappAPICheckbox).removeAttr('disabled');
-				$(wappScoreCheckbox).parent().removeClass("disableSettingsField");
-				$(wappScoreCheckbox).removeAttr('disabled');
+				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox,wappScorePointsDOM],true);
 			}
 
 		} else {
@@ -684,9 +694,17 @@ VISH.Editor.Object = (function(V,$,undefined){
 		if(objectInfo.type===V.Constant.MEDIA.WEB_APP){
 			oSettings.wappAPI = $(oSF).find("input[type='checkbox'][name='wappAPI']").is(":checked");
 			oSettings.wappScore = (oSettings.wappAPI && $(oSF).find("input[type='checkbox'][name='wappScore']").is(":checked"));
+			
+			var wappScorePointsDOM = $(oSF).find("select[name='wappScorePoints']");
+			if((oSettings.wappScore)&&(!$(wappScorePointsDOM).is(":disabled"))){
+				oSettings.wappScorePoints = $(wappScorePointsDOM).val();
+			} else {
+				delete oSettings.wappScorePoints;
+			}
 		} else {
 			delete oSettings.wappAPI;
 			delete oSettings.wappScore;
+			delete oSettings.wappScorePoints;
 		}
 
 		//Save Settings

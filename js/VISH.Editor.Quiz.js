@@ -93,7 +93,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 				}
 
 				//Quiz score
-				var quizScoreDOM = $(qSF).find("#quizSettings_quizScore");
+				var quizScoreDOM = $(qSF).find("select[name='quizScorePoints']");
 				if(!isSelfAssessment){
 					//Disable quizScore
 					$(quizScoreDOM).prop('disabled',true);
@@ -151,7 +151,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 			qSettings.nAttempts = $(nAttemptsDOM).val();
 		}
 
-		var quizScoreDOM = $(qSF).find("#quizSettings_quizScore");
+		var quizScoreDOM = $(qSF).find("select[name='quizScorePoints']");
 		if(!$(quizScoreDOM).is(":disabled")){
 			qSettings.quizScore = $(quizScoreDOM).val();
 		}
