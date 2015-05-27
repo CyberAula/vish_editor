@@ -13,7 +13,19 @@
 	</style>
 	<script type="text/javascript">
 		var API_1484_11 = new Local_API_1484_11();
+		API_1484_11.addListener("cmi.progress_measure", function(value){
+			console.log("Progress measure: " + value);
+		});
+		API_1484_11.addListener("cmi.completion_status", function(value){
+			console.log("Completion status: " + value);
+		});
+		API_1484_11.addListener("cmi.score.scaled", function(value){
+			console.log("Scaled score: " + value);
+		});
+		API_1484_11.addListener("cmi.success_status", function(value){
+			console.log("Success status: " + value);
+		});
 	</script>
-	<iframe style="width:100%; height:100%; border: none" src="../contents/scormappcode/MedievalArmor/index_lms.html"></iframe>
+	<iframe style="width:100%; height:100%; border: none" src="http://localhost/viewer.html"></iframe>
 </body>
 </html>
