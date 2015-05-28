@@ -98,7 +98,7 @@ function SCORM_Player(options) {
 			return;
 		}
 
-		var iframe = $('<iframe id="scormcontent" style="width:100%; height:100%; border: none"></iframe>');
+		var iframe = $('<iframe id="scormcontent" style="width:100%; height:100%; border: none" webkitAllowFullScreen="true" allowfullscreen="true" mozallowfullscreen="true"></iframe>');
 		$("body").append(iframe);
 
 		document.getElementById('scormcontent').onload = function(){
