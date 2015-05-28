@@ -52,6 +52,10 @@ var getOptions = function(){
 			rootURL: "http://localhost:3000/quiz_sessions/"
 		};
 
+		//WAPP Token API
+		configuration["WAPP_TOKEN_API"] = {
+			rootURL: "http://localhost:3000/apis/wapp_token"
+		};
 
 		/////////////////////
 		// Sources enabled

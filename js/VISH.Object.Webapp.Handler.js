@@ -76,7 +76,7 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 
 	var getAuthToken = function(callback){
 		_requestAuthToken(function(data){
-			var token = data["token"];
+			var token = data["auth_token"];
 			callback(token);
 		});
 	};
@@ -85,7 +85,7 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 
 		if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
 			var _token = parseInt(Math.random()*1000000000);
-			successCallback({token: _token});
+			successCallback({auth_token: _token});
 			return;
 		}
 
