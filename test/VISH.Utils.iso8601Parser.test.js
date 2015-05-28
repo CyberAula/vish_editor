@@ -13,8 +13,8 @@ describe("VISH.Utils.iso8601Parser", function(){
 
 //// EXPORTED METHODS
 
-    it('should export getDuration function', function(){
-        VISH.Utils.iso8601Parser.should.have.property('getDuration');
+    it('should export getDurationFromISO function', function(){
+        VISH.Utils.iso8601Parser.should.have.property('getDurationFromISO');
     });
 
     it('should export getDurationFromISOPerUnit function', function(){

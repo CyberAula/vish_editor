@@ -37,10 +37,4 @@ describe("VISH.Editor.Object.Webapp", function(){
        })
     });
 
-    describe("#generateWrapper", function(){
-       it('should return unknown', function(){
-           VISH.Editor.Object.Webapp.generateWrapper("url").should.eql("<iframe objecttype='webapp' src='url?wmode=opaque' wmode='opaque'></iframe>");
-       })
-    });
-
 });

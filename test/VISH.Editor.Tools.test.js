@@ -65,8 +65,8 @@ describe("VISH.Editor.Tools", function(){
         VISH.Editor.Tools.should.have.property('resizeLess');
     });
 
-    it('should export quizSettings function', function(){
-        VISH.Editor.Tools.should.have.property('quizSettings');
+    it('should export showSettings function', function(){
+        VISH.Editor.Tools.should.have.property('showSettings');
     });
 
 });

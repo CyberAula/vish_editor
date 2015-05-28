@@ -5,27 +5,27 @@ require("./helpers/listdeps.js");
 
 describe("VISH.Messenger.VE", function(){
     
-//// OBJECT CREATION
+    //// OBJECT CREATION
 
     it('should create a VISH.Messenger.VE object', function(){
         VISH.Messenger.VE.should.be.an.instanceof(Object);
     });
 
-//// EXPORTED METHODS
+    //// EXPORTED METHODS
 
-    it('should export createMessage function', function(){
-        VISH.Messenger.VE.should.have.property('createMessage');
+    it('should export createVEMessage function', function(){
+        VISH.Messenger.VE.should.have.property('createVEMessage');
     });
 
     it('should export processVEMessage function', function(){
         VISH.Messenger.VE.should.have.property('processVEMessage');
     });
 
-//// METHOD RETURNS
+    //// METHOD RETURNS
 
-    describe("#createMessage", function(){
+    describe("#createVEMessage", function(){
        it('should return external object', function(){
-           VISH.Messenger.VE.createMessage("VEevent", "params", "origin", "destination").should.eql('{\"vishEditor\":true,\"VEevent\":\"VEevent\",\"params\":\"params\",\"origin\":\"origin\",\"destination\":\"destination\"}');
+           VISH.Messenger.VE.createVEMessage("VEevent", "params", "destination", "destinationId").should.eql('{\"IframeMessage\":true,\"mode\":\"EXTERNAL\",\"type\":\"VE\",\"data\":{\"VEevent\":\"VEevent\",\"params\":\"params\"},\"origin\":\"?\",\"originId\":\"?\",\"destination\":\"destination\",\"destinationId\":\"destinationId\"}');
        })
     });
 
