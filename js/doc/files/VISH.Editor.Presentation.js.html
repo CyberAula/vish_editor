@@ -91,13 +91,13 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	};
 
 	var _onConnect = function(origin){
-		V.Debugging.log(&quot;Communication stablished with origin &quot; + origin);
+		// V.Debugging.log(&quot;Communication stablished with origin &quot; + origin);
 		V.IframeAPI.registerCallback(&quot;onMessage&quot;,function(VEMessage,origin){
 			// V.Debugging.log(&quot;onMessage from &quot; + origin);
 			// V.Debugging.log(VEMessage);
 			var VEMessageObject = JSON.parse(VEMessage);
-			if(VEMessageObject.VEevent===V.Constant.Event.onSelectedSlides){
-				V.Messenger.VE.processVEMessage(VEMessage);
+			if(VEMessageObject.data.VEevent===V.Constant.Event.onSelectedSlides){
+				V.Messenger.VE.processVEMessage(VEMessageObject);
 			}
 		});
 	};

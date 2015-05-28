@@ -86,7 +86,10 @@ VISH.Editor.Object = (function(V,$,undefined){
 	var uploadDivId = &quot;tab_object_upload_content&quot;;
 	var urlDivId = &quot;tab_object_from_url_content&quot;;
 	var urlInputId = &quot;object_embed_code&quot;;
+
+	var _hiddenLinkToInitObjectSettings;
 		
+
 	var init = function(){
 		V.Editor.Object.LRE.init();
 		V.Editor.Object.Repository.init();
@@ -172,7 +175,46 @@ VISH.Editor.Object = (function(V,$,undefined){
 				V.Debugging.log(&quot;Upload error&quot;);
 				V.Debugging.log(error);
 			}
-		});	
+		});
+
+		//Object Settings
+		_hiddenLinkToInitObjectSettings = $(&#x27;&lt;a href=&quot;#objectSettings_fancybox&quot; style=&quot;display:none&quot;&gt;&lt;/a&gt;&#x27;);
+		$(_hiddenLinkToInitObjectSettings).fancybox({
+			&#x27;autoDimensions&#x27; : false,
+			&#x27;height&#x27;: 360,
+			&#x27;width&#x27;: 400,
+			&#x27;scrolling&#x27;: &#x27;no&#x27;,
+			&#x27;showCloseButton&#x27;: false,
+			&#x27;padding&#x27; : 0,
+			&quot;onStart&quot;  : function(data){
+				_onStartObjectSettingsFancybox();
+			},
+			&quot;onComplete&quot; : function(data){
+			},
+			&quot;onClosed&quot;  : function(data){
+			}
+		});
+
+		//Settings panel events
+		$(&quot;#objectSettings_fancybox&quot;).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappAPI&#x27;]&quot;).change(function(){
+			var wappScoreCheckbox = $(&quot;#objectSettings_fancybox&quot;).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappScore&#x27;]&quot;);
+			var wappScorePointsDOM = $(&quot;#objectSettings_fancybox&quot;).find(&quot;select[name=&#x27;wappScorePoints&#x27;]&quot;);
+			if(!$(this).is(&#x27;:checked&#x27;)){
+				V.Editor.Utils.enableElementSettingsField([wappScoreCheckbox,wappScorePointsDOM],false);
+			} else {
+				V.Editor.Utils.enableElementSettingsField([wappScoreCheckbox],true);
+			}
+		});
+
+		$(&quot;#objectSettings_fancybox&quot;).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappScore&#x27;]&quot;).change(function(){
+			var wappScorePointsDOM = $(&quot;#objectSettings_fancybox&quot;).find(&quot;select[name=&#x27;wappScorePoints&#x27;]&quot;);
+			if(!$(this).is(&#x27;:checked&#x27;)){
+				V.Editor.Utils.enableElementSettingsField([wappScorePointsDOM],false);
+			} else {
+				V.Editor.Utils.enableElementSettingsField([wappScorePointsDOM],true);
+				$(wappScorePointsDOM).val(10);
+			}
+		});
 	};
 	
 	var onLoadTab = function(tab){
@@ -619,6 +661,140 @@ VISH.Editor.Object = (function(V,$,undefined){
 			V.Editor.Object.Webapp.afterDraw(wrapperTag);
 		}
 	};
+
+	/////////////////
+	// Object Settings
+	/////////////////
+
+	var showObjectSettings = function(){
+		$(_hiddenLinkToInitObjectSettings).trigger(&quot;click&quot;);
+	};
+
+	var _onStartObjectSettingsFancybox = function(){
+		var oSF = $(&quot;#objectSettings_fancybox&quot;);
+
+		//Get object
+		var area = V.Editor.getCurrentArea();
+		var object = $(area).find(&quot;div.object_wrapper&quot;).children().first();
+		var objectInfo = V.Object.getObjectInfo(object);
+
+		$(oSF).find(&quot;input[type=&#x27;hidden&#x27;][name=&#x27;elId&#x27;]&quot;).val($(area).attr(&quot;id&quot;));
+		
+		//Load Settings
+		var oSettings = {};
+		var unloadObject = true;
+		
+		try {
+			oSettings = JSON.parse($(area).attr(&quot;elSettings&quot;));
+		} catch(e){}
+
+		if(typeof oSettings.unloadObject != &quot;undefined&quot;){
+			unloadObject = oSettings.unloadObject;
+		}
+
+		if(objectInfo.type===V.Constant.MEDIA.FLASH){
+			//Unload object should be true for flash files.
+			unloadObject = true;
+		}
+
+		//WAPPs
+		var showWAPPSettings = (objectInfo.type===V.Constant.MEDIA.WEB_APP);
+		if(showWAPPSettings){
+			var wappAPI = oSettings.wappAPI_supported;
+			var wappScore = false;
+			var wappScorePoints = 0;
+
+			if(typeof oSettings.wappAPI != &quot;undefined&quot;){
+				wappAPI = oSettings.wappAPI;
+			}
+			if(typeof oSettings.wappScore != &quot;undefined&quot;){
+				wappScore = oSettings.wappScore &amp;&amp; wappAPI;
+			}
+			
+			if((typeof oSettings.wappScorePoints != &quot;undefined&quot;)&amp;&amp;(oSettings.wappScore===true)){
+				wappScorePoints = oSettings.wappScorePoints;
+			} else {
+				if(wappScore){
+					wappScorePoints = 10;
+				}
+			}
+		}
+
+		//Fill and reset form
+
+		//Unload object
+		var unloadObjectCheckbox = $(oSF).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;unloadObject&#x27;]&quot;);
+		$(unloadObjectCheckbox).prop(&#x27;checked&#x27;, unloadObject);
+
+		if(objectInfo.type===V.Constant.MEDIA.FLASH){
+			V.Editor.Utils.enableElementSettingsField(unloadObjectCheckbox,false);
+		} else {
+			V.Editor.Utils.enableElementSettingsField(unloadObjectCheckbox,true);
+		}
+
+		if(showWAPPSettings){
+			$(oSF).find(&quot;div.wapp_settings&quot;).show();
+
+			var wappAPICheckbox = $(oSF).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappAPI&#x27;]&quot;);
+			$(wappAPICheckbox).prop(&#x27;checked&#x27;, wappAPI);
+
+			var wappScoreCheckbox = $(oSF).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappScore&#x27;]&quot;);
+			$(wappScoreCheckbox).prop(&#x27;checked&#x27;, wappScore);
+
+			var wappScorePointsDOM = $(oSF).find(&quot;select[name=&#x27;wappScorePoints&#x27;]&quot;);
+			$(wappScorePointsDOM).val(wappScorePoints);
+
+			if(oSettings.wappAPI_supported!==true){
+				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox,wappScorePointsDOM],false);
+			} else {
+				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox,wappScorePointsDOM],true);
+			}
+
+		} else {
+			$(oSF).find(&quot;div.wapp_settings&quot;).hide();
+		}
+	};
+
+	var onObjectSettingsDone = function(){
+		var oSF = $(&quot;#objectSettings_fancybox&quot;);
+
+		//Get area and object
+		var areaId = $(oSF).find(&quot;input[type=&#x27;hidden&#x27;][name=&#x27;elId&#x27;]&quot;).val();
+		var area = $(&quot;#&quot;+areaId);
+		var object = $(area).find(&quot;div.object_wrapper&quot;).children().first();
+		var objectInfo = V.Object.getObjectInfo(object);
+
+		//Get previous settings
+		var oSettings = {};
+		try {
+			oSettings = JSON.parse($(area).attr(&quot;elsettings&quot;));
+		} catch(e) {}
+		
+		//Get new settings
+		oSettings.unloadObject = $(oSF).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;unloadObject&#x27;]&quot;).is(&quot;:checked&quot;);
+
+		if(objectInfo.type===V.Constant.MEDIA.WEB_APP){
+			oSettings.wappAPI = $(oSF).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappAPI&#x27;]&quot;).is(&quot;:checked&quot;);
+			oSettings.wappScore = (oSettings.wappAPI &amp;&amp; $(oSF).find(&quot;input[type=&#x27;checkbox&#x27;][name=&#x27;wappScore&#x27;]&quot;).is(&quot;:checked&quot;));
+			
+			var wappScorePointsDOM = $(oSF).find(&quot;select[name=&#x27;wappScorePoints&#x27;]&quot;);
+			if((oSettings.wappScore)&amp;&amp;(!$(wappScorePointsDOM).is(&quot;:disabled&quot;))){
+				oSettings.wappScorePoints = $(wappScorePointsDOM).val();
+			} else {
+				delete oSettings.wappScorePoints;
+			}
+		} else {
+			delete oSettings.wappAPI;
+			delete oSettings.wappScore;
+			delete oSettings.wappScorePoints;
+		}
+
+		//Save Settings
+		var oSSerialized = JSON.stringify(oSettings);
+		$(area).attr(&quot;elSettings&quot;,oSSerialized);
+
+		$.fancybox.close();
+	};
 	
 	
 	return {
@@ -631,7 +807,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		drawPreview 					: drawPreview,
 		resetPreview 					: resetPreview,
 		drawPreviewElement				: drawPreviewElement,
-		drawPreviewObject				: drawPreviewObject
+		drawPreviewObject				: drawPreviewObject,
+		showObjectSettings				: showObjectSettings,
+		onObjectSettingsDone			: onObjectSettingsDone
 	};
 
 }) (VISH, jQuery);

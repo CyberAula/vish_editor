@@ -87,27 +87,34 @@ VISH.ObjectPlayer = (function(V,$,undefined){
 	 * the object is in the wrapper attribute of the div
 	 */
 	var loadObject = function(slide){
-		$.each(slide.children(&#x27;.objectelement&#x27;),function(index,value){
-			if($(value).hasClass(&#x27;youtubeelement&#x27;)){
-				V.Video.Youtube.loadYoutubeObject(value);
+		$.each(slide.children(&#x27;.objectelement&#x27;),function(index,objectWrapper){
+			if($(objectWrapper).hasClass(&#x27;loadedObject&#x27;)){
+				return;
+			} else {
+				$(objectWrapper).addClass(&#x27;loadedObject&#x27;);
+			}
+
+			if($(objectWrapper).hasClass(&#x27;youtubeelement&#x27;)){
+				V.Video.Youtube.loadYoutubeObject(objectWrapper);
 				return;
 			}
 
-			if($(value).attr(&quot;objectWrapper&quot;).match(&quot;^&lt;iframe&quot;)!==null &amp;&amp; V.Status.isOnline()=== false){
-				$(value).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;/adverts/advert_new_grey_iframe.png&#x27;/&gt;&quot;);
+			if($(objectWrapper).attr(&quot;objectWrapper&quot;).match(&quot;^&lt;iframe&quot;)!==null &amp;&amp; V.Status.isOnline()=== false){
+				$(objectWrapper).html(&quot;&lt;img src=&#x27;&quot;+V.ImagesPath+&quot;/adverts/advert_new_grey_iframe.png&#x27;/&gt;&quot;);
 				return;
 			}
 
-			var object = $($(value).attr(&quot;objectWrapper&quot;));
-			$(object).attr(&quot;style&quot;,$(value).attr(&quot;zoomInStyle&quot;));
-			$(value).html(&quot;&lt;div style=&#x27;&quot; + $(value).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(object) + &quot;&lt;/div&gt;&quot;);
-			adjustDimensionsAfterZoom($($(value).children()[0]).children()[0]);
+			var object = $($(objectWrapper).attr(&quot;objectWrapper&quot;));
+			$(object).attr(&quot;style&quot;,$(objectWrapper).attr(&quot;zoomInStyle&quot;));
+			$(objectWrapper).html(&quot;&lt;div style=&#x27;&quot; + $(objectWrapper).attr(&quot;objectStyle&quot;) + &quot;&#x27;&gt;&quot; + V.Utils.getOuterHTML(object) + &quot;&lt;/div&gt;&quot;);
+			adjustDimensionsAfterZoom($($(objectWrapper).children()[0]).children()[0]);
 		});
 	};
 
 	var unloadObject= function(slide){
-		$.each($(slide).children(&#x27;.objectelement&#x27;),function(index,value){
-			$(value).html(&quot;&quot;);
+		$.each($(slide).children(&#x27;.objectelement:not(&quot;.unloadableObject&quot;)&#x27;),function(index,objectWrapper){
+			$(objectWrapper).removeClass(&#x27;loadedObject&#x27;);
+			$(objectWrapper).html(&quot;&quot;);
 		});
 	};
 	

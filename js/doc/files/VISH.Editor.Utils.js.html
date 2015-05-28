@@ -578,6 +578,32 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		V.Utils.showDialog(options);
 	};
 
+	var enableElementSettingsField = function(element,enable){
+		if(element instanceof Array){
+			for(var i=0; i&lt;element.length; i++){
+				enableElementSettingsField(element[i],enable);
+			}
+			return;
+		}
+
+		if(enable){
+			$(element).parent().removeClass(&quot;disableSettingsField&quot;);
+			$(element).removeAttr(&#x27;disabled&#x27;);
+		} else {
+			if ($(element).is(&quot;input&quot;)){
+				if ($(element).attr(&quot;type&quot;)===&quot;checkbox&quot;){
+					var defaultCheckboxValue = ($(element).attr(&quot;defaultvalue&quot;)===&quot;true&quot;) ? true : false;
+					$(element).prop(&#x27;checked&#x27;, defaultCheckboxValue);
+				}
+			} else if ($(element).is(&quot;select&quot;)){
+				var defaultSelectValue = $(element).find(&quot;option[selected=&#x27;selected&#x27;]&quot;).val();
+				$(element).val(defaultSelectValue);
+			}
+			$(element).parent().addClass(&quot;disableSettingsField&quot;);
+			$(element).attr(&#x27;disabled&#x27;, &#x27;disabled&#x27;);
+		}
+	};
+
 	return {
 		setStyleInPixels  			: setStyleInPixels,		
 		addZoomToStyle  			: addZoomToStyle,	
@@ -591,7 +617,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		filterFilePath 				: filterFilePath,
 		loadTab						: loadTab,
 		hideNonDefaultTabs			: hideNonDefaultTabs,
-		showErrorDialog				: showErrorDialog
+		showErrorDialog				: showErrorDialog,
+		enableElementSettingsField	: enableElementSettingsField
 	};
 
 }) (VISH, jQuery);
