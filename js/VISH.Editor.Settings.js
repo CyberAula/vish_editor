@@ -165,6 +165,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Tags: intialized on _onInitialTagsReceived method.
 
+		//License
+		if((typeof presentation.license == "object")&&(typeof presentation.license.key == "string")){
+			$("#presentation_details_license_select").val(presentation.license.key);
+		}
+
 		//Themes
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 
@@ -470,6 +475,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.tags = tags;
 		}
 
+		//License
+		var licenseName = $("#presentation_details_license_select").find(":selected").text();
+		var licenseKey = $("#presentation_details_license_select").val();
+		if((typeof licenseName == "string")&&(licenseKey)){
+			settings.license = {name: licenseName, key: licenseKey};
+		}
+		
 		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
 		if(typeof  themeNumber == "string"){
 			settings.theme = "theme" + themeNumber;

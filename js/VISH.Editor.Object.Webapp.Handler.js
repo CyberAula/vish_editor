@@ -4,7 +4,7 @@ VISH.Editor.Object.Webapp.Handler = (function(V,$,undefined){
 	};
 
 	var onWAPPConnected = function(origin,originId){
-		console.log("onWAPPConnected: " + origin);
+		// V.Debugging.log("onWAPPConnected: " + origin);
 
 		var iframe = $("iframe[src='" + origin + "']");
 

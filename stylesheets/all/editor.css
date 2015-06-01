@@ -172,6 +172,15 @@ p.presentation_details_column_title {
 	margin-top: -9px;
 }
 
+#presentation_details_license {
+	margin-top: 23px;
+}
+
+#presentation_details_license select {
+	width: 100%;
+	margin-top: 5px;
+}
+
 #presentation_details_title {
 	width: 100%;
 	display: inline;
@@ -590,7 +599,7 @@ input.slider_range_input {
 	width: 107%;
 	margin-top: -33px;
 	margin-left: -20px;
-	margin-bottom: 49px;
+	margin-bottom: 8px;
 }
 
 /* Settings End */
