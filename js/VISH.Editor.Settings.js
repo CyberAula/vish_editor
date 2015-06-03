@@ -166,7 +166,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//Tags: intialized on _onInitialTagsReceived method.
 
 		//License
-		var hasLicense = ((typeof presentation.license == "object")&&(typeof presentation.license.key == "string"));
+		var validLicenseValues = [];
+		$("#presentation_details_license_select option").each(function(index,optionTag){
+			validLicenseValues.push($(optionTag).attr("value"));
+		});
+		var hasLicense = ((typeof presentation.license == "object")&&(typeof presentation.license.key == "string")&&(validLicenseValues.indexOf(presentation.license.key)!=-1));
 		if(hasLicense){
 			$("#presentation_details_license_select").val(presentation.license.key);
 		}
