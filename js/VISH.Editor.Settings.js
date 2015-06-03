@@ -166,8 +166,19 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//Tags: intialized on _onInitialTagsReceived method.
 
 		//License
-		if((typeof presentation.license == "object")&&(typeof presentation.license.key == "string")){
+		var hasLicense = ((typeof presentation.license == "object")&&(typeof presentation.license.key == "string"));
+		if(hasLicense){
 			$("#presentation_details_license_select").val(presentation.license.key);
+		}
+
+		//Block license if resource has been already published
+		if(V.Editor.hasBeenPublished()){
+			if(hasLicense){
+				var hasPrivateLicense = (hasLicense && presentation.license.key === "private");
+				if(!hasPrivateLicense){
+					$("#presentation_details_license_select").attr("disabled","disabled");
+				}
+			}
 		}
 
 		//Themes

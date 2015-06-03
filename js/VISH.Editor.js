@@ -109,7 +109,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		//If we have to edit
 		if(initialPresentation){
-			presentation = V.Utils.fixPresentation(presentation);
+			var presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
 				$("#waiting_overlay").hide();
 				V.Utils.showPNotValidDialog();
@@ -832,35 +832,6 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 	};
-
-	var _uploadPresentationWithNode = function(presentation){
-		var send_type;
-		var url = V.UploadPresentationPath;
-
-		if(draftPresentation){
-			send_type = 'PUT'; //if we are editing
-			url = url + draftPresentation.id;
-		} else {
-			send_type = 'POST'; //if it is a new
-		} 
-
-		//POST to /server/presentation/
-		var jsonPresentation = JSON.stringify(presentation);   
-		var params = {
-			"presentation[json]": jsonPresentation
-		};
-
-		$.ajax({
-			type    : send_type,
-			url     : url,
-			data    : params,
-			success : function(data) {
-				//Redirect
-				V.Editor.Events.allowExitWithoutConfirmation();
-				window.top.location.href = data.url;
-			}
-		});
-	};
 	
 	
 	//////////////////
@@ -968,6 +939,18 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
+	var hasBeenPublished = function(){
+		if(initialPresentation){
+			if(!isPresentationDraft()){
+				return true;
+			} else if((typeof draftPresentation["vishMetadata"] == "object")&&(draftPresentation["vishMetadata"]["released"]==="true")){
+				return true;
+			}
+		} else {
+			return false;
+		}
+	};
+
 	var hasPresentationChanged = function(){
 		try {
 			var objectToCompare;
@@ -999,6 +982,7 @@ VISH.Editor = (function(V,$,undefined){
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
+		hasBeenPublished		: hasBeenPublished,
 		getContentAddMode		: getContentAddMode,
 		setContentAddMode		: setContentAddMode,
 		hasInitialPresentation	: hasInitialPresentation,
