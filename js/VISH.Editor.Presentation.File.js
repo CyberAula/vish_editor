@@ -68,10 +68,16 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 				switch(fileType){
 					case "xml":
 						var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
+						var isMoodleXMLCompliant = V.Editor.MoodleXML.isCompliantXMLFile(e.target.result);
 						if(isIMSQTICompliant){
 							var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
 							V.Editor.Presentation.previewPresentation(json);
-						} else {
+						} else if(isMoodleXMLCompliant) {
+							var json = V.Editor.MoodleXML.getJSONFromXMLFile(e.target.result);
+							V.Editor.Presentation.previewPresentation(json);
+						}
+						 else
+						{
 							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 							return;
 						}
