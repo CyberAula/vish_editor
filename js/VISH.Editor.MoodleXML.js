@@ -10,8 +10,8 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var xmlDoc = $.parseXML( fileXML );
 		var xml = $(xmlDoc);
 
-		var itemBody = $(xml).find("itemBody");
-		var simpleChoice = $(xml).find("simpleChoice");
+		var itemBody = $(xml).find("question");
+		var simpleChoice = $(xml).find("questiontext");
 		var orderInteraction = $(xml).find("orderInteraction");
 		var correctResponse = $(xml).find("correctResponse value");
 		
@@ -31,19 +31,19 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			schema = false;
 		}
 
-		if(checkQuizType(fileXML) == "multipleCA"){
+		if(checkQuizType(fileXML) == "multichoice"){
 			if((itemBody.length == 0)||(simpleChoice.length == 0)||(correctResponse.length == 0)|| (schema == false)){
 				isCompliant = false;
 			}else{
 				isCompliant= true;
 			}
-		}else if(checkQuizType(fileXML) == "order"){
+		}else if(checkQuizType(fileXML) == "truefalse"){
 			if((itemBody.length == 0)||(orderInteraction.length == 0)||(correctResponse.length == 0)|| (schema == false)){
 				isCompliant = false;
 			}else{
 				isCompliant = true;
 			}
-		}else if(checkQuizType(fileXML) == "shortanswer" || checkQuizType(fileXML) == "fillInTheBlankText"){
+		}else if(checkQuizType(fileXML) == "shortanswer" || checkQuizType(fileXML) == "matching"){
 			if((itemBody.length == 0)||(correctResponse.length == 0)|| (schema == false)){
 				isCompliant = false;
 			}else{
