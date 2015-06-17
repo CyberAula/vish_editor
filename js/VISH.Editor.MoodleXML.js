@@ -5,7 +5,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 	
 	var isCompliantXMLFile = function(fileXML){
 		var isCompliant = true;
-		var schema;
+		var schema = false;
 
 		var xmlDoc = $.parseXML( fileXML );
 		var xml = $(xmlDoc);
@@ -20,7 +20,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 					if((((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1) ||(((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1)) {
 						schema = true;
 					} else {
-						schema = false;
+						return;	
 					}
 				});
 			});
@@ -28,9 +28,8 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			schema = false;
 		}
 
-		//
 		itemBody.each(function(){
-			if ( checkQuizType($(this)).localeCompare("multichoice") == 0 || checkQuizType($(this)).localeCompare("truefalse") == 0  ||  checkQuizType($(this)).localeCompare("shortanswer") == 0  || checkQuizType($(this)).localeCompare("matching") == 0  || checkQuizType($(this)).localeCompare("cloze") == 0  || checkQuizType($(this)).localeCompare("essay") == 0  || checkQuizType($(this)).localeCompare("numerical") == 0  || checkQuizType($(this)).localeCompare("description") == 0 ) {
+			if ( checkQuizType($(this)) != null ) {
 				return;
 			}else{
 				isCompliant = false;
@@ -54,20 +53,9 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 
 
 	var checkQuizType = function(fileXML){
-		var quizType;
+		
 
-		var xmlDoc = $.parseXML( fileXML );
-		var xml = $(xmlDoc);
-
-		var category = $(xml).find("category");
-		var multichoice = $(xml).find("multichoice");
-		var truefalse = $(xml).find("truefalse");
-		var shortanswer = $(xml).find("shortanswer");
-		var matching = $(xml).find("matching");
-		var cloze = $(xml).find("cloze");
-		var essay = $(xml).find("essay");
-		var numerical = $(xml).find("numerical");
-		var description = $(xml).find("description");
+		var quizType = fileXML.attr("type");
 
 		if(category.length != 0){
 			quizType = "category";
@@ -87,6 +75,8 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			quizType = "numerical"
 		}else if (description.length != 0){
 			quizType = "description"
+		} else {
+			quizType = null;
 		}
 
 		return quizType;
