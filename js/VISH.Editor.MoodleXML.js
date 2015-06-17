@@ -11,33 +11,31 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var xml = $(xmlDoc);
 
 		var quiz = $(xml).find("quiz");
-		var itemBody = $(xml).find("question");
+		var itemBody = quiz.children("question");
 		
-		//check from MSQTI
-		if(itemBody.length != 0){
-			itemBody.each(function(){
-				$(this).each(function(index,attribute){
-					if((((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1) ||(((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1)) {
-						schema = true;
-					} else {
-						return;	
-					}
-				});
-			});
-		} else {
-			schema = false;
+		if ( quiz.children().length  != itemBody.length) {
+			isCompliant = false;
 		}
 
-		itemBody.each(function(){
-			if ( checkQuizType($(this)) != null ) {
-				return;
-			}else{
-				isCompliant = false;
-			}
-		});
+		isCompliant = checkQuizTypes(xml);
 
 		return (isCompliant || schema);
  	};
+
+ 		//check from MSQTI
+		// if(itemBody.length != 0){
+		// 	itemBody.each(function(){
+		// 		$(this).each(function(index,attribute){
+		// 			if((((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1) ||(((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1)) {
+		// 				schema = true;
+		// 			} else {
+		// 				return;	
+		// 			}
+		// 		});
+		// 	});
+		// } else {
+		// 	schema = false;
+		// }
 
 	var checkAnswer = function(answer, correctArray){
 		var answerBoolean;
@@ -53,35 +51,52 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 
 
 	var checkQuizType = function(fileXML){
-		
 
-		var quizType = fileXML.attr("type");
+		var quizType = $(fileXML).attr("type");
+		var quizRecognise;
 
-		if(category.length != 0){
-			quizType = "category";
-		}else if(multichoice.length != 0){
-			quizType = "multichoice";
-		}else if(truefalse.length != 0){
-			quizType = "truefalse";
-		}else if(shortanswer.length != 0){
-			quizType = "shortanswer";
-		}else if(matching.length != 0){
-			quizType = "matching";
-		}else if (cloze.length != 0){
-			quizType = "cloze"
-		}else if (essay.length != 0){
-			quizType = "essay"
-		}else if (numerical.length != 0){
-			quizType = "numerical"
-		}else if (description.length != 0){
-			quizType = "description"
-		} else {
-			quizType = null;
+		if( quizType === "category"){
+			quizRecognise = true;
+		} else if (quizType === "multichoice") {
+			quizRecognise = true;
+		} else if (quizType === "truefalse"){
+			quizRecognise = true;
+		} else if (quizType === "shortanswer"){
+			quizRecognise = true;
+		} else if (quizType === "matching"){
+			quizRecognise = true;
+		} else if (quizType === "cloze"){
+			quizRecognise = true;
+		} else if (quizType === "essay"){
+			quizRecognise = true;
+		} else if (quizType === "numerical"){
+			quizRecognise = true;
+		} else if (quiztype === "description"){
+			quizRecognise = true;
+		}else{
+			quizRecognise = false;
 		}
 
-		return quizType;
+		return quizRecognise;
 	};
 
+	var checkQuizTypes = function(fileXML){
+
+		var quizType = fileXML.find("question")
+		var quizRecognise;
+
+		quizType.each(function(){
+			type = $(this).attr("type");
+			if( type === "category" || type === "multichoice" || type === "truefalse" || type === "shortanswer" || type === "matching" || type === "cloze" || type === "essay" || type === "numerical" || type === "description"){
+			quizRecognise = true;
+			}else{
+				quizRecognise = false;
+				return false;	
+			}
+		});
+
+		return quizRecognise;
+	};
 
 	var getJSONFromXMLFile = function(fileXML){
 		var itemBodyContent;
