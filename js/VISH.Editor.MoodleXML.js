@@ -131,56 +131,29 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var elements = [];
 		var question;
 		var answerArray = [];
-		//var answerArrayL = [];
 		var correctanswerArray = [];
 		var nAnswers;
 		var answerIds = [];
-		//var quiztype;
-
-		var xmlDoc = $.parseXML(fileXML);
-		var xml = $(xmlDoc);
-
 
 		/*To get the question */
-		if($(xml).find('prompt').length != 0){
-		$(xml).find('prompt').each(function(){
-			question = $(this).text();
-		});
-		}else{
-			itemBodyContent.children().first().each(function(){
-				question = $(this).text();
-			});	
-		}
+		question = fileXML.children("questiontext").children("text").text();
+
 
 		/*To get array of answers */
-		itemBodyContent.find('simpleChoice').each(function(){
+		fileXML.find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
-		// if(answerArray.length == 2){
-		// 	if(((jQuery.inArray("true",answerArrayL)) == -1) && ((jQuery.inArray("false",answerArrayL)) == -1)){
-		// 		quiztype = "multiplechoice";
-		// 	}else{
-		// 		quiztype = "truefalse";
-		// 	}
-		// }
-
 
 		/* To get array of corrrect answers */
-		$(xml).find('correctResponse value').each(function(){
-			var cAnswer = $(this).text();
-			correctanswerArray.push(cAnswer);
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				answerArray.push(answer);
+			}
 		});
 
 		/* To get identifiers */
-		itemBodyContent.find('simpleChoice').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					answerIds.push(attribute.textContent);
-		    	}
-		   	})
-		});
 
 
 		if(correctanswerArray.length > 1){
@@ -234,55 +207,35 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var correctanswerArray = [];
 		var answerIds = [];
 
-		var xmlDoc = $.parseXML(fileXML);
-		var xml = $(xmlDoc);
-
 
 		/*To get the question */
-		if($(xml).find('prompt').length != 0){
-			$(xml).find('prompt').each(function(){
-				question = $(this).text();
-			});
-		}else{
-			itemBodyContent.children().first().each(function(){
-				question = $(this).text();
-			});	
-		}
+		question = fileXML.children("questiontext").children("text").text();
+
 
 		/*To get array of answers */
-		itemBodyContent.find('simpleChoice').each(function(){
+		fileXML.find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
+
 		/* To get array of corrrect answers */
-		$(xml).find('correctResponse value').each(function(){
-			var cAnswer = $(this).text();
-			correctanswerArray.push(cAnswer);
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				answerArray.push(answer);
+			}
 		});
 
 		/* To get identifiers */
-		itemBodyContent.find('simpleChoice').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					answerIds.push(attribute.textContent);
-		    	}
-		   	})
-		});
 
-		//we get the IDs
+
+		//we dont have identifiers
 		//now we have to get the choices according to that ID
-		itemBodyContent.find('simpleChoice').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					answerIds.push(attribute.textContent);
-		    	}
-		   	})
-		});
 
+		//is is for the order?
 		var myHash = [];
 		for (var i = 1; i <= answerArray.length; i++ ){
-			myHash[answerIds[i-1]] = answerArray[i-1];
+			
 		}
 
 		var choices = [];
@@ -324,41 +277,69 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var correctanswerArray = [];
 		var selfA;
 
-		var xmlDoc = $.parseXML(fileXML);
-		var xml = $(xmlDoc);
-
-
-		$(xml).find('responseProcessing').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "template"){
-					if (attribute.textContent == "http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"){
-						selfA = true;
-					}else{
-						selfA = false;
-					}
-		    	}
-		   	})
-		});
-
 
 
 		/*To get the question */
-		if($(xml).find('prompt').length != 0){
-		$(xml).find('prompt').each(function(){
-			question = $(this).text();
-		});
-		}else{
-			itemBodyContent.children().first().each(function(){
-				question = $(this).text();
-			});	
-		}
+		question = fileXML.children("questiontext").children("text").text();
 
 
 		/* To get array of corrrect answers */
-		$(xml).find('correctResponse value').each(function(){
-			var cAnswer = $(this).text();
-			correctanswerArray.push(cAnswer);
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				var answer = $(this).children("text").text();
+				correctanswerArray.push(answer);
+			}
 		});
+
+		/* To get identifiers */
+
+		elements.push({
+			"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
+			"quiztype":"openAnswer",
+			"selfA": selfA,
+			"question":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
+			},
+			"answer":{
+				"value": correctanswerArray[0],
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
+			}
+		});
+
+		var options = {
+			template : "t2"
+		}
+
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
+
+	var getJSONFromXMLFileTF = function(fileXML,itemBodyContent){
+
+		var elements = [];
+		var question;
+		var correctanswerArray = [];
+
+		/* To get the question*/
+		question = fileXML.children("questiontext").children("text").text();
+
+
+		/*To get array of answers */
+		fileXML.find('answer').each(function(){
+			var answer = $(this).text();
+			answerArray.push(answer);
+		});
+
+
+		/* To get array of corrrect answers */
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				answerArray.push(answer);
+			}
+		});
+
 		
 		elements.push({
 			"id":"article2_zone1",
@@ -383,7 +364,49 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
 
+	var getJSONFromXMLFileNum = function(fileXML,itemBodyContent){
 
+		var elements = [];
+		var question;
+		var correctanswerArray = [];
+		var selfA;
+
+
+
+		/*To get the question */
+		question = fileXML.children("questiontext").children("text").text();
+
+
+		/* To get array of corrrect answers */
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				var answer = $(this).children("text").text();
+				correctanswerArray.push(answer);
+			}
+		});
+		
+		elements.push({
+			"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
+			"quiztype":"openAnswer",
+			"selfA": selfA,
+			"question":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
+			},
+			"answer":{
+				"value": correctanswerArray[0],
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
+			}
+		});
+
+		var options = {
+			template : "t2"
+		}
+
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
 
 	return {
 		init 						: init,
