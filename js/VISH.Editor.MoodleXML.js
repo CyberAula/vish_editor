@@ -40,7 +40,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var quizType = $(fileXML).attr("type");
 		var quizRecognise;
 
-		if(quiztype == null) {
+		if(quizType == null) {
 			quizRecognise = "not_recognised";
 		}else if( quizType === "category"){
 			return "category";
@@ -72,7 +72,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var quizType = fileXML.find("question")
 		var quizRecognise;
 
-		if ( quiztype != null){
+		if ( quizType != null){
 			for(var i =0; i < quizType.length; i++){
 				type = $(quizType[i]).attr("type");
 				if( type === "category" || type === "multichoice" || type === "truefalse" || type === "shortanswer" || type === "matching" || type === "cloze" || type === "essay" || type === "numerical" || type === "description"){
@@ -95,23 +95,27 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var questionArray = []
 		var notRecognised = 0;
 
+		var options = {
+			template : "t2",
+		}
+
 		for(var n = 0; n < question.length; n++ ){
 
 			switch(checkQuizType(question[n])){
 	    		case "multichoice":
-	        		questionArray.push(getJSONFromXMLFileMC(question[n], itemBodyContent));
+	        		questionArray.push(getJSONFromXMLFileMC(question[n], itemBodyContent)[0]);
 	        		break;
 	    		case "matching":
-					questionArray.push(getJSONFromXMLFileSorting(question[n], itemBodyContent));
+					questionArray.push(getJSONFromXMLFileSorting(question[n], itemBodyContent)[0]);
 	        		break;
 	    		case "truefalse":
-					questionArray.push(getJSONFromXMLFileTF(question[n], itemBodyContent));
+					questionArray.push(getJSONFromXMLFileTF(question[n], itemBodyContent)[0]);
 	        		break;
 	        	case "shortanswer" :
-					questionArray.push(getJSONFromXMLFileSA(question[n], itemBodyContent));
+					questionArray.push(getJSONFromXMLFileSA(question[n], itemBodyContent)[0]);
 	        		break;
 	        	case "numerical" :
-					questionArray.push(getJSONFromXMLFileNum(question[n], itemBodyContent));
+					questionArray.push(getJSONFromXMLFileNum(question[n], itemBodyContent)[0]);
 	        		break;
 	        	case "category":
 	        	case "description" :
@@ -124,6 +128,8 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 	        		break;
 			}
 		}
+
+		return V.Editor.Presentation.generatePresentationScaffold(questionArray);
 	}
 
 
@@ -136,20 +142,21 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var answerIds = [];
 
 		/*To get the question */
-		question = fileXML.children("questiontext").children("text").text();
+		question = $(fileXML).children("questiontext").children("text").text();
 
 
 		/*To get array of answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
 
 		/* To get array of corrrect answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
-				answerArray.push(answer);
+				var answer = $(this).text();
+				correctanswerArray.push(answer);
 			}
 		});
 
@@ -161,7 +168,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		} else {
 			nAnswers = false;
 		}
-
+		//TODO: Check arrays well formed
 		var choices = [];
 		for (var i = 1; i <= answerArray.length; i++ ){
 			var iChoice;
@@ -195,7 +202,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			template : "t2"
 		}
 
-		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+		return elements;
 	};
 
 
@@ -209,18 +216,18 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 
 
 		/*To get the question */
-		question = fileXML.children("questiontext").children("text").text();
+		question = $(fileXML).children("questiontext").children("text").text();
 
 
 		/*To get array of answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
 
 		/* To get array of corrrect answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
 				answerArray.push(answer);
 			}
@@ -267,7 +274,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			template : "t2"
 		}
 
-		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+		return elements;
 	};
 
 		var getJSONFromXMLFileSA = function(fileXML,itemBodyContent){
@@ -280,11 +287,11 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 
 
 		/*To get the question */
-		question = fileXML.children("questiontext").children("text").text();
+		question = $(fileXML).children("questiontext").children("text").text();
 
 
 		/* To get array of corrrect answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
 				var answer = $(this).children("text").text();
 				correctanswerArray.push(answer);
@@ -313,7 +320,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			template : "t2"
 		}
 
-		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+		return elements;
 	};
 
 	var getJSONFromXMLFileTF = function(fileXML,itemBodyContent){
@@ -321,47 +328,57 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var elements = [];
 		var question;
 		var correctanswerArray = [];
+		var answerArray = [];
+		var answerIds = [];
 
 		/* To get the question*/
-		question = fileXML.children("questiontext").children("text").text();
+		question = $(fileXML).children("questiontext").children("text").text();
 
 
 		/*To get array of answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
 
 		/* To get array of corrrect answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
-				answerArray.push(answer);
+				var answer = $(this).text();
+				correctanswerArray.push(answer);
 			}
 		});
 
+		var choices = [];
+		for (var i = 1; i <= answerArray.length; i++ ){
+			var iChoice;
+			iChoice = {
+				'id': i.toString(), 
+				'value': (answerArray[i-1]).toString() , 
+				'wysiwygValue' :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 
+				'answer': checkAnswer(answerIds[i-1], correctanswerArray)
+			};
+			choices.push(iChoice);
+		}
 		
 		elements.push({
 			"id":"article2_zone1",
 			"type":"quiz",
 			"areaid":"left",
-			"quiztype":"openAnswer",
-			"selfA": selfA,
+			"quiztype":"truefalse",
 			"question":{
 				"value": question,
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
 			},
-			"answer":{
-				"value": correctanswerArray[0],
-				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
-			}
+			"choices": $.extend([{}], choices)
 		});
 
 		var options = {
 			template : "t2"
 		}
 
-		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+		return elements;
 	};
 
 	var getJSONFromXMLFileNum = function(fileXML,itemBodyContent){
@@ -369,16 +386,16 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var elements = [];
 		var question;
 		var correctanswerArray = [];
-		var selfA;
+		var selfA = true;
 
 
 
 		/*To get the question */
-		question = fileXML.children("questiontext").children("text").text();
+		question = $(fileXML).children("questiontext").children("text").text();
 
 
 		/* To get array of corrrect answers */
-		fileXML.find('answer').each(function(){
+		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
 				var answer = $(this).children("text").text();
 				correctanswerArray.push(answer);
@@ -405,7 +422,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			template : "t2"
 		}
 
-		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+		return elements;
 	};
 
 	return {
