@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quiz>
+<!-- question: 0  -->
+  <question type="category">
+    <category>
+        <text>$module$/Short Answer</text>
+
+    </category>
+  </question>
+
+<!-- question: 520  -->
+  <question type="shortanswer">
+    <name>
+      <text>Short answer Test</text>
+    </name>
+    <questiontext format="html">
+      <text><![CDATA[<p>What is the example test used to try fonts?</p>]]></text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text></text>
+    </generalfeedback>
+    <defaultgrade>1.0000000</defaultgrade>
+    <penalty>0.3333333</penalty>
+    <hidden>0</hidden>
+    <usecase>0</usecase>
+    <answer fraction="100" format="moodle_auto_format">
+      <text>the quick brown fox jumps over the lazy dog</text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="moodle_auto_format">
+      <text>This is an incorrect naswer</text>
+      <feedback format="html">
+        <text></text>
+      </feedback>
+    </answer>
+  </question>
+
+</quiz>
