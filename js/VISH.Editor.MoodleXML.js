@@ -17,25 +17,10 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			isCompliant = false;
 		}
 
-		isCompliant = checkQuizTypes(xml);
+		isCompliant = checkQuizCompliance(xml);
 
 		return (isCompliant || schema);
  	};
-
- 		//check from MSQTI
-		// if(itemBody.length != 0){
-		// 	itemBody.each(function(){
-		// 		$(this).each(function(index,attribute){
-		// 			if((((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1) ||(((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1)) {
-		// 				schema = true;
-		// 			} else {
-		// 				return;	
-		// 			}
-		// 		});
-		// 	});
-		// } else {
-		// 	schema = false;
-		// }
 
 	var checkAnswer = function(answer, correctArray){
 		var answerBoolean;
@@ -55,46 +40,49 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var quizType = $(fileXML).attr("type");
 		var quizRecognise;
 
-		if( quizType === "category"){
-			quizRecognise = true;
+		if(quiztype == null) {
+			quizRecognise = "not_recognised";
+		}else if( quizType === "category"){
+			return "category";
 		} else if (quizType === "multichoice") {
-			quizRecognise = true;
+			return "multichoice";
 		} else if (quizType === "truefalse"){
-			quizRecognise = true;
+			return "truefalse";
 		} else if (quizType === "shortanswer"){
-			quizRecognise = true;
+			return "shortanswer";
 		} else if (quizType === "matching"){
-			quizRecognise = true;
+			return "matching";
 		} else if (quizType === "cloze"){
-			quizRecognise = true;
+			return "cloze";
 		} else if (quizType === "essay"){
-			quizRecognise = true;
+			return "essay";
 		} else if (quizType === "numerical"){
-			quizRecognise = true;
+			return "numerical";
 		} else if (quiztype === "description"){
-			quizRecognise = true;
+			return "description";
 		}else{
-			quizRecognise = false;
+			quizRecognise = "not_recognised";
 		}
 
 		return quizRecognise;
 	};
 
-	var checkQuizTypes = function(fileXML){
+	var checkQuizCompliance = function(fileXML){
 
 		var quizType = fileXML.find("question")
 		var quizRecognise;
 
-		quizType.each(function(){
-			type = $(this).attr("type");
-			if( type === "category" || type === "multichoice" || type === "truefalse" || type === "shortanswer" || type === "matching" || type === "cloze" || type === "essay" || type === "numerical" || type === "description"){
-			quizRecognise = true;
-			}else{
-				quizRecognise = false;
-				return false;	
+		if ( quiztype != null){
+			for(var i =0; i < quizType.length; i++){
+				type = $(quizType[i]).attr("type");
+				if( type === "category" || type === "multichoice" || type === "truefalse" || type === "shortanswer" || type === "matching" || type === "cloze" || type === "essay" || type === "numerical" || type === "description"){
+					quizRecognise = true;
+				}else{
+					quizRecognise = false;
+					return false;	
+				}
 			}
-		});
-
+		}
 		return quizRecognise;
 	};
 
@@ -103,100 +91,38 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 
 		var xmlDoc = $.parseXML( fileXML );
 		var xml = $(xmlDoc);
-		var myRandomHash = [];
-		var randomArray = [];
-		var min,max;
-		var ident;
+		var question = xml.find("question");
+		var questionArray = []
+		var notRecognised = 0;
 
-		if($(xml).find('templateProcessing setTemplateValue randomInteger').length != 0){
-				$(xml).find('templateProcessing setTemplateValue randomInteger').each(function(){
-					$(this).parent().each(function(){
-							$(this.attributes).each(function(index,attribute){
-								if(attribute.name == "identifier"){
-									ident = attribute.textContent;
-								}
-							})
-						})
-					$(this.attributes).each(function(index,attribute){
-						if(attribute.name == "min"){
-							min = attribute.textContent;
-						}else if (attribute.name == "max") {
-							max = attribute.textContent;
-					}
-				});
-				myRandomHash[ident] = Math.floor(Math.random()*(parseInt(max)-parseInt(min)+1)+parseInt(min));
-			});
-		}
+		for(var n = 0; n < question.length; n++ ){
 
-		if($(xml).find('templateProcessing setTemplateValue randomFloat').length != 0){
-				$(xml).find('templateProcessing setTemplateValue randomFloat').each(function(){
-					$(this).parent().each(function(){
-						$(this.attributes).each(function(index,attribute){
-							if(attribute.name == "identifier"){
-								ident = attribute.textContent;
-							}
-						})
-					})
-					$(this.attributes).each(function(index,attribute){
-						if(attribute.name == "min"){
-							min = attribute.textContent;
-						}else if (attribute.name == "max") {
-							max = attribute.textContent;
-					}
-				});
-				myRandomHash[ident] = parseFloat(Math.min(parseInt(min) + (Math.random() * (parseInt(max) - parseInt(min))),parseInt(max)).toFixed(2));
-			});
-		}
-
-		if($(xml).find('templateProcessing setTemplateValue random').length != 0){
-				$(xml).find('templateProcessing setTemplateValue random').each(function(){
-					$(this).parent().each(function(){
-						$(this.attributes).each(function(index,attribute){
-							if(attribute.name == "identifier"){
-								ident = attribute.textContent;
-							}
-						})	
-					})
-					$(this).children().each(function(){
-						for (var i = 1; i <= ($(this).text().split('\n').length)-2; i++ ){
-							randomArray[i-1] = $(this).text().split('\n')[i];
-						}
-					});
-					myRandomHash[ident] = randomArray[Math.floor(Math.random()*randomArray.length)];
-			});
-		}
-
-		if($(xml).find('printedVariable').length != 0){
-			$(xml).find('printedVariable').each(function(){
-				$(this.attributes).each(function(index,attribute){
-					if(attribute.name == "identifier"){
-						if(myRandomHash[attribute.textContent] != undefined){
-							$(xml).find('itemBody').each(function(){
-								$(this).find('printedVariable').replaceWith(myRandomHash[attribute.textContent].toString());
-								itemBodyContent = $(xml).find('itemBody');
-								//itemBodyContent= $(this)[0].innerHTML;
-							});
-						}
-		    		}
-		    	})
-		   	})
-		} else {
-			itemBodyContent = $(xml).find('itemBody');
-		}
-
-		switch(checkQuizType(fileXML)){
-    		case "multipleCA":
-        		return getJSONFromXMLFileMC(fileXML, itemBodyContent);
-        		break;
-    		case "order":
-				return getJSONFromXMLFileSorting(fileXML,itemBodyContent);
-        		break;
-    		case "openshortAnswer":
-				return getJSONFromXMLFileSA(fileXML, itemBodyContent);
-        		break;
-        	case "fillInTheBlankText" :
-				return getJSONFromXMLFileSA(fileXML, itemBodyContent);
-        		break;
+			switch(checkQuizType(question[n])){
+	    		case "multichoice":
+	        		questionArray.push(getJSONFromXMLFileMC(question[n], itemBodyContent));
+	        		break;
+	    		case "matching":
+					questionArray.push(getJSONFromXMLFileSorting(question[n], itemBodyContent));
+	        		break;
+	    		case "truefalse":
+					questionArray.push(getJSONFromXMLFileTF(question[n], itemBodyContent));
+	        		break;
+	        	case "shortanswer" :
+					questionArray.push(getJSONFromXMLFileSA(question[n], itemBodyContent));
+	        		break;
+	        	case "numerical" :
+					questionArray.push(getJSONFromXMLFileNum(question[n], itemBodyContent));
+	        		break;
+	        	case "category":
+	        	case "description" :
+				case "cloze" :
+	        	case "essay" :
+	        		notRecognised++;
+	        		break;
+	        	default :
+	        		notRecognised++;
+	        		break;
+			}
 		}
 	}
 
@@ -205,56 +131,29 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var elements = [];
 		var question;
 		var answerArray = [];
-		//var answerArrayL = [];
 		var correctanswerArray = [];
 		var nAnswers;
 		var answerIds = [];
-		//var quiztype;
-
-		var xmlDoc = $.parseXML(fileXML);
-		var xml = $(xmlDoc);
-
 
 		/*To get the question */
-		if($(xml).find('prompt').length != 0){
-		$(xml).find('prompt').each(function(){
-			question = $(this).text();
-		});
-		}else{
-			itemBodyContent.children().first().each(function(){
-				question = $(this).text();
-			});	
-		}
+		question = fileXML.children("questiontext").children("text").text();
+
 
 		/*To get array of answers */
-		itemBodyContent.find('simpleChoice').each(function(){
+		fileXML.find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
-		// if(answerArray.length == 2){
-		// 	if(((jQuery.inArray("true",answerArrayL)) == -1) && ((jQuery.inArray("false",answerArrayL)) == -1)){
-		// 		quiztype = "multiplechoice";
-		// 	}else{
-		// 		quiztype = "truefalse";
-		// 	}
-		// }
-
 
 		/* To get array of corrrect answers */
-		$(xml).find('correctResponse value').each(function(){
-			var cAnswer = $(this).text();
-			correctanswerArray.push(cAnswer);
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				answerArray.push(answer);
+			}
 		});
 
 		/* To get identifiers */
-		itemBodyContent.find('simpleChoice').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					answerIds.push(attribute.textContent);
-		    	}
-		   	})
-		});
 
 
 		if(correctanswerArray.length > 1){
@@ -308,55 +207,35 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var correctanswerArray = [];
 		var answerIds = [];
 
-		var xmlDoc = $.parseXML(fileXML);
-		var xml = $(xmlDoc);
-
 
 		/*To get the question */
-		if($(xml).find('prompt').length != 0){
-			$(xml).find('prompt').each(function(){
-				question = $(this).text();
-			});
-		}else{
-			itemBodyContent.children().first().each(function(){
-				question = $(this).text();
-			});	
-		}
+		question = fileXML.children("questiontext").children("text").text();
+
 
 		/*To get array of answers */
-		itemBodyContent.find('simpleChoice').each(function(){
+		fileXML.find('answer').each(function(){
 			var answer = $(this).text();
 			answerArray.push(answer);
 		});
 
+
 		/* To get array of corrrect answers */
-		$(xml).find('correctResponse value').each(function(){
-			var cAnswer = $(this).text();
-			correctanswerArray.push(cAnswer);
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				answerArray.push(answer);
+			}
 		});
 
 		/* To get identifiers */
-		itemBodyContent.find('simpleChoice').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					answerIds.push(attribute.textContent);
-		    	}
-		   	})
-		});
 
-		//we get the IDs
+
+		//we dont have identifiers
 		//now we have to get the choices according to that ID
-		itemBodyContent.find('simpleChoice').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "identifier"){
-					answerIds.push(attribute.textContent);
-		    	}
-		   	})
-		});
 
+		//is is for the order?
 		var myHash = [];
 		for (var i = 1; i <= answerArray.length; i++ ){
-			myHash[answerIds[i-1]] = answerArray[i-1];
+			
 		}
 
 		var choices = [];
@@ -398,40 +277,112 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var correctanswerArray = [];
 		var selfA;
 
-		var xmlDoc = $.parseXML(fileXML);
-		var xml = $(xmlDoc);
 
 
-		$(xml).find('responseProcessing').each(function(){
-			$(this.attributes).each(function(index,attribute){
-				if(attribute.name == "template"){
-					if (attribute.textContent == "http://www.imsglobal.org/question/qti_v2p1/rptemplates/map_response"){
-						selfA = true;
-					}else{
-						selfA = false;
-					}
-		    	}
-		   	})
+		/*To get the question */
+		question = fileXML.children("questiontext").children("text").text();
+
+
+		/* To get array of corrrect answers */
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				var answer = $(this).children("text").text();
+				correctanswerArray.push(answer);
+			}
 		});
+
+		/* To get identifiers */
+
+		elements.push({
+			"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
+			"quiztype":"openAnswer",
+			"selfA": selfA,
+			"question":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
+			},
+			"answer":{
+				"value": correctanswerArray[0],
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
+			}
+		});
+
+		var options = {
+			template : "t2"
+		}
+
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
+
+	var getJSONFromXMLFileTF = function(fileXML,itemBodyContent){
+
+		var elements = [];
+		var question;
+		var correctanswerArray = [];
+
+		/* To get the question*/
+		question = fileXML.children("questiontext").children("text").text();
+
+
+		/*To get array of answers */
+		fileXML.find('answer').each(function(){
+			var answer = $(this).text();
+			answerArray.push(answer);
+		});
+
+
+		/* To get array of corrrect answers */
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				answerArray.push(answer);
+			}
+		});
+
+		
+		elements.push({
+			"id":"article2_zone1",
+			"type":"quiz",
+			"areaid":"left",
+			"quiztype":"openAnswer",
+			"selfA": selfA,
+			"question":{
+				"value": question,
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
+			},
+			"answer":{
+				"value": correctanswerArray[0],
+				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + correctanswerArray[0] + "</span></span></p>\n"
+			}
+		});
+
+		var options = {
+			template : "t2"
+		}
+
+		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
+	};
+
+	var getJSONFromXMLFileNum = function(fileXML,itemBodyContent){
+
+		var elements = [];
+		var question;
+		var correctanswerArray = [];
+		var selfA;
 
 
 
 		/*To get the question */
-		if($(xml).find('prompt').length != 0){
-		$(xml).find('prompt').each(function(){
-			question = $(this).text();
-		});
-		}else{
-			itemBodyContent.children().first().each(function(){
-				question = $(this).text();
-			});	
-		}
+		question = fileXML.children("questiontext").children("text").text();
 
 
 		/* To get array of corrrect answers */
-		$(xml).find('correctResponse value').each(function(){
-			var cAnswer = $(this).text();
-			correctanswerArray.push(cAnswer);
+		fileXML.find('answer').each(function(){
+			if ($(this).attr("fraction") > 0 ){
+				var answer = $(this).children("text").text();
+				correctanswerArray.push(answer);
+			}
 		});
 		
 		elements.push({
@@ -457,8 +408,6 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		return V.Editor.Presentation.generatePresentationScaffold(elements,options);
 	};
 
-
-
 	return {
 		init 						: init,
 		isCompliantXMLFile			: isCompliantXMLFile,
@@ -466,3 +415,19 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 	};
 
 }) (VISH, jQuery);
+
+
+ 		//check from MSQTI
+		// if(itemBody.length != 0){
+		// 	itemBody.each(function(){
+		// 		$(this).each(function(index,attribute){
+		// 			if((((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1) ||(((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1)) {
+		// 				schema = true;
+		// 			} else {
+		// 				return;	
+		// 			}
+		// 		});
+		// 	});
+		// } else {
+		// 	schema = false;
+		// }
