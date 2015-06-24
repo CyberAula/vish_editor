@@ -191,7 +191,7 @@ VISH.Editor = (function(V,$,undefined){
 
 		//If we have to edit
 		if(initialPresentation){
-			presentation = V.Utils.fixPresentation(presentation);
+			var presentation = V.Utils.fixPresentation(presentation);
 			if(presentation===null){
 				$(&quot;#waiting_overlay&quot;).hide();
 				V.Utils.showPNotValidDialog();
@@ -914,35 +914,6 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 	};
-
-	var _uploadPresentationWithNode = function(presentation){
-		var send_type;
-		var url = V.UploadPresentationPath;
-
-		if(draftPresentation){
-			send_type = &#x27;PUT&#x27;; //if we are editing
-			url = url + draftPresentation.id;
-		} else {
-			send_type = &#x27;POST&#x27;; //if it is a new
-		} 
-
-		//POST to /server/presentation/
-		var jsonPresentation = JSON.stringify(presentation);   
-		var params = {
-			&quot;presentation[json]&quot;: jsonPresentation
-		};
-
-		$.ajax({
-			type    : send_type,
-			url     : url,
-			data    : params,
-			success : function(data) {
-				//Redirect
-				V.Editor.Events.allowExitWithoutConfirmation();
-				window.top.location.href = data.url;
-			}
-		});
-	};
 	
 	
 	//////////////////
@@ -1050,6 +1021,18 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
+	var hasBeenPublished = function(){
+		if(initialPresentation){
+			if(!isPresentationDraft()){
+				return true;
+			} else if((typeof draftPresentation[&quot;vishMetadata&quot;] == &quot;object&quot;)&amp;&amp;(draftPresentation[&quot;vishMetadata&quot;][&quot;released&quot;]===&quot;true&quot;)){
+				return true;
+			}
+		} else {
+			return false;
+		}
+	};
+
 	var hasPresentationChanged = function(){
 		try {
 			var objectToCompare;
@@ -1081,6 +1064,7 @@ VISH.Editor = (function(V,$,undefined){
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
+		hasBeenPublished		: hasBeenPublished,
 		getContentAddMode		: getContentAddMode,
 		setContentAddMode		: setContentAddMode,
 		hasInitialPresentation	: hasInitialPresentation,

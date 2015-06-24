@@ -30,15 +30,19 @@ VISH.IframeAPI = (function(V,undefined){
 
 	var init = function(initOptions){
 
-		try {
-			_origin = window.location.href;
-		} catch (e){}
-		_originId = _generateOriginId();
+		if(_initialized===false){
+			try {
+				_origin = window.location.href;
+			} catch (e){}
+			_originId = _generateOriginId();
 
-		if (window.addEventListener){
-			window.addEventListener("message", _onIframeMessageReceived, false);
-		} else if (window.attachEvent){
-			window.attachEvent("message", _onIframeMessageReceived);
+			if (window.addEventListener){
+				window.addEventListener("message", _onIframeMessageReceived, false);
+			} else if (window.attachEvent){
+				window.attachEvent("message", _onIframeMessageReceived);
+			}
+
+			_defineVEConstants();
 		}
 
 		_options = initOptions || {};
@@ -52,8 +56,6 @@ VISH.IframeAPI = (function(V,undefined){
 		} else if(_options.ve===true){
 			_mode = "EXTERNAL";
 		}
-
-		_defineVEConstants();
 
 		if((_options.tracking===true)&&(_mode = "INTERNAL")){
 			enableTracker();
