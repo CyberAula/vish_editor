@@ -161,14 +161,12 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		});
 
 		/* To get identifiers */
-
-
 		if(correctanswerArray.length > 1){
 			nAnswers = true;
 		} else {
 			nAnswers = false;
 		}
-		//TODO: Check arrays well formed
+
 		var choices = [];
 		for (var i = 1; i <= answerArray.length; i++ ){
 			var iChoice;
@@ -176,7 +174,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 				'id': i.toString(), 
 				'value': (answerArray[i-1]).toString() , 
 				'wysiwygValue' :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 
-				'answer': checkAnswer(answerIds[i-1], correctanswerArray)
+				'answer': (correctanswerArray.indexOf(answerArray[i-1]) != -1)
 			};
 			choices.push(iChoice);
 		}
@@ -234,10 +232,6 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		});
 
 		/* To get identifiers */
-
-
-		//we dont have identifiers
-		//now we have to get the choices according to that ID
 
 		//is is for the order?
 		var myHash = [];
@@ -345,8 +339,10 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		/* To get array of corrrect answers */
 		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
-				var answer = $(this).text();
-				correctanswerArray.push(answer);
+				correctanswerArray.push(true);
+			}
+			else{
+				correctanswerArray.push(false);
 			}
 		});
 
@@ -357,7 +353,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 				'id': i.toString(), 
 				'value': (answerArray[i-1]).toString() , 
 				'wysiwygValue' :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + (answerArray[i-1]).toString() + '&shy;</span></span></p>\n', 
-				'answer': checkAnswer(answerIds[i-1], correctanswerArray)
+				'answer': correctanswerArray[i-1]
 			};
 			choices.push(iChoice);
 		}
@@ -366,6 +362,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			"id":"article2_zone1",
 			"type":"quiz",
 			"areaid":"left",
+			"selfA": true,
 			"quiztype":"truefalse",
 			"question":{
 				"value": question,

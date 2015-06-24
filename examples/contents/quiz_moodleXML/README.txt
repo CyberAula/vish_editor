@@ -1,0 +1,2 @@
+This examples were created with Moodle 2.4 and conversion engine between MoodleXML and Vish_quizes was made following this examples.
+Due to MoodleXMl is not a actual standar, it would be considered as a pseudostandard, therefore this was the only way to check the rightness of the conversions.
