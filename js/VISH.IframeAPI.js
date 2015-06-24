@@ -29,9 +29,6 @@ VISH.IframeAPI = (function(V,undefined){
 	//////////////
 
 	var init = function(initOptions){
-		if(_initialized) {
-			return;
-		}
 
 		try {
 			_origin = window.location.href;
