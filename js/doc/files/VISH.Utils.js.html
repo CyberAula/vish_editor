@@ -356,6 +356,9 @@ VISH.Utils = (function(V,undefined){
 			// return null;
 		}
 
+		//Fix license
+		presentation = _fixLicense(presentation);
+
 		return presentation;
 	};
 
@@ -399,6 +402,19 @@ VISH.Utils = (function(V,undefined){
 		}
 
 		return presentation;
+    };
+
+    var _fixLicense = function(presentation){
+		if(typeof presentation.license != &quot;object&quot;){
+			var options = V.Utils.getOptions();
+			var isDraft = (([&quot;string&quot;,&quot;boolean&quot;].indexOf(typeof options.draft) === -1) || (options.draft.toString()===&quot;true&quot;));
+			if(!isDraft){
+				var licenseKey = &quot;cc-by-nc&quot;;
+				presentation.license = {name: V.I18n.getTrans(&quot;i.License_&quot; + licenseKey), key: licenseKey};
+			}
+		}
+
+    	return presentation;
     };
 
 	/*

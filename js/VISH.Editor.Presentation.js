@@ -24,7 +24,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	 * Preview a presentation to insert its slides into the current presentation
 	 */
 	var previewPresentation = function(presentation){
-		V.IframeAPI.init({callback: _onConnect});
+		V.IframeAPI.init({callback: _onConnect, ve:true});
 		V.Editor.Preview.preview({insertMode: true, slideNumberToPreview: 1, presentationJSON: presentation});
 	};
 

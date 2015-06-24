@@ -247,6 +247,26 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Tags: intialized on _onInitialTagsReceived method.
 
+		//License
+		var validLicenseValues = [];
+		$(&quot;#presentation_details_license_select option&quot;).each(function(index,optionTag){
+			validLicenseValues.push($(optionTag).attr(&quot;value&quot;));
+		});
+		var hasLicense = ((typeof presentation.license == &quot;object&quot;)&amp;&amp;(typeof presentation.license.key == &quot;string&quot;)&amp;&amp;(validLicenseValues.indexOf(presentation.license.key)!=-1));
+		if(hasLicense){
+			$(&quot;#presentation_details_license_select&quot;).val(presentation.license.key);
+		}
+
+		//Block license if resource has been already published
+		if(V.Editor.hasBeenPublished()){
+			if(hasLicense){
+				var hasPrivateLicense = (hasLicense &amp;&amp; presentation.license.key === &quot;private&quot;);
+				if(!hasPrivateLicense){
+					$(&quot;#presentation_details_license_select&quot;).attr(&quot;disabled&quot;,&quot;disabled&quot;);
+				}
+			}
+		}
+
 		//Themes
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 
@@ -552,6 +572,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.tags = tags;
 		}
 
+		//License
+		var licenseName = $(&quot;#presentation_details_license_select&quot;).find(&quot;:selected&quot;).text();
+		var licenseKey = $(&quot;#presentation_details_license_select&quot;).val();
+		if((typeof licenseName == &quot;string&quot;)&amp;&amp;(licenseKey)){
+			settings.license = {name: licenseName, key: licenseKey};
+		}
+		
 		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
 		if(typeof  themeNumber == &quot;string&quot;){
 			settings.theme = &quot;theme&quot; + themeNumber;
