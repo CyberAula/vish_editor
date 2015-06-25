@@ -106,7 +106,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 	        		questionArray.push(getJSONFromXMLFileMC(question[n], itemBodyContent)[0]);
 	        		break;
 	    		case "matching":
-					questionArray.push(getJSONFromXMLFileSorting(question[n], itemBodyContent)[0]);
+					notRecognised++;
 	        		break;
 	    		case "truefalse":
 					questionArray.push(getJSONFromXMLFileTF(question[n], itemBodyContent)[0]);
@@ -128,8 +128,11 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 	        		break;
 			}
 		}
-
+		// if( notRecognised > 0){
+		// 	generateDialogNotRecognisedItems(notRecognised, questionArray);
+		// } else{
 		return V.Editor.Presentation.generatePresentationScaffold(questionArray);
+		// }
 	}
 
 
@@ -140,10 +143,10 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var correctanswerArray = [];
 		var nAnswers;
 		var answerIds = [];
-
+		var title;
 		/*To get the question */
 		question = $(fileXML).children("questiontext").children("text").text();
-
+		title = $(fileXML).children("name").children("text").text();
 
 		/*To get array of answers */
 		$(fileXML).find('answer').each(function(){
@@ -186,6 +189,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			"areaid":"left",
 			"quiztype": "multiplechoice",
 			"selfA":true,
+			"title": title,
 			"question":{
 				"value": question,
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
@@ -194,74 +198,6 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			"extras":{
 				"multipleAnswer": nAnswers
 			}
-		});
-
-		var options = {
-			template : "t2"
-		}
-
-		return elements;
-	};
-
-
-
-	var getJSONFromXMLFileSorting = function(fileXML, itemBodyContent){
-		var elements = [];
-		var question;
-		var answerArray = [];
-		var correctanswerArray = [];
-		var answerIds = [];
-
-
-		/*To get the question */
-		question = $(fileXML).children("questiontext").children("text").text();
-
-
-		/*To get array of answers */
-		$(fileXML).find('answer').each(function(){
-			var answer = $(this).text();
-			answerArray.push(answer);
-		});
-
-
-		/* To get array of corrrect answers */
-		$(fileXML).find('answer').each(function(){
-			if ($(this).attr("fraction") > 0 ){
-				answerArray.push(answer);
-			}
-		});
-
-		/* To get identifiers */
-
-		//is is for the order?
-		var myHash = [];
-		for (var i = 1; i <= answerArray.length; i++ ){
-			
-		}
-
-		var choices = [];
-		for (var i = 1; i <= answerArray.length; i++ ){
-			var iChoice;
-			iChoice = {
-				'id': i.toString(), 
-				'value': myHash[correctanswerArray[i-1]] , 
-				'wysiwygValue' :  "<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + myHash[correctanswerArray[i-1]] + '&shy;</span></span></p>\n', 
-				'answer': i.toString()
-			};
-			choices.push(iChoice);
-		}
-
-		elements.push({
-			"id":"article2_zone1",
-			"type":"quiz",
-			"areaid":"left",
-			"quiztype":"sorting",
-			"selfA": true,
-			"question":{
-				"value": question,
-				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
-			},
-			"choices": $.extend([{}], choices)
 		});
 
 		var options = {
@@ -326,12 +262,15 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var answerIds = [];
 
 		/* To get the question*/
-		question = $(fileXML).children("questiontext").children("text").text();
+		question = $(fileXML).children("name").children("text").text();
 
 
 		/*To get array of answers */
-		$(fileXML).find('answer').each(function(){
+		$(fileXML).find('generalfeedback').each(function(){
 			var answer = $(this).text();
+			if (answer.trim() == ""){
+				var answer = $(this).parent().children("questiontext").text()
+			}
 			answerArray.push(answer);
 		});
 
@@ -339,10 +278,11 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		/* To get array of corrrect answers */
 		$(fileXML).find('answer').each(function(){
 			if ($(this).attr("fraction") > 0 ){
-				correctanswerArray.push(true);
-			}
-			else{
-				correctanswerArray.push(false);
+				if ($(this).find("text").text() == "true"){
+					correctanswerArray.push(true);
+				}else{
+					correctanswerArray.push(false);
+				}
 			}
 		});
 
@@ -422,6 +362,20 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		return elements;
 	};
 
+	// var generateDialogNotRecognisedItems = function(notRecognised, questionArray){
+	// 	var options = {};
+	// 	options.width = 375;
+	// 	options.height = 130;
+	// 	options.text = notRecognised + " items couldn't be converted";
+	// 	var button1 = {};
+	// 	button1.text = V.I18n.getTrans("i.yes");
+	// 	button1.callback = function(){
+	// 		V.Editor.Presentation.generatePresentationScaffold(questionArray);
+	// 	}
+	// 	options.buttons = [button1];
+	// 	V.Utils.showDialog(options);
+	// }
+
 	return {
 		init 						: init,
 		isCompliantXMLFile			: isCompliantXMLFile,
@@ -429,19 +383,3 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 	};
 
 }) (VISH, jQuery);
-
-
- 		//check from MSQTI
-		// if(itemBody.length != 0){
-		// 	itemBody.each(function(){
-		// 		$(this).each(function(index,attribute){
-		// 			if((((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1) ||(((attribute.textContent).indexOf("https://moodle.org/pluginfile.php/134/mod_forum/attachment/1105860/Quiz.xsd")) != -1)) {
-		// 				schema = true;
-		// 			} else {
-		// 				return;	
-		// 			}
-		// 		});
-		// 	});
-		// } else {
-		// 	schema = false;
-		// }
