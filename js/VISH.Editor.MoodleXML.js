@@ -96,7 +96,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var notRecognised = 0;
 
 		var options = {
-			template : "t2",
+			template : "t2"
 		}
 
 		for(var n = 0; n < question.length; n++ ){
