@@ -12,7 +12,7 @@ VISH.Editor.Quiz = (function(V,$,undefined){
 		_hiddenLinkToInitQuizSettings = $('<a href="#quizSettings_fancybox" style="display:none"></a>');
 		$(_hiddenLinkToInitQuizSettings).fancybox({
 			'autoDimensions' : false,
-			'height': 360,
+			'height': 400,
 			'width': 400,
 			'scrolling': 'no',
 			'showCloseButton': false,
