@@ -46,6 +46,8 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 				fileType = "xml";
 			} else if(file.type.match("json")){
 				fileType = "json";
+			} else if(file.type.match("application/zip")){
+				fileType = "zip";
 			}
 		} else {
 			//File API is uncapable of recognizing the file type.
@@ -110,14 +112,55 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 							_showErrorDialog(V.I18n.getTrans("i.readJSONfileError"));
 						}
 						break;
+					case "zip":
+		                    var zip = new JSZip(e.target.result);
+		                    var uncompressedfile = zip.file(/.xml/)[0].asText();
+		                    var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(uncompressedfile);
+							var isMoodleXMLCompliant = V.Editor.MoodleXML.isCompliantXMLFile(uncompressedfile);
+							if(isIMSQTICompliant){
+								var json = V.Editor.IMSQTI.getJSONFromXMLFile(uncompressedfile);
+								V.Editor.Presentation.previewPresentation(json);
+							} else if(isMoodleXMLCompliant) {
+								var moodleXMLFileAnalysis = V.Editor.MoodleXML.getJSONFromXMLFile(uncompressedfile);
+								var json = moodleXMLFileAnalysis.json;
+								var questionsSupported = moodleXMLFileAnalysis.questionsSupported;
+								switch(questionsSupported){
+									case "ALL":
+										V.Editor.Presentation.previewPresentation(json);
+										break;
+									case "SEVERAL":
+										//Show dialog and then preview presentation
+										var options = {};
+										options.text = V.I18n.getTrans("i.QuizErrorQuestionsUnsupported");
+										var button1 = {};
+										button1.text = V.I18n.getTrans("i.Ok");
+										button1.callback = function(){
+											V.Editor.Presentation.previewPresentation(json);
+										}
+										options.buttons = [button1];
+										V.Utils.showDialog(options);
+										break;
+									case "NONE":
+									default:
+										_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+										break;
+								}
+							} else {
+								_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+								return;
+							}
+						break;
 					default:
 						_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 						return;
 				}
 			};
 		})(file);
-
+		if(fileType != "zip"){
 		reader.readAsText(file);
+		}else{
+			reader.readAsArrayBuffer(file);
+		}
 	};
 
 	var _showErrorDialog = function(msg){
