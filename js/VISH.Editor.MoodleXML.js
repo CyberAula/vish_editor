@@ -93,47 +93,52 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var xml = $(xmlDoc);
 		var question = xml.find("question");
 		var questionArray = []
-		var notRecognised = 0;
+		var notRecognized = 0;
+		//"ALL" if all questions are supported. "SEVERAL" if some but not all are supported. "NONE" if no questions are supported.
+		var questionsSupported = "ALL";
 
 		var options = {
 			template : "t2"
 		}
 
 		for(var n = 0; n < question.length; n++ ){
-
 			switch(checkQuizType(question[n])){
-	    		case "multichoice":
-	        		questionArray.push(getJSONFromXMLFileMC(question[n], itemBodyContent)[0]);
-	        		break;
-	    		case "matching":
-					notRecognised++;
-	        		break;
-	    		case "truefalse":
+				case "multichoice":
+					questionArray.push(getJSONFromXMLFileMC(question[n], itemBodyContent)[0]);
+					break;
+				case "matching":
+					notRecognized++;
+					break;
+				case "truefalse":
 					questionArray.push(getJSONFromXMLFileTF(question[n], itemBodyContent)[0]);
-	        		break;
-	        	case "shortanswer" :
+					break;
+				case "shortanswer" :
 					questionArray.push(getJSONFromXMLFileSA(question[n], itemBodyContent)[0]);
-	        		break;
-	        	case "numerical" :
+					break;
+				case "numerical" :
 					questionArray.push(getJSONFromXMLFileNum(question[n], itemBodyContent)[0]);
-	        		break;
-	        	case "category":
-	        	case "description" :
-				case "cloze" :
-	        	case "essay" :
-	        		notRecognised++;
-	        		break;
-	        	default :
-	        		notRecognised++;
-	        		break;
+					break;
+				case "category":
+				case "description":
+					break;
+				case "cloze":
+				case "essay":
+				default:
+					notRecognized++;
+					break;
 			}
 		}
-		// if( notRecognised > 0){
-		// 	generateDialogNotRecognisedItems(notRecognised, questionArray);
-		// } else{
-		return V.Editor.Presentation.generatePresentationScaffold(questionArray);
-		// }
-	}
+
+		if(notRecognized > 0){
+			if(questionArray.length === 0){
+				questionsSupported = "NONE";
+			} else {
+				questionsSupported = "SEVERAL";
+			}
+		}
+
+		return {json: V.Editor.Presentation.generatePresentationScaffold(questionArray), questionsSupported: questionsSupported};
+	};
 
 
 	var getJSONFromXMLFileMC = function(fileXML, itemBodyContent){
@@ -362,19 +367,6 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		return elements;
 	};
 
-	// var generateDialogNotRecognisedItems = function(notRecognised, questionArray){
-	// 	var options = {};
-	// 	options.width = 375;
-	// 	options.height = 130;
-	// 	options.text = notRecognised + " items couldn't be converted";
-	// 	var button1 = {};
-	// 	button1.text = V.I18n.getTrans("i.yes");
-	// 	button1.callback = function(){
-	// 		V.Editor.Presentation.generatePresentationScaffold(questionArray);
-	// 	}
-	// 	options.buttons = [button1];
-	// 	V.Utils.showDialog(options);
-	// }
 
 	return {
 		init 						: init,

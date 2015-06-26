@@ -73,15 +73,34 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 							var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
 							V.Editor.Presentation.previewPresentation(json);
 						} else if(isMoodleXMLCompliant) {
-							var json = V.Editor.MoodleXML.getJSONFromXMLFile(e.target.result);
-							V.Editor.Presentation.previewPresentation(json);
-						}
-						 else
-						{
+							var moodleXMLFileAnalysis = V.Editor.MoodleXML.getJSONFromXMLFile(e.target.result);
+							var json = moodleXMLFileAnalysis.json;
+							var questionsSupported = moodleXMLFileAnalysis.questionsSupported;
+							switch(questionsSupported){
+								case "ALL":
+									V.Editor.Presentation.previewPresentation(json);
+									break;
+								case "SEVERAL":
+									//Show dialog and then preview presentation
+									var options = {};
+									options.text = V.I18n.getTrans("i.QuizErrorQuestionsUnsupported");
+									var button1 = {};
+									button1.text = V.I18n.getTrans("i.Ok");
+									button1.callback = function(){
+										V.Editor.Presentation.previewPresentation(json);
+									}
+									options.buttons = [button1];
+									V.Utils.showDialog(options);
+									break;
+								case "NONE":
+								default:
+									_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+									break;
+							}
+						} else {
 							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 							return;
 						}
-						//IMS QTI?
 						break;
 					case "json":
 						try {
