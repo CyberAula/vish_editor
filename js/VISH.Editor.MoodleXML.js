@@ -127,14 +127,16 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 					notRecognized++;
 					break;
 			}
-		}
+		};
 
-		if(notRecognized > 0){
-			if(questionArray.length === 0){
-				questionsSupported = "NONE";
-			} else {
+		if(questionArray.length > 0){
+			if(notRecognized > 0){
 				questionsSupported = "SEVERAL";
+			} else {
+				questionsSupported = "ALL";
 			}
+		} else {
+			questionsSupported = "NONE";
 		}
 
 		return {json: V.Editor.Presentation.generatePresentationScaffold(questionArray), questionsSupported: questionsSupported};
