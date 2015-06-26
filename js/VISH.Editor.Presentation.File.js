@@ -163,20 +163,26 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 						}
 						else if (uncompressedfile.length > 1 ){
 							var quizesArray = [];
+
 							for (var i = 0; i < uncompressedfile.length; i++) {
 								if(uncompressedfile[i].name != "imsmanifest.xml"){
 							    	var iterationFile = uncompressedfile[i].asText();
 							    	var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(iterationFile);
 							    	if (isIMSQTICompliant){
 							    		var json = V.Editor.IMSQTI.getJSONFromXMLFile(iterationFile);
-							    			quizesArray.push(json.slides[0]);
+							    		quizesArray.push(json.slides[0]);
 							    	} 
 							    }
 							}
 
-							var finalJson = {"VEVersion": "0.9.1", "type": "presentation", "theme": "theme1", "slides": quizesArray };
-							
-							V.Editor.Presentation.previewPresentation(finalJson);
+							if (quizesArray.length > 0){
+								var finalJson = {"VEVersion": "0.9.1", "type": "presentation", "theme": "theme1", "slides": quizesArray };
+								V.Editor.Presentation.previewPresentation(finalJson);
+
+							}else{
+								_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+							}
+
 						} else {
 							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 						}
