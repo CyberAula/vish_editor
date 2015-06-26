@@ -113,15 +113,26 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 						}
 						break;
 					case "zip":
+						//parse Zip
+						try{
 		                    var zip = new JSZip(e.target.result);
-		                    var uncompressedfile = zip.file(/.xml/)[0].asText();
-		                    var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(uncompressedfile);
-							var isMoodleXMLCompliant = V.Editor.MoodleXML.isCompliantXMLFile(uncompressedfile);
+		                    var uncompressedfile = zip.file(/.xml/);
+		                    }
+		                catch(e){
+		                	_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+						return;
+		                }
+
+	                	if (uncompressedfile.length == 1){
+	                		targetFile = uncompressedfile[0].asText();
+
+		                    var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(targetFile);
+							var isMoodleXMLCompliant = V.Editor.MoodleXML.isCompliantXMLFile(targetFile);
 							if(isIMSQTICompliant){
-								var json = V.Editor.IMSQTI.getJSONFromXMLFile(uncompressedfile);
+								var json = V.Editor.IMSQTI.getJSONFromXMLFile(targetFile);
 								V.Editor.Presentation.previewPresentation(json);
 							} else if(isMoodleXMLCompliant) {
-								var moodleXMLFileAnalysis = V.Editor.MoodleXML.getJSONFromXMLFile(uncompressedfile);
+								var moodleXMLFileAnalysis = V.Editor.MoodleXML.getJSONFromXMLFile(targetFile);
 								var json = moodleXMLFileAnalysis.json;
 								var questionsSupported = moodleXMLFileAnalysis.questionsSupported;
 								switch(questionsSupported){
@@ -149,6 +160,26 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 								_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 								return;
 							}
+						}
+						else if (uncompressedfile.length > 1 ){
+							var quizesArray = [];
+							for (var i = 0; i < uncompressedfile.length; i++) {
+								if(uncompressedfile[i].name != "imsmanifest.xml"){
+							    	var iterationFile = uncompressedfile[i].asText();
+							    	var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(iterationFile);
+							    	if (isIMSQTICompliant){
+							    		var json = V.Editor.IMSQTI.getJSONFromXMLFile(iterationFile);
+							    			quizesArray.push(json.slides[0]);
+							    	} 
+							    }
+							}
+
+							var finalJson = {"VEVersion": "0.9.1", "type": "presentation", "theme": "theme1", "slides": quizesArray };
+							
+							V.Editor.Presentation.previewPresentation(finalJson);
+						} else {
+							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+						}
 						break;
 					default:
 						_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
