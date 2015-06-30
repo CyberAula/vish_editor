@@ -15,7 +15,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 			// V.Debugging.log(VEMessage);
 			var VEMessageObject = JSON.parse(VEMessage);
 			if(VEMessageObject.data.VEevent===V.Constant.Event.onSelectedSlides){
-				V.Messenger.VE.processVEMessage(VEMessageObject);
+				V.EventsNotifier.notifyEvent(V.Constant.Event.onSelectedSlides,VEMessageObject.data.params,true);
 			}
 		});
 	};
@@ -24,7 +24,7 @@ VISH.Editor.Presentation = (function(V,$,undefined){
 	 * Preview a presentation to insert its slides into the current presentation
 	 */
 	var previewPresentation = function(presentation){
-		V.IframeAPI.init({callback: _onConnect, ve:true});
+		V.IframeAPI.init({callback: _onConnect, ve: true});
 		V.Editor.Preview.preview({insertMode: true, slideNumberToPreview: 1, presentationJSON: presentation});
 	};
 

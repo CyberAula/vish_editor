@@ -69,16 +69,13 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 			return function(e){
 				switch(fileType){
 					case "xml":
-						var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(e.target.result);
-						var isMoodleXMLCompliant = V.Editor.MoodleXML.isCompliantXMLFile(e.target.result);
-						if(isIMSQTICompliant){
+						if(V.Editor.IMSQTI.isCompliantXMLFile(e.target.result)){
 							var json = V.Editor.IMSQTI.getJSONFromXMLFile(e.target.result);
 							V.Editor.Presentation.previewPresentation(json);
-						} else if(isMoodleXMLCompliant) {
+						} else if(V.Editor.MoodleXML.isCompliantXMLFile(e.target.result)) {
 							var moodleXMLFileAnalysis = V.Editor.MoodleXML.getJSONFromXMLFile(e.target.result);
 							var json = moodleXMLFileAnalysis.json;
-							var questionsSupported = moodleXMLFileAnalysis.questionsSupported;
-							switch(questionsSupported){
+							switch(moodleXMLFileAnalysis.questionsSupported){
 								case "ALL":
 									V.Editor.Presentation.previewPresentation(json);
 									break;
@@ -104,6 +101,7 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 							return;
 						}
 						break;
+
 					case "json":
 						try {
 							var json = JSON.parse(e.target.result);
@@ -112,30 +110,26 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 							_showErrorDialog(V.I18n.getTrans("i.readJSONfileError"));
 						}
 						break;
+
 					case "zip":
-						//parse Zip
-						try{
-		                    var zip = new JSZip(e.target.result);
-		                    var uncompressedfile = zip.file(/.xml/);
-		                    }
-		                catch(e){
-		                	_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
-						return;
-		                }
+						try {
+							var zip = new JSZip(e.target.result);
+							var uncompressedfile = zip.file(/.xml/);
+						} catch(e) {
+							_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
+							return;
+						}
 
-	                	if (uncompressedfile.length == 1){
-	                		targetFile = uncompressedfile[0].asText();
+						if (uncompressedfile.length == 1){
+							var targetFile = uncompressedfile[0].asText();
 
-		                    var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(targetFile);
-							var isMoodleXMLCompliant = V.Editor.MoodleXML.isCompliantXMLFile(targetFile);
-							if(isIMSQTICompliant){
+							if(V.Editor.IMSQTI.isCompliantXMLFile(targetFile)){
 								var json = V.Editor.IMSQTI.getJSONFromXMLFile(targetFile);
 								V.Editor.Presentation.previewPresentation(json);
-							} else if(isMoodleXMLCompliant) {
+							} else if(V.Editor.MoodleXML.isCompliantXMLFile(targetFile)) {
 								var moodleXMLFileAnalysis = V.Editor.MoodleXML.getJSONFromXMLFile(targetFile);
 								var json = moodleXMLFileAnalysis.json;
-								var questionsSupported = moodleXMLFileAnalysis.questionsSupported;
-								switch(questionsSupported){
+								switch(moodleXMLFileAnalysis.questionsSupported){
 									case "ALL":
 										V.Editor.Presentation.previewPresentation(json);
 										break;
@@ -160,26 +154,23 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 								_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 								return;
 							}
-						}
-						else if (uncompressedfile.length > 1 ){
+						} else if (uncompressedfile.length > 1 ){
 							var quizesArray = [];
 
 							for (var i = 0; i < uncompressedfile.length; i++) {
 								if(uncompressedfile[i].name != "imsmanifest.xml"){
-							    	var iterationFile = uncompressedfile[i].asText();
-							    	var isIMSQTICompliant = V.Editor.IMSQTI.isCompliantXMLFile(iterationFile);
-							    	if (isIMSQTICompliant){
-							    		var json = V.Editor.IMSQTI.getJSONFromXMLFile(iterationFile);
-							    		quizesArray.push(json.slides[0]);
-							    	} 
-							    }
+									var iterationFile = uncompressedfile[i].asText();
+									if (V.Editor.IMSQTI.isCompliantXMLFile(iterationFile)){
+										var json = V.Editor.IMSQTI.getJSONFromXMLFile(iterationFile);
+										quizesArray.push(json.slides[0]);
+									}
+								}
 							}
 
 							if (quizesArray.length > 0){
 								var finalJson = {"VEVersion": "0.9.1", "type": "presentation", "theme": "theme1", "slides": quizesArray };
 								V.Editor.Presentation.previewPresentation(finalJson);
-
-							}else{
+							} else {
 								_showErrorDialog(V.I18n.getTrans("i.NoSupportedFileError"));
 							}
 
@@ -193,9 +184,10 @@ VISH.Editor.Presentation.File = (function(V,$,undefined){
 				}
 			};
 		})(file);
+
 		if(fileType != "zip"){
-		reader.readAsText(file);
-		}else{
+			reader.readAsText(file);
+		} else {
 			reader.readAsArrayBuffer(file);
 		}
 	};

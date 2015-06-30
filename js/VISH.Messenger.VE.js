@@ -32,23 +32,23 @@ VISH.Messenger.VE = (function(V,undefined){
 		switch(data.VEevent){
 			case V.Constant.Event.onGoToSlide:
 				if((data.params)&&(data.params.slideNumber)){
-						V.Slides.goToSlide(data.params.slideNumber,false);
+					V.Slides.goToSlide(data.params.slideNumber,false);
 				}
 				break;
 			case V.Constant.Event.onPlayVideo:
 				if((data.params)&&(data.params.videoId)){
-						if((data.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=data.params.slideNumber)){
-							V.Slides.goToSlide(data.params.slideNumber,false);
-						}
-						V.Video.playVideo(data.params.videoId,data.params.currentTime,false);
+					if((data.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=data.params.slideNumber)){
+						V.Slides.goToSlide(data.params.slideNumber,false);
+					}
+					V.Video.playVideo(data.params.videoId,data.params.currentTime,false);
 				}
 				break;
 			case V.Constant.Event.onPauseVideo:
 				if((data.params)&&(data.params.videoId)){
-						if((data.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=data.params.slideNumber)){
-							V.Slides.goToSlide(data.params.slideNumber,false);
-						}
-						V.Video.pauseVideo(data.params.videoId,data.params.currentTime,false);
+					if((data.params.slideNumber)&&(V.Slides.getCurrentSlideNumber()!=data.params.slideNumber)){
+						V.Slides.goToSlide(data.params.slideNumber,false);
+					}
+					V.Video.pauseVideo(data.params.videoId,data.params.currentTime,false);
 				}
 				break;
 			case V.Constant.Event.onSeekVideo:
@@ -80,12 +80,12 @@ VISH.Messenger.VE = (function(V,undefined){
 				}
 				break;
 			case V.Constant.Event.allowExitWithoutConfirmation:
-					if(V.Editing){
-						V.Editor.Events.allowExitWithoutConfirmation();
-					}
+				if(V.Editing){
+					V.Editor.Events.allowExitWithoutConfirmation();
+				}
 				break;
 			case V.Constant.Event.onSelectedSlides:
-					V.EventsNotifier.notifyEvent(V.Constant.Event.onSelectedSlides,data.params,true);
+				//Do nothing (handled in V.Editor.Presentation)
 				break;
 			case V.Constant.Event.onVEFocusChange:
 				break;
