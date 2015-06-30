@@ -14,6 +14,7 @@ VISH.IframeMessenger = (function(V,undefined){
 		if(_initialized){
 			return;
 		}
+		_initialized = true;
 
 		try {
 			_origin = window.location.href;
@@ -27,8 +28,6 @@ VISH.IframeMessenger = (function(V,undefined){
 		}
 
 		V.EventsNotifier.registerCallback(V.Constant.Event.onSendIframeMessage,sendIframeMessage);
-
-		_initialized = true;
 	};
 
 	var sendIframeMessage = function(iframeMessage){
