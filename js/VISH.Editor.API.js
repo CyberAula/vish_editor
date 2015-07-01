@@ -242,7 +242,21 @@ VISH.Editor.API = (function(V,$,undefined){
 			},
 			success: function(data){
 				if((data)&&(data.url)){
+					if (data.xml){
+						var element = document.createElement('a');
+						  element.setAttribute('href', 'data:application/xml;charset=utf-8,' + encodeURIComponent(data.xml));
+						  element.setAttribute('download', data.filename);
+
+						  element.style.display = 'none';
+						  document.body.appendChild(element);
+
+						  element.click();
+						  document.body.removeChild(element);
+						  
+					} else {
 					_downloadFile(data.url);
+					}
+
 					if(typeof successCallback == "function"){
 						successCallback();
 					}
