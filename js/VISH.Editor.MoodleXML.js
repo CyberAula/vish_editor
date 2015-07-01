@@ -273,13 +273,20 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 
 
 		/*To get array of answers */
+		if ( $(fileXML).find('generalfeedback').length != 0){
 		$(fileXML).find('generalfeedback').each(function(){
 			var answer = $(this).text();
 			if (answer.trim() == ""){
-				var answer = $(this).parent().children("questiontext").text()
+				var answer = $(this).parent().children("questiontext").text();
 			}
 			answerArray.push(answer);
 		});
+		} else {
+			$(fileXML).find('questiontext').each(function(){
+				var answer = $(this).text();
+				answerArray.push(answer);
+			});
+		}
 
 
 		/* To get array of corrrect answers */
