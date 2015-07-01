@@ -151,6 +151,7 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		var nAnswers;
 		var answerIds = [];
 		var title;
+		var shuffleanswers = false;
 		/*To get the question */
 		question = $(fileXML).children("questiontext").children("text").text();
 		title = $(fileXML).children("name").children("text").text();
@@ -176,6 +177,9 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 		} else {
 			nAnswers = false;
 		}
+		if ($(fileXML).find('shuffleanswers').text() == 1){
+			shuffleanswers = true;
+		}
 
 		var choices = [];
 		for (var i = 1; i <= answerArray.length; i++ ){
@@ -195,13 +199,16 @@ VISH.Editor.MoodleXML = (function(V,$,undefined){
 			"type":"quiz",
 			"areaid":"left",
 			"quiztype": "multiplechoice",
+			"settings": {
+				"shuffleChoices": shuffleanswers
+			},
 			"selfA":true,
 			"title": title,
 			"question":{
 				"value": question,
 				"wysiwygValue":"<p style=\"text-align:left;\">\n\t<span autocolor=\"true\" style=\"color:#000\"><span style=\"font-size:38px;\">&shy;" + question + "</span></span></p>\n"
 			},
-			"choices": $.extend([{}], choices), 
+			"choices": $.extend([{}], choices),
 			"extras":{
 				"multipleAnswer": nAnswers
 			}
