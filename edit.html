@@ -506,7 +506,7 @@
 				</div>
 
 				<div id="presentation_details_fields_row2">
-					<button id='pedagogical_clasification_button' type='button' class='button' i18n-key="i.PedagogicalAspects">Pedagogical Aspects</button>
+					<button id='pedagogical_clasification_button' type='button' class='button' i18n-key="i.advancedSettings">Advanced</button>
 					<button id='fill_details_later_button' type='button' class='button' i18n-key="i.Filllater">Fill later</button>
 					<button id='save_presentation_details' disabled="true" type='button' class='button buttonDisabledOnSettings' title="Write a title and choose an avatar to continue" i18n-key="i.Continue">Continue</button>
 				</div>
@@ -514,11 +514,21 @@
 
 
 			<div id="pedagogical_options_fields" style="display:none">
+				
 				<img class='help_in_settings' id='help_pedagogical_selection' src="/images/vicons/helptutorial_circle_blank.png"/>
 				<div>
-					<p class="pedagogical_title" i18n-key="i.PedagogicalAspects">Pedagogical Aspects</p>
+					<p class="pedagogical_title" i18n-key="i.advancedSettings">Advanced</p>
 				</div>
 
+				<div class="fancy_tabs" id="advanced_tabs">
+				  <ul>
+				    <li><a href="#pedagogical-options-tab">Pedagogical</a></li>
+				    <li><a href="#publication-tab">Publication</a></li>
+				    <li><a href="#rte-tab">RTE</a></li>
+				  </ul>
+				 </div>
+
+				<div id="pedagogical-options-tab">
 				<div id="pedagogical_options_fields_row1">
 					
 					<div id="pedagogical_options_fields_row1_column1">
@@ -655,7 +665,7 @@
 				<div id="pedagogical_options_fields_row3">
 					<button id='done_in_pedagogical' type='button' class='button' i18n-key="i.Done">Done</button>
 				</div>
-
+				</div>
 			</div>
 
 		</form>
