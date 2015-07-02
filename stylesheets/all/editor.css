@@ -374,6 +374,9 @@ div#tagBoxIntro .tagit {
 	height: 59px;
 }
 
+#catalog_button {
+	margin-left: 228px;
+}
 
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
 	position: absolute;
@@ -422,7 +425,7 @@ div#tagBoxIntro .tagit {
 }
 
 #metadata_options_fields_row2 {
-	height: 224px;
+	height: 202px;
 }
 
 #metadata_options_fields_row3 {
