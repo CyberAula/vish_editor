@@ -663,12 +663,20 @@
 				</div>
 			 	</div>
 																																				
-			 	<div id="publication-tab">
-					
+			 	<div id="publication-tab" style="display:none">
+			 	<div id="publication_title">
+			 		<p>Allow other users to:</p>
+			 	</div>
+					<div id="publication_content"><br>
+						<input type="checkbox" name="clone" value="allow_clone" i18n-key="i.allowClone" checked> Clone<br>
+						<input type="checkbox" name="comment" value="allow_comment" i18n-key="i.allowComment" checked> Comment<br>
+						<input type="checkbox" name="download" value="allow_download" i18n-key="i.allowDownload" checked> Download<br>
+					<br>
+					</div>
 				</div>
 
-				<div id="rte-tab">
-																																									
+				<div id="rte-tab" style="display:none">
+					<input type="checkbox" name="clone" value="allow_clone" i18n-key="i.allowFollowing" checked>Allow to follow this object after exporting as SCORM<br>		
 				</div>
 
 				<div id="pedagogical_options_fields_row3">
