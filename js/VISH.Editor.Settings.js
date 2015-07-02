@@ -636,6 +636,20 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	};
 
 	/**
+	 *
+	 */
+	 var advancedTabs = function(event){
+	 	event.preventDefault();
+	 	if($(this).hasClass != true){
+	 		$(this).closest('ul').find('.fancy_selected').removeClass('fancy_selected');
+	 		$(this).addClass("fancy_selected");
+		 	$("#pedagogical_options_fields").children('.active').removeClass('active').hide();
+		 	var attr = "#" + $(this).attr("tab");
+		 	$(attr).addClass("active").show();
+	 	}
+	 };
+
+	/**
 	 * function called when the user clicks on the pedagogical options button
 	 */
 	 var onPedagogicalButtonClicked = function(event){
@@ -675,6 +689,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,
 		onTLTchange								: onTLTchange,
+		advancedTabs							: advancedTabs,
 		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		getTags									: getTags,

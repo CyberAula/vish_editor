@@ -522,13 +522,13 @@
 
 				<div class="fancy_tabs" id="advanced_tabs">
 				  <ul>
-				    <li><a href="#pedagogical-options-tab">Pedagogical</a></li>
-				    <li><a href="#publication-tab">Publication</a></li>
-				    <li><a href="#rte-tab">RTE</a></li>
+				    <li><a class='js_tabs_asettings fancy_selected' tab="pedagogical-options-tab" href="#">Pedagogical</a></li>
+				    <li><a class='js_tabs_asettings' tab="publication-tab" href="#">Publication</a></li>
+				    <li><a class='js_tabs_asettings' tab="rte-tab" href="#">RTE</a></li>
 				  </ul>
 				 </div>
 
-				<div id="pedagogical-options-tab">
+				<div id="pedagogical-options-tab" class="active">
 				<div id="pedagogical_options_fields_row1">
 					
 					<div id="pedagogical_options_fields_row1_column1">
@@ -661,11 +661,21 @@
 						<textarea id='educational_objectives_textarea' name="educational_objectives" placeholder="Please describe the educational objectives you aim to fulfil by using this excursion..." i18n-key="i.EducationalObjectivesPlaceholder"></textarea>
 					</div>
 				</div>
+			 	</div>
+																																				
+			 	<div id="publication-tab">
+					
+				</div>
+
+				<div id="rte-tab">
+																																									
+				</div>
 
 				<div id="pedagogical_options_fields_row3">
 					<button id='done_in_pedagogical' type='button' class='button' i18n-key="i.Done">Done</button>
 				</div>
-				</div>
+							
+				
 			</div>
 
 		</form>
