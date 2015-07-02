@@ -188,7 +188,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//Themes
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 
-		//Pedagogical
+		//Metadata
 		
 		if(presentation.language){
 			$("#language_tag").val(presentation.language);
@@ -511,7 +511,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.animation = V.Constant.Animations.Default;
 		}
 
-		//Pedagogical fields
+		//Metadata fields
 		var language = $("#language_tag").val();
 		if(typeof language == "string"){
 			settings.language = language;
@@ -643,27 +643,27 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	if($(this).hasClass != true){
 	 		$(this).closest('ul').find('.fancy_selected').removeClass('fancy_selected');
 	 		$(this).addClass("fancy_selected");
-		 	$("#pedagogical_options_fields").children('.active').removeClass('active').hide();
+		 	$("#metadata_options_fields").children('.active').removeClass('active').hide();
 		 	var attr = "#" + $(this).attr("tab");
 		 	$(attr).addClass("active").show();
 	 	}
 	 };
 
 	/**
-	 * function called when the user clicks on the pedagogical options button
+	 * function called when the user clicks on the metadata options button
 	 */
-	 var onPedagogicalButtonClicked = function(event){
+	 var onMetadataButtonClicked = function(event){
 	 	event.preventDefault();
 	 	$("#presentation_details_fields").slideUp();
-	 	$("#pedagogical_options_fields").slideDown();
+	 	$("#metadata_options_fields").slideDown();
 	 };
 
 	 /**
-	 * function called when the user clicks on the done button in the pedagogical options panel
+	 * function called when the user clicks on the done button in the metadata options panel
 	 */
-	 var onDonePedagogicalButtonClicked = function(event){
+	 var onDoneMetadataButtonClicked = function(event){
 	 	event.preventDefault();
-	 	$("#pedagogical_options_fields").slideUp();
+	 	$("#metadata_options_fields").slideUp();
 	 	$("#presentation_details_fields").slideDown();
 	 };
 
@@ -694,8 +694,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		getTags									: getTags,
 		saveSettings							: saveSettings,
-		onPedagogicalButtonClicked   			: onPedagogicalButtonClicked,
-		onDonePedagogicalButtonClicked 			: onDonePedagogicalButtonClicked,
+		onMetadataButtonClicked   			: onMetadataButtonClicked,
+		onDoneMetadataButtonClicked 			: onDoneMetadataButtonClicked,
 		selectAnimation 						: selectAnimation,
 		addContributor							: addContributor
 	};

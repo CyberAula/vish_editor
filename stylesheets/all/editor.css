@@ -375,11 +375,11 @@ div#tagBoxIntro .tagit {
 }
 
 
-#pedagogical_clasification_button, #fill_details_later_button, #save_presentation_details {
+#metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
 	position: absolute;
 }
 
-#pedagogical_clasification_button {
+#metadata_clasification_button {
 	left: 36px;
 	width: 220px;
 }
@@ -397,18 +397,18 @@ div#tagBoxIntro .tagit {
 	right: 20px;
 }
 
-#pedagogical-options-tab{
+#metadata-options-tab{
 	margin-top: 20px;
 }
 
-#pedagogical_options_fields {
+#metadata_options_fields {
 	overflow: hidden;
 	font-size: 1.4em;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: 300;
 } 
 
-.pedagogical_title {
+.metadata_title {
 	color: #B6B6B6;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 2em;
@@ -417,26 +417,26 @@ div#tagBoxIntro .tagit {
 	margin-bottom: 4%;
 }
 
-#pedagogical_options_fields_row1 {
+#metadata_options_fields_row1 {
 	height: 250px;
 }
 
-#pedagogical_options_fields_row2 {
+#metadata_options_fields_row2 {
 	height: 224px;
 }
 
-#pedagogical_options_fields_row3 {
+#metadata_options_fields_row3 {
 	height: 55px;
 }
 
-#pedagogical_options_fields_row1_column1 {
+#metadata_options_fields_row1_column1 {
 	float: left;
 	width: 303px;
 	height: 165px;
 	margin-left: 33px;
 }
 
-#pedagogical_options_fields_row1_column2 {
+#metadata_options_fields_row1_column2 {
 	float: left;
 	width: 338px;
 	height: 246px;
@@ -446,7 +446,7 @@ div#tagBoxIntro .tagit {
 	margin-right: -19px;
 }
 
-#pedagogical_options_fields_row1_column3 {
+#metadata_options_fields_row1_column3 {
 	float: left;
 	margin-left: 7px;
 	height: 245px;
@@ -585,7 +585,7 @@ input.slider_range_input {
 	text-align: center;
 }
 
-#done_in_pedagogical {
+#done_in_metadata {
 	position: absolute;
 	right: 23px;
 	font-size: 13px;
@@ -2239,7 +2239,7 @@ div.object_wrapper {
 	top: 217px;
 }
 
-.tut_pedagogical {
+.tut_metadata {
 	width: 700px;
 	left: 50%;
 	margin-left: -350px;

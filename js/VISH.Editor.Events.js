@@ -41,8 +41,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 			
 			$(document).on('keyup', '#presentation_details_input_title', V.Editor.Settings.onKeyUpOnTitle);
 			$(document).on('keyup', '#presentation_details_preview_addtitle_input', V.Editor.Settings.onKeyUpOnPreviewTitle);
-			$(document).on('click', '#pedagogical_clasification_button', V.Editor.Settings.onPedagogicalButtonClicked);
-			$(document).on('click', '#done_in_pedagogical', V.Editor.Settings.onDonePedagogicalButtonClicked);
+			$(document).on('click', '#metadata_clasification_button', V.Editor.Settings.onMetadataButtonClicked);
+			$(document).on('click', '#done_in_metadata', V.Editor.Settings.onDoneMetadataButtonClicked);
 			$(document).on('click', '.js_tabs_asettings', V.Editor.Settings.advancedTabs);
 
 			$(document).on('click', '#fill_details_later_button', function(event){
@@ -341,9 +341,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_in_settings_help', 'bottom');
 		});
 
-		//Help in pedagogical options settings	
-		$(document).on('click','#help_pedagogical_selection', function(){
-			V.Tour.startTourWithId('help_pedagogical_selection_help', 'bottom');
+		//Help in metadata options settings	
+		$(document).on('click','#help_metadata_selection', function(){
+			V.Tour.startTourWithId('help_metadata_selection_help', 'bottom');
 		});
 
 		//Help inserting images [URL, Upload, ViSH, Flickr, LRE]

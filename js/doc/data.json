@@ -737,13 +737,13 @@
         {
             "file": "VISH.Editor.Settings.js",
             "line": 638,
-            "description": "function called when the user clicks on the pedagogical options button",
+            "description": "function called when the user clicks on the metadata options button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
             "line": 647,
-            "description": "function called when the user clicks on the done button in the pedagogical options panel",
+            "description": "function called when the user clicks on the done button in the metadata options panel",
             "class": "VISH.Editor"
         },
         {
@@ -1990,11 +1990,11 @@
             "line": " VISH.Editor.Settings.js:435"
         },
         {
-            "message": "Missing item type\nfunction called when the user clicks on the pedagogical options button",
+            "message": "Missing item type\nfunction called when the user clicks on the metadata options button",
             "line": " VISH.Editor.Settings.js:638"
         },
         {
-            "message": "Missing item type\nfunction called when the user clicks on the done button in the pedagogical options panel",
+            "message": "Missing item type\nfunction called when the user clicks on the done button in the metadata options panel",
             "line": " VISH.Editor.Settings.js:647"
         },
         {
