@@ -333,6 +333,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	/// Fancy Box Functions
 	/////////////////////////
 
+	var loadTabTimer;
+
 	/**
 	 * Function to load a tab and its content in the fancybox
 	 * also changes the help button to show the correct help
@@ -349,9 +351,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		//select the correct one
 		$("#" + tab_id).addClass("fancy_selected");
 		//hide previous help button
-		$(".help_in_fancybox").hide();
+		$(".help_in_fancybox").not("#"+ tab_id + "_help").hide();
 
-		//Submodule callbacks	
+		//Submodule callbacks
 		switch (tab_id) {
 			case "tab_presentations_repo":
 				V.Editor.Presentation.Repository.beforeLoadTab();
@@ -399,6 +401,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 		//show correct one
 		$("#"+ tab_id + "_help").show();
+
+		//Fix occasionally help img bug on Google Chrome
+		if(typeof loadTabTimer != "undefined"){
+			clearTimeout(loadTabTimer);
+		}
+		loadTabTimer = setTimeout(function(){
+			if($("#"+ tab_id + "_help").length > 0 && !$("#"+ tab_id + "_help").is(":visible") && $("#"+ tab_id + "_content").is(":visible")){
+				$("#"+ tab_id + "_help").hide().show(1);
+			}
+		},0);
 
 		//Submodule callbacks	
 		switch (tab_id) {
