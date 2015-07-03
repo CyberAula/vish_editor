@@ -44,6 +44,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click', '#metadata_clasification_button', V.Editor.Settings.onMetadataButtonClicked);
 			$(document).on('click', '#done_in_metadata', V.Editor.Settings.onDoneMetadataButtonClicked);
 			$(document).on('click', '.js_tabs_asettings', V.Editor.Settings.advancedTabs);
+			$(document).on('click', '#catalog_button', V.Editor.Settings.onCatalogButtonClicked);
+			$(document).on('click', '#catalog_done_button', V.Editor.Settings.onDoneCatalogButtonClicked);
 
 			$(document).on('click', '#fill_details_later_button', function(event){
 				event.preventDefault();

@@ -378,8 +378,35 @@ div#tagBoxIntro .tagit {
 	margin-top: 7px;
 }
 
+#catalog_title{
+  width: 85%;
+  position: relative;
+  font-family: 'Open Sans', arial, sans-serif;
+  margin: 0px;
+  font-size: 19px;
+  color: #9B999D;
+}
+
+#catalog_tags{
+	width: 87%;
+}
+
 #catalog_button {
-	margin-left: 228px;
+	position: absolute;
+  	left: 635px;
+  	top: 402px;
+}
+
+#catalog_content{
+  display: none;
+  background: rgb(221, 221, 221);
+  height: 301px;
+  width: 270px;
+  z-index: 1162;
+  position: absolute;
+  left: 40%;
+  top: 25%;
+  padding-left: 32px;
 }
 
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {

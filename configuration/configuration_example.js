@@ -70,7 +70,8 @@ var getOptions = function(){
 		configuration["LRE_path"] = "http://localhost:3000/lre/search";
 		configuration["SoundCloud"] = true;
 		configuration["SoundCloudAPIKEY"] = 'SoundcloudAPIKey';
-
+		configuration["catalog"] = ["Art", "Astronomy", "Biology", "Chemistry", "Citizenship", "Classical Languages", "Cross Curricular Education", "Computer Science", "General Culture", "Economics", "Education", "Electronics", "Environmental Education", "Ethics", "Foreign Languages", "Geography", "Geology", "Health Education", "History", "Home Economics", "Literature", "Law", "Mathematics", "Music", "Natural Sciences", "Philosophy", "Physical Education", "Physics", "Politics", "Psychology", "Religion", "Social Sciences", "Software Engineering", "Technology", "Telecommunications"];
+		
 		/////////////////////
 		// Features enabled
 		/////////////////////

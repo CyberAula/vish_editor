@@ -497,7 +497,7 @@
 								<ul id="tagindex" class="tagList"></ul>
 							</div>
 						</div>
-						    <div><span class="presentation_details_text">Attatchment</span></div>
+						    <div><span class="presentation_details_text" i18n-key="i.Attatchment" >Attatchment</span></div>
 						    <input type="file" name="fileToUpload" id="attatchment_file">
 					</div>
 
@@ -506,8 +506,6 @@
 						<div id="scrollbar_themes_list"></div>
 					</div>
 				</div>
-
-				
 
 				<div id="presentation_details_fields_row2">
 					<button id='metadata_clasification_button' type='button' class='button' i18n-key="i.advancedSettings">Advanced</button>
@@ -526,8 +524,8 @@
 
 				<div class="fancy_tabs" id="advanced_tabs">
 				  <ul>
-				    <li><a class='js_tabs_asettings fancy_selected' tab="metadata-options-tab" href="#">Metadata</a></li>
-				    <li><a class='js_tabs_asettings' tab="publication-tab" href="#">Publication</a></li>
+				    <li><a class='js_tabs_asettings fancy_selected' tab="metadata-options-tab" href="#" i18n-key="i.MetadataAspects">Metadata</a></li>
+				    <li><a class='js_tabs_asettings' tab="publication-tab" href="#" i18n-key="i.Publicacion">Publication</a></li>
 				    <li><a class='js_tabs_asettings' tab="rte-tab" href="#">RTE</a></li>
 				  </ul>
 				 </div>
@@ -668,19 +666,19 @@
 			 	</div>
 																																				
 			 	<div id="publication-tab" style="display:none">
-			 	<div id="publication_title">
-			 		<p>Allow other users to:</p>
+			 	<div id="publication_title"  >
+			 		<p i18n-key="i.allowUsersTo">Allow other users to:</p>
 			 	</div>
 					<div id="publication_content"><br>
-						<input type="checkbox" name="clone" value="allow_clone" i18n-key="i.allowClone" checked> Clone<br>
-						<input type="checkbox" name="comment" value="allow_comment" i18n-key="i.allowComment" checked> Comment<br>
-						<input type="checkbox" name="download" value="allow_download" i18n-key="i.allowDownload" checked> Download<br>
+						<input type="checkbox" id="allow_clone" checked> <span i18n-key="i.allowClone">Clone</span><br>
+						<input type="checkbox" id="allow_comment" checked> <span i18n-key="i.allowComment">Comment</span><br>
+						<input type="checkbox" id="allow_download" checked> <span i18n-key="i.allowDownload">Download</span><br>
 					<br>
 					</div>
 				</div>
 
 				<div id="rte-tab" style="display:none">
-					<input type="checkbox" name="clone" value="allow_clone" i18n-key="i.allowFollowing" checked>Allow to follow this object after exporting as SCORM<br>		
+					<input type="checkbox" id="allow_following_rte" checked><span i18n-key="i.allowFollowing">Allow to follow this object after exporting as SCORM</span><br>		
 				</div>
 
 				<div id="metadata_options_fields_row3">
@@ -693,6 +691,16 @@
 		</form>
 	</div>
 
+	<div id="catalog_content" >
+		<div id="catalog_title">
+			<p>Catalog Tags</p>
+		</div>
+		<div id="catalog_body">
+			<select id="catalog_tags" size="11" multiple="multiple">
+			</select>
+		</div>
+		<button id="catalog_done_button" type="button" class="button buttonfancy previewButton" i18n-key="i.Done">Done</button>
+	</div>
 
 	<!-- Import and Add slide fancybox -->
 	<div style='display:none'>

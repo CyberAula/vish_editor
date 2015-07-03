@@ -150,6 +150,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 
+		var catalog_tags = V.Utils.getOptions().configuration.catalog;
+		if(catalog_tags){
+			for(var i = 0; i<catalog_tags.length; i++){
+				$("#catalog_tags").append($("<option />").val(catalog_tags[i]).attr("i18n-key", "i."+ catalog_tags[i]).text(catalog_tags[i]))
+			}
+		}
+
+
 		//Contributors
 		if(typeof presentation.contributors == "object"){
 			_contributors = presentation.contributors;
@@ -189,7 +197,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 
 		//Metadata
-		
+
 		if(presentation.language){
 			$("#language_tag").val(presentation.language);
 		}
@@ -229,9 +237,27 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#subject_tag").val(presentation.subject);
 		}
 		
+		//Advanced Settings
 		if(presentation.educational_objectives){
 			$("#educational_objectives_textarea").val(presentation.educational_objectives);
-		}		
+		}
+
+		if(presentation.allow_clone && typeof (presentation.allow_clone == "boolean")){
+			$("#allow_clone").prop('checked', presentation.allow_clone);
+		}
+
+		if(presentation.allow_comment && typeof (presentation.allow_comment == "boolean")){
+			$("#allow_comment").prop('checked', presentation.allow_comment);
+		}
+
+		if(presentation.allow_download && typeof (presentation.allow_download == "boolean")){
+			$("#allow_download").prop('checked', presentation.allow_download);
+		}
+
+		if(presentation.allow_following_rte && typeof (presentation.allow_following_rte == "boolean")){
+			$("#allow_following_rte").prop('checked', presentation.allow_following_rte);
+		}
+
 	};
 
 	var _onThemeImagesLoaded = function(){
@@ -561,6 +587,28 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.educational_objectives = educational_objectives;
 		}
 
+		//Publication settings
+		var allow_clone = $("#allow_clone").is(':checked');
+		if(typeof allow_clone == "boolean"){
+			settings.allow_clone = allow_clone.toString();
+		}
+
+		var allow_comment = $("#allow_comment").is(':checked');
+			if(typeof allow_comment == "boolean"){
+			settings.allow_comment = allow_comment.toString();
+		}
+
+		var allow_download = $("#allow_download").is(':checked');
+		if(typeof allow_download == "boolean"){
+			settings.allow_download = allow_download.toString();
+		}
+
+		var allow_following_rte = $("#allow_following_rte").is(':checked');
+		if(typeof allow_following_rte == "boolean"){
+			settings.allow_following_rte = allow_following_rte.toString();
+		}
+
+
 		return settings;
 	};
 
@@ -636,7 +684,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	};
 
 	/**
-	 *
+	 * function called when navigating into metadata options to manage tabs
 	 */
 	 var advancedTabs = function(event){
 	 	event.preventDefault();
@@ -665,6 +713,22 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$("#metadata_options_fields").slideUp();
 	 	$("#presentation_details_fields").slideDown();
+	 };
+
+	 /**
+	 * function called when the user clicks on the metadata options button
+	 */
+	 var onCatalogButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$("#catalog_content").fadeIn();
+	 };
+
+	 /**
+	 * function called when the user clicks on the done button in the metadata options panel
+	 */
+	 var onDoneCatalogButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$("#catalog_content").fadeOut();
 	 };
 
 
@@ -696,6 +760,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		saveSettings							: saveSettings,
 		onMetadataButtonClicked   			: onMetadataButtonClicked,
 		onDoneMetadataButtonClicked 			: onDoneMetadataButtonClicked,
+		onCatalogButtonClicked 					: onCatalogButtonClicked,
+		onDoneCatalogButtonClicked				: onDoneCatalogButtonClicked,
 		selectAnimation 						: selectAnimation,
 		addContributor							: addContributor
 	};
