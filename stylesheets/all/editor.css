@@ -394,7 +394,7 @@ div#tagBoxIntro .tagit {
 #catalog_button {
 	position: absolute;
   	left: 635px;
-  	top: 402px;
+  	top: 389px;
 }
 
 #catalog_content{
@@ -407,6 +407,29 @@ div#tagBoxIntro .tagit {
   left: 40%;
   top: 25%;
   padding-left: 32px;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.fileUpload input#attatchment_file {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.file_details_upload{
+	margin-top: 10px;
+ 	margin-left: -10px;
 }
 
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {

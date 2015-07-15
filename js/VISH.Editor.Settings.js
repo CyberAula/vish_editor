@@ -731,6 +731,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#catalog_content").fadeOut();
 	 };
 
+	 /**
+	 *	Function to beautify upload behaviour
+	 */
+	 var onUploadFileAttatchment = function(){
+    	document.getElementById("uploadFile").value = document.getElementById("attatchment_file").value;
+	 };
 
 	 /*
 	  * Contributors Management
@@ -749,6 +755,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
+		onUploadFileAttatchment					: onUploadFileAttatchment,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,
