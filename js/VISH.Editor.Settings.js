@@ -118,7 +118,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Sliders are initialized in the init() method.
 		onTLTchange();
-
+		if(typeof V.Utils.getOptions().configuration.catalog === 'undefined' || V.Utils.getOptions().configuration.catalog.length == 0 ){
+			$('#catalog_button').hide();
+		}
 		//Check for enable continue button
 		_checkIfEnableContinueButton();
 	};
@@ -723,12 +725,22 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#catalog_content").fadeIn();
 	 };
 
+
 	 /**
 	 * function called when the user clicks on the done button in the metadata options panel
 	 */
 	 var onDoneCatalogButtonClicked = function(event){
 	 	event.preventDefault();
+	 	
+	 	var catalog_tags = $("#catalog_tags").find(":selected");
+	 	if (catalog_tags.length > 0){
+ 			for( i = 0; i < catalog_tags.length; i ++){
+ 				$("#tagBoxIntro .tagList").tagit('add', catalog_tags[i].value);
+ 			}
+	 	}
+
 	 	$("#catalog_content").fadeOut();
+	 	
 	 };
 
 	 /**
