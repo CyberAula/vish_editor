@@ -481,12 +481,10 @@ div#tagBoxIntro .tagit {
 } 
 
 .metadata_title {
-	color: #B6B6B6;
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 2em;
-	left: 35px;
-	position: relative;
-	margin-bottom: 4%;
+  	font-size: 1.7em;
+  	color: #ccc;
+  	margin: 26px;
 }
 
 #metadata_options_fields_row1 {
@@ -534,11 +532,23 @@ div#tagBoxIntro .tagit {
 	height: 393px;
 }
 
+#publication-tab{
+	overflow: hidden;
+  	font-size: 1.4em;
+  	font-family: 'Open Sans', arial, sans-serif;
+  	font-weight: 300;
+  	height: 472px;
+}
+
 #rte-tab{
   display: block;
   margin-left: 35px;
   margin-top: 50px;
-  height: 400px;
+  height: 422px;
+  overflow: hidden;
+  font-size: 1.4em;
+  font-family: 'Open Sans', arial, sans-serif;
+  font-weight: 300;
 }
 
 #language_tag_box_text {
