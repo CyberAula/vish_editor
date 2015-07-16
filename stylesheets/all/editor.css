@@ -392,21 +392,36 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_button {
-	position: absolute;
-  	left: 635px;
-  	top: 400px;
+  position: absolute;
+  right: 278px;
+  top: 393px;
+  background: #0066ff;
+  border: black;
 }
 
 #catalog_content{
   display: none;
-  background: rgb(221, 221, 221);
-  height: 301px;
+  background: white;
+  height: 289px;
   width: 270px;
   z-index: 1162;
   position: absolute;
-  left: 40%;
-  top: 25%;
+  top: 509px;
+  right: 314px;
   padding-left: 32px;
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#catalog_done_button{
+  position: relative;
+  float: right;
+  right: 10px;
+  background-color: #428bca;
+  border: none;
+  top: 5px;
 }
 
 .fileUpload {

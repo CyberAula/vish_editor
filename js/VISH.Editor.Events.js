@@ -50,6 +50,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click', '#fill_details_later_button', function(event){
 				event.preventDefault();
+				$("#catalog_content").hide();
 				$.fancybox.close();
 			});
 			$(document).on('change', '#tlt_hours, #tlt_minutes, #tlt_seconds', V.Editor.Settings.onTLTchange);
