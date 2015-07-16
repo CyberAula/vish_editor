@@ -2297,14 +2297,14 @@ div.object_wrapper {
 /* Tutorials with Joyride */
 
 .tut_settings {
-	top: 78px;
-	left: 396px;
-	width: 446px;
+	top: 320px;
+  	left: 636px;
+ 	width: 446px;
 }
 
 .theme_tut_in_settings {
-	left: 531px !important;
-	width: 350px;
+	left: 771px !important;
+    width: 350px;
 }
 
 .tut_themes{

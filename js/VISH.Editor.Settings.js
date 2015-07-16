@@ -757,7 +757,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 *	Function to beautify upload behaviour
 	 */
 	 var onUploadFileAttatchment = function(){
-    	document.getElementById("uploadFile").value = document.getElementById("attatchment_file").value;
+    	document.getElementById("uploadFile").value = V.Editor.Utils.filterFilePath(document.getElementById("attatchment_file").value);
 	 };
 
 	 /*
