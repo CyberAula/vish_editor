@@ -118,7 +118,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Sliders are initialized in the init() method.
 		onTLTchange();
-
+		if(typeof V.Utils.getOptions().configuration.catalog === 'undefined' || V.Utils.getOptions().configuration.catalog.length == 0 ){
+			$('#catalog_button').hide();
+		}
 		//Check for enable continue button
 		_checkIfEnableContinueButton();
 	};
@@ -242,20 +244,29 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#educational_objectives_textarea").val(presentation.educational_objectives);
 		}
 
-		if(presentation.allow_clone && typeof (presentation.allow_clone == "boolean")){
-			$("#allow_clone").prop('checked', presentation.allow_clone);
+		//to make checked by the fault and read settings
+		if(presentation.allow_clone == "false"){
+			$("#allow_clone").prop("checked", false);
+		} else {
+			$("#allow_clone").prop('checked', true);
 		}
 
-		if(presentation.allow_comment && typeof (presentation.allow_comment == "boolean")){
-			$("#allow_comment").prop('checked', presentation.allow_comment);
+		if(presentation.allow_comment == "false"){
+			$("#allow_comment").prop("checked", false);
+		} else {
+			$("#allow_comment").prop('checked', true);
 		}
 
-		if(presentation.allow_download && typeof (presentation.allow_download == "boolean")){
-			$("#allow_download").prop('checked', presentation.allow_download);
+		if(presentation.allow_download == "false"){
+			$("#allow_download").prop("checked", false);
+		} else {
+			$("#allow_download").prop('checked', true);
 		}
 
-		if(presentation.allow_following_rte && typeof (presentation.allow_following_rte == "boolean")){
-			$("#allow_following_rte").prop('checked', presentation.allow_following_rte);
+		if(presentation.allow_following_rte == "false"){
+			$("#allow_following_rte").prop("checked", false);
+		} else {
+			$("#allow_following_rte").prop('checked', true);
 		}
 
 	};
@@ -470,7 +481,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if($(event.target).hasClass("buttonDisabledOnSettings")){
 			return;
 		}
-
+		$("#catalog_content").hide();
 		$.fancybox.close();
 	};
 
@@ -606,8 +617,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		var allow_following_rte = $("#allow_following_rte").is(':checked');
 		if(typeof allow_following_rte == "boolean"){
 			settings.allow_following_rte = allow_following_rte.toString();
-		}
-
+		
+}
 
 		return settings;
 	};
@@ -702,6 +713,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 */
 	 var onMetadataButtonClicked = function(event){
 	 	event.preventDefault();
+	 	$("#catalog_content").hide();
 	 	$("#presentation_details_fields").slideUp();
 	 	$("#metadata_options_fields").slideDown();
 	 };
@@ -723,14 +735,30 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#catalog_content").fadeIn();
 	 };
 
+
 	 /**
 	 * function called when the user clicks on the done button in the metadata options panel
 	 */
 	 var onDoneCatalogButtonClicked = function(event){
 	 	event.preventDefault();
+	 	
+	 	var catalog_tags = $("#catalog_tags").find(":selected");
+	 	if (catalog_tags.length > 0){
+ 			for( i = 0; i < catalog_tags.length; i ++){
+ 				$("#tagBoxIntro .tagList").tagit('add', catalog_tags[i].value);
+ 			}
+	 	}
+
 	 	$("#catalog_content").fadeOut();
+	 	
 	 };
 
+	 /**
+	 *	Function to beautify upload behaviour
+	 */
+	 var onUploadFileAttatchment = function(){
+    	document.getElementById("uploadFile").value = V.Editor.Utils.filterFilePath(document.getElementById("attatchment_file").value);
+	 };
 
 	 /*
 	  * Contributors Management
@@ -749,6 +777,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
+		onUploadFileAttatchment					: onUploadFileAttatchment,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,

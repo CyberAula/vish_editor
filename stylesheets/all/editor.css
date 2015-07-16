@@ -392,21 +392,59 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_button {
-	position: absolute;
-  	left: 635px;
-  	top: 402px;
+  position: absolute;
+  right: 278px;
+  top: 393px;
+  background: #0066ff;
+  border: black;
 }
 
 #catalog_content{
   display: none;
-  background: rgb(221, 221, 221);
-  height: 301px;
+  background: white;
+  height: 289px;
   width: 270px;
   z-index: 1162;
   position: absolute;
-  left: 40%;
-  top: 25%;
+  top: 509px;
+  right: 314px;
   padding-left: 32px;
+  border-radius: 10px;
+  border-color: black;
+  border-style: solid;
+  border-width: 1px;
+}
+
+#catalog_done_button{
+  position: relative;
+  float: right;
+  right: 10px;
+  background-color: #428bca;
+  border: none;
+  top: 5px;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.fileUpload input#attatchment_file {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+.file_details_upload{
+	margin-top: 10px;
+ 	margin-left: -10px;
 }
 
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
@@ -443,12 +481,10 @@ div#tagBoxIntro .tagit {
 } 
 
 .metadata_title {
-	color: #B6B6B6;
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 2em;
-	left: 35px;
-	position: relative;
-	margin-bottom: 4%;
+  	font-size: 1.7em;
+  	color: #ccc;
+  	margin: 26px;
 }
 
 #metadata_options_fields_row1 {
@@ -496,11 +532,23 @@ div#tagBoxIntro .tagit {
 	height: 393px;
 }
 
+#publication-tab{
+	overflow: hidden;
+  	font-size: 1.4em;
+  	font-family: 'Open Sans', arial, sans-serif;
+  	font-weight: 300;
+  	height: 472px;
+}
+
 #rte-tab{
   display: block;
   margin-left: 35px;
   margin-top: 50px;
-  height: 400px;
+  height: 422px;
+  overflow: hidden;
+  font-size: 1.4em;
+  font-family: 'Open Sans', arial, sans-serif;
+  font-weight: 300;
 }
 
 #language_tag_box_text {
@@ -2259,14 +2307,14 @@ div.object_wrapper {
 /* Tutorials with Joyride */
 
 .tut_settings {
-	top: 78px;
-	left: 396px;
-	width: 446px;
+	top: 320px;
+  	left: 636px;
+ 	width: 446px;
 }
 
 .theme_tut_in_settings {
-	left: 531px !important;
-	width: 350px;
+	left: 771px !important;
+    width: 350px;
 }
 
 .tut_themes{
