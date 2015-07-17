@@ -47,6 +47,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on('click', '#catalog_button', V.Editor.Settings.onCatalogButtonClicked);
 			$(document).on('click', '#catalog_done_button', V.Editor.Settings.onDoneCatalogButtonClicked);
 			$(document).on('change', ".fileUpload", V.Editor.Settings.onUploadFileAttatchment);
+			$(document).on('change', ".fileUpload2", V.Editor.Settings.onUploadingFileAttatchment);
 
 			$(document).on('click', '#fill_details_later_button', function(event){
 				event.preventDefault();
