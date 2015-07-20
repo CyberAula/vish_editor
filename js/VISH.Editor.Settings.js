@@ -763,30 +763,33 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 var onUploadingFileAttatchment = function(){
 
 	    var formData = new FormData();
-	    var excursion_id = 0;
-    	
-    	$.ajax({
-	        url: '/excursion/'+excursion_id +"/attachment",  //Server script to process data
-	        type: 'POST',
-	        data: file,
-		    success: function () {
-		      // do something
-		    },
-		    xhrFields: {
-		      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
-		      onprogress: function (progress) {
-		        // calculate upload progress
-		        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
-		        // log upload progress to console
-		        console.log('progress', percentage);
-		        if (percentage === 100) {
-		          console.log('DONE!');
-		        }
-		      }
-		    },
-		    processData: false,
-		    contentType: file.type
-		});
+	    var excursion_id = document.URL.match(/excursions.(\d+)/)[1];
+    	var file = $("#attatchment_file")[0].files[0];
+    	if (file != null){
+	    	$.ajax({
+		        url: '/excursions/'+excursion_id +"/attachment",  //Server script to process data
+		        type: 'POST',
+		        data: file,
+			    success: function () {
+			      // do something
+			      console.log("poderoso");
+			    },
+			    xhrFields: {
+			      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
+			      onprogress: function (progress) {
+			        // calculate upload progress
+			        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
+			        // log upload progress to console
+			        console.log('progress', percentage);
+			        if (percentage === 100) {
+			          console.log('DONE!');
+			        }
+			      }
+			    },
+			    processData: false,
+			    contentType: file.type
+			});
+		}
 	 };
 	 /*
 	  * Contributors Management
