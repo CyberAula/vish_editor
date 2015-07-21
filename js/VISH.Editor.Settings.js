@@ -763,13 +763,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 var onUploadingFileAttatchment = function(){
 
 	    var formData = new FormData();
-	    var excursion_id = document.URL.match(/excursions.(\d+)/)[1];
+	    var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
     	var file = $("#attatchment_file")[0].files[0];
+    	formData.append('file',file);
     	if (file != null){
 	    	$.ajax({
 		        url: '/excursions/'+excursion_id +"/attachment",  //Server script to process data
 		        type: 'POST',
-		        data: file,
+		        data: formData,
+		        dataType: 'json',
 			    success: function () {
 			      // do something
 			      console.log("poderoso");
