@@ -374,10 +374,6 @@ div#tagBoxIntro .tagit {
 	height: 59px;
 }
 
-#attatchment_file{
-	margin-top: 7px;
-}
-
 #catalog_title{
   width: 85%;
   position: relative;
@@ -427,7 +423,17 @@ div#tagBoxIntro .tagit {
 .fileUpload {
     position: relative;
     overflow: hidden;
-    margin: 10px;
+    padding: 0px;
+    background-color: green;
+}
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    padding: 0px;
+    background-color: green;
+}
+.fileUpload input[type="button"]{
+	background-color: black;
 }
 
 .fileUpload input#attatchment_file {
@@ -439,6 +445,8 @@ div#tagBoxIntro .tagit {
     font-size: 20px;
     cursor: pointer;
     opacity: 0;
+    padding: 0px;
+    background-color: yellow;
     filter: alpha(opacity=0);
 }
 
