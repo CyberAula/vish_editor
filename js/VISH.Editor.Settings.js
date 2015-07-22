@@ -757,41 +757,48 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 *	Function to beautify upload behaviour
 	 */
 	 var onUploadFileAttatchment = function(){
-    	document.getElementById("uploadFile").value = V.Editor.Utils.filterFilePath(document.getElementById("attatchment_file").value);
+    	//document.getElementById("uploadFile").value = V.Editor.Utils.filterFilePath(document.getElementById("attatchment_file").value);
 	 };
 
 	 var onUploadingFileAttatchment = function(){
+	 	var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+	 	var attachment_url = "/excursions/"+ excursion_id + "/attachment";
+	 	$("#attachment_file_form").attr("action", attachment_url);
+	 	$("#attachment_author").val(V.User.getId());
+	 	$("#attachment_aut_token").val(V.User.getToken());
 
-	    var formData = new FormData();
-	    var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-    	var file = $("#attatchment_file")[0].files[0];
-    	formData.append('file',file);
-    	if (file != null){
-	    	$.ajax({
-		        url: '/excursions/'+excursion_id +"/attachment",  //Server script to process data
-		        type: 'POST',
-		        data: formData,
-		        dataType: 'json',
-			    success: function () {
-			      // do something
-			      console.log("poderoso");
-			    },
-			    xhrFields: {
-			      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
-			      onprogress: function (progress) {
-			        // calculate upload progress
-			        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
-			        // log upload progress to console
-			        console.log('progress', percentage);
-			        if (percentage === 100) {
-			          console.log('DONE!');
-			        }
-			      }
-			    },
-			    processData: false,
-			    contentType: file.type
-			});
-		}
+	 	$("#attachment_file_form").ajaxForm(function() { }); 
+
+	 //    var formData = new FormData();
+	 //    var excursion_id = 1314;//V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+  //   	var file = $("#attatchment_file")[0].files[0];
+  //   	formData.append('file',file);
+  //   	if (file != null){
+	 //    	$.ajax({
+		//         url: "http://localhost:3000/excursions/1314/attachment",  //Server script to process data
+		//         type: 'POST',
+		//         data: formData.serialize(),
+		//         dataType: 'json',
+		// 	    success: function () {
+		// 	      // do something
+		// 	      console.log("poderoso");
+		// 	    },
+		// 	    xhrFields: {
+		// 	      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
+		// 	      onprogress: function (progress) {
+		// 	        // calculate upload progress
+		// 	        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
+		// 	        // log upload progress to console
+		// 	        console.log('progress', percentage);
+		// 	        if (percentage === 100) {
+		// 	          console.log('DONE!');
+		// 	        }
+		// 	      }
+		// 	    },
+		// 	    processData: false,
+		// 	    contentType: file.type
+		// 	});
+		// }
 	 };
 	 /*
 	  * Contributors Management
