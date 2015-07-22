@@ -423,20 +423,10 @@ div#tagBoxIntro .tagit {
 .fileUpload {
     position: relative;
     overflow: hidden;
-    padding: 0px;
-    background-color: green;
-}
-.fileUpload {
-    position: relative;
-    overflow: hidden;
-    padding: 0px;
-    background-color: green;
-}
-.fileUpload input[type="button"]{
-	background-color: black;
+    margin: 10px;
 }
 
-.fileUpload input#attatchment_file {
+.fileUpload input#attachment_file {
     position: absolute;
     top: 0;
     right: 0;
@@ -450,7 +440,7 @@ div#tagBoxIntro .tagit {
     filter: alpha(opacity=0);
 }
 
-.file_details_upload{
+#description_attachment{
 	margin-top: 10px;
  	margin-left: -10px;
 }
@@ -471,6 +461,9 @@ div#tagBoxIntro .tagit {
 #fill_details_later_button {
 	right: 20px;
 	margin-right: 200px;
+}
+#upload_file_attachment:disabled{
+	background: gray;
 }
 
 #save_presentation_details {
