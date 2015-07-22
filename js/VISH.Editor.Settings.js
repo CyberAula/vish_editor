@@ -761,25 +761,32 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	if( file_name != ""){
     		document.getElementById("description_attachment").value = V.Editor.Utils.filterFilePath(file_name);
 	 		$('#upload_file_attachment').prop('disabled', false);
+	 		$("#upload_icon_success").hide();
+	 	} else {
+	 		$("#upload_icon_success").hide();
 	 	}
 	 };
 
 	 var onUploadingFileAttachment = function(event){
 	 	var file_name = document.getElementById("attachment_file").value;
-	 	if(file_name!= ""){
-	 	var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-	 	var attachment_url = "/excursions/"+ excursion_id + "/upload_attachment";
-	 	$("#attachment_file_form").attr("action", attachment_url);
-	 	$("#attachment_author").val(V.User.getId());
-	 	$("#attachment_aut_token").val(V.User.getToken());
-	 	$("#attachment_file_form").ajaxForm({ 
-	 		success: function(responseText, statusText, xhr, form) {
-				//responseText == JSON.parse(xhr.responseText)
-				alert("done");
-			}
-		}); 
+	 	if(file_name!= "" && V.Editor.getDraftPresentation()["vishMetadata"] != undefined){
+		 	var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+		 	var attachment_url = "/excursions/"+ excursion_id + "/upload_attachment";
+		 	$("#attachment_file_form").attr("action", attachment_url);
+		 	$("#attachment_author").val(V.User.getId());
+		 	$("#attachment_aut_token").val(V.User.getToken());
+		 	$("#attachment_file_form").ajaxForm({ 
+		 		success: function(responseText, statusText, xhr, form) {
+		 			$("#upload_icon_success").show();
+				},
+				error: function(error){
+					//TODO: Add translations
+					V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
+				}
+			}); 
 		} else {
 			event.preventDefault();
+			V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));
 		}
 	 };
 	 /*

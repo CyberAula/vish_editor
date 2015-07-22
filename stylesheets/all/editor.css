@@ -420,30 +420,6 @@ div#tagBoxIntro .tagit {
   top: 5px;
 }
 
-.fileUpload {
-    position: relative;
-    overflow: hidden;
-    margin: 10px;
-}
-
-.fileUpload input#attachment_file {
-    position: absolute;
-    top: 0;
-    right: 0;
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    cursor: pointer;
-    opacity: 0;
-    padding: 0px;
-    background-color: yellow;
-    filter: alpha(opacity=0);
-}
-
-#description_attachment{
-	margin-top: 10px;
- 	margin-left: -10px;
-}
 
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
 	position: absolute;
@@ -462,8 +438,52 @@ div#tagBoxIntro .tagit {
 	right: 20px;
 	margin-right: 200px;
 }
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    background: #0066ff !important;
+}
+
+.fileUpload input#attachment_file {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    padding: 0px;
+    filter: alpha(opacity=0);
+}
+
+#description_attachment{
+	margin-top: 10px;
+ 	margin-left: 0px;
+}
+
+#upload_file_attachment{
+	margin-left: 4px;
+}
+
 #upload_file_attachment:disabled{
 	background: gray;
+}
+
+#upload_file_attachment:hover:disabled{
+	background: gray;
+	opacity: 0.6;
+	cursor: default;
+}
+
+#upload_file_attachment:enabled{
+	background-color: #0066ff !important;
+}
+
+#upload_icon_success{
+	display: none;
 }
 
 #save_presentation_details {
