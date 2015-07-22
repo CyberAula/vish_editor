@@ -762,36 +762,26 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	 var onUploadingFileAttatchment = function(){
 
-	    var formData = new FormData();
+	    var formData = $("#attachment_form");
 	    var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-    	var file = $("#attatchment_file")[0].files[0];
-    	formData.append('file',file);
-    	if (file != null){
+    	formData.attr("action", '/excursions/'+excursion_id +"/attachment");
+    	
+
+    	formData.ajaxSubmit();
+    	
+    	/*if (formData != null){
 	    	$.ajax({
 		        url: '/excursions/'+excursion_id +"/attachment",  //Server script to process data
 		        type: 'POST',
-		        data: formData,
-		        dataType: 'json',
+		        data: new FormData(formData),
+		        processData: false,
+      			contentType: false,
 			    success: function () {
 			      // do something
 			      console.log("poderoso");
-			    },
-			    xhrFields: {
-			      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
-			      onprogress: function (progress) {
-			        // calculate upload progress
-			        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
-			        // log upload progress to console
-			        console.log('progress', percentage);
-			        if (percentage === 100) {
-			          console.log('DONE!');
-			        }
-			      }
-			    },
-			    processData: false,
-			    contentType: file.type
+			    }
 			});
-		}
+		}*/
 	 };
 	 /*
 	  * Contributors Management
