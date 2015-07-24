@@ -269,6 +269,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#allow_following_rte").prop('checked', true);
 		}
 
+		if(presentation.attachment_file_name != undefined && $('#upload_file_attachment').prop('disabled')){
+			document.getElementById("description_attachment").value = presentation.attachment_file_name;
+			$("#upload_icon_success").show();
+			$('#upload_file_attachment').prop('disabled', true);
+		}
+
 	};
 
 	var _onThemeImagesLoaded = function(){
@@ -617,8 +623,13 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		var allow_following_rte = $("#allow_following_rte").is(':checked');
 		if(typeof allow_following_rte == "boolean"){
 			settings.allow_following_rte = allow_following_rte.toString();
+		}
+		//TODO
+		var attachment_file_name = V.Editor.Utils.filterFilePath(document.getElementById("description_attachment").value);
+		if(attachment_file_name != "" && $('#upload_file_attachment').prop('disabled')){
+			settings.attachment_file_name = attachment_file_name;
+		}
 		
-}
 
 		return settings;
 	};
@@ -777,10 +788,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		 	$("#attachment_aut_token").val(V.User.getToken());
 		 	$("#attachment_file_form").ajaxForm({ 
 		 		success: function(responseText, statusText, xhr, form) {
-		 			$("#upload_icon_success").show();
+		 			if(responseText.status == "bad_request" && responseText.message == "bad_size"){
+		 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorTooBig"));
+		 				$('#upload_file_attachment').prop('disabled', true);
+		 			}else if(responseText.status == "bad_request" && responseText.message == "wrong_params"){
+		 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
+		 				$('#upload_file_attachment').prop('disabled', true);
+		 			} else if (responseText.status == "ok" && responseText.message == "success") {
+		 				$("#upload_icon_success").show();
+		 				$('#upload_file_attachment').prop('disabled', true);
+					}
 				},
 				error: function(error){
-					//TODO: Add translations
 					V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
 				}
 			}); 
