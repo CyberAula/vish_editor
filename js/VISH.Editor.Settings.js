@@ -756,37 +756,38 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 /**
 	 *	Function to beautify upload behaviour
 	 */
-	 var onUploadFileAttatchment = function(){
-    	document.getElementById("uploadFile").value = V.Editor.Utils.filterFilePath(document.getElementById("attatchment_file").value);
+	 var onUploadFileAttachment = function(event){
+	 	var file_name = document.getElementById("attachment_file").value;
+	 	if( file_name != ""){
+    		document.getElementById("description_attachment").value = V.Editor.Utils.filterFilePath(file_name);
+	 		$('#upload_file_attachment').prop('disabled', false);
+	 		$("#upload_icon_success").hide();
+	 	} else {
+	 		$("#upload_icon_success").hide();
+	 	}
 	 };
 
-	 var onUploadingFileAttatchment = function(){
-
-	    var formData = new FormData();
-	    var excursion_id = 0;
-    	
-    	$.ajax({
-	        url: '/excursion/'+excursion_id +"/attachment",  //Server script to process data
-	        type: 'POST',
-	        data: file,
-		    success: function () {
-		      // do something
-		    },
-		    xhrFields: {
-		      // add listener to XMLHTTPRequest object directly for progress (jquery doesn't have this yet)
-		      onprogress: function (progress) {
-		        // calculate upload progress
-		        var percentage = Math.floor((progress.total / progress.totalSize) * 100);
-		        // log upload progress to console
-		        console.log('progress', percentage);
-		        if (percentage === 100) {
-		          console.log('DONE!');
-		        }
-		      }
-		    },
-		    processData: false,
-		    contentType: file.type
-		});
+	 var onUploadingFileAttachment = function(event){
+	 	var file_name = document.getElementById("attachment_file").value;
+	 	if(file_name!= "" && V.Editor.getDraftPresentation()["vishMetadata"] != undefined){
+		 	var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+		 	var attachment_url = "/excursions/"+ excursion_id + "/upload_attachment";
+		 	$("#attachment_file_form").attr("action", attachment_url);
+		 	$("#attachment_author").val(V.User.getId());
+		 	$("#attachment_aut_token").val(V.User.getToken());
+		 	$("#attachment_file_form").ajaxForm({ 
+		 		success: function(responseText, statusText, xhr, form) {
+		 			$("#upload_icon_success").show();
+				},
+				error: function(error){
+					//TODO: Add translations
+					V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
+				}
+			}); 
+		} else {
+			event.preventDefault();
+			V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));
+		}
 	 };
 	 /*
 	  * Contributors Management
@@ -805,8 +806,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
-		onUploadFileAttatchment					: onUploadFileAttatchment,
-		onUploadingFileAttatchment				: onUploadingFileAttatchment,
+		onUploadFileAttachment					: onUploadFileAttachment,
+		onUploadingFileAttachment				: onUploadingFileAttachment,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,
