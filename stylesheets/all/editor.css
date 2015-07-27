@@ -42,7 +42,7 @@ p.addthumbtitle  {
 	width: 35%;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.3em;
-	color: #ff005d;
+	color: #222;
 	pointer-events: none;
 }
 
@@ -466,30 +466,25 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_done_button:hover{
-background-color: #326999;
+	background-color: #326999;
+}
+
+.file_details_upload{
+	margin-top: 10px;
 }
 
 .fileUpload {
     position: relative;
     overflow: hidden;
-    margin: 10px;
+    margin: 10px 10px 10px 0px;
+    background: #428bca !important;
 }
 
-.fileUpload.button.btn-primary {
-	margin-right: 3px;
+.fileUpload:hover {
+    background: #326999 !important;
 }
 
-#uploadFile {
-	border: none;
-	background-color: rgb(238, 238, 238);
-	color: rgb(85, 85, 85);
-	padding-left: 10px;
-	width: 218px;
-	border-radius: 5px;
-	height: 20px;
-}
-
-.fileUpload input#attatchment_file {
+.fileUpload input#attachment_file {
     position: absolute;
     top: 0;
     right: 0;
@@ -498,12 +493,45 @@ background-color: #326999;
     font-size: 20px;
     cursor: pointer;
     opacity: 0;
+    padding: 0px;
     filter: alpha(opacity=0);
 }
 
-.file_details_upload{
-	margin-top: 10px;
- 	margin-left: -10px;
+#description_attachment{
+	border: medium none;
+	background-color: #EEE;
+	color: #555;
+	padding-left: 10px;
+	width: 207px;
+	border-radius: 5px;
+	height: 20px;
+}
+
+#upload_file_attachment{
+	margin-left: 4px;
+}
+
+#upload_file_attachment:disabled{
+	background: gray;
+}
+
+#upload_file_attachment:hover:disabled{
+	background: gray;
+	opacity: 1;
+	cursor: default;
+}
+
+#upload_file_attachment:enabled{
+	background-color: #428bca !important;
+}
+
+#upload_file_attachment:enabled:hover{
+	background-color: #326999 !important;
+}
+
+#upload_icon_success{
+	display: none;
+	color: green;
 }
 
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
