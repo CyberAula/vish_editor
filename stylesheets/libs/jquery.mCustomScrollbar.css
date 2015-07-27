@@ -128,6 +128,7 @@
 }
 .mCustomScrollBox{
 	-ms-touch-action:none; /*MSPointer events - direct all pointer events to js*/
+	border-right:solid -0.5px #ababab;
 }
 
 /* default scrollbar colors and backgrounds (default theme) */

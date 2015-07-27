@@ -13,12 +13,14 @@
 	z-index: 10000;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: normal;
-	 -moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border: 1px solid #000;
-	-webkit-box-shadow: 7px 7px 5px rgba(50, 50, 50, 0.08);
-	-moz-box-shadow:    7px 7px 5px rgba(50, 50, 50, 0.08);
-	box-shadow:         7px 7px 5px rgba(50, 50, 50, 0.08);
+	 -moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius:10px;
+	border: transparent;
+	-webkit-box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
+    box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.8);
+}
 
 	/*add scroll*/
 	max-height: 95%;
@@ -157,8 +159,7 @@
 	font-size: 1.1rem;
 	display: inline;
 	text-decoration:none;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
+	background: #428BCA repeat-x bottom;
 	color:#f9f9f9;
 	cursor: pointer;
 	font-weight: bold;
@@ -192,8 +193,8 @@
 	position: absolute;
 	right: 10px;
 	top: 10px;
-	height: 22px;
-	width: 22px;
+	height: 31px;
+	width: 31px;
 	background-image:url(../../images/vicons/ve_close.png);
 }
 
