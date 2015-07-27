@@ -75,13 +75,13 @@ ul.tagit {
     overflow: auto;
     font-size: 14px;
     padding: 9px;
-    background: #fff;
+    background: #EEE;
     color: #555;
-	border: 1px solid #B9B9B9;;
-	-moz-border-radius: 10px;
-    -khtml-border-radius: 10px;
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
+	border: none;
+	-moz-border-radius: 8px;
+    -khtml-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    border-radius: 8px;
 }
 
 
@@ -163,6 +163,7 @@ ul.tagit input[type="text"] {
     width: inherit !important;
     min-width: 190px !important;
     outline: none;
+    background-color: #EEE;
 }
 
 .tagit-hiddenSelect {

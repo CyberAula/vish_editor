@@ -1080,8 +1080,7 @@ img.selectSlidesimgbutton {
 	padding: 5px 10px;
 	display: inline;
 	text-decoration:none;
-	background: #ff005d repeat-x bottom;
-	opacity: 0.6;
+	background: rgb(66, 139, 202) repeat-x bottom;
 	color:#f9f9f9;
 	cursor: pointer;
 	font-weight: bold;
@@ -1090,11 +1089,11 @@ img.selectSlidesimgbutton {
 	-webkit-border-radius: 5px;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.1em;
+	border:none;
 }
 
 .button:hover {
-	opacity: 1;
-	text-shadow: 1px 1px #666;
+	background: #326999 repeat-x bottom;
 }
 
 /* Notifications CSS */
