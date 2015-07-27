@@ -769,20 +769,47 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 */
 	 var onUploadFileAttachment = function(event){
 	 	var file_name = document.getElementById("attachment_file").value;
-	 	if( file_name != ""){
+	 	var id;
+	 	try{
+	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+	 	} catch(e){
+	 	
+	 		id = "";
+	 	}
+	 	
+	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+	 	}
+
+	 	if( file_name != "" && id != "" ){
     		document.getElementById("description_attachment").value = V.Editor.Utils.filterFilePath(file_name);
 	 		$('#upload_file_attachment').prop('disabled', false);
 	 		$("#upload_icon_success").hide();
 	 	} else {
 	 		$("#upload_icon_success").hide();
+	 		document.getElementById("attachment_file").value = "";
+	 		V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadHasToSaveFirst"));
 	 	}
 	 };
 
+	 /**
+	 *	Function to handle uploading an attachment behaviour
+	 **/
 	 var onUploadingFileAttachment = function(event){
 	 	var file_name = document.getElementById("attachment_file").value;
-	 	if(file_name!= "" && V.Editor.getDraftPresentation()["vishMetadata"] != undefined){
-		 	var excursion_id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-		 	var attachment_url = "/excursions/"+ excursion_id + "/upload_attachment";
+	 	var id;
+	 	try{
+	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+	 	} catch(e){
+	 	
+	 		id = "";
+	 	}
+	 	
+	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+		 	var id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+	 	}
+	 	if(file_name != "" && id != ""){
+		 	var attachment_url = "/excursions/"+ id + "/upload_attachment";
 		 	$("#attachment_file_form").attr("action", attachment_url);
 		 	$("#attachment_author").val(V.User.getId());
 		 	$("#attachment_aut_token").val(V.User.getToken());
@@ -797,6 +824,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		 			} else if (responseText.status == "ok" && responseText.message == "success") {
 		 				$("#upload_icon_success").show();
 		 				$('#upload_file_attachment').prop('disabled', true);
+		 				V.Editor.Tools.save();
+
 					}
 				},
 				error: function(error){
@@ -804,10 +833,15 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				}
 			}); 
 		} else {
-			event.preventDefault();
-			V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));
+			if(id == ""){
+				event.preventDefault();
+				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadHasToSaveFirst"));
+			} else {
+				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));
+			}
 		}
 	 };
+
 	 /*
 	  * Contributors Management
 	  */
@@ -836,7 +870,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		getTags									: getTags,
 		saveSettings							: saveSettings,
-		onMetadataButtonClicked   			: onMetadataButtonClicked,
+		onMetadataButtonClicked   				: onMetadataButtonClicked,
 		onDoneMetadataButtonClicked 			: onDoneMetadataButtonClicked,
 		onCatalogButtonClicked 					: onCatalogButtonClicked,
 		onDoneCatalogButtonClicked				: onDoneCatalogButtonClicked,
