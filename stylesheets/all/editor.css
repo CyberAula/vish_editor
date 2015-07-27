@@ -357,11 +357,11 @@ textarea#presentation_details_textarea {
 
 .animation_selected_in_fancybox {
 	background-position: -5px -6px;
-	border-radius: 13px !important;
-border: 6px solid rgba(53, 126, 189, 0.6) !important;
-opacity: 1 !important;
-width: 92px !important;
-height: 65px !important;
+	border-radius: 6px !important;
+	border: 6px solid rgba(53, 126, 189, 0.6) !important;
+	opacity: 1 !important;
+	width: 105px !important;
+	height: 67px !important;
 }
 
 .theme_selected_in_fancybox > div {
@@ -378,11 +378,11 @@ height: 65px !important;
 
 .theme_selected_in_fancybox {
 	background-position: -5px -6px;
-	border-radius: 13px !important;
-border: 6px solid #357ebd !important;
-opacity: 1 !important;
-width: 92px !important;
-height: 65px !important;
+	border-radius: 2px !important;
+	border: 6px solid #357EBD !important;
+	opacity: 1 !important;
+	width: 104px !important;
+	height: 69px !important;
 }
 
 
@@ -1564,6 +1564,9 @@ div.addUrlButtons{
 
 .slidethumb.slideAni {
 	opacity:0.7;
+	background-repeat: no-repeat;
+	background-size: auto 100%;
+	background-position: center;
 }
 
 .quizFancythumb {
@@ -2276,10 +2279,9 @@ div.object_wrapper {
 
 #theme_fancybox {
 	background: url("/images/icons/themebg.png") no-repeat;
-	width: 530px;
 	height: 300px;
-	padding-left: 45px;
-	padding-right: 35px;
+	padding-left: 23px;
+	padding-right: 27px;
 	padding-top: 87px;
 }
 
@@ -2299,10 +2301,9 @@ div.object_wrapper {
 
 #animation_fancybox {
 	background: url("/images/icons/animationbg.png") no-repeat;
-	width: 530px;
 	height: 300px;
-	padding-left: 44px;
-	padding-right: 35px;
+	padding-left: 20px;
+	padding-right: 25px;
 	padding-top: 95px;
 }
 
@@ -2357,6 +2358,7 @@ div.object_wrapper {
 
 #select_animation1 {
 	background-image: url("/images/animations/no_animation.gif");
+
 }
 
 #select_animation1:hover {
