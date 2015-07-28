@@ -633,16 +633,23 @@ VISH.EVideo = (function(V,$,undefined){
 			/*straightfoward workaround to stop videos*/
 			var videoId = $(video).attr("id");
 			var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+			
 			ytplayer.addEventListener("onStateChange",function(event){
-				if(event.data== 3 && $.last_event != undefined && $.last_event == -1){
-					$.last_event = null;
+				if(event.data == 3 && $.yt_last_event != undefined && $.yt_last_event == -1){
+					$.yt_last_event = null;
+					$.yt_last_event_counter = 1;
 					var id_video = event.target.getIframe().id;
 					ytplayer = V.Video.Youtube.getYouTubePlayer(id_video);
 					ytplayer.pauseVideo();
+					ytplayer.removeEventListener("onStateChange");
 				}
-				if(event.data == -1){
-					$.last_event = event.data;
+				if(event.data == -1 && $.yt_last_event_counter != 1){
+					$.yt_last_event = event.data;
 				}
+				if(event.data == -1 && $.yt_last_event_counter == 1){
+					$.yt_last_event_counter = null;
+				}
+
 			});
 
 		}
