@@ -629,6 +629,22 @@ VISH.EVideo = (function(V,$,undefined){
 			setTimeout(function(){
 				_blockTimeUpdate = false;
 			},SEEK_WAIT);
+			/*Pretty Straightfoward workaround to stop videos*/
+			var videoId = $(video).attr("id");
+			var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
+			ytplayer.addEventListener("onStateChange",function(event){
+				if(event.data== 3 && $.last_event != undefined && $.last_event == -1){
+					console.log("changed");
+					$.last_event = null;
+					var id_video = event.target.getIframe().id;
+					ytplayer = V.Video.Youtube.getYouTubePlayer(id_video);
+					ytplayer.pauseVideo();
+				}
+				if(event.data == -1){
+					$.last_event = event.data;
+				}
+			});
+
 		}
 	};
 
