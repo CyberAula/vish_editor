@@ -115,7 +115,7 @@ p.presentation_details_column_title {
 	float: left;
 	margin-right: 19px;
 	padding: 23px 23px 47px;
-	background-color: #428BCA;
+	background-color: #fff;
 }
 
 #presentation_details_fields_row1_column2 {
@@ -147,7 +147,7 @@ p.presentation_details_column_title {
 
 #presentation_details_preview_title {
 	margin-top: -15px;
-	color:#fff;
+	color:#428BCA;
 	font-weight: bold;
 }
 
@@ -155,9 +155,8 @@ p.presentation_details_column_title {
 	padding-top: 5px;
 	padding-left: 5px;
 	padding-bottom: 10px;
-	background-color: rgb(255, 255, 255);
-    border-top: 3px solid rgb(66, 139, 202);
-    border-bottom: 3px solid rgb(66, 139, 202);
+    border-top: 3px solid #fff;
+    border-bottom: 3px solid #fff;
 }
 
 #presentation_details_preview_addtitle_input{
@@ -165,9 +164,9 @@ p.presentation_details_column_title {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.3em;
 	font-weight: 400;
-	color: #222;
+	color: #444;
 	width: 193px;
-	background-color: #FFF;
+	background-color: #EEE;
 	margin-top: 8px;
 }
 
@@ -177,8 +176,7 @@ p.presentation_details_column_title {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1em;
 	font-weight: 400;
-	color: #323232;
-	background-color: #FFF;
+	color: #444;
 	border-radius: 0px 0px 8px 8px;
 }
 
@@ -190,20 +188,22 @@ p.presentation_details_column_title {
 	width: 200px;
 	border-radius: 8px;
 	margin-top: 0px;
+	background-color: #EEE;
 }
 
 #presentation_details_license {
-	margin-top: 23px;
+	margin-top: 47px;
 }
 
 #presentation_details_license select {
 	width: 100%;
-	margin-top: 5px;
+	margin-top: 13px;
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: medium none transparent;
 	padding: 3px;
 	color:#666;
+	background-color: #EEE;
 }
 
 #presentation_details_title {
@@ -220,7 +220,7 @@ span.presentation_details_text {
 }
 
 .presentation_details_text[title~="License"] {
-	color:#fff;
+	margin-bottom: 10px;
 }
 
 input.presentation_details_input {
@@ -267,7 +267,6 @@ textarea#presentation_details_textarea {
 	width: 100%;
 	overflow: hidden;
 	cursor: pointer;
-	background: #FFF;
 	border-radius: 8px 8px 0px 0px;
 }
 
@@ -541,14 +540,13 @@ div#tagBoxIntro .tagit {
 #metadata_clasification_button {
 	left: 36px;
 	width: 220px;
-	background-color: white;
-	font-weight: normal;
-	color: rgb(66, 139, 202);
+	background-color: #428BCA;
+	font-weight: bold;
+	color: #FFF;
 }
 
 #metadata_clasification_button:hover {
-	color:#326999;
-	font-weight: bold;
+	background-color:#326999;
 }
 
 #fill_details_later_button, #save_presentation_details {
@@ -2280,15 +2278,15 @@ div.object_wrapper {
 #theme_fancybox {
 	background: url("/images/icons/themebg.png") no-repeat;
 	height: 300px;
-	padding-left: 23px;
+	padding-left: 19px;
 	padding-right: 27px;
 	padding-top: 87px;
 }
 
 #help_themes_selection {
 	position: absolute;
-	margin-top: -88px;
-	right: 25px;
+	margin-top: -86px;
+	right: 27px;
 	cursor: pointer;
 }
 
@@ -2302,15 +2300,15 @@ div.object_wrapper {
 #animation_fancybox {
 	background: url("/images/icons/animationbg.png") no-repeat;
 	height: 300px;
-	padding-left: 20px;
+	padding-left: 19px;
 	padding-right: 25px;
-	padding-top: 95px;
+	padding-top: 85px;
 }
 
 #help_animation_selection {
 	position: absolute;
-	margin-top: -95px;
-	right: 25px;
+	margin-top: -84px;
+	right: 27px;
 	cursor: pointer;
 }
 
