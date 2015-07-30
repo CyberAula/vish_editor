@@ -89,7 +89,7 @@ img.addThumbnailPlus:hover {
 p.presentation_details_column_title {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.7em;
-	color: #4D4D4D;
+	color: #ccc;
 }
 
 #presentation_details_preview_thumbnail_img .addthumbtitle:hover {
@@ -326,7 +326,7 @@ textarea#presentation_details_textarea {
 .animation_selected_in_fancybox {
 	background-position: -5px -6px;
 	border-radius: 13px !important;
-border: 6px solid rgba(53, 126, 189, 0.6) !important;
+border: 6px solid #357ebd !important;
 opacity: 1 !important;
 width: 92px !important;
 height: 65px !important;
@@ -714,7 +714,7 @@ input.slider_range_input {
 }
 
 .help_in_settings:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover.png");
+	background-image: url("/images/vicons/helptutorial_circle_hover_tp.png");
 	cursor: pointer;
 }
 
@@ -792,9 +792,8 @@ input.slider_range_input {
 }
 
 .slidesScrollbarButton {
-	background-color: #929292;
-	border:none !important;
-	color:white;
+	border: 1px solid #B9B9B9 !important;
+
 }
 
 .slidesScrollbarButton:not(.addSlideButtonDisabled):hover {
@@ -1140,7 +1139,7 @@ div.vezone[tooltip='true'][size='large'] {
 	left: 11%;
 	top: 5%;
 	font-size: 19px;
-	color: #3F3F3F;
+	color: #9B999D;
 }
 
 .listInFancy .textfancy{
@@ -1442,10 +1441,6 @@ div.addUrlButtons{
 	border: 1px solid #ccc;
 }
 
-.slidethumb.slideAni {
-	opacity:0.7;
-}
-
 .quizFancythumb {
 	width: 125px;
 	height: 85px;
@@ -1484,6 +1479,9 @@ div.addUrlButtons{
 	opacity: 1;	
 }
 
+.slidethumb:hover {
+	border: 1px solid #357ebd;
+}
 
 .slidethumb:active, .quizFancythumb:active {
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
@@ -1550,7 +1548,7 @@ div.addUrlButtons{
 	padding: 0px;
 	margin-top: 4px;
 	margin-bottom: 4px;
-	color: #393939;
+	color: #666;
 	cursor: pointer;
 }
 
@@ -1610,11 +1608,7 @@ div.vezone {
 	padding: 0px;
 	border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;
-	-webkit-user-select:none;
-	-moz-user-select:none;
-	-khtml-user-select:none;
-	-ms-user-select:none;	
+	-webkit-border-radius: 5px 5px 0px 0px;	
 }
 
 .fancy_tabs li {
@@ -1637,7 +1631,7 @@ div.vezone {
 
 .fancy_tabs li a:hover {
 	opacity: 0.8;
-	border-bottom: 3px solid #ff005d;
+	border-bottom: 3px solid #930;
 }
 
 .fancy_tabs li a.fancy_selected {
@@ -2180,12 +2174,12 @@ div.object_wrapper {
 	height: 300px;
 	padding-left: 44px;
 	padding-right: 35px;
-	padding-top: 95px;
+	padding-top: 87px;
 }
 
 #help_animation_selection {
 	position: absolute;
-	margin-top: -95px;
+	margin-top: -88px;
 	right: 25px;
 	cursor: pointer;
 }
@@ -2198,8 +2192,8 @@ div.object_wrapper {
 .anim_text {
 	opacity: 1;
 	border-radius: 5px;
-	background: rgba(28, 49, 71, 0.2); /* Fallback */
-	background-color: rgba(28, 49, 71, 0.2);
+	background: rgba(28, 49, 71, 0.6); /* Fallback */
+	background-color: rgba(28, 49, 71, 0.6);
 	color: rgba(28, 49, 71, 0.6);
 	width: 100%;
 	height: 100%;
@@ -2209,10 +2203,6 @@ div.object_wrapper {
     -ms-transition: opacity 0.50s ease-out;
     -moz-transition: opacity 0.50s ease-out;
     -webkit-transition: opacity 0.50s ease-out;
-    -webkit-user-select:none;
-	-moz-user-select:none;
-	-khtml-user-select:none;
-	-ms-user-select:none;
 }
 
 .anim_text:hover {
@@ -2227,7 +2217,7 @@ div.object_wrapper {
 .anim_text > h3 {
 	margin-left: 3px;
 	margin-top: 26px;
-	font-family: "Open Sans",arial,sans-serif;
+	font-family: "Open Sans";
 	font-weight: 400;
 	color: #fff;
 	opacity: 1;
@@ -3102,7 +3092,7 @@ span.letterInChapterDialog {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-	background-color: #285C8A;
+	background-color: #357ebd;
 	border-color: #3071a9;
 }
 
