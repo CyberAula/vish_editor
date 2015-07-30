@@ -460,8 +460,13 @@ div#tagBoxIntro .tagit {
 }
 
 #description_attachment{
-	margin-top: 10px;
- 	margin-left: 0px;
+	border: medium none;
+	background-color: #EEE;
+	color: #555;
+	padding-left: 10px;
+	width: 207px;
+	border-radius: 5px;
+	height: 20px;
 }
 
 #upload_file_attachment{
@@ -484,6 +489,7 @@ div#tagBoxIntro .tagit {
 
 #upload_icon_success{
 	display: none;
+	color: green;
 }
 
 #save_presentation_details {
