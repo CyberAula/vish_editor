@@ -165,6 +165,11 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Refresh Draggable Objects
 		V.Editor.Utils.refreshDraggables(article_to_move);
 
+		//if HTML5 video, redraw balls, because onloadeddata event is not fired again
+		if($(article_to_move).attr("type")=="enrichedvideo" && $(article_to_move).find("video[videotype=HTML5_VIDEO]")){
+			V.Editor.EVideo.onHTML5VideoReady($(article_to_move).find(".evideoBody video")[0]);
+		}
+
 		//Reload text areas
 		_cleanTextAreas(article_to_move);
 		_loadTextAreasOfSlide(article_to_move,textAreas);
