@@ -16,7 +16,7 @@ body .cke_dialog{
 .cke_skin_vEditor .cke_dialog_body{
 	z-index:1;
 	border:none;
-	padding:5px;
+	padding:0px;
 	background-color:#fff;
 	-moz-border-radius:5px;
 	-webkit-border-radius:5px;border-radius:5px;
@@ -24,6 +24,7 @@ body .cke_dialog{
 	-webkit-box-shadow: 0px 10px 5px 3px rgba(0,0,0,0.65);
 	-moz-box-shadow: 0px 10px 5px 3px rgba(0,0,0,0.65);
 	box-shadow: 0px 10px 5px 3px rgba(0,0,0,0.65);
+	margin:0px;
 }
 
 
@@ -35,13 +36,16 @@ body .cke_dialog{
 
 
 .cke_skin_vEditor .cke_dialog_title{
-	font-weight:bold;
-	font-size:14px;
-	padding:3px 3px 8px;
-	cursor:move;
-	position:relative;
-	border-bottom:1px solid #eee;
-	color: #428BCA;
+	font-weight: bold;
+	font-size: 14px;
+	cursor: move;
+	position: relative;
+	border-bottom: 1px solid #EEE;
+	margin: 0px;
+	color: rgb(255, 255, 255);
+	background-color: rgb(66, 139, 202);
+	padding: 11px;
+	border-radius: 5px 5px 0px 0px;
 }
 
 .cke_skin_vEditor .cke_browser_iequirks .cke_dialog_title,.cke_skin_vEditor .cke_browser_ie6 .cke_dialog_title,
@@ -118,7 +122,7 @@ body .cke_dialog{
 	padding:4px 8px;
 	display:inline-block;
 	cursor:pointer;
-	margin-right:2px;
+	margin-right:6px;
 	border-radius:3px;
 	border:none;
 }
@@ -155,6 +159,7 @@ body .cke_dialog{
 	cursor:default;
 	background-color: #72AFE4;
 	color: white;
+	font-weight: bold;
 }
 
 .cke_skin_vEditor .cke_hc a.cke_dialog_tab_selected,
@@ -191,7 +196,7 @@ body .cke_dialog{
 
 .cke_skin_vEditor input.cke_dialog_ui_input_text,
 .cke_skin_vEditor input.cke_dialog_ui_input_password{
-	background-color:white;
+	background-color:#EEE;
 	border:none;
 	padding:0;
 	width:100%;
@@ -201,8 +206,10 @@ body .cke_dialog{
 
 .cke_skin_vEditor div.cke_dialog_ui_input_text,
 .cke_skin_vEditor div.cke_dialog_ui_input_password{
-	background-color:white;
-	border:1px solid #a0a0a0;padding:1px 0;
+	border: medium none;
+	padding: 3px;
+	border-radius: 3px;
+	background-color: rgb(238, 238, 238);
 	_width:99.9%;
 }
 
@@ -259,20 +266,22 @@ body .cke_dialog{
 
 
 .cke_skin_vEditor textarea.cke_dialog_ui_input_textarea{
-	background-color:white;
-	border:none;
-	padding:0;
-	width:100%;
+	overflow: auto;
+	resize: none;
+	background-color: rgb(238, 238, 238);
+	border: medium none;
+	padding: 3px;
+	border-radius: 5px;
+	width: 98.5%;
 	_width:99%;
-	overflow:auto;
-	resize:none;
+
 }
 
 
 .cke_skin_vEditor div.cke_dialog_ui_input_textarea{
-	background-color:white;
-	border:1px solid #a0a0a0;
+	background-color:#EEE;
 	padding:1px 0;
+	border-radius:5px;
 }
 
 
@@ -509,14 +518,14 @@ body .cke_dialog{
 .cke_skin_vEditor .cke_dialog .cke_dialog_body .cke_dialog_close_button{
 	background-image: url("images/ve_close.png");
 	background-repeat: no-repeat;
-	background-size: 100%;
+	background-size: 75%;
 	position: absolute;
 	cursor: pointer;
 	text-align: center;
 	height: 30px;
 	width: 30px;
-	top: 3px;
-	right: -1px;
+	top: 7px;
+	right: 1px;
 	_background-image:url(images/sprites_ie6.png);
 }
 
@@ -526,8 +535,8 @@ body .cke_dialog{
 }
 
 
-.cke_skin_vEditor .cke_dialog_close_button:hover{
-	background-position:0 -1045px;
+.cke_skin_vEditor .cke_dialog .cke_dialog_body .cke_dialog_close_button:hover{
+	background-image: url("images/ve_close_hover.png");
 }
 
 
@@ -571,8 +580,10 @@ body .cke_dialog{
 	}
 
 .cke_skin_vEditor .cke_dialog_ui_input_select{
-	border:1px solid #a0a0a0;
-	background-color:white;
+	border: medium none;
+	border-radius: 3px;
+	background-color: rgb(238, 238, 238);
+	padding: 3px;
 }
 
 .cke_skin_vEditor .cke_dialog_ui_input_file{
@@ -648,12 +659,12 @@ body .cke_dialog{
 
 
 .cke_skin_vEditor .cke_dialog .ImagePreviewBox{
-	border:2px ridge black;
 	overflow:scroll;
-	height:200px;
-	width:300px;
-	padding:2px;
-	background-color:white;
+	height: 206px;
+	width: 286px;
+	padding: 8px;
+	background-color: #EEE;
+	border-radius: 5px;
 }
 
 .cke_skin_vEditor .cke_dialog .ImagePreviewBox table td{
@@ -712,6 +723,7 @@ body .cke_dialog{
 	text-align:center;
 	background-color:#eaead1;
 	font-size:14px;
+	background-color:rgb(222, 239, 255);
 }
 
 
@@ -760,7 +772,7 @@ body .cke_dialog{
 
 
 .cke_skin_vEditor .cke_dialog_body label.cke_required{
-	font-weight:bold;
+	font-weight:normal;
 }
 
 

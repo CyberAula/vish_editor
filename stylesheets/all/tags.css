@@ -102,18 +102,16 @@ ul.tagit.ui-sortable li.tagit-choice a.ui-icon.ui-icon-grip-dotted-vertical{
 }
 
 ul.tagit li.tagit-choice {
-    background-color: #0066ff;
-	  opacity: 0.5;
-	  color: #fff;
+    background-color: #428BCA;
+    color: #fff;
     padding: 2px 13px 3px 4px;
-		font-size: 15px;
-		font-family: Helvetica;
-		margin-bottom: 5px;
+	font-size: 15px;
+	font-family: Helvetica;
+	margin-bottom: 5px;
 }
 
 ul.tagit li.tagit-choice.selected {
     background-color: #0066ff;
-	opacity: 1;
     border-color: #f76464;
 }
 

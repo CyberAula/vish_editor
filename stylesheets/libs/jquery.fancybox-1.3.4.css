@@ -91,9 +91,9 @@
 	position: relative;
 	overflow: hidden;
 	z-index: 1102;
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
 }
 
 #fancybox-hide-sel-frame {
@@ -108,22 +108,24 @@
 
 #fancybox-close {
 	position: absolute;
-	top: 1px;
-	right: -1px;
+	top: 4px;
+	right: 2px;
 	width: 22px;
 	height: 22px;
-	background: transparent url('/images/vicons/ve_close.png') no-repeat center top;
-	background-size: 100%;
+	background: transparent url('/images/vicons/ve_close2.png') center top;
 	padding: 10px;
 	padding-left: 4px;
 	cursor: pointer;
 	z-index: 1103;
 	display: none;
+	background-size: 80%;
+	background-repeat: no-repeat;
 }
 
 #fancybox-close:hover{
-	background: transparent url('/images/vicons/ve_close_hover.png') no-repeat center top;
-	background-size: 100%;
+	background: transparent url('/images/vicons/ve_close2_hover.png') no-repeat center top;
+	background-size: 80%;
+	background-repeat: no-repeat;
 }
 
 #fancybox-error {

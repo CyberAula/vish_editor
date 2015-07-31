@@ -65,7 +65,7 @@
 	border-top-color: transparent !important;
 	border-left-color: transparent !important;
 	border-right-color: transparent !important;
-	border-bottom-color: #4866FA;
+	border-bottom-color: #428BCA;
 	top: -28px;
 }
 
@@ -123,7 +123,7 @@
 
 .joyride-tip-guide h2 {
 	font-size: 1.5rem; 
-	color: #0066ff;
+	color: #428BCA;
 	padding-bottom: 5px;  
 }
 
@@ -196,6 +196,7 @@
 	height: 31px;
 	width: 31px;
 	background-image:url(../../images/vicons/ve_close.png);
+	background-repeat: no-repeat;
 }
 
 .joyride-close-tip:hover {
