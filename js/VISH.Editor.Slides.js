@@ -165,6 +165,9 @@ VISH.Editor.Slides = (function(V,$,undefined){
 		//Refresh Draggable Objects
 		V.Editor.Utils.refreshDraggables(article_to_move);
 
+		//Refresh HTML5 EVideo Object
+		V.Editor.Utils.refreshHTML5EVideo(article_to_move);
+
 		//Reload text areas
 		_cleanTextAreas(article_to_move);
 		_loadTextAreasOfSlide(article_to_move,textAreas);
