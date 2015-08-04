@@ -448,7 +448,30 @@ div#tagBoxIntro .tagit {
     overflow: hidden;
     margin: 10px;
     margin-left: 0px;
-    background: #0066ff !important;
+    background: #0066ff repeat-x bottom;
+    padding: 5px 10px;
+    display: inline;
+    text-decoration: none;
+    opacity: 0.6;
+    color: #f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.1em;
+}
+
+
+.attachmentFileUpload:disabled{
+	background: gray !important;
+}
+
+.attachmentFileUpload:hover:disabled{
+	background: gray !important;
+	opacity: 0.6;
+	cursor: default;
 }
 
 .attachmentFileUpload input#attachment_file {
