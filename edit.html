@@ -539,7 +539,7 @@
 				<div class="fancy_tabs" id="advanced_tabs">
 				  <ul>
 				    <li><a class='js_tabs_asettings fancy_selected' tab="metadata-options-tab" href="#" i18n-key="i.MetadataAspects">Metadata</a></li>
-				    <li><a class='js_tabs_asettings' tab="publication-tab" href="#" i18n-key="i.Publicacion">Publication</a></li>
+				    <li><a class='js_tabs_asettings' tab="publication-tab" href="#" i18n-key="i.Publication">Publication</a></li>
 				    <li><a class='js_tabs_asettings' tab="rte-tab" href="#">RTE</a></li>
 				  </ul>
 				 </div>
@@ -683,16 +683,15 @@
 			 	<div id="publication_title"  >
 			 		<p i18n-key="i.allowUsersTo">Allow other users to:</p>
 			 	</div>
-					<div id="publication_content"><br>
-						<input type="checkbox" id="allow_clone" checked> <span i18n-key="i.allowClone">Clone</span><br>
-						<input type="checkbox" id="allow_comment" checked> <span i18n-key="i.allowComment">Comment</span><br>
-						<input type="checkbox" id="allow_download" checked> <span i18n-key="i.allowDownload">Download</span><br>
-					<br>
+					<div id="publication_content">
+						<p><input type="checkbox" id="allow_clone" checked> <span i18n-key="i.allowClone">Clone</span></p>
+						<p><input type="checkbox" id="allow_comment" checked> <span i18n-key="i.allowComment">Comment</span></p>
+						<p><input type="checkbox" id="allow_download" checked> <span i18n-key="i.allowDownload">Download</span></p>
 					</div>
 				</div>
 
 				<div id="rte-tab" style="display:none">
-					<input type="checkbox" id="allow_following_rte" checked onclick="return false"><span i18n-key="i.allowFollowing">Allow to follow this object after exporting as SCORM</span><br>		
+					<input type="checkbox" id="allow_following_rte" checked onclick="return false"><span i18n-key="i.enableRTE">Enable object tracking when it is exported to SCORM</span>		
 				</div>
 
 				<div id="metadata_options_fields_row3">

@@ -512,6 +512,8 @@ div#tagBoxIntro .tagit {
   	font-size: 1.7em;
   	color: #ccc;
   	margin: 26px;
+  	margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #metadata_options_fields_row1 {
@@ -550,13 +552,25 @@ div#tagBoxIntro .tagit {
 	border-left: 1px solid #ebebeb;
 }
 
-#publication_title{
+#publication_title {
+	margin-top: 40px;
 	margin-left: 35px;
+	font-size: 18px;
 }
 
-#publication_content{
-	margin-left: 250px;
-	height: 393px;
+#publication_title p {
+	margin: 0px;
+}
+
+#publication_content {
+	margin-left: 70px;
+	font-size: 18px;
+}
+
+#publication_content p {
+    margin-top: 12px;
+    margin-bottom: 15px;
+    font-size: 17px;
 }
 
 #publication-tab{
@@ -570,12 +584,10 @@ div#tagBoxIntro .tagit {
 #rte-tab{
   display: block;
   margin-left: 35px;
-  margin-top: 50px;
+  margin-top: 40px;
   height: 422px;
   overflow: hidden;
-  font-size: 1.4em;
-  font-family: 'Open Sans', arial, sans-serif;
-  font-weight: 300;
+  font-size: 18px;
 }
 
 #language_tag_box_text {
