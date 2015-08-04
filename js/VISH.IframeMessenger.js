@@ -151,26 +151,38 @@ VISH.IframeMessenger = (function(V,undefined){
 	//////////////
 
 	var _onProtocolMessage = function(protocolMessage){
-		if((protocolMessage.data)&&(protocolMessage.data.message === "onIframeMessengerHello")){
-			var helloMessage = protocolMessage;
+		if(protocolMessage.data){
+			switch(protocolMessage.data.message){
+				case "onIframeMessengerHello":
+					var helloMessage = protocolMessage;
 
-			// Reply Hello message
-			if(V.Status.getIsInIframe()){
-				if(helloMessage.origin != "?"){
-					_connected = true;
+					// Reply Hello message
+					if(V.Status.getIsInIframe()){
+						if(helloMessage.origin != "?"){
+							_connected = true;
 
-					if(V.Editing){
-						V.Editor.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
-					} else {
-						V.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
+							if(V.Editing){
+								V.Editor.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
+							} else {
+								V.Object.Webapp.Handler.onWAPPConnected(helloMessage.origin,helloMessage.originId);
+							}
+
+							helloMessage.destination = helloMessage.origin;
+							helloMessage.destinationId = helloMessage.originId;
+							helloMessage.origin = _origin;
+							helloMessage.originId = _originId;
+							_sendMessage(JSON.stringify(helloMessage));
+						}
 					}
-
-					helloMessage.destination = helloMessage.origin;
-					helloMessage.destinationId = helloMessage.originId;
-					helloMessage.origin = _origin;
-					helloMessage.originId = _originId;
-					_sendMessage(JSON.stringify(helloMessage));
-				}
+					break;
+				case "enablePreventDefault":
+					V.Status.setPreventDefaultMode(true);
+					break;
+				case "disablePreventDefault":
+					V.Status.setPreventDefaultMode(false);
+					break;
+				default:
+					break;
 			}
 		}
 	};
