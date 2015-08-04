@@ -275,6 +275,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$('#upload_file_attachment').prop('disabled', true);
 		}
 
+		if (presentation.allow_clone == undefined){
+			$('.attachmentFileUpload').prop('disabled', true);
+			$('#attachment_file').prop('disabled', true);
+			
+		}
+
 	};
 
 	var _onThemeImagesLoaded = function(){
@@ -624,12 +630,16 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(typeof allow_following_rte == "boolean"){
 			settings.allow_following_rte = allow_following_rte.toString();
 		}
-		//TODO
+		
 		var attachment_file_name = V.Editor.Utils.filterFilePath(document.getElementById("description_attachment").value);
 		if(attachment_file_name != "" && $('#upload_file_attachment').prop('disabled')){
 			settings.attachment_file_name = attachment_file_name;
 		}
 		
+		//callbacks
+		$('.attachmentFileUpload').prop('disabled', false);
+		$('#attachment_file').prop('disabled', false);
+
 
 		return settings;
 	};
