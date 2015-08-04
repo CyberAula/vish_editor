@@ -585,9 +585,14 @@ div#tagBoxIntro .tagit {
   display: block;
   margin-left: 35px;
   margin-top: 40px;
-  height: 422px;
+  height: 432px;
   overflow: hidden;
-  font-size: 18px;
+  font-size: 17px;
+}
+
+#rte-tab p{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #language_tag_box_text {
