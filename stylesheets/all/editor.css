@@ -439,14 +439,19 @@ div#tagBoxIntro .tagit {
 	margin-right: 200px;
 }
 
-.fileUpload {
+#attachment_file_form {
+	margin-top: 3px;
+}
+
+.attachmentFileUpload {
     position: relative;
     overflow: hidden;
     margin: 10px;
+    margin-left: 0px;
     background: #0066ff !important;
 }
 
-.fileUpload input#attachment_file {
+.attachmentFileUpload input#attachment_file {
     position: absolute;
     top: 0;
     right: 0;
