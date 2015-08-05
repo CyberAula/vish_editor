@@ -726,6 +726,9 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		 	$("#metadata_options_fields").children('.active').removeClass('active').hide();
 		 	var attr = "#" + $(this).attr("tab");
 		 	$(attr).addClass("active").show();
+
+		 	//help behaviour
+		 	$(".help_in_settings").attr("id", "help-" + $(this).attr("tab"));
 	 	}
 	 };
 
@@ -768,9 +771,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
  			for( i = 0; i < catalog_tags.length; i ++){
  				$("#tagBoxIntro .tagList").tagit('add', catalog_tags[i].value);
  			}
+ 			$("#catalog_tags :selected").removeAttr("selected");
 	 	}
 
 	 	$("#catalog_content").fadeOut();
+
 	 	
 	 };
 
