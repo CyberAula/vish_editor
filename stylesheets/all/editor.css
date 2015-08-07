@@ -326,10 +326,10 @@ textarea#presentation_details_textarea {
 .animation_selected_in_fancybox {
 	background-position: -5px -6px;
 	border-radius: 13px !important;
-border: 6px solid #357ebd !important;
-opacity: 1 !important;
-width: 92px !important;
-height: 65px !important;
+	border: 6px solid #357ebd !important;
+	opacity: 1 !important;
+	width: 92px !important;
+	height: 65px !important;
 }
 
 .theme_selected_in_fancybox > div {
@@ -388,36 +388,35 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_button {
-  position: absolute;
-  right: 278px;
-  top: 393px;
-  background: #0066ff;
-  border: black;
+  	position: relative;
+    left: 245px;
+    background: #0066ff;
+    border: black;
 }
 
 #catalog_content{
-  display: none;
-  background: white;
-  height: 289px;
-  width: 270px;
-  z-index: 1162;
-  position: absolute;
-  top: 170px;
-  right: 377px;
-  padding-left: 32px;
-  border-radius: 10px;
-  border-color: black;
-  border-style: solid;
-  border-width: 1px;
+	display: none;
+	background: white;
+	height: 297px;
+	width: 270px;
+	z-index: 1162;
+	position: absolute;
+	top: 183px;
+	right: 377px;
+	padding-left: 32px;
+	border-radius: 10px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
 }
 
 #catalog_done_button{
-  position: relative;
-  float: right;
-  right: 10px;
-  background-color: #428bca;
-  border: none;
-  top: 5px;
+	position: relative;
+	float: right;
+	right: 10px;
+	background-color: #428bca;
+	border: none;
+	top: 5px;
 }
 
 
@@ -2368,18 +2367,14 @@ div.object_wrapper {
 
 
 
-
-
 /* Tutorials with Joyride */
 
 .tut_settings {
-	top: 320px;
-  	left: 636px;
  	width: 446px;
+ 	left: 32.9%;
 }
 
 .theme_tut_in_settings {
-	left: 771px !important;
     width: 350px;
 }
 
