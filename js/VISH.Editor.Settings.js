@@ -251,6 +251,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#allow_clone").prop('checked', true);
 		}
 
+		if( presentation.license != undefined && (presentation.license.key == "cc-by-nd" || presentation.license.key == "cc-by-nc-nd")){
+			$("#allow_clone").prop("checked", false);
+			$("#allow_clone").prop("disabled", true);
+		}
+
 		if(presentation.allow_comment == "false"){
 			$("#allow_comment").prop("checked", false);
 		} else {
@@ -275,10 +280,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$('#upload_file_attachment').prop('disabled', true);
 		}
 
-		if (presentation.allow_clone == undefined){
+		if (presentation.title == undefined){
 			$('.attachmentFileUpload').prop('disabled', true);
 			$('#attachment_file').prop('disabled', true);
-			
+		} else {
+			$('.attachmentFileUpload').removeAttr('disabled');
 		}
 
 	};
@@ -616,6 +622,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.allow_clone = allow_clone.toString();
 		}
 
+		if( licenseKey == "cc-by-nd" || licenseKey == "cc-by-nc-nd"){
+			settings.allow_clone = "false";
+		}
+
+
 		var allow_comment = $("#allow_comment").is(':checked');
 			if(typeof allow_comment == "boolean"){
 			settings.allow_comment = allow_comment.toString();
@@ -639,7 +650,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		//callbacks
 		$('.attachmentFileUpload').prop('disabled', false);
 		$('#attachment_file').prop('disabled', false);
-
+		$('.attachmentFileUpload').removeAttr('disabled');
 
 		return settings;
 	};
@@ -740,6 +751,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#catalog_content").hide();
 	 	$("#presentation_details_fields").slideUp();
 	 	$("#metadata_options_fields").slideDown();
+	 	$("#advanced_tabs .fancy_selected")[0].attr("id", "help-" + $("#advanced_tabs .fancy_selected").attr("tab"));
 	 };
 
 	 /**
@@ -749,6 +761,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$("#metadata_options_fields").slideUp();
 	 	$("#presentation_details_fields").slideDown();
+	 	$(".help_in_settings").attr("id","help_in_settings"); 
 	 };
 
 	 /**

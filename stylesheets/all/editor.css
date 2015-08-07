@@ -464,14 +464,8 @@ div#tagBoxIntro .tagit {
 }
 
 
-.attachmentFileUpload:disabled{
+.attachmentFileUpload[disabled]{
 	background: gray !important;
-}
-
-.attachmentFileUpload:hover:disabled{
-	background: gray !important;
-	opacity: 0.6;
-	cursor: default;
 }
 
 .attachmentFileUpload input#attachment_file {
