@@ -629,6 +629,7 @@ VISH.EVideo = (function(V,$,undefined){
 			setTimeout(function(){
 				_blockTimeUpdate = false;
 			},SEEK_WAIT);
+
 		}
 	};
 

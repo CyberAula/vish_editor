@@ -79,6 +79,12 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 	};
 
+	var refreshHTML5EVideo = function(slide){
+		//if HTML5 video, redraw balls, because onloadeddata event is not fired again
+		if($(slide).attr("type")=="enrichedvideo" && $(slide).find("video[videotype=HTML5_VIDEO]")){
+			V.Editor.EVideo.onHTML5VideoReady($(slide).find(".evideoBody video")[0]);
+		}
+	}
 
 	/* Generate table for carrousels */
 	var generateTable = function(options){
@@ -539,6 +545,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		addZoomToStyle  			: addZoomToStyle,	
 		getStylesInPercentages 		: getStylesInPercentages,
 		refreshDraggables			: refreshDraggables,
+		refreshHTML5EVideo			: refreshHTML5EVideo,
 		replaceIdsForSlide 			: replaceIdsForSlide,
 		replaceIdsForSlideJSON		: replaceIdsForSlideJSON,
 		generateTable 				: generateTable,

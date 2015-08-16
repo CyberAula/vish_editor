@@ -3,11 +3,6 @@ section.slides article[type='standard'] {
 	background-size: 100% 100%;
 }
 
-section.slides article[type='enrichedvideo'] {
-	background: white url("/images/themes/theme7/bg.jpg") top;
-	background-size:100% 100%;
-}
-
 section.slides > article > div.vezone, section.slides > article > article > div.vezone {
 	background-color: rgba(255, 255, 255, 0.4);
 }
@@ -18,42 +13,14 @@ div.vezone > span.zone_tooltip {
 	color: #5C5C5C;
 }
 
-
-.evideoIndexBody {
-    position: relative;
-    height: 100%;
-    width: 78%;
-    padding-left: 5%;
-    padding-right: 5%;
-    float: right;
-    display: inline-block;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background-color: #205195;
-    list-style: outside none none;
-    z-index: 2;
+section.slides {
+	background: rgb(229,235,238); /* Old browsers */
+	background:  -moz-linear-gradient(top,  rgba(229,235,238,1) 0%, rgba(215,222,227,1) 7%, rgba(255,255,255,1) 50%, rgba(229,235,238,1) 92%, rgba(215,222,227,1) 96%, rgba(215,222,227,1) 100%); /* FF3.6+ */
+	background:  -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(229,235,238,1)), color-stop(7%,rgba(215,222,227,1)), color-stop(50%,rgba(255,255,255,1)), color-stop(92%,rgba(229,235,238,1)), color-stop(96%,rgba(215,222,227,1)), color-stop(100%,rgba(215,222,227,1))); /* Chrome,Safari4+ */
+	background:  -webkit-linear-gradient(top,  rgba(229,235,238,1) 0%,rgba(215,222,227,1) 7%,rgba(255,255,255,1) 50%,rgba(229,235,238,1) 92%,rgba(215,222,227,1) 96%,rgba(215,222,227,1) 100%); /* Chrome10+,Safari5.1+ */
+	background:  -o-linear-gradient(top,  rgba(229,235,238,1) 0%,rgba(215,222,227,1) 7%,rgba(255,255,255,1) 50%,rgba(229,235,238,1) 92%,rgba(215,222,227,1) 96%,rgba(215,222,227,1) 100%); /* Opera 11.10+ */
+	background:  -ms-linear-gradient(top,  rgba(229,235,238,1) 0%,rgba(215,222,227,1) 7%,rgba(255,255,255,1) 50%,rgba(229,235,238,1) 92%,rgba(215,222,227,1) 96%,rgba(215,222,227,1) 100%); /* IE10+ */
+	background:  linear-gradient(to bottom,  rgba(229,235,238,1) 0%,rgba(215,222,227,1) 7%,rgba(255,255,255,1) 50%,rgba(229,235,238,1) 92%,rgba(215,222,227,1) 96%,rgba(215,222,227,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e5ebee', endColorstr='#d7dee3',GradientType=0 ); /* IE6-9 */
 }
 
-.evideoIndexSide {
-    width: 100%;
-    position: absolute;
-    right: 0px;
-    height: 7%;
-    display: inline-block;
-    background-color: #205195;
-    border-radius: 6px 0px 0px 6px;
-    z-index: 1;
-}
-
-.evideoToggleIndex {
-    min-width: 20px;
-    min-height: 20px;
-}
-
-.evideoChapters {
-	box-shadow: none;
-}
-
-.evideoControlButton.evideoPlayButton{
-	content:url("/images/themes/theme7/customPlayer/eVideoPlay.png");
-}

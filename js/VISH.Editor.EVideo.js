@@ -540,7 +540,16 @@ VISH.Editor.EVideo = (function(V,$,undefined){
 		var videoBox = $(eVideoDOM).find(".evideoBox");
 		var videoDOM = V.EVideo.getVideoFromVideoBox(videoBox);
 		var duration = V.Video.getDuration(videoDOM);
-
+		
+		/*Validation to make sure, which kind of update is, not a slide displacement*/
+		if( !eVideoDOM.find(".ballSlider").hasClass("ui-slider")){
+			$(eVideoJSON.balls).each(function(index,ball){
+				if(ball.drawed != undefined){
+					ball.drawed = false;
+				}
+			});
+		}
+		
 		$(eVideoJSON.balls).each(function(index,ball){
 			if(ball.drawed != true) {
 				_drawBall(eVideoDOM,eVideoJSON,ball,duration);
