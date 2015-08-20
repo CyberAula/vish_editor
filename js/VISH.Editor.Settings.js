@@ -287,6 +287,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$('.attachmentFileUpload').removeAttr('disabled');
 		}
 
+		// Fix catalog position up to button size
+		if (VISH.I18n.getLanguage() == "en"){
+			$("#catalog_button").css("margin-left","244px");
+			$("#upload_file_attachment").css("margin-left","15px");
+		}
+
 	};
 
 	var _onThemeImagesLoaded = function(){

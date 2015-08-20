@@ -681,6 +681,8 @@ var i18n =
 				"i.Catalog"					: "Catalogar",
 				"i.CatalogueTitle"			: "Catálogo",
 				"i.Chemistry"				: "Química",
+				"i.ChooseFile"				: "Seleccionar",
+				"i.ChooseFileTip"			: "Elije un archivo", 
 				"i.Citizenship"				: "Educación para la Ciudadanía",
 				"i.ClassicalLanguages"		: "Lenguas Clásicas",
 				"i.close"					: "cerrar",

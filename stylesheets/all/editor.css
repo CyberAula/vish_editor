@@ -389,7 +389,7 @@ div#tagBoxIntro .tagit {
 
 #catalog_button {
   	position: relative;
-    left: 245px;
+    margin-left: 188px;
     background: #0066ff;
     border: black;
 }
@@ -491,7 +491,7 @@ div#tagBoxIntro .tagit {
 }
 
 #upload_file_attachment{
-	margin-left: 4px;
+	margin-left: 25px;
 }
 
 #upload_file_attachment:disabled{
