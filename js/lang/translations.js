@@ -432,14 +432,14 @@ var i18n =
 				"i.walkMetadata1_9" 		: "El tema (o temas) de esta excursión.",
 				"i.walkMetadata1_10" 	: "Comentarios acerca de como este objeto de aprendizaje puede o va a ser utilizado.",
 				
-				"i.walkPublication1_1"		: "Bienvenido a la pantalla de permisos de recursos en Vish Editor",
+				"i.walkPublication1_1"		: "Bienvenido a la pantalla de permisos en Vish Editor",
 				"i.walkPublication1_2"		: "En esta pantalla podrás cambiar los permisos de clonación, descarga y comentarios",
 				"i.walkPublication1_3"		: "Clonar: permite que otro usuario pueda obtener la excursión en su cuenta y poder modificarla como si fuera una propia, manteniendo las atribuciones al autor.",
 				"i.walkPublication1_4"		: "Comentarios: permite activar o desactivar los comentarios para en la excursión.",
 				"i.walkPublication1_5"		: "Descarga: permite que cualquier usuario pueda descargar la excursión en cualquiera de los formatos.",
 
 				"i.walkRTE1_1"				: "Bienvenido a la pantalla de opciones de RTE",
-				"i.walkRTE1_2"				: "En esta pantalla encontrarás la selección de permitir el seguimiento de recursos scorm, para su utilización académica en labores de investigación y calidad de rescursos educativos.",
+				"i.walkRTE1_2"				: "En esta pantalla prodrás permitir el seguimiento de recursos scorm, para su utilización académica en labores de investigación y calidad de rescursos educativos.",
 
 				"i.walkSlide1_1"			: "Añadiendo contenido a una diapositiva",
 				"i.walkSlide1_2"			: "Para añadir contenido a una diapositiva, primero tienes que pulsar sobre cualquiera de las areas editables disponibles en ella. Estas áreas tienen un borde punteado y un texto que dice ",
