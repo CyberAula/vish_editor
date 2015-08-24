@@ -758,7 +758,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#presentation_details_fields").slideUp();
 	 	$("#metadata_options_fields").slideDown();
 	 	if ($("#advanced_tabs .fancy_selected") != undefined ){ 
-	 		$($("#advanced_tabs .fancy_selected")[0]).attr("id", "help-tab-" + $("#advanced_tabs .fancy_selected").attr("tab"));
+	 		$(".help_in_settings").attr("id", "help-" + $("#advanced_tabs .fancy_selected").attr("tab"));
 	 	}
 	 };
 
