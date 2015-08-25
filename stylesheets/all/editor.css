@@ -455,6 +455,11 @@ div#tagBoxIntro .tagit {
 
 #catalog_button:hover {
 	background-color:#326999;
+  	position: relative;
+    margin-left: 188px;
+    background: #0066ff;
+    border: black;
+
 }
 
 #catalog_content{
@@ -592,7 +597,7 @@ div#tagBoxIntro .tagit {
 }
 
 #upload_file_attachment{
-	margin-left: 4px;
+	margin-left: 25px;
 }
 
 #upload_file_attachment:disabled{

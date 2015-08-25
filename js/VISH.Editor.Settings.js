@@ -287,6 +287,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$('.attachmentFileUpload').removeAttr('disabled');
 		}
 
+		// Fix catalog position up to button size
+		if (VISH.I18n.getLanguage() == "en"){
+			$("#catalog_button").css("margin-left","244px");
+			$("#upload_file_attachment").css("margin-left","15px");
+		}
+
 	};
 
 	var _onThemeImagesLoaded = function(){
@@ -739,7 +745,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		 	$(attr).addClass("active").show();
 
 		 	//help behaviour
-		 	$(".help_in_settings").attr("id", "help-" + $(this).attr("tab"));
+		 	$($(".help_in_settings")[1]).attr("id", "help-" + $(this).attr("tab"));
 	 	}
 	 };
 
@@ -752,7 +758,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$("#presentation_details_fields").slideUp();
 	 	$("#metadata_options_fields").slideDown();
 	 	if ($("#advanced_tabs .fancy_selected") != undefined ){ 
-	 		$("#advanced_tabs .fancy_selected")[0].attr("id", "help-" + $("#advanced_tabs .fancy_selected").attr("tab"));
+	 		$(".help_in_settings").attr("id", "help-" + $("#advanced_tabs .fancy_selected").attr("tab"));
 	 	}
 	 };
 
