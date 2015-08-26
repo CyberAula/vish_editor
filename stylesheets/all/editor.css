@@ -445,50 +445,13 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_button {
-/* TODO: check*/
-  position: absolute;
-  right: 281px;
-  top: 380px;
-  background: #428BCA;
-  border: black;
-}
-
-#catalog_button:hover {
-	background-color:#326999;
   	position: relative;
     margin-left: 188px;
     background: #0066ff;
     border: black;
-
 }
 
 #catalog_content{
-/* TODO: check*/
-  display: none;
-  background: white;
-  height: 308px;
-  width: 256px;
-  z-index: 1162;
-  position: absolute;
-  top: 417px;
-  right: 100px;
-  padding-left: 18px;
-  border-radius: 8px;
-  border: transparent;
-  -webkit-box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
-}
-
-#catalog_done_button{
-	/*=======
-  position: relative;
-  float: right;
-  right: 11px;
-  background-color: #428bca;
-  border: none;
-  top: 5px;
-
 	display: none;
 	background: white;
 	height: 297px;
@@ -502,22 +465,15 @@ div#tagBoxIntro .tagit {
 	border-color: black;
 	border-style: solid;
 	border-width: 1px;
-
 }
 
-
-#catalog_done_button{>>>>>>> 5d30ef2d73d024a80539a1dfaf853f969103fb59*/
+#catalog_done_button{
 	position: relative;
 	float: right;
 	right: 10px;
 	background-color: #428bca;
 	border: none;
 	top: 5px;
-
-}
-
-#catalog_done_button:hover{
-	background-color: #326999;
 }
 
 .file_details_upload{
@@ -529,30 +485,11 @@ div#tagBoxIntro .tagit {
 }
 
 .attachmentFileUpload {
-
-
-    background: #428bca !important;
+    position: relative;
+    overflow: hidden;
     margin: 10px;
     margin-left: 0px;
-
-    padding: 5px 10px;
-    display: inline;
-    text-decoration: none;
-    opacity: 0.6;
-    color: #f9f9f9;
-    cursor: pointer;
-    font-weight: bold;
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    font-family: 'Open Sans', arial, sans-serif;
-    font-size: 1.1em;
-}
-
-.fileUpload:hover {
-    background: #326999 !important;
-    margin: 10px;
-    margin-left: 0px;
+    background: #0066ff repeat-x bottom;
     padding: 5px 10px;
     display: inline;
     text-decoration: none;
@@ -570,7 +507,6 @@ div#tagBoxIntro .tagit {
 
 .attachmentFileUpload[disabled]{
 	background: gray !important;
-
 }
 
 .attachmentFileUpload input#attachment_file {
@@ -606,23 +542,18 @@ div#tagBoxIntro .tagit {
 
 #upload_file_attachment:hover:disabled{
 	background: gray;
-	opacity: 1;
+	opacity: 0.6;
 	cursor: default;
 }
 
 #upload_file_attachment:enabled{
-	background-color: #428bca !important;
-}
-
-#upload_file_attachment:enabled:hover{
-	background-color: #326999 !important;
+	background-color: #0066ff !important;
 }
 
 #upload_icon_success{
 	display: none;
 	color: green;
 }
-
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
 	position: absolute;
 }
@@ -932,7 +863,7 @@ input.slider_range_input {
 }
 
 .help_in_settings:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover_tp.png");
+	background-image: url("/images/vicons/helptutorial_circle_hover.png");
 	cursor: pointer;
 }
 
