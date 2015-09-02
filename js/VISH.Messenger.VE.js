@@ -74,11 +74,6 @@ VISH.Messenger.VE = (function(V,undefined){
 					V.Status.setSlaveMode(data.params.slave);
 				}
 				break;
-			case V.Constant.Event.onPreventDefault:
-				if((data.params)&&(typeof data.params.preventDefaults != "undefined")){
-					V.Status.setPreventDefaultMode(data.params.preventDefaults);
-				}
-				break;
 			case V.Constant.Event.allowExitWithoutConfirmation:
 				if(V.Editing){
 					V.Editor.Events.allowExitWithoutConfirmation();

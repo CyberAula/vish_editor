@@ -351,6 +351,21 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('help_metadata_selection_help', 'bottom');
 		});
 
+		//Help in metadata options settings	
+		$(document).on('click','#help-metadata-options-tab', function(){
+			V.Tour.startTourWithId('help_metadata_selection_help', 'bottom');
+		});
+
+		//Help in publication options settings	
+		$(document).on('click','#help-publication-tab', function(){
+			V.Tour.startTourWithId('help_publication_selection_help', 'bottom');
+		});
+
+		//Help in rte options settings	
+		$(document).on('click','#help-rte-tab', function(){
+			V.Tour.startTourWithId('help_rte_selection_help', 'bottom');
+		});
+
 		//Help inserting images [URL, Upload, ViSH, Flickr, LRE]
 		$(document).on('click','#tab_pic_from_url_help', function(){
 			V.Tour.startTourWithId('images_fancy_tabs_id_help', 'top');

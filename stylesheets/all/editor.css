@@ -101,6 +101,7 @@ p.presentation_details_column_title {
 #selectthemeshelp{
 	position:relative;
 	right:18px;
+	color: #ccc;
 }
 
 #presentation_details_preview_thumbnail_img .addthumbtitle:hover {
@@ -433,11 +434,10 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_button {
-  position: absolute;
-  right: 281px;
-  top: 380px;
-  background: #428BCA;
-  border: black;
+  	position: relative;
+    margin-left: 188px;
+    background: #0066ff;
+    border: black;
 }
 
 #catalog_button:hover {
@@ -470,6 +470,15 @@ div#tagBoxIntro .tagit {
   top: 5px;
 }
 
+#catalog_done_button{
+	position: relative;
+	float: right;
+	right: 10px;
+	background-color: #428bca;
+	border: none;
+	top: 5px;
+}
+
 #catalog_done_button:hover{
 	background-color: #326999;
 }
@@ -478,18 +487,35 @@ div#tagBoxIntro .tagit {
 	margin-top: 10px;
 }
 
-.fileUpload {
+#attachment_file_form {
+	margin-top: 3px;
+}
+
+.attachmentFileUpload {
     position: relative;
     overflow: hidden;
-    margin: 10px 10px 10px 0px;
-    background: #428bca !important;
+    margin: 10px;
+    margin-left: 0px;
+    background: #0066ff repeat-x bottom;
+    padding: 5px 10px;
+    display: inline;
+    text-decoration: none;
+    opacity: 0.6;
+    color: #f9f9f9;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.1em;
 }
 
-.fileUpload:hover {
-    background: #326999 !important;
+.attachmentFileUpload[disabled]{
+	background: gray !important;
 }
 
-.fileUpload input#attachment_file {
+.attachmentFileUpload input#attachment_file {
     position: absolute;
     top: 0;
     right: 0;
@@ -513,7 +539,7 @@ div#tagBoxIntro .tagit {
 }
 
 #upload_file_attachment{
-	margin-left: 4px;
+	margin-left: 25px;
 }
 
 #upload_file_attachment:disabled{
@@ -583,10 +609,10 @@ div#tagBoxIntro .tagit {
 .metadata_title {
 	font-family: 'Open Sans', arial, sans-serif;
   	font-size: 1.7em;
-  	color: #fff;
-  	padding: 26px;
-  	background-color: #428BCA;
-  	margin:0px;
+  	color: #ccc;
+  	margin: 26px;
+  	margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 #metadata_options_fields_row1 {
@@ -625,13 +651,25 @@ div#tagBoxIntro .tagit {
 	border-left: 1px solid #ebebeb;
 }
 
-#publication_title{
+#publication_title {
+	margin-top: 40px;
 	margin-left: 35px;
+	font-size: 18px;
 }
 
-#publication_content{
-	margin-left: 250px;
-	height: 393px;
+#publication_title p {
+	margin: 0px;
+}
+
+#publication_content {
+	margin-left: 70px;
+	font-size: 18px;
+}
+
+#publication_content p {
+    margin-top: 12px;
+    margin-bottom: 15px;
+    font-size: 17px;
 }
 
 #publication-tab{
@@ -645,12 +683,15 @@ div#tagBoxIntro .tagit {
 #rte-tab{
   display: block;
   margin-left: 35px;
-  margin-top: 50px;
-  height: 422px;
+  margin-top: 40px;
+  height: 432px;
   overflow: hidden;
-  font-size: 1.4em;
-  font-family: 'Open Sans', arial, sans-serif;
-  font-weight: 300;
+  font-size: 17px;
+}
+
+#rte-tab p{
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 #language_tag_box_text {
@@ -825,7 +866,7 @@ input.slider_range_input {
 }
 
 .help_in_settings:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover.png");
+	background-image: url("/images/vicons/helptutorial_circle_hover_tp.png");
 	cursor: pointer;
 }
 
@@ -903,9 +944,9 @@ input.slider_range_input {
 
 .slidesScrollbarButton {
 	background-color: #929292;
-	border:none !important;
 	color:white;
 	margin-top:3px;
+	border: 1px solid #B9B9B9 !important;
 }
 
 .slidesScrollbarButton:not(.addSlideButtonDisabled):hover {
@@ -1264,7 +1305,7 @@ div.vezone[tooltip='true'][size='large'] {
 	left: 11%;
 	top: 5%;
 	font-size: 19px;
-	color: #3F3F3F;
+	color: #9B999D;
 }
 
 .listInFancy .textfancy{
@@ -1567,13 +1608,6 @@ div.addUrlButtons{
 	box-shadow: 0px 4px 4px -1px rgba(0,0,0,0.65);
 }
 
-.slidethumb.slideAni {
-	opacity:0.7;
-	background-repeat: no-repeat;
-	background-size: auto 100%;
-	background-position: center;
-}
-
 .quizFancythumb {
 	width: 125px;
 	height: 85px;
@@ -1612,6 +1646,9 @@ div.addUrlButtons{
 	opacity: 1;	
 }
 
+.slidethumb:hover {
+	border: 1px solid #357ebd;
+}
 
 .slidethumb:active, .quizFancythumb:active {
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
@@ -1681,7 +1718,7 @@ div.addUrlButtons{
 	padding: 0px;
 	margin-top: 15px;
 	margin-bottom: 4px;
-	color: #393939;
+	color: #666;
 	cursor: pointer;
 }
 
@@ -1741,11 +1778,7 @@ div.vezone {
 	padding: 0px;
 	border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
-	-webkit-border-radius: 5px 5px 0px 0px;
-	-webkit-user-select:none;
-	-moz-user-select:none;
-	-khtml-user-select:none;
-	-ms-user-select:none;	
+	-webkit-border-radius: 5px 5px 0px 0px;	
 }
 
 .fancy_tabs li {
@@ -1768,7 +1801,7 @@ div.vezone {
 
 .fancy_tabs li a:hover {
 	opacity: 0.8;
-	border-bottom: 3px solid #AAA;
+	border-bottom: 3px solid #930;
 }
 
 .fancy_tabs li a.fancy_selected {
@@ -2317,15 +2350,15 @@ div.object_wrapper {
 #animation_fancybox {
 	background: url("/images/icons/animationbg.png") no-repeat;
 	height: 300px;
-	padding-left: 19px;
-	padding-right: 25px;
-	padding-top: 85px;
+	padding-left: 44px;
+	padding-right: 35px;
+	padding-top: 87px;
 }
 
 #help_animation_selection {
 	position: absolute;
-	margin-top: -81.5px;
-	right: 33px;
+	margin-top: -88px;
+	right: 25px;
 	cursor: pointer;
 	width:25px;
 }
@@ -2338,6 +2371,8 @@ div.object_wrapper {
 .anim_text {
 	opacity: 1;
 	border-radius: 5px;
+	background: rgba(28, 49, 71, 0.6); /* Fallback */
+	background-color: rgba(28, 49, 71, 0.6);
 	color: rgba(28, 49, 71, 0.6);
 	width: 100%;
 	height: 100%;
@@ -2347,10 +2382,6 @@ div.object_wrapper {
     -ms-transition: opacity 0.50s ease-out;
     -moz-transition: opacity 0.50s ease-out;
     -webkit-transition: opacity 0.50s ease-out;
-    -webkit-user-select:none;
-	-moz-user-select:none;
-	-khtml-user-select:none;
-	-ms-user-select:none;
 }
 
 .anim_text:hover {
@@ -2365,7 +2396,7 @@ div.object_wrapper {
 .anim_text > h3 {
 	margin-left: 3px;
 	margin-top: 26px;
-	font-family: "Open Sans",arial,sans-serif;
+	font-family: "Open Sans";
 	font-weight: 400;
 	color: #fff;
 	opacity: 1;
@@ -2472,18 +2503,14 @@ div.object_wrapper {
 
 
 
-
-
 /* Tutorials with Joyride */
 
 .tut_settings {
-	top: 320px;
-  	left: 636px;
  	width: 446px;
+ 	left: 32.9%;
 }
 
 .theme_tut_in_settings {
-	left: 771px !important;
     width: 350px;
 }
 
@@ -3246,7 +3273,7 @@ span.letterInChapterDialog {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-	background-color: #285C8A;
+	background-color: #357ebd;
 	border-color: #3071a9;
 }
 
