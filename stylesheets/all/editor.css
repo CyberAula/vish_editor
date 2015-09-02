@@ -440,34 +440,20 @@ div#tagBoxIntro .tagit {
     border: black;
 }
 
-#catalog_button:hover {
-	background-color:#326999;
-}
-
 #catalog_content{
-  display: none;
-  background: white;
-  height: 308px;
-  width: 256px;
-  z-index: 1162;
-  position: absolute;
-  top: 417px;
-  right: 100px;
-  padding-left: 18px;
-  border-radius: 8px;
-  border: transparent;
-  -webkit-box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
-  box-shadow: 0px 10px 17px 0px rgba(0,0,0,0.75);
-}
-
-#catalog_done_button{
-  position: relative;
-  float: right;
-  right: 11px;
-  background-color: #428bca;
-  border: none;
-  top: 5px;
+	display: none;
+	background: white;
+	height: 297px;
+	width: 270px;
+	z-index: 1162;
+	position: absolute;
+	top: 183px;
+	right: 377px;
+	padding-left: 32px;
+	border-radius: 10px;
+	border-color: black;
+	border-style: solid;
+	border-width: 1px;
 }
 
 #catalog_done_button{
@@ -548,23 +534,18 @@ div#tagBoxIntro .tagit {
 
 #upload_file_attachment:hover:disabled{
 	background: gray;
-	opacity: 1;
+	opacity: 0.6;
 	cursor: default;
 }
 
 #upload_file_attachment:enabled{
-	background-color: #428bca !important;
-}
-
-#upload_file_attachment:enabled:hover{
-	background-color: #326999 !important;
+	background-color: #0066ff !important;
 }
 
 #upload_icon_success{
 	display: none;
 	color: green;
 }
-
 #metadata_clasification_button, #fill_details_later_button, #save_presentation_details {
 	position: absolute;
 }
@@ -609,10 +590,10 @@ div#tagBoxIntro .tagit {
 .metadata_title {
 	font-family: 'Open Sans', arial, sans-serif;
   	font-size: 1.7em;
-  	color: #ccc;
-  	margin: 26px;
-  	margin-top: 15px;
-    margin-bottom: 15px;
+  	color: #fff;
+  	padding: 26px;
+  	background-color: #428BCA;
+  	margin:0px;
 }
 
 #metadata_options_fields_row1 {
@@ -866,7 +847,7 @@ input.slider_range_input {
 }
 
 .help_in_settings:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover_tp.png");
+	background-image: url("/images/vicons/helptutorial_circle_hover.png");
 	cursor: pointer;
 }
 
@@ -1801,7 +1782,7 @@ div.vezone {
 
 .fancy_tabs li a:hover {
 	opacity: 0.8;
-	border-bottom: 3px solid #930;
+	border-bottom: 3px solid #AAA;
 }
 
 .fancy_tabs li a.fancy_selected {
