@@ -62,25 +62,20 @@
 }
 
 #menu ul {
-	background: #ddd; /* for non-css3 browsers */
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#cfcfcf'); /* for IE */
-	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#cfcfcf)); /* for webkit browsers */
-	background: -moz-linear-gradient(top,  #fff,  #cfcfcf); /* for firefox 3.6+ */
-	display: none;
+	display:none;
+	background-color:#FFF;
 	margin: 0;
-	padding: 0;
-	width: 178px;
-	position: absolute;
-	top: 40px;
-	left: -21px;
-	-webkit-border-radius: 0px 0px 10px 10px;
-	-moz-border-radius: 0px 0px 10px 10px;
-	border-radius: 0px 0px 10px 10px;
-	-webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
-	-moz-box-shadow:    4px 4px 5px rgba(50, 50, 50, 0.2);
-	box-shadow:         4px 4px 5px rgba(50, 50, 50, 0.2);
-	border-left: 1px solid #C7C7C7;
-	border-bottom: 1px solid #C7C7C7;
+    padding: 0;
+    width: 179px;
+    position: absolute;
+    top: 46px;
+    left: -20px;
+    -webkit-border-radius: 0px 0px 10px 10px;
+    -moz-border-radius: 0px 0px 10px 10px;
+    border-radius: 0px 0px 10px 10px;
+    -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
+    -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
+    box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
 }
 
 ul.menu_option_main ul {

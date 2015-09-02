@@ -297,6 +297,12 @@ textarea#presentation_details_textarea {
 
 /* Themes in settings */
 
+#fancybox-content {
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
 #scrollbar_themes_list {
 	height: 486px;
 }
@@ -384,11 +390,12 @@ textarea#presentation_details_textarea {
 
 .theme_selected_in_fancybox {
 	background-position: -5px -6px;
-	border-radius: 2px !important;
-	border: 6px solid #357EBD !important;
-	opacity: 1 !important;
-	width: 104px !important;
-	height: 69px !important;
+    border-radius: 8px !important;
+    border: 4px solid #357EBD !important;
+    opacity: 1 !important;
+    width: 104px !important;
+    height: 69px !important;
+    padding: 2px;
 }
 
 
@@ -436,8 +443,12 @@ div#tagBoxIntro .tagit {
 #catalog_button {
   	position: relative;
     margin-left: 188px;
-    background: #0066ff;
+    background: #428BCA;
     border: black;
+}
+
+#catalog_button:hover{
+	background-color:#326999;
 }
 
 #catalog_content{
@@ -482,7 +493,7 @@ div#tagBoxIntro .tagit {
     overflow: hidden;
     margin: 10px;
     margin-left: 0px;
-    background: #0066ff repeat-x bottom;
+    background: #428BCA repeat-x bottom;
     padding: 5px 10px;
     display: inline;
     text-decoration: none;
@@ -495,6 +506,10 @@ div#tagBoxIntro .tagit {
     -webkit-border-radius: 5px;
     font-family: 'Open Sans', arial, sans-serif;
     font-size: 1.1em;
+}
+
+.attachmentFileUpload:hover {
+	background-color: #326999;
 }
 
 .attachmentFileUpload[disabled]{
@@ -1435,83 +1450,83 @@ div.addUrlButtons{
 }
 
 #arrow_left_div {
-	background: url("/images/carrousel/arrow_left.png");
+	background: url("/images/carrousel/arrow_left.png") no-repeat;
 }
 
 #arrow_left_div:hover {
-	background: url("/images/carrousel/arrow_left_hover.png");
+	background: url("/images/carrousel/arrow_left_hover.png") no-repeat;
 }
 
 #arrow_right_div {
-	background: url("/images/carrousel/arrow_right.png");
+	background: url("/images/carrousel/arrow_right.png") no-repeat;
 }
 
 #arrow_right_div:hover {
-	background: url("/images/carrousel/arrow_right_hover.png");
+	background: url("/images/carrousel/arrow_right_hover.png") no-repeat;
 }
 
 .textthumb {
-	background: url("/images/zonethumbs/text.png");
+	background: url("/images/zonethumbs/text.png") no-repeat;
 }
 
 .textthumb:hover {
-	background: url("/images/zonethumbs/text_hover.png");
+	background: url("/images/zonethumbs/text_hover.png") no-repeat;
 }
 
 .textthumb_small {
-	background: url("/images/zonethumbs/text_small.png");
+	background: url("/images/zonethumbs/text_small.png") no-repeat;
 }
 
 .textthumb_small:hover {
-	background: url("/images/zonethumbs/text_small_hover.png");
+	background: url("/images/zonethumbs/text_small_hover.png") no-repeat;
 }
 
 .picthumb {
-	background: url("/images/zonethumbs/image.png");
+	background: url("/images/zonethumbs/image.png") no-repeat;
 }
 
 .picthumb:hover {
-	background: url("/images/zonethumbs/image_hover.png");
+	background: url("/images/zonethumbs/image_hover.png") no-repeat;
 }
 
 .picthumb_small {
-	background: url("/images/zonethumbs/image_small.png");
+	background: url("/images/zonethumbs/image_small.png") no-repeat;
 }
 
 .picthumb_small:hover {
-	background: url("/images/zonethumbs/image_small_hover.png");
+	background: url("/images/zonethumbs/image_small_hover.png") no-repeat;
 }
 
 .objectthumb {
-	background: url("/images/zonethumbs/object.png");
+	background: url("/images/zonethumbs/object.png") no-repeat;
 }
 
 .objectthumb:hover {
-	background: url("/images/zonethumbs/object_hover.png");
+	background: url("/images/zonethumbs/object_hover.png") no-repeat;
 }
 
 .videothumb {
-	background: url("/images/zonethumbs/video.png");
+	background: url("/images/zonethumbs/video.png") no-repeat;
 }
 
 .videothumb:hover {
-	background: url("/images/zonethumbs/video_hover.png");
+	background: url("/images/zonethumbs/video_hover.png") no-repeat;
 }
 
 .livethumb {
-	background: url("/images/zonethumbs/live.png");
+	background: url("/images/zonethumbs/live.png") no-repeat;
 }
 
 .quizthumb {
-	background: url("/images/zonethumbs/quiz.png");
+	background: url("/images/zonethumbs/quiz.png") no-repeat;
 }
 
 .quizthumb:hover {
-	background: url("/images/zonethumbs/quiz_hover.png");
+	background: url("/images/zonethumbs/quiz_hover.png") no-repeat;
 }
 
 .livethumb:hover {
-	background: url("/images/zonethumbs/live_hover.png");
+	background: url("/images/zonethumbs/live_hover.png") no-repeat;
 }
 
 .thumbicon {
@@ -1583,10 +1598,16 @@ div.addUrlButtons{
 	height: 79px;
 	margin: 9px 4px 6px 16px;
 	border-radius: 4px;
-	border: 1px solid #CCC;
+	border: none;
 	-webkit-box-shadow: 0px 10px 5px 4px rgba(0,0,0,0.75);
 	-moz-box-shadow: 0px 10px 5px 4px rgba(0,0,0,0.75);
 	box-shadow: 0px 4px 4px -1px rgba(0,0,0,0.65);
+	background-position:7px;
+	background-repeat: no-repeat;
+}
+
+.slidethumb.slideAni {
+	background-position:2px;
 }
 
 .quizFancythumb {
@@ -1603,7 +1624,6 @@ div.addUrlButtons{
 	border-radius: 9px;
 	-webkit-border-radius: 9px;
 	-moz-border-radius: 9px;
-	opacity: 0.8;
 }
 
 .quizFancythumb img {
@@ -1627,9 +1647,6 @@ div.addUrlButtons{
 	opacity: 1;	
 }
 
-.slidethumb:hover {
-	border: 1px solid #357ebd;
-}
 
 .slidethumb:active, .quizFancythumb:active {
 	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.0);
@@ -1641,9 +1658,6 @@ div.addUrlButtons{
 	opacity: 1.0;	
 }
 
-.slidethumb:active {
-	border: 1px solid #000;
-}
 
 .quizFancythumb img:active {
 	border: 1px solid #000;
@@ -1733,8 +1747,17 @@ div.vezone {
 }
 
 #fancybox-close {
-	width: 17px;
-	height: 10px;
+	width: 22px;
+	height: auto;
+	right: 3px;
+	top: 7px;
+	background: transparent url('/images/vicons/ve_close2.png') no-repeat center top;
+	background-size:60%;
+}
+
+#fancybox-close:hover {
+	background: transparent url('/images/vicons/ve_close2_hover.png') no-repeat center top;
+	background-size:60%;
 }
 
 .outer_box {
@@ -2285,20 +2308,18 @@ div.object_wrapper {
 }
 
 .help_in_fancybox {
-	background-image: url("/images/vicons/helptutorial_circle2.png");
+	background-image: url("/images/vicons/helptutorial_circle.png");
 	position: absolute;
-	margin-top: 1px;
-	margin-right: -7px;
-	top: 2.6px;
-	right: 30px;
-	background-size: 70%;
-	background-repeat: no-repeat;
+	top: 6.6px;
+    right: 22px;
+    background-size: 60%;
+    background-repeat: no-repeat;
 }
 
 .help_in_fancybox:hover {
-	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
+	background-image: url("/images/vicons/helptutorial_circle_hover.png");
 	cursor: pointer;
-	background-size: 70%;
+	background-size: 60%;
 	background-repeat: no-repeat;
 }
 
@@ -2315,33 +2336,32 @@ div.object_wrapper {
 
 #help_themes_selection {
 	position: absolute;
-	margin-top: -83px;
-	right: 34px;
-	cursor: pointer;
-	width:24px;
+    margin-top: -80px;
+    right: 34px;
+    cursor: pointer;
+    width: 21px;
 }
 
 #help_themes_selection:hover {
-	background-image: url("/images/vicons/helptutorial_circle2_hover_tp.png");
 	cursor: pointer;
 }
 
 /* Animation fancybox */
 
 #animation_fancybox {
-	background: url("/images/icons/animationbg.png") no-repeat;
+	background: transparent url("/images/icons/animationbg.png") no-repeat scroll 0% 0%;
 	height: 300px;
-	padding-left: 44px;
-	padding-right: 35px;
+	padding-left: 23px;
+	padding-right: 16px;
 	padding-top: 87px;
 }
 
 #help_animation_selection {
 	position: absolute;
-	margin-top: -88px;
-	right: 25px;
-	cursor: pointer;
-	width:25px;
+    margin-top: -80px;
+    right: 35px;
+    cursor: pointer;
+    width: 21px;
 }
 
 #help_animation_selection:hover {
@@ -2352,8 +2372,7 @@ div.object_wrapper {
 .anim_text {
 	opacity: 1;
 	border-radius: 5px;
-	background: rgba(28, 49, 71, 0.6); /* Fallback */
-	background-color: rgba(28, 49, 71, 0.6);
+	background: rgba(34, 76, 119, 0.7); /* Fallback */
 	color: rgba(28, 49, 71, 0.6);
 	width: 100%;
 	height: 100%;
@@ -2377,7 +2396,7 @@ div.object_wrapper {
 .anim_text > h3 {
 	margin-left: 3px;
 	margin-top: 26px;
-	font-family: "Open Sans";
+	font-family:"Open Sans",arial,sans-serif;
 	font-weight: 400;
 	color: #fff;
 	opacity: 1;
@@ -3254,8 +3273,7 @@ span.letterInChapterDialog {
 }
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active {
-	background-color: #357ebd;
-	border-color: #3071a9;
+	background-color: #2C6494;
 }
 
 .btn-small {
