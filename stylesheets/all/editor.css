@@ -368,12 +368,13 @@ textarea#presentation_details_textarea {
 }
 
 .animation_selected_in_fancybox {
-	background-position: -5px -6px;
-	border-radius: 6px !important;
-	border: 6px solid rgba(53, 126, 189, 0.6) !important;
+	border-radius: 6px;
+	border: 5px solid rgba(53, 126, 189, 0.6) !important;
 	opacity: 1 !important;
 	width: 105px !important;
-	height: 67px !important;
+	height: 69px !important;
+	background-size: 80% auto;
+	background-position: 10px center !important;
 }
 
 .theme_selected_in_fancybox > div {
@@ -497,7 +498,6 @@ div#tagBoxIntro .tagit {
     padding: 5px 10px;
     display: inline;
     text-decoration: none;
-    opacity: 0.6;
     color: #f9f9f9;
     cursor: pointer;
     font-weight: bold;
@@ -942,7 +942,7 @@ input.slider_range_input {
 	background-color: #929292;
 	color:white;
 	margin-top:3px;
-	border: 1px solid #B9B9B9 !important;
+	border: none !important;
 }
 
 .slidesScrollbarButton:not(.addSlideButtonDisabled):hover {
@@ -1599,9 +1599,6 @@ div.addUrlButtons{
 	margin: 9px 4px 6px 16px;
 	border-radius: 4px;
 	border: none;
-	-webkit-box-shadow: 0px 10px 5px 4px rgba(0,0,0,0.75);
-	-moz-box-shadow: 0px 10px 5px 4px rgba(0,0,0,0.75);
-	box-shadow: 0px 4px 4px -1px rgba(0,0,0,0.65);
 	background-position:7px;
 	background-repeat: no-repeat;
 }
@@ -2308,18 +2305,19 @@ div.object_wrapper {
 }
 
 .help_in_fancybox {
-	background-image: url("/images/vicons/helptutorial_circle.png");
+	background-image: url("/images/vicons/helptutorial_circle2.png");
 	position: absolute;
 	top: 6.6px;
-    right: 22px;
-    background-size: 60%;
+    right: 34px;
+    width:21px;
+    height:21px;
     background-repeat: no-repeat;
+    background-size: 100%;
 }
 
 .help_in_fancybox:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover.png");
+	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
 	cursor: pointer;
-	background-size: 60%;
 	background-repeat: no-repeat;
 }
 
@@ -2336,14 +2334,20 @@ div.object_wrapper {
 
 #help_themes_selection {
 	position: absolute;
-    margin-top: -80px;
-    right: 34px;
-    cursor: pointer;
-    width: 21px;
+margin-top: -80px;
+right: 35px;
+cursor: pointer;
+width: 21px;
+background-image: url("/images/vicons/helptutorial_circle2.png");
+background-size: 100% auto;
+background-repeat: no-repeat;
+height: 20px;
 }
 
 #help_themes_selection:hover {
 	cursor: pointer;
+	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
+
 }
 
 /* Animation fancybox */
@@ -2358,21 +2362,25 @@ div.object_wrapper {
 
 #help_animation_selection {
 	position: absolute;
-    margin-top: -80px;
-    right: 35px;
-    cursor: pointer;
-    width: 21px;
+	margin-top: -80px;
+	right: 35px;
+	cursor: pointer;
+	width: 21px;
+	background-image: url("/images/vicons/helptutorial_circle2.png");
+	background-size: 100%;
+	background-repeat: no-repeat;
+	height: 20px;
 }
 
 #help_animation_selection:hover {
-	background-image: url("/images/vicons/helptutorial_circle2_hover_tp.png");
+	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
 	cursor: pointer;
 }
 
 .anim_text {
 	opacity: 1;
 	border-radius: 5px;
-	background: rgba(34, 76, 119, 0.7); /* Fallback */
+	background: rgba(66, 139, 202, 0.8); /* Fallback */
 	color: rgba(28, 49, 71, 0.6);
 	width: 100%;
 	height: 100%;
@@ -2908,14 +2916,18 @@ p.draggable_number {
 
 .vt_search_button {
 	position: absolute;
-	background: #4d90fe !important;
-	background-color: #3079ed !important;
-	background-image: -webkit-linear-gradient(top, #4d90fe,#4787ed) !important;
-	left: 495px;
-	width: 44px;
-	height: 30px;
+	background: #428BCA none repeat scroll 0% 0% !important;
+	left: 498px;
+	width: 40px;
+	height: 29px;
 	padding: 0px;
-	top: -1px;
+	top: 0px;
+	border: none;
+	border-radius: 5px;
+}
+
+.vt_search_button:hover {
+	background-color:#326999;
 }
 
 .vt_search_button_img {
