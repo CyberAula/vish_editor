@@ -15,6 +15,13 @@
 	z-index: 10;
 }
 
+#toolbar_wrapper p, #toolbar_wrapper a{
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
+}
+
 #toolbar_menu , #toolbar_presentation, #toolbar_element {
 	display: inline-block;
 	height: 58px;

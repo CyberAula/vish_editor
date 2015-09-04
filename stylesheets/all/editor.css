@@ -2,6 +2,13 @@ img {
   border:0;
 }
 
+ul {
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
+}
+
 #menubar {
 	width: 100%;
 	height: 70px;
@@ -298,9 +305,10 @@ textarea#presentation_details_textarea {
 /* Themes in settings */
 
 #fancybox-content {
-    border-radius: 5px;
-    -moz-border-radius: 5px;
-    -webkit-border-radius: 5px;
+    -webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 #scrollbar_themes_list {
@@ -859,6 +867,10 @@ input.slider_range_input {
 	height: 29px;
 	top: 3px;
 	background-repeat: no-repeat;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 .help_in_settings:hover {
@@ -946,8 +958,7 @@ input.slider_range_input {
 }
 
 .slidesScrollbarButton:not(.addSlideButtonDisabled):hover {
-	background: #357ebd;
-	color: #fff;
+	color: #357ebd;
 }
 
 .slidesScrollbarButton:not(.addSlideButtonDisabled):active {
@@ -1011,6 +1022,10 @@ input.slider_range_input {
 	max-height: 700px;
 	display:block;
 	overflow: hidden;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 #slides_list div.wrapper_barbutton {
@@ -1330,14 +1345,15 @@ div.addUrlButtons{
 }
 
 .addUrlButton {
-	float:right;
+	float: right;
 	padding: 5px 10px;
 	text-decoration: none;
-	background: #FF005D repeat-x bottom;
-	opacity: 0.6;
+	background: #428BCA none repeat-x scroll center bottom;
+	opacity: 1;
 	color: #F9F9F9;
 	cursor: pointer;
 	font-weight: bold;
+	border: none;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
@@ -1359,6 +1375,7 @@ div.addUrlButtons{
 
 .addUrlButton:hover {
 	text-shadow: none;
+	background-color:#326999;
 }
 
 .tools_input_addUrl {
@@ -1601,6 +1618,10 @@ div.addUrlButtons{
 	border: none;
 	background-position:7px;
 	background-repeat: no-repeat;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 .slidethumb.slideAni {
@@ -1621,12 +1642,12 @@ div.addUrlButtons{
 	border-radius: 9px;
 	-webkit-border-radius: 9px;
 	-moz-border-radius: 9px;
+	box-shadow: 0px 2px 3px 0px;
 }
 
 .quizFancythumb img {
 	width: 110px !important;
 	height: 85px !important;
-	border: 1px solid #ccc;
 }
 
 .quizFancythumb p {
@@ -2295,6 +2316,10 @@ div.object_wrapper {
 	background-size: 90%;
 	background-repeat: no-repeat;
 	width:26px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 .help_in_slide:hover {
@@ -2313,6 +2338,10 @@ div.object_wrapper {
     height:21px;
     background-repeat: no-repeat;
     background-size: 100%;
+    -webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 .help_in_fancybox:hover {
@@ -2334,14 +2363,18 @@ div.object_wrapper {
 
 #help_themes_selection {
 	position: absolute;
-margin-top: -80px;
-right: 35px;
-cursor: pointer;
-width: 21px;
-background-image: url("/images/vicons/helptutorial_circle2.png");
-background-size: 100% auto;
-background-repeat: no-repeat;
-height: 20px;
+	margin-top: -80px;
+	right: 35px;
+	cursor: pointer;
+	width: 21px;
+	background-image: url("/images/vicons/helptutorial_circle2.png");
+	background-size: 100% auto;
+	background-repeat: no-repeat;
+	height: 20px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 #help_themes_selection:hover {
@@ -2370,6 +2403,10 @@ height: 20px;
 	background-size: 100%;
 	background-repeat: no-repeat;
 	height: 20px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 #help_animation_selection:hover {
@@ -2390,6 +2427,10 @@ height: 20px;
     -ms-transition: opacity 0.50s ease-out;
     -moz-transition: opacity 0.50s ease-out;
     -webkit-transition: opacity 0.50s ease-out;
+    -webkit-user-select:none;
+	-moz-user-select:none;
+	-khtml-user-select:none;
+	-ms-user-select:none;
 }
 
 .anim_text:hover {
@@ -3036,6 +3077,12 @@ div.eVideoChapterActions p {
 	cursor: pointer;
 }
 
+div.eVideoChapterActions p i {
+	color:#29435A;}
+
+div.eVideoChapterActions p i:hover {
+	color:#428BCA;}
+
 div.eVideoChapterActions p.icon-trash-container {
 	margin-left: 1px;
 	display: block;
@@ -3267,7 +3314,13 @@ span.letterInChapterDialog {
 	outline-offset: -2px;
 }
 
-.btn:not(.addSlideButtonDisabled):hover, .btn:not(.addSlideButtonDisabled):focus {
+.btn:not(.addSlideButtonDisabled):hover{
+	background-color:#428BCA;
+	text-decoration: none;
+	color:#FFFFFF;
+}
+
+.btn:not(.addSlideButtonDisabled):focus {
 	color: #ffffff;
 	text-decoration: none;
 }
@@ -3311,6 +3364,11 @@ span.letterInChapterDialog {
 	float: right;
 	margin-right: 2%;
 	margin-top: 1%;
+}
+
+.btn.evideoAddChapterButton:hover{
+background-color: #fff;
+color:#326999;
 }
 
 

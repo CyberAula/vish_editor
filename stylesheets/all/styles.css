@@ -1886,7 +1886,7 @@ div.ballWrapper div.ballImg:active {
     display: inline-block;
     overflow-x: hidden;
     overflow-y: auto;
-	background-color: #DDDDDD;
+	background-color: #428BCA;
     list-style: none outside none;
     z-index: 2;
 }
@@ -1897,7 +1897,7 @@ div.ballWrapper div.ballImg:active {
 	right: 0;
 	height: 7%;
 	display: inline-block;
-  	background-color: #DDDDDD;
+  	background-color: #428BCA;
     border-radius: 6px 0px 0px 6px;
     z-index: 1;
 }
@@ -1958,9 +1958,8 @@ div.ballWrapper div.ballImg:active {
 	overflow-y: auto;
 	padding: 10% 3%;
 	list-style-type: none;
-	background-color: #F7F7F7;
+	background-color: #FFFFFF;
 	border-radius: 5px;
-	box-shadow: 0 0 6px 1px #575757 inset;
 }
 
 .evideoChapters li {
@@ -1980,7 +1979,7 @@ div.ballWrapper div.ballImg:active {
 }
 
 .evideoChapters li span.eVideoIndexEntryBody {
-	color: black;
+	color: #29435A;
 }
 
 .evideoChapters li:hover span.eVideoIndexEntryNumber, .evideoChapters li:hover span.eVideoIndexEntryBody, .evideoChapters li.hover span.eVideoIndexEntryNumber, .evideoChapters li.hover span.eVideoIndexEntryBody {
