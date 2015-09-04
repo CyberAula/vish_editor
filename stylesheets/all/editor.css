@@ -3320,6 +3320,10 @@ span.letterInChapterDialog {
 	color:#FFFFFF;
 }
 
+.btn.btn-primary.btn-small:hover {
+	background-color: #326999;
+}
+
 .btn:not(.addSlideButtonDisabled):focus {
 	color: #ffffff;
 	text-decoration: none;
