@@ -7,6 +7,23 @@ ul {
 	-moz-user-select:none;
 	-khtml-user-select:none;
 	-ms-user-select:none;
+	list-style: none;
+}
+
+::-webkit-input-placeholder {
+   color: #323232;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+   color: #323232;  
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+   color: #323232;  
+}
+
+:-ms-input-placeholder {  
+   color: #323232;  
 }
 
 #menubar {
@@ -108,7 +125,7 @@ p.presentation_details_column_title {
 #selectthemeshelp{
 	position:relative;
 	right:18px;
-	color: #ccc;
+	color: #323232;
 }
 
 #presentation_details_preview_thumbnail_img .addthumbtitle:hover {
@@ -309,6 +326,7 @@ textarea#presentation_details_textarea {
 	-moz-user-select:none;
 	-khtml-user-select:none;
 	-ms-user-select:none;
+	border-radius:7px;
 }
 
 #scrollbar_themes_list {
@@ -518,6 +536,7 @@ div#tagBoxIntro .tagit {
 
 .attachmentFileUpload:hover {
 	background-color: #326999;
+	cursor: pointer;
 }
 
 .attachmentFileUpload[disabled]{
@@ -525,6 +544,7 @@ div#tagBoxIntro .tagit {
 }
 
 .attachmentFileUpload input#attachment_file {
+	width:100px;
     position: absolute;
     top: 0;
     right: 0;
@@ -536,6 +556,10 @@ div#tagBoxIntro .tagit {
     padding: 0px;
     filter: alpha(opacity=0);
 }
+
+.attachmentFileUpload input#attachment_file {
+	cursor: pointer;
+	}
 
 #description_attachment{
 	border: medium none;
@@ -552,7 +576,7 @@ div#tagBoxIntro .tagit {
 }
 
 #upload_file_attachment:disabled{
-	background: gray;
+	background: #CECECE;
 }
 
 #upload_file_attachment:hover:disabled{
@@ -612,9 +636,9 @@ div#tagBoxIntro .tagit {
 
 .metadata_title {
 	font-family: 'Open Sans', arial, sans-serif;
-  	font-size: 1.7em;
+  	font-size: 1.5em;
   	color: #fff;
-  	padding: 26px;
+  	padding: 13px 26px 13px 26px;
   	background-color: #428BCA;
   	margin:0px;
 }
@@ -1065,9 +1089,9 @@ input.slider_range_input {
 	margin: 0px 0px 0px 29px;
 	border-radius: 3px;
 	opacity: 0.7;
-	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.3);
-	-moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.7);
+	box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.7);
 }
 
 #slides_list img.image_barbutton:hover {
@@ -1267,6 +1291,10 @@ div.vezone[tooltip='true'][size='large'] {
 	height: 210px;
 }
 
+.box1.box1fancy3 {
+	margin-top:40px;
+}
+
 .box2 {
 	margin-left: 30px;
 	margin-top: 30px;
@@ -1313,10 +1341,8 @@ div.vezone[tooltip='true'][size='large'] {
 	position: relative;
 	font-family: 'Open Sans', arial, sans-serif;
 	margin: 0px;
-	left: 11%;
-	top: 5%;
 	font-size: 19px;
-	color: #9B999D;
+	color: #2D2D2D;
 }
 
 .listInFancy .textfancy{
@@ -1435,6 +1461,17 @@ div.addUrlButtons{
 .marginsfancy3 {
 	margin-top: 30px;
 	margin-left: 330px;
+}
+
+.input_text_fancy.input_text_excursions.formsizefancy2.marginsfancy3 {
+    margin-top: 47px;
+    margin-left: 219px;
+}
+
+.textD {
+	float: left;
+    margin-left: 20px;
+    width:600px;
 }
 
 .input_text_fancy {
@@ -2229,8 +2266,6 @@ div.object_wrapper {
 .documentsForm { 
 	display: inline-block;
 	position: relative;
-	margin-left: 1.5%;
-	margin-top: 1.7%;
 	width: 615px;
 }
 
@@ -2239,7 +2274,6 @@ div.object_wrapper {
 	border: 1px solid #ddd; 
 	padding: 1px; 
 	border-radius: 3px; 
-	margin-left: 71px;
 	margin-top: 10px;
 }
 
@@ -2287,6 +2321,7 @@ div.object_wrapper {
 	font-family: 'Open Sans', arial, sans-serif;
   	font-size: 16px;
   	background: 5px 50% no-repeat;
+  	color: #656565;
 }
 
 .imagelogotab {
@@ -2294,6 +2329,11 @@ div.object_wrapper {
 	padding-top: 12px;
 	padding-left: 35px;
 	position: absolute;
+}
+
+#repoLogo{
+	margin-top: 20px;
+    margin-left: 44px;
 }
 
 .carrouselNoResults {
@@ -2304,7 +2344,7 @@ div.object_wrapper {
 	text-align: center;
 	padding: 5px;
 	padding: 5px;
-	color: #FF005D;
+	color: #428BCA;
 }
 
 .help_in_slide {
@@ -2908,6 +2948,23 @@ p.draggable_number {
 
 #menuButton {
 	border: none;
+    background-image: url("/images/toolbar/logofondo.png");
+    background-position: -152px;
+}
+
+#menuButton:hover {
+    -webkit-transition-property: background-position;
+    -moz-transition-property: background-position;
+    -o-transition-property: background-position;
+    -ms-transition-property: background-position;
+    transition-property: background-position;
+    background-position: -10px;
+    -webkit-transition-duration: 0.8s;
+	-moz-transition-duration:0.8s;
+	-o-transition-duration:0.8s;
+	-ms-transition-duration:0.8s;
+	transition-duration:0.8s;
+
 }
 
 .excursions_repo_content {
@@ -3449,6 +3506,7 @@ color:#326999;
 	margin-right: 2%;
 	position: relative;
 	float: left;
+	color: #656565;
 }
 
 

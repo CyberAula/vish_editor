@@ -30,12 +30,11 @@
 	color: #e7e5e5;
 	text-decoration: none;
 	display: block;
-	padding: 10px;
-	margin: 0px 0px 0px 33px;
+	padding: 10px 10px 10px 25px;	
 	-webkit-border-radius: 1.6em;
 	-moz-border-radius: 1.6em;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 }
+
 
 .menu_option {
 }
@@ -46,19 +45,18 @@
 #menu ul li:hover a, #menu li:hover li a {
 	background: none;
 	border: none;
-	color: #333;
+	color: #424242;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
 	border-radius: 0px;
 }
 
 #menu ul a:hover {
-	/*background: #357ebd !important;*/
-	color: #357ebd !important;
+	background-color: #428BCA !important;
+	color:white !important; 
 	-webkit-border-radius: 0px;
 	-moz-border-radius: 0px;
 	border-radius: 0px;
-	text-shadow: 0 1px 1px rgba(0, 0, 0, .1);
 }
 
 #menu ul {
@@ -107,7 +105,6 @@ ul.menu_option_main ul {
 
 #menu ul a {
 	font-weight: normal;
-	text-shadow: 0 1px 1px rgba(255, 255, 255, .9);
 }
 
 
@@ -141,9 +138,9 @@ ul.menu_option_main ul {
 	-moz-border-radius-topleft: 0px 9px 9px 9px;
 	left: 160px;
 	top: 0px;
--webkit-box-shadow: 0px 7px 16px rgba(50, 50, 50, 0.3);
--moz-box-shadow:    0px 7px 16px rgba(50, 50, 50, 0.3);
-box-shadow:         0px 7px 16px rgba(50, 50, 50, 0.3);
+	-webkit-box-shadow: 0px 7px 16px rgba(50, 50, 50, 0.3);
+	-moz-box-shadow:    0px 7px 16px rgba(50, 50, 50, 0.3);
+	box-shadow:         0px 7px 16px rgba(50, 50, 50, 0.3);
 }
 
 #menu ul ul li:first-child > a {
@@ -225,9 +222,9 @@ a.menu_option{
 }
 
 #menu .icon-question {
-	margin-left: 3px;
+	margin-left: 23px;
 }
 
 #menu .icon-info {
-	margin-left: 5px;
+	margin-left: 25px;
 }

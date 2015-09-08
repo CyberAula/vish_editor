@@ -39,7 +39,8 @@
 
 #toolbar_menu .icon-button {
 	float: left;
-	margin-right: 20px;
+	margin-right: 15px;
+    margin-left: 20px;
 }
 
 #toolbar_presentation {
@@ -141,6 +142,8 @@ button.btn-toolbarElementWrapper {
 	height: 32px;
 	margin: 0px 0px -4px 0px;
 	opacity: 0.9;
+	background-image: url("/images/toolbar/evideo.png");
+    background-size: 100%;
 }
 
 .toolbar_icon:hover, img.big_toolbar_icon:hover {
