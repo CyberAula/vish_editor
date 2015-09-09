@@ -124,7 +124,6 @@ p.presentation_details_column_title {
 
 #selectthemeshelp{
 	position:relative;
-	right:18px;
 	color: #323232;
 }
 
@@ -799,6 +798,7 @@ input.slider_range_input {
 
 #educational_objectives_textarea {
 	font-family: "Open Sans",arial,sans-serif;
+	font-size: 1em;
 	width: 903px;
 	height: 131px;
 	margin-top: 10px;
@@ -865,6 +865,7 @@ input.slider_range_input {
 	background-color: rgb(238, 238, 238);
 	color: #444;
 	padding:4px;
+	height: 24px;
 }
 
 #done_in_metadata {
@@ -2984,14 +2985,15 @@ p.draggable_number {
 
 .vt_canvas {
 	width: 100%;
-	height: 100%;
+	height: 96%;
+	top:16px;
 }
 
 .vt_search {
 	position: absolute;
 	top: 0;
 	left: 140px;
-	top: 3px;
+	top: 12px;
 }
 
 .vt_search_input {
@@ -3016,8 +3018,8 @@ p.draggable_number {
 	position: absolute;
 	background: #428BCA none repeat scroll 0% 0% !important;
 	left: 498px;
-	width: 40px;
-	height: 29px;
+	width: 36px;
+	height: 27px;
 	padding: 0px;
 	top: 0px;
 	border: none;
@@ -3309,16 +3311,20 @@ img.notificationIconDeleteTimestampLink {
 }
 
 #eVideoChaptersName_wrapper{
-
+font-size: 1.7em;
 }
 
 #eVideoChaptersTextArea{
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 1.2rem;
-	width: 100%;
-	height: 35px;
-	margin-top: 5px;
-	margin-left: 0px;
+    font-size: 1.2rem;
+    width: 94%;
+    height: 35px;
+    margin-top: 5px;
+    margin-left: 0px;
+    background-color: #EEE;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
 	resize: none;
 }
 

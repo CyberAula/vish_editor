@@ -41,6 +41,8 @@
 	float: left;
 	margin-right: 15px;
     margin-left: 20px;
+    top: -2px;
+    position: relative;
 }
 
 #toolbar_presentation {
