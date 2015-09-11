@@ -30,20 +30,32 @@
 	color: #e7e5e5;
 	text-decoration: none;
 	display: block;
-	padding: 10px 10px 10px 25px;	
+	padding: 10px;	
 	-webkit-border-radius: 1.6em;
 	-moz-border-radius: 1.6em;
+	margin-top: 2px;
+	margin-bottom: 3px;
 }
 
 
 .menu_option {
 }
 
+a.expansive {
+	background-image: url("/images/icons/fleMenu.png");
+    background-repeat: no-repeat;
+    background-position: 140px;
+    background-size: 10%;
+}
+
+a.expansive:hover {
+	background-image: url("/images/icons/fleMenu_hover.png");
+	}
+
 
 /* Level 1 */
 
 #menu ul li:hover a, #menu li:hover li a {
-	background: none;
 	border: none;
 	color: #424242;
 	-webkit-box-shadow: none;
@@ -117,6 +129,7 @@ ul.menu_option_main ul {
 	-webkit-border-top-right-radius: 0px;
 	-moz-border-radius-topright: 0px;
 	border-radius: 0px 0px 0px 0px;
+	margin-top: 15px;
 }
 
 #menu ul li:last-child > a {
@@ -125,7 +138,8 @@ ul.menu_option_main ul {
 	-webkit-border-bottom-right-radius: 9px;
 	-moz-border-radius-bottomright: 9px;
 	border-radius: 0px 0px 9px 9px;
-	padding-bottom:10px;
+	padding-bottom: 13px;
+    margin-bottom: 0px;
 }
 
 
@@ -155,6 +169,9 @@ ul.menu_option_main ul {
 	border-radius-bottom-right: 8px;
 }
 
+#menu ul ul li a.menu_option.menu_action.subMenu {
+	margin-top: 0px;
+}
 
 /* Third level */
 

@@ -33,7 +33,8 @@ VISH.Editor.API = (function(V,$,undefined){
 		settings.entities_type = types;
 		// delete settings.sort_by //Sort by relevance
 		// settings.language = ? //Filter by language
-		settings.qualityThreshold = 5 //Filter by quality
+		console.log("QUITAR Y PONER UN 5")
+		settings.qualityThreshold = 0 //Filter by quality
 		var query = _buildQuery(searchTerms,settings);
 
 		//2. Peform the search in the instances

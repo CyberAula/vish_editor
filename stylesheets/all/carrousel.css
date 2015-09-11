@@ -354,6 +354,10 @@ a.prev_multiple_row_thumbnails, a.next_multiple_row_thumbnails {
 
 div.carrousel_element_single_row_presentation_repository > img.carrousel_element_single_row_presentation_repository {
 	margin-left: -22px !important;
+	margin-top: 5px;
+	-webkit-box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow:    0px 2px 9px rgba(0, 0, 0, 0.7);
+	box-shadow:         0px 2px 9px rgba(0, 0, 0, 0.7);
 }
 
 div.image_carousel_single_row_presentation_repository {
@@ -381,9 +385,9 @@ div.carrousel_element_single_row_presentation_repository:hover {
 }
 
 img.carrousel_element_single_row_presentation_repository:hover {
-	-webkit-box-shadow: 4px 4px 9px rgba(50, 50, 50, 0.37);
-	-moz-box-shadow:    4px 4px 9px rgba(50, 50, 50, 0.37);
-	box-shadow:         4px 4px 9px rgba(50, 50, 50, 0.37);
+	-webkit-box-shadow: 0px 2px 9px rgba(0, 0, 0, 0.7);
+	-moz-box-shadow:    0px 2px 9px rgba(0, 0, 0, 0.7);
+	box-shadow:         0px 2px 9px rgba(0, 0, 0, 0.7);
 }
 
 img.carrousel_element_single_row_presentation_repository:active {

@@ -152,7 +152,6 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var selectThumbnail = function(no){
 		$("#slides_list img.image_barbutton").removeClass("selectedSlideThumbnail");
 		$("#slides_list img.image_barbutton[slideNumber=" + no + "]").addClass("selectedSlideThumbnail");
-		console.log("ENTRA")
 		$("#slides_list div.wrapper_barbutton").removeClass("selectedThumbnailBackground");
 		$("#slides_list img.image_barbutton[slideNumber=" + no + "]").parent("div.wrapper_barbutton").addClass("selectedThumbnailBackground");
 

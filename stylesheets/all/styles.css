@@ -696,6 +696,7 @@ div#tab_quiz_session_results {
 	position: fixed;
 	top: -1px;
 	right: 27px;
+	background-repeat: no-repeat;
 }
 
 #help_addslides_selection:hover {
