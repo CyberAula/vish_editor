@@ -692,15 +692,16 @@ div#tab_quiz_session_results {
 }
 
 #help_addslides_selection {
-	background-image: url("/images/vicons/helptutorial_circle.png");
-	position: fixed;
-	top: -1px;
-	right: 27px;
-	background-repeat: no-repeat;
+	background-image: url("/images/vicons/helptutorial_circle2.png");
+    position: fixed;
+    top: 7px;
+    right: 23px;
+    background-repeat: no-repeat;
+    background-size: 63%;
 }
 
 #help_addslides_selection:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover.png");
+	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
 	cursor: pointer;
 }
 

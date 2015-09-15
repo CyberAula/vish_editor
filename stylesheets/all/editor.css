@@ -141,14 +141,14 @@ p.presentation_details_column_title {
 #presentation_details_fields_row1 {
 	width: 100%;
 	height: 600px;
+	margin-top: 4px;
 }
 
 #presentation_details_fields_row1_column1 {
 	height: 100%;
 	width: 24%;
-	padding: 35px;
+	padding: 35px 10px 35px 42px;
 	float: left;
-	padding: 35px;
 	background-color: #fff;
 }
 
@@ -159,7 +159,7 @@ p.presentation_details_column_title {
 	margin-top: 36px;
 	float: left;
 	border-left: 1px solid #EBEBEB;
-	padding-left: 24px;
+	padding-left: 31px;
 }
 
 #presentation_details_fields_row1_column3 {
@@ -226,12 +226,12 @@ p.presentation_details_column_title {
 }
 
 #presentation_details_license {
-	margin-top: 47px;
+	margin-top: 54px;
 }
 
 #presentation_details_license select {
-	width: 100%;
-	margin-top: 13px;
+	width: 83%;
+	margin-top: 12px;
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
 	border: medium none transparent;
@@ -374,6 +374,10 @@ textarea#presentation_details_textarea {
 	display: none;
 }
 
+#scrollbar_themes_list .wrapper_barbutton:first-child {
+    margin-top: 10px;
+}
+
 .theme_selected_in_scrollbar {
 	border-radius: 16px !important;
 	border: 4px solid #357ebd !important;
@@ -465,7 +469,8 @@ div#tagBoxIntro .tagit {
   font-family: 'Open Sans', arial, sans-serif;
   margin: 0px;
   font-size: 19px;
-  color: #9B999D;
+  font-weight: bold;
+  color: #428BCA;
 }
 
 #catalog_tags{
@@ -478,7 +483,7 @@ div#tagBoxIntro .tagit {
 
 #catalog_button {
   	position: relative;
-    margin-left: 188px;
+  	margin-left: 241px !important;
     background: #428BCA;
     border: black;
 }
@@ -607,8 +612,8 @@ div#tagBoxIntro .tagit {
 }
 
 #metadata_clasification_button {
-	left: 36px;
-	width: 220px;
+	left: 42px;
+	width: 180px;
 	background-color: #428BCA;
 	font-weight: bold;
 	color: #FFF;
@@ -624,11 +629,11 @@ div#tagBoxIntro .tagit {
 
 #fill_details_later_button {
 	right: 79px;
-	margin-right: 200px;
+	margin-right: 206px;
 }
 
 #save_presentation_details {
-	right: 33px;
+	right: 46px;
 }
 
 #metadata-options-tab{
@@ -900,7 +905,7 @@ input.slider_range_input {
 	position: absolute;
 	right: 1px;
 	height: 29px;
-	top: 3px;
+	top: 8px;
 	background-repeat: no-repeat;
 	-webkit-user-select:none;
 	-moz-user-select:none;
@@ -1117,7 +1122,6 @@ input.slider_range_input {
 	-moz-box-shadow:    15px 15px 18px rgba(50, 50, 50, 0.17);
 	box-shadow:         15px 15px 18px rgba(50, 50, 50, 0.17);
 	cursor: move, pointer;
-	background-image: url("/images/icons/selection.gif");
 	border: none;
 	width: 72%;
 	padding: 1px;
@@ -1689,7 +1693,7 @@ div.addUrlButtons{
 	border-radius: 9px;
 	-webkit-border-radius: 9px;
 	-moz-border-radius: 9px;
-	box-shadow: 0px 2px 3px 0px;
+	box-shadow: 0px 2px 5px 0px;
 }
 
 .quizFancythumb img {
@@ -2191,6 +2195,7 @@ table.metadata {
 	width: 300px;
 	height: 195px;
 	table-layout:fixed;
+	margin-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
 }
@@ -2410,7 +2415,7 @@ div.object_wrapper {
 	position: absolute;
 	top: 6.6px;
     right: 34px;
-    width:21px;
+    width:23px;
     height:21px;
     background-repeat: no-repeat;
     background-size: 100%;
@@ -3050,15 +3055,15 @@ p.draggable_number {
 }
 
 .vt_search_button {
-	position: absolute;
-	background: #428BCA none repeat scroll 0% 0% !important;
-	left: 498px;
-	width: 36px;
-	height: 27px;
-	padding: 0px;
-	top: 0px;
-	border: none;
-	border-radius: 5px;
+    position: absolute;
+    background: #428BCA none repeat scroll 0% 0% !important;
+    left: 497px;
+    width: 31px;
+    height: 29px;
+    padding: 0px;
+    top: 0px;
+    border: none;
+    border-radius: 3px;
 }
 
 .vt_search_button:hover {
@@ -3066,6 +3071,7 @@ p.draggable_number {
 }
 
 .vt_search_button_img {
+	padding: 3px;
 }
 
 span.poi_label {
