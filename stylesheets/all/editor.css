@@ -2975,11 +2975,13 @@ div.draggable_sc_div img.fc_draggable_arrow:hover {
 
 p.draggable_number {
 	position: relative;
-	top: -45px;
+	top: -44px;
 	left: 0px !important;
 	text-align: center;
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 15px;
+	font-size: 13px;
+    font-weight: bold;
+    color: white;
 }
 
 /* Overwrite scrollbar style */
