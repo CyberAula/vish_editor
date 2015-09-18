@@ -36,7 +36,9 @@
     border-left: 1px solid rgb(204, 204, 204);
     border-top: 1px solid rgb(204, 204, 204);
     background-color: white;
-    border-radius: 0px 22px 0px 0px;
+    -webkit-border-radius:0px 10px 0px 0px;
+    -moz-border-radius:0px 10px 0px 0px;
+    border-radius: 0px 10px 0px 0px;
     -webkit-box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
     -moz-box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
     box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
