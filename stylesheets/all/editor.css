@@ -12,7 +12,7 @@ ul {
 
 ::-webkit-input-placeholder {
    color: #000;
-   opacity: 0.8;
+   opacity: 0.9;
 }
 
 :-moz-placeholder { /* Firefox 18- */
@@ -198,7 +198,7 @@ p.presentation_details_column_title {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.3em;
 	font-weight: 400;
-	color: #444;
+	color: #111;
 	width: 193px;
 	background-color: #EEE;
 	margin-top: 8px;
@@ -210,7 +210,7 @@ p.presentation_details_column_title {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1em;
 	font-weight: 400;
-	color: #444;
+	color: #111;
 	border-radius: 0px 0px 8px 8px;
 }
 
@@ -1103,7 +1103,6 @@ input.slider_range_input {
 	height: 81px;
 	margin: 0px 0px 0px 29px;
 	border-radius: 3px;
-	opacity: 0.7;
 	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.7);
 	-moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.7);
 	box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.7);
@@ -1114,7 +1113,6 @@ input.slider_range_input {
 	height: 77px;
 	cursor:pointer;
 	border: 2px solid #357ebd;
-	opacity: 0.9;
 }
 
 #slides_list img.image_barbutton:active {
@@ -1658,7 +1656,6 @@ div.addUrlButtons{
 	float: left;
 	color: black;
 	cursor: pointer;
-	opacity: 0.8;
 }
 
 .slidethumb {
@@ -1674,6 +1671,286 @@ div.addUrlButtons{
 	-khtml-user-select:none;
 	-ms-user-select:none;
 }
+
+
+img#t1 {
+    background-image: url("/images/templatesthumbs/t1.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t1:hover {
+    background-image: url("/images/templatesthumbs/t1h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t2 {
+    background-image: url("/images/templatesthumbs/t2.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t2:hover {
+    background-image: url("/images/templatesthumbs/t2h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t3 {
+    background-image: url("/images/templatesthumbs/t3.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t3:hover {
+    background-image: url("/images/templatesthumbs/t3h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+img#t4 {
+    background-image: url("/images/templatesthumbs/t4.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t4:hover {
+    background-image: url("/images/templatesthumbs/t4h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t5 {
+    background-image: url("/images/templatesthumbs/t5.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t5:hover {
+    background-image: url("/images/templatesthumbs/t5h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t6 {
+    background-image: url("/images/templatesthumbs/t6.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t6:hover {
+    background-image: url("/images/templatesthumbs/t6h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t7 {
+    background-image: url("/images/templatesthumbs/t7.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t7:hover {
+    background-image: url("/images/templatesthumbs/t7h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t8 {
+    background-image: url("/images/templatesthumbs/t8.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t8:hover {
+    background-image: url("/images/templatesthumbs/t8h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t9 {
+    background-image: url("/images/templatesthumbs/t9.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t9:hover {
+    background-image: url("/images/templatesthumbs/t9h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t10 {
+    background-image: url("/images/templatesthumbs/t10.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t10:hover {
+    background-image: url("/images/templatesthumbs/t10h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t11 {
+    background-image: url("/images/templatesthumbs/t11.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t11:hover {
+    background-image: url("/images/templatesthumbs/t11h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t12 {
+    background-image: url("/images/templatesthumbs/t12.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t12:hover {
+    background-image: url("/images/templatesthumbs/t12h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t13 {
+    background-image: url("/images/templatesthumbs/t13.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t13:hover {
+    background-image: url("/images/templatesthumbs/t13h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+
+img#t14 {
+    background-image: url("/images/templatesthumbs/t14.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t14:hover {
+    background-image: url("/images/templatesthumbs/t14h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t15 {
+    background-image: url("/images/templatesthumbs/t15.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t15:hover {
+    background-image: url("/images/templatesthumbs/t15h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t16 {
+    background-image: url("/images/templatesthumbs/t17.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t16:hover {
+    background-image: url("/images/templatesthumbs/t17h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t17 {
+    background-image: url("/images/templatesthumbs/t17.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t17:hover {
+    background-image: url("/images/templatesthumbs/t17h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t18 {
+    background-image: url("/images/templatesthumbs/t18.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t18:hover {
+    background-image: url("/images/templatesthumbs/t18h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t19 {
+    background-image: url("/images/templatesthumbs/t19.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t19:hover {
+    background-image: url("/images/templatesthumbs/t19h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t20 {
+    background-image: url("/images/templatesthumbs/t20.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#t20:hover {
+    background-image: url("/images/templatesthumbs/t20h.png");
+    background-position-x: 8px;
+    background-repeat: no-repeat;
+}
+
+img#flscard {
+    background-image: url("/images/templatesthumbs/flashcard_template.png");
+	background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+img#flscard:hover {
+    background-image: url("/images/templatesthumbs/flashcard_templateh.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+img#vrtour {
+    background-image: url("/images/templatesthumbs/tVTour.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+img#vrtour:hover {
+    background-image: url("/images/templatesthumbs/tVTourh.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
+img#erivideo {
+    background-image: url("/images/templatesthumbs/tEVideo.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+img#erivideo:hover {
+    background-image: url("/images/templatesthumbs/tEVideoh.png");
+    background-size: 100%;
+    background-repeat: no-repeat;
+}
+
+
 
 .slidethumb.slideAni {
 	background-position:2px;
@@ -1754,13 +2031,11 @@ div.addUrlButtons{
 	width: 90%;
 	height: 90%;
 	overflow: hidden;
-	opacity: 0.7;
 	margin: 4% 5% 6% 5%;
 }
 
 .stthumb:hover {
 	cursor: pointer;
-	opacity: 1;
 }
 
 .stthumb:active {
@@ -1782,7 +2057,7 @@ div.addUrlButtons{
 	padding: 0px;
 	margin-top: 15px;
 	margin-bottom: 4px;
-	color: #666;
+	color: #222;
 	cursor: pointer;
 }
 
@@ -1864,16 +2139,15 @@ div.vezone {
 	padding: 0.5em 1.5em;
 	text-decoration: none;
 	background: #ffffff;
-	opacity: 0.5;
+	opacity: 0.8;
 	font-size: 15px;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: 400;
 	color: #000;
-	border-bottom: 3px solid transparent;
 }
 
 .fancy_tabs li a:hover {
-	opacity: 0.8;
+	opacity: 1;
 	border-bottom: 3px solid #AAA;
 }
 
