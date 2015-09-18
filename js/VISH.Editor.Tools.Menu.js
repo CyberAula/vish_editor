@@ -36,6 +36,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				});
 			});
 
+			//enable menu toolbar button click
+			
+
 			//Prevent iframe to move
 			if(V.Status.getDevice().desktop){
 				$("a.menu_option_main, a.menu_option:not('.menu_action')").on("click", function(event){
@@ -56,6 +59,32 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			_initialized = true;
 		}
 		$("#menu").show();
+
+			//menu click show withouth css instead of hover
+		if(V.Status.getDevice().desktop){
+			var _submenu = false;
+		
+			$("a:.menu_option_main").on('click',function(){
+				if($("#menu li > ul.menu_option_main").css('display') === 'none' ){
+					$("#menu li > ul.menu_option_main").css('display','block');
+					$("ul:.menu_option_main li").hover(function(e){
+						$(this).children('ul').css('display','block').on('mouseenter',function(){
+							_submenu = true;
+							$(this).mouseleave(function(e){
+								_submenu= false;
+							});
+						});
+					}, function(){
+						if (!_submenu){
+							$("ul:.menu_option_main li > ul").css('display','none');
+						}
+					});
+				} else {
+					$("#menu li > ul.menu_option_main").css('display','none');
+				}
+			});
+		}
+
 	};
 
 	var _enableMenuItem = function(items){
