@@ -89,7 +89,7 @@ VISH.Editor.Flashcard = (function(V,$,undefined){
 				var slide_id = $(slide).attr("id");
 				var arrowDiv = $('<div class="draggable_sc_div" slide_id="'+ slide_id +'" >');
 				$(arrowDiv).append($('<img src="'+V.ImagesPath+'icons/flashcard_button.png" class="fc_draggable_arrow">'));
-				$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
+				$(arrowDiv).append($('<p class="draggable_number" data-tooltip="Drag me to the slide">'+String.fromCharCode(64+index+1)+'</p>'));
 				$(div).prepend(arrowDiv);
 
 				var poi = pois[slide_id];
