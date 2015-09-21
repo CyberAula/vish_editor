@@ -190,7 +190,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			if(hasLicense){
 				var hasPrivateLicense = (hasLicense && presentation.license.key === "private");
 				if(!hasPrivateLicense){
-					$("#presentation_details_license_select").attr("disabled","disabled");
+					$("#presentation_details_license_select").attr("disabled","disabled").css('-webkit-appearance', 'none').css('-moz-appearance','none');
+
 				}
 			}
 		}
