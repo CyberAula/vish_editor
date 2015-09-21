@@ -20,6 +20,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			return;
 		}
 
+		if (V.Utils.getOptions().configuration.classroom_pupil === true){
+			$('#toolbar_publish').attr('action', 'notify_teacher');
+		}
+
 		if(!toolbarEventsLoaded){
 			//Add listeners to toolbar buttons
 			$.each($("#toolbar_wrapper a.tool_action, img.toolbar_icon"), function(index, toolbarButton) {
@@ -210,6 +214,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
 	};
 
+
+	var changenotifyTeacherButton = function(status){
+
+	};
 
 	/*
 	 * Dirty Mode: change save buttons status
