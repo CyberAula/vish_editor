@@ -2651,13 +2651,15 @@ div.object_wrapper {
 
 .carrouselNoResults {
 	margin: auto;
-	margin-top: 32%;
+	
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 23px;
 	text-align: center;
 	padding: 5px;
 	padding: 5px;
 	color: #428BCA;
+	position: relative;
+    top: 210px;
 }
 
 .help_in_slide {
