@@ -319,7 +319,7 @@ textarea#presentation_details_textarea {
 }
 
 #tlt_current_value {
-	display: inline;span:first-child
+	display: inline;
 	width: 95px;
 	margin-left: 4px;
 }
