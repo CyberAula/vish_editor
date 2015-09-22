@@ -72,7 +72,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 							_submenu = true;
 							$(this).mouseleave(function(e){
 								_submenu= false;
-							});
+							})
 						});
 					}, function(){
 						if (!_submenu){
@@ -82,6 +82,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				} else {
 					$("#menu li > ul.menu_option_main").css('display','none');
 				}
+			});
+			 $(document).click( function(){
+				$("#menu li > ul.menu_option_main").hide();
 			});
 		}
 
