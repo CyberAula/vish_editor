@@ -20,7 +20,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			return;
 		}
 
+		//Pupil modification in Editor
 		if (V.Utils.getOptions().configuration.classroom_pupil === true){
+			$("#toolbar_publish_wrapper p").html(V.I18n.getTrans("i.notify_teacher"));
+			$('#toolbar_publish i').removeClass().addClass("icon-button icon-bell-alt");
 			$('#toolbar_publish').attr('action', 'notify_teacher');
 		}
 
@@ -494,6 +497,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		V.Editor.EVideo.onChangeVideo();
 	};
 
+	var notify_teacher = function(){
+		V.Editor.Tools.Menu.notifyTeacherClicked();
+	};
+
    /*
 	* Element actions
 	*/
@@ -727,6 +734,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		save 							: save,
 		publish							: publish,
 		unpublish 						: unpublish,
+		notify_teacher					: notify_teacher,
 		preview 						: preview,
 		selectTheme						: selectTheme,
 		selectAnimation					: selectAnimation,

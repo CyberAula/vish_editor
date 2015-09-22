@@ -249,6 +249,38 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 	};
 
 	/////////////////////
+	/// NOTIFY ON PUPILS EDITOR
+	///////////////////////
+
+	var notifyTeacherClicked = function(){
+		var options = {};
+		options.width = 600;
+		options.height = 200;
+		//options.notificationIconSrc = V.ImagesPath + "icons/unpublish_icon.png";
+		//options.notificationIconClass = "publishNotificationIcon";
+		options.text = V.I18n.getTrans("i.notify_teacher_confirmation");
+		options.buttons = [];
+
+			var button1 = {};
+		button1.text = V.I18n.getTrans("i.no");
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons.push(button1);
+
+		var button2 = {};
+		button2.callback = function(){
+			V.Editor.savePresentation();
+			$.fancybox.close();
+		};
+		button2.text = V.I18n.getTrans("i.yes");
+
+		options.buttons.push(button2);
+
+		V.Utils.showDialog(options);
+	};
+
+	/////////////////////
 	/// PREVIEW
 	///////////////////////
 
@@ -417,6 +449,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 	};
 
+
+
 	return {
 		init							: init,
 		disableMenu 					: disableMenu,
@@ -432,6 +466,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onUnpublishButtonClicked		: onUnpublishButtonClicked,
+		notifyTeacherClicked			: notifyTeacherClicked, 
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,
