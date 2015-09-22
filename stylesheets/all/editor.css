@@ -407,13 +407,27 @@ textarea#presentation_details_textarea {
 }
 
 .animation_selected_in_fancybox {
-	border-radius: 6px;
-	border: 5px solid rgba(53, 126, 189, 0.6) !important;
-	opacity: 1 !important;
-	width: 105px !important;
-	height: 69px !important;
-	background-size: 80% auto;
-	background-position: 10px center !important;
+	border-radius: 6px !important;
+    border: 5px solid rgba(53, 126, 189, 0.6) !important;
+    opacity: 1 !important;
+    width: 107px !important;
+    height: 69px !important;
+    background-size: 90% auto;
+    background-position: center !important;
+    position: relative;
+    top: -10px;
+}
+
+.slidethumb.ani {
+    float: none;
+    margin: 7px;
+    display: inline-block;
+}
+
+.filaAni {
+    height: 93px;
+    margin-top: 5px;
+    margin-left: 10px;
 }
 
 .theme_selected_in_fancybox > div {
