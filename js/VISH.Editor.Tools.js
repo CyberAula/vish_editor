@@ -20,11 +20,25 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			return;
 		}
 
-		//Pupil modification in Editor
+		//Pupil view modification in Editor
 		if (V.Utils.getOptions().configuration.classroom_pupil === true){
-			$("#toolbar_publish_wrapper p").html(V.I18n.getTrans("i.notify_teacher"));
-			$('#toolbar_publish i').removeClass().addClass("icon-button icon-bell-alt");
-			$('#toolbar_publish').attr('action', 'notify_teacher');
+			var draft = V.Utils.getOptions().draft;
+			var notified = V.Utils.getOptions().notified;
+			var publish_button = $("#toolbar_publish_wrapper");
+
+			if(draft && notified){ 
+				publish_button.addClass("menu_item_disabled");
+				publish_button.children("p").html(V.I18n.getTrans("i.notified_teacher"));
+				publish_button.find("i").removeClass().addClass("icon-button icon-bell-alt");
+			} else if (draft) {
+				publish_button.children("p").html(V.I18n.getTrans("i.notify_teacher"));
+				publish_button.find("i").removeClass().addClass("icon-button icon-bell-alt");
+				$('#toolbar_publish').attr('action', 'notify_teacher');
+			} else {
+				publish_button.addClass("menu_item_disabled");
+				publish_button.children("p").html(V.I18n.getTrans("i.Published"));
+				publish_button.find("i").removeClass().addClass("icon-button icon-cloud-upload");
+			}
 		}
 
 		if(!toolbarEventsLoaded){

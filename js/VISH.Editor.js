@@ -863,7 +863,10 @@ VISH.Editor = (function(V,$,undefined){
 					url     : path,
 					data    : data,
 					success : function(data) {
-						console.log('done');
+						var publish_button = $("#toolbar_publish_wrapper");
+						publish_button.addClass("menu_item_disabled");
+						publish_button.children("p").html(V.I18n.getTrans("i.notified_teacher"));
+						publish_button.find("i").removeClass().addClass("icon-button icon-exclamation");
 					},
 					error: function(data){
 						console.log('not done');
