@@ -71,7 +71,11 @@ var getOptions = function(){
 		configuration["SoundCloud"] = true;
 		configuration["SoundCloudAPIKEY"] = 'SoundcloudAPIKey';
 		configuration["catalog"] = ["Art", "Astronomy", "Biology", "Chemistry", "Citizenship", "Classical Languages", "Cross Curricular Education", "Computer Science", "General Culture", "Economics", "Education", "Electronics", "Environmental Education", "Ethics", "Foreign Languages", "Geography", "Geology", "Health Education", "History", "Home Economics", "Literature", "Law", "Mathematics", "Music", "Natural Sciences", "Philosophy", "Physical Education", "Physics", "Politics", "Psychology", "Religion", "Social Sciences", "Software Engineering", "Technology", "Telecommunications"];
-		
+
+		configuration["notify_teacher_path"] = "/private_student_group/notify_teacher";
+		configuration["classroom_pupil"] = true;
+
+
 		/////////////////////
 		// Features enabled
 		/////////////////////

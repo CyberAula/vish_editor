@@ -274,6 +274,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var button2 = {};
 		button2.callback = function(){
 			V.Editor.savePresentation();
+			V.Editor.notify_teacher();
 			$.fancybox.close();
 		};
 		button2.text = V.I18n.getTrans("i.yes");

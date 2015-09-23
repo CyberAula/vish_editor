@@ -217,11 +217,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
 	};
 
-
-	var changenotifyTeacherButton = function(status){
-
-	};
-
 	/*
 	 * Dirty Mode: change save buttons status
 	 */
@@ -498,6 +493,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	};
 
 	var notify_teacher = function(){
+		V.Editor.Tools.Menu.onSaveButtonClicked();
 		V.Editor.Tools.Menu.notifyTeacherClicked();
 	};
 
