@@ -1413,15 +1413,22 @@ div.addUrlButtons{
 .removeUrlButton {
 	float:right;
 	padding: 5px 10px;
+	margin-right: 10px;
 	text-decoration: none;
-	background: #FF005D repeat-x bottom;
+	background: #428BCA repeat-x bottom;
 	opacity: 0.6;
 	color: #F9F9F9;
 	cursor: pointer;
 	font-weight: bold;
 	border-radius: 5px;
+	border:none;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+}
+
+.removeUrlButton:hover {
+	text-shadow: none;
+	background-color:#326999;
 }
 
 .addUrlButton:hover {
