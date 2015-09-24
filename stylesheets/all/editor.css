@@ -3422,9 +3422,6 @@ div.change_evideo_button:hover {
 	text-align: left;
 }
 
-.evideoIndexBodyActions .slidesScrollbarButton{
-	background-color:white;
-	color:#428BCA;}
 
 section.slides_editor .evideoChapters{
 	height: 79% !important;
@@ -3760,9 +3757,13 @@ span.letterInChapterDialog {
 	margin-top: 1%;
 }
 
+.btn.evideoAddChapterButton{
+background-color: #428BCA;
+color:#fff;
+}
+
 .btn.evideoAddChapterButton:hover{
-background-color: #fff;
-color:#326999;
+background-color: #326999;
 }
 
 
