@@ -3754,6 +3754,38 @@ span.letterInChapterDialog {
 	margin-top: -7px;
 }
 
+/*Exit button*/
+
+div#toolbar_exit {
+    width: 39px;
+    height: 32px;
+    margin: 0px;
+    position: absolute;
+    left: 1147px;
+    top: 5px;
+}
+
+div#toolbar_exit:hover {
+    background-color: #326999;
+}
+
+a#toolbar_exit_btn {
+    width: 100%;
+    height: 100%;
+}
+
+#toolbar_exit_btn img {
+    width: 70%;
+    margin-left: 6px;
+    margin-top: 3px;
+    height: 84%;
+}
+
+div#toolbar_exit .toolbar_presentation_title {
+    font-family: 'Open Sans', arial, sans-serif;
+    margin-top: 2px;
+}
+
 
 /* More buttons */
 
