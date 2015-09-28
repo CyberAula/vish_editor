@@ -101,6 +101,13 @@ var getOptions = function(){
 		options["configuration"] = configuration;
 
 
+		/////////////////////
+		// Aspect Customization
+		/////////////////////
+		configuration["repository_name"] = "vish";
+		configuration["repository_image"] = "/images/repository_image";
+		configuration["editor_logo"] = "/images/repository_image";
+		configuration["menu_logo"] = "/images/logo_image";
 
 		/////////////////////
 		// Options to initialize ViSH Editor
