@@ -449,6 +449,12 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$("#toolbar_element").children().hide();
 	};
 
+	/*
+	 * General actions
+	 */
+	 var exit = function(){
+	 	V.Editor.Tools.Menu.exit();
+	 }
 
    /*
 	* Presentation actions
@@ -731,7 +737,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		setAllTooltipMargins			: setAllTooltipMargins,
 		changePublishButtonStatus		: changePublishButtonStatus,
 		changeSaveButtonStatus			: changeSaveButtonStatus,
-		showSettings 					: showSettings
+		showSettings 					: showSettings,
+		exit							: exit
 	};
 
 }) (VISH, jQuery);
