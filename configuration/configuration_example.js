@@ -104,10 +104,10 @@ var getOptions = function(){
 		/////////////////////
 		// Aspect Customization
 		/////////////////////
-		configuration["repository_name"] = "vish";
-		configuration["repository_image"] = "/images/repository_image";
-		configuration["editor_logo"] = "/images/repository_image";
-		configuration["menu_logo"] = "/images/logo_image";
+		configuration["repository_name"] = "EducaInternet";
+		configuration["repository_image"] = "/images/logos/repositoryimg_educa.png";
+		configuration["editor_logo"] = "/images/icons/logo_educa.png";
+		configuration["menu_logo"] = "/images/toolbar/logofondo_educa.png";
 
 		/////////////////////
 		// Options to initialize ViSH Editor
