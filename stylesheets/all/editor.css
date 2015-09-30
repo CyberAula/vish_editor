@@ -253,6 +253,16 @@ span.presentation_details_text {
 	margin-right: 55px;
 }
 
+p#tags {
+    display: inline-block;
+    width: 200px;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.6em;
+    font-weight: bold;
+    margin: 0px 0px 0px 0px;
+    color: #428BCA;
+}
+
 .presentation_details_text[title~="License"] {
 	margin-bottom: 10px;
 }
@@ -496,10 +506,9 @@ div#tagBoxIntro .tagit {
 }
 
 #catalog_button {
-  	position: relative;
-  	margin-left: 241px !important;
+    position: relative;
+    margin-left: 138px !important;
     background: #428BCA;
-    border: black;
 }
 
 #catalog_button:hover{
