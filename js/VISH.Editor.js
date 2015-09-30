@@ -834,7 +834,47 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 	
-	
+	//////////////////
+	///  Notify Teacher
+	//////////////////
+
+	var notify_teacher = function(){
+		//get Id
+		var id;
+	 	try{
+	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+	 	} catch(e){
+	 	
+	 		id = "";
+	 	}
+	 	
+	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+	 	}
+
+		var data = {
+			"authenticity_token" : V.User.getToken(),
+			"user_data"			 : V.Utils.getOptions().user,
+			"excursion_data"	 : id
+		};
+
+		var path = V.Utils.getOptions().configuration.notify_teacher_path;
+		$.ajax({	
+					type  : "POST",
+					url     : path,
+					data    : data,
+					success : function(data) {
+						var publish_button = $("#toolbar_publish_wrapper");
+						publish_button.addClass("menu_item_disabled");
+						publish_button.children("p").html(V.I18n.getTrans("i.notified_teacher"));
+						publish_button.find("i").removeClass().addClass("icon-button icon-exclamation");
+					},
+					error: function(data){
+						console.log('not done');
+					}
+				});
+	};
+
 	//////////////////
 	///  Getters and Setters
 	//////////////////
@@ -990,6 +1030,7 @@ VISH.Editor = (function(V,$,undefined){
 		isZoneEmpty				: isZoneEmpty,
 		savePresentation		: savePresentation,
 		sendPresentation		: sendPresentation,
+		notify_teacher 			: notify_teacher, 
 		setCurrentArea			: setCurrentArea,
 		selectArea				: selectArea,
 		onSlideEnterEditor 		: onSlideEnterEditor,

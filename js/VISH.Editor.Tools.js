@@ -20,6 +20,27 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			return;
 		}
 
+		//Pupil view modification in Editor
+		if (V.Utils.getOptions().configuration.classroom_pupil === true){
+			var draft = V.Utils.getOptions().draft;
+			var notified = V.Utils.getOptions().notified;
+			var publish_button = $("#toolbar_publish_wrapper");
+
+			if(draft && notified){ 
+				publish_button.addClass("menu_item_disabled");
+				publish_button.children("p").html(V.I18n.getTrans("i.notified_teacher"));
+				publish_button.find("i").removeClass().addClass("icon-button icon-bell-alt");
+			} else if (draft) {
+				publish_button.children("p").html(V.I18n.getTrans("i.notify_teacher"));
+				publish_button.find("i").removeClass().addClass("icon-button icon-bell-alt");
+				$('#toolbar_publish').attr('action', 'notify_teacher');
+			} else {
+				publish_button.addClass("menu_item_disabled");
+				publish_button.children("p").html(V.I18n.getTrans("i.Published"));
+				publish_button.find("i").removeClass().addClass("icon-button icon-cloud-upload");
+			}
+		}
+
 		if(!toolbarEventsLoaded){
 			//Add listeners to toolbar buttons
 			$.each($("#toolbar_wrapper a.tool_action, img.toolbar_icon"), function(index, toolbarButton) {
@@ -209,7 +230,6 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		$(menuItem).parent().addClass("menu_item_disabled");
 		$(menuItem).find("span").html(V.I18n.getTrans("i.Publish"));
 	};
-
 
 	/*
 	 * Dirty Mode: change save buttons status
@@ -492,6 +512,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		V.Editor.EVideo.onChangeVideo();
 	};
 
+	var notify_teacher = function(){
+		V.Editor.Tools.Menu.onSaveButtonClicked();
+		V.Editor.Tools.Menu.notifyTeacherClicked();
+	};
+
    /*
 	* Element actions
 	*/
@@ -725,6 +750,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		save 							: save,
 		publish							: publish,
 		unpublish 						: unpublish,
+		notify_teacher					: notify_teacher,
 		preview 						: preview,
 		selectTheme						: selectTheme,
 		selectAnimation					: selectAnimation,
