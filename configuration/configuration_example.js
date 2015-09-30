@@ -112,6 +112,12 @@ var getOptions = function(){
 		configuration["repository_image"] = "/images/logos/repositoryimg_educa.png";
 		configuration["editor_logo"] = "/images/icons/logo_educa.png";
 		configuration["menu_logo"] = "/images/toolbar/logofondo_educa.png";
+		configuration["customization_words_es"] = {"VISH Editor":"Educa Editor", 
+												"Virtual Science Hub":"EducaInternet", 
+												"VISH": "EducaInternet"};
+		configuration["customization_words_en"] = {"VISH Editor":"Educa Editor", 
+												"Virtual Science Hub":"EducaInternet", 
+												"VISH": "EducaInternet"};
 
 		/////////////////////
 		// Options to initialize ViSH Editor
