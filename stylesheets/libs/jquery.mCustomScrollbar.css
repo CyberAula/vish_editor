@@ -131,11 +131,6 @@
 	border-right:solid -0.5px #ababab;
 }
 
-#mCSB_2 {
-	position:relative;
-	right:17px;
-}
-
 /* default scrollbar colors and backgrounds (default theme) */
 .mCustomScrollBox>.mCSB_scrollTools{
 	opacity:0.75;

@@ -1413,15 +1413,22 @@ div.addUrlButtons{
 .removeUrlButton {
 	float:right;
 	padding: 5px 10px;
+	margin-right: 10px;
 	text-decoration: none;
-	background: #FF005D repeat-x bottom;
+	background: #428BCA repeat-x bottom;
 	opacity: 0.6;
 	color: #F9F9F9;
 	cursor: pointer;
 	font-weight: bold;
 	border-radius: 5px;
+	border:none;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
+}
+
+.removeUrlButton:hover {
+	text-shadow: none;
+	background-color:#326999;
 }
 
 .addUrlButton:hover {
@@ -3422,9 +3429,6 @@ div.change_evideo_button:hover {
 	text-align: left;
 }
 
-.evideoIndexBodyActions .slidesScrollbarButton{
-	background-color:white;
-	color:#428BCA;}
 
 section.slides_editor .evideoChapters{
 	height: 79% !important;
@@ -3750,6 +3754,38 @@ span.letterInChapterDialog {
 	margin-top: -7px;
 }
 
+/*Exit button*/
+
+div#toolbar_exit {
+    width: 39px;
+    height: 32px;
+    margin: 0px;
+    position: absolute;
+    left: 1147px;
+    top: 5px;
+}
+
+div#toolbar_exit:hover {
+    background-color: #326999;
+}
+
+a#toolbar_exit_btn {
+    width: 100%;
+    height: 100%;
+}
+
+#toolbar_exit_btn img {
+    width: 70%;
+    margin-left: 6px;
+    margin-top: 3px;
+    height: 84%;
+}
+
+div#toolbar_exit .toolbar_presentation_title {
+    font-family: 'Open Sans', arial, sans-serif;
+    margin-top: 2px;
+}
+
 
 /* More buttons */
 
@@ -3760,9 +3796,13 @@ span.letterInChapterDialog {
 	margin-top: 1%;
 }
 
+.btn.evideoAddChapterButton{
+background-color: #428BCA;
+color:#fff;
+}
+
 .btn.evideoAddChapterButton:hover{
-background-color: #fff;
-color:#326999;
+background-color: #326999;
 }
 
 

@@ -97,16 +97,16 @@ div.pagination {
 }
 
 div.pagination a {
-	background: url(/images/carrousel/carrousel_sprite.png) 0 -260px no-repeat transparent;
-	width: 15px;
-	height: 15px;
+	background: url(/images/carrousel/carrousel_sprite.png) 0 -259px no-repeat transparent;
+	width: 17px;
+	height: 17px;
 	margin: 0 5px 0 0;
 	display: inline-block;
 	outline: none;
 }
 
 div.pagination a.selected {
-	background-position: -25px -260px;
+	background-position: -25px -259px;
 	cursor: default;
 }
 

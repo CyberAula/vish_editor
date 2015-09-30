@@ -138,7 +138,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.Noresultsfound") + "</p>");
 			V.Utils.removeTempShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 		} else if(noResults===false){
-			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.errorYoutubeConnection") + "</p>");
+			$("#" + carrouselDivId).html("<p class='carrouselNoResults'>" + V.I18n.getTrans("i.errorSoundCloudConnection") + "</p>");
 			V.Utils.removeTempShown([$("#" + containerDivId),$("#" + carrouselDivId)]);
 		} else {
 			var options = new Array();

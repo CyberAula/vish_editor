@@ -105,6 +105,13 @@ var getOptions = function(){
 		options["configuration"] = configuration;
 
 
+		/////////////////////
+		// Aspect Customization
+		/////////////////////
+		configuration["repository_name"] = "EducaInternet";
+		configuration["repository_image"] = "/images/logos/repositoryimg_educa.png";
+		configuration["editor_logo"] = "/images/icons/logo_educa.png";
+		configuration["menu_logo"] = "/images/toolbar/logofondo_educa.png";
 
 		/////////////////////
 		// Options to initialize ViSH Editor
