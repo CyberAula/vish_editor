@@ -78,7 +78,7 @@ VISH.Events = (function(V,$,undefined){
 		});
 
 		//Evaluate button in recommendations panel
-		$(document).on('click', '#evaluate_excursion', function(event){
+		$(document).on('click', '#evaluate_presentation', function(event){
 			V.Recommendations.onClickEvaluateButton(event);
 		});
 

@@ -1504,7 +1504,7 @@ div.addUrlButtons{
 	margin-left: 330px;
 }
 
-.input_text_fancy.input_text_excursions.formsizefancy2.marginsfancy3 {
+.input_text_fancy.input_text_pres.formsizefancy2.marginsfancy3 {
     margin-top: 40px;
     margin-left: 219px;
 }
@@ -3314,13 +3314,13 @@ p.draggable_number {
 
 }
 
-.excursions_repo_content {
+.pres_repo_content {
 	width: 100%;
 	height: 230px;
 	position: absolute;
 }
 
-.input_text_excursions {
+.input_text_pres {
 	width: 345px !important;
 }
 

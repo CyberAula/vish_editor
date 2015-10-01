@@ -323,7 +323,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 		//Help in presentation carrousel
 		$(document).on('click','#tab_presentations_repo_help', function(){
-			V.Tour.startTourWithId('help_excursion_selection_help', 'bottom');
+			V.Tour.startTourWithId('help_pres_selection_help', 'bottom');
 		});	
 
 		//Help in LRE carrousel
