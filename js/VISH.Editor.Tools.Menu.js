@@ -60,6 +60,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 		$("#menu").show();
 
+		$(".theme_selected_in_fancybox").removeClass("theme_selected_in_fancybox");
+		$("#theme_fancybox div#select_theme"+V.Editor.Themes.getCurrentTheme().number+" img").addClass("theme_selected_in_fancybox");
+
 			//menu click show withouth css instead of hover
 		if(V.Status.getDevice().desktop){
 			var _submenu = false;
