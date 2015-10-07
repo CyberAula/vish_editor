@@ -54,6 +54,50 @@ VISH.Editor.Themes = (function(V,$,undefined){
 				number: "12",
 				color: "666"
 			};
+			themes["theme13"] = {
+				number: "13",
+				color: "666"
+			};
+			themes["theme14"] = {
+				number: "14",
+				color: "000"
+			};
+			themes["theme15"] = {
+				number: "15",
+				color: "fff"
+			};
+			themes["theme16"] = {
+				number: "16",
+				color: "555"
+			};
+			themes["theme17"] = {
+				number: "17",
+				color: "000"
+			};
+			themes["theme18"] = {
+				number: "18",
+				color: "000"
+			};
+			themes["theme19"] = {
+				number: "19",
+				color: "666"
+			};
+			themes["theme20"] = {
+				number: "20",
+				color: "666"
+			};
+			themes["theme21"] = {
+				number: "21",
+				color: "fff"
+			};
+			themes["theme22"] = {
+				number: "22",
+				color: "666"
+			};
+			themes["theme23"] = {
+				number: "23",
+				color: "666"
+			};
 		}
 	}
 
