@@ -14,7 +14,7 @@ VISH.Editor.Customization = (function(V,$,undefined){
 		var repository_image = VISH.Configuration.getConfiguration().repository_image;
 		if( repository_image != null ){
 			imageExist(repository_image, function(){
-				$("img[src$='/images/logos/repositoryimg.png']").attr("src", repository_image);
+				$("img.repositoryimgclass").attr("src", repository_image);
 			});
 		}
 
