@@ -3,10 +3,6 @@ section.slides article[type='standard'] {
 	background-size: 100% 100%;
 }
 
-section.slides > article > div.vezone, section.slides > article > article > div.vezone {
-	background-color: rgba(100, 100, 100, 0.4);
-}
-
 div.vezone > span.zone_tooltip {
 	font-family: 'Open Sans', arial, sans-serif;
 	font-weight: 100;

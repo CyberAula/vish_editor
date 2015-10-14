@@ -3,10 +3,6 @@ section.slides article[type='standard'] {
 	background-size: 100% 100%;
 }
 
-section.slides > article > div.vezone, section.slides > article > article > div.vezone {
-	background-color: rgba(100, 100, 100, 0.5);
-}
-
 section.slides {
 	background-color: #575757;
 }
