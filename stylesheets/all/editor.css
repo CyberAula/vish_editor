@@ -140,43 +140,44 @@ p.presentation_details_column_title {
 
 #presentation_details_fields_row1 {
 	width: 100%;
-	height: 600px;
-	margin-top: 4px;
+    height: 489px;
+    margin-top: 18px;
 }
 
 #presentation_details_fields_row1_column1 {
 	height: 100%;
-	width: 24%;
-	padding: 35px 10px 35px 42px;
-	float: left;
-	background-color: #fff;
+    width: 23%;
+    margin-left: 46px;
+    padding-top: 24px;
+    float: left;
+    background-color: #fff;
 }
 
 #presentation_details_fields_row1_column2 {
-	height: 571px;
-	width: 491px;
-	margin-left: -19px;
-	margin-top: 36px;
-	float: left;
-	border-left: 1px solid #EBEBEB;
-	padding-left: 31px;
+	height: 450px;
+    width: 491px;
+    margin-top: 23px;
+    float: left;
+    border-left: 1px solid #EBEBEB;
+    padding-left: 30px;
+    margin-left: 0px;
 }
 
 #presentation_details_fields_row1_column3 {
-	height: 572px;
-	width: 191px;
-	float: left;
-	margin-left: -55px;
-	padding-left: 45px;
-	margin-top: 17px;
-	margin-bottom: -50px;
-	border-left: 1px solid #EBEBEB;
+	height: 450px;
+    width: 191px;
+    float: left;
+    margin-left: -55px;
+    padding-left: 29px;
+    margin-top: 17px;
+    margin-bottom: -50px;
+    border-left: 1px solid #EBEBEB;
 }
 
 #presentation_details_fields_row2 {
 	width: 100%;
-	padding-top: 10px;
-	height: 60px;
+    padding-top: 17px;
+    height: 60px;
 }
 
 #presentation_details_preview_title {
@@ -206,12 +207,12 @@ p.presentation_details_column_title {
 
 #presentation_details_preview_author {
 	cursor: default;
-	padding: 5px;
-	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 1em;
-	font-weight: 400;
-	color: #111;
-	border-radius: 0px 0px 8px 8px;
+    padding: 7px 5px 8px 5px;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1em;
+    font-weight: 400;
+    color: #111;
+    border-radius: 0px 0px 8px 8px;
 }
 
 #presentation_details_preview_author span:first-child {
@@ -226,7 +227,7 @@ p.presentation_details_column_title {
 }
 
 #presentation_details_license {
-	margin-top: 54px;
+	margin-top: 26px;
 }
 
 #presentation_details_license select {
@@ -259,7 +260,7 @@ p#tags {
     font-family: 'Open Sans', arial, sans-serif;
     font-size: 1.6em;
     font-weight: bold;
-    margin: 0px 0px 0px 0px;
+    margin: 5px 0px 0px 0px;
     color: #428BCA;
 }
 
@@ -466,21 +467,22 @@ textarea#presentation_details_textarea {
 
 div#tagBoxIntro {
 	padding: 0px;
-	color: #7a8fa9;
-	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 14px;
-	-moz-border-radius: 5px;
-	-khtml-border-radius: 5px;
-	-webkit-border-radius: 5px;
-	border-radius: 5px;
-	background: #fff;
-	max-height: 45%;
-	width: 83%;
-	margin-top: -7px;	
+    color: #7a8fa9;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 14px;
+    -moz-border-radius: 5px;
+    -khtml-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    background: #fff;
+    width: 93%;
+    height: 174px;
+    margin-top: -7px;
 }
 
 div#tagBoxIntro .tagit {
-	height: 59px;
+	height: 262px;
+    margin-top: 16px;
 }
 
 #attatchment_file{
@@ -497,18 +499,24 @@ div#tagBoxIntro .tagit {
   color: #428BCA;
 }
 
+#catalog_title p {
+	margin: 14px 0px 14px 0px;
+}
+
 #catalog_tags{
 	width: 94%;
 	border: transparent;
 	border-radius: 5px;
 	background-color: #EEE;
 	padding: 5px;
+	height: 178px;
 }
 
 #catalog_button {
     position: relative;
-    margin-left: 138px !important;
+    margin-left: 107px !important;
     background: #428BCA;
+    margin-top: 124px;
 }
 
 #catalog_button:hover{
@@ -518,17 +526,18 @@ div#tagBoxIntro .tagit {
 #catalog_content{
 	display: none;
 	background: white;
-	height: 297px;
+	height: 278px;
 	width: 270px;
 	z-index: 1162;
 	position: absolute;
-	top: 183px;
-	right: 377px;
-	padding-left: 32px;
+	top: 195px;
+    right: 342px;
+	padding-left: 23px;
+    padding-right: 4px;
 	border-radius: 10px;
-	border-color: black;
-	border-style: solid;
-	border-width: 1px;
+	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
 }
 
 #catalog_done_button{
@@ -537,7 +546,7 @@ div#tagBoxIntro .tagit {
 	right: 10px;
 	background-color: #428bca;
 	border: none;
-	top: 5px;
+	top: 8px;
 }
 
 #catalog_done_button:hover{
@@ -661,6 +670,7 @@ div#tagBoxIntro .tagit {
 
 #metadata-options-tab{
 	margin-top: 20px;
+	margin-bottom: 50px;
 }
 
 #metadata_options_fields {
@@ -678,6 +688,14 @@ div#tagBoxIntro .tagit {
   	padding: 13px 26px 13px 26px;
   	background-color: #428BCA;
   	margin:0px;
+  	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+}
+
+div#advanced_tabs {
+	border-bottom: 1px solid #e6e6e6;
+    margin-top: 11px;
 }
 
 #metadata_options_fields_row1 {
@@ -924,7 +942,7 @@ input.slider_range_input {
 }
 
 .help_in_settings {
-	background-image: url("/images/vicons/helptutorial_circle.png");
+	background-image: url("/images/vicons/helptutorial_circle2.png");
 	position: absolute;
 	right: 1px;
 	height: 29px;
@@ -937,15 +955,25 @@ input.slider_range_input {
 }
 
 .help_in_settings:hover {
-	background-image: url("/images/vicons/helptutorial_circle_hover.png");
+	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
 	cursor: pointer;
 }
 
+
+#settings_header {
+	background-color: rgb(66, 139, 202);
+	height: 81px;
+	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+}
+
+
 #presentation_details_logo {
-	width: 94%;
-	margin-top: -40px;
-	margin-left: -13px;
-	margin-bottom: 8px;
+	height: 105px;
+	margin-left: 33px;
+	position: relative;
+	top: -13px;
 }
 
 /* Settings End */
