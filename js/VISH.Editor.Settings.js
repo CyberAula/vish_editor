@@ -92,13 +92,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 			//Generate thumbnail images
 			var imagesArray = [];
+			imagesArray[0]= "<img themeNumber='1' class='image_barbutton' src='" + V.ImagesPath + "themes/theme1" + "/select." + imgExt + "' />";
 			var imagesArrayTitles = [];
+			imagesArrayTitles.push(imagesArray[0]);
 
-			for(var i=1; i<13; i++){
+			for(var i=13; i<24; i++){
 				var imgExt = "png";
-				if(i==12){
-					imgExt = "gif";
-				}
 				var srcURL = V.ImagesPath + "themes/theme" + i + "/select." + imgExt;
 				imagesArray.push($("<img themeNumber='"+ i +"' class='image_barbutton' src='" + srcURL + "' />"));
 				imagesArrayTitles.push(i);
