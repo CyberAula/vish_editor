@@ -3916,7 +3916,7 @@ background-color: #326999;
 }
 
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
-	background: #A3A1A1;
+	background: #909090;
 	filter: "alpha(opacity=75)";
 	-ms-filter: "alpha(opacity=75)";
 }
@@ -3929,7 +3929,7 @@ background-color: #326999;
 }
 
 .mCSB_scrollTools .mCSB_dragger:hover .mCSB_dragger_bar {
-	background: #9E9E9E;
+	background: #949494;
 	filter: "alpha(opacity=85)";
 	-ms-filter: "alpha(opacity=85)";
 }
