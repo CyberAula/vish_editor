@@ -636,7 +636,11 @@ div#tagBoxIntro .tagit {
 }
 
 #upload_file_attachment:enabled{
-	background-color: #0066ff !important;
+	background-color: #428BCA !important;
+}
+
+#upload_file_attachment:enabled{
+	background-color: #326999 !important;
 }
 
 #upload_icon_success{
