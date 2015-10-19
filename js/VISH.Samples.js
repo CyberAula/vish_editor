@@ -165,7 +165,7 @@ VISH.Samples = (function(V,undefined){
 		"id":"4",
 		"VEVersion":"0.2",
 		"type":"presentation",
-		"theme":"theme1",
+		"theme":"theme12",
 		"animation": "animation1",
 		"avatar":"http://vishub.org/assets/logos/original/excursion-10.png",
 		"title":"The Iberian Lynx",

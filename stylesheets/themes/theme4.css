@@ -1,5 +1,6 @@
 section.slides article[type='standard'] {
-	background: #090909;
+	background: white url("/images/themes/theme4/select.jpg") top;
+	background-size: 100% 100%;
 }
 
 
