@@ -438,7 +438,11 @@ textarea#presentation_details_textarea {
 .filaAni {
     height: 93px;
     margin-top: 5px;
-    margin-left: 10px;
+    margin-left: 35px;
+}
+
+div#aniF1 {
+    margin-top: 20px;
 }
 
 .theme_selected_in_fancybox > div {
@@ -2767,16 +2771,38 @@ div.object_wrapper {
 /* Themes fancybox */
 
 #theme_fancybox {
-	background: url("/images/icons/themebg.png") no-repeat;
 	height: 300px;
-	padding-left: 19px;
-	padding-right: 27px;
-	padding-top: 87px;
+}
+
+#header_fancybox {
+    background-color: #248BCA;
+    margin: 0px;
+    height: 70px;
+    -webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+}
+
+i#themeIheader {
+    color: white;
+    font-size: 2em;
+    margin-left: 39px;
+}
+
+#header_fancybox p {
+    margin: 0px;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 2em;
+    color: white;
+    font-weight: bold;
+    margin-left: 14px;
+    margin-top: 20px;
+    display: inline-block;
 }
 
 #help_themes_selection {
 	position: absolute;
-	margin-top: -80px;
+	margin-top: -63px;
 	right: 35px;
 	cursor: pointer;
 	width: 21px;
@@ -2796,19 +2822,26 @@ div.object_wrapper {
 
 }
 
+.slidethumb.row1 {
+    margin-top: 30px;
+}
+.slidethumb.col1 {
+    margin-left: 38px;
+}
+
 /* Animation fancybox */
 
 #animation_fancybox {
-	background: transparent url("/images/icons/animationbg.png") no-repeat scroll 0% 0%;
+	/*background: transparent url("/images/icons/animationbg.png") no-repeat scroll 0% 0%;
 	height: 300px;
 	padding-left: 23px;
 	padding-right: 16px;
-	padding-top: 87px;
+	padding-top: 87px;*/
 }
 
 #help_animation_selection {
 	position: absolute;
-	margin-top: -80px;
+	margin-top: -63px;
 	right: 35px;
 	cursor: pointer;
 	width: 21px;
@@ -2826,6 +2859,35 @@ div.object_wrapper {
 	background-image: url("/images/vicons/helptutorial_circle2_hover.png");
 	cursor: pointer;
 }
+
+
+div#ani_header_fancybox {
+    background-color: #248BCA;
+    margin: 0px;
+    height: 70px;
+    -webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    -moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+    box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
+}
+
+i#aniIheader {
+    color: white;
+    font-size: 2em;
+    margin-left: 39px;
+}
+
+
+div#ani_header_fancybox p {
+    margin: 0px;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 2em;
+    color: white;
+    font-weight: bold;
+    margin-left: 14px;
+    margin-top: 20px;
+    display: inline-block;
+}
+
 
 .anim_text {
 	opacity: 1;
