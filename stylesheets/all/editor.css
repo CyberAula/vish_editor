@@ -2156,6 +2156,7 @@ div.vezone {
 	border-radius: 0px;
 	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
+	background-color:#333 !important;
 }
 
 #fancybox-close {
