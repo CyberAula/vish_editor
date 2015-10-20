@@ -703,6 +703,7 @@ div#tagBoxIntro .tagit {
 
 div#advanced_tabs {
 	border-bottom: 1px solid #e6e6e6;
+	border-top:none;
     margin-top: 11px;
 }
 
@@ -996,9 +997,9 @@ input.slider_range_input {
 	text-align: center;
 	background: #f0f0f0;
 	border-left: 1px solid rgb(204, 204, 204);
-	box-shadow: 9px 0px 8px -4px rgba(0,0,0,0.2);
-	-webkit-box-shadow: 9px 0px 8px -4px rgba(0,0,0,0.2);
-	-moz-box-shadow: 9px 0px 8px -4px rgba(0,0,0,0.2);
+	box-shadow: 9px 0px 8px -4px rgba(0,0,0,0.3);
+	-webkit-box-shadow: 9px 0px 8px -4px rgba(0,0,0,0.3);
+	-moz-box-shadow: 9px 0px 8px -4px rgba(0,0,0,0.3);
 }
 
 #bottomside {
@@ -1230,7 +1231,7 @@ button.downimport {
 	opacity: 0.8;
 	box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.3);
 	-moz-box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow:: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.3);
 }
 
 #slideset_selected img.image_barbutton:hover {
@@ -1246,7 +1247,9 @@ button.downimport {
     width: 76px;
     border-radius: 3px;
     border: 1px solid #FFF;
-    box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.5);
+    -moz-box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.5);
     margin-left: 5px;
     margin-top:5px;
 }

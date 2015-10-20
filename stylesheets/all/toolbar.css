@@ -9,9 +9,9 @@
 	padding-right: 42px;
 	zoom: 1;
 	overflow: visible;
-	box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.4);
-	-webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.4);
-	-moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.4);
+	box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.5);
+	-moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.5);
 	z-index: 10;
 }
 
