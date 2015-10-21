@@ -4200,3 +4200,11 @@ body.ViSHEditorBody #page-fullscreen {
   margin-left: 0;
   margin-bottom: -16px;
 }
+
+
+/* Change the shadow of the fancyboxes*/
+#fancybox-outer {
+	box-shadow: 0px 6px 12px 5px rgba(0, 0, 0, 0.3);
+	-webkit-box-shadow: 0px 6px 12px 5px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 6px 12px 5px rgba(0, 0, 0, 0.3);
+}

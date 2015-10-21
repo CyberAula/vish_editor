@@ -258,26 +258,33 @@ section.slides > article > article.show_in_smartcard {
 }
 
 #slide-counter-span {
+	font-size: 14px;
 	cursor: default;
-	text-align: center;
-	margin-left: 1px;
+	color: white;
+    font-weight: bold;
+    top: -2px;
+    position: relative;
 }
 
 #slide-counter-span, #slide-counter-input {
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 14px;
 }
 
 #slide-counter-input {
-	min-width: 18px;
-	min-height: 10px;
-	padding: 1px 1px 1px 0;
-	text-align: right;
+	font-size: 22px !important;
+    width: 30px !important;
+    color: white;
+    font-weight: bold;
+    background-color: #555;
+    border: none;
+    text-align: right;
+    top: -1px;
+    position: relative;
+    right: 5px;
 }
 
 #slide-counter-input:hover {
 	cursor: text;
-	border-radius: 1px;
 }
 
 #slide-counter-input:focus {
@@ -285,18 +292,13 @@ section.slides > article > article.show_in_smartcard {
 }
 
 #viewbar {
-	background-image: -moz-linear-gradient(#ececec,#a8a8a8);
-	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#ececec),to(#a8a8a8));
-	background-image: -o-linear-gradient(#ececec,#a8a8a8);
-	background-image: -ms-linear-gradient(#ececec,#a8a8a8);
+	background-color: #555;
 	height: 40px;
 	bottom: 0;
 	opacity: 1.0;
 	position: absolute;
 	text-align: center;
 	width: 100%;
-	border-bottom: 1px solid #888;
-	border-top: 1px solid #ccc;
 	z-index: 1200;
 }
 
