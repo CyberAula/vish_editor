@@ -71,7 +71,7 @@ select.tagit-hiddenSelect{
 
 ul.tagit {
     cursor: text;
-    overflow: auto;
+    overflow: hidden;
     font-size: 14px;
     padding: 9px;
     background: #EEE;

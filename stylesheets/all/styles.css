@@ -262,8 +262,7 @@ section.slides > article > article.show_in_smartcard {
 	cursor: default;
 	color: white;
     font-weight: bold;
-    top: -2px;
-    position: relative;
+    margin-left: 4px;
 }
 
 #slide-counter-span, #slide-counter-input {
@@ -271,20 +270,26 @@ section.slides > article > article.show_in_smartcard {
 }
 
 #slide-counter-input {
-	font-size: 22px !important;
+	font-size: 18px !important;
     width: 30px !important;
     color: white;
     font-weight: bold;
-    background-color: #555;
+    background-color: #484848;
     border: none;
-    text-align: right;
-    top: -1px;
-    position: relative;
+    text-align: center;
     right: 5px;
+    padding:4px;
+    -webkit-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.55);
+    -moz-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.55);
+    box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.55);
 }
 
 #slide-counter-input:hover {
 	cursor: text;
+    background-color: #454545;
+    -webkit-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.75);
 }
 
 #slide-counter-input:focus {
