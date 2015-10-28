@@ -184,7 +184,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 
-
 		//Themes
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 

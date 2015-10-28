@@ -220,7 +220,9 @@ VISH.Recommendations = (function(V,$,undefined){
                         '<ul class="rec-thumbnail">'+
                           '<li class="rec-img-excursion">'+
                            '<img src="'+ex.image+'">'+
-                            '<div class="rec-number_pages">'+ex.number_of_slides+'</div>'+
+                           	'<div id="rec-cont-np">'+
+                             '<div class="rec-number_pages">'+ex.number_of_slides+'</div>'+
+                            '</div>'+
                           '</li>'+
                           '<li class="rec-info-excursion">'+
                             '<div class="rec-title-excursion">'+ex.title+'</div>'+
