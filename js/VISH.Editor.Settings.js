@@ -155,6 +155,36 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 
+		//Set the title of the license, so it can be completely displayed
+		if(hasLicense){
+			switch(presentation.license.key) {
+			    case "public":
+			        document.getElementById("presentation_details_license_select").title = "Public Domain";
+			        break;
+			    case "cc-by":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution";
+			        break;
+			    case "cc-by-sa":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-ShareAlike";
+			        break;
+			    case "cc-by-nd":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NoDerivs";
+			        break;
+			    case "cc-by-nc":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NonCommercial";
+			        break;
+			    case "cc-by-nc-sa":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NonCommercial-ShareAlike";
+			        break;
+			    case "cc-by-nc-nd":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NonCommercial-NoDerivs";
+			        break;
+			    default:
+			        document.getElementById("presentation_details_license_select").title = "";
+			}
+		}
+
+
 		//Themes
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 
