@@ -480,7 +480,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Presentation actions
     */
 
-    var save = function(){
+  var displaySettings = function(){
+		V.Editor.Settings.displaySettings();
+	};
+
+  var save = function(){
 		V.Editor.Tools.Menu.onSaveButtonClicked();
 	};
 
@@ -748,6 +752,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess,
 		save 							: save,
+		displaySettings   : displaySettings,
 		publish							: publish,
 		unpublish 						: unpublish,
 		notify_teacher					: notify_teacher,
