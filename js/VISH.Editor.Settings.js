@@ -73,7 +73,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
-		
 
 		//Sliders are initialized in the init() method.
 		onTLTchange();

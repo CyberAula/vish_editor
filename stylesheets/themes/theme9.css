@@ -1,6 +1,12 @@
 section.slides article[type='standard'] {
-	background: url("/images/themes/theme9/bg.jpg") top;
+	background-color: transparent;
+	border: none;
+	background: url("/images/themes/theme9/bg.png") top;
 	background-size: 100% 100% !important;
+	padding-top: 9% !important;
+	box-shadow: 10px 33px 6px rgba(0, 0, 0, 0.04);
+	moz-box-shadow: 10px 33px 6px rgba(0, 0, 0, 0.04);
+	webkit-box-shadow: 10px 33px 6px rgba(0, 0, 0, 0.04)
 }
 
 section.slides > article > div.vezone, section.slides > article > article > div.vezone {
@@ -15,4 +21,16 @@ div.vezone > span.zone_tooltip {
 
 section.slides {
 	background-color: #cacaca
+}
+
+section.slides article[type='standard'][template='t10'] > div.t10_center {
+	margin: 8% 0% 0% 0% !important;
+	width: 99.7% !important;
+	height: 89% !important;
+}
+
+section.slides > div.t10_center {
+	margin: 8% 0% 0% 0% !important;
+	width: 99.7% !important;
+	height: 89% !important;
 }
