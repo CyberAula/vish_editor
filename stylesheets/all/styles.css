@@ -1376,7 +1376,7 @@ a.button_advert:hover {
 .rec-img-excursion {
     float: left;
     display: inline-block;
-    width: 51%;
+    width: 50%;
     height: 100%;
     margin-top: 3px;
     margin-left: 4px;
@@ -1384,8 +1384,9 @@ a.button_advert:hover {
 
 .rec-img-excursion > img {
     border-radius: 5px 0px 0px 5px;
-    height: 96%;
-    margin: 0px;
+    height: 95%;
+    margin: 0;
+    width: 97%;
 }
 
 .rec-title-excursion {
@@ -1409,8 +1410,7 @@ div#rec-cont-np {
     margin: 0px;
     padding: 0px;
     position: relative;
-    top: -28px;
-    left: 171px;
+    top: 12px;
 }
 
 .rec-number_pages {
@@ -1431,9 +1431,10 @@ div#rec-cont-np {
     float: left;
     width: 44%;
     display: inline-block;
-    padding-left: 0px;
+    padding-left: 0;
     height: 95%;
     margin-top: 5px;
+    margin-left: 8px;
 }
 
 .rec-by {
@@ -1450,7 +1451,7 @@ div#rec-cont-np {
     font-size: 1.2rem;
     display: inline-block;
     color: #000;
-    margin-top: 6%;
+    margin-top: 3%;
 }
 
 .rec-likes {
@@ -1506,6 +1507,7 @@ div#rec-cont-np {
 #evaluate_presentation:hover{
 	background-color: #fff;
     color: #000;
+    text-shadow: none;
 
 }
 

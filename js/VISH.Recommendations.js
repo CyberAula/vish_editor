@@ -220,15 +220,15 @@ VISH.Recommendations = (function(V,$,undefined){
                         '<ul class="rec-thumbnail">'+
                           '<li class="rec-img-excursion">'+
                            '<img src="'+ex.image+'">'+
-                           	'<div id="rec-cont-np">'+
-                             '<div class="rec-number_pages">'+ex.number_of_slides+'</div>'+
-                            '</div>'+
                           '</li>'+
                           '<li class="rec-info-excursion">'+
                             '<div class="rec-title-excursion">'+ex.title+'</div>'+
                             '<div class="rec-by">by <span class="rec-name">'+ex.author+'</span></div>'+
                             '<span class="rec-visits">'+ex.views+'</span> <span class="rec-views">'+V.I18n.getTrans("i.exviews")+'</span>'+
                             '<div class="rec-likes"><span class="rec-likes-number">'+ex.favourites+'</span><img class="rec-menu_icon" src="'+ V.ImagesPath + 'vicons/star-on10.png"></div>'+
+                          	'<div id="rec-cont-np">'+
+                            	'<div class="rec-number_pages">'+ex.number_of_slides+'</div>'+
+                            '</div>'+
                           '</li>'+
                         '</ul>'+
                     '</div>';
