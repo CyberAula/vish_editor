@@ -691,7 +691,7 @@ var i18n =
 				"i.by"						: "por",
 				"i.cancel"					: "cancelar",
 				"i.Cancel"					: "Cancelar",
-				"i.Catalog"					: "Catalogar",
+				"i.Catalog"					: "Catálogo",
 				"i.CatalogueTitle"			: "Catálogo",
 				"i.Chemistry"				: "Química",
 				"i.ChooseFile"				: "Seleccionar",

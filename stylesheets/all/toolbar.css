@@ -67,6 +67,7 @@
 	min-width: 425px;
 	text-align: left;
 	max-width: 620px;
+	position: fixed;
 }
 
 #toolbar_element > div {
@@ -82,7 +83,7 @@
 
 #toolbar_text {
 	position: absolute;
-	margin-left: 10px;
+	left: -34px;
 	height: 56px;
 	overflow: hidden;
 }
