@@ -68,6 +68,7 @@
 	text-align: left;
 	max-width: 620px;
 	position: fixed;
+	right: 41px;
 }
 
 #toolbar_element > div {
@@ -83,8 +84,9 @@
 
 #toolbar_text {
 	position: absolute;
-	left: -34px;
+	left: -12px;
 	height: 56px;
+	width: 398px;
 	overflow: hidden;
 }
 
@@ -214,3 +216,33 @@ img.toolbar_icon {
 #toolbar_background_wrapper, #toolbar_evideo_wrapper {
 	min-width: 88px;
 }
+
+#toolbar_settings_wrapper {
+	min-width: 0px;
+    width: 43px;
+    height: 44px;
+    display: inline-block;
+    position: relative;
+    top: -19px;
+    left: -4px;
+}
+
+#toolbar_settings button {
+	width:100%;
+	height: 100%;
+}
+
+
+#toolbar_settings button  img{
+	width: 90%;
+  	position: relative;
+    	top: 3px;
+}
+
+
+
+/*To align the cke toolbox with the other elements of edition*/
+.cke_toolbox{
+	position: relative;
+    right: -17px;
+    }
