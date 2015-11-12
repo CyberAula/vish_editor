@@ -1410,7 +1410,7 @@ div#rec-cont-np {
     margin: 0px;
     padding: 0px;
     position: relative;
-    top: 12px;
+    top: 8px;
 }
 
 .rec-number_pages {
@@ -1451,7 +1451,7 @@ div#rec-cont-np {
     font-size: 1.2rem;
     display: inline-block;
     color: #000;
-    margin-top: 3%;
+    margin-top: 2%;
 }
 
 .rec-likes {
