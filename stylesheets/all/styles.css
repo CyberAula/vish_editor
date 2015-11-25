@@ -1362,7 +1362,7 @@ a.button_advert:hover {
 
 .rec-name {
     font-family: 'Open Sans', arial, sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
 }
 
 .rec-views {
@@ -1392,7 +1392,8 @@ a.button_advert:hover {
 .rec-title-excursion {
     font-family: 'Open Sans', arial, sans-serif;
     width: 100%;
-    font-size: 1.6rem;
+    font-size: 1.4rem;
+    font-weight: bold;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1405,7 +1406,7 @@ div#rec-cont-np {
     background-size: 30%;
     background-repeat: no-repeat;
     background-position-y: -2px;
-    width: 73px;
+    width: 45%;
     height: 21px;
     margin: 0px;
     padding: 0px;
@@ -1439,10 +1440,10 @@ div#rec-cont-np {
 
 .rec-by {
     font-family: 'Open Sans', arial, sans-serif;
-    margin-top: 4%;
-    margin-bottom: 4%;
+    margin-top: 0%;
+    margin-bottom: 2%;
     color: #555;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .rec-visits {
