@@ -448,6 +448,12 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var toolbarClass = "toolbar_" + type;
 		$("#toolbar_element").children().hide();
 		$("#toolbar_element").find("." + toolbarClass).css("display","inline-block");
+		if (type == "quiz") {
+			document.getElementById("toolbar_settings_wrapper").style.top = "-8px";
+		}
+		else{
+			document.getElementById("toolbar_settings_wrapper").style.top = "-4px";
+		}
 	};
 
 	var loadToolbarForObject = function(object){

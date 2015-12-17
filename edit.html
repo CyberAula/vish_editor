@@ -306,82 +306,95 @@
 			</div>
 
 			<div id="toolbar_presentation">
-				<div class="toolbar_presentation_wrapper withRightBorder">
+				<div class="toolbar_btn toolbar_presentation_wrapper withRightBorder">
 					<a id="toolbar_settings_button" class="tool_action" action="displaySettings" href="#">
-						<button type="button" class="btn btn-primary btn-small">
+						<button type="button" class="btn_toolbar btn btn-primary btn-small">
 							<i class="icon-button icon-cog"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Settings">Settings</p>
 				</div>
-				<div class="toolbar_presentation_wrapper withRightBorder save">
+				<div class="toolbar_btn toolbar_presentation_wrapper withRightBorder save">
 					<a id="toolbar_save" class="tool_action" action="save" href="#">
-						<button type="button" class="btn btn-primary btn-small">
+						<button type="button" class="btn_toolbar btn btn-primary btn-small">
 							<i class="icon-button icon-save"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Save">Save</p>
 				</div>
-				<div id="toolbar_preview_wrapper" class="toolbar_presentation_wrapper withRightBorder">
+				<div id="toolbar_preview_wrapper" class="toolbar_btn toolbar_presentation_wrapper withRightBorder">
 					<a id="toolbar_preview" class="tool_action" action="preview" href="#">
-						<button type="button" class="btn btn-primary btn-small">
+						<button type="button" class="btn_toolbar btn btn-primary btn-small">
 							<i class="icon-button icon-eye-open"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Preview">Preview</p>
 				</div>
-				<div id="toolbar_publish_wrapper" class="toolbar_presentation_wrapper withRightBorder">
+				<div id="toolbar_publish_wrapper" class="toolbar_btn toolbar_presentation_wrapper withRightBorder">
 					<a id="toolbar_publish" class="tool_action" action="publish" href="#">
-						<button type="button" class="btn btn-primary btn-small">
+						<button type="button" class="btn_toolbar btn btn-primary btn-small">
 							<i class="icon-button icon-rotate-270 icon-download-alt"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Publish">Publish</p>
 				</div>
-				<div id="toolbar_themes_wrapper" class="toolbar_presentation_wrapper withRightBorder">
+				<div id="toolbar_themes_wrapper" class="toolbar_btn toolbar_presentation_wrapper withRightBorder">
 					<a id="toolbar_theme" class="tool_action" action="selectTheme" href="#">
-						<button type="button" class="btn btn-primary btn-small">
+						<button type="button" class="btn_toolbar btn btn-primary btn-small">
 							<i class="icon-button icon-edit"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Themes">Themes</p>
 				</div>
-				<div id="toolbar_animation_wrapper" class="toolbar_presentation_wrapper">
+				<div id="toolbar_animation_wrapper" class="toolbar_btn toolbar_presentation_wrapper">
 					<a id="toolbar_animation" class="tool_action" action="selectAnimation" href="#">
-						<button type="button" class="btn btn-primary btn-small">
+						<button type="button" class="btn_toolbar btn btn-primary btn-small">
 							<i class="icon-button icon-magic"></i>
 						</button>
 					</a>
 					<p class="toolbar_presentation_title" i18n-key="i.Animations">Animation</p>
 				</div>
-				<div id="toolbar_background_wrapper" class="toolbar_presentation_wrapper toolbar_presentation_wrapper_slideTools withLeftBorder toolbar_standard toolbar_flashcard toolbar_VirtualTour" style='display:none'>
+			</div>
+			<div id="toolbar_element" class="withLeftBorder">
+				<div id="toolbar_background_wrapper" class="subToolbar toolbar_btn toolbar_presentation_wrapper_slideTools withLeftBorder toolbar_standard toolbar_flashcard toolbar_VirtualTour" style='display:none'>
 					<a id="toolbar_background" class="tool_action" action="changeBackground" href="#">
-						<button type="button" class="btn btn-primary btn-small">
-							<i class="icon-button icon-picture"></i>
+						<button id="bgw_btn" type="button" class="btn btn-primary btn-small">
+							<i id="bgw_icon"class="icon-button icon-picture"></i>
 						</button>
 					</a>
-					<p class="toolbar_presentation_title" i18n-key="i.Background"> Background</p>
+					<p class="toolbar_presentation_title" i18n-key="i.Background">Background</p>
 				</div>
-				<div id="toolbar_evideo_wrapper" class="toolbar_presentation_wrapper toolbar_presentation_wrapper_slideTools withLeftBorder toolbar_enrichedvideo" style='display:none'>
+				<div id="toolbar_evideo_wrapper" class="subToolbar toolbar_btn toolbar_presentation_wrapper_slideTools withLeftBorder toolbar_enrichedvideo" style='display:none'>
 					<a id="toolbar_evideo" class="tool_action" action="changeVideo" href="#">
 						<img class="big_toolbar_icon toolbar_web" src="/images/toolbar/change_evideo.png"/>
 					</a>
-					<p class="toolbar_presentation_title" i18n-key="i.Video"> Video</p>
+					<p class="toolbar_presentation_title" i18n-key="i.Video">Video</p>
 				</div>
-			</div>
-			<div id="toolbar_element" class="withLeftBorder">
-				<div id="toolbar_settings_wrapper" class="toolbar_presentation_wrapper withRightBorder toolbar_quiz toolbar_object toolbar_web" style="display:none">
-					<a id="toolbar_settings" class="tool_action" action="showSettings" href="#">
-						<button type="button" class="btn btn-primary btn-small btn-toolbarElementWrapper">
-							<img src="/images/toolbar/quiz_settings.png"/>
-						</button>
-					</a>
+				
+				<div id="toolbar_settings_wrapper" class="subToolbar toolbar_btn toolbar_quiz toolbar_object toolbar_web" style="display:none">
+					<img class="toolbar_icon tool_action" action="showSettings" src="/images/toolbar/options2.png"/>
+					<p i18n-key="i.Options">Options</p>
 				</div>
-				<img class="toolbar_icon toolbar_image" style="display:none" action="addLink" src="/images/toolbar/addLink.png"/>
-				<img class="toolbar_icon toolbar_web toolbar_image toolbar_video toolbar_object toolbar_snapshot" style="display:none" action="resizeLess" src="/images/toolbar/resizeLess.png"/>
-				<img class="toolbar_icon toolbar_web toolbar_image toolbar_video toolbar_object toolbar_snapshot"  style="display:none" action="resizeMore" src="/images/toolbar/resizeMore.png"/>
-				<img class="toolbar_icon toolbar_web" style="display:none" action="zoomLess" src="/images/toolbar/zoomLess.png"/>
-				<img class="toolbar_icon toolbar_web"  style="display:none" action="zoomMore" src="/images/toolbar/zoomMore.png"/>
+				<div class="subToolbar toolbar_btn toolbar_image" style="display:none">
+					<img class="toolbar_icon" action="addLink" src="/images/toolbar/addLink.png"/>
+					<p i18n-key="i.Link">Link</p>
+				</div>
+				<div class="subToolbar toolbar_btn toolbar_web toolbar_image toolbar_video toolbar_object toolbar_snapshot" style="display:none">
+					<img class="toolbar_icon" action="resizeLess" src="/images/toolbar/resizeLess.png"/>
+					<p i18n-key="i.Resize-">Resize-</p>
+				</div>
+				<div class="subToolbar toolbar_btn toolbar_web toolbar_image toolbar_video toolbar_object toolbar_snapshot" style="display:none">
+					<img class="toolbar_icon" action="resizeMore" src="/images/toolbar/resizeMore.png"/>
+					<p i18n-key="i.Resize+">Resize+</p>
+				</div>
+				<div class="subToolbar toolbar_btn toolbar_web" style="display:none">
+					<img class="toolbar_icon"  action="zoomLess" src="/images/toolbar/zoomLess.png"/>
+					<p i18n-key="i.Zoom-">Zoom-</p>
+				</div>
+				<div class="subToolbar toolbar_btn toolbar_web" style="display:none">
+					<img class="toolbar_icon" action="zoomMore" src="/images/toolbar/zoomMore.png"/>
+					<p i18n-key="i.Zoom+">Zoom+</p>
+				</div>
 				<div id="toolbar_text" class='toolbar_text toolbar_quiz' style="display:none"></div>
 			</div>
 
@@ -1679,7 +1692,7 @@
 	<!-- Object Settings -->
 	<div style='display:none'>
 		<div id="objectSettings_fancybox" class="elSettings_fancybox">
-			<p class="elsettings_fancybox_title" i18n-key="i.Settings">Settings</p>
+			<p class="elsettings_fancybox_title" i18n-key="i.Options">Options</p>
 
 			<input type="hidden" name="elId">
 

@@ -3863,8 +3863,8 @@ span.letterInChapterDialog {
 /*Exit button*/
 
 div#toolbar_exit {
-    width: 39px;
-    height: 32px;
+    width: 48px;
+    height: 50px;
     margin: 0px;
     position: absolute;
     left: 1147px;
@@ -3881,15 +3881,15 @@ a#toolbar_exit_btn {
 }
 
 #toolbar_exit_btn img {
-    width: 70%;
-    margin-left: 6px;
-    margin-top: 3px;
-    height: 84%;
+    width: 60%;
+    margin-left: 10px;
+    margin-top: 1px;
+    height: 60%;
 }
 
 div#toolbar_exit .toolbar_presentation_title {
     font-family: 'Open Sans', arial, sans-serif;
-    margin-top: 2px;
+    margin-top: 6px;
 }
 
 
