@@ -104,6 +104,10 @@
     top: -7px;
 }
 
+#toolbar_animation_wrapper {
+	margin-right: 10px;
+}
+
 #toolbar_text {
 	position: relative;
 	left: -12px;
