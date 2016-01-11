@@ -1335,7 +1335,7 @@ a.button_advert:hover {
 
 .rec-excursion {
     cursor: pointer;
-    opacity: 0.8;
+    opacity: 0.9;
     float: left;
     width: 46.5% !important;
     height: 33%;
@@ -1395,10 +1395,10 @@ a.button_advert:hover {
     font-size: 1.4rem;
     font-weight: bold;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     color: #000;
     text-decoration: none;
+    height: 61px;
+    margin-bottom: 5px;
 }
 
 div#rec-cont-np {
@@ -1440,10 +1440,13 @@ div#rec-cont-np {
 
 .rec-by {
     font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1rem;
     margin-top: 0%;
     margin-bottom: 2%;
     color: #555;
-    font-size: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .rec-visits {
