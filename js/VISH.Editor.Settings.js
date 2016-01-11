@@ -1,8 +1,6 @@
 VISH.Editor.Settings = (function(V,$,undefined){
 
-	var themeScrollbarDivId = "scrollbar_themes_list";
 	var tagsLoaded = false;
-	var themeScrollbarCreated = false;
 
 	//Timers
 	var t1;
@@ -67,14 +65,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			"onComplete"  : function(data){
 				$("#fancybox-wrap").css("margin-top", "20px");
 				_onDisplaySettings();
-			},
-			"onClosed" : function(data){
-				//Update theme if it has change
-				var selectedThemeNumber = $(".theme_selected_in_scrollbar").attr("themeNumber");
-				var currentThemeNumber = V.Editor.Themes.getCurrentTheme().number;
-				if((typeof selectedThemeNumber == "string")&&(selectedThemeNumber!=currentThemeNumber)){
-					V.Editor.Themes.selectTheme("theme"+selectedThemeNumber);
-				};
 			}
 		});
 
@@ -83,37 +73,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
-
-		//Themes
-		if(!themeScrollbarCreated){
-			//Select Theme scrollbar
-			V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
-			$("#" + themeScrollbarDivId).hide();
-
-			//Generate thumbnail images
-			var imagesArray = [];
-			imagesArray[0]= "<img themeNumber='1' class='image_barbutton' src='" + V.ImagesPath + "themes/theme1" + "/select." + imgExt + "' />";
-			var imagesArrayTitles = [];
-			imagesArrayTitles.push(imagesArray[0]);
-
-			for(var i=13; i<24; i++){
-				var imgExt = "png";
-				var srcURL = V.ImagesPath + "themes/theme" + i + "/select." + imgExt;
-				imagesArray.push($("<img themeNumber='"+ i +"' class='image_barbutton' src='" + srcURL + "' />"));
-				imagesArrayTitles.push(i);
-			}
-
-			var options = {};
-			options.order = true;
-			options.titleArray = imagesArrayTitles;
-			options.callback = _onThemeImagesLoaded;
-			t1 = Date.now();
-			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
-		} else {
-			//Select and move to current theme
-			selectTheme(V.Editor.Themes.getCurrentTheme().number);
-			V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
-		}
 
 		//Sliders are initialized in the init() method.
 		onTLTchange();
@@ -192,6 +151,35 @@ VISH.Editor.Settings = (function(V,$,undefined){
 					$("#presentation_details_license_select").attr("disabled","disabled").css('-webkit-appearance', 'none').css('-moz-appearance','none');
 
 				}
+			}
+		}
+
+		//Set the title of the license, so it can be completely displayed
+		if(hasLicense){
+			switch(presentation.license.key) {
+			    case "public":
+			        document.getElementById("presentation_details_license_select").title = "Public Domain";
+			        break;
+			    case "cc-by":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution";
+			        break;
+			    case "cc-by-sa":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-ShareAlike";
+			        break;
+			    case "cc-by-nd":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NoDerivs";
+			        break;
+			    case "cc-by-nc":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NonCommercial";
+			        break;
+			    case "cc-by-nc-sa":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NonCommercial-ShareAlike";
+			        break;
+			    case "cc-by-nc-nd":
+			        document.getElementById("presentation_details_license_select").title = "Creative Commons Attribution-NonCommercial-NoDerivs";
+			        break;
+			    default:
+			        document.getElementById("presentation_details_license_select").title = "";
 			}
 		}
 
@@ -294,54 +282,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 	};
-
-	var _onThemeImagesLoaded = function(){
-
-		var diff = Date.now()-t1;
-		if(diff<1500){
-			setTimeout(function(){
-				_onThemeImagesLoaded();
-			},1500-diff);
-			return;
-		}
-
-		//Add class to title elements and events
-		$("#" + themeScrollbarDivId).find("img.image_barbutton").each(function(index,img){
-			//Add class to title
-			var imgContainer = $(img).parent();
-			$(imgContainer).addClass("wrapper_barbutton");
-			var p = $(imgContainer).find("p");
-			$(p).addClass("ptext_barbutton");
-
-			//Add events to imgs
-			$(img).click(function(event){
-				_onClickTheme(event);
-			});
-		});
-
-		var options = new Array();
-		options.scrollTop = true;
-		options.callback = _afterCreateThemesScrollbar;
-
-		//Create scrollbar
-		$("#" + themeScrollbarDivId).show();
-		V.Editor.Scrollbar.createScrollbar(themeScrollbarDivId, options);
-	};
-
-	var _onClickTheme = function(event){
-		var themeNumber = $(event.target).attr("themeNumber");
-		selectTheme(themeNumber);
-	};
-
-	var _afterCreateThemesScrollbar = function(){
-		selectTheme(V.Editor.Themes.getCurrentTheme().number);
-		V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$("img.theme_selected_in_scrollbar"));
-		themeScrollbarCreated = true;
-	};
-
+	
 	var selectTheme = function(themeNumber){
-		$(".theme_selected_in_scrollbar").removeClass("theme_selected_in_scrollbar");
-		$("#scrollbar_themes_list img.image_barbutton[themenumber='"+themeNumber+"']").addClass("theme_selected_in_scrollbar");
 		$(".theme_selected_in_fancybox").removeClass("theme_selected_in_fancybox");
 		$("#theme_fancybox div#select_theme"+themeNumber+" img").addClass("theme_selected_in_fancybox");
 	};

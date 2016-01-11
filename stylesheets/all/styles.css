@@ -258,26 +258,38 @@ section.slides > article > article.show_in_smartcard {
 }
 
 #slide-counter-span {
+	font-size: 14px;
 	cursor: default;
-	text-align: center;
-	margin-left: 1px;
+	color: white;
+    font-weight: bold;
+    margin-left: 4px;
 }
 
 #slide-counter-span, #slide-counter-input {
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 14px;
 }
 
 #slide-counter-input {
-	min-width: 18px;
-	min-height: 10px;
-	padding: 1px 1px 1px 0;
-	text-align: right;
+	font-size: 18px !important;
+    width: 30px !important;
+    color: white;
+    font-weight: bold;
+    background-color: #484848;
+    border: none;
+    text-align: center;
+    right: 5px;
+    padding:4px;
+    -webkit-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.55);
+    -moz-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.55);
+    box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.55);
 }
 
 #slide-counter-input:hover {
 	cursor: text;
-	border-radius: 1px;
+    background-color: #454545;
+    -webkit-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.75);
+    -moz-box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.75);
+    box-shadow: inset 0px 0px 8px 2px rgba(0,0,0,0.75);
 }
 
 #slide-counter-input:focus {
@@ -285,18 +297,13 @@ section.slides > article > article.show_in_smartcard {
 }
 
 #viewbar {
-	background-image: -moz-linear-gradient(#ececec,#a8a8a8);
-	background-image: -webkit-gradient(linear,0% 0,0% 100%,from(#ececec),to(#a8a8a8));
-	background-image: -o-linear-gradient(#ececec,#a8a8a8);
-	background-image: -ms-linear-gradient(#ececec,#a8a8a8);
+	background-color: #555;
 	height: 40px;
 	bottom: 0;
 	opacity: 1.0;
 	position: absolute;
 	text-align: center;
 	width: 100%;
-	border-bottom: 1px solid #888;
-	border-top: 1px solid #ccc;
 	z-index: 1200;
 }
 
@@ -1319,7 +1326,7 @@ a.button_advert:hover {
 }
 
 .rec-second-row .rec-grid {
-	margin-top: 3% !important;
+	margin-top: 5% !important;
 	margin-left: 6% !important;
 	height: 80%;
 	width: 91%;
@@ -1327,24 +1334,15 @@ a.button_advert:hover {
 }
 
 .rec-excursion {
-	cursor:pointer;
-	opacity: 0.8;
-	border: 1px #ccc solid;
-	padding-left: 15px;
-	float: left;
-	width: 44%;
-	height: 33%;
-	border-radius: 20px;
-	margin-top: 2%;
-	margin-right: 3%;
-	background: #f6f8f9; /* Old browsers */
-	background: -moz-linear-gradient(top, #f6f8f9 0%, #c8cbce 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f6f8f9), color-stop(100%,#c8cbce)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top, #f6f8f9 0%,#c8cbce 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top, #f6f8f9 0%,#c8cbce 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top, #f6f8f9 0%,#c8cbce 100%); /* IE10+ */
-	background: linear-gradient(to bottom, #f6f8f9 0%,#c8cbce 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f6f8f9', endColorstr='#c8cbce',GradientType=0 ); /* IE6-9 */
+    cursor: pointer;
+    opacity: 0.8;
+    float: left;
+    width: 46.5% !important;
+    height: 33%;
+    border-radius: 5px;
+    margin-top: 2%;
+    margin-right: 3%;
+    background-color: #FFF;
 }
 
 .rec-excursion:hover {
@@ -1352,32 +1350,23 @@ a.button_advert:hover {
 	filter: alpha(opacity=100);
 	-webkit-transition: opacity 1s linear;
 	-webkit-transition: margin 0.5s ease-out;
-	background: rgb(254,255,255); /* Old browsers */
-	background: -moz-linear-gradient(top,  rgba(255,255,255,1) 0%, rgba(229,229,229,1) 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(254,255,255,1)), color-stop(100%,rgba(229,229,229,1))); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(top,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* IE10+ */
-	background: linear-gradient(to bottom,  rgba(255,255,255,1) 0%,rgba(229,229,229,1) 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#feffff', endColorstr='#e5e5e5',GradientType=0 ); /* IE6-9 */
+	background-color: #FFF;
 }
 
 .rec-thumbnail {
 	list-style: none;
-	margin-left: -5%;;
+	margin: 0px;
 	height: 100%;
 	-webkit-padding-start: 0px;
 }
 
 .rec-name {
-	color: #36f;
-	opacity: 0.6;
-	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 1.4rem;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.3rem;
 }
 
 .rec-views {
-	color: #999;
+	color: #404040;;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.2rem;
 	margin-left: 1%;
@@ -1385,86 +1374,93 @@ a.button_advert:hover {
 }
 
 .rec-img-excursion {
-	float: left;
-	margin-left: 4%;
-	display: inline-block;
-	width: 36%;
-	height: 91%;
+    float: left;
+    display: inline-block;
+    width: 50%;
+    height: 100%;
+    margin-top: 3px;
+    margin-left: 4px;
 }
 
 .rec-img-excursion > img {
-	border-radius: 15%;
-	width: 77%;
-	height: 91%;
-	border: 1px #CCC solid;
+    border-radius: 5px 0px 0px 5px;
+    height: 95%;
+    margin: 0;
+    width: 97%;
 }
 
 .rec-title-excursion {
-	margin-left: -17%;
-	font-family: 'Open Sans', arial, sans-serif;
-	width: 108%;
-	font-size: 1.6rem;
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
-	color: #36f;
-	text-decoration: none;
+    font-family: 'Open Sans', arial, sans-serif;
+    width: 100%;
+    font-size: 1.4rem;
+    font-weight: bold;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #000;
+    text-decoration: none;
+}
+
+div#rec-cont-np {
+    background-image: url("/images/vicons/slides_num.png");
+    background-size: 30%;
+    background-repeat: no-repeat;
+    background-position-y: -2px;
+    width: 45%;
+    height: 21px;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+    top: 8px;
 }
 
 .rec-number_pages {
-	font-family: 'Open Sans', arial, sans-serif;
-	padding: 3%;
-	position: relative;
-	height: 14%;
-	width: 12%;
-	margin-top: -23%;
-	margin-left: 55%;
-	text-align: center;
-	background-color: #fff;
-	border-radius: 50%;
-	color: #333;
-	font-size: 1rem;
-	-webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1),0 1px 0 rgba(255,255,255,0.15);
-	-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1),0 1px 0 rgba(255,255,255,0.15);
-	box-shadow: inset 0 1px 2px rgba(0,0,0,0.1),0 1px 0 rgba(255,255,255,0.15);
+	    font-family: 'Open Sans', arial, sans-serif;
+    padding: 3% 0% 0% 0%;
+    position: relative;
+    left: 28px;
+    height: 12%;
+    width: 24%;
+    background-color: #fff;
+    border-radius: 13%;
+    color: #333;
+    font-size: 1rem;
+    text-align: left;
 }
 
 .rec-info-excursion {
-	float: left;
-	margin-bottom: 5%;
-	width: 54%;
-	margin-left: 4%;
-	display: inline-block;
-	padding-left: 0px;
-	height: 95%;
+    float: left;
+    width: 44%;
+    display: inline-block;
+    padding-left: 0;
+    height: 95%;
+    margin-top: 5px;
+    margin-left: 8px;
 }
 
 .rec-by {
-	font-family: 'Open Sans', arial, sans-serif;
-	margin-top: 4%;
-	margin-bottom: 4%;
-	color: #999;
-	margin-left: -16%;
-	font-size: 1.1rem;
+    font-family: 'Open Sans', arial, sans-serif;
+    margin-top: 0%;
+    margin-bottom: 2%;
+    color: #555;
+    font-size: 1rem;
 }
 
 .rec-visits {
-	font-weight: bold;
-	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 1.2rem;
-	display: inline-block;
-	color: #40cc7f;
-	margin-left: -16%;
-	margin-top: 6%;
+    font-weight: bold;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.2rem;
+    display: inline-block;
+    color: #000;
+    margin-top: 2%;
 }
 
 .rec-likes {
-	font-weight: bold;
-	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 1.1rem;
-	display: inline-block;
-	color: #40cc7f;
-	white-space: nowrap;
+    font-family: 'Open Sans', arial, sans-serif;
+    font-size: 1.1rem;
+    display: inline-block;
+    color: #000;
+    white-space: nowrap;
 }
 
 .recbutton {
@@ -1490,8 +1486,34 @@ a.button_advert:hover {
 	text-shadow: 1px 1px #666;
 }
 
+#evaluate_presentation{
+    padding: 5px 10px;
+    display: inline;
+    text-decoration: none;
+    background: #ddd repeat-x bottom;
+    opacity: 1;
+    color: #1f1f1f;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    float: right;
+    margin-top: 5.6%;
+    font-size: 1.2rem;
+    border: none;
+    margin-right: 9%;
+}
+
+#evaluate_presentation:hover{
+	background-color: #fff;
+    color: #000;
+    text-shadow: none;
+
+}
+
 img.rec-menu_icon {
-	margin-left: 5%;
+	margin-left: 4px;
 }
 
 .viewer_button {

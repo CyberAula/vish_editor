@@ -9,9 +9,9 @@
 	padding-right: 42px;
 	zoom: 1;
 	overflow: visible;
-	box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.4);
-	-webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.4);
-	-moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.4);
+	box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.5);
+	-moz-box-shadow: 3px 3px 10px 1px rgba(0,0,0,0.5);
 	z-index: 10;
 }
 
@@ -53,13 +53,16 @@
 }
 
 #toolbar_presentation {
-	padding-right: 8px;
 	padding-left: 8px;
 	min-width: 475px;
 	float: left;
 	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 	box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
 }
 
 #toolbar_element {
@@ -67,6 +70,13 @@
 	min-width: 425px;
 	text-align: left;
 	max-width: 620px;
+	position: fixed;
+	border-left: 1px rgba(255, 255, 255, 0.5) solid;
+	padding-left: 10px;
+	-webkit-user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
 }
 
 #toolbar_element > div {
@@ -75,15 +85,34 @@
 
 .toolbar_presentation_wrapper {
 	display: inline-block;
-	min-width: 75px;
+	min-width: 55px;
 	text-align: center;
-	margin-top: 4px;
+	height: 30px;
+    position: relative;
+    top: -4px;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+
+.toolbar_presentation_wrapper button {
+    height: 32px;
+    width: 39px;
+    position: relative;
+    top: -7px;
+}
+
+#toolbar_animation_wrapper {
+	margin-right: 10px;
 }
 
 #toolbar_text {
-	position: absolute;
-	margin-left: 10px;
+	position: relative;
+	left: -12px;
 	height: 56px;
+	width: 398px;
 	overflow: hidden;
 }
 
@@ -143,37 +172,44 @@ button.btn-toolbarElementWrapper {
 	text-align: center;
 	font-size: 12px;
 	padding: 0;
-	margin: 0px 10px 0px 10px;
+	margin: 0px;
 	color:white;
+	position: relative;
+    top: -7px;
 }
 
-.toolbar_icon {
-	padding:10px;
-	height: 43px;
-	cursor: pointer;
-	margin-top:6px;
+button.btn_toolbar.btn.btn-primary.btn-small{
+	background:transparent;
+	border:none;
 }
+
+button.btn_toolbar.btn.btn-primary.btn-small:hover {
+	background:transparent;
+}
+
 
 .big_toolbar_icon {
-	width: 41px;
-	height: 32px;
-	margin: 0px 0px -4px 0px;
-	opacity: 0.9;
-	background-image: url("/images/toolbar/evideo.png");
-    background-size: 100%;
+	width: 47px;
+    height: 24px;
+    margin: 0px 0px -4px 0px;
+    background-image: url("/images/toolbar/evideo.png");
+    background-size: 92%;
+    background-position-y: -7px;
+    background-position-x: 6px;
+    background-repeat: no-repeat;
 }
 
-.toolbar_icon:hover, img.big_toolbar_icon:hover {
+.toolbar_btn:hover, img.big_toolbar_icon:hover {
 	background-color: #326999;	
 }
 
-.toolbar_icon:active {
+.toolbar_btn:active {
 	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
 	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
 	box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.15);
 }
 
-img.toolbar_icon {
+img.toolbar_btn {
 	height: 24px;
 	width: 23px;
 }
@@ -187,6 +223,33 @@ img.toolbar_icon {
 
 .toolbar_bigicon:hover {
 	opacity: 1;
+}
+
+.toolbar_icon {
+    height: 19px;
+    position: relative;
+    left: 30%;
+    top: -3px;
+}
+
+.subToolbar {
+	height: 30px;
+    position: relative;
+    top: -4px;
+    border: 0;
+    padding: 10px;
+    cursor: pointer;
+    margin-top: 8px;
+}
+
+.subToolbar.toolbar_btn p {
+    font-family: 'Open Sans', arial, sans-serif;
+    margin: 0px;
+    color: white;
+    text-align: center;
+    width: 55px;
+    position: relative;
+    top: 2px;
 }
 
 /*.withLeftBorder {
@@ -213,3 +276,65 @@ img.toolbar_icon {
 #toolbar_background_wrapper, #toolbar_evideo_wrapper {
 	min-width: 88px;
 }
+
+#toolbar_evideo_wrapper, div#toolbar_background_wrapper{
+    min-width: 0px;
+    width: 55px;
+    height: 31px;
+    position: relative;
+    top: -4px;
+}
+
+#toolbar_settings_wrapper {
+	/*min-width: 0px;
+    width: 39px;
+    height: 32px;
+    display: inline-block;
+    position: relative;
+    top: -2px;
+    left: -4px;*/
+}
+
+#toolbar_settings_wrapper p {
+    color: white;
+    margin: 0px;
+    font-family: 'Open Sans', arial, sans-serif;
+}
+
+#toolbar_background_wrapper p {
+    width: 75px;
+    right: 10px;
+}
+
+#toolbar_settings button {
+	width:100%;
+	height: 100%;
+}
+
+
+#toolbar_settings button  img{
+	width: 75%;
+  	position: relative;
+}
+
+#bgw_icon{
+	font-size: 21px;
+    text-align: center;
+}
+
+#bgw_btn {
+    position: relative;
+    top: -7px;
+    left: 6px;
+    height: 23px;
+    width: 36px;
+    background: transparent;
+    border: none;
+}
+
+
+/*To align the cke toolbox with the other elements of edition*/
+.cke_toolbox{
+	position: relative;
+    right: -17px;
+    }

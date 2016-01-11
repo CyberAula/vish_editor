@@ -448,6 +448,12 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		var toolbarClass = "toolbar_" + type;
 		$("#toolbar_element").children().hide();
 		$("#toolbar_element").find("." + toolbarClass).css("display","inline-block");
+		if (type == "quiz") {
+			document.getElementById("toolbar_settings_wrapper").style.top = "-8px";
+		}
+		else{
+			document.getElementById("toolbar_settings_wrapper").style.top = "-4px";
+		}
 	};
 
 	var loadToolbarForObject = function(object){
@@ -480,7 +486,11 @@ VISH.Editor.Tools = (function(V,$,undefined){
 	* Presentation actions
     */
 
-    var save = function(){
+  var displaySettings = function(){
+		V.Editor.Settings.displaySettings();
+	};
+
+  var save = function(){
 		V.Editor.Tools.Menu.onSaveButtonClicked();
 	};
 
@@ -748,6 +758,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess,
 		save 							: save,
+		displaySettings   : displaySettings,
 		publish							: publish,
 		unpublish 						: unpublish,
 		notify_teacher					: notify_teacher,
