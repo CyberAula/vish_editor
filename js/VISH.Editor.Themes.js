@@ -92,7 +92,7 @@ VISH.Editor.Themes = (function(V,$,undefined){
 			};
 			themes["theme22"] = {
 				number: "22",
-				color: "666"
+				color: "fff"
 			};
 			themes["theme23"] = {
 				number: "23",
