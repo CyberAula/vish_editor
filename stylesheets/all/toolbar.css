@@ -22,7 +22,7 @@
 	-ms-user-select:none;
 }
 
-#toolbar_menu , #toolbar_presentation, #toolbar_element {
+#toolbar_menu , #toolbar_presentation, #toolbar_slide, #toolbar_element {
 	display: inline-block;
 	height: 58px;
 	min-height: 50px;
@@ -31,25 +31,25 @@
 
 #toolbar_menu {
 	min-width: 179px;
-    float: left;
-    background-color: white;
-    border-left: 1px solid rgb(204, 204, 204);
-    border-top: 1px solid rgb(204, 204, 204);
-    background-color: white;
-    -webkit-border-radius:0px 10px 0px 0px;
-    -moz-border-radius:0px 10px 0px 0px;
-    border-radius: 0px 10px 0px 0px;
-    -webkit-box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
-    -moz-box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
-    box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
+	float: left;
+	background-color: white;
+	border-left: 1px solid rgb(204, 204, 204);
+	border-top: 1px solid rgb(204, 204, 204);
+	background-color: white;
+	-webkit-border-radius:0px 10px 0px 0px;
+	-moz-border-radius:0px 10px 0px 0px;
+	border-radius: 0px 10px 0px 0px;
+	-webkit-box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
+	-moz-box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
+	box-shadow: 8px 0px 4px -2px rgba(0,0,0,0.15);
 }
 
 #toolbar_menu .icon-button {
 	float: left;
 	margin-right: 15px;
-    margin-left: 20px;
-    top: -2px;
-    position: relative;
+	margin-left: 20px;
+	top: -2px;
+	position: relative;
 }
 
 #toolbar_presentation {
@@ -60,23 +60,35 @@
 	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 	box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
 	-webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -ms-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
+	border-right: 1px rgba(255, 255, 255, 0.5) solid;
+}
+
+#toolbar_slide {
+	padding-left: 8px;
+	width: auto;
+	float: left;
+	-webkit-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	-moz-box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	box-shadow: inset 0px 0px 18px -3px rgba(0,0,0,0.05);
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
 }
 
 #toolbar_element {
 	padding-left: 1px;
-	min-width: 425px;
 	text-align: left;
 	max-width: 620px;
 	position: fixed;
-	border-left: 1px rgba(255, 255, 255, 0.5) solid;
 	padding-left: 10px;
 	-webkit-user-select: none;
-    -moz-user-select: none;
-    -khtml-user-select: none;
-    -ms-user-select: none;
+	-moz-user-select: none;
+	-khtml-user-select: none;
+	-ms-user-select: none;
 }
 
 #toolbar_element > div {
