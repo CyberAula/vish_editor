@@ -75,12 +75,7 @@ p.addthumbtitle  {
 }
 
 img.addThumbnailPlus {
-	opacity: 0.7 !important;
-	background: white !important;
-	margin-left: -4px;
-	-moz-border-radius: 0px !important;
-	-webkit-border-radius: 0px !important;
-	border-radius: 0px !important;
+	opacity: 0.9 !important;
 }
 
 img.addThumbnailPlus:hover {
