@@ -992,6 +992,10 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
+	var hasBeenSaved = function(){
+		return !((typeof lastStoredPresentationStringify == "undefined")&&(!initialPresentation));
+	};
+
 	var hasPresentationChanged = function(){
 		try {
 			var objectToCompare;
@@ -1024,6 +1028,7 @@ VISH.Editor = (function(V,$,undefined){
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
 		hasBeenPublished		: hasBeenPublished,
+		hasBeenSaved			: hasBeenSaved,
 		getContentAddMode		: getContentAddMode,
 		setContentAddMode		: setContentAddMode,
 		hasInitialPresentation	: hasInitialPresentation,

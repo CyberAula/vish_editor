@@ -208,6 +208,11 @@ p.presentation_details_column_title {
 	background-color: #EEE;
 }
 
+#presentation_details_license_select:disabled {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
 #presentation_details_title {
 	width: 100%;
 	display: inline;
@@ -556,29 +561,31 @@ div#tagBoxIntro .tagit {
 	cursor: pointer;
 }
 
-.attachmentFileUpload[disabled]{
+.attachmentFileUpload[disabled] {
 	background: gray !important;
 }
 
 .attachmentFileUpload input#attachment_file {
-	width:100px;
     position: absolute;
     top: 0;
     right: 0;
     margin: 0;
     padding: 0;
     font-size: 20px;
-    cursor: pointer;
     opacity: 0;
     padding: 0px;
     filter: alpha(opacity=0);
 }
 
-.attachmentFileUpload input#attachment_file {
+.attachmentFileUpload input#attachment_file, .attachmentFileUpload input#attachment_file:hover {
 	cursor: pointer;
-	}
+}
 
-#description_attachment{
+.attachmentFileUpload input#attachment_file[disabled] {
+	cursor: default;
+}
+
+#description_attachment {
 	border: medium none;
 	background-color: #EEE;
 	color: #555;
@@ -588,25 +595,23 @@ div#tagBoxIntro .tagit {
 	height: 20px;
 }
 
-#upload_file_attachment{
-	margin-left: 25px;
+#upload_file_attachment {
+	margin-left: 15px;
 }
 
-#upload_file_attachment:disabled{
+#upload_file_attachment:disabled {
 	background: #CECECE;
 }
 
-#upload_file_attachment:hover:disabled{
-	background: gray;
-	opacity: 0.6;
+#upload_file_attachment:hover:disabled {
 	cursor: default;
 }
 
-#upload_file_attachment:enabled{
+#upload_file_attachment:enabled {
 	background-color: #428BCA !important;
 }
 
-#upload_file_attachment:enabled{
+#upload_file_attachment:enabled {
 	background-color: #326999 !important;
 }
 

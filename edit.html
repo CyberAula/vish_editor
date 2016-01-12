@@ -501,7 +501,7 @@
 								<option value="cc-by" i18n-key="i.License_cc-by">Creative Commons Attribution</option>
 								<option value="cc-by-sa" i18n-key="i.License_cc-by-sa">Creative Commons Attribution-ShareAlike</option>
 								<option value="cc-by-nd" i18n-key="i.License_cc-by-nd">Creative Commons Attribution-NoDerivs</option>
-								<option value="cc-by-nc" i18n-key="i.License_cc-by-nc">Creative Commons Attribution-NonCommercial</option>
+								<option value="cc-by-nc" i18n-key="i.License_cc-by-nc" selected="selected">Creative Commons Attribution-NonCommercial</option>
 								<option value="cc-by-nc-sa" i18n-key="i.License_cc-by-nc-sa">Creative Commons Attribution-NonCommercial-ShareAlike</option>
 								<option value="cc-by-nc-nd" i18n-key="i.License_cc-by-nc-nd">Creative Commons Attribution-NonCommercial-NoDerivs</option>
 							</select>
@@ -525,17 +525,18 @@
 					    </div>
 						<div class="file_details_upload">
 							<form id="attachment_file_form" method="post" action="attatchment_file.json" enctype="multipart/form-data">
-								<div class="attachmentFileUpload" i18n-key-tooltip="i.tooltip.UploadAttachment" title="If this button is deactivated, you need to save your excursion first.">
+								<div class="attachmentFileUpload" disabled="disabled" i18n-key-tooltip="i.tooltip.UploadAttachment" title="If this button is deactivated, you need to save your excursion first.">
 									<span i18n-key="i.ChooseFile">Choose File</span>
 									<input type="file" name="attachment" id="attachment_file">
 								</div>
 								<input id="description_attachment" placeholder="Choose File" disabled="disabled">
 								<input type="hidden" name="author_id" id="attachment_author">
 								<input type="hidden" name="authenticity_token" id="attachment_aut_token">
-								<input id="upload_file_attachment" type="submit" class="button" i18n-key="i.Upload" value="Upload" disabled="true" style="margin-left: 15px;">
+								<input id="upload_file_attachment" type="submit" class="button" i18n-key="i.Upload" value="Upload" disabled="true">
 								<span id="upload_icon_success" class="icon-button icon-ok" aria-hidden="true"></span>
 							</form>
 						</div>
+
 					</div>
 
 					<div id="presentation_details_fields_row1_column3">  

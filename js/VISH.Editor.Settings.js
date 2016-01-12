@@ -148,8 +148,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			if(hasLicense){
 				var hasPrivateLicense = (hasLicense && presentation.license.key === "private");
 				if(!hasPrivateLicense){
-					$("#presentation_details_license_select").attr("disabled","disabled").css('-webkit-appearance', 'none').css('-moz-appearance','none');
-
+					$("#presentation_details_license_select").attr("disabled","disabled");
 				}
 			}
 		}
@@ -262,25 +261,17 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$("#allow_following_rte").prop('checked', true);
 		}
 
-		if(presentation.attachment_file_name != undefined && $('#upload_file_attachment').prop('disabled')){
-			document.getElementById("description_attachment").value = presentation.attachment_file_name;
-			$("#upload_icon_success").show();
-			$('#upload_file_attachment').prop('disabled', true);
-		}
-
-		if (presentation.title == undefined){
-			$('.attachmentFileUpload').prop('disabled', true);
-			$('#attachment_file').prop('disabled', true);
-		} else {
+		if(V.Editor.hasBeenSaved()){
 			$('.attachmentFileUpload').removeAttr('disabled');
+			$('#attachment_file').removeAttr('disabled');
+			if(presentation.attachment_file_name != undefined){
+				document.getElementById("description_attachment").value = presentation.attachment_file_name;
+				$("#upload_icon_success").show();
+			}
+		} else {
+			$('.attachmentFileUpload').prop('disabled',true);
+			$('#attachment_file').prop('disabled',true);
 		}
-
-		// Fix catalog position up to button size
-		if (VISH.I18n.getLanguage() == "en"){
-			$("#catalog_button").css("margin-left","244px");
-			$("#upload_file_attachment").css("margin-left","15px");
-		}
-
 	};
 	
 	var selectTheme = function(themeNumber){
