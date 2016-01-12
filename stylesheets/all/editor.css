@@ -1142,7 +1142,7 @@ input.slider_range_input {
 	border-top: none;
 }
 
-.selectedThumbnailBackground {
+.selectedThumbnailBackground:not(.ui-sortable-helper) {
 	background-color: rgb(197, 222, 234);
 	box-shadow: 0px 0px 6px -1px rgba(30, 30, 130, 0.3) inset;
 }
