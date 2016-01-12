@@ -411,7 +411,7 @@ var i18n =
 				"i.walkSettings3_1"			: "Añade un avatar para tu excursión (Obligatorio)",
 				"i.walkSettings3_2"			: "Pulsa sobre este botón para elegir una imagen que represente a tu excursión. Esta imagen será el avatar de tu excursión y es importante porque será mostrada en la plataforma ViSH, permitiendo a los usuarios identificar la excursión.",
 				"i.walkSettings4_1"			: "Añade una licencia para esta excursión (Obligatorio)",
-				"i.walkSettings4_2"			: "Ya que eres el autor de esta excursión, necesitas que tenga una licencia. Para ello puedes incluir una de las siguientes licencias de Crative Commons desde el menú desplegable. Esta es la página de licencias Creative Commons (https://creativecommons.org/licenses/) donde te explican las diferentes licencias en profundidad.",
+				"i.walkSettings4_2"			: "Ya que eres el autor de esta excursión, necesitas que tenga una licencia. Para ello puedes incluir una de las siguientes licencias de Creative Commons desde el menú desplegable. Esta es la página de licencias Creative Commons (https://creativecommons.org/licenses/) donde te explican las diferentes licencias en profundidad.",
 				"i.walkSettings4_3"			: "Recuerda que solamente puedes cambiar la licencia antes de publicar la excursión. Si ya la has publicado, el menú desplegable permanecerá desactivado y no podrás cambiarla.", 
 				"i.walkSettings5_1"			: "Escribe una descripción",
 				"i.walkSettings5_2"			: "Aqui puedes explicar en detalle sobre qué trata la excursión.",

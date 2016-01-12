@@ -567,6 +567,7 @@ div#tagBoxIntro .tagit {
 
 .attachmentFileUpload input#attachment_file {
     position: absolute;
+    width: 100px;
     top: 0;
     right: 0;
     margin: 0;
@@ -771,9 +772,10 @@ div#advanced_tabs {
 }
 
 input.slider_range_input {
-	border: 0; 
-	color: #333; 
-	width: 175px;
+	border: 0;
+	color: #005580;
+	font-weight: bold;
+	width: 175px
 }
 
 .range_text {
