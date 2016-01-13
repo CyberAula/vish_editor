@@ -1528,7 +1528,7 @@ img.rec-menu_icon {
 	padding: 5px 10px;
 	display: inline;
 	text-decoration:none;
-	background: #ff005d repeat-x bottom;
+	background: rgb(66, 139, 202) repeat-x bottom;
 	opacity: 0.6;
 	color:#f9f9f9;
 	cursor: pointer;
