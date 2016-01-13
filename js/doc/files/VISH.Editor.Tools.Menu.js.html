@@ -41,6 +41,7 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
+                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -118,6 +119,9 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				});
 			});
 
+			//enable menu toolbar button click
+			
+
 			//Prevent iframe to move
 			if(V.Status.getDevice().desktop){
 				$(&quot;a.menu_option_main, a.menu_option:not(&#x27;.menu_action&#x27;)&quot;).on(&quot;click&quot;, function(event){
@@ -138,6 +142,38 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			_initialized = true;
 		}
 		$(&quot;#menu&quot;).show();
+
+		$(&quot;.theme_selected_in_fancybox&quot;).removeClass(&quot;theme_selected_in_fancybox&quot;);
+		$(&quot;#theme_fancybox div#select_theme&quot;+V.Editor.Themes.getCurrentTheme().number+&quot; img&quot;).addClass(&quot;theme_selected_in_fancybox&quot;);
+
+			//menu click show withouth css instead of hover
+		if(V.Status.getDevice().desktop){
+			var _submenu = false;
+		
+			$(&quot;a:.menu_option_main&quot;).on(&#x27;click&#x27;,function(){
+				if($(&quot;#menu li &gt; ul.menu_option_main&quot;).css(&#x27;display&#x27;) === &#x27;none&#x27; ){
+					$(&quot;#menu li &gt; ul.menu_option_main&quot;).css(&#x27;display&#x27;,&#x27;block&#x27;);
+					$(&quot;ul:.menu_option_main li&quot;).hover(function(e){
+						$(this).children(&#x27;ul&#x27;).css(&#x27;display&#x27;,&#x27;block&#x27;).on(&#x27;mouseenter&#x27;,function(){
+							_submenu = true;
+							$(this).mouseleave(function(e){
+								_submenu= false;
+							})
+						});
+					}, function(){
+						if (!_submenu){
+							$(&quot;ul:.menu_option_main li &gt; ul&quot;).css(&#x27;display&#x27;,&#x27;none&#x27;);
+						}
+					});
+				} else {
+					$(&quot;#menu li &gt; ul.menu_option_main&quot;).css(&#x27;display&#x27;,&#x27;none&#x27;);
+				}
+			});
+			 $(document).click( function(){
+				$(&quot;#menu li &gt; ul.menu_option_main&quot;).hide();
+			});
+		}
+
 	};
 
 	var _enableMenuItem = function(items){
@@ -296,6 +332,39 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			});
 			$.fancybox.close();
 		}
+		options.buttons.push(button2);
+
+		V.Utils.showDialog(options);
+	};
+
+	/////////////////////
+	/// NOTIFY ON PUPILS EDITOR
+	///////////////////////
+
+	var notifyTeacherClicked = function(){
+		var options = {};
+		options.width = 600;
+		options.height = 200;
+		//options.notificationIconSrc = V.ImagesPath + &quot;icons/unpublish_icon.png&quot;;
+		//options.notificationIconClass = &quot;publishNotificationIcon&quot;;
+		options.text = V.I18n.getTrans(&quot;i.notify_teacher_confirmation&quot;);
+		options.buttons = [];
+
+			var button1 = {};
+		button1.text = V.I18n.getTrans(&quot;i.no&quot;);
+		button1.callback = function(){
+			$.fancybox.close();
+		}
+		options.buttons.push(button1);
+
+		var button2 = {};
+		button2.callback = function(){
+			V.Editor.savePresentation();
+			V.Editor.notify_teacher();
+			$.fancybox.close();
+		};
+		button2.text = V.I18n.getTrans(&quot;i.yes&quot;);
+
 		options.buttons.push(button2);
 
 		V.Utils.showDialog(options);
@@ -470,6 +539,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		}
 	};
 
+
+
 	return {
 		init							: init,
 		disableMenu 					: disableMenu,
@@ -485,6 +556,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onUnpublishButtonClicked		: onUnpublishButtonClicked,
+		notifyTeacherClicked			: notifyTeacherClicked, 
 		onSaveButtonClicked 			: onSaveButtonClicked,
 		preview 						: preview,
 		help 							: help,

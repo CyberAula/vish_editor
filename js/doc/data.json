@@ -320,6 +320,7 @@
         "ViSH": {
             "name": "ViSH",
             "submodules": {},
+            "elements": {},
             "classes": {
                 "VISH.Editor": 1
             },
@@ -347,6 +348,7 @@
             "description": "ViSH Editor"
         }
     },
+    "elements": {},
     "classitems": [
         {
             "file": "libs/ckeditor/lang/fa.js",
@@ -622,7 +624,7 @@
         },
         {
             "file": "VISH.Editor.Events.js",
-            "line": 267,
+            "line": 274,
             "description": "Tutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
             "class": "VISH.Editor"
         },
@@ -730,20 +732,50 @@
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 435,
+            "line": 429,
             "description": "function called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 638,
+            "line": 668,
+            "description": "function called when navigating into metadata options to manage tabs",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Settings.js",
+            "line": 685,
             "description": "function called when the user clicks on the metadata options button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 647,
+            "line": 698,
             "description": "function called when the user clicks on the done button in the metadata options panel",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Settings.js",
+            "line": 708,
+            "description": "function called when the user clicks on the metadata options button",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Settings.js",
+            "line": 717,
+            "description": "function called when the user clicks on the done button in the metadata options panel",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Settings.js",
+            "line": 736,
+            "description": "Function to beautify upload behaviour",
+            "class": "VISH.Editor"
+        },
+        {
+            "file": "VISH.Editor.Settings.js",
+            "line": 764,
+            "description": "Function to handle uploading an attachment behaviour",
             "class": "VISH.Editor"
         },
         {
@@ -793,7 +825,7 @@
         },
         {
             "file": "VISH.Editor.Tools.Menu.js",
-            "line": 101,
+            "line": 136,
             "description": "function called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls V.Viewer with the generated json",
             "class": "VISH.Editor"
         },
@@ -805,7 +837,7 @@
         },
         {
             "file": "VISH.Editor.Utils.js",
-            "line": 336,
+            "line": 344,
             "description": "Function to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
             "class": "VISH.Editor"
         },
@@ -838,77 +870,77 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 215,
+            "line": 216,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 270,
+            "line": 271,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 316,
+            "line": 317,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 348,
+            "line": 349,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 387,
+            "line": 388,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 396,
+            "line": 397,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 460,
+            "line": 461,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 472,
+            "line": 473,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 498,
+            "line": 499,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 523,
+            "line": 524,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 845,
+            "line": 886,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1915,7 +1947,7 @@
         },
         {
             "message": "Missing item type\nTutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Editor.Events.js:267"
+            "line": " VISH.Editor.Events.js:274"
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -1987,15 +2019,35 @@
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
-            "line": " VISH.Editor.Settings.js:435"
+            "line": " VISH.Editor.Settings.js:429"
+        },
+        {
+            "message": "Missing item type\nfunction called when navigating into metadata options to manage tabs",
+            "line": " VISH.Editor.Settings.js:668"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the metadata options button",
-            "line": " VISH.Editor.Settings.js:638"
+            "line": " VISH.Editor.Settings.js:685"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the done button in the metadata options panel",
-            "line": " VISH.Editor.Settings.js:647"
+            "line": " VISH.Editor.Settings.js:698"
+        },
+        {
+            "message": "Missing item type\nfunction called when the user clicks on the metadata options button",
+            "line": " VISH.Editor.Settings.js:708"
+        },
+        {
+            "message": "Missing item type\nfunction called when the user clicks on the done button in the metadata options panel",
+            "line": " VISH.Editor.Settings.js:717"
+        },
+        {
+            "message": "Missing item type\nFunction to beautify upload behaviour",
+            "line": " VISH.Editor.Settings.js:736"
+        },
+        {
+            "message": "Missing item type\nFunction to handle uploading an attachment behaviour",
+            "line": " VISH.Editor.Settings.js:764"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
@@ -2027,7 +2079,7 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on save\nGenerates the json for the current slides\ncovers the section element and every article inside\nfinally calls V.Viewer with the generated json",
-            "line": " VISH.Editor.Tools.Menu.js:101"
+            "line": " VISH.Editor.Tools.Menu.js:136"
         },
         {
             "message": "Missing item type\nfunction to get the styles in percentages",
@@ -2035,7 +2087,7 @@
         },
         {
             "message": "Missing item type\nFunction to load a tab and its content in the fancybox\nalso changes the help button to show the correct help",
-            "line": " VISH.Editor.Utils.js:336"
+            "line": " VISH.Editor.Utils.js:344"
         },
         {
             "message": "Missing item type\nReturns a video object prepared to draw.\nSources: array of arrays [[source src, source type],...] .\nOptions: hash with additional data like poster url or autoplay\nparam area: optional param indicating the area to add the video, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -2043,47 +2095,47 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:215"
+            "line": " VISH.Editor.js:216"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:270"
+            "line": " VISH.Editor.js:271"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:316"
+            "line": " VISH.Editor.js:317"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:348"
+            "line": " VISH.Editor.js:349"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:387"
+            "line": " VISH.Editor.js:388"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:396"
+            "line": " VISH.Editor.js:397"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:460"
+            "line": " VISH.Editor.js:461"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:472"
+            "line": " VISH.Editor.js:473"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:498"
+            "line": " VISH.Editor.js:499"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:523"
+            "line": " VISH.Editor.js:524"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:845"
+            "line": " VISH.Editor.js:886"
         },
         {
             "message": "Missing item type\nFunction to add the events to the help buttons to launch joy ride bubbles",

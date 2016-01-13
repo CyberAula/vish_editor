@@ -41,6 +41,7 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
+                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -161,6 +162,12 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		});
 	};
 
+	var refreshHTML5EVideo = function(slide){
+		//if HTML5 video, redraw balls, because onloadeddata event is not fired again
+		if($(slide).attr(&quot;type&quot;)==&quot;enrichedvideo&quot; &amp;&amp; $(slide).find(&quot;video[videotype=HTML5_VIDEO]&quot;)){
+			V.Editor.EVideo.onHTML5VideoReady($(slide).find(&quot;.evideoBody video&quot;)[0]);
+		}
+	}
 
 	/* Generate table for carrousels */
 	var generateTable = function(options){
@@ -415,6 +422,8 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	/// Fancy Box Functions
 	/////////////////////////
 
+	var loadTabTimer;
+
 	/**
 	 * Function to load a tab and its content in the fancybox
 	 * also changes the help button to show the correct help
@@ -431,9 +440,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		//select the correct one
 		$(&quot;#&quot; + tab_id).addClass(&quot;fancy_selected&quot;);
 		//hide previous help button
-		$(&quot;.help_in_fancybox&quot;).hide();
+		$(&quot;.help_in_fancybox&quot;).not(&quot;#&quot;+ tab_id + &quot;_help&quot;).hide();
 
-		//Submodule callbacks	
+		//Submodule callbacks
 		switch (tab_id) {
 			case &quot;tab_presentations_repo&quot;:
 				V.Editor.Presentation.Repository.beforeLoadTab();
@@ -481,6 +490,16 @@ VISH.Editor.Utils = (function(V,$,undefined){
 
 		//show correct one
 		$(&quot;#&quot;+ tab_id + &quot;_help&quot;).show();
+
+		//Fix occasionally help img bug on Google Chrome
+		if(typeof loadTabTimer != &quot;undefined&quot;){
+			clearTimeout(loadTabTimer);
+		}
+		loadTabTimer = setTimeout(function(){
+			if($(&quot;#&quot;+ tab_id + &quot;_help&quot;).length &gt; 0 &amp;&amp; !$(&quot;#&quot;+ tab_id + &quot;_help&quot;).is(&quot;:visible&quot;) &amp;&amp; $(&quot;#&quot;+ tab_id + &quot;_content&quot;).is(&quot;:visible&quot;)){
+				$(&quot;#&quot;+ tab_id + &quot;_help&quot;).hide().show(1);
+			}
+		},0);
 
 		//Submodule callbacks	
 		switch (tab_id) {
@@ -609,6 +628,7 @@ VISH.Editor.Utils = (function(V,$,undefined){
 		addZoomToStyle  			: addZoomToStyle,	
 		getStylesInPercentages 		: getStylesInPercentages,
 		refreshDraggables			: refreshDraggables,
+		refreshHTML5EVideo			: refreshHTML5EVideo,
 		replaceIdsForSlide 			: replaceIdsForSlide,
 		replaceIdsForSlideJSON		: replaceIdsForSlideJSON,
 		generateTable 				: generateTable,
