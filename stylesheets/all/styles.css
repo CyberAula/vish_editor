@@ -684,12 +684,13 @@ div#tab_quiz_session_results {
 
 .help_in_fancybox_viewer {
 	background-image: url("/images/vicons/helptutorial_circle.png");
+	background-repeat: no-repeat;
 	position: absolute;
 	margin-top: -1px;
 	margin-right: -5px;
 	top: 0px;
 	right: 30px;
-	margin-top: -1px;
+	margin-top: 5px;
 	margin-right: -5px;
 }
 
