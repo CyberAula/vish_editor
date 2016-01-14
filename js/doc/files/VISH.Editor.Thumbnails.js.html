@@ -41,6 +41,7 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
+                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -234,6 +235,9 @@ VISH.Editor.Thumbnails = (function(V,$,undefined){
 	var selectThumbnail = function(no){
 		$(&quot;#slides_list img.image_barbutton&quot;).removeClass(&quot;selectedSlideThumbnail&quot;);
 		$(&quot;#slides_list img.image_barbutton[slideNumber=&quot; + no + &quot;]&quot;).addClass(&quot;selectedSlideThumbnail&quot;);
+		$(&quot;#slides_list div.wrapper_barbutton&quot;).removeClass(&quot;selectedThumbnailBackground&quot;);
+		$(&quot;#slides_list img.image_barbutton[slideNumber=&quot; + no + &quot;]&quot;).parent(&quot;div.wrapper_barbutton&quot;).addClass(&quot;selectedThumbnailBackground&quot;);
+
 
 		var advance = ((lastSelectedSlideThumbnail===undefined)||(no &gt; lastSelectedSlideThumbnail));
 		lastSelectedSlideThumbnail = no;

@@ -41,6 +41,7 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
+                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -302,11 +303,10 @@ VISH.Recommendations = (function(V,$,undefined){
                         &#x27;&lt;ul class=&quot;rec-thumbnail&quot;&gt;&#x27;+
                           &#x27;&lt;li class=&quot;rec-img-excursion&quot;&gt;&#x27;+
                            &#x27;&lt;img src=&quot;&#x27;+ex.image+&#x27;&quot;&gt;&#x27;+
-                            &#x27;&lt;div class=&quot;rec-number_pages&quot;&gt;&#x27;+ex.number_of_slides+&#x27;&lt;/div&gt;&#x27;+
                           &#x27;&lt;/li&gt;&#x27;+
                           &#x27;&lt;li class=&quot;rec-info-excursion&quot;&gt;&#x27;+
                             &#x27;&lt;div class=&quot;rec-title-excursion&quot;&gt;&#x27;+ex.title+&#x27;&lt;/div&gt;&#x27;+
-                            &#x27;&lt;div class=&quot;rec-by&quot;&gt;by &lt;span class=&quot;rec-name&quot;&gt;&#x27;+ex.author+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
+                            &#x27;&lt;div class=&quot;rec-by&quot;&gt;&#x27; + V.I18n.getTrans(&quot;i.by&quot;) + &#x27; &lt;span class=&quot;rec-name&quot;&gt;&#x27;+ex.author+&#x27;&lt;/span&gt;&lt;/div&gt;&#x27;+
                             &#x27;&lt;span class=&quot;rec-visits&quot;&gt;&#x27;+ex.views+&#x27;&lt;/span&gt; &lt;span class=&quot;rec-views&quot;&gt;&#x27;+V.I18n.getTrans(&quot;i.exviews&quot;)+&#x27;&lt;/span&gt;&#x27;+
                             &#x27;&lt;div class=&quot;rec-likes&quot;&gt;&lt;span class=&quot;rec-likes-number&quot;&gt;&#x27;+ex.favourites+&#x27;&lt;/span&gt;&lt;img class=&quot;rec-menu_icon&quot; src=&quot;&#x27;+ V.ImagesPath + &#x27;vicons/star-on10.png&quot;&gt;&lt;/div&gt;&#x27;+
                           &#x27;&lt;/li&gt;&#x27;+

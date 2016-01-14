@@ -223,7 +223,7 @@ VISH.Recommendations = (function(V,$,undefined){
                           '</li>'+
                           '<li class="rec-info-excursion">'+
                             '<div class="rec-title-excursion">'+ex.title+'</div>'+
-                            '<div class="rec-by">by <span class="rec-name">'+ex.author+'</span></div>'+
+                            '<div class="rec-by">' + V.I18n.getTrans("i.by") + ' <span class="rec-name">'+ex.author+'</span></div>'+
                             '<span class="rec-visits">'+ex.views+'</span> <span class="rec-views">'+V.I18n.getTrans("i.exviews")+'</span>'+
                             '<div class="rec-likes"><span class="rec-likes-number">'+ex.favourites+'</span><img class="rec-menu_icon" src="'+ V.ImagesPath + 'vicons/star-on10.png"></div>'+
                           '</li>'+

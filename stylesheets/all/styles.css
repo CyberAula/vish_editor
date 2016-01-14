@@ -683,12 +683,13 @@ div#tab_quiz_session_results {
 
 .help_in_fancybox_viewer {
 	background-image: url("/images/vicons/helptutorial_circle.png");
+	background-repeat: no-repeat;
 	position: absolute;
 	margin-top: -1px;
 	margin-right: -5px;
 	top: 0px;
 	right: 30px;
-	margin-top: -1px;
+	margin-top: 5px;
 	margin-right: -5px;
 }
 
@@ -1365,11 +1366,11 @@ a.button_advert:hover {
 }
 
 .rec-views {
-	color: #404040;;
+	color: #404040;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.2rem;
 	margin-left: 1%;
-	margin-right: 8%;
+	margin-right: 7%;
 }
 
 .rec-img-excursion {
@@ -1377,27 +1378,30 @@ a.button_advert:hover {
     display: inline-block;
     width: 50%;
     height: 100%;
-    margin-top: 3px;
-    margin-left: 4px;
+    margin: 0px;
 }
 
 .rec-img-excursion > img {
     border-radius: 5px 0px 0px 5px;
-    height: 95%;
-    margin: 0;
-    width: 97%;
+    height: 94%;
+    width: 94%;
+    margin: 0px;
+    margin-top: 3%;
+    margin-left: 3%;
 }
 
 .rec-title-excursion {
     font-family: 'Open Sans', arial, sans-serif;
     width: 100%;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
     font-weight: bold;
     overflow: hidden;
     color: #000;
     text-decoration: none;
-    height: 61px;
-    margin-bottom: 5px;
+    max-height: 54%;
+    height: 5.7rem;
+    line-height: 1.9rem;
+    margin-bottom: 5%;
 }
 
 div#rec-cont-np {
@@ -1429,12 +1433,12 @@ div#rec-cont-np {
 
 .rec-info-excursion {
     float: left;
-    width: 44%;
+    width: 46%;
     display: inline-block;
-    padding-left: 0;
-    height: 95%;
-    margin-top: 5px;
-    margin-left: 8px;
+    padding: 2% 2% 2% 2%;
+    height: 96%;
+    margin: 0px;
+    overflow: hidden;
 }
 
 .rec-by {
@@ -1515,14 +1519,16 @@ div#rec-cont-np {
 }
 
 img.rec-menu_icon {
-	margin-left: 4px;
+	margin-left: 10%;
+	width: 1rem;
+	max-width: 10px;
 }
 
 .viewer_button {
 	padding: 5px 10px;
 	display: inline;
 	text-decoration:none;
-	background: #ff005d repeat-x bottom;
+	background: rgb(66, 139, 202) repeat-x bottom;
 	opacity: 0.6;
 	color:#f9f9f9;
 	cursor: pointer;

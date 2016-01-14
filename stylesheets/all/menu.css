@@ -12,7 +12,6 @@
 #menu a {
 	color: #333;
 	font-size: 1.4em;
-
 }
 
 #menu li {
@@ -22,7 +21,6 @@
 	z-index: 1080;
 	margin-top: 10px;
 }
-
 
 /* main level link */
 #menu a {
@@ -43,14 +41,14 @@
 
 a.expansive {
 	background-image: url("/images/icons/fleMenu.png");
-    background-repeat: no-repeat;
-    background-position: 140px;
-    background-size: 10%;
+	background-repeat: no-repeat;
+	background-position: 140px;
+	background-size: 10%;
 }
 
 a.expansive:hover {
 	background-image: url("/images/icons/fleMenu_hover.png");
-	}
+}
 
 
 /* Level 1 */
@@ -75,17 +73,17 @@ a.expansive:hover {
 	display:none;
 	background-color:#FFF;
 	margin: 0;
-    padding: 0;
-    width: 179px;
-    position: absolute;
-    top: 46px;
-    left: -20px;
-    -webkit-border-radius: 0px 0px 10px 10px;
-    -moz-border-radius: 0px 0px 10px 10px;
-    border-radius: 0px 0px 10px 10px;
-    -webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
-    -moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
-    box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
+	padding: 0;
+	width: 179px;
+	position: absolute;
+	top: 46px;
+	left: -20px;
+	-webkit-border-radius: 0px 0px 10px 10px;
+	-moz-border-radius: 0px 0px 10px 10px;
+	border-radius: 0px 0px 10px 10px;
+	-webkit-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
+	-moz-box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
+	box-shadow: 4px 4px 5px rgba(50, 50, 50, 0.2);
 }
 
 ul.menu_option_main ul {
@@ -139,7 +137,7 @@ ul.menu_option_main ul {
 	-moz-border-radius-bottomright: 9px;
 	border-radius: 0px 0px 9px 9px;
 	padding-bottom: 13px;
-    margin-bottom: 0px;
+	margin-bottom: 0px;
 }
 
 
@@ -171,6 +169,10 @@ ul.menu_option_main ul {
 
 #menu ul ul li a.menu_option.menu_action.subMenu {
 	margin-top: 0px;
+}
+
+#menu ul ul li a.menu_option.menu_action {
+	padding-left: 15px;
 }
 
 /* Third level */

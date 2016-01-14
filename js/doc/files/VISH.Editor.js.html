@@ -41,6 +41,7 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
+                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -188,7 +189,8 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.LRE.init(options.lang);
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 		V.SCORM.init();
-
+		V.Editor.Customization.init();
+		
 		//If we have to edit
 		if(initialPresentation){
 			var presentation = V.Utils.fixPresentation(presentation);
@@ -915,7 +917,47 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 	
-	
+	//////////////////
+	///  Notify Teacher
+	//////////////////
+
+	var notify_teacher = function(){
+		//get Id
+		var id;
+	 	try{
+	 		var id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
+	 	} catch(e){
+	 	
+	 		id = &quot;&quot;;
+	 	}
+	 	
+	 	if (id == &quot;&quot; &amp;&amp; window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+	 	}
+
+		var data = {
+			&quot;authenticity_token&quot; : V.User.getToken(),
+			&quot;user_data&quot;			 : V.Utils.getOptions().user,
+			&quot;excursion_data&quot;	 : id
+		};
+
+		var path = V.Utils.getOptions().configuration.notify_teacher_path;
+		$.ajax({	
+					type  : &quot;POST&quot;,
+					url     : path,
+					data    : data,
+					success : function(data) {
+						var publish_button = $(&quot;#toolbar_publish_wrapper&quot;);
+						publish_button.addClass(&quot;menu_item_disabled&quot;);
+						publish_button.children(&quot;p&quot;).html(V.I18n.getTrans(&quot;i.notified_teacher&quot;));
+						publish_button.find(&quot;i&quot;).removeClass().addClass(&quot;icon-button icon-exclamation&quot;);
+					},
+					error: function(data){
+						console.log(&#x27;not done&#x27;);
+					}
+				});
+	};
+
 	//////////////////
 	///  Getters and Setters
 	//////////////////
@@ -1033,6 +1075,10 @@ VISH.Editor = (function(V,$,undefined){
 		}
 	};
 
+	var hasBeenSaved = function(){
+		return !((typeof lastStoredPresentationStringify == &quot;undefined&quot;)&amp;&amp;(!initialPresentation));
+	};
+
 	var hasPresentationChanged = function(){
 		try {
 			var objectToCompare;
@@ -1065,12 +1111,14 @@ VISH.Editor = (function(V,$,undefined){
 		getDraftPresentation	: getDraftPresentation,
 		isPresentationDraft		: isPresentationDraft,
 		hasBeenPublished		: hasBeenPublished,
+		hasBeenSaved			: hasBeenSaved,
 		getContentAddMode		: getContentAddMode,
 		setContentAddMode		: setContentAddMode,
 		hasInitialPresentation	: hasInitialPresentation,
 		isZoneEmpty				: isZoneEmpty,
 		savePresentation		: savePresentation,
 		sendPresentation		: sendPresentation,
+		notify_teacher 			: notify_teacher, 
 		setCurrentArea			: setCurrentArea,
 		selectArea				: selectArea,
 		onSlideEnterEditor 		: onSlideEnterEditor,

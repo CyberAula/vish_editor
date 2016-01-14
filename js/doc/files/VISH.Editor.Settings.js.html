@@ -41,6 +41,7 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
+                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -82,9 +83,7 @@
     <pre class="code prettyprint linenums">
 VISH.Editor.Settings = (function(V,$,undefined){
 
-	var themeScrollbarDivId = &quot;scrollbar_themes_list&quot;;
 	var tagsLoaded = false;
-	var themeScrollbarCreated = false;
 
 	//Timers
 	var t1;
@@ -149,14 +148,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			&quot;onComplete&quot;  : function(data){
 				$(&quot;#fancybox-wrap&quot;).css(&quot;margin-top&quot;, &quot;20px&quot;);
 				_onDisplaySettings();
-			},
-			&quot;onClosed&quot; : function(data){
-				//Update theme if it has change
-				var selectedThemeNumber = $(&quot;.theme_selected_in_scrollbar&quot;).attr(&quot;themeNumber&quot;);
-				var currentThemeNumber = V.Editor.Themes.getCurrentTheme().number;
-				if((typeof selectedThemeNumber == &quot;string&quot;)&amp;&amp;(selectedThemeNumber!=currentThemeNumber)){
-					V.Editor.Themes.selectTheme(&quot;theme&quot;+selectedThemeNumber);
-				};
 			}
 		});
 
@@ -166,41 +157,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	var _onDisplaySettings = function(){
 		var options = V.Utils.getOptions();
 
-		//Themes
-		if(!themeScrollbarCreated){
-			//Select Theme scrollbar
-			V.Editor.Scrollbar.cleanScrollbar(themeScrollbarDivId);
-			$(&quot;#&quot; + themeScrollbarDivId).hide();
-
-			//Generate thumbnail images
-			var imagesArray = [];
-			var imagesArrayTitles = [];
-
-			for(var i=1; i&lt;13; i++){
-				var imgExt = &quot;png&quot;;
-				if(i==12){
-					imgExt = &quot;gif&quot;;
-				}
-				var srcURL = V.ImagesPath + &quot;themes/theme&quot; + i + &quot;/select.&quot; + imgExt;
-				imagesArray.push($(&quot;&lt;img themeNumber=&#x27;&quot;+ i +&quot;&#x27; class=&#x27;image_barbutton&#x27; src=&#x27;&quot; + srcURL + &quot;&#x27; /&gt;&quot;));
-				imagesArrayTitles.push(i);
-			}
-
-			var options = {};
-			options.order = true;
-			options.titleArray = imagesArrayTitles;
-			options.callback = _onThemeImagesLoaded;
-			t1 = Date.now();
-			V.Utils.Loader.loadImagesOnContainer(imagesArray,themeScrollbarDivId,options);
-		} else {
-			//Select and move to current theme
-			selectTheme(V.Editor.Themes.getCurrentTheme().number);
-			V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$(&quot;img.theme_selected_in_scrollbar&quot;));
-		}
-
 		//Sliders are initialized in the init() method.
 		onTLTchange();
-
+		if(typeof V.Utils.getOptions().configuration.catalog === &#x27;undefined&#x27; || V.Utils.getOptions().configuration.catalog.length == 0 ){
+			$(&#x27;#catalog_button&#x27;).hide();
+		}
 		//Check for enable continue button
 		_checkIfEnableContinueButton();
 	};
@@ -231,6 +192,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				$(authorDOM).html(authorName);
 			}
 		}
+
+		var catalog_tags = V.Utils.getOptions().configuration.catalog;
+		if(catalog_tags){
+			for(var i = 0; i&lt;catalog_tags.length; i++){
+				$(&quot;#catalog_tags&quot;).append($(&quot;&lt;option /&gt;&quot;).val(catalog_tags[i]).attr(&quot;i18n-key&quot;, &quot;i.&quot;+ catalog_tags[i]).text(catalog_tags[i]))
+			}
+		}
+
 
 		//Contributors
 		if(typeof presentation.contributors == &quot;object&quot;){
@@ -267,11 +236,40 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			}
 		}
 
+		//Set the title of the license, so it can be completely displayed
+		if(hasLicense){
+			switch(presentation.license.key) {
+			    case &quot;public&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Public Domain&quot;;
+			        break;
+			    case &quot;cc-by&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Creative Commons Attribution&quot;;
+			        break;
+			    case &quot;cc-by-sa&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Creative Commons Attribution-ShareAlike&quot;;
+			        break;
+			    case &quot;cc-by-nd&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Creative Commons Attribution-NoDerivs&quot;;
+			        break;
+			    case &quot;cc-by-nc&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Creative Commons Attribution-NonCommercial&quot;;
+			        break;
+			    case &quot;cc-by-nc-sa&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Creative Commons Attribution-NonCommercial-ShareAlike&quot;;
+			        break;
+			    case &quot;cc-by-nc-nd&quot;:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;Creative Commons Attribution-NonCommercial-NoDerivs&quot;;
+			        break;
+			    default:
+			        document.getElementById(&quot;presentation_details_license_select&quot;).title = &quot;&quot;;
+			}
+		}
+
 		//Themes
 		selectTheme(V.Editor.Themes.getCurrentTheme().number);
 
 		//Metadata
-		
+
 		if(presentation.language){
 			$(&quot;#language_tag&quot;).val(presentation.language);
 		}
@@ -311,58 +309,55 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			$(&quot;#subject_tag&quot;).val(presentation.subject);
 		}
 		
+		//Advanced Settings
 		if(presentation.educational_objectives){
 			$(&quot;#educational_objectives_textarea&quot;).val(presentation.educational_objectives);
-		}		
-	};
-
-	var _onThemeImagesLoaded = function(){
-
-		var diff = Date.now()-t1;
-		if(diff&lt;1500){
-			setTimeout(function(){
-				_onThemeImagesLoaded();
-			},1500-diff);
-			return;
 		}
 
-		//Add class to title elements and events
-		$(&quot;#&quot; + themeScrollbarDivId).find(&quot;img.image_barbutton&quot;).each(function(index,img){
-			//Add class to title
-			var imgContainer = $(img).parent();
-			$(imgContainer).addClass(&quot;wrapper_barbutton&quot;);
-			var p = $(imgContainer).find(&quot;p&quot;);
-			$(p).addClass(&quot;ptext_barbutton&quot;);
+		//to make checked by the fault and read settings
+		if(presentation.allow_clone == &quot;false&quot;){
+			$(&quot;#allow_clone&quot;).prop(&quot;checked&quot;, false);
+		} else {
+			$(&quot;#allow_clone&quot;).prop(&#x27;checked&#x27;, true);
+		}
 
-			//Add events to imgs
-			$(img).click(function(event){
-				_onClickTheme(event);
-			});
-		});
+		if( presentation.license != undefined &amp;&amp; (presentation.license.key == &quot;cc-by-nd&quot; || presentation.license.key == &quot;cc-by-nc-nd&quot;)){
+			$(&quot;#allow_clone&quot;).prop(&quot;checked&quot;, false);
+			$(&quot;#allow_clone&quot;).prop(&quot;disabled&quot;, true);
+		}
 
-		var options = new Array();
-		options.scrollTop = true;
-		options.callback = _afterCreateThemesScrollbar;
+		if(presentation.allow_comment == &quot;false&quot;){
+			$(&quot;#allow_comment&quot;).prop(&quot;checked&quot;, false);
+		} else {
+			$(&quot;#allow_comment&quot;).prop(&#x27;checked&#x27;, true);
+		}
 
-		//Create scrollbar
-		$(&quot;#&quot; + themeScrollbarDivId).show();
-		V.Editor.Scrollbar.createScrollbar(themeScrollbarDivId, options);
+		if(presentation.allow_download == &quot;false&quot;){
+			$(&quot;#allow_download&quot;).prop(&quot;checked&quot;, false);
+		} else {
+			$(&quot;#allow_download&quot;).prop(&#x27;checked&#x27;, true);
+		}
+
+		if(presentation.allow_following_rte == &quot;false&quot;){
+			$(&quot;#allow_following_rte&quot;).prop(&quot;checked&quot;, false);
+		} else {
+			$(&quot;#allow_following_rte&quot;).prop(&#x27;checked&#x27;, true);
+		}
+
+		if(V.Editor.hasBeenSaved()){
+			$(&#x27;.attachmentFileUpload&#x27;).removeAttr(&#x27;disabled&#x27;);
+			$(&#x27;#attachment_file&#x27;).removeAttr(&#x27;disabled&#x27;);
+			if(presentation.attachment_file_name != undefined){
+				document.getElementById(&quot;description_attachment&quot;).value = presentation.attachment_file_name;
+				$(&quot;#upload_icon_success&quot;).show();
+			}
+		} else {
+			$(&#x27;.attachmentFileUpload&#x27;).prop(&#x27;disabled&#x27;,true);
+			$(&#x27;#attachment_file&#x27;).prop(&#x27;disabled&#x27;,true);
+		}
 	};
-
-	var _onClickTheme = function(event){
-		var themeNumber = $(event.target).attr(&quot;themeNumber&quot;);
-		selectTheme(themeNumber);
-	};
-
-	var _afterCreateThemesScrollbar = function(){
-		selectTheme(V.Editor.Themes.getCurrentTheme().number);
-		V.Editor.Scrollbar.goToElement(themeScrollbarDivId,$(&quot;img.theme_selected_in_scrollbar&quot;));
-		themeScrollbarCreated = true;
-	};
-
+	
 	var selectTheme = function(themeNumber){
-		$(&quot;.theme_selected_in_scrollbar&quot;).removeClass(&quot;theme_selected_in_scrollbar&quot;);
-		$(&quot;#scrollbar_themes_list img.image_barbutton[themenumber=&#x27;&quot;+themeNumber+&quot;&#x27;]&quot;).addClass(&quot;theme_selected_in_scrollbar&quot;);
 		$(&quot;.theme_selected_in_fancybox&quot;).removeClass(&quot;theme_selected_in_fancybox&quot;);
 		$(&quot;#theme_fancybox div#select_theme&quot;+themeNumber+&quot; img&quot;).addClass(&quot;theme_selected_in_fancybox&quot;);
 	};
@@ -526,7 +521,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if($(event.target).hasClass(&quot;buttonDisabledOnSettings&quot;)){
 			return;
 		}
-
+		$(&quot;#catalog_content&quot;).hide();
 		$.fancybox.close();
 	};
 
@@ -643,6 +638,42 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.educational_objectives = educational_objectives;
 		}
 
+		//Publication settings
+		var allow_clone = $(&quot;#allow_clone&quot;).is(&#x27;:checked&#x27;);
+		if(typeof allow_clone == &quot;boolean&quot;){
+			settings.allow_clone = allow_clone.toString();
+		}
+
+		if( licenseKey == &quot;cc-by-nd&quot; || licenseKey == &quot;cc-by-nc-nd&quot;){
+			settings.allow_clone = &quot;false&quot;;
+		}
+
+
+		var allow_comment = $(&quot;#allow_comment&quot;).is(&#x27;:checked&#x27;);
+			if(typeof allow_comment == &quot;boolean&quot;){
+			settings.allow_comment = allow_comment.toString();
+		}
+
+		var allow_download = $(&quot;#allow_download&quot;).is(&#x27;:checked&#x27;);
+		if(typeof allow_download == &quot;boolean&quot;){
+			settings.allow_download = allow_download.toString();
+		}
+
+		var allow_following_rte = $(&quot;#allow_following_rte&quot;).is(&#x27;:checked&#x27;);
+		if(typeof allow_following_rte == &quot;boolean&quot;){
+			settings.allow_following_rte = allow_following_rte.toString();
+		}
+		
+		var attachment_file_name = V.Editor.Utils.filterFilePath(document.getElementById(&quot;description_attachment&quot;).value);
+		if(attachment_file_name != &quot;&quot; &amp;&amp; $(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;)){
+			settings.attachment_file_name = attachment_file_name;
+		}
+		
+		//callbacks
+		$(&#x27;.attachmentFileUpload&#x27;).prop(&#x27;disabled&#x27;, false);
+		$(&#x27;#attachment_file&#x27;).prop(&#x27;disabled&#x27;, false);
+		$(&#x27;.attachmentFileUpload&#x27;).removeAttr(&#x27;disabled&#x27;);
+
 		return settings;
 	};
 
@@ -718,12 +749,33 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	};
 
 	/**
+	 * function called when navigating into metadata options to manage tabs
+	 */
+	 var advancedTabs = function(event){
+	 	event.preventDefault();
+	 	if($(this).hasClass != true){
+	 		$(this).closest(&#x27;ul&#x27;).find(&#x27;.fancy_selected&#x27;).removeClass(&#x27;fancy_selected&#x27;);
+	 		$(this).addClass(&quot;fancy_selected&quot;);
+		 	$(&quot;#metadata_options_fields&quot;).children(&#x27;.active&#x27;).removeClass(&#x27;active&#x27;).hide();
+		 	var attr = &quot;#&quot; + $(this).attr(&quot;tab&quot;);
+		 	$(attr).addClass(&quot;active&quot;).show();
+
+		 	//help behaviour
+		 	$($(&quot;.help_in_settings&quot;)[1]).attr(&quot;id&quot;, &quot;help-&quot; + $(this).attr(&quot;tab&quot;));
+	 	}
+	 };
+
+	/**
 	 * function called when the user clicks on the metadata options button
 	 */
 	 var onMetadataButtonClicked = function(event){
 	 	event.preventDefault();
+	 	$(&quot;#catalog_content&quot;).hide();
 	 	$(&quot;#presentation_details_fields&quot;).slideUp();
 	 	$(&quot;#metadata_options_fields&quot;).slideDown();
+	 	if ($(&quot;#advanced_tabs .fancy_selected&quot;) != undefined ){ 
+	 		$(&quot;.help_in_settings&quot;).attr(&quot;id&quot;, &quot;help-&quot; + $(&quot;#advanced_tabs .fancy_selected&quot;).attr(&quot;tab&quot;));
+	 	}
 	 };
 
 	 /**
@@ -733,8 +785,114 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	event.preventDefault();
 	 	$(&quot;#metadata_options_fields&quot;).slideUp();
 	 	$(&quot;#presentation_details_fields&quot;).slideDown();
+	 	$(&quot;.help_in_settings&quot;).attr(&quot;id&quot;,&quot;help_in_settings&quot;); 
 	 };
 
+	 /**
+	 * function called when the user clicks on the metadata options button
+	 */
+	 var onCatalogButtonClicked = function(event){
+	 	event.preventDefault();
+	 	$(&quot;#catalog_content&quot;).fadeIn();
+	 };
+
+
+	 /**
+	 * function called when the user clicks on the done button in the metadata options panel
+	 */
+	 var onDoneCatalogButtonClicked = function(event){
+	 	event.preventDefault();
+	 	
+	 	var catalog_tags = $(&quot;#catalog_tags&quot;).find(&quot;:selected&quot;);
+	 	if (catalog_tags.length &gt; 0){
+ 			for( i = 0; i &lt; catalog_tags.length; i ++){
+ 				$(&quot;#tagBoxIntro .tagList&quot;).tagit(&#x27;add&#x27;, catalog_tags[i].value);
+ 			}
+ 			$(&quot;#catalog_tags :selected&quot;).removeAttr(&quot;selected&quot;);
+	 	}
+
+	 	$(&quot;#catalog_content&quot;).fadeOut();
+
+	 	
+	 };
+
+	 /**
+	 *	Function to beautify upload behaviour
+	 */
+	 var onUploadFileAttachment = function(event){
+	 	var file_name = document.getElementById(&quot;attachment_file&quot;).value;
+	 	var id;
+	 	try{
+	 		var id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
+	 	} catch(e){
+	 	
+	 		id = &quot;&quot;;
+	 	}
+	 	
+	 	if (id == &quot;&quot; &amp;&amp; window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+	 	}
+
+	 	if( file_name != &quot;&quot; &amp;&amp; id != &quot;&quot; ){
+    		document.getElementById(&quot;description_attachment&quot;).value = V.Editor.Utils.filterFilePath(file_name);
+	 		$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, false);
+	 		$(&quot;#upload_icon_success&quot;).hide();
+	 	} else {
+	 		$(&quot;#upload_icon_success&quot;).hide();
+	 		document.getElementById(&quot;attachment_file&quot;).value = &quot;&quot;;
+	 		V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadHasToSaveFirst&quot;));
+	 	}
+	 };
+
+	 /**
+	 *	Function to handle uploading an attachment behaviour
+	 **/
+	 var onUploadingFileAttachment = function(event){
+	 	var file_name = document.getElementById(&quot;attachment_file&quot;).value;
+	 	var id;
+	 	try{
+	 		var id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
+	 	} catch(e){
+	 	
+	 		id = &quot;&quot;;
+	 	}
+	 	
+	 	if (id == &quot;&quot; &amp;&amp; window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+		 	var id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+	 	}
+	 	if(file_name != &quot;&quot; &amp;&amp; id != &quot;&quot;){
+		 	var attachment_url = &quot;/excursions/&quot;+ id + &quot;/upload_attachment&quot;;
+		 	$(&quot;#attachment_file_form&quot;).attr(&quot;action&quot;, attachment_url);
+		 	$(&quot;#attachment_author&quot;).val(V.User.getId());
+		 	$(&quot;#attachment_aut_token&quot;).val(V.User.getToken());
+		 	$(&quot;#attachment_file_form&quot;).ajaxForm({ 
+		 		success: function(responseText, statusText, xhr, form) {
+		 			if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;bad_size&quot;){
+		 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorTooBig&quot;));
+		 				$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
+		 			}else if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;wrong_params&quot;){
+		 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorWrongServer&quot;));
+		 				$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
+		 			} else if (responseText.status == &quot;ok&quot; &amp;&amp; responseText.message == &quot;success&quot;) {
+		 				$(&quot;#upload_icon_success&quot;).show();
+		 				$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
+		 				V.Editor.Tools.save();
+
+					}
+				},
+				error: function(error){
+					V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorWrongServer&quot;));
+				}
+			}); 
+		} else {
+			if(id == &quot;&quot;){
+				event.preventDefault();
+				V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadHasToSaveFirst&quot;));
+			} else {
+				V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorCantReach&quot;));
+			}
+		}
+	 };
 
 	 /*
 	  * Contributors Management
@@ -753,16 +911,21 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
+		onUploadFileAttachment					: onUploadFileAttachment,
+		onUploadingFileAttachment				: onUploadingFileAttachment,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,
 		onTLTchange								: onTLTchange,
+		advancedTabs							: advancedTabs,
 		checkMandatoryFields					: checkMandatoryFields,
 		onSavePresentationDetailsButtonClicked	: onSavePresentationDetailsButtonClicked,
 		getTags									: getTags,
 		saveSettings							: saveSettings,
-		onMetadataButtonClicked   			: onMetadataButtonClicked,
+		onMetadataButtonClicked   				: onMetadataButtonClicked,
 		onDoneMetadataButtonClicked 			: onDoneMetadataButtonClicked,
+		onCatalogButtonClicked 					: onCatalogButtonClicked,
+		onDoneCatalogButtonClicked				: onDoneCatalogButtonClicked,
 		selectAnimation 						: selectAnimation,
 		addContributor							: addContributor
 	};
