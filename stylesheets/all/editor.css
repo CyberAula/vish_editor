@@ -2316,11 +2316,23 @@ a#tab_video_youtube > img {
 	height: 40px;
 	cursor:pointer;
 	background: url("/images/icons/delete_content.png");
+	background-size: 100%;
 	z-index: 10000;
 }
 
 .delete_content:hover {
 	background: url("/images/icons/delete_content_hover.png");
+	background-size: 100%;
+}
+
+div.vezone[size='small'] .delete_content{
+	max-height: 35px;
+	max-width: 35px;
+}
+
+div.vezone[size='extra_small'] .delete_content{
+	max-height: 30px;
+	max-width: 30px;
 }
 
 .addpicture {
