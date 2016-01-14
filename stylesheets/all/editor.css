@@ -3441,6 +3441,7 @@ p.draggable_number {
     top: 0px;
     border: none;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .vt_search_button:hover {
