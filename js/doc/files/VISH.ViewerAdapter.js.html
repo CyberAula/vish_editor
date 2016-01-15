@@ -421,8 +421,10 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//Slide counter
 			//Font size related to menubar
 			var menubarIncreaseFactor = viewbarHeight/40;
+			var slideCounterFontSizeMain = 18*getPonderatedIncrease(menubarIncreaseFactor,0.5);
 			var slideCounterFontSize = 14*getPonderatedIncrease(menubarIncreaseFactor,0.5);
-			$(&quot;#slide-counter-span, #slide-counter-input&quot;).css(&quot;font-size&quot;,slideCounterFontSize+&quot;px&quot;);
+			$(&quot;#slide-counter-input&quot;).css(&quot;font-size&quot;,slideCounterFontSizeMain+&quot;px&quot;);
+			$(&quot;#slide-counter-span&quot;).css(&quot;font-size&quot;,slideCounterFontSize+&quot;px&quot;);
 			$(&quot;#slide-counter-input&quot;).width(24*getPonderatedIncrease(menubarIncreaseFactor,1));
 			var slideCounterMarginTop = (viewbarHeight - $(&quot;#slide-counter-div&quot;).height())/2;
 			$(&quot;#slide-counter-div&quot;).css(&quot;margin-top&quot;,slideCounterMarginTop+&quot;px&quot;);

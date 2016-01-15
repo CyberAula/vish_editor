@@ -833,24 +833,29 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 	};
+
+	var getPresentationId = function(){
+		var id;
+		try{
+			id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
+		} catch(e){}
+		if(typeof id == "undefined"){
+			//TODO. Get presentation id in other way...
+			try{
+				if (window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
+					id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
+				}
+			} catch(e){}
+		}
+		return id;
+	};
 	
 	//////////////////
 	///  Notify Teacher
 	//////////////////
 
 	var notify_teacher = function(){
-		//get Id
-		var id;
-	 	try{
-	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-	 	} catch(e){
-	 	
-	 		id = "";
-	 	}
-	 	
-	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
-		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
-	 	}
+		var id = getPresentationId();
 
 		var data = {
 			"authenticity_token" : V.User.getToken(),
@@ -1026,6 +1031,7 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentContainer		: setCurrentContainer,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
+		getPresentationId		: getPresentationId,
 		isPresentationDraft		: isPresentationDraft,
 		hasBeenPublished		: hasBeenPublished,
 		hasBeenSaved			: hasBeenSaved,

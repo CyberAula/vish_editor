@@ -129,8 +129,8 @@ VISH.Editor.Events = (function(V,$,undefined){
 			$(document).on(&#x27;click&#x27;, &#x27;.js_tabs_asettings&#x27;, V.Editor.Settings.advancedTabs);
 			$(document).on(&#x27;click&#x27;, &#x27;#catalog_button&#x27;, V.Editor.Settings.onCatalogButtonClicked);
 			$(document).on(&#x27;click&#x27;, &#x27;#catalog_done_button&#x27;, V.Editor.Settings.onDoneCatalogButtonClicked);
-			$(document).on(&#x27;change&#x27;, &#x27;#attachment_file&#x27;, V.Editor.Settings.onUploadFileAttachment);
-			$(document).on(&#x27;click&#x27;, &#x27;#upload_file_attachment&#x27;, V.Editor.Settings.onUploadingFileAttachment);
+			$(document).on(&#x27;change&#x27;, &#x27;#attachment_file&#x27;, V.Editor.Settings.onChangeAttachmentFile);
+			$(document).on(&#x27;click&#x27;, &#x27;#upload_file_attachment&#x27;, V.Editor.Settings.onUploadAttachmentFile);
 
 			$(document).on(&#x27;click&#x27;, &#x27;#fill_details_later_button&#x27;, function(event){
 				event.preventDefault();
