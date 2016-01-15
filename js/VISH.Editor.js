@@ -785,12 +785,15 @@ VISH.Editor = (function(V,$,undefined){
 							lastStoredPresentationStringify = jsonPresentation;
 							if((createNewPresentation)&&(typeof data != "undefined")&&(data.uploadPath)){
 								//Update V.UploadPresentationPath because the presentation exists now
-								//Future saves will update the existing presentation
+								//Future savings will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
 								if(V.Status.getDevice().features.historypushState){
 									if(data.editPath){
 										window.top.history.replaceState("","",data.editPath);
 									}
+								}
+								if(data.id){
+									V.PresentationId = data.id;
 								}
 							}
 							if(order=="publish"){
@@ -835,19 +838,15 @@ VISH.Editor = (function(V,$,undefined){
 	};
 
 	var getPresentationId = function(){
-		var id;
-		try{
-			id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-		} catch(e){}
-		if(typeof id == "undefined"){
-			//TODO. Get presentation id in other way...
-			try{
-				if (window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
-					id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
-				}
-			} catch(e){}
+		if(typeof V.PresentationId != "undefined"){
+			return V.PresentationId;
 		}
-		return id;
+
+		var draftPresentation = V.Editor.getDraftPresentation();
+		if((typeof draftPresentation != "undefined")&&(typeof draftPresentation["vishMetadata"] != "undefined")&&(typeof draftPresentation["vishMetadata"]["id"] != "undefined")){
+			V.PresentationId = draftPresentation["vishMetadata"]["id"];
+		}
+		return V.PresentationId;
 	};
 	
 	//////////////////
