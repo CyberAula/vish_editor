@@ -3104,6 +3104,11 @@ table.contentIconsWalkthrough td {
 	max-height: 30px;
 }
 
+.tut_toolbar_tools img.tut_toolbar_tools_menu_icon {
+	background-color: #428BCA;
+	padding: 5px;
+}
+
 .tut_toolbar_tools table p {
 	margin-left: 5px;
 }
