@@ -372,7 +372,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 		var parent_offset = $(parent).offset();
 
 		var newMarginTop = parent_offset.top - 20;
-		var newMarginLeft = parent_offset.left + 12;
+		var newMarginLeft = parent_offset.left + 15;
 		var newTop = top - newMarginTop;
 		var newLeft = left - newMarginLeft;
 
@@ -388,7 +388,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 			$(arrow).css("position", "absolute");
 			//Original margins
 			$(arrow).css("margin-top","-20px");
-			$(arrow).css("margin-left","12px");
+			$(arrow).css("margin-left","15px");
 			$(arrow).attr("ddend","scrollbar");
 		});
 
@@ -516,7 +516,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 				var slide_id = $(slide).attr("id");
 				var arrowDiv = $('<div class="draggable_sc_div" slide_id="'+ slide_id +'" slideNumber="'+(index+1)+'"" >');
 				$(arrowDiv).append($('<img src="'+V.ImagesPath+'icons/flashcard_button.png" class="fc_draggable_arrow">'));
-				$(arrowDiv).append($('<p class="draggable_number"  data-tooltip="Drag me to the map">'+String.fromCharCode(64+index+1)+'</p>'));
+				$(arrowDiv).append($('<p class="draggable_number">'+String.fromCharCode(64+index+1)+'</p>'));
 				$(div).prepend(arrowDiv);
 
 				if(typeof markers[slide_id] != "undefined"){
@@ -588,7 +588,7 @@ VISH.Editor.VirtualTour = (function(V,$,undefined){
 						$(event.target).css("position", "absolute");
 						//Original margins
 						$(event.target).css("margin-top","-20px");
-						$(event.target).css("margin-left","12px");
+						$(event.target).css("margin-left","15px");
 						$(event.target).attr("ddend","scrollbar");
 					});
 				}

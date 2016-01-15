@@ -1188,11 +1188,11 @@ button.downimport {
 	top: 24px;
 	padding-top: 7px;
 	height: 15px;
-	right: -26px;
+	right: -22px;
 	background: white;
 	padding: 4px;
 	font-family: 'Open Sans', arial, sans-serif;
-	border-radius: 5px 0px 5px 5px;
+	border-radius: 5px 0px 5px 0px;
 	cursor: default;
 	pointer-events: none;
 }
@@ -1224,7 +1224,7 @@ button.downimport {
     box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.5);
     -moz-box-shadow: 0px 2px 3px 1.25px rgba(0, 0, 0, 0.5);
-    margin-left: 5px;
+    margin-left: 0px;
     margin-top:5px;
 }
 
@@ -3336,7 +3336,7 @@ div.draggable_sc_div {
 	display: block;
 	position: absolute;
 	margin-top: -20px;
-	margin-left: 19px;
+	margin-left: 15px;
 	opacity: 1;
 	pointer-events: none;
 }
@@ -3367,13 +3367,11 @@ div.draggable_sc_div img.fc_draggable_arrow:hover {
 
 p.draggable_number {
 	position: relative;
-	top: -44px;
+	top: -45px;
 	left: 0px !important;
 	text-align: center;
 	font-family: 'Open Sans', arial, sans-serif;
-	font-size: 13px;
-    font-weight: bold;
-    color: white;
+	font-size: 15px;
 }
 
 /* Overwrite scrollbar style */
