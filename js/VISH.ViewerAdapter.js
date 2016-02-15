@@ -48,7 +48,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 
 		//Mobiles
 		if(V.Status.getDevice().mobile){
-			if(!V.Status.getIsInIframe()){
+			if(!V.Status.isEmbed()){
 				_closeButton = (options)&&(options["comeBackUrl"]);
 			}
 		}
@@ -70,7 +70,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		/////////////
 
 		//No fs for preview
-		_fsButton = _fsButton && (!V.Status.getIsPreview());
+		_fsButton = _fsButton && (!V.Status.isPreview());
 
 
 		////////////////
@@ -89,11 +89,11 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			$("#forward_arrow").hide();
 		};
 
-		if(V.Status.getIsPreview()){
+		if(V.Status.isPreview()){
 			$("div#viewerpreview").show();
 		}
 
-		if(V.Status.getIsPreviewInsertMode()){
+		if(V.Status.isPreviewInsertMode()){
 			$("#selectSlidesBar").show();
 			$("#viewbar").css("bottom",$("#selectSlidesBar").height()+"px");
 			$("#viewbar").css("border-bottom","none");
@@ -101,7 +101,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		}
 
 		//Watermark
-		if((V.Status.getIsInExternalSite())&&(!V.Status.getIsPreviewInsertMode())){
+		if((V.Status.isExternalSite())&&(!V.Status.isPreviewInsertMode())){
 			if((options)&&(typeof options.watermarkURL == "string")){
 				$("#embedWatermark").parent().attr("href",options.watermarkURL);
 				$("#embedWatermark").show();
@@ -237,7 +237,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			viewbarHeight = 0;
 			min_margin_height = 0;
 			min_margin_width = 0;
-		} else if(V.Status.getIsPreviewInsertMode()){
+		} else if(V.Status.isPreviewInsertMode()){
 			//Preview with insert images
 			viewbarHeight = 120; //Constant because is displayed from ViSH Editor
 		} else {
@@ -279,7 +279,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		$(".vish_arrow").width(finalWidthMargin/2*0.9);
 
 		//Viewbar
-		if((_showViewbar)&&(!V.Status.getIsPreviewInsertMode())){
+		if((_showViewbar)&&(!V.Status.isPreviewInsertMode())){
 			$("#viewbar").height(viewbarHeight);
 		}
 
@@ -330,7 +330,7 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 			//Fs button
 			$("#page-fullscreen").width($("#page-fullscreen").height());
 
-			if(V.Status.getIsPreviewInsertMode()){
+			if(V.Status.isPreviewInsertMode()){
 				//Get the real viewbar height in insert mode
 				viewbarHeight = $("#viewbar").height();
 			}

@@ -31,7 +31,7 @@ VISH.FullScreen = (function(V,$,undefined){
 	var _initFallback = function(){
 		_pageIsFullScreen = false;
 
-		if(V.Status.getIsInIframe()){
+		if(V.Status.isEmbed()){
 			_enterFsURL = options["fullScreenFallback"]["enterFullscreenURL"];
 		} else {
 			_exitFsURL = options["fullScreenFallback"]["exitFullscreenURL"];
@@ -54,7 +54,7 @@ VISH.FullScreen = (function(V,$,undefined){
 
 	var _canUseFallbackFs = function(){
 		// Fallback is not possible in embeds...
-		if(V.Status.getIsEmbed()){
+		if(V.Status.isExternalDomain()){
 			return false;
 		}
 
@@ -65,11 +65,11 @@ VISH.FullScreen = (function(V,$,undefined){
 		var options = V.Utils.getOptions();
 		if ((typeof options == "object")&&(typeof options["fullScreenFallback"] == "object")) {
  
-			if ((V.Status.getIsInIframe())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string")){
+			if ((V.Status.isEmbed())&&(typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string")){
 				return true;
 			}
 
-			if(V.Status.getIsInIframe()){
+			if(V.Status.isEmbed()){
 				if (typeof options["fullScreenFallback"]["enterFullscreenURL"] == "string"){
 					return true;
 				}

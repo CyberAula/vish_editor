@@ -320,7 +320,6 @@
         "ViSH": {
             "name": "ViSH",
             "submodules": {},
-            "elements": {},
             "classes": {
                 "VISH.Editor": 1
             },
@@ -348,7 +347,6 @@
             "description": "ViSH Editor"
         }
     },
-    "elements": {},
     "classitems": [
         {
             "file": "libs/ckeditor/lang/fa.js",
@@ -1710,7 +1708,7 @@
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 382,
+            "line": 384,
             "description": "Fancybox resizing. If a fancybox is opened, resize it",
             "class": "",
             "namespace": "VISH"
@@ -2423,7 +2421,7 @@
         },
         {
             "message": "Missing item type\nFancybox resizing. If a fancybox is opened, resize it",
-            "line": " VISH.ViewerAdapter.js:382"
+            "line": " VISH.ViewerAdapter.js:384"
         }
     ]
 }

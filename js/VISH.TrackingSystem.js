@@ -41,7 +41,7 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		_rTrse = V.Utils.getOptions().TrackingSystemRelatedEntryId;
 
-		if((typeof _apiKey == "undefined")||(typeof _apiUrl == "undefined")||(V.Status.getIsPreview())){
+		if((typeof _apiKey == "undefined")||(typeof _apiUrl == "undefined")||(V.Status.isPreview())){
 			_enabled = false;
 			return;
 		} else {
@@ -66,10 +66,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 		var sessionOptions = V.Viewer.getOptions();
 		if(typeof sessionOptions == "object"){
 			_environment.lang = sessionOptions.lang;
-			_environment.scorm = (sessionOptions.scorm || false);
-			_environment.embed = V.Status.getIsEmbed();
-			_environment.vish = V.Status.getIsInVishSite();
-			_environment.iframe = V.Status.getIsInIframe();
+			_environment.scorm = V.Status.isScorm();
+			_environment.isExternalDomain = V.Status.isExternalDomain();
+			_environment.vish = V.Status.isVishSite();
+			_environment.isEmbed = V.Status.isEmbed();
 			_environment.developping = sessionOptions.developping;
 			_referrer = sessionOptions.referrer;
 		}

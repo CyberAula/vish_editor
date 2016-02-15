@@ -25,24 +25,24 @@ describe("VISH.Status", function(){
         VISH.Status.should.have.property('refreshDeviceAfterResize');
     });
 
-    it('should export getIsEmbed function', function(){
-        VISH.Status.should.have.property('getIsEmbed');
+    it('should export isExternalDomain function', function(){
+        VISH.Status.should.have.property('isExternalDomain');
     });
 
-    it('should export getIsInIframe function', function(){
-        VISH.Status.should.have.property('getIsInIframe');
+    it('should export isEmbed function', function(){
+        VISH.Status.should.have.property('isEmbed');
     });
 
-    it('should export getIframe function', function(){
-        VISH.Status.should.have.property('getIframe');
+    it('should export getContainer function', function(){
+        VISH.Status.should.have.property('getContainer');
     });
 
     it('should export isOnline function', function(){
         VISH.Status.should.have.property('isOnline');
     });
 
-    it('should export getIsScorm function', function(){
-        VISH.Status.should.have.property('getIsScorm');
+    it('should export isScorm function', function(){
+        VISH.Status.should.have.property('isScorm');
     });
 
     it('should export getIsInExternalSite function', function(){

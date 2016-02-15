@@ -39,7 +39,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
-		if(V.Status.getIsInVishSite()){
+		if(V.Status.isVishSite()){
 			user_id = V.User.getId();
 			var presentation = V.Viewer.getCurrentPresentation();
 			if(presentation["vishMetadata"] && presentation["vishMetadata"]["id"]){
@@ -139,7 +139,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.getIsInVishSite()&&V.Status.getIsInIframe()));
+		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite()&&V.Status.isEmbed()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
 		return _showEvaluateButton;
@@ -207,7 +207,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		//Store recommender information for tracking
         _RSTrackingData = data;
 
-		var applyTargetBlank = V.Status.getIsInExternalSite();
+		var applyTargetBlank = V.Status.isExternalSite();
 
         var ex;
         var result = "";
@@ -361,7 +361,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
 
 		try {
-			if(V.Status.getIsInVishSite()&&V.Status.getIsInIframe()&&(typeof window.parent.triggerEvaluation == "function")){
+			if(V.Status.isVishSite()&&V.Status.isEmbed()&&(typeof window.parent.triggerEvaluation == "function")){
 				//VE in the ViSH site. Trigger ViSH evaluation. This case is not triggered when we access the .full in ViSH.
 				V.FullScreen.exitFromNativeFullScreen();
 				window.parent.triggerEvaluation();

@@ -41,7 +41,6 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
-                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -122,7 +121,7 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
-		if(V.Status.getIsInVishSite()){
+		if(V.Status.isVishSite()){
 			user_id = V.User.getId();
 			var presentation = V.Viewer.getCurrentPresentation();
 			if(presentation[&quot;vishMetadata&quot;] &amp;&amp; presentation[&quot;vishMetadata&quot;][&quot;id&quot;]){
@@ -222,7 +221,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.getIsInVishSite()&amp;&amp;V.Status.getIsInIframe()));
+		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite()&amp;&amp;V.Status.isEmbed()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton &amp;&amp; V.Status.getDevice().desktop;
 		return _showEvaluateButton;
@@ -290,7 +289,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		//Store recommender information for tracking
         _RSTrackingData = data;
 
-		var applyTargetBlank = V.Status.getIsInExternalSite();
+		var applyTargetBlank = V.Status.isExternalSite();
 
         var ex;
         var result = &quot;&quot;;
@@ -444,7 +443,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
 
 		try {
-			if(V.Status.getIsInVishSite()&amp;&amp;V.Status.getIsInIframe()&amp;&amp;(typeof window.parent.triggerEvaluation == &quot;function&quot;)){
+			if(V.Status.isVishSite()&amp;&amp;V.Status.isEmbed()&amp;&amp;(typeof window.parent.triggerEvaluation == &quot;function&quot;)){
 				//VE in the ViSH site. Trigger ViSH evaluation. This case is not triggered when we access the .full in ViSH.
 				V.FullScreen.exitFromNativeFullScreen();
 				window.parent.triggerEvaluation();

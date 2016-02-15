@@ -157,7 +157,7 @@ VISH.IframeMessenger = (function(V,undefined){
 					var helloMessage = protocolMessage;
 
 					// Reply Hello message
-					if(V.Status.getIsInIframe()){
+					if((V.Status.isEmbed())&&(V.Status.getContainerType()==="IFRAME")){
 						if(helloMessage.origin != "?"){
 							_connected = true;
 

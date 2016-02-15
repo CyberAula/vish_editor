@@ -41,7 +41,6 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
-                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -134,7 +133,7 @@ VISH.Events = (function(V,$,undefined){
 			var comeBackUrl = V.Viewer.getOptions()[&quot;comeBackUrl&quot;];
 			if(comeBackUrl){
 				window.top.location.href = V.Viewer.getOptions()[&quot;comeBackUrl&quot;];
-			} else if((V.Status.getIsEmbed())&amp;&amp;(V.Status.getDevice().features.history)){
+			} else if((V.Status.isExternalDomain())&amp;&amp;(V.Status.getDevice().features.history)){
 				//Go back
 				history.back();
 			}

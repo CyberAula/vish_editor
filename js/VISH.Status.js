@@ -1,25 +1,27 @@
 VISH.Status = (function(V,$,undefined){
+	//Device
 	var _device;
 
-	//In an iframe or not
-	var _isInIframe;
-	//In the same domain (no iframe or embed in the same domain) or not
-	var _isAnotherDomain;
+	//Is embed (in a iframe or another container) or not
+	var _isEmbed;
+	var _container;
+	var _containerType;
+	//Is in external domain or not
+	var _isExternalDomain;
+	//External or Internal site
+	var _isInExternalSite;
+	var _isInVishSite;
+	var _isLocalFile;
+
+	//SCORM Package (same domain but external site)
+	var _scorm;
 
 	//Online or offline
 	var _isOnline;
 
 	//Preview
-	var _is_preview;
-	var _is_preview_insertMode;
-
-	//SCORM Package (same domain but external site)
-	var _scorm;
-
-	//External or Internal site
-	var _isInExternalSite;
-	var _isInVishSite;
-	var _isLocalFile;
+	var _isPreview;
+	var _isPreviewInsertMode;
 
 	//Uniq mode (to show only one slide of an excursion)
 	var _uniqMode;
@@ -33,9 +35,11 @@ VISH.Status = (function(V,$,undefined){
 	var _isWindowFocused;
 	var _isCKEditorInstanceFocused;
 	
+
 	var init = function(callback){
-		_checkIframe();
+		_checkEmbed();
 		_checkDomain();
+		_checkContainer();
 		_checkSite();
 		_checkPreview();
 		_checkUniqMode();
@@ -58,38 +62,54 @@ VISH.Status = (function(V,$,undefined){
    /*
 	* Use to see if we are inside an iframe
 	*/
-	var _checkIframe = function(){
-		_isInIframe = ((window.location != window.parent.location) ? true : false);
-		return _isInIframe;
+	var _checkEmbed = function(){
+		_isEmbed = ((window.location != window.parent.location) ? true : false);
+		return _isEmbed;
 	};
 
    /*
 	* Use to see if we are embeded in another domain
 	*/
 	var _checkDomain = function(){
-		_isAnotherDomain = false;
+		_isExternalDomain = false;
 
-		if(_checkIframe()){
+		if(_checkEmbed()){
 			try {
 				var parent = window.parent;
 				while(parent!=window.top){
 					if(typeof parent.location.href === "undefined"){
-						_isAnotherDomain = true;
+						_isExternalDomain = true;
 						break;
 					} else {
 						parent = parent.parent;
 					}
 				}
-
 				if(typeof window.top.location.href === "undefined"){
-					_isAnotherDomain = true;
+					_isExternalDomain = true;
 				}
 			} catch(e) {
-				_isAnotherDomain = true;
+				_isExternalDomain = true;
 			}
 		}
 
-		return _isAnotherDomain;
+		return _isExternalDomain;
+	};
+
+	var _checkContainer = function(){
+		_container = undefined;
+		_containerType = "undefined";
+
+		if((_isEmbed)&&(!_isExternalDomain)){
+			try{
+				switch(window.frameElement.tagName){
+					case "OBJECT":
+					case "IFRAME":
+					default:
+						_containerType = window.frameElement.tagName;
+						_container = window.frameElement;
+				}
+			} catch (e){}
+		}
 	};
 
    /*
@@ -105,13 +125,13 @@ VISH.Status = (function(V,$,undefined){
 			_scorm = false;
 		}
 
-		if(!_isAnotherDomain){
+		if(!_isExternalDomain){
 			_isLocalFile = (window.top.location.href.indexOf("file://")===0);
 		} else {
 			_isLocalFile = false;
 		}
 		
-		_isInExternalSite = ((_isAnotherDomain)||(_scorm));
+		_isInExternalSite = ((_isExternalDomain)||(_scorm));
 		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
 	};
 
@@ -119,16 +139,16 @@ VISH.Status = (function(V,$,undefined){
 		var options = V.Utils.getOptions();
 
 		if(typeof options["preview"] == "boolean"){
-			_is_preview = options["preview"];
+			_isPreview = options["preview"];
 		} else {
-			_is_preview = false;
+			_isPreview = false;
 		}
 
-		_is_preview_insertMode = false;
-		if(_is_preview){
+		_isPreviewInsertMode = false;
+		if(_isPreview){
 			var presentation = V.Viewer.getCurrentPresentation();
 			if(presentation.insertMode===true){
-				_is_preview_insertMode = true;
+				_isPreviewInsertMode = true;
 			}
 		}
 	};
@@ -208,48 +228,48 @@ VISH.Status = (function(V,$,undefined){
 		_device = V.Status.Device.fillScreen(_device);
 	};
 
-	var getIsEmbed = function(){
-		return _isAnotherDomain;
+	var isEmbed = function(){
+		return _isEmbed;
 	};
 
-	var getIsInIframe = function(){
-		return _isInIframe;
+	var getContainer = function(){
+		return _container;
 	};
 
-	var getIframe = function(){
-		if((_isInIframe)&&(!_isAnotherDomain)){
-			return window.frameElement;
-		} else {
-			return null;
-		}
+	var getContainerType = function(){
+		return _containerType;
+	};
+
+	var isExternalDomain = function(){
+		return _isExternalDomain;
+	};
+
+	var isExternalSite = function(){
+		return _isInExternalSite;
+	};
+
+	var isVishSite = function(){
+		return _isInVishSite;
+	};
+
+	var getIsLocalFile = function(){
+		return _isLocalFile;
+	};
+
+	var isScorm = function(){
+		return _scorm;
 	};
 
 	var isOnline = function(){
 		return _isOnline;
 	};
 
-	var getIsScorm = function(){
-		return _scorm;
+	var isPreview = function(){
+		return _isPreview;
 	};
 
-	var getIsLocalFile = function(){
-		return _isLocalFile;
-	}
-
-	var getIsInExternalSite = function(){
-		return _isInExternalSite;
-	};
-
-	var getIsInVishSite = function(){
-		return _isInVishSite;
-	};
-
-	var getIsPreview = function(){
-		return _is_preview;
-	};
-
-	var getIsPreviewInsertMode = function(){
-		return _is_preview_insertMode;
+	var isPreviewInsertMode = function(){
+		return _isPreviewInsertMode;
 	};
 
 	var getIsUniqMode = function(){
@@ -335,14 +355,15 @@ VISH.Status = (function(V,$,undefined){
 	return {
 		init						: init,
 		getDevice					: getDevice,
-		getIsEmbed 					: getIsEmbed,
-		getIsInIframe				: getIsInIframe,
-		getIframe					: getIframe,
-		getIsScorm					: getIsScorm,
-		getIsInExternalSite			: getIsInExternalSite,
-		getIsInVishSite				: getIsInVishSite,
-		getIsPreview 				: getIsPreview,
-		getIsPreviewInsertMode		: getIsPreviewInsertMode,
+		isExternalDomain 			: isExternalDomain,
+		isEmbed						: isEmbed,
+		getContainer				: getContainer,
+		getContainerType			: getContainerType,
+		isScorm						: isScorm,
+		isExternalSite				: isExternalSite,
+		isVishSite					: isVishSite,
+		isPreview 					: isPreview,
+		isPreviewInsertMode			: isPreviewInsertMode,
 		getIsUniqMode				: getIsUniqMode,
 		isOnline 					: isOnline,
 		isSlaveMode 				: isSlaveMode,

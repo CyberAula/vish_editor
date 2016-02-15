@@ -109,7 +109,7 @@ VISH.Viewer = (function(V,$,undefined){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr("id"));
 		}
 
-		if(!V.Status.getIsEmbed()){
+		if(!V.Status.isExternalDomain()){
 			//Try to win focus
 			window.focus();
 		}

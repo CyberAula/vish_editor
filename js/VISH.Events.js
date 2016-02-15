@@ -51,7 +51,7 @@ VISH.Events = (function(V,$,undefined){
 			var comeBackUrl = V.Viewer.getOptions()["comeBackUrl"];
 			if(comeBackUrl){
 				window.top.location.href = V.Viewer.getOptions()["comeBackUrl"];
-			} else if((V.Status.getIsEmbed())&&(V.Status.getDevice().features.history)){
+			} else if((V.Status.isExternalDomain())&&(V.Status.getDevice().features.history)){
 				//Go back
 				history.back();
 			}

@@ -127,7 +127,7 @@ VISH.Status.Device = (function(V,$,undefined){
 					 //In addition, we need a server functionality (require Vish)
 					 //Currently disabled
 
-					 // if((device.tablet)&&(!V.Status.getIsInIframe())&&((V.Utils.getOptions().configuration.mode===V.Constant.VISH))){
+					 // if((device.tablet)&&(!V.Status.isEmbed())&&((V.Utils.getOptions().configuration.mode===V.Constant.VISH))){
 					 // 	//Is already loaded the static viewport?
 					 // 	//Look in URL params and options
 					 // 	if((V.Utils.getOptions().staticViewport)||(V.Utils.getParamsFromUrl(window.location.href).hasOwnProperty("viewport"))){

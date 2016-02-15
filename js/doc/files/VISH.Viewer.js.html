@@ -41,7 +41,6 @@
                                 <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
                             </ul>
                 
-                
                             <ul id="api-modules" class="apis modules">
                                 <li><a href="../modules/ViSH.html">ViSH</a></li>
                             </ul>
@@ -192,7 +191,7 @@ VISH.Viewer = (function(V,$,undefined){
 			V.Slides.triggerEnterEventById($(V.Slides.getCurrentSlide()).attr(&quot;id&quot;));
 		}
 
-		if(!V.Status.getIsEmbed()){
+		if(!V.Status.isExternalDomain()){
 			//Try to win focus
 			window.focus();
 		}
