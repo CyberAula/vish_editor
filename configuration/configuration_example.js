@@ -72,10 +72,6 @@ var getOptions = function(){
 		configuration["SoundCloudAPIKEY"] = 'SoundcloudAPIKey';
 		configuration["catalog"] = ["Art", "Astronomy", "Biology", "Chemistry", "Citizenship", "Classical Languages", "Cross Curricular Education", "Computer Science", "General Culture", "Economics", "Education", "Electronics", "Environmental Education", "Ethics", "Foreign Languages", "Geography", "Geology", "Health Education", "History", "Home Economics", "Literature", "Law", "Mathematics", "Music", "Natural Sciences", "Philosophy", "Physical Education", "Physics", "Politics", "Psychology", "Religion", "Social Sciences", "Software Engineering", "Technology", "Telecommunications"];
 
-		configuration["notify_teacher_path"] = "/private_student_group/notify_teacher";
-		configuration["classroom_pupil"] = true;
-
-
 		/////////////////////
 		// Features enabled
 		/////////////////////
@@ -95,6 +91,10 @@ var getOptions = function(){
 		// 	evmethod: "wbltses"
 		// };
 
+		// Private Student Groups
+		// configuration["notify_teacher_path"] = "/private_student_group/notify_teacher";
+		// configuration["classroom_pupil"] = true;
+
 
 		/////////////////////
 		// Behaviour customization
@@ -108,9 +108,9 @@ var getOptions = function(){
 		/////////////////////
 		// Aspect Customization
 		/////////////////////
-		configuration["repository_image"] = "/images/logos/repositoryimg_educa.png";
-		configuration["editor_logo"] = "/images/icons/logo_educa.png";
-		configuration["menu_logo"] = "/images/toolbar/logofondo_educa.png";
+		// configuration["repository_image"] = "/images/logos/repositoryimg_educa.png";
+		// configuration["editor_logo"] = "/images/icons/logo_educa.png";
+		// configuration["menu_logo"] = "/images/toolbar/logofondo_educa.png";
 		
 
 		/////////////////////
