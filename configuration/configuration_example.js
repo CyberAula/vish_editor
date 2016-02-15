@@ -187,6 +187,7 @@ var getOptions = function(){
 
 		//Add a Watermark
 		options["watermarkURL"] = "http://localhost/viewer.html";
+		// options["watermarkIcon"] = "custom";
 
 		//Addons
 		options.addons = [];
