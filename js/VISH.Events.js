@@ -125,8 +125,9 @@ VISH.Events = (function(V,$,undefined){
 		var fsParams = V.FullScreen.getFSParams();
 
 		if(typeof fsParams.currentFSElement == "undefined"){
-			//Browser is not in fullscreen
-			if((typeof fsParams.lastFSElement != "undefined")&&(fsParams.lastFSElement != document.documentElement)&&((new Date() - fsParams.lastFSTimestamp)<1000)){
+			//Browser is not in fullscreen.
+			if((typeof fsParams.lastFSElement != "undefined")&&(fsParams.lastFSElement != fsParams.fsElementTarget)&&((new Date() - fsParams.lastFSTimestamp)<1000)){
+				//Another element has left from FS
 				//Try to prevent Chrome bug
 				if($("body").is(":-webkit-full-screen-ancestor")){
 					// do something to fix Chrome bug...
@@ -135,7 +136,7 @@ VISH.Events = (function(V,$,undefined){
 			}
 		} else {
 			//Browser is in fullscreen
-			if((typeof fsParams.currentFSElement != "undefined")&&(fsParams.currentFSElement != document.documentElement)){
+			if((typeof fsParams.currentFSElement != "undefined")&&(fsParams.currentFSElement != fsParams.fsElementTarget)){
 				//Another element is in fs now.
 				return;
 			}

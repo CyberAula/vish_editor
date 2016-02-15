@@ -17,6 +17,7 @@ VISH.FullScreen = (function(V,$,undefined){
 
 
 	var init = function(){
+		_addContainerFSAttributes();
 		// If FullScreen native support is not available try to use fallback options
 		if((!_canUseNativeFs())&&(_canUseFallbackFs())){
 			_fallbackFs = true;
@@ -49,11 +50,11 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var _canUseNativeFs = function(){
-		return (V.Status.getDevice().features.fullscreen)&&(_getFsEnabled());
+		return (V.Status.getDevice().features.fullscreen)&&(_getFsEnabled(_getFSDocumentTarget()));
 	};
 
 	var _canUseFallbackFs = function(){
-		// Fallback is not possible in embeds...
+		// Fallback is not possible in external domains...
 		if(V.Status.isExternalDomain()){
 			return false;
 		}
@@ -100,10 +101,10 @@ VISH.FullScreen = (function(V,$,undefined){
 
 	var _enableNativeFS = function(){
 		$(document).on('click', '#page-fullscreen', _toggleFullScreen);
-		$(document).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",function(event){
+		$(_getFSDocumentTarget()).on("webkitfullscreenchange mozfullscreenchange fullscreenchange MSFullscreenChange",function(event){
 			_lastFSElement = _currentFSElement;
 			// _currentFSElement = event.target;
-			_currentFSElement = _getFsElement(); //Use the HTML5 FS API Wrapper
+			_currentFSElement = _getFsElement(_getFSDocumentTarget()); //Use the HTML5 FS API Wrapper
 			_lastFSTimestamp = new Date();
 
 			_updateFsButtons();
@@ -127,10 +128,12 @@ VISH.FullScreen = (function(V,$,undefined){
 			return;
 		}
 
+		var myDoc = _getFSDocumentTarget();
+		var myElem = _getFSElementTarget();
 		if(_isDocumentFullScreen()){
-			_cancelFullscreen();
+			_cancelFullscreenForElement(myDoc);
 		} else {
-			_launchFullscreenForElement(document.documentElement);
+			_launchFullscreenForElement(myDoc,myElem);
 		}
 	};
 
@@ -156,18 +159,51 @@ VISH.FullScreen = (function(V,$,undefined){
 		$("#page-fullscreen").removeClass("fson").addClass("fsoff");
 	};
 
+	/* Add container attributes for enable FS when possible */
+	var _addContainerFSAttributes = function(){
+		try {
+			var container = V.Status.getContainer();
+			if(typeof container != "undefined"){
+				//App is embed, but not in external domain
+				if(typeof $(container).attr("allowfullscreen") == "undefined"){
+					$(container).attr("allowfullscreen","true");
+					$(container).attr("webkitAllowFullScreen","true");
+					$(container).attr("mozallowfullscreen","true");
+				}
+
+				var fsElementTarget = _getFSElementTarget();
+				if(V.Status.getContainerType()==="OBJECT"){
+					//Add FS style
+					$(container).addClass("VEditorFS");
+					$(fsElementTarget).addClass("VEditorFS");
+					$(window.parent.document).find("head").append("<style>.VEditorFS:full-screen, :full-screen > object.VEditorFS {width: 100% !important;height: 100% !important;}</style>");
+					$(window.parent.document).find("head").append("<style>.VEditorFS:-webkit-full-screen, :-webkit-full-screen > object.VEditorFS {width: 100% !important;height: 100% !important;}</style>");
+					$(window.parent.document).find("head").append("<style>.VEditorFS:-moz-full-screen, :-moz-full-screen > object.VEditorFS {width: 100% !important;height: 100% !important;}</style>");
+				}
+			}
+		} catch(e){}
+	};
+
 
 	/*
 	 * Wrapper for HTML5 FullScreen API. Make it cross-browser
 	 */
 	 var _isBrowserInFullScreen = function(){
-	 	var fsElement = _getFsElement();
+	 	var fsElement = _getFsElement(_getFSDocumentTarget());
 		return ((typeof fsElement !== "undefined")&&(fsElement !== null));
 	};
 
 	/* To test if the application is in fullscreen */
 	var _isDocumentFullScreen = function(){
-		return $(_getFsElement()).is("html");
+		if(V.Status.getContainerType()==="OBJECT"){
+			//Fix for fs in objects
+			return _isObjectFullScreen();
+		}
+		return $(_getFsElement(_getFSDocumentTarget())).is("html");
+	};
+
+	var _isObjectFullScreen = function(){
+		return _isBrowserInFullScreen();
 	};
 
 	var isOtherElementInFullScreen = function(){
@@ -175,22 +211,30 @@ VISH.FullScreen = (function(V,$,undefined){
 	};
 
 	var getFSParams = function(){
-		return {currentFSElement: _currentFSElement, lastFSElement:_lastFSElement, lastFSTimestamp: _lastFSTimestamp };
+		return {currentFSElement: _currentFSElement, lastFSElement:_lastFSElement, lastFSTimestamp: _lastFSTimestamp, fsElementTarget: _getFSElementTarget() };
 	};
 
 	var _isElementInFullScreen = function(elem){
-		return ((typeof elem !== "undefined")&&(elem !== null)&&(elem===_getFsElement()));
+		return ((typeof elem !== "undefined")&&(elem !== null)&&(elem===_getFsElement(_getFSDocumentTarget())));
 	};
 
-	var _getFsElement = function(){
-		return document.fullscreenElement || document.mozFullScreenElement || document.webkitFullscreenElement || document.msFullscreenElement;
+	var _getFsElement = function(myDoc){
+		return myDoc.fullscreenElement || myDoc.mozFullScreenElement || myDoc.webkitFullscreenElement || myDoc.msFullscreenElement;
 	};
 
-	var _getFsEnabled = function(){
-		return document.fullscreenEnabled || document.mozFullScreenEnabled || document.webkitFullscreenEnabled || document.msFullscreenEnabled;
+	var _getFsEnabled = function(myDoc){
+		return myDoc.fullscreenEnabled || myDoc.mozFullScreenEnabled || myDoc.webkitFullscreenEnabled || myDoc.msFullscreenEnabled;
 	};
 
-	var _launchFullscreenForElement = function(element){
+	var _getFSDocumentTarget = function(){
+		return (V.Status.getContainerType()=="OBJECT" ? window.parent.document : document);
+	};
+
+	var _getFSElementTarget = function(){
+		return (V.Status.getContainerType()=="OBJECT" ? V.Status.getContainer().parentElement : document.documentElement);
+	};
+
+	var _launchFullscreenForElement = function(myDoc,element){
 		if(element.requestFullscreen) {
 			element.requestFullscreen();
 		} else if(element.mozRequestFullScreen) {
@@ -198,7 +242,7 @@ VISH.FullScreen = (function(V,$,undefined){
 		} else if(element.webkitRequestFullscreen) {
 			element.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
 			setTimeout(function(){
-				if (!document.webkitCurrentFullScreenElement){
+				if (!myDoc.webkitCurrentFullScreenElement){
 					// Element.ALLOW_KEYBOARD_INPUT does not work, document is not in full screen mode
 					//Fix known Safari bug
 					element.webkitRequestFullScreen();
@@ -207,10 +251,6 @@ VISH.FullScreen = (function(V,$,undefined){
 		} else if(element.msRequestFullscreen) {
 			element.msRequestFullscreen();
 		}
-	};
-
-	var _cancelFullscreen = function() {
-		_cancelFullscreenForElement(document)
 	};
 
 	var _cancelFullscreenForElement = function(elem) {
