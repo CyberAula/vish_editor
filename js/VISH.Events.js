@@ -128,10 +128,12 @@ VISH.Events = (function(V,$,undefined){
 			//Browser is not in fullscreen.
 			if((typeof fsParams.lastFSElement != "undefined")&&(fsParams.lastFSElement != fsParams.fsElementTarget)&&((new Date() - fsParams.lastFSTimestamp)<1000)){
 				//Another element has left from FS
-				//Try to prevent Chrome bug
 				if($("body").is(":-webkit-full-screen-ancestor")){
-					// do something to fix Chrome bug...
-					return;
+					//Another element has left from FS in Chrome in a non appropriate way
+					//Try to prevent/fix Chrome bug
+					if(fsParams.lastFSElement.tagName === "IFRAME"){
+						$(fsParams.lastFSElement).attr("src",$(fsParams.lastFSElement).attr("src"));
+					}
 				}
 			}
 		} else {
