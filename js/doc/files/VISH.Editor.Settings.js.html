@@ -809,24 +809,18 @@ VISH.Editor.Settings = (function(V,$,undefined){
  			}
  			$(&quot;#catalog_tags :selected&quot;).removeAttr(&quot;selected&quot;);
 	 	}
-
 	 	$(&quot;#catalog_content&quot;).fadeOut();
-
-	 	
 	 };
 
 	 /**
 	 *	Function to beautify upload behaviour
 	 */
-	 var onUploadFileAttachment = function(event){
+	 var onChangeAttachmentFile = function(event){
 	 	var file_name = document.getElementById(&quot;attachment_file&quot;).value;
-	 	var id;
+	 	var id = &quot;&quot;;
 	 	try{
-	 		var id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
-	 	} catch(e){
-	 	
-	 		id = &quot;&quot;;
-	 	}
+	 		id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
+	 	} catch(e){}
 	 	
 	 	if (id == &quot;&quot; &amp;&amp; window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
 		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
@@ -846,13 +840,12 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 /**
 	 *	Function to handle uploading an attachment behaviour
 	 **/
-	 var onUploadingFileAttachment = function(event){
+	 var onUploadAttachmentFile = function(event){
 	 	var file_name = document.getElementById(&quot;attachment_file&quot;).value;
 	 	var id;
 	 	try{
 	 		var id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
 	 	} catch(e){
-	 	
 	 		id = &quot;&quot;;
 	 	}
 	 	
@@ -876,7 +869,6 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		 				$(&quot;#upload_icon_success&quot;).show();
 		 				$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
 		 				V.Editor.Tools.save();
-
 					}
 				},
 				error: function(error){
@@ -910,8 +902,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
-		onUploadFileAttachment					: onUploadFileAttachment,
-		onUploadingFileAttachment				: onUploadingFileAttachment,
+		onChangeAttachmentFile					: onChangeAttachmentFile,
+		onUploadAttachmentFile					: onUploadAttachmentFile,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,

@@ -785,12 +785,15 @@ VISH.Editor = (function(V,$,undefined){
 							lastStoredPresentationStringify = jsonPresentation;
 							if((createNewPresentation)&&(typeof data != "undefined")&&(data.uploadPath)){
 								//Update V.UploadPresentationPath because the presentation exists now
-								//Future saves will update the existing presentation
+								//Future savings will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
 								if(V.Status.getDevice().features.historypushState){
 									if(data.editPath){
 										window.top.history.replaceState("","",data.editPath);
 									}
+								}
+								if(data.id){
+									V.PresentationId = data.id;
 								}
 							}
 							if(order=="publish"){
@@ -833,24 +836,25 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 	};
+
+	var getPresentationId = function(){
+		if(typeof V.PresentationId != "undefined"){
+			return V.PresentationId;
+		}
+
+		var draftPresentation = V.Editor.getDraftPresentation();
+		if((typeof draftPresentation != "undefined")&&(typeof draftPresentation["vishMetadata"] != "undefined")&&(typeof draftPresentation["vishMetadata"]["id"] != "undefined")){
+			V.PresentationId = draftPresentation["vishMetadata"]["id"];
+		}
+		return V.PresentationId;
+	};
 	
 	//////////////////
 	///  Notify Teacher
 	//////////////////
 
 	var notify_teacher = function(){
-		//get Id
-		var id;
-	 	try{
-	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-	 	} catch(e){
-	 	
-	 		id = "";
-	 	}
-	 	
-	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
-		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
-	 	}
+		var id = getPresentationId();
 
 		var data = {
 			"authenticity_token" : V.User.getToken(),
@@ -1026,6 +1030,7 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentContainer		: setCurrentContainer,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
+		getPresentationId		: getPresentationId,
 		isPresentationDraft		: isPresentationDraft,
 		hasBeenPublished		: hasBeenPublished,
 		hasBeenSaved			: hasBeenSaved,

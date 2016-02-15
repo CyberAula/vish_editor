@@ -695,8 +695,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	}
 	 };
 
-	 /**
-	 * function called when the user clicks on the done button in the metadata options panel
+	/**
+	 * Function called when the user clicks on the done button in the metadata options panel
 	 */
 	 var onDoneMetadataButtonClicked = function(event){
 	 	event.preventDefault();
@@ -705,8 +705,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 	$(".help_in_settings").attr("id","help_in_settings"); 
 	 };
 
-	 /**
-	 * function called when the user clicks on the metadata options button
+	/**
+	 * Function called when the user clicks on the catalog button
 	 */
 	 var onCatalogButtonClicked = function(event){
 	 	event.preventDefault();
@@ -714,12 +714,11 @@ VISH.Editor.Settings = (function(V,$,undefined){
 	 };
 
 
-	 /**
-	 * function called when the user clicks on the done button in the metadata options panel
+	/**
+	 * Function called when the user clicks on the done button in the catalog panel
 	 */
-	 var onDoneCatalogButtonClicked = function(event){
+	var onDoneCatalogButtonClicked = function(event){
 	 	event.preventDefault();
-	 	
 	 	var catalog_tags = $("#catalog_tags").find(":selected");
 	 	if (catalog_tags.length > 0){
  			for( i = 0; i < catalog_tags.length; i ++){
@@ -727,99 +726,74 @@ VISH.Editor.Settings = (function(V,$,undefined){
  			}
  			$("#catalog_tags :selected").removeAttr("selected");
 	 	}
-
 	 	$("#catalog_content").fadeOut();
-
-	 	
 	 };
 
-	 /**
+	/**
 	 *	Function to beautify upload behaviour
 	 */
-	 var onUploadFileAttachment = function(event){
-	 	var file_name = document.getElementById("attachment_file").value;
-	 	var id;
-	 	try{
-	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-	 	} catch(e){
-	 	
-	 		id = "";
-	 	}
-	 	
-	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
-		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
-	 	}
-
-	 	if( file_name != "" && id != "" ){
-    		document.getElementById("description_attachment").value = V.Editor.Utils.filterFilePath(file_name);
-	 		$('#upload_file_attachment').prop('disabled', false);
-	 		$("#upload_icon_success").hide();
-	 	} else {
-	 		$("#upload_icon_success").hide();
-	 		document.getElementById("attachment_file").value = "";
-	 		V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadHasToSaveFirst"));
-	 	}
-	 };
-
-	 /**
-	 *	Function to handle uploading an attachment behaviour
-	 **/
-	 var onUploadingFileAttachment = function(event){
-	 	var file_name = document.getElementById("attachment_file").value;
-	 	var id;
-	 	try{
-	 		var id = V.Editor.getDraftPresentation()["vishMetadata"]["id"];
-	 	} catch(e){
-	 	
-	 		id = "";
-	 	}
-	 	
-	 	if (id == "" && window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
-		 	var id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
-	 	}
-	 	if(file_name != "" && id != ""){
-		 	var attachment_url = "/excursions/"+ id + "/upload_attachment";
-		 	$("#attachment_file_form").attr("action", attachment_url);
-		 	$("#attachment_author").val(V.User.getId());
-		 	$("#attachment_aut_token").val(V.User.getToken());
-		 	$("#attachment_file_form").ajaxForm({ 
-		 		success: function(responseText, statusText, xhr, form) {
-		 			if(responseText.status == "bad_request" && responseText.message == "bad_size"){
-		 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorTooBig"));
-		 				$('#upload_file_attachment').prop('disabled', true);
-		 			}else if(responseText.status == "bad_request" && responseText.message == "wrong_params"){
-		 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
-		 				$('#upload_file_attachment').prop('disabled', true);
-		 			} else if (responseText.status == "ok" && responseText.message == "success") {
-		 				$("#upload_icon_success").show();
-		 				$('#upload_file_attachment').prop('disabled', true);
-		 				V.Editor.Tools.save();
-
-					}
-				},
-				error: function(error){
-					V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
-				}
-			}); 
-		} else {
-			if(id == ""){
-				event.preventDefault();
-				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadHasToSaveFirst"));
-			} else {
-				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));
+	var onChangeAttachmentFile = function(event){
+		$("#upload_icon_success").hide();
+		if(V.Editor.hasBeenSaved()){
+			var fileName = document.getElementById("attachment_file").value;
+			if(fileName != ""){
+				document.getElementById("description_attachment").value = V.Editor.Utils.filterFilePath(fileName);
+				$('#upload_file_attachment').prop('disabled', false);
 			}
+		} else {
+			V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadHasToSaveFirst"));
 		}
 	 };
 
-	 /*
-	  * Contributors Management
-	  */
+	/**
+	 *	Function to handle uploading an attachment behaviour
+	 **/
+	var onUploadAttachmentFile = function(event){
+		if(V.Editor.hasBeenSaved()){
+			var fileName = document.getElementById("attachment_file").value;
+			if(fileName != ""){
+				var attachment_url = "/excursions/"+ V.Editor.getPresentationId() + "/upload_attachment";
+				$("#attachment_file_form").attr("action", attachment_url);
+				$("#attachment_author").val(V.User.getId());
+				$("#attachment_aut_token").val(V.User.getToken());
+				$("#attachment_file_form").ajaxForm({
+					success: function(responseText, statusText, xhr, form) {
+						if(responseText.status == "bad_request" && responseText.message == "bad_size"){
+							V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorTooBig"));
+							$('#upload_file_attachment').prop('disabled', true);
+						}else if(responseText.status == "bad_request" && responseText.message == "wrong_params"){
+							V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
+							$('#upload_file_attachment').prop('disabled', true);
+						} else if (responseText.status == "ok" && responseText.message == "success") {
+							$("#upload_icon_success").show();
+							$('#upload_file_attachment').prop('disabled', true);
+							V.Editor.Tools.save();
+						}
+					},
+					error: function(error){
+						V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
+					}
+				});
+			} else {
+				event.preventDefault();
+				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));
+			}
+		} else {
+			event.preventDefault();
+			V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadHasToSaveFirst"));
+		}
+	};
 
-	 var addContributor = function(contributor){
-	 	if((typeof contributor == "object")&&(typeof contributor.name == "string")){
-	 		_contributors.push(contributor);
-	 	}
-	 };
+
+	/*
+	 * Contributors Management
+	 */
+
+	var addContributor = function(contributor){
+		if((typeof contributor == "object")&&(typeof contributor.name == "string")){
+			_contributors.push(contributor);
+		}
+	};
 
 
 	return {
@@ -828,8 +802,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		loadPresentationSettings				: loadPresentationSettings,
 		onChangeThumbnailClicked				: onChangeThumbnailClicked,
 		onThumbnailSelected						: onThumbnailSelected,
-		onUploadFileAttachment					: onUploadFileAttachment,
-		onUploadingFileAttachment				: onUploadingFileAttachment,
+		onChangeAttachmentFile					: onChangeAttachmentFile,
+		onUploadAttachmentFile					: onUploadAttachmentFile,
 		selectTheme								: selectTheme,
 		onKeyUpOnTitle							: onKeyUpOnTitle,
 		onKeyUpOnPreviewTitle					: onKeyUpOnPreviewTitle,

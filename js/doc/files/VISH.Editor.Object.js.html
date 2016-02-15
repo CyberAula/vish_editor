@@ -747,7 +747,8 @@ VISH.Editor.Object = (function(V,$,undefined){
 			if(oSettings.wappAPI_supported!==true){
 				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox,wappScorePointsDOM],false);
 			} else {
-				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox,wappScorePointsDOM],true);
+				V.Editor.Utils.enableElementSettingsField([wappAPICheckbox,wappScoreCheckbox],true);
+				V.Editor.Utils.enableElementSettingsField(wappScorePointsDOM,wappScore);
 			}
 
 		} else {

@@ -766,13 +766,13 @@
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 736,
+            "line": 733,
             "description": "Function to beautify upload behaviour",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 764,
+            "line": 758,
             "description": "Function to handle uploading an attachment behaviour",
             "class": "VISH.Editor"
         },
@@ -2041,11 +2041,11 @@
         },
         {
             "message": "Missing item type\nFunction to beautify upload behaviour",
-            "line": " VISH.Editor.Settings.js:736"
+            "line": " VISH.Editor.Settings.js:733"
         },
         {
             "message": "Missing item type\nFunction to handle uploading an attachment behaviour",
-            "line": " VISH.Editor.Settings.js:764"
+            "line": " VISH.Editor.Settings.js:758"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
