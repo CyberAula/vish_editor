@@ -749,30 +749,30 @@
         {
             "file": "VISH.Editor.Settings.js",
             "line": 698,
-            "description": "function called when the user clicks on the done button in the metadata options panel",
+            "description": "Function called when the user clicks on the done button in the metadata options panel",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
             "line": 708,
-            "description": "function called when the user clicks on the metadata options button",
+            "description": "Function called when the user clicks on the catalog button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
             "line": 717,
-            "description": "function called when the user clicks on the done button in the metadata options panel",
+            "description": "Function called when the user clicks on the done button in the catalog panel",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 733,
+            "line": 732,
             "description": "Function to beautify upload behaviour",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 758,
+            "line": 748,
             "description": "Function to handle uploading an attachment behaviour",
             "class": "VISH.Editor"
         },
@@ -938,7 +938,7 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 886,
+            "line": 890,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -2028,24 +2028,24 @@
             "line": " VISH.Editor.Settings.js:685"
         },
         {
-            "message": "Missing item type\nfunction called when the user clicks on the done button in the metadata options panel",
+            "message": "Missing item type\nFunction called when the user clicks on the done button in the metadata options panel",
             "line": " VISH.Editor.Settings.js:698"
         },
         {
-            "message": "Missing item type\nfunction called when the user clicks on the metadata options button",
+            "message": "Missing item type\nFunction called when the user clicks on the catalog button",
             "line": " VISH.Editor.Settings.js:708"
         },
         {
-            "message": "Missing item type\nfunction called when the user clicks on the done button in the metadata options panel",
+            "message": "Missing item type\nFunction called when the user clicks on the done button in the catalog panel",
             "line": " VISH.Editor.Settings.js:717"
         },
         {
             "message": "Missing item type\nFunction to beautify upload behaviour",
-            "line": " VISH.Editor.Settings.js:733"
+            "line": " VISH.Editor.Settings.js:732"
         },
         {
             "message": "Missing item type\nFunction to handle uploading an attachment behaviour",
-            "line": " VISH.Editor.Settings.js:758"
+            "line": " VISH.Editor.Settings.js:748"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",
@@ -2133,7 +2133,7 @@
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:886"
+            "line": " VISH.Editor.js:890"
         },
         {
             "message": "Missing item type\nFunction to add the events to the help buttons to launch joy ride bubbles",

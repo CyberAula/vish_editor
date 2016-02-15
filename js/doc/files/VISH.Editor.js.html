@@ -867,12 +867,15 @@ VISH.Editor = (function(V,$,undefined){
 							lastStoredPresentationStringify = jsonPresentation;
 							if((createNewPresentation)&amp;&amp;(typeof data != &quot;undefined&quot;)&amp;&amp;(data.uploadPath)){
 								//Update V.UploadPresentationPath because the presentation exists now
-								//Future saves will update the existing presentation
+								//Future savings will update the existing presentation
 								V.UploadPresentationPath = data.uploadPath;
 								if(V.Status.getDevice().features.historypushState){
 									if(data.editPath){
 										window.top.history.replaceState(&quot;&quot;,&quot;&quot;,data.editPath);
 									}
+								}
+								if(data.id){
+									V.PresentationId = data.id;
 								}
 							}
 							if(order==&quot;publish&quot;){
@@ -915,24 +918,25 @@ VISH.Editor = (function(V,$,undefined){
 				break;
 		}
 	};
+
+	var getPresentationId = function(){
+		if(typeof V.PresentationId != &quot;undefined&quot;){
+			return V.PresentationId;
+		}
+
+		var draftPresentation = V.Editor.getDraftPresentation();
+		if((typeof draftPresentation != &quot;undefined&quot;)&amp;&amp;(typeof draftPresentation[&quot;vishMetadata&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof draftPresentation[&quot;vishMetadata&quot;][&quot;id&quot;] != &quot;undefined&quot;)){
+			V.PresentationId = draftPresentation[&quot;vishMetadata&quot;][&quot;id&quot;];
+		}
+		return V.PresentationId;
+	};
 	
 	//////////////////
 	///  Notify Teacher
 	//////////////////
 
 	var notify_teacher = function(){
-		//get Id
-		var id;
-	 	try{
-	 		var id = V.Editor.getDraftPresentation()[&quot;vishMetadata&quot;][&quot;id&quot;];
-	 	} catch(e){
-	 	
-	 		id = &quot;&quot;;
-	 	}
-	 	
-	 	if (id == &quot;&quot; &amp;&amp; window.parent.document.location.pathname.match(/excursions.(\d+)/) != null){
-		 	id = window.parent.document.location.pathname.match(/excursions.(\d+)/)[1];
-	 	}
+		var id = getPresentationId();
 
 		var data = {
 			&quot;authenticity_token&quot; : V.User.getToken(),
@@ -1108,6 +1112,7 @@ VISH.Editor = (function(V,$,undefined){
 		setCurrentContainer		: setCurrentContainer,
 		getPresentationType		: getPresentationType,
 		getDraftPresentation	: getDraftPresentation,
+		getPresentationId		: getPresentationId,
 		isPresentationDraft		: isPresentationDraft,
 		hasBeenPublished		: hasBeenPublished,
 		hasBeenSaved			: hasBeenSaved,
