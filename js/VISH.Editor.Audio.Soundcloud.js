@@ -32,7 +32,7 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 		_prepareRequest();
 		_searchInSoundcloud(text);
 	};
-
+	
 	var _prepareRequest = function(){
 		_cleanCarrousel();
 		_cleanAudioPreview();

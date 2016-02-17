@@ -628,7 +628,7 @@
         },
         {
             "file": "VISH.Editor.Image.js",
-            "line": 181,
+            "line": 182,
             "description": "Function to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -945,7 +945,7 @@
         },
         {
             "file": "VISH.Events.js",
-            "line": 153,
+            "line": 156,
             "description": "Function to add the events to the help buttons to launch joy ride bubbles",
             "class": "",
             "namespace": "VISH"
@@ -1694,21 +1694,21 @@
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 140,
+            "line": 143,
             "description": "Function to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 227,
+            "line": 230,
             "description": "Function to adapt the slides to the screen size",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.ViewerAdapter.js",
-            "line": 384,
+            "line": 387,
             "description": "Fancybox resizing. If a fancybox is opened, resize it",
             "class": "",
             "namespace": "VISH"
@@ -1949,7 +1949,7 @@
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Image.js:181"
+            "line": " VISH.Editor.Image.js:182"
         },
         {
             "message": "Missing item type\nfunction to call to LRE and request images\nsuccessCallback: function to pass the results if everything goes well.\nfailCallback: function to pass the error if something fails. Format: {\"error\":\"cnf cannot be null!\"}",
@@ -2137,7 +2137,7 @@
         },
         {
             "message": "Missing item type\nFunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Events.js:153"
+            "line": " VISH.Events.js:156"
         },
         {
             "message": "Missing item type\nFunction to do the language translation",
@@ -2413,15 +2413,15 @@
         },
         {
             "message": "Missing item type\nFunction to hide/show the page-switchers buttons and arrows\nhide the left one if on first slide\nhide the right one if on last slide -> always show it, it will show the recommendations if on last slide\nshow both otherwise",
-            "line": " VISH.ViewerAdapter.js:140"
+            "line": " VISH.ViewerAdapter.js:143"
         },
         {
             "message": "Missing item type\nFunction to adapt the slides to the screen size",
-            "line": " VISH.ViewerAdapter.js:227"
+            "line": " VISH.ViewerAdapter.js:230"
         },
         {
             "message": "Missing item type\nFancybox resizing. If a fancybox is opened, resize it",
-            "line": " VISH.ViewerAdapter.js:384"
+            "line": " VISH.ViewerAdapter.js:387"
         }
     ]
 }

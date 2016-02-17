@@ -186,6 +186,9 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		if((V.Status.isExternalSite())&amp;&amp;(!V.Status.isPreviewInsertMode())){
 			if((options)&amp;&amp;(typeof options.watermarkURL == &quot;string&quot;)){
 				$(&quot;#embedWatermark&quot;).parent().attr(&quot;href&quot;,options.watermarkURL);
+				if(typeof options.watermarkIcon == &quot;string&quot;){
+					$(&quot;#embedWatermark&quot;).css(&quot;background-image&quot;,&quot;url(&#x27;&quot; + V.ImagesPath + &quot;vicons/watermark_&quot; + options.watermarkIcon + &quot;.png&#x27;)&quot;);
+				}
 				$(&quot;#embedWatermark&quot;).show();
 			}
 		}

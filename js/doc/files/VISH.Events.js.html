@@ -207,17 +207,20 @@ VISH.Events = (function(V,$,undefined){
 		var fsParams = V.FullScreen.getFSParams();
 
 		if(typeof fsParams.currentFSElement == &quot;undefined&quot;){
-			//Browser is not in fullscreen
-			if((typeof fsParams.lastFSElement != &quot;undefined&quot;)&amp;&amp;(fsParams.lastFSElement != document.documentElement)&amp;&amp;((new Date() - fsParams.lastFSTimestamp)&lt;1000)){
-				//Try to prevent Chrome bug
+			//Browser is not in fullscreen.
+			if((typeof fsParams.lastFSElement != &quot;undefined&quot;)&amp;&amp;(fsParams.lastFSElement != fsParams.fsElementTarget)&amp;&amp;((new Date() - fsParams.lastFSTimestamp)&lt;1000)){
+				//Another element has left from FS
 				if($(&quot;body&quot;).is(&quot;:-webkit-full-screen-ancestor&quot;)){
-					// do something to fix Chrome bug...
-					return;
+					//Another element has left from FS in Chrome in a non appropriate way
+					//Try to prevent/fix Chrome bug
+					if(fsParams.lastFSElement.tagName === &quot;IFRAME&quot;){
+						$(fsParams.lastFSElement).attr(&quot;src&quot;,$(fsParams.lastFSElement).attr(&quot;src&quot;));
+					}
 				}
 			}
 		} else {
 			//Browser is in fullscreen
-			if((typeof fsParams.currentFSElement != &quot;undefined&quot;)&amp;&amp;(fsParams.currentFSElement != document.documentElement)){
+			if((typeof fsParams.currentFSElement != &quot;undefined&quot;)&amp;&amp;(fsParams.currentFSElement != fsParams.fsElementTarget)){
 				//Another element is in fs now.
 				return;
 			}

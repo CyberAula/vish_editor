@@ -1,12 +1,12 @@
-VISH.Editor.Image.Flikr = (function(V,$,undefined){
+VISH.Editor.Image.Flickr = (function(V,$,undefined){
 	
-	var containerDivId = "tab_pic_flikr_content";
-	var carrouselDivId = "tab_pic_flikr_content_carrousel";
+	var containerDivId = "tab_pic_flickr_content";
+	var carrouselDivId = "tab_pic_flickr_content_carrousel";
 	var myInput;
 	var timestampLastSearch;
 	
 	var init = function(){
-		myInput = $("#tab_pic_flikr_content").find("input[type='search']");
+		myInput = $("#tab_pic_flickr_content").find("input[type='search']");
 		$(myInput).vewatermark(V.I18n.getTrans("i.SearchContent"));
 		$(myInput).keydown(function(event){
 			if(event.keyCode == 13) {
@@ -49,8 +49,8 @@ VISH.Editor.Image.Flikr = (function(V,$,undefined){
 	}
 
 	var _searchInFlickr = function(text){
-		var url_flikr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
-		$.getJSON(url_flikr, function(data){
+		var url_flickr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
+		$.getJSON(url_flickr, function(data){
 			_onDataReceived(data);
 		}).error(function(){
 			_onAPIError();

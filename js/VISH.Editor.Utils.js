@@ -372,7 +372,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				V.Editor.Image.Repository.beforeLoadTab();
 				break;
 			case "tab_pic_flikr":
-				V.Editor.Image.Flikr.beforeLoadTab();
+				V.Editor.Image.Flickr.beforeLoadTab();
+				break;
+			case "tab_pic_europeana":
+				V.Editor.Image.Europeana.beforeLoadTab();
 				break;
 			case "tab_pic_lre":
 				V.Editor.Image.LRE.beforeLoadTab();
@@ -440,7 +443,10 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				V.Editor.Image.Repository.onLoadTab();
 				break;
 			case "tab_pic_flikr":
-				V.Editor.Image.Flikr.onLoadTab();
+				V.Editor.Image.Flickr.onLoadTab();
+				break;
+			case "tab_pic_europeana":
+				V.Editor.Image.Europeana.onLoadTab();
 				break;
 			case "tab_pic_lre":
 				V.Editor.Image.LRE.onLoadTab();

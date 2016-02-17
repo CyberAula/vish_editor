@@ -448,7 +448,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;help_rte_selection_help&#x27;, &#x27;bottom&#x27;);
 		});
 
-		//Help inserting images [URL, Upload, ViSH, Flickr, LRE]
+		//Help inserting images [URL, Upload, ViSH, Flickr, Europeana, LRE]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_from_url_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;images_fancy_tabs_id_help&#x27;, &#x27;top&#x27;);
 		});	
@@ -460,6 +460,9 @@ VISH.Editor.Events = (function(V,$,undefined){
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_flikr_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;search_flickr_fancy_help&#x27;, &#x27;bottom&#x27;);
+		});
+		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_europeana_help&#x27;, function(){
+			V.Tour.startTourWithId(&#x27;search_europeana_fancy_help&#x27;, &#x27;bottom&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_pic_lre_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;search_lre_fancy_help&#x27;, &#x27;bottom&#x27;);
