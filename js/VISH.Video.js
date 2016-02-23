@@ -147,14 +147,33 @@ VISH.Video = (function(V,$,undefined){
 				var videoId = $(video).attr("id");
 				var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
 				var ytStatus = ytplayer.getPlayerState();
-				var videoUnstarted = (ytStatus==-1);
-				// var videoPlaying = (ytStatus==1);
-				// var videoPaused = (ytStatus==2);
-				
+				// ytStatus	(https://developers.google.com/youtube/js_api_reference?hl=en)				
+				// -1 – unstarted
+				// 0 – ended
+				// 1 – playing
+				// 2 – paused
+				// 3 – buffering
+				// 5 – video cued
+
 				ytplayer.seekTo(seekTime);
 
-				if(videoUnstarted){
-					ytplayer.pauseVideo();
+				switch(ytStatus){
+					case -1:
+						ytplayer.pauseVideo();
+						break;
+					case 0:
+					case 1:
+					case 2:
+						break;
+					default:
+						/*straightfoward workaround to stop videos*/
+						ytplayer.addEventListener("onStateChange",function(event){
+							ytplayer.removeEventListener("onStateChange");
+							if(event.data===-1){
+								ytplayer.pauseVideo();
+							}
+						});
+						break;
 				}
 
 				//Notify time update
@@ -238,32 +257,6 @@ VISH.Video = (function(V,$,undefined){
 						//Start timer
 						youtubePlayerTimeUpdate[videoId].timer = _createYouTubeTimer(video,ytplayer,timeUpdateCallback);
 					}
-					
-					/*straightfoward workaround to stop videos*/
-					try{
-						var videoId = $(video).attr("id");
-						var ytplayer = V.Video.Youtube.getYouTubePlayer(videoId);
-						
-						ytplayer.addEventListener("onStateChange",function(event){
-							if(event.data == 3 && $.yt_last_event != undefined && $.yt_last_event == -1 && ytplayer.getCurrentTime() != 0){
-								$.yt_last_event = null;
-								$.yt_last_event_counter = 1;
-								var id_video = event.target.getIframe().id;
-								ytplayer = V.Video.Youtube.getYouTubePlayer(id_video);
-								ytplayer.pauseVideo();
-								ytplayer.removeEventListener("onStateChange");
-							}
-							if(event.data == -1 && $.yt_last_event_counter != 1){
-								$.yt_last_event = event.data;
-							}
-							if(event.data == -1 && $.yt_last_event_counter == 1){
-								$.yt_last_event_counter = null;
-							}
-
-						});
-						}
-						catch(e){}
-					
 				};
 				break;
 			default:
