@@ -9,8 +9,8 @@ VISH.SCORM.API = (function(V,$,undefined){
 	var connected;
 
 	//Vars
-	var COMPLETION_THRESHOLD = 0.9;
-	var COMPLETION_ATTEMPT_THRESHOLD = 0.1;
+	var COMPLETION_THRESHOLD = 0; //Force attempt completion!
+	var COMPLETION_ATTEMPT_THRESHOLD = 0;
 	var SCORE_THRESHOLD = 0.5;
 
 	var hasScore = false;
@@ -84,6 +84,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 	};
 
 	var _updateCompletionStatus = function(progressMeasure){
+		if(typeof progressMeasure != "number"){
+			progressMeasure = 0;
+		}
+
 		var completionStatus;
 
 		if(progressMeasure >= COMPLETION_THRESHOLD){
@@ -822,6 +826,12 @@ VISH.SCORM.API = (function(V,$,undefined){
 	                case "cmi.location":
 	                    nn = "cmi.core.lesson_location";
 	                    break;
+	                case "cmi.learner_name":
+	                    nn = "cmi.core.student_name";
+	                    break;
+	                case "cmi.learner_id":
+	                	nn = "cmi.core.student_id";
+	                	break;
 	                case "cmi.completion_threshold":
 	                    // unsupported
 	                    ig = true;
