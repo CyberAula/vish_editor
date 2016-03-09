@@ -614,6 +614,11 @@ div#tab_quiz_session_results {
 	bottom: 0;
 	right: 0;
 	margin-bottom: 2%;
+	cursor: pointer;
+}
+
+.button.quizStopButton:hover {
+	color: white;
 }
 
 /***** Fancybox tabs (for quizzes) ****************/

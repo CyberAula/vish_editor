@@ -91,13 +91,13 @@ VISH.Constant.QZ_TYPE.SORTING = &quot;sorting&quot;;
 
 VISH.QuizCharts = (function(V,$,undefined){
   
+  	//Colors
 	var pieBackgroundColor = [&quot;#F38630&quot;,&quot;#E0E4CC&quot;,&quot;#69D2E7&quot;,&quot;#FFF82A&quot;,&quot;#FF0FB4&quot;,&quot;#2A31FF&quot;,&quot;#FF6075&quot;,&quot;#00D043&quot;];
 	var pieLetterColor = [&quot;#000&quot;];
 
 	//Translations
-	var language = &quot;en&quot;;
-	var i18n = 
-		{ &quot;es&quot;:
+	var i18n = {
+		&quot;es&quot;:
 			{
 				&quot;i.T&quot;			: &quot;V&quot;,
 				&quot;i.F&quot;			: &quot;F&quot;,
@@ -106,7 +106,7 @@ VISH.QuizCharts = (function(V,$,undefined){
 				&quot;i.Responses&quot;	: &quot;Respuestas&quot;,
 				&quot;i.WaitingResponses&quot;	: &quot;Esperando respuestas...&quot;
 			},
-		  &quot;default&quot;:
+		 &quot;en&quot;:
 			{
 				&quot;i.T&quot;			: &quot;T&quot;,
 				&quot;i.F&quot;			: &quot;F&quot;,
@@ -115,30 +115,48 @@ VISH.QuizCharts = (function(V,$,undefined){
 				&quot;i.Responses&quot;	: &quot;Responses&quot;,
 				&quot;i.WaitingResponses&quot;	: &quot;Waiting for responses...&quot;
 			}
-		};
+	};
 
-	var translations = i18n[&quot;default&quot;];
+	//Vars
+	var DEFAULT_LANGUAGE = &quot;en&quot;;
+	var language;
+	var translations;
 
-	var init = function(options){
-		if((options)&amp;&amp;(options.lang)){
-			language = options.lang;
+
+	var init = function(lang){
+
+		//Get language
+		//1. Language specified by options
+		if(_isValidLocale(lang)){
+			language = lang;
+		} else {
+			//2. Browser language
+			var browserLang = (navigator.language || navigator.userLanguage);
+			if(_isValidLocale(browserLang)){
+				language = browserLang;
+			} else {
+				//3. Default language
+				language = DEFAULT_LANGUAGE;
+			}
 		}
 
-		if(i18n[language]){
-			translations = i18n[language];
-		}
+		translations = i18n[language];
 
 		_insertCss(&quot;div.openQuizAnswersListWrapper{ overflow: auto; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box; padding: 15px;} ul.openQuizAnswersList{ padding: 0px; list-style: none; } ul.openQuizAnswersList li { font-family: &#x27;Open Sans&#x27;, arial, sans-serif; position: relative; font-style: italic; border-bottom: 1px solid #D7EEFF; padding: 3% 6% 2% 6%; font-size: 1.2rem; } ul.openQuizAnswersList li:first-child { padding-left: 10%; text-align: left; color: #838383; font-weight: bold; border-bottom: 1px solid #D8DAFF; padding-top: 0%; border-bottom: 1px solid #AFAFAF; font-style: normal; padding-bottom: 20px; font-size: 1.7rem; } ul.openQuizAnswersList li:last-child { -webkit-border-bottom-left-radius: 15px; -webkit-border-bottom-right-radius: 15px; -moz-border-radius-bottomleft: 15px; -moz-border-radius-bottomright: 15px; border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; }&quot;);
-		_insertCss(&quot;div.openQuizAnswerLeft{position: absolute; width: 5%; height: 70%; top: 15%; left: 3%; background-image: url(&#x27;&quot;+(VISH.ImagesPath||&quot;&quot;)+&quot;vicons/userAnswer.png&#x27;); background-position: center; background-size: contain; background-repeat: no-repeat;} div.openQuizAnswerRight{ margin-left: 5%; };&quot;);
+		_insertCss(&quot;div.openQuizAnswerLeft{position: absolute; width: 5%; height: 70%; top: 15%; left: 3%; background-image: url(&#x27;&quot;+(V.ImagesPath||&quot;&quot;)+&quot;vicons/userAnswer.png&#x27;); background-position: center; background-size: contain; background-repeat: no-repeat;} div.openQuizAnswerRight{ margin-left: 5%; };&quot;);
+	};
+
+	var _isValidLocale = function(locale){
+		return ((typeof locale == &quot;string&quot;)&amp;&amp;([&quot;en&quot;,&quot;es&quot;].indexOf(locale)!=-1));
 	};
 
 	var _getTrans = function(s,params){
-		if (translations[s]){
+		if (typeof translations[s] == &quot;string&quot;){
 			return _getTransWithParams(translations[s],params);
 		}
 		
-		//Search in default language
-		return _getTransWithParams(i18n[&quot;default&quot;][s],params);
+		//Default language
+		return _getTransWithParams(i18n[DEFAULT_LANGUAGE][s],params);
 	};
 
 	/*

@@ -499,7 +499,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 				options.width = 600;
 				options.height = 185;
 
-				if(format==&quot;scorm&quot;){
+				if(format.indexOf(&quot;scorm&quot;)!=-1){
+					//SCORM
 					options.text = V.I18n.getTrans(&quot;i.exportPresToSCORMerrorNotification&quot;);
 				} else {
 					//JSON
@@ -521,8 +522,12 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		_exportTo(&quot;json&quot;);
 	};
 
-	var exportToSCORM = function(){
-		_exportTo(&quot;scorm&quot;);
+	var exportToSCORM12 = function(){
+		_exportTo(&quot;scorm12&quot;);
+	};
+
+	var exportToSCORM2004 = function(){
+		_exportTo(&quot;scorm2004&quot;);
 	};
 
 	var displaySettings = function(){
@@ -551,7 +556,8 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		insertEFile						: insertEFile,
 		insertPresentation				: insertPresentation,
 		exportToJSON 					: exportToJSON,
-		exportToSCORM					: exportToSCORM,
+		exportToSCORM12					: exportToSCORM12,
+		exportToSCORM2004				: exportToSCORM2004,
 		displaySettings					: displaySettings,
 		onPublishButtonClicked			: onPublishButtonClicked,
 		onUnpublishButtonClicked		: onUnpublishButtonClicked,

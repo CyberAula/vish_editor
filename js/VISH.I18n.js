@@ -1,30 +1,63 @@
 VISH.I18n = (function(V,$,undefined){
 	
-	var translations;
-	var defaultTranslations;
-	var language;
+	var DEFAULT_ENV = "vish";
+	var DEFAULT_LANGUAGE = "en";
+
+	var _availableLocales;
+	var _language;
+	var _translations;
+	var _defaultTranslations;
+	
 
 	/**
-	 * Function to do the language translation
+	 * Init I18n module
 	 */
-	var init = function(lang){
-		// var initTime = new Date().getTime();
-
-		defaultTranslations = i18n["vish"]["default"];
+	var init = function(options, presentation){
+		_availableLocales = _getAvailableLocales();
 		
-		//Set lang specific translation
-		if(typeof lang != "undefined"){
-			language = lang;
+		//Get language
+		//1. Language specified by options
+		if(_isValidLocale(options.lang)){
+			_language = options.lang;
 		} else {
-			return;
-		}
-		
-		if(typeof(i18n["vish"][language])!='undefined'){
-			translations = i18n["vish"][language];
-		} else {
-			return;
+			//2. Browser language
+			var browserLang = (navigator.language || navigator.userLanguage);
+			if(_isValidLocale(browserLang)){
+				_language = browserLang;
+			} else {
+				//3. LO language
+				if((typeof presentation == "object")&&(_isValidLocale(presentation.language))){
+					_language = presentation.language;
+				} else {
+					//4. Default language
+					_language = DEFAULT_LANGUAGE;
+				}
+			}
 		}
 
+		_translations = i18n[DEFAULT_ENV][_language];
+		_defaultTranslations = i18n[DEFAULT_ENV][DEFAULT_LANGUAGE];
+	};
+
+	var _getAvailableLocales = function(){
+		if((typeof i18n != "object")||(typeof i18n[DEFAULT_ENV] != "object")){
+			return [];
+		}
+		return Object.keys(i18n[DEFAULT_ENV]);
+	};
+
+	var getAvailableLocales = function(){
+		if(_availableLocales instanceof Array) {
+			return _availableLocales;
+		}
+		return _getAvailableLocales();
+	};
+
+	var _isValidLocale = function(locale){
+		return ((typeof locale == "string")&&(getAvailableLocales().indexOf(locale)!=-1));
+	};
+
+	var translateUI = function(){
 		$("[i18n-key]").each(function(index, elem){
 			var translation = getTrans($(elem).attr("i18n-key"));
 			if(translation!=null){
@@ -60,9 +93,7 @@ VISH.I18n = (function(V,$,undefined){
 		});
 
 		// Translate images (if any)
-
-		// var duration = new Date().getTime() - initTime;
-		// V.Debugging.log("Internationalization took " + duration + " ms.");
+		// ...
 	};
 		
 	var _translateInput = function(input,translation){
@@ -72,7 +103,7 @@ VISH.I18n = (function(V,$,undefined){
 		if($(input).attr("placeholder")){
 			$(input).attr("placeholder", translation);
 		}
-	}
+	};
 
 	var _translateDiv = function(div,translation){
 		if($(div).attr("data-text") != undefined){
@@ -81,11 +112,11 @@ VISH.I18n = (function(V,$,undefined){
 		if($(div).attr("title") != undefined){
 			$(div).attr("title", translation);
 		}
-	}
+	};
 
 	var _translateTextArea = function(textArea,translation){
 		$(textArea).attr("placeholder", translation);
-	}
+	};
 
 	var _translateLI = function(li,translation){
 		if($(li).attr("data-text") != undefined){
@@ -93,32 +124,33 @@ VISH.I18n = (function(V,$,undefined){
 		} else {
 			_genericTranslate(li,translation);
 		}
-	}
+	};
 
 	var _translateImg = function(img,translation){
 		$(img).attr("src",V.ImagesPath + translation);
-	}
+	};
 
 	var _genericTranslate = function(elem,translation){
 		$(elem).text(translation);
-	}
+	};
 
 	/**
-	 * Function to translate a text
+	 * Function to translate a string
 	 */
 	var getTrans = function(s, params) {
-		if (typeof(translations)!= 'undefined' && translations[s]) {
-			return _getTrans(translations[s],params);
+		//First language
+		if((typeof _translations != "undefined")&&(typeof _translations[s] == "string")) {
+			return _getTrans(_translations[s],params);
 		}
-		// V.Debugging.log("Text without translation: " + s);
+		// V.Debugging.log("Text without translation: " + s + " for language " + _language);
 
-		//Search in default language
-		if (typeof(defaultTranslations)!= 'undefined' && defaultTranslations[s]) {
-			return _getTrans(defaultTranslations[s],params);
+		//Default language
+		if((_language != DEFAULT_LANGUAGE)&&(typeof _defaultTranslations != "undefined")&&(typeof _defaultTranslations[s] == "string")) {
+			return _getTrans(_defaultTranslations[s],params);
 		}
 		// V.Debugging.log("Text without default translation: " + s);
 
-		//Don't return s if s is a key.
+		//Don't return s if it is a key.
 		var key_pattern =/^i\./g;
 		if(key_pattern.exec(s)!=null){
 			return null;
@@ -145,19 +177,22 @@ VISH.I18n = (function(V,$,undefined){
 		};
 
 		return trans;
-	}
+	};
 
 	/**
 	 * Return the current language
 	 */
 	var getLanguage = function(){
-		return language;
-	}
+		return _language;
+	};
+
 
 	return {
-		init 			: init,
-		getTrans 		: getTrans,
-		getLanguage		: getLanguage
+		init 				: init,
+		getAvailableLocales : getAvailableLocales,
+		getLanguage			: getLanguage,
+		getTrans 			: getTrans,
+		translateUI 		: translateUI
 	};
 
 }) (VISH, jQuery);

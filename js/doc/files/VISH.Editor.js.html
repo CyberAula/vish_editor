@@ -151,7 +151,7 @@ VISH.Editor = (function(V,$,undefined){
 		_isDraft = _initPresentationDraft();
 
 		// V.Storage.setTestingMode(true);
-		
+		V.I18n.init(initOptions,presentation);
 		V.Utils.init();
 		V.Status.init(function(){
 			//Status loading finishes
@@ -165,8 +165,8 @@ VISH.Editor = (function(V,$,undefined){
 			return;
 		}
 
+		V.I18n.translateUI();
 		V.Utils.Loader.loadDeviceCSS();
-		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
 		V.Editor.ViewerAdapter.init();
 		V.Object.init();
@@ -185,7 +185,7 @@ VISH.Editor = (function(V,$,undefined){
 		V.User.init(options);
 		V.Video.init();
 		V.Audio.init();
-		V.Editor.LRE.init(options.lang);
+		V.Editor.LRE.init(V.I18n.getLanguage());
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 		V.SCORM.init();
 		V.Editor.Customization.init();

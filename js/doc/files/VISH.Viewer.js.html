@@ -96,23 +96,21 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Editing = false;
 		$(&quot;body&quot;).addClass(&quot;ViSHViewerBody&quot;);
 		
-		V.Debugging.init(options);
+		initOptions = (typeof options == &quot;object&quot;) ? options : {};
 
-		if(options){
-			initOptions = options;
-		} else {
-			initOptions = {};
-		}
+		V.Debugging.init(options);
 		
-		if((options)&amp;&amp;(options[&quot;configuration&quot;])&amp;&amp;(V.Configuration)){
-			V.Configuration.init(options[&quot;configuration&quot;]);
+		if((initOptions[&quot;configuration&quot;])&amp;&amp;(V.Configuration)){
+			V.Configuration.init(initOptions[&quot;configuration&quot;]);
 		}
 
 		if(V.Debugging.isDevelopping()){
-			if ((options[&quot;configuration&quot;][&quot;mode&quot;]===V.Constant.NOSERVER)&amp;&amp;(!presentation)&amp;&amp;(V.Debugging.getPresentationSamples()!==null)) {
+			if ((initOptions[&quot;configuration&quot;][&quot;mode&quot;]===V.Constant.NOSERVER)&amp;&amp;(!presentation)&amp;&amp;(V.Debugging.getPresentationSamples()!==null)){
 			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}
+
+		V.I18n.init(initOptions,presentation);
 
 		V.Debugging.log(&quot;\n\nViSH Viewer init with presentation:\n&quot;); 
 		V.Debugging.log(JSON.stringify(presentation));
@@ -137,8 +135,8 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Slideset.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();
+		V.I18n.translateUI();
 		V.Utils.Loader.loadDeviceCSS();
-		V.I18n.init(options.lang);
 		V.Utils.Loader.loadLanguageCSS();
 		V.User.init(options);
 		V.Storage.init();

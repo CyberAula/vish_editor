@@ -8,19 +8,13 @@ VISH.Debugging = (function(V,$,undefined){
 	var presentationOptions;
 
 	var init = function(options){
-		if(options){
-			if(typeof options["developping"] == "boolean"){
-				developping = options["developping"];
-
-				if(developping){
-					presentationOptions = options;
-					if(options["developmentSettings"]){
-						settings = options["developmentSettings"];
-					}
+		if((options)&&(typeof options["developping"] == "boolean")){
+			developping = options["developping"];
+			if(developping){
+				presentationOptions = options;
+				if(options["developmentSettings"]){
+					settings = options["developmentSettings"];
 				}
-			} else {
-				developping = false;
-				settings = null;
 			}
 		} else {
 			developping = false;

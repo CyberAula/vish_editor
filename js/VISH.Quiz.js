@@ -42,7 +42,7 @@ VISH.Quiz = (function(V,$,undefined){
 		V.Quiz.TF.init();
 		V.Quiz.Sorting.init();
 		V.Quiz.Open.init();
-		V.QuizCharts.init(V.Utils.getOptions());
+		V.QuizCharts.init(V.I18n.getLanguage());
 		_loadEvents();
 	};
 
