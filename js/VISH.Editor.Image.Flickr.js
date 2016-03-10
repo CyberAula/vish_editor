@@ -49,8 +49,9 @@ VISH.Editor.Image.Flickr = (function(V,$,undefined){
 	}
 
 	var _searchInFlickr = function(text){
-		var url_flickr = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
-		$.getJSON(url_flickr, function(data){
+		var flickrURL = "http://api.flickr.com/services/feeds/photos_public.gne?tags="+text+"&tagmode=any&format=json&jsoncallback=?";
+		flickrURL = V.Utils.checkUrlProtocol(flickrURL);
+		$.getJSON(flickrURL, function(data){
 			_onDataReceived(data);
 		}).error(function(){
 			_onAPIError();

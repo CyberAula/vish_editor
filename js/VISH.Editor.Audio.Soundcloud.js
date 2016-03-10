@@ -55,7 +55,9 @@ VISH.Editor.Audio.Soundcloud = (function(V,$,undefined){
 	};
 
 	var _searchInSoundcloud = function(text){
-		$.getJSON("http://api.soundcloud.com/tracks?callback=?",{
+		var urlSoundCloud = "http://api.soundcloud.com/tracks?callback=?";
+		urlSoundCloud = V.Utils.checkUrlProtocol(urlSoundCloud);
+		$.getJSON(urlSoundCloud,{
 			consumer_key: V.Configuration.getConfiguration()["SoundCloudAPIKEY"],
 			q: text,
 			format: "json"

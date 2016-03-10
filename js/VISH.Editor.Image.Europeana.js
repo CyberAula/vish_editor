@@ -52,9 +52,10 @@ VISH.Editor.Image.Europeana = (function(V,$,undefined){
 
 	var _searchInEuropeana = function(text){
 		var text = text || "*";
-		var url_europeana = "http://www.europeana.eu/api/v2/search.json?wskey=" + V.Configuration.getConfiguration()["EuropeanaAPIKEY"] + "&query=" + text + "&qf=TYPE:IMAGE&profile=RICH&media=true&rows=100&qf=IMAGE_SIZE:small&callback=VISH.Editor.Image.Europeana.onEuropeanaSearchCallback"
+		var urlEuropeana = "http://www.europeana.eu/api/v2/search.json?wskey=" + V.Configuration.getConfiguration()["EuropeanaAPIKEY"] + "&query=" + text + "&qf=TYPE:IMAGE&profile=RICH&media=true&rows=100&qf=IMAGE_SIZE:small&callback=VISH.Editor.Image.Europeana.onEuropeanaSearchCallback";
+		urlEuropeana = V.Utils.checkUrlProtocol(urlEuropeana);
 		$("#europeana_search_call").remove();
-		$("head").append('<script id="europeana_search_call" src="' + url_europeana + '"></script>');
+		$("head").append('<script id="europeana_search_call" src="' + urlEuropeana + '"></script>');
 	};
 
 	var onEuropeanaSearchCallback = function(data){

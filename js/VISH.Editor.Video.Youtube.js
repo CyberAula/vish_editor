@@ -59,8 +59,9 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _searchInYoutube = function(text){
-		var url_youtube = "https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults="+MAX_VIDEOS+"&q="+text+"&key="+ V.Configuration.getConfiguration()["YoutubeAPIKEY"] + "&videoEmbeddable=true&type=video";
-		$.getJSON(url_youtube, function(data){
+		var urlYoutube = "https://www.googleapis.com/youtube/v3/search?part=id,snippet&maxResults="+MAX_VIDEOS+"&q="+text+"&key="+ V.Configuration.getConfiguration()["YoutubeAPIKEY"] + "&videoEmbeddable=true&type=video";
+		urlYoutube = V.Utils.checkUrlProtocol(urlYoutube);
+		$.getJSON(urlYoutube, function(data){
 			_onDataReceived(data);
 		}).error(function(){
 			_onAPIError();
