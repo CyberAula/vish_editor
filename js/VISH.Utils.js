@@ -1422,6 +1422,32 @@ VISH.Utils = (function(V,undefined){
 		return z;
 	};
 
+	var checkUrlProtocol = function(url){
+		if(typeof url == "string"){
+			var protocolMatch = (url).match(/^https?:\/\//);
+			if((protocolMatch instanceof Array)&&(protocolMatch.length === 1)){
+				var urlProtocol = protocolMatch[0].replace(":\/\/","");
+				var documentProtocol = V.Status.getProtocol();
+				if(urlProtocol != documentProtocol){
+					switch(documentProtocol){
+						case "https":
+							//Try to load HTTP url over HTTPs
+							url = "https" + url.replace(urlProtocol,""); //replace first
+							break;
+						case "http":
+							//Try to load HTTPs url over HTTP
+							//Do nothing
+							break;
+						default:
+							//Document is not loaded over HTTP or HTTPs
+							break;
+					}
+				}
+			}
+		}
+		return url;
+	};
+
 
 	return {
 		init 					: init,
@@ -1463,6 +1489,7 @@ VISH.Utils = (function(V,undefined){
 		removeTempShown			: removeTempShown,
 		shuffle 				: shuffle,
 		purgeString				: purgeString,
+		checkUrlProtocol		: checkUrlProtocol,
 		getLevenshteinDistance	: getLevenshteinDistance
 	};
 

@@ -48,6 +48,8 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			_enabled = true;
 		}
 
+		_apiUrl = V.Utils.checkUrlProtocol(_apiUrl);
+
 		if(!V.Editing){
 			_app_id = "ViSH Viewer";
 		} else {

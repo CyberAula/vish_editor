@@ -868,10 +868,10 @@ VISH.Editor = (function(V,$,undefined){
 							if((createNewPresentation)&amp;&amp;(typeof data != &quot;undefined&quot;)&amp;&amp;(data.uploadPath)){
 								//Update V.UploadPresentationPath because the presentation exists now
 								//Future savings will update the existing presentation
-								V.UploadPresentationPath = data.uploadPath;
+								V.UploadPresentationPath = V.Utils.checkUrlProtocol(data.uploadPath);
 								if(V.Status.getDevice().features.historypushState){
 									if(data.editPath){
-										window.top.history.replaceState(&quot;&quot;,&quot;&quot;,data.editPath);
+										window.top.history.replaceState(&quot;&quot;,&quot;&quot;,V.Utils.checkUrlProtocol(data.editPath));
 									}
 								}
 								if(data.id){
@@ -886,7 +886,7 @@ VISH.Editor = (function(V,$,undefined){
 							_isDraft = true;
 							if((typeof data != &quot;undefined&quot;)&amp;&amp;(data.exitPath)){
 								//Update exit path
-								V.exitPath = data.exitPath;
+								V.exitPath = V.Utils.checkUrlProtocol(data.exitPath);
 							}
 						}
 						if(typeof successCallback == &quot;function&quot;){

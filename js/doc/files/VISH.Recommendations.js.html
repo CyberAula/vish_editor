@@ -116,6 +116,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		var options = V.Utils.getOptions();
 		if((options)&amp;&amp;(!options.preview)&amp;&amp;(typeof options[&quot;configuration&quot;][&quot;recommendationsAPI&quot;] != &quot;undefined&quot;)&amp;&amp;(typeof options[&quot;configuration&quot;][&quot;recommendationsAPI&quot;][&quot;rootURL&quot;] == &quot;string&quot;)){
 			_recommendationAPIUrl = options[&quot;configuration&quot;][&quot;recommendationsAPI&quot;][&quot;rootURL&quot;];
+			_recommendationAPIUrl = V.Utils.checkUrlProtocol(_recommendationAPIUrl); //Update URL depending on HTTP protocol
 			_enabled = true;
 		} else {
 			return;
@@ -187,22 +188,24 @@ VISH.Recommendations = (function(V,$,undefined){
 				V.ViewerAdapter.decideIfPageSwitcher();
 
 				var loepSettings = _getLOEPSettings();
-				loepSettings.language = V.Utils.getOptions()[&quot;lang&quot;];
-				loepSettings.containerDOM = $(&#x27;#fancy_evaluations&#x27;);
-				loepSettings.loadCallback = function(){
-					//LOEP form loaded
-				};
-				loepSettings.submitCallback = function(){
-					//&quot;Sucesfully submitted&quot;
-					$.fancybox.close();
-				};
-				loepSettings.errorCallback = function(errorMsg){
-					//&quot;Error loading the evaluation form&quot;
-					hideEvaluations();
-					$.fancybox.close();
-				};
-				loepSettings.debug = V.Debugging.isDevelopping();
-				new LOEP.IframeAPI.instance(loepSettings);
+				if(typeof loepSettings == &quot;object&quot;){
+					loepSettings.language = V.Utils.getOptions()[&quot;lang&quot;];
+					loepSettings.containerDOM = $(&#x27;#fancy_evaluations&#x27;);
+					loepSettings.loadCallback = function(){
+						//LOEP form loaded
+					};
+					loepSettings.submitCallback = function(){
+						//&quot;Sucesfully submitted&quot;
+						$.fancybox.close();
+					};
+					loepSettings.errorCallback = function(errorMsg){
+						//&quot;Error loading the evaluation form&quot;
+						hideEvaluations();
+						$.fancybox.close();
+					};
+					loepSettings.debug = V.Debugging.isDevelopping();
+					new LOEP.IframeAPI.instance(loepSettings);
+				}
 			},
 			&#x27;onClosed&#x27; : function(data) {
 				$(&#x27;#fancy_evaluations&#x27;).html(&quot;&quot;);
@@ -221,7 +224,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite()&amp;&amp;V.Status.isEmbed()));
+		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite() &amp;&amp; V.Status.isEmbed()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton &amp;&amp; V.Status.getDevice().desktop;
 		return _showEvaluateButton;
@@ -466,7 +469,9 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var _getLOEPSettings = function(){
 		try {
-			return V.Utils.getOptions()[&quot;configuration&quot;][&quot;loepSettings&quot;];
+			var confLOEPSettings = V.Utils.getOptions()[&quot;configuration&quot;][&quot;loepSettings&quot;];
+			confLOEPSettings.tokenURL = V.Utils.checkUrlProtocol(confLOEPSettings.tokenURL);
+			return confLOEPSettings;
 		} catch (e){
 			return undefined;
 		}

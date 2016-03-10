@@ -13,7 +13,7 @@ VISH.Configuration = (function(V,$,undefined){
 		V.StylesheetsPath = configuration["StylesheetsPath"];
 
 		//Services
-		V.RootPath = configuration["rootPath"];
+		V.RootPath = V.Utils.checkUrlProtocol(configuration["rootPath"]);
 
 		//Upload paths
 		V.UploadImagePath = configuration["uploadImagePath"];
@@ -22,8 +22,13 @@ VISH.Configuration = (function(V,$,undefined){
 		V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
 
 		//Source paths
-		V.LREPath = configuration["LRE_path"];
-		V.ViSHInstances = configuration["ViSH_instances"];
+		V.LREPath = V.Utils.checkUrlProtocol(configuration["LRE_path"]);
+		V.ViSHInstances = [];
+		if(configuration["ViSH_instances"] instanceof Array){
+			for(var i=0; i<configuration["ViSH_instances"].length; i++){
+				V.ViSHInstances.push(V.Utils.checkUrlProtocol(configuration["ViSH_instances"][i]));
+			}
+		}
 	};
 	
 	var applyConfiguration = function(){

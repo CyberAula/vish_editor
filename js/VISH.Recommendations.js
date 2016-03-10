@@ -34,6 +34,7 @@ VISH.Recommendations = (function(V,$,undefined){
 		var options = V.Utils.getOptions();
 		if((options)&&(!options.preview)&&(typeof options["configuration"]["recommendationsAPI"] != "undefined")&&(typeof options["configuration"]["recommendationsAPI"]["rootURL"] == "string")){
 			_recommendationAPIUrl = options["configuration"]["recommendationsAPI"]["rootURL"];
+			_recommendationAPIUrl = V.Utils.checkUrlProtocol(_recommendationAPIUrl); //Update URL depending on HTTP protocol
 			_enabled = true;
 		} else {
 			return;
@@ -105,22 +106,24 @@ VISH.Recommendations = (function(V,$,undefined){
 				V.ViewerAdapter.decideIfPageSwitcher();
 
 				var loepSettings = _getLOEPSettings();
-				loepSettings.language = V.Utils.getOptions()["lang"];
-				loepSettings.containerDOM = $('#fancy_evaluations');
-				loepSettings.loadCallback = function(){
-					//LOEP form loaded
-				};
-				loepSettings.submitCallback = function(){
-					//"Sucesfully submitted"
-					$.fancybox.close();
-				};
-				loepSettings.errorCallback = function(errorMsg){
-					//"Error loading the evaluation form"
-					hideEvaluations();
-					$.fancybox.close();
-				};
-				loepSettings.debug = V.Debugging.isDevelopping();
-				new LOEP.IframeAPI.instance(loepSettings);
+				if(typeof loepSettings == "object"){
+					loepSettings.language = V.Utils.getOptions()["lang"];
+					loepSettings.containerDOM = $('#fancy_evaluations');
+					loepSettings.loadCallback = function(){
+						//LOEP form loaded
+					};
+					loepSettings.submitCallback = function(){
+						//"Sucesfully submitted"
+						$.fancybox.close();
+					};
+					loepSettings.errorCallback = function(errorMsg){
+						//"Error loading the evaluation form"
+						hideEvaluations();
+						$.fancybox.close();
+					};
+					loepSettings.debug = V.Debugging.isDevelopping();
+					new LOEP.IframeAPI.instance(loepSettings);
+				}
 			},
 			'onClosed' : function(data) {
 				$('#fancy_evaluations').html("");
@@ -139,7 +142,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite()&&V.Status.isEmbed()));
+		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite() && V.Status.isEmbed()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
 		return _showEvaluateButton;
@@ -384,7 +387,9 @@ VISH.Recommendations = (function(V,$,undefined){
 
 	var _getLOEPSettings = function(){
 		try {
-			return V.Utils.getOptions()["configuration"]["loepSettings"];
+			var confLOEPSettings = V.Utils.getOptions()["configuration"]["loepSettings"];
+			confLOEPSettings.tokenURL = V.Utils.checkUrlProtocol(confLOEPSettings.tokenURL);
+			return confLOEPSettings;
 		} catch (e){
 			return undefined;
 		}

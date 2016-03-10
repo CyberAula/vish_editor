@@ -86,270 +86,270 @@
 
 VISH.SCORM.API = (function(V,$,undefined){
 
-	//SCORM API Instance
-	var scorm;
-	var connected;
+    //SCORM API Instance
+    var scorm;
+    var connected;
 
-	//Vars
-	var COMPLETION_THRESHOLD = 0; //Force attempt completion!
-	var COMPLETION_ATTEMPT_THRESHOLD = 0;
-	var SCORE_THRESHOLD = 0.5;
+    //Vars
+    var COMPLETION_THRESHOLD = 0; //Force attempt completion!
+    var COMPLETION_ATTEMPT_THRESHOLD = 0;
+    var SCORE_THRESHOLD = 0.5; //Mastery score should be 50 for SCORM 1.2
 
-	var hasScore = false;
-
-
-	var init = function(){
-		scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: false, exit_type: &quot;&quot;});
-		connected = scorm.initialize();
-		scorm.debug(&quot;Connected: &quot; + connected,4);
-		
-		if(!connected){
-			return;
-		}
-
-		//Init progress tracking
-		V.ProgressTracking.init();
-
-		//Init User model
-		var learnerName = scorm.getvalue(&#x27;cmi.learner_name&#x27;);
-		var learnerId = scorm.getvalue(&#x27;cmi.learner_id&#x27;);
-		var myUser = V.User.getUser();
-		if(typeof myUser == &quot;object&quot;){
-			if(_isValidAPIResponse(learnerName)){
-				myUser.name = learnerName;
-			}
-			if(_isValidAPIResponse(learnerId)){
-				myUser.id = learnerId;
-			}
-			V.User.setUser(myUser);
-		}
-
-		//Initial progress value
-		_updateProgressMeasure(0);
-
-		hasScore = V.ProgressTracking.getHasScore();
-		if(hasScore){
-			//Initial score values
-			scorm.setvalue(&#x27;cmi.score.min&#x27;,(0).toString());
-			scorm.setvalue(&#x27;cmi.score.max&#x27;,(100).toString());
-			_updateScore(0);
-		}
-
-		V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
-			var updateProgress = (typeof objective.progress != &quot;undefined&quot;);
-			var updateScore = (typeof objective.score != &quot;undefined&quot;);
-
-			if(updateProgress){
-				_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
-			}
-			if(updateScore){
-				_updateScore(V.ProgressTracking.getScore());
-			}
-
-			if(updateProgress||updateScore){
-				scorm.commit();
-			}
-		});
-
-		V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
-			_updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
-			// scorm.commit(); terminate will call commit
-			scorm.terminate();
-		});
-	};
-
-	var _updateProgressMeasure = function(progressMeasure){
-		if(typeof progressMeasure == &quot;number&quot;){
-			scorm.setvalue(&#x27;cmi.progress_measure&#x27;,progressMeasure.toString());
-			_updateCompletionStatus(progressMeasure);
-		}
-	};
-
-	var _updateCompletionStatus = function(progressMeasure){
-		if(typeof progressMeasure != &quot;number&quot;){
-			progressMeasure = 0;
-		}
-
-		var completionStatus;
-
-		if(progressMeasure &gt;= COMPLETION_THRESHOLD){
-			completionStatus = &quot;completed&quot;;
-		} else if (progressMeasure&gt;=COMPLETION_ATTEMPT_THRESHOLD){
-			completionStatus = &quot;incomplete&quot;;
-		} else {
-			completionStatus = &quot;not attempted&quot;;
-		}
-
-		scorm.setvalue(&#x27;cmi.completion_status&#x27;,completionStatus);
-	};
-
-	var _updateScore = function(score){
-		if(typeof score == &quot;number&quot;){
-			score = Math.max(0,Math.min(1,score));
-			scorm.setvalue(&#x27;cmi.score.scaled&#x27;,score.toString());
-			scorm.setvalue(&#x27;cmi.score.raw&#x27;,(score*100).toString());
-			_updateSuccessStatus(score);
-		}
-	};
-
-	var _updateSuccessStatus = function(score){
-		var successStatus;
-
-		if(typeof score != &quot;number&quot;){
-			successStatus = &quot;unknown&quot;;
-		} else if(score &gt;= SCORE_THRESHOLD){
-			successStatus = &quot;passed&quot;;
-		} else {
-			successStatus = &quot;failed&quot;;
-		}
-
-		scorm.setvalue(&#x27;cmi.success_status&#x27;,successStatus);
-	};
-
-	var _isValidAPIResponse = function(string){
-		if((typeof string == &quot;string&quot;)&amp;&amp;(string.trim()!=&quot;&quot;)&amp;&amp;(string!=&quot;false&quot;)){
-			return true;
-		} else {
-			return false;
-		}
-	};
-
-	var getAPIInstance = function(){
-		if(connected){
-			return scorm;
-		} else {
-			return undefined;
-		}		
-	};
-
-	var getLMSAPIInstance = function(){
-		if((connected)&amp;&amp;(scorm)&amp;&amp;(scorm.API)&amp;&amp;((scorm.API.path))){
-			return scorm.API.path;
-		} else {
-			return undefined;
-		}		
-	};
+    var hasScore = false;
 
 
-	/* Base code provided by https://github.com/cybercussion/SCOBot */
-	/**
-	 * SCORM API
-	 * This is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.
-	 * Switch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations
-	 * on data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.
-	 * Depending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages
-	 * will be output so you can monitor your cmi &quot;set&quot; value length.  Ultimately, a LMS may block your request because of this.
-	 * This API is meant to simplify common SCORM Tasks, but also offers the ability to use it &#x27;long hand&#x27;. Several other
-	 * public API&#x27;s are available online, some free some charge, and this is a best effort to boil it all down.
-	 * Documentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com
-	 * Goals: SCORM For Everyone else, low overhead, simple API&#x27;s, containment, and transparency.
-	 *
-	 * Typical CMI Usage (if used by itself):
-	 * var scorm = new SCORM_API({debug: true, exit_type: &#x27;suspend&#x27;}),
-	 * lmsconnected = scorm.initialize();
-	 * scorm.getvalue(&#x27;cmi.location&#x27;);
-	 * scorm.setvalue(&#x27;cmi.location&#x27;, &#x27;4&#x27;);
-	 * scorm.commit();
-	 * scorm.terminate();
-	 *
-	 * HTML Event Setup:
-	 * If you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things
-	 * vs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  &#x27;window.top&#x27; can be used because
-	 * some deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with
-	 * JQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.
-	 * $(window).bind(&#x27;load&#x27;, YOUR_INITIALIZATION_METHOD);
-	 * $(window).bind(&#x27;unload&#x27;, YOUR_EXIT_METHOD);
-	 *
-	 * JSLint was recently changed and its throwing a &quot;use spaces, not tabs&quot; error.  I decided to switch to spaces.
-	 * https://github.com/douglascrockford/JSLint/pull/140
-	 *
-	 * https://github.com/cybercussion/SCOBot
-	 * @author Mark Statkus &lt;mark@cybercussion.com&gt;
-	 * @license Copyright (c) 2009-2014, Cybercussion Interactive LLC
-	 * As of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.
-	 * @requires JQuery
-	 * @version 3.1.0
-	 * @param options {Object} override default values
-	 * @constructor
-	 */
+    var init = function(){
+        scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: false, exit_type: &quot;&quot;});
+        connected = scorm.initialize();
+        scorm.debug(&quot;Connected: &quot; + connected,4);
+        
+        if(!connected){
+            return;
+        }
 
-	function SCORM_API(options){
-	    // Constructor ////////////
-	    &quot;use strict&quot;;
-	    // Please edit run time options or override them when you instantiate this object.
-	    var defaults = {
-	            version:           &quot;3.1.1&quot;,
-	            createDate:        &quot;04/05/2011 08:56AM&quot;,
-	            modifiedDate:      &quot;07/16/2014 09:40AM&quot;,
-	            debug:             false,
-	            windowDebug: 	   false,
-	            isActive:          false,
-	            throw_alerts:      false,
-	            prefix:            &quot;SCORM_API&quot;,
-	            exit_type:         &quot;suspend&quot;, // suspend, finish, or &quot;&quot; (undetermined)
-	            success_status:    &quot;unknown&quot;, // passed, failed, unknown
-	            use_standalone:    true,
-	            standalone:        false,
-	            completion_status: &quot;unknown&quot;, // completed, incomplete, unknown
-	            time_type:         &quot;GMT&quot;,
-	            cmi:               null
-	        },
-	    	// Settings merged with defaults and extended options
-	        settings = $.extend(defaults, options),
-	    	// Internal API Error Boolean, Error Code object
-	        isError = 0,
-	        error = {
-	            0:   &quot;No Error&quot;,
-	            404: &quot;Not Found&quot;,
-	            405: &quot;Prevented on a read only resource&quot;
-	        },
-	    	// API Object
-	        API = {
-	            connection: false,
-	            version:    &quot;none&quot;, // 2004, 1.2 or none
-	            mode:       &quot;&quot;,
-	            path:       false, // Set Path to LMS API or maybe something local later by default?
-	            data:       {// Defaults, I&#x27;m moving a few of the SCORM defaults into this data object, they will be maintained here thereafter.
-	                completion_status: settings.completion_status,
-	                success_status:    settings.success_status,
-	                exit_type:         settings.exit_type
-	            },
-	            isActive:   settings.isActive  // If SCO is initialized already, this was added for a page by page concept where pages unload and load.
-	        },
-	        self = this;
-	    // Public to Public call hook within the internal API
-	    // Set some more &#x27;settings&#x27;
-	    settings.error = error; // Inherit
-	    settings.startDate = {}; // Set on Success of Initialize aka &quot;the start time&quot;
-	    // End Constructor ////////
-	    
-	    // Private ////////////////
+        //Init progress tracking
+        V.ProgressTracking.init();
 
-	    /**
-	     * Debug
-	     * Built-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)
-	     * @param msg {String} Debug Message
-	     * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
-	     */
-	    function debug(msg,lvl){
-	    	if(settings){
-	    		msg = settings.prefix + &quot;: &quot; + msg;
-		    	if(settings.debug){
-		        	if(settings.windowDebug==true){
-		        		windowDebug(msg,lvl);
-		        	} else {
-		        		_debug(msg,lvl);
-		        	}
-		        }
-		        if(lvl &lt; 3 &amp;&amp; settings.throw_alerts){
-		            alert(msg);
-		        }
-	    	}
-	        return false;
-	    };
+        //Init User model
+        var learnerName = scorm.getvalue(&#x27;cmi.learner_name&#x27;);
+        var learnerId = scorm.getvalue(&#x27;cmi.learner_id&#x27;);
+        var myUser = V.User.getUser();
+        if(typeof myUser == &quot;object&quot;){
+            if(_isValidAPIResponse(learnerName)){
+                myUser.name = learnerName;
+            }
+            if(_isValidAPIResponse(learnerId)){
+                myUser.id = learnerId;
+            }
+            V.User.setUser(myUser);
+        }
 
-	   	function _debug(msg,lvl){
-	   		// IE 7 probably 6 was throwing a error if &#x27;console undefined&#x27;
+        //Initial progress value
+        _updateProgressMeasure(0);
+
+        hasScore = V.ProgressTracking.getHasScore();
+        if(hasScore){
+            //Initial score values
+            scorm.setvalue(&#x27;cmi.score.min&#x27;,(0).toString());
+            scorm.setvalue(&#x27;cmi.score.max&#x27;,(100).toString());
+            _updateScore(0);
+        }
+
+        V.EventsNotifier.registerCallback(V.Constant.Event.onProgressObjectiveUpdated, function(objective){
+            var updateProgress = (typeof objective.progress != &quot;undefined&quot;);
+            var updateScore = (typeof objective.score != &quot;undefined&quot;);
+
+            if(updateProgress){
+                _updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
+            }
+            if(updateScore){
+                _updateScore(V.ProgressTracking.getScore());
+            }
+
+            if(updateProgress||updateScore){
+                scorm.commit();
+            }
+        });
+
+        V.EventsNotifier.registerCallback(V.Constant.Event.exit, function(){
+            _updateProgressMeasure(V.ProgressTracking.getProgressMeasure());
+            // scorm.commit(); terminate will call commit
+            scorm.terminate();
+        });
+    };
+
+    var _updateProgressMeasure = function(progressMeasure){
+        if(typeof progressMeasure == &quot;number&quot;){
+            scorm.setvalue(&#x27;cmi.progress_measure&#x27;,progressMeasure.toString());
+            _updateCompletionStatus(progressMeasure);
+        }
+    };
+
+    var _updateCompletionStatus = function(progressMeasure){
+        if(typeof progressMeasure != &quot;number&quot;){
+            progressMeasure = 0;
+        }
+
+        var completionStatus;
+
+        if(progressMeasure &gt;= COMPLETION_THRESHOLD){
+            completionStatus = &quot;completed&quot;;
+        } else if (progressMeasure&gt;=COMPLETION_ATTEMPT_THRESHOLD){
+            completionStatus = &quot;incomplete&quot;;
+        } else {
+            completionStatus = &quot;not attempted&quot;;
+        }
+
+        scorm.setvalue(&#x27;cmi.completion_status&#x27;,completionStatus);
+    };
+
+    var _updateScore = function(score){
+        if(typeof score == &quot;number&quot;){
+            score = Math.max(0,Math.min(1,score));
+            scorm.setvalue(&#x27;cmi.score.scaled&#x27;,score.toString());
+            scorm.setvalue(&#x27;cmi.score.raw&#x27;,(score*100).toString());
+            _updateSuccessStatus(score);
+        }
+    };
+
+    var _updateSuccessStatus = function(score){
+        var successStatus;
+
+        if(typeof score != &quot;number&quot;){
+            successStatus = &quot;unknown&quot;;
+        } else if(score &gt;= SCORE_THRESHOLD){
+            successStatus = &quot;passed&quot;;
+        } else {
+            successStatus = &quot;failed&quot;;
+        }
+
+        scorm.setvalue(&#x27;cmi.success_status&#x27;,successStatus);
+    };
+
+    var _isValidAPIResponse = function(string){
+        if((typeof string == &quot;string&quot;)&amp;&amp;(string.trim()!=&quot;&quot;)&amp;&amp;(string!=&quot;false&quot;)){
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    var getAPIInstance = function(){
+        if(connected){
+            return scorm;
+        } else {
+            return undefined;
+        }       
+    };
+
+    var getLMSAPIInstance = function(){
+        if((connected)&amp;&amp;(scorm)&amp;&amp;(scorm.API)&amp;&amp;((scorm.API.path))){
+            return scorm.API.path;
+        } else {
+            return undefined;
+        }       
+    };
+
+
+    /* Base code provided by https://github.com/cybercussion/SCOBot */
+    /**
+     * SCORM API
+     * This is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.
+     * Switch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations
+     * on data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.
+     * Depending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages
+     * will be output so you can monitor your cmi &quot;set&quot; value length.  Ultimately, a LMS may block your request because of this.
+     * This API is meant to simplify common SCORM Tasks, but also offers the ability to use it &#x27;long hand&#x27;. Several other
+     * public API&#x27;s are available online, some free some charge, and this is a best effort to boil it all down.
+     * Documentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com
+     * Goals: SCORM For Everyone else, low overhead, simple API&#x27;s, containment, and transparency.
+     *
+     * Typical CMI Usage (if used by itself):
+     * var scorm = new SCORM_API({debug: true, exit_type: &#x27;suspend&#x27;}),
+     * lmsconnected = scorm.initialize();
+     * scorm.getvalue(&#x27;cmi.location&#x27;);
+     * scorm.setvalue(&#x27;cmi.location&#x27;, &#x27;4&#x27;);
+     * scorm.commit();
+     * scorm.terminate();
+     *
+     * HTML Event Setup:
+     * If you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things
+     * vs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  &#x27;window.top&#x27; can be used because
+     * some deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with
+     * JQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.
+     * $(window).bind(&#x27;load&#x27;, YOUR_INITIALIZATION_METHOD);
+     * $(window).bind(&#x27;unload&#x27;, YOUR_EXIT_METHOD);
+     *
+     * JSLint was recently changed and its throwing a &quot;use spaces, not tabs&quot; error.  I decided to switch to spaces.
+     * https://github.com/douglascrockford/JSLint/pull/140
+     *
+     * https://github.com/cybercussion/SCOBot
+     * @author Mark Statkus &lt;mark@cybercussion.com&gt;
+     * @license Copyright (c) 2009-2014, Cybercussion Interactive LLC
+     * As of 3.0.0 this code is under a Creative Commons Attribution-ShareAlike 4.0 International License.
+     * @requires JQuery
+     * @version 3.1.0
+     * @param options {Object} override default values
+     * @constructor
+     */
+
+    function SCORM_API(options){
+        // Constructor ////////////
+        &quot;use strict&quot;;
+        // Please edit run time options or override them when you instantiate this object.
+        var defaults = {
+                version:           &quot;3.1.1&quot;,
+                createDate:        &quot;04/05/2011 08:56AM&quot;,
+                modifiedDate:      &quot;07/16/2014 09:40AM&quot;,
+                debug:             false,
+                windowDebug:       false,
+                isActive:          false,
+                throw_alerts:      false,
+                prefix:            &quot;SCORM_API&quot;,
+                exit_type:         &quot;suspend&quot;, // suspend, finish, or &quot;&quot; (undetermined)
+                success_status:    &quot;unknown&quot;, // passed, failed, unknown
+                use_standalone:    true,
+                standalone:        false,
+                completion_status: &quot;unknown&quot;, // completed, incomplete, unknown
+                time_type:         &quot;GMT&quot;,
+                cmi:               null
+            },
+            // Settings merged with defaults and extended options
+            settings = $.extend(defaults, options),
+            // Internal API Error Boolean, Error Code object
+            isError = 0,
+            error = {
+                0:   &quot;No Error&quot;,
+                404: &quot;Not Found&quot;,
+                405: &quot;Prevented on a read only resource&quot;
+            },
+            // API Object
+            API = {
+                connection: false,
+                version:    &quot;none&quot;, // 2004, 1.2 or none
+                mode:       &quot;&quot;,
+                path:       false, // Set Path to LMS API or maybe something local later by default?
+                data:       {// Defaults, I&#x27;m moving a few of the SCORM defaults into this data object, they will be maintained here thereafter.
+                    completion_status: settings.completion_status,
+                    success_status:    settings.success_status,
+                    exit_type:         settings.exit_type
+                },
+                isActive:   settings.isActive  // If SCO is initialized already, this was added for a page by page concept where pages unload and load.
+            },
+            self = this;
+        // Public to Public call hook within the internal API
+        // Set some more &#x27;settings&#x27;
+        settings.error = error; // Inherit
+        settings.startDate = {}; // Set on Success of Initialize aka &quot;the start time&quot;
+        // End Constructor ////////
+        
+        // Private ////////////////
+
+        /**
+         * Debug
+         * Built-In Debug Functionality to output to console (Firebug, Inspector, Dev Tool etc ...)
+         * @param msg {String} Debug Message
+         * @param lvl {Integer} 1=Error, 2=Warning, 3=Log, 4=Info
+         */
+        function debug(msg,lvl){
+            if(settings){
+                msg = settings.prefix + &quot;: &quot; + msg;
+                if(settings.debug){
+                    if(settings.windowDebug==true){
+                        windowDebug(msg,lvl);
+                    } else {
+                        _debug(msg,lvl);
+                    }
+                }
+                if(lvl &lt; 3 &amp;&amp; settings.throw_alerts){
+                    alert(msg);
+                }
+            }
+            return false;
+        };
+
+        function _debug(msg,lvl){
+            // IE 7 probably 6 was throwing a error if &#x27;console undefined&#x27;
             if(!window.console){
                 window.console = {};
                 window.console.info = noconsole;
@@ -377,1211 +377,1225 @@ VISH.SCORM.API = (function(V,$,undefined){
             }
 
             return true;
-	    };
+        };
 
-	    /**
-	     * No Console
-	     * Lack of support in older browsers forced this
-	     * @param msg {String} Debug Message
-	     * @param lvl {*} 1=Error, 2=Warning, 3=Log, 4=Info
-	     * @event debug fired when no console is available.  You could listen to this to put it in an alternative log.
-	     */
-	    function noconsole(msg,lvl){
-	        // ignore (IE 8 and prior or other browser that doesn&#x27;t support it).  Routing event out so it can be handled.
-	        $(self).triggerHandler({
-	            &#x27;type&#x27;: &quot;debug&quot;,
-	            &#x27;msg&#x27;:  msg,
-	            &#x27;lvl&#x27;:  lvl
-	        });
-	    };
-
-
-	    //Debug in a new window
-		//debug info
-		var aryDebug = new Array();
-		var strDebug = &quot;&quot;;
-		var winDebug;
-
-		function windowDebug(strInfo,lvl){
-
-			var isDebugWindowShown = false;
-			if(!winDebug || winDebug.closed){
-				isDebugWindowShown = ShowDebugWindow();
-			} else {
-				isDebugWindowShown = true;
-			}
-
-			if(isDebugWindowShown==false){
-				//pop-up window blocked
-				//Disable windowDebug
-				settings.windowDebug = false
-				debug(&quot;Window debug has been blocked&quot;,1);
-				debug(&quot;Debugging messages will be displayed in the console&quot;,2);
-				debug(strInfo,lvl);
-				return false;
-			}
-
-			var strLine;
-			strLine = (aryDebug.length+1) + &quot;: &quot; + strInfo;
-			aryDebug[aryDebug.length] = strLine;
-
-			if(winDebug &amp;&amp; !winDebug.closed){
-				winDebug.document.write(strLine + &quot;&lt;br&gt;\n&quot;);
-			}
-
-			return true;
-		};
-
-		function ShowDebugWindow(){
-			if (winDebug &amp;&amp; !winDebug.closed){
-				winDebug.close();
-			}
-
-			winDebug = window.open(&quot;&quot;, &quot;Debug&quot;, &quot;width=600,height=300,resizable,scrollbars&quot;);
-
-			if(typeof winDebug == &quot;undefined&quot;){
-				//pop-up window blocked
-				return false;
-			}
-
-			winDebug.document.write(aryDebug.join(&quot;&lt;br&gt;\n&quot;));
-
-			winDebug.document.close();
-
-			winDebug.focus();
-
-			return true;
-		};
-
-	    /**
-	     * Find API
-	     * API_1484_11 or API for SCORM 2004 or 1.2
-	     * @param win {object} Window level
-	     */
-	    function findAPI(win){
-	        var attempts = 0, limit = 500;
-	        while ((!win.API &amp;&amp; !win.API_1484_11) &amp;&amp; (win.parent) &amp;&amp; (win.parent !== win) &amp;&amp; (attempts &lt;= limit)){
-	            attempts += 1;
-	            win = win.parent;
-	        }
-	        if(win.API_1484_11){ //SCORM 2004-specific API.
-	            API.version = &quot;2004&quot;;
-	            //Set version
-	            API.path = win.API_1484_11;
-	        } else if(win.API){ //SCORM 1.2-specific API
-	            API.version = &quot;1.2&quot;;
-	            //Set version
-	            API.path = win.API;
-	        } else {
-	            return false;
-	        }
-	        return true;
-	    };
-
-	    // SCORM Time centric to SCORM 2004 and 1.2 Compatibility
-	    /**
-	     * Centiseconds To ISO Duration
-	     * Borrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil &quot;with&quot; statement
-	     * @param n {Number} Total Seconds
-	     * @param bPrecise {Boolean} Only Set true if were dealing with months, years (highly unlikely)
-	     * @returns {String} SCORM 2004 Time PT0H0M0S Format
-	     */
-	    function centisecsToISODuration(n,bPrecise){
-	        /* Note: SCORM and IEEE 1484.11.1 require centisec precision
-	         Parameters:
-	         n = number of centiseconds
-	         bPrecise = optional parameter; if true, duration will
-	         be expressed without using year and/or month fields.
-	         If bPrecise is not true, and the duration is long,
-	         months are calculated by approximation based on average number
-	         of days over 4 years (365*4+1), not counting the extra days
-	         for leap years. If a reference date was available,
-	         the calculation could be more precise, but becomes complex,
-	         since the exact result depends on where the reference date
-	         falls within the period (e.g. beginning, end or ???)
-	         1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
-	         1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
-	         1 day = 8640000 centiseconds
-	         1 hour = 360000 centiseconds
-	         1 minute = 6000 centiseconds */
-	        var str = &quot;P&quot;,
-	            nCs = Math.max(n, 0),
-	            nY = 0,
-	            nM = 0,
-	            nD = 0,
-	            nH,
-	            nMin;
-	        // Next set of operations uses whole seconds
-	        //with (Math) { //argumentatively considered harmful
-	        nCs = Math.round(nCs);
-	        if (bPrecise === true) {
-	            nD = Math.floor(nCs / 8640000);
-	        } else {
-	            nY = Math.floor(nCs / 3155760000);
-	            nCs -= nY * 3155760000;
-	            nM = Math.floor(nCs / 262980000);
-	            nCs -= nM * 262980000;
-	            nD = Math.floor(nCs / 8640000);
-	        }
-	        nCs -= nD * 8640000;
-	        nH = Math.floor(nCs / 360000);
-	        nCs -= nH * 360000;
-	        nMin = Math.floor(nCs / 6000);
-	        nCs -= nMin * 6000;
-	        //}
-	        // Now we can construct string
-	        if (nY &gt; 0) {
-	            str += nY + &quot;Y&quot;;
-	        }
-	        if (nM &gt; 0) {
-	            str += nM + &quot;M&quot;;
-	        }
-	        if (nD &gt; 0) {
-	            str += nD + &quot;D&quot;;
-	        }
-	        if ((nH &gt; 0) || (nMin &gt; 0) || (nCs &gt; 0)) {
-	            str += &quot;T&quot;;
-	            if (nH &gt; 0) {
-	                str += nH + &quot;H&quot;;
-	            }
-	            if (nMin &gt; 0) {
-	                str += nMin + &quot;M&quot;;
-	            }
-	            if (nCs &gt; 0) {
-	                str += (nCs / 100) + &quot;S&quot;;
-	            }
-	        }
-	        if (str === &quot;P&quot;) {
-	            str = &quot;PT0H0M0S&quot;;
-	        }
-	        // technically PT0S should do but SCORM test suite assumes longer form.
-	        return str;
-	    };
-
-	    /**
-	     * ISO Duration to Centisecond
-	     * @param str
-	     * @return {Number}
-	     */
-	    function ISODurationToCentisec(str){
-	        // Only gross syntax check is performed here
-	        // Months calculated by approximation based on average number
-	        // of days over 4 years (365*4+1), not counting the extra days
-	        // in leap years. If a reference date was available,
-	        // the calculation could be more precise, but becomes complex,
-	        // since the exact result depends on where the reference date
-	        // falls within the period (e.g. beginning, end or ???)
-	        // 1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
-	        // 1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
-	        // 1 day = 8640000 centiseconds
-	        // 1 hour = 360000 centiseconds
-	        // 1 minute = 6000 centiseconds
-	        var aV = [0, 0, 0, 0, 0, 0],
-	            bErr = !!((str.indexOf(&quot;P&quot;) !== 0)),
-	            bTFound = false,
-	            aT = [&quot;Y&quot;, &quot;M&quot;, &quot;D&quot;, &quot;H&quot;, &quot;M&quot;, &quot;S&quot;],
-	            p = 0,
-	            i = 0,
-	            len;
-	        if (!bErr) {
-	            str = str.substr(1); //get past the P
-	            len = aT.length;
-	            i = 0;
-	            //for (i = 0; i &lt; len; i += 1) {
-	            while (i &lt; len) {
-	                if (str.indexOf(&quot;T&quot;) === 0) {
-	                    str = str.substr(1);
-	                    i = Math.max(i, 3);
-	                    bTFound = true;
-	                }
-	                p = str.indexOf(aT[i]);
-	                if (p &gt; -1) {
-	                    /*jslint continue: true */
-	                    if ((i === 1) &amp;&amp; (str.indexOf(&quot;T&quot;) &gt; -1) &amp;&amp; (str.indexOf(&quot;T&quot;) &lt; p)) {
-	                        continue;
-	                    }
-	                    /*jslint continue: false */
-	                    if (aT[i] === &quot;S&quot;) {
-	                        aV[i] = parseFloat(str.substr(0, p));
-	                    } else {
-	                        aV[i] = parseInt(str.substr(0, p), 10);
-	                    }
-	                    if (isNaN(aV[i])) {
-	                        bErr = true;
-	                        break;
-	                    }
-	                    if ((i &gt; 2) &amp;&amp; (!bTFound)) {
-	                        bErr = true;
-	                        break;
-	                    }
-	                    str = str.substr(p + 1);
-	                }
-	                i += 1;
-	            }
-	            bErr = !!(((!bErr) &amp;&amp; (len !== 0)));
-	        }
-	        if (bErr) {
-	            return 0;
-	        }
-	        return aV[0] * 3155760000 + aV[1] * 262980000
-	            + aV[2] * 8640000 + aV[3] * 360000 + aV[4] * 6000
-	            + Math.round(aV[5] * 100);
-	    };
-
-	    /**
-	     * Pad Time
-	     * Pads time with proper formatting (double digits)
-	     */
-	    function padTime(n){
-	        return n &lt; 10 ? &#x27;0&#x27; + n : n;
-	    };
-
-	    /**
-	     * ISO 8601 Date String UTC
-	     * Converts date object into ISO 8601 standard
-	     * returns {String} ISO 8601 + UTC
-	     */
-	    function isoDateToStringUTC(d){
-	        return d.getUTCFullYear() + &#x27;-&#x27; + padTime(d.getUTCMonth() + 1) + &#x27;-&#x27; + padTime(d.getUTCDate()) + &#x27;T&#x27; + padTime(d.getUTCHours()) + &#x27;:&#x27; + padTime(d.getUTCMinutes()) + &#x27;:&#x27; + padTime(d.getUTCSeconds()) + &quot;.&quot; + Math.round((d.getUTCMilliseconds() / 1000) % 1000) + &#x27;Z&#x27;;
-	    };
-
-	    /**
-	     * ISO 8601 Date String
-	     * Concerts date into ISO 8601 Standard
-	     * @returns {String} ISO 8601
-	     */
-	    function isoDateToString(d){
-	        var offset = d.getTimezoneOffset() &gt; 0 ? &#x27;-&#x27; : &#x27;+&#x27;;
-	        return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds()) + &quot;.&quot; + Math.round((d.getMilliseconds() / 1000) % 1000) + offset + padTime(d.getTimezoneOffset() / 60) + &#x27;:00&#x27;;
-	        //return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds());
-	    };
-
-	    /**
-	     * ISO 8601 String to Date
-	     * Not extremely clear yet if this is needed at a SCO level.  If not I&#x27;ll remove it later.
-	     * @param str {String} ISO8601
-	     * @return {Object} Date Object or false
-	     */
-	    function isoStringToDate(str){
-	        var MM = [&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;],
-	            d,
-	            uoffset,
-	            offset = 0,
-	            mil = 0,
-	            dd;
-	        /*jslint unparam: true*/
-	        switch (settings.time_type) {
-	        case &quot;UTC&quot;:
-	            d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))(|Z)/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
-	                return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
-	            });
-	            dd = new Date.UTC(d);
-	            return dd;
-	        case &quot;GMT&quot;:
-	            d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))([\+|\-]\d+:\d+)/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec, $Ms, $Offset) {
-	                offset = parseInt($Offset.substring(1, $Offset.length), 10) * 60 * 60 * 60;
-	                mil = $Ms;
-	                return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
-	                //return $Year + &quot;,&quot; + ($Month - 1) + &quot;,&quot; + $Day + &quot;,&quot; + $Hour + &quot;,&quot; + $Min + &quot;,&quot; + $Sec + &quot;,&quot; + $Ms;
-	            });
-	            // At this point we have to convert the users offset to the recorded offset to set the date properly.
-	            dd = new Date(d);
-	            uoffset = dd.getTimezoneOffset() * 60 * 60;
-	            if (uoffset !== offset) {
-	                dd = new Date(dd.getTime() + offset + uoffset);
-	                dd.setMilliseconds(mil);
-	            }
-	            return dd;
-	        default:
-	            d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
-	                return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
-	            });
-	            dd = new Date(d);
-	            return dd;
-	        }
-	    };
-
-	    /**
-	     * Centiseconds To SCORM 1.2 Duration
-	     * Borrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil &quot;with&quot; statement
-	     * @param n {Number} Total Seconds
-	     * @returns {String} SCORM 2004 Time PT0H0M0S Format
-	     */
-	    function centisecsToSCORM12Duration(n){
-	        // Format is [HH]HH:MM:SS[.SS]
-	        var //bTruncated = false,
-	            str,
-	            nH,
-	            nCs,
-	            nM,
-	            nS;
-	        //with (Math) { agrumentavely considered harmful
-	        n = Math.round(n);
-	        nH = Math.floor(n / 360000);
-	        nCs = n - nH * 360000;
-	        nM = Math.floor(nCs / 6000);
-	        nCs = nCs - nM * 6000;
-	        nS = Math.floor(nCs / 100);
-	        nCs = nCs - nS * 100;
-	        //}
-	        /*if (nH &gt; 9999) {
-	         nH = 9999;
-	         bTruncated = true;
-	         }*/
-	        str = &quot;0000&quot; + nH + &quot;:&quot;;
-	        str = str.substr(str.length - 5, 5);
-	        if (nM &lt; 10) {
-	            str += &quot;0&quot;;
-	        }
-	        str += nM + &quot;:&quot;;
-	        if (nS &lt; 10) {
-	            str += &quot;0&quot;;
-	        }
-	        str += nS;
-	        if (nCs &gt; 0) {
-	            str += &quot;.&quot;;
-	            if (nCs &lt; 10) {
-	                str += &quot;0&quot;;
-	            }
-	            str += nCs;
-	        }
-	        //if (bTruncated) alert (&quot;Hours truncated to 9999 to fit HHHH:MM:SS.SS format&quot;)
-	        return str;
-	    };
+        /**
+         * No Console
+         * Lack of support in older browsers forced this
+         * @param msg {String} Debug Message
+         * @param lvl {*} 1=Error, 2=Warning, 3=Log, 4=Info
+         * @event debug fired when no console is available.  You could listen to this to put it in an alternative log.
+         */
+        function noconsole(msg,lvl){
+            // ignore (IE 8 and prior or other browser that doesn&#x27;t support it).  Routing event out so it can be handled.
+            $(self).triggerHandler({
+                &#x27;type&#x27;: &quot;debug&quot;,
+                &#x27;msg&#x27;:  msg,
+                &#x27;lvl&#x27;:  lvl
+            });
+        };
 
 
-	    // End SCORM Time Handlers /////////////////////////////
-	    
-	    /**
-	     * Make Boolean
-	     * Turns &#x27;yes&#x27;, &#x27;no&#x27;, &#x27;true&#x27;, &#x27;false&#x27;, &#x27;0&#x27;, &#x27;1&#x27; into true/false
-	     * @param str {String} value to turn to boolean
-	     * @returns {Boolean}
-	     */
-	    function makeBoolean(str){
-	        if (str === undefined) {
-	            debug(&quot;makeBoolean was given empty string, converting to false&quot;, 2);
-	            return false;
-	        }
-	        if (str === true || str === false) {
-	            return Boolean(str);
-	        }
-	        switch (str.toLowerCase()) {
-	        case &quot;true&quot;:
-	        case &quot;yes&quot;:
-	        case &quot;1&quot;:
-	            return true;
-	        case &quot;false&quot;:
-	        case &quot;no&quot;:
-	        case &quot;0&quot;:
-	        case null:
-	            return false;
-	        default:
-	            return Boolean(str);
-	        }
-	    };
+        //Debug in a new window
+        //debug info
+        var aryDebug = new Array();
+        var strDebug = &quot;&quot;;
+        var winDebug;
 
-	    /**
-	     * Trigger Warning (internal to this API)
-	     * Throws a console log when a SCORM API Error occurs
-	     * @returns {Boolean}
-	     */
-	    function triggerWarning(n){
-	        debug(error[n],2);
-	        return true;
-	    };
+        function windowDebug(strInfo,lvl){
 
-	    /**
-	     * Trigger Exception
-	     */
-	    function triggerException(msg){
-	        $(self).triggerHandler({
-	            &#x27;type&#x27;:  &#x27;exception&#x27;,
-	            &#x27;error&#x27;: msg
-	        });
-	    };
+            var isDebugWindowShown = false;
+            if(!winDebug || winDebug.closed){
+                isDebugWindowShown = ShowDebugWindow();
+            } else {
+                isDebugWindowShown = true;
+            }
 
-	    /**
-	     * Get Last LMS Error Code
-	     * Error Code should be 0 if its anything else, a error has occurred
-	     * @returns {Number}
-	     */
-	    function getLastErrorCode(){
-	        var lms = API.path, // shortcut
-	            code = 0;
-	        // default error code
-	        if (lms) {
-	            switch (API.version) {
-	            case &quot;1.2&quot;:
-	                code = parseInt(lms.LMSGetLastError(), 10);
-	                break;
-	            case &quot;2004&quot;:
-	                code = parseInt(lms.GetLastError(), 10);
-	                break;
-	            default:
-	                // handle nonLMS?
-	                break;
-	            }
-	        }
-	        return code;
-	    };
+            if(isDebugWindowShown==false){
+                //pop-up window blocked
+                //Disable windowDebug
+                settings.windowDebug = false
+                debug(&quot;Window debug has been blocked&quot;,1);
+                debug(&quot;Debugging messages will be displayed in the console&quot;,2);
+                debug(strInfo,lvl);
+                return false;
+            }
 
-	    /**
-	     * Get Last LMS Error Message
-	     * Error Message associated by error code
-	     * @param n {Number} error code
-	     * @returns {String} error message
-	     */
-	    function getLastErrorMessage(n){
-	        var lms = API.path, // shortcut
-	            result = &#x27;No LMS Connectivity&#x27;;
-	        // default message
-	        if (lms) {
-	            switch (API.version) {
-	            case &quot;1.2&quot;:
-	                result = lms.LMSGetErrorString(n.toString());
-	                break;
-	            case &quot;2004&quot;:
-	                result = lms.GetErrorString(n.toString());
-	                break;
-	            default:
-	                // handle nonLMS?
-	                break;
-	            }
-	        }
-	        return String(result);
-	    };
+            var strLine;
+            strLine = (aryDebug.length+1) + &quot;: &quot; + strInfo;
+            aryDebug[aryDebug.length] = strLine;
 
-	    function getDiagnostic(n){
-	        var lms = API.path, // shortcut
-	            result = &#x27;No LMS Connectivity&#x27;;
-	        // default message
-	        if (lms) {
-	            switch (API.version) {
-	            case &quot;1.2&quot;:
-	                result = lms.LMSGetDiagnostic(n.toString());
-	                break;
-	            case &quot;2004&quot;:
-	                result = lms.GetDiagnostic(n.toString());
-	                break;
-	            default:
-	                // handle nonLMS?
-	                break;
-	            }
-	        }
-	        return String(result);
-	    };
+            if(winDebug &amp;&amp; !winDebug.closed){
+                winDebug.document.write(strLine + &quot;&lt;br&gt;\n&quot;);
+            }
 
-	    // End Private ////////////
+            return true;
+        };
 
+        function ShowDebugWindow(){
+            if (winDebug &amp;&amp; !winDebug.closed){
+                winDebug.close();
+            }
 
-	    // Public SCORM Calls /////
-	    /**
-	     * Get Value (SCORM Call)
-	     * Gets the cmi object value requested
-	     * @param n {String} CMI Object Path as String
-	     * @returns {String}
-	     * @event &#x27;getvalue&#x27;
-	     */
-	    this.getvalue = function(n){
-	        var v = null, // success
-	            lms = API.path, // lms shortcut
-	            ec = 0,// error code
-	            m  = &#x27;&#x27;, // error message
-	            d  = &#x27;&#x27;, // error diagnostic
-	            nn = null, // new number
-	            ig = false;// ignore
-	        if (API.isActive) {// it has initialized
-	            // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
-	            // Handy if you don&#x27;t want to go through all your content calls...
-	            switch (API.version) {
-	            case &quot;1.2&quot;:
-	                switch (n) {
-	                // SCORM 1.2 is just a comments string with a max char limit of 4096
-	                case &quot;cmi.comments_from_lms._count&quot;:
-	                case &quot;cmi.comments_from_learner._count&quot;:
-	                    ig = true;
-	                    break;
-	                case &quot;cmi.credit&quot;:
-	                    nn = &quot;cmi.core.credit&quot;;
-	                    break;
-	                case &quot;cmi.location&quot;:
-	                    nn = &quot;cmi.core.lesson_location&quot;;
-	                    break;
-	                case &quot;cmi.learner_name&quot;:
-	                    nn = &quot;cmi.core.student_name&quot;;
-	                    break;
-	                case &quot;cmi.learner_id&quot;:
-	                	nn = &quot;cmi.core.student_id&quot;;
-	                	break;
-	                case &quot;cmi.completion_threshold&quot;:
-	                    // unsupported
-	                    ig = true;
-	                    break;
-	                case &quot;cmi.entry&quot;:
-	                    nn = &quot;cmi.core.entry&quot;;
-	                    break;
-	                case &quot;cmi.mode&quot;:
-	                    nn = &quot;cmi.core.lesson_mode&quot;;
-	                    break;
-	                case &quot;cmi.exit&quot;:
-	                    nn = &quot;cmi.core.exit&quot;;
-	                    break;
-	                case &quot;cmi.score.raw&quot;:
-	                    nn = &quot;cmi.core.score.raw&quot;;
-	                    break;
-	                case &quot;cmi.score.min&quot;:
-	                    nn = &quot;cmi.core.score.min&quot;;
-	                    break;
-	                case &quot;cmi.score.max&quot;:
-	                    nn = &quot;cmi.core.score.max&quot;;
-	                    break;
-	                case &quot;cmi.scaled_passing_score&quot;:
-	                    nn = &quot;cmi.student_data.mastery_score&quot;;
-	                    break;
-	                case &quot;cmi.max_time_allowed&quot;:
-	                    nn = &quot;cmi.student_data.max_time_allowed&quot;;
-	                    break;
-	                case &quot;cmi.time_limit_action&quot;:
-	                    nn = &quot;cmi.student_data.time_limit_action&quot;;
-	                    break;
-	                case &quot;cmi.learner_preferences.audio_level&quot;:
-	                    nn = &quot;cmi.student_preferences.audio&quot;;
-	                    break;
-	                case &quot;cmi.learner_preferences.delivery_speed&quot;:
-	                    nn = &quot;cmi.student_preferences.speed&quot;;
-	                    break;
-	                case &quot;cmi.learner_preferences.language&quot;:
-	                    nn = &quot;cmi.student_preferences.language&quot;;
-	                    break;
-	                case &quot;cmi.learner_preferences.audio_captioning&quot;:
-	                    nn = &quot;cmi.student_preferences.text&quot;;
-	                    break;
-	                case &quot;cmi.success_status&quot;:
-	                case &quot;cmi.completion_status&quot;:
-	                    nn = &quot;cmi.core.lesson_status&quot;;
-	                    break;
-	                case &quot;cmi.session_time&quot;:
-	                    nn = &quot;cmi.core.session_time&quot;;
-	                    break;
-	                    // Possibly need more here, review further later.
-	                case &quot;cmi.suspend_data&quot;:
-	                    nn = n;
-	                    break;
-	                default:
-	                    nn = n;
-	                    break;
-	                }
-	                if (ig) {
-	                    return &#x27;false&#x27;;
-	                }
-	                v = lms.LMSGetValue(nn);
-	                break;
-	            case &quot;2004&quot;:
-	                v = lms.GetValue(n);
-	                break;
-	            default:
-	                // handle non-LMS fail-over (will return &#x27;false&#x27; below otherwise)?
-	                break;
-	            }
-	            ec = getLastErrorCode();
-	            m  = getLastErrorMessage(ec);
-	            d  = getDiagnostic(ec);
-	            // Clean up Error Codes that are non-critical (like date element not initialized)
-	            // Custom event Trigger getvalue
-	            $(self).triggerHandler({
-	                &#x27;type&#x27;: &quot;getvalue&quot;,
-	                &#x27;n&#x27;: n,
-	                &#x27;v&#x27;: v,
-	                &#x27;error&#x27;: {
-	                    &#x27;code&#x27;: ec,
-	                    &#x27;message&#x27;: m,
-	                    &#x27;diagnostic&#x27;: d
-	                }
-	            });
-	            if (ec === 0 || ec === 403) {
-	                // Clean up differences in LMS responses
-	                if (v === &#x27;undefined&#x27; || v === null || v === &#x27;null&#x27;) { // was typeof v
-	                    v = &quot;&quot;;
-	                }
-	                return String(v);
-	            }
-	            debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + m + &quot;\nDiagnostic: &quot; + d, 1);
-	            return &#x27;false&#x27;;
-	        }
-	        debug(n + &quot; Get Aborted, connection not initialized! &quot; + API.isActive, 2);
-	        return &#x27;false&#x27;;
-	    };
+            winDebug = window.open(&quot;&quot;, &quot;Debug&quot;, &quot;width=600,height=300,resizable,scrollbars&quot;);
 
-	    /**
-	     * Set Value (SCORM Call)
-	     * Sets the cmi object value by name
-	     * @param n {String} CMI Object Path as String
-	     * @param v {String} Value
-	     * @returns {String}
-	     * @event &#x27;setvalue&#x27;
-	     */
-	    this.setvalue = function(n,v){
-	        var s = &#x27;false&#x27;, // success
-	            lms = API.path, // lms shortcut
-	            ec = 0, // error code
-	            m = &#x27;&#x27;, // error message
-	            d = &#x27;&#x27;, // error diagnostic
-	            nn = null, // new number
-	            ig = false; // ignore
-	        // Security Consideration?
-	        // It may be worth some minor security later to validate this is being set from a authorized source.  This is lacking support old versions of IE however.
-	        //debug(&quot;The caller of this method is &quot; + arguments.callee.caller.caller.name, 4);  //arguments.callee.caller
-	        if (API.isActive) {// it has initialized
-	            // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
-	            // Handy if you don&#x27;t want to go through all your content calls...
-	            switch (API.version) {
-	            case &quot;1.2&quot;:
-	                API.mode = API.mode === &quot;&quot; ? lms.LMSGetValue(&#x27;cmi.core.lesson_mode&#x27;) : API.mode;
-	                if (API.mode === &quot;normal&quot;) {
-	                    switch (n) {
-	                    case &quot;cmi.location&quot;:
-	                        if (v.length &gt; 255) {
-	                            debug(&quot;Warning, your bookmark is over the limit!!&quot;, 2);
-	                        }
-	                        nn = &quot;cmi.core.lesson_location&quot;;
-	                        break;
-	                    case &quot;cmi.mode&quot;:
-	                        nn = &quot;cmi.core.lesson_mode&quot;;
-	                        break;
-	                    case &quot;cmi.exit&quot;:
-	                        nn = &quot;cmi.core.exit&quot;;
-	                        API.exit_type = v;
-	                        break;
-	                    case &quot;cmi.score.raw&quot;:
-	                        nn = &quot;cmi.core.score.raw&quot;;
-	                        break;
-	                    case &quot;cmi.score.min&quot;:
-	                        nn = &quot;cmi.core.score.min&quot;;
-	                        break;
-	                    case &quot;cmi.score.max&quot;:
-	                        nn = &quot;cmi.core.score.max&quot;;
-	                        break;
-	                    case &quot;cmi.score.scaled&quot;:
-	                        ig = true;
-	                        break;
-	                    case &quot;cmi.success_status&quot;:
-	                    case &quot;cmi.completion_status&quot;:
-	                        nn = &quot;cmi.core.lesson_status&quot;;
-	                        API.data.completion_status = v;
-	                        // set local status
-	                        break;
-	                    case &quot;cmi.scaled_passing_score&quot;:
-	                        nn = &quot;cmi.student_data.mastery_score&quot;;
-	                        break;
-	                    case &quot;cmi.learner_preferences.audio_level&quot;:
-	                        nn = &quot;cmi.student_preferences.audio&quot;;
-	                        break;
-	                    case &quot;cmi.learner_preferences.delivery_speed&quot;:
-	                        nn = &quot;cmi.student_preferences.speed&quot;;
-	                        break;
-	                    case &quot;cmi.learner_preferences.language&quot;:
-	                        nn = &quot;cmi.student_preferences.language&quot;;
-	                        break;
-	                    case &quot;cmi.learner_preferences.audio_captioning&quot;:
-	                        nn = &quot;cmi.student_preferences.text&quot;;
-	                        break;
-	                    case &quot;cmi.session_time&quot;:
-	                        nn = &quot;cmi.core.session_time&quot;;
-	                        break;
-	                        // Possibly need more here, review further later.
-	                    case &quot;cmi.total_time&quot;:
-	                        nn = &quot;cmi.core.total_time&quot;;
-	                        break;
-	                    case &quot;cmi.suspend_data&quot;:
-	                        if (v.length &gt; 4096) {
-	                            debug(&quot;Warning, your suspend data is over the limit!!&quot;, 2);
-	                        }
-	                        nn = n;
-	                        break;
-	                    default:
-	                        nn = n;
-	                        break;
-	                    }
-	                    if (ig) {
-	                        return &#x27;false&#x27;;
-	                    }
-	                    debug(&quot;SCORM 1.2 LMS SetValue with n: &quot; + nn + &quot; and v: &quot; + v, 3);
-	                    s = lms.LMSSetValue(nn, v); //makeBoolean(lms.LMSSetValue(nn, v));
-	                } else {
-	                    debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
-	                    return &#x27;false&#x27;;
-	                }
-	                break;
-	            case &quot;2004&quot;:
-	                API.mode = API.mode === &quot;&quot; ? lms.GetValue(&#x27;cmi.mode&#x27;) : API.mode;
-	                if (API.mode === &quot;normal&quot;) {
-	                    switch (n) {
-	                    case &quot;cmi.location&quot;:
-	                        if (v.length &gt; 1000) {
-	                            debug(&quot;Warning, your bookmark is over the limit!!&quot;, 2);
-	                        }
-	                        break;
-	                    case &quot;cmi.completion_status&quot;:
-	                        API.data.completion_status = v;
-	                        // set local status
-	                        break;
-	                    case &quot;cmi.success_status&quot;:
-	                        API.data.success_status = v;
-	                        // set local status
-	                        break;
-	                    case &quot;cmi.exit&quot;:
-	                        API.data.exit_type = v;
-	                        // set local status
-	                        break;
-	                    case &quot;suspend_data&quot;:
-	                        if (v.length &gt; 64000) {
-	                            debug(&quot;Warning, your suspend data is over the limit!!&quot;, 2);
-	                        }
-	                        break;
-	                    default:
-	                        // any other handling?
-	                        break;
-	                    }
-	                    debug(&quot;SCORM 2004 LMS SetValue with n: &quot; + n + &quot; and v: &quot; + v, 3);
-	                    s = lms.SetValue(n, v); //makeBoolean(lms.SetValue(n, v));
-	                } else {
-	                    debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
-	                    return &#x27;false&#x27;;
-	                }
-	                break;
-	            default:
-	                // handle non-LMS?
-	                break;
-	            }
-	            ec = getLastErrorCode();
-	            m = getLastErrorMessage(ec);
-	            d = getDiagnostic(ec);
-	            // Custom Event Trigger setvalue
-	            $(self).triggerHandler({
-	                &#x27;type&#x27;: &quot;setvalue&quot;,
-	                &#x27;n&#x27;: n,
-	                &#x27;v&#x27;: v,
-	                &#x27;error&#x27;: {
-	                    &#x27;code&#x27;: ec,
-	                    &#x27;message&#x27;: m,
-	                    &#x27;diagnostic&#x27;: d
-	                }
-	            });
-	            // Ensure Error Codes not critical
-	            if (ec === 0 || ec === 403) {
-	                return s;
-	            }
-	            debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for &quot; + n + &quot;\nDiagnostic: &quot; + getDiagnostic(ec), 1);
-	            return s;
-	        }
-	        debug(n + &quot; Set Aborted, connection not initialized! Locate where you called it after you Terminated.&quot;, 2);
-	        return &#x27;false&#x27;;
-	    };
+            if(typeof winDebug == &quot;undefined&quot;){
+                //pop-up window blocked
+                return false;
+            }
 
-	    /**
-	     * Commit (SCORM Call)
-	     * Commits the Data to the Server via the LMS API.  SCORM Time done by default.
-	     * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
-	     */
-	    this.commit = function(){
-	        var s = &#x27;false&#x27;,
-	            lms = API.path,
-	            ec = 0,
-	            session_secs,
-	            saveDate = new Date();
+            winDebug.document.write(aryDebug.join(&quot;&lt;br&gt;\n&quot;));
 
-	        if(API.isActive){
-	        	// it has been initialized
-	        	session_secs = (saveDate.getTime() - settings.startDate.getTime()) / 1000;
-	            debug(&quot;Committing data&quot;, 3);
+            winDebug.document.close();
 
-	            switch (API.version) {
-	            case &quot;1.2&quot;:
-	                self.setvalue(&quot;cmi.core.session_time&quot;, centisecsToSCORM12Duration(session_secs * 100));
-	                s = lms.LMSCommit(&quot;&quot;); //makeBoolean(lms.LMSCommit(&quot;&quot;));
-	                break;
-	            case &quot;2004&quot;:
-	                self.setvalue(&quot;cmi.session_time&quot;, centisecsToISODuration(session_secs * 100, true));
-	                s = lms.Commit(&quot;&quot;); //makeBoolean(lms.Commit(&quot;&quot;));
-	                break;
-	            default:
-	                // handle non-LMS?
-	                break;
-	            }
+            winDebug.focus();
 
-	            ec = getLastErrorCode();
-	            if (ec === 0) {
-	                return s;
-	            }
-	            debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
-	            return &#x27;false&#x27;;
-	        }
+            return true;
+        };
 
-	        debug(&quot;Commit Aborted, connection not initialized!&quot;, 2);
-	        return &#x27;false&#x27;;
-	    };
+        /**
+         * Find API
+         * API_1484_11 or API for SCORM 2004 or 1.2
+         * @param win {object} Window level
+         */
+        function findAPI(win){
+            var attempts = 0, limit = 500;
+            while ((!win.API &amp;&amp; !win.API_1484_11) &amp;&amp; (win.parent) &amp;&amp; (win.parent !== win) &amp;&amp; (attempts &lt;= limit)){
+                attempts += 1;
+                win = win.parent;
+            }
+            if(win.API_1484_11){ //SCORM 2004-specific API.
+                API.version = &quot;2004&quot;;
+                //Set version
+                API.path = win.API_1484_11;
+            } else if(win.API){ //SCORM 1.2-specific API
+                API.version = &quot;1.2&quot;;
+                //Set version
+                API.path = win.API;
+            } else {
+                return false;
+            }
+            return true;
+        };
 
-	    /**
-	     * Initialize  (SCORM Call)
-	     * Initializes the SCO
-	     * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
-	     */
-	    this.initialize = function(){
-	        debug(&quot;Initialize Called. \n\tversion: &quot; + settings.version + &quot;\n\tModified: &quot; + settings.modifiedDate, 3);
-	        var s = false, // success boo
-	            lms = API.path, // shortcut
-	            ec = 0;
-	        // error code
-	        if (!API.isActive) {
-	            if (lms) {
-	                switch (API.version) {
-	                case &quot;1.2&quot;:
-	                    s = makeBoolean(lms.LMSInitialize(&quot;&quot;));
-	                    break;
-	                case &quot;2004&quot;:
-	                    s = makeBoolean(lms.Initialize(&quot;&quot;));
-	                    break;
-	                default:
-	                    // handle local mode ?
-	                    break;
-	                }
-	                ec = getLastErrorCode();
+        // SCORM Time centric to SCORM 2004 and 1.2 Compatibility
+        /**
+         * Centiseconds To ISO Duration
+         * Borrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil &quot;with&quot; statement
+         * @param n {Number} Total Seconds
+         * @param bPrecise {Boolean} Only Set true if were dealing with months, years (highly unlikely)
+         * @returns {String} SCORM 2004 Time PT0H0M0S Format
+         */
+        function centisecsToISODuration(n,bPrecise){
+            /* Note: SCORM and IEEE 1484.11.1 require centisec precision
+             Parameters:
+             n = number of centiseconds
+             bPrecise = optional parameter; if true, duration will
+             be expressed without using year and/or month fields.
+             If bPrecise is not true, and the duration is long,
+             months are calculated by approximation based on average number
+             of days over 4 years (365*4+1), not counting the extra days
+             for leap years. If a reference date was available,
+             the calculation could be more precise, but becomes complex,
+             since the exact result depends on where the reference date
+             falls within the period (e.g. beginning, end or ???)
+             1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+             1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
+             1 day = 8640000 centiseconds
+             1 hour = 360000 centiseconds
+             1 minute = 6000 centiseconds */
+            var str = &quot;P&quot;,
+                nCs = Math.max(n, 0),
+                nY = 0,
+                nM = 0,
+                nD = 0,
+                nH,
+                nMin;
+            // Next set of operations uses whole seconds
+            //with (Math) { //argumentatively considered harmful
+            nCs = Math.round(nCs);
+            if (bPrecise === true) {
+                nD = Math.floor(nCs / 8640000);
+            } else {
+                nY = Math.floor(nCs / 3155760000);
+                nCs -= nY * 3155760000;
+                nM = Math.floor(nCs / 262980000);
+                nCs -= nM * 262980000;
+                nD = Math.floor(nCs / 8640000);
+            }
+            nCs -= nD * 8640000;
+            nH = Math.floor(nCs / 360000);
+            nCs -= nH * 360000;
+            nMin = Math.floor(nCs / 6000);
+            nCs -= nMin * 6000;
+            //}
+            // Now we can construct string
+            if (nY &gt; 0) {
+                str += nY + &quot;Y&quot;;
+            }
+            if (nM &gt; 0) {
+                str += nM + &quot;M&quot;;
+            }
+            if (nD &gt; 0) {
+                str += nD + &quot;D&quot;;
+            }
+            if ((nH &gt; 0) || (nMin &gt; 0) || (nCs &gt; 0)) {
+                str += &quot;T&quot;;
+                if (nH &gt; 0) {
+                    str += nH + &quot;H&quot;;
+                }
+                if (nMin &gt; 0) {
+                    str += nMin + &quot;M&quot;;
+                }
+                if (nCs &gt; 0) {
+                    str += (nCs / 100) + &quot;S&quot;;
+                }
+            }
+            if (str === &quot;P&quot;) {
+                str = &quot;PT0H0M0S&quot;;
+            }
+            // technically PT0S should do but SCORM test suite assumes longer form.
+            return str;
+        };
 
-	                // Check for any errors previously
-	                if (s &amp;&amp; ec === 0) {
-	                    API.isActive = true;
-	                    API.data.completion_status = self.getvalue(&#x27;cmi.completion_status&#x27;);
-	                    settings.startDate = new Date();
-	                    //self.setvalue(&#x27;cmi.exit&#x27;, settings.exit_type); // Consider setting exit type sooner by default?
-	                    // Need to set Start Date
-	                    debug(&quot;SCO is initialized.&quot;, 3);
-	                    switch (API.data.completion_status) {
-	                    case &quot;not attempted&quot;:
-	                    case &quot;unknown&quot;:
-	                        self.setvalue(&quot;cmi.completion_status&quot;, &quot;incomplete&quot;);
-	                        break;
-	                    default:
-	                        if(API.data.completion_status === &#x27;&#x27;){
-	                            triggerException(&quot;LMS compatibility issue, Please notify a administrator.  Completion Status is empty.&quot;);
-	                        }
-	                        break;
-	                    }
-	                    return &#x27;true&#x27;;
-	                }
-	                debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Initialize.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
-	            } else {
-	                debug(&quot;Aborted, LMS could not be located!.&quot;, 2);
-	            }
-	        } else {
-	            debug(&quot;Aborted, connection already initialized!.&quot;, 2);
-	        }
-	        return &#x27;false&#x27;;
-	    };
+        /**
+         * ISO Duration to Centisecond
+         * @param str
+         * @return {Number}
+         */
+        function ISODurationToCentisec(str){
+            // Only gross syntax check is performed here
+            // Months calculated by approximation based on average number
+            // of days over 4 years (365*4+1), not counting the extra days
+            // in leap years. If a reference date was available,
+            // the calculation could be more precise, but becomes complex,
+            // since the exact result depends on where the reference date
+            // falls within the period (e.g. beginning, end or ???)
+            // 1 year ~ (365*4+1)/4*60*60*24*100 = 3155760000 centiseconds
+            // 1 month ~ (365*4+1)/48*60*60*24*100 = 262980000 centiseconds
+            // 1 day = 8640000 centiseconds
+            // 1 hour = 360000 centiseconds
+            // 1 minute = 6000 centiseconds
+            var aV = [0, 0, 0, 0, 0, 0],
+                bErr = !!((str.indexOf(&quot;P&quot;) !== 0)),
+                bTFound = false,
+                aT = [&quot;Y&quot;, &quot;M&quot;, &quot;D&quot;, &quot;H&quot;, &quot;M&quot;, &quot;S&quot;],
+                p = 0,
+                i = 0,
+                len;
+            if (!bErr) {
+                str = str.substr(1); //get past the P
+                len = aT.length;
+                i = 0;
+                //for (i = 0; i &lt; len; i += 1) {
+                while (i &lt; len) {
+                    if (str.indexOf(&quot;T&quot;) === 0) {
+                        str = str.substr(1);
+                        i = Math.max(i, 3);
+                        bTFound = true;
+                    }
+                    p = str.indexOf(aT[i]);
+                    if (p &gt; -1) {
+                        /*jslint continue: true */
+                        if ((i === 1) &amp;&amp; (str.indexOf(&quot;T&quot;) &gt; -1) &amp;&amp; (str.indexOf(&quot;T&quot;) &lt; p)) {
+                            continue;
+                        }
+                        /*jslint continue: false */
+                        if (aT[i] === &quot;S&quot;) {
+                            aV[i] = parseFloat(str.substr(0, p));
+                        } else {
+                            aV[i] = parseInt(str.substr(0, p), 10);
+                        }
+                        if (isNaN(aV[i])) {
+                            bErr = true;
+                            break;
+                        }
+                        if ((i &gt; 2) &amp;&amp; (!bTFound)) {
+                            bErr = true;
+                            break;
+                        }
+                        str = str.substr(p + 1);
+                    }
+                    i += 1;
+                }
+                bErr = !!(((!bErr) &amp;&amp; (len !== 0)));
+            }
+            if (bErr) {
+                return 0;
+            }
+            return aV[0] * 3155760000 + aV[1] * 262980000
+                + aV[2] * 8640000 + aV[3] * 360000 + aV[4] * 6000
+                + Math.round(aV[5] * 100);
+        };
 
-	    /**
-	     * Terminate (SCORM Call)
-	     * Terminates the SCO
-	     * @returns {Boolean}
-	     */
-	    this.terminate = function(){
-	        var s = false, lms = API.path, ec = 0;
-	        debug(&quot;Terminating &quot; + API.isActive + &quot; &quot; + lms, 4);
-	        if(API.isActive){
-	            if(lms){
-	                // if not completed or passed, suspend the content.
-	                debug(&quot;completion_status = &quot; + API.data.completion_status + &quot;|| success_status = &quot; + API.data.success_status, 3);
-	                self.commit(); // Store Data before Terminating
-	                switch (API.version) {
-	                case &quot;1.2&quot;:
-	                    s = lms.LMSFinish(&quot;&quot;); //makeBoolean(lms.LMSFinish(&quot;&quot;));
-	                    break;
-	                case &quot;2004&quot;:
-	                    s = lms.Terminate(&quot;&quot;); //makeBoolean(lms.Terminate(&quot;&quot;));
-	                    break;
-	                default:
-	                    // handle non-LMS?
-	                    break;
-	                }
-	                if(makeBoolean(s)){
-	                    debug(&quot;Terminated.&quot;, 3);
-	                    API.isActive = false;
-	                }else{
-	                    ec = getLastErrorCode();
-	                    debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
-	                }
-	            }else{
-	                debug(&quot;Lost connection to LMS&quot;, 2);
-	            }
-	        } else {
-	            debug(&quot;Terminate Aborted, connection not initialized!&quot;, 2);
-	        }
-	        return s;
-	    };
+        /**
+         * Pad Time
+         * Pads time with proper formatting (double digits)
+         */
+        function padTime(n){
+            return n &lt; 10 ? &#x27;0&#x27; + n : n;
+        };
 
-	    // End SCORM Public Calls /////////////
+        /**
+         * ISO 8601 Date String UTC
+         * Converts date object into ISO 8601 standard
+         * returns {String} ISO 8601 + UTC
+         */
+        function isoDateToStringUTC(d){
+            return d.getUTCFullYear() + &#x27;-&#x27; + padTime(d.getUTCMonth() + 1) + &#x27;-&#x27; + padTime(d.getUTCDate()) + &#x27;T&#x27; + padTime(d.getUTCHours()) + &#x27;:&#x27; + padTime(d.getUTCMinutes()) + &#x27;:&#x27; + padTime(d.getUTCSeconds()) + &quot;.&quot; + Math.round((d.getUTCMilliseconds() / 1000) % 1000) + &#x27;Z&#x27;;
+        };
+
+        /**
+         * ISO 8601 Date String
+         * Concerts date into ISO 8601 Standard
+         * @returns {String} ISO 8601
+         */
+        function isoDateToString(d){
+            var offset = d.getTimezoneOffset() &gt; 0 ? &#x27;-&#x27; : &#x27;+&#x27;;
+            return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds()) + &quot;.&quot; + Math.round((d.getMilliseconds() / 1000) % 1000) + offset + padTime(d.getTimezoneOffset() / 60) + &#x27;:00&#x27;;
+            //return d.getFullYear() + &#x27;-&#x27; + padTime(d.getMonth() + 1) + &#x27;-&#x27; + padTime(d.getDate()) + &#x27;T&#x27; + padTime(d.getHours()) + &#x27;:&#x27; + padTime(d.getMinutes()) + &#x27;:&#x27; + padTime(d.getSeconds());
+        };
+
+        /**
+         * ISO 8601 String to Date
+         * Not extremely clear yet if this is needed at a SCO level.  If not I&#x27;ll remove it later.
+         * @param str {String} ISO8601
+         * @return {Object} Date Object or false
+         */
+        function isoStringToDate(str){
+            var MM = [&quot;January&quot;, &quot;February&quot;, &quot;March&quot;, &quot;April&quot;, &quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;, &quot;September&quot;, &quot;October&quot;, &quot;November&quot;, &quot;December&quot;],
+                d,
+                uoffset,
+                offset = 0,
+                mil = 0,
+                dd;
+            /*jslint unparam: true*/
+            switch (settings.time_type) {
+            case &quot;UTC&quot;:
+                d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))(|Z)/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
+                    return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
+                });
+                dd = new Date.UTC(d);
+                return dd;
+            case &quot;GMT&quot;:
+                d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(?:\.(\d+))([\+|\-]\d+:\d+)/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec, $Ms, $Offset) {
+                    offset = parseInt($Offset.substring(1, $Offset.length), 10) * 60 * 60 * 60;
+                    mil = $Ms;
+                    return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
+                    //return $Year + &quot;,&quot; + ($Month - 1) + &quot;,&quot; + $Day + &quot;,&quot; + $Hour + &quot;,&quot; + $Min + &quot;,&quot; + $Sec + &quot;,&quot; + $Ms;
+                });
+                // At this point we have to convert the users offset to the recorded offset to set the date properly.
+                dd = new Date(d);
+                uoffset = dd.getTimezoneOffset() * 60 * 60;
+                if (uoffset !== offset) {
+                    dd = new Date(dd.getTime() + offset + uoffset);
+                    dd.setMilliseconds(mil);
+                }
+                return dd;
+            default:
+                d = str.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})/, function ($0, $Year, $Month, $Day, $Hour, $Min, $Sec) {
+                    return MM[$Month - 1] + &quot; &quot; + $Day + &quot;, &quot; + $Year + &quot; &quot; + $Hour + &quot;:&quot; + $Min + &quot;:&quot; + $Sec;
+                });
+                dd = new Date(d);
+                return dd;
+            }
+        };
+
+        /**
+         * Centiseconds To SCORM 1.2 Duration
+         * Borrowed from Claude Ostyn, but touched up for JSLint/JavaScript and evil &quot;with&quot; statement
+         * @param n {Number} Total Seconds
+         * @returns {String} SCORM 2004 Time PT0H0M0S Format
+         */
+        function centisecsToSCORM12Duration(n){
+            // Format is [HH]HH:MM:SS[.SS]
+            var //bTruncated = false,
+                str,
+                nH,
+                nCs,
+                nM,
+                nS;
+            //with (Math) { agrumentavely considered harmful
+            n = Math.round(n);
+            nH = Math.floor(n / 360000);
+            nCs = n - nH * 360000;
+            nM = Math.floor(nCs / 6000);
+            nCs = nCs - nM * 6000;
+            nS = Math.floor(nCs / 100);
+            nCs = nCs - nS * 100;
+            //}
+            /*if (nH &gt; 9999) {
+             nH = 9999;
+             bTruncated = true;
+             }*/
+            str = &quot;0000&quot; + nH + &quot;:&quot;;
+            str = str.substr(str.length - 5, 5);
+            if (nM &lt; 10) {
+                str += &quot;0&quot;;
+            }
+            str += nM + &quot;:&quot;;
+            if (nS &lt; 10) {
+                str += &quot;0&quot;;
+            }
+            str += nS;
+            if (nCs &gt; 0) {
+                str += &quot;.&quot;;
+                if (nCs &lt; 10) {
+                    str += &quot;0&quot;;
+                }
+                str += nCs;
+            }
+            //if (bTruncated) alert (&quot;Hours truncated to 9999 to fit HHHH:MM:SS.SS format&quot;)
+            return str;
+        };
 
 
-	    // Start Public Utility based Support for SCORM Calls
-	    /**
-	     * Get Objective By ID
-	     * This is fun, they make you go fish the objectives array integer by the ID.
-	     * Objectives do not appear to be &#x27;journaled&#x27; as object identifiers have to be unique.
-	     * As this method is seeking information it may trigger SCORM Errors on the LMS that hint that
-	     * objects haven&#x27;t been defined yet.  This is perfectly normal.
-	     * @param id {*} Alpha-Numeric Identification of the Interaction you&#x27;re looking for
-	     * @returns {String} &#x27;false&#x27; if nothing found or id
-	     */
-	    this.getObjectiveByID = function(id){
-	        var count = self.getvalue(&quot;cmi.objectives._count&quot;), // obtain total objectives
-	            i,
-	            tID;
-	        scorm.debug(&quot;Set Objective - Begin search, Objective count is &quot; + count, 4);
-	        if (count === &#x27;&#x27; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
-	            return &#x27;false&#x27;;
-	        }
-	        count = parseInt(count, 10) - 1; // convert from string
-	        i = count;
-	        //for (i = count; i &gt;= 0; i -= 1) {
-	        while (i &gt;= 0) {
-	            tID = self.getvalue(&quot;cmi.objectives.&quot; + i + &quot;.id&quot;);
-	            //scorm.debug(&quot;Objective ID Check for &quot; + i + &quot; : &quot; + id + &quot; vs &quot; + tID, 4);
-	            if (id === tID) {
-	                scorm.debug(&quot;Objective ID Match on &quot; + i, 4);
-	                return i;
-	            }
-	            i -= 1;
-	        }
-	        return &#x27;false&#x27;;
-	    };
+        // End SCORM Time Handlers /////////////////////////////
+        
+        /**
+         * Make Boolean
+         * Turns &#x27;yes&#x27;, &#x27;no&#x27;, &#x27;true&#x27;, &#x27;false&#x27;, &#x27;0&#x27;, &#x27;1&#x27; into true/false
+         * @param str {String} value to turn to boolean
+         * @returns {Boolean}
+         */
+        function makeBoolean(str){
+            if (str === undefined) {
+                debug(&quot;makeBoolean was given empty string, converting to false&quot;, 2);
+                return false;
+            }
+            if (str === true || str === false) {
+                return Boolean(str);
+            }
+            switch (str.toLowerCase()) {
+            case &quot;true&quot;:
+            case &quot;yes&quot;:
+            case &quot;1&quot;:
+                return true;
+            case &quot;false&quot;:
+            case &quot;no&quot;:
+            case &quot;0&quot;:
+            case null:
+                return false;
+            default:
+                return Boolean(str);
+            }
+        };
 
-	    /**
-	     * Get Interaction By ID
-	     * This is fun, they make you go fish the interactions array integer by the ID.
-	     * I included this in the main SCORM API because this functionality should be stock.  You&#x27;re
-	     * either going to journal these (history) or treat them like states that you update.  You must decide that.
-	     * @param id {*} Alpha-Numeric Identification of the Interaction you&#x27;re looking for
-	     * @returns {String} &#x27;false&#x27; if nothing found or id
-	     */
-	    this.getInteractionByID = function(id){
-	        var count = self.getvalue(&quot;cmi.interactions._count&quot;), // obtain total objectives
-	            i,
-	            tID;
-	        if (count === &quot;&quot; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
-	            return &#x27;false&#x27;;
-	        }
-	        count = parseInt(count, 10) - 1; // convert from string
-	        scorm.debug(&quot;Getting interactions from count &quot; + count, 4);
-	        i = count;
-	        //for (i = count; i &gt;= 0; i -= 1) {
-	        while (i &gt;= 0) {
-	            tID = this.getvalue(&quot;cmi.interactions.&quot; + i + &quot;.id&quot;);
-	            //scorm.debug(&quot;Interaction ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
-	            if (id === tID) {
-	                scorm.debug(&quot;Interaction By ID Returning &quot; + i);
-	                return i;
-	            }
-	            i -= 1;
-	        }
-	        return &#x27;false&#x27;;
-	    };
+        /**
+         * Trigger Warning (internal to this API)
+         * Throws a console log when a SCORM API Error occurs
+         * @returns {Boolean}
+         */
+        function triggerWarning(n){
+            debug(error[n],2);
+            return true;
+        };
 
-	    /**
-	     * Get interaction.n.objective By ID
-	     * You can have multiple objectives assigned to a interaction.
-	     */
-	    this.getInteractionObjectiveByID = function(n,id){
-	        var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives._count&quot;), // obtain total objectives
-	            i,
-	            tID;
-	        if (count === &quot;&quot; || count === &#x27;false&#x27;) {
-	            return &#x27;0&#x27;;
-	        }
-	        count = parseInt(count, 10) - 1; // convert from string
-	        scorm.debug(&quot;Getting interaction objectives from count &quot; + count, 4);
-	        i = count;
-	        //for (i = count; i &gt;= 0; i -= 1) {
-	        while (i &gt;= 0) {
-	            tID = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives.&quot; + i + &quot;.id&quot;);
-	            //scorm.debug(&quot;Interaction Objective ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
-	            if (id === tID) {
-	                scorm.debug(&quot;Interaction Objective By ID Returning &quot; + i);
-	                return i;
-	            }
-	            i -= 1;
-	        }
-	        return &#x27;false&#x27;;
-	    };
+        /**
+         * Trigger Exception
+         */
+        function triggerException(msg){
+            $(self).triggerHandler({
+                &#x27;type&#x27;:  &#x27;exception&#x27;,
+                &#x27;error&#x27;: msg
+            });
+        };
 
-	    /**
-	     * Get interaction.n.correct_responses By pattern
-	     * You can have multiple correct responses assigned to a interaction.
-	     */
-	    this.getInteractionCorrectResponsesByPattern = function(n,pattern){
-	        var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses._count&quot;), // obtain total correct_responses
-	            i,
-	            p;
-	        if (count === &quot;&quot; || count === &#x27;false&#x27;) {
-	            scorm.debug(&quot;Correct Responses pattern was empty or false&quot;, 4);
-	            return &#x27;0&#x27;; // never created before so go with 0
-	        }
-	        count = parseInt(count, 10) - 1; // convert from string
-	        scorm.debug(&quot;Getting interaction correct responses from count &quot; + count, 4);
-	        i = count;
-	        //for (i = count; i &gt;= 0; i -= 1) {
-	        while (i &gt;= 0) {
-	            p = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses.&quot; + i + &quot;.pattern&quot;);
-	            //scorm.debug(&quot;Interaction Correct Responses Pattern Check for &quot; + i + &quot; : &quot; + p + &quot; vs &quot; + pattern, 4);
-	            if (pattern === p) {
-	                scorm.debug(&quot;Interaction Correct Responses By Pattern Returning &quot; + i);
-	                return &quot;match&quot;;
-	            }
-	            i -= 1;
-	        }
-	        return &#x27;false&#x27;;
-	    };
+        /**
+         * Get Last LMS Error Code
+         * Error Code should be 0 if its anything else, a error has occurred
+         * @returns {Number}
+         */
+        function getLastErrorCode(){
+            var lms = API.path, // shortcut
+                code = 0;
+            // default error code
+            if (lms) {
+                switch (API.version) {
+                case &quot;1.2&quot;:
+                    code = parseInt(lms.LMSGetLastError(), 10);
+                    break;
+                case &quot;2004&quot;:
+                    code = parseInt(lms.GetLastError(), 10);
+                    break;
+                default:
+                    // handle nonLMS?
+                    break;
+                }
+            }
+            return code;
+        };
 
-	    // End SCORM Public Utilities
+        /**
+         * Get Last LMS Error Message
+         * Error Message associated by error code
+         * @param n {Number} error code
+         * @returns {String} error message
+         */
+        function getLastErrorMessage(n){
+            var lms = API.path, // shortcut
+                result = &#x27;No LMS Connectivity&#x27;;
+            // default message
+            if (lms) {
+                switch (API.version) {
+                case &quot;1.2&quot;:
+                    result = lms.LMSGetErrorString(n.toString());
+                    break;
+                case &quot;2004&quot;:
+                    result = lms.GetErrorString(n.toString());
+                    break;
+                default:
+                    // handle nonLMS?
+                    break;
+                }
+            }
+            return String(result);
+        };
 
+        function getDiagnostic(n){
+            var lms = API.path, // shortcut
+                result = &#x27;No LMS Connectivity&#x27;;
+            // default message
+            if (lms) {
+                switch (API.version) {
+                case &quot;1.2&quot;:
+                    result = lms.LMSGetDiagnostic(n.toString());
+                    break;
+                case &quot;2004&quot;:
+                    result = lms.GetDiagnostic(n.toString());
+                    break;
+                default:
+                    // handle nonLMS?
+                    break;
+                }
+            }
+            return String(result);
+        };
 
-	    // Internal API Public Calls //////////
-	    /**
-	     * Init (Internal API)
-	     * Initializes the SCORM API, and locates the LMS API
-	     * @returns {Boolean}
-	     */
-	    this.init = function(){
-	        // Search for LMS API
-	        var win;
-	        try {
-	            win = window.parent;
-	            if (win &amp;&amp; win !== window) {
-	                findAPI(window.parent);
-	            }
-	        } catch (e) {/* Cross Domain issue */
-	            debug(e, 1);
-	        }
-	        if (!API.path) {
-	            try {
-	                win = window.top.opener;
-	                findAPI(win);
-	            } catch (ee) {/* Cross domain issue */
-	                debug(ee, 1);
-	            }
-	        }
-	        if (API.path) {
-	            API.connection = true;
-	            return true;
-	        }
-	        debug(&quot;I was unable to locate an API for communication&quot;, 2);
-	        if (settings.use_standalone) {
-	            // Create Local API in SCORM 2004
-	            debug(&quot;If you included Local_API_1484_11 I&#x27;ll mimic the LMS.  If not, all SCORM calls will fail.&quot;, 4);
-	            settings.standalone = true;
-	            API.version = &quot;2004&quot;;
-	            // May or may not be provided (standalone) if not, this is null (DOA)
-	            API.path = typeof Local_API_1484_11 === &#x27;function&#x27; ? new Local_API_1484_11({cmi: settings.cmi}) : null;
-	            $(API.path).on(&#x27;StoreData&#x27;, function (e) {
-	                $(self).triggerHandler({
-	                    type:        &#x27;StoreData&#x27;,
-	                    runtimedata: e.runtimedata
-	                });
-	            });
-	            return true;
-	        }
-	        return false;
-	    };
-
-	    /**
-	     * Get Last Error (Internal API)
-	     * Converts error integer to Message String
-	     * @param n {String} name
-	     * @returns value {String}
-	     */
-	    this.getLastError = function(n){
-	        return error[n];
-	    };
-
-	    /**
-	     * Is LMS Connected
-	     * Will tell you if LMS is truly connected or not.  You may be running locally.
-	     * @return {Boolean}
-	     */
-	    this.isLMSConnected = function(){
-	        return API.connection;
-	    };
-
-	    /**
-	     * Set (Internal API)
-	     * This locally sets values local to this API
-	     * @param n {String} name
-	     * @param v (String,Number,Object,Array,Boolean} value
-	     */
-	    this.set = function(n,v){
-	        //debug(&quot;set &quot; + n, 3);
-	        // May need to maintain read-only perms here, case them out as needed.
-	        switch (n) {
-	        case &quot;version&quot;:
-	        case &quot;createDate&quot;:
-	        case &quot;modifiedDate&quot;:
-	        case &quot;prefix&quot;:
-	            triggerWarning(405);
-	            return false;
-	            //break;
-	        case &quot;isActive&quot;:
-	            API.isActive = v;
-	            settings[n] = v;
-	            break;
-	        case &quot;startDate&quot;:
-	            settings[n] = new Date(v);
-	            // Need to set Start Date if forcing isActive!
-	            break;
-	        default:
-	            settings[n] = v;
-	            break;
-	        }
-	        return (isError !== 0);
-	    };
-
-	    /**
-	     * Get (Internal API)
-	     * This locally gets values local to this API
-	     * @param n {String} name
-	     * @returns {*} value or {Boolean} false
-	     */
-	    this.get = function(n){
-	        //debug(&quot;get &quot; + n, 3);
-	        if (settings[n] === undefined) {
-	            triggerWarning(404);
-	            return false;
-	        }
-	        return settings[n];
-	    };
-
-	    /**
-	     * Hook for External Plugins like Flash to set Time
-	     * Public to Private API&#x27;s
-	     */
-	    this.centisecsToSCORM12Duration = centisecsToSCORM12Duration;
-	    this.centisecsToISODuration = centisecsToISODuration;
-	    this.ISODurationToCentisec = ISODurationToCentisec;
-	    this.isoDateToStringUTC = isoDateToStringUTC;
-	    this.isoDateToString = isoDateToString;
-	    this.isoStringToDate = isoStringToDate;
-	    this.makeBoolean = makeBoolean;
-	    this.debug = debug;
-	    this.settings = settings;
-	    this.API = API;
-	    // Self Initialize, note you could make this call outside, but later I decided to do it by default.
-	    this.init();
-	};
+        // End Private ////////////
 
 
-	return {
-		init 				: init,
-		getAPIInstance		: getAPIInstance,
-		getLMSAPIInstance	: getLMSAPIInstance
-	};
+        // Public SCORM Calls /////
+        /**
+         * Get Value (SCORM Call)
+         * Gets the cmi object value requested
+         * @param n {String} CMI Object Path as String
+         * @returns {String}
+         * @event &#x27;getvalue&#x27;
+         */
+        this.getvalue = function(n){
+            var v = null, // success
+                lms = API.path, // lms shortcut
+                ec = 0,// error code
+                m  = &#x27;&#x27;, // error message
+                d  = &#x27;&#x27;, // error diagnostic
+                nn = null, // new number
+                ig = false;// ignore
+            if (API.isActive) {// it has initialized
+                // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
+                // Handy if you don&#x27;t want to go through all your content calls...
+                switch (API.version) {
+                case &quot;1.2&quot;:
+                    switch (n) {
+                    // SCORM 1.2 is just a comments string with a max char limit of 4096
+                    case &quot;cmi.comments_from_lms._count&quot;:
+                    case &quot;cmi.comments_from_learner._count&quot;:
+                        ig = true;
+                        break;
+                    case &quot;cmi.credit&quot;:
+                        nn = &quot;cmi.core.credit&quot;;
+                        break;
+                    case &quot;cmi.location&quot;:
+                        nn = &quot;cmi.core.lesson_location&quot;;
+                        break;
+                    case &quot;cmi.learner_name&quot;:
+                        nn = &quot;cmi.core.student_name&quot;;
+                        break;
+                    case &quot;cmi.learner_id&quot;:
+                        nn = &quot;cmi.core.student_id&quot;;
+                        break;
+                    case &quot;cmi.completion_threshold&quot;:
+                        // unsupported
+                        ig = true;
+                        break;
+                    case &quot;cmi.progress_measure&quot;:
+                        ig = true;
+                        break;
+                    case &quot;cmi.entry&quot;:
+                        nn = &quot;cmi.core.entry&quot;;
+                        break;
+                    case &quot;cmi.mode&quot;:
+                        nn = &quot;cmi.core.lesson_mode&quot;;
+                        break;
+                    case &quot;cmi.exit&quot;:
+                        nn = &quot;cmi.core.exit&quot;;
+                        break;
+                    case &quot;cmi.score.raw&quot;:
+                        nn = &quot;cmi.core.score.raw&quot;;
+                        break;
+                    case &quot;cmi.score.min&quot;:
+                        nn = &quot;cmi.core.score.min&quot;;
+                        break;
+                    case &quot;cmi.score.max&quot;:
+                        nn = &quot;cmi.core.score.max&quot;;
+                        break;
+                    case &quot;cmi.scaled_passing_score&quot;:
+                        nn = &quot;cmi.student_data.mastery_score&quot;;
+                        break;
+                    case &quot;cmi.max_time_allowed&quot;:
+                        nn = &quot;cmi.student_data.max_time_allowed&quot;;
+                        break;
+                    case &quot;cmi.time_limit_action&quot;:
+                        nn = &quot;cmi.student_data.time_limit_action&quot;;
+                        break;
+                    case &quot;cmi.learner_preferences.audio_level&quot;:
+                        nn = &quot;cmi.student_preferences.audio&quot;;
+                        break;
+                    case &quot;cmi.learner_preferences.delivery_speed&quot;:
+                        nn = &quot;cmi.student_preferences.speed&quot;;
+                        break;
+                    case &quot;cmi.learner_preferences.language&quot;:
+                        nn = &quot;cmi.student_preferences.language&quot;;
+                        break;
+                    case &quot;cmi.learner_preferences.audio_captioning&quot;:
+                        nn = &quot;cmi.student_preferences.text&quot;;
+                        break;
+                    case &quot;cmi.success_status&quot;:
+                    case &quot;cmi.completion_status&quot;:
+                        nn = &quot;cmi.core.lesson_status&quot;;
+                        break;
+                    case &quot;cmi.session_time&quot;:
+                        nn = &quot;cmi.core.session_time&quot;;
+                        break;
+                        // Possibly need more here, review further later.
+                    case &quot;cmi.suspend_data&quot;:
+                        nn = n;
+                        break;
+                    default:
+                        nn = n;
+                        break;
+                    }
+                    if (ig) {
+                        return &#x27;false&#x27;;
+                    }
+                    v = lms.LMSGetValue(nn);
+                    break;
+                case &quot;2004&quot;:
+                    v = lms.GetValue(n);
+                    break;
+                default:
+                    // handle non-LMS fail-over (will return &#x27;false&#x27; below otherwise)?
+                    break;
+                }
+                ec = getLastErrorCode();
+                m  = getLastErrorMessage(ec);
+                d  = getDiagnostic(ec);
+                // Clean up Error Codes that are non-critical (like date element not initialized)
+                // Custom event Trigger getvalue
+                $(self).triggerHandler({
+                    &#x27;type&#x27;: &quot;getvalue&quot;,
+                    &#x27;n&#x27;: n,
+                    &#x27;v&#x27;: v,
+                    &#x27;error&#x27;: {
+                        &#x27;code&#x27;: ec,
+                        &#x27;message&#x27;: m,
+                        &#x27;diagnostic&#x27;: d
+                    }
+                });
+                if (ec === 0 || ec === 403) {
+                    // Clean up differences in LMS responses
+                    if (v === &#x27;undefined&#x27; || v === null || v === &#x27;null&#x27;) { // was typeof v
+                        v = &quot;&quot;;
+                    }
+                    return String(v);
+                }
+                debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + m + &quot;\nDiagnostic: &quot; + d, 1);
+                return &#x27;false&#x27;;
+            }
+            debug(n + &quot; Get Aborted, connection not initialized! &quot; + API.isActive, 2);
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Set Value (SCORM Call)
+         * Sets the cmi object value by name
+         * @param n {String} CMI Object Path as String
+         * @param v {String} Value
+         * @returns {String}
+         * @event &#x27;setvalue&#x27;
+         */
+        this.setvalue = function(n,v){
+            var s = &#x27;false&#x27;, // success
+                lms = API.path, // lms shortcut
+                ec = 0, // error code
+                m = &#x27;&#x27;, // error message
+                d = &#x27;&#x27;, // error diagnostic
+                nn = null, // new number
+                ig = false; // ignore
+            // Security Consideration?
+            // It may be worth some minor security later to validate this is being set from a authorized source.  This is lacking support old versions of IE however.
+            //debug(&quot;The caller of this method is &quot; + arguments.callee.caller.caller.name, 4);  //arguments.callee.caller
+            if (API.isActive) {// it has initialized
+                // This is switch cased to appropriately translate SCORM 2004 to 1.2 if needed.
+                // Handy if you don&#x27;t want to go through all your content calls...
+                switch (API.version) {
+                case &quot;1.2&quot;:
+                    API.mode = API.mode === &quot;&quot; ? lms.LMSGetValue(&#x27;cmi.core.lesson_mode&#x27;) : API.mode;
+                    if (API.mode === &quot;normal&quot;) {
+                        switch (n) {
+                        case &quot;cmi.location&quot;:
+                            if (v.length &gt; 255) {
+                                debug(&quot;Warning, your bookmark is over the limit!!&quot;, 2);
+                            }
+                            nn = &quot;cmi.core.lesson_location&quot;;
+                            break;
+                        case &quot;cmi.progress_measure&quot;:
+                            ig = true;
+                            break;
+                        case &quot;cmi.mode&quot;:
+                            nn = &quot;cmi.core.lesson_mode&quot;;
+                            break;
+                        case &quot;cmi.exit&quot;:
+                            nn = &quot;cmi.core.exit&quot;;
+                            API.exit_type = v;
+                            break;
+                        case &quot;cmi.score.raw&quot;:
+                            nn = &quot;cmi.core.score.raw&quot;;
+                            break;
+                        case &quot;cmi.score.min&quot;:
+                            nn = &quot;cmi.core.score.min&quot;;
+                            break;
+                        case &quot;cmi.score.max&quot;:
+                            nn = &quot;cmi.core.score.max&quot;;
+                            break;
+                        case &quot;cmi.score.scaled&quot;:
+                            ig = true;
+                            break;
+                        case &quot;cmi.success_status&quot;:
+                            if((API.data.completion_status == &quot;completed&quot;)&amp;&amp;(v != &quot;passed&quot;)){
+                                //When cmi.core.lesson_status is &quot;completed&quot;, only allow the LO to chage it to &quot;passed&quot;
+                                return &#x27;false&#x27;;
+                            }
+                        case &quot;cmi.completion_status&quot;:
+                            if((API.data.completion_status == &quot;passed&quot;)){
+                                //When cmi.core.lesson_status is &quot;passed&quot;, prevent the LO to change it to &quot;complete&quot;
+                                return &#x27;false&#x27;;
+                            }
+                            nn = &quot;cmi.core.lesson_status&quot;;
+                            API.data.completion_status = v;
+                            // set local status
+                            break;
+                        case &quot;cmi.scaled_passing_score&quot;:
+                            nn = &quot;cmi.student_data.mastery_score&quot;;
+                            break;
+                        case &quot;cmi.learner_preferences.audio_level&quot;:
+                            nn = &quot;cmi.student_preferences.audio&quot;;
+                            break;
+                        case &quot;cmi.learner_preferences.delivery_speed&quot;:
+                            nn = &quot;cmi.student_preferences.speed&quot;;
+                            break;
+                        case &quot;cmi.learner_preferences.language&quot;:
+                            nn = &quot;cmi.student_preferences.language&quot;;
+                            break;
+                        case &quot;cmi.learner_preferences.audio_captioning&quot;:
+                            nn = &quot;cmi.student_preferences.text&quot;;
+                            break;
+                        case &quot;cmi.session_time&quot;:
+                            nn = &quot;cmi.core.session_time&quot;;
+                            break;
+                            // Possibly need more here, review further later.
+                        case &quot;cmi.total_time&quot;:
+                            nn = &quot;cmi.core.total_time&quot;;
+                            break;
+                        case &quot;cmi.suspend_data&quot;:
+                            if (v.length &gt; 4096) {
+                                debug(&quot;Warning, your suspend data is over the limit!!&quot;, 2);
+                            }
+                            nn = n;
+                            break;
+                        default:
+                            nn = n;
+                            break;
+                        }
+                        if (ig) {
+                            return &#x27;false&#x27;;
+                        }
+                        debug(&quot;SCORM 1.2 LMS SetValue with n: &quot; + nn + &quot; and v: &quot; + v, 3);
+                        s = lms.LMSSetValue(nn, v); //makeBoolean(lms.LMSSetValue(nn, v));
+                    } else {
+                        debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
+                        return &#x27;false&#x27;;
+                    }
+                    break;
+                case &quot;2004&quot;:
+                    API.mode = API.mode === &quot;&quot; ? lms.GetValue(&#x27;cmi.mode&#x27;) : API.mode;
+                    if (API.mode === &quot;normal&quot;) {
+                        switch (n) {
+                        case &quot;cmi.location&quot;:
+                            if (v.length &gt; 1000) {
+                                debug(&quot;Warning, your bookmark is over the limit!!&quot;, 2);
+                            }
+                            break;
+                        case &quot;cmi.completion_status&quot;:
+                            API.data.completion_status = v;
+                            // set local status
+                            break;
+                        case &quot;cmi.success_status&quot;:
+                            API.data.success_status = v;
+                            // set local status
+                            break;
+                        case &quot;cmi.exit&quot;:
+                            API.data.exit_type = v;
+                            // set local status
+                            break;
+                        case &quot;suspend_data&quot;:
+                            if (v.length &gt; 64000) {
+                                debug(&quot;Warning, your suspend data is over the limit!!&quot;, 2);
+                            }
+                            break;
+                        default:
+                            // any other handling?
+                            break;
+                        }
+                        debug(&quot;SCORM 2004 LMS SetValue with n: &quot; + n + &quot; and v: &quot; + v, 3);
+                        s = lms.SetValue(n, v); //makeBoolean(lms.SetValue(n, v));
+                    } else {
+                        debug(&quot;Warning, you are not in normal mode.  Ignoring &#x27;set&#x27; requests.&quot;, 2);
+                        return &#x27;false&#x27;;
+                    }
+                    break;
+                default:
+                    // handle non-LMS?
+                    break;
+                }
+                ec = getLastErrorCode();
+                m = getLastErrorMessage(ec);
+                d = getDiagnostic(ec);
+                // Custom Event Trigger setvalue
+                $(self).triggerHandler({
+                    &#x27;type&#x27;: &quot;setvalue&quot;,
+                    &#x27;n&#x27;: n,
+                    &#x27;v&#x27;: v,
+                    &#x27;error&#x27;: {
+                        &#x27;code&#x27;: ec,
+                        &#x27;message&#x27;: m,
+                        &#x27;diagnostic&#x27;: d
+                    }
+                });
+                // Ensure Error Codes not critical
+                if (ec === 0 || ec === 403) {
+                    return s;
+                }
+                debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for &quot; + n + &quot;\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+                return s;
+            }
+            debug(n + &quot; Set Aborted, connection not initialized! Locate where you called it after you Terminated.&quot;, 2);
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Commit (SCORM Call)
+         * Commits the Data to the Server via the LMS API.  SCORM Time done by default.
+         * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
+         */
+        this.commit = function(){
+            var s = &#x27;false&#x27;,
+                lms = API.path,
+                ec = 0,
+                session_secs,
+                saveDate = new Date();
+
+            if(API.isActive){
+                // it has been initialized
+                session_secs = (saveDate.getTime() - settings.startDate.getTime()) / 1000;
+                debug(&quot;Committing data&quot;, 3);
+
+                switch (API.version) {
+                case &quot;1.2&quot;:
+                    self.setvalue(&quot;cmi.core.session_time&quot;, centisecsToSCORM12Duration(session_secs * 100));
+                    s = lms.LMSCommit(&quot;&quot;); //makeBoolean(lms.LMSCommit(&quot;&quot;));
+                    break;
+                case &quot;2004&quot;:
+                    self.setvalue(&quot;cmi.session_time&quot;, centisecsToISODuration(session_secs * 100, true));
+                    s = lms.Commit(&quot;&quot;); //makeBoolean(lms.Commit(&quot;&quot;));
+                    break;
+                default:
+                    // handle non-LMS?
+                    break;
+                }
+
+                ec = getLastErrorCode();
+                if (ec === 0) {
+                    return s;
+                }
+                debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+                return &#x27;false&#x27;;
+            }
+
+            debug(&quot;Commit Aborted, connection not initialized!&quot;, 2);
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Initialize  (SCORM Call)
+         * Initializes the SCO
+         * @returns {String} &#x27;true&#x27; or &#x27;false&#x27;
+         */
+        this.initialize = function(){
+            debug(&quot;Initialize Called. \n\tversion: &quot; + settings.version + &quot;\n\tModified: &quot; + settings.modifiedDate, 3);
+            var s = false, // success boo
+                lms = API.path, // shortcut
+                ec = 0;
+            // error code
+            if (!API.isActive) {
+                if (lms) {
+                    switch (API.version) {
+                    case &quot;1.2&quot;:
+                        s = makeBoolean(lms.LMSInitialize(&quot;&quot;));
+                        break;
+                    case &quot;2004&quot;:
+                        s = makeBoolean(lms.Initialize(&quot;&quot;));
+                        break;
+                    default:
+                        // handle local mode ?
+                        break;
+                    }
+                    ec = getLastErrorCode();
+
+                    // Check for any errors previously
+                    if (s &amp;&amp; ec === 0) {
+                        API.isActive = true;
+                        API.data.completion_status = self.getvalue(&#x27;cmi.completion_status&#x27;);
+                        settings.startDate = new Date();
+                        //self.setvalue(&#x27;cmi.exit&#x27;, settings.exit_type); // Consider setting exit type sooner by default?
+                        // Need to set Start Date
+                        debug(&quot;SCO is initialized.&quot;, 3);
+                        switch (API.data.completion_status) {
+                        case &quot;not attempted&quot;:
+                        case &quot;unknown&quot;:
+                            self.setvalue(&quot;cmi.completion_status&quot;, &quot;incomplete&quot;);
+                            break;
+                        default:
+                            if(API.data.completion_status === &#x27;&#x27;){
+                                triggerException(&quot;LMS compatibility issue, Please notify a administrator.  Completion Status is empty.&quot;);
+                            }
+                            break;
+                        }
+                        return &#x27;true&#x27;;
+                    }
+                    debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Initialize.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+                } else {
+                    debug(&quot;Aborted, LMS could not be located!.&quot;, 2);
+                }
+            } else {
+                debug(&quot;Aborted, connection already initialized!.&quot;, 2);
+            }
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Terminate (SCORM Call)
+         * Terminates the SCO
+         * @returns {Boolean}
+         */
+        this.terminate = function(){
+            var s = false, lms = API.path, ec = 0;
+            debug(&quot;Terminating &quot; + API.isActive + &quot; &quot; + lms, 4);
+            if(API.isActive){
+                if(lms){
+                    // if not completed or passed, suspend the content.
+                    debug(&quot;completion_status = &quot; + API.data.completion_status + &quot;|| success_status = &quot; + API.data.success_status, 3);
+                    self.commit(); // Store Data before Terminating
+                    switch (API.version) {
+                    case &quot;1.2&quot;:
+                        s = lms.LMSFinish(&quot;&quot;); //makeBoolean(lms.LMSFinish(&quot;&quot;));
+                        break;
+                    case &quot;2004&quot;:
+                        s = lms.Terminate(&quot;&quot;); //makeBoolean(lms.Terminate(&quot;&quot;));
+                        break;
+                    default:
+                        // handle non-LMS?
+                        break;
+                    }
+                    if(makeBoolean(s)){
+                        debug(&quot;Terminated.&quot;, 3);
+                        API.isActive = false;
+                    }else{
+                        ec = getLastErrorCode();
+                        debug(&quot;Error\nError Code: &quot; + ec + &quot;\nError Message: &quot; + getLastErrorMessage(ec) + &quot; for Commit.\nDiagnostic: &quot; + getDiagnostic(ec), 1);
+                    }
+                }else{
+                    debug(&quot;Lost connection to LMS&quot;, 2);
+                }
+            } else {
+                debug(&quot;Terminate Aborted, connection not initialized!&quot;, 2);
+            }
+            return s;
+        };
+
+        // End SCORM Public Calls /////////////
+
+
+        // Start Public Utility based Support for SCORM Calls
+        /**
+         * Get Objective By ID
+         * This is fun, they make you go fish the objectives array integer by the ID.
+         * Objectives do not appear to be &#x27;journaled&#x27; as object identifiers have to be unique.
+         * As this method is seeking information it may trigger SCORM Errors on the LMS that hint that
+         * objects haven&#x27;t been defined yet.  This is perfectly normal.
+         * @param id {*} Alpha-Numeric Identification of the Interaction you&#x27;re looking for
+         * @returns {String} &#x27;false&#x27; if nothing found or id
+         */
+        this.getObjectiveByID = function(id){
+            var count = self.getvalue(&quot;cmi.objectives._count&quot;), // obtain total objectives
+                i,
+                tID;
+            scorm.debug(&quot;Set Objective - Begin search, Objective count is &quot; + count, 4);
+            if (count === &#x27;&#x27; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
+                return &#x27;false&#x27;;
+            }
+            count = parseInt(count, 10) - 1; // convert from string
+            i = count;
+            //for (i = count; i &gt;= 0; i -= 1) {
+            while (i &gt;= 0) {
+                tID = self.getvalue(&quot;cmi.objectives.&quot; + i + &quot;.id&quot;);
+                //scorm.debug(&quot;Objective ID Check for &quot; + i + &quot; : &quot; + id + &quot; vs &quot; + tID, 4);
+                if (id === tID) {
+                    scorm.debug(&quot;Objective ID Match on &quot; + i, 4);
+                    return i;
+                }
+                i -= 1;
+            }
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Get Interaction By ID
+         * This is fun, they make you go fish the interactions array integer by the ID.
+         * I included this in the main SCORM API because this functionality should be stock.  You&#x27;re
+         * either going to journal these (history) or treat them like states that you update.  You must decide that.
+         * @param id {*} Alpha-Numeric Identification of the Interaction you&#x27;re looking for
+         * @returns {String} &#x27;false&#x27; if nothing found or id
+         */
+        this.getInteractionByID = function(id){
+            var count = self.getvalue(&quot;cmi.interactions._count&quot;), // obtain total objectives
+                i,
+                tID;
+            if (count === &quot;&quot; || count === &#x27;false&#x27; || count === &#x27;-1&#x27;) {
+                return &#x27;false&#x27;;
+            }
+            count = parseInt(count, 10) - 1; // convert from string
+            scorm.debug(&quot;Getting interactions from count &quot; + count, 4);
+            i = count;
+            //for (i = count; i &gt;= 0; i -= 1) {
+            while (i &gt;= 0) {
+                tID = this.getvalue(&quot;cmi.interactions.&quot; + i + &quot;.id&quot;);
+                //scorm.debug(&quot;Interaction ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
+                if (id === tID) {
+                    scorm.debug(&quot;Interaction By ID Returning &quot; + i);
+                    return i;
+                }
+                i -= 1;
+            }
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Get interaction.n.objective By ID
+         * You can have multiple objectives assigned to a interaction.
+         */
+        this.getInteractionObjectiveByID = function(n,id){
+            var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives._count&quot;), // obtain total objectives
+                i,
+                tID;
+            if (count === &quot;&quot; || count === &#x27;false&#x27;) {
+                return &#x27;0&#x27;;
+            }
+            count = parseInt(count, 10) - 1; // convert from string
+            scorm.debug(&quot;Getting interaction objectives from count &quot; + count, 4);
+            i = count;
+            //for (i = count; i &gt;= 0; i -= 1) {
+            while (i &gt;= 0) {
+                tID = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.objectives.&quot; + i + &quot;.id&quot;);
+                //scorm.debug(&quot;Interaction Objective ID Check for &quot; + i + &quot; : &quot; + tID + &quot; vs &quot; + id, 4);
+                if (id === tID) {
+                    scorm.debug(&quot;Interaction Objective By ID Returning &quot; + i);
+                    return i;
+                }
+                i -= 1;
+            }
+            return &#x27;false&#x27;;
+        };
+
+        /**
+         * Get interaction.n.correct_responses By pattern
+         * You can have multiple correct responses assigned to a interaction.
+         */
+        this.getInteractionCorrectResponsesByPattern = function(n,pattern){
+            var count = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses._count&quot;), // obtain total correct_responses
+                i,
+                p;
+            if (count === &quot;&quot; || count === &#x27;false&#x27;) {
+                scorm.debug(&quot;Correct Responses pattern was empty or false&quot;, 4);
+                return &#x27;0&#x27;; // never created before so go with 0
+            }
+            count = parseInt(count, 10) - 1; // convert from string
+            scorm.debug(&quot;Getting interaction correct responses from count &quot; + count, 4);
+            i = count;
+            //for (i = count; i &gt;= 0; i -= 1) {
+            while (i &gt;= 0) {
+                p = self.getvalue(&quot;cmi.interactions.&quot; + n + &quot;.correct_responses.&quot; + i + &quot;.pattern&quot;);
+                //scorm.debug(&quot;Interaction Correct Responses Pattern Check for &quot; + i + &quot; : &quot; + p + &quot; vs &quot; + pattern, 4);
+                if (pattern === p) {
+                    scorm.debug(&quot;Interaction Correct Responses By Pattern Returning &quot; + i);
+                    return &quot;match&quot;;
+                }
+                i -= 1;
+            }
+            return &#x27;false&#x27;;
+        };
+
+        // End SCORM Public Utilities
+
+
+        // Internal API Public Calls //////////
+        /**
+         * Init (Internal API)
+         * Initializes the SCORM API, and locates the LMS API
+         * @returns {Boolean}
+         */
+        this.init = function(){
+            // Search for LMS API
+            var win;
+            try {
+                win = window.parent;
+                if (win &amp;&amp; win !== window) {
+                    findAPI(window.parent);
+                }
+            } catch (e) {/* Cross Domain issue */
+                debug(e, 1);
+            }
+            if (!API.path) {
+                try {
+                    win = window.top.opener;
+                    findAPI(win);
+                } catch (ee) {/* Cross domain issue */
+                    debug(ee, 1);
+                }
+            }
+            if (API.path) {
+                API.connection = true;
+                return true;
+            }
+            debug(&quot;I was unable to locate an API for communication&quot;, 2);
+            if (settings.use_standalone) {
+                // Create Local API in SCORM 2004
+                debug(&quot;If you included Local_API_1484_11 I&#x27;ll mimic the LMS.  If not, all SCORM calls will fail.&quot;, 4);
+                settings.standalone = true;
+                API.version = &quot;2004&quot;;
+                // May or may not be provided (standalone) if not, this is null (DOA)
+                API.path = typeof Local_API_1484_11 === &#x27;function&#x27; ? new Local_API_1484_11({cmi: settings.cmi}) : null;
+                $(API.path).on(&#x27;StoreData&#x27;, function (e) {
+                    $(self).triggerHandler({
+                        type:        &#x27;StoreData&#x27;,
+                        runtimedata: e.runtimedata
+                    });
+                });
+                return true;
+            }
+            return false;
+        };
+
+        /**
+         * Get Last Error (Internal API)
+         * Converts error integer to Message String
+         * @param n {String} name
+         * @returns value {String}
+         */
+        this.getLastError = function(n){
+            return error[n];
+        };
+
+        /**
+         * Is LMS Connected
+         * Will tell you if LMS is truly connected or not.  You may be running locally.
+         * @return {Boolean}
+         */
+        this.isLMSConnected = function(){
+            return API.connection;
+        };
+
+        /**
+         * Set (Internal API)
+         * This locally sets values local to this API
+         * @param n {String} name
+         * @param v (String,Number,Object,Array,Boolean} value
+         */
+        this.set = function(n,v){
+            //debug(&quot;set &quot; + n, 3);
+            // May need to maintain read-only perms here, case them out as needed.
+            switch (n) {
+            case &quot;version&quot;:
+            case &quot;createDate&quot;:
+            case &quot;modifiedDate&quot;:
+            case &quot;prefix&quot;:
+                triggerWarning(405);
+                return false;
+                //break;
+            case &quot;isActive&quot;:
+                API.isActive = v;
+                settings[n] = v;
+                break;
+            case &quot;startDate&quot;:
+                settings[n] = new Date(v);
+                // Need to set Start Date if forcing isActive!
+                break;
+            default:
+                settings[n] = v;
+                break;
+            }
+            return (isError !== 0);
+        };
+
+        /**
+         * Get (Internal API)
+         * This locally gets values local to this API
+         * @param n {String} name
+         * @returns {*} value or {Boolean} false
+         */
+        this.get = function(n){
+            //debug(&quot;get &quot; + n, 3);
+            if (settings[n] === undefined) {
+                triggerWarning(404);
+                return false;
+            }
+            return settings[n];
+        };
+
+        /**
+         * Hook for External Plugins like Flash to set Time
+         * Public to Private API&#x27;s
+         */
+        this.centisecsToSCORM12Duration = centisecsToSCORM12Duration;
+        this.centisecsToISODuration = centisecsToISODuration;
+        this.ISODurationToCentisec = ISODurationToCentisec;
+        this.isoDateToStringUTC = isoDateToStringUTC;
+        this.isoDateToString = isoDateToString;
+        this.isoStringToDate = isoStringToDate;
+        this.makeBoolean = makeBoolean;
+        this.debug = debug;
+        this.settings = settings;
+        this.API = API;
+        // Self Initialize, note you could make this call outside, but later I decided to do it by default.
+        this.init();
+    };
+
+
+    return {
+        init                : init,
+        getAPIInstance      : getAPIInstance,
+        getLMSAPIInstance   : getLMSAPIInstance
+    };
 
 })(VISH,jQuery);
     </pre>

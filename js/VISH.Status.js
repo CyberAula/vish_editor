@@ -34,13 +34,16 @@ VISH.Status = (function(V,$,undefined){
 	var _isVEFocused;
 	var _isWindowFocused;
 	var _isCKEditorInstanceFocused;
-	
 
+	//HTTP protocol
+	var _protocol;
+	
 	var init = function(callback){
 		_checkEmbed();
 		_checkDomain();
 		_checkContainer();
 		_checkSite();
+		_checkProtocol();
 		_checkPreview();
 		_checkUniqMode();
 		_isVEFocused = false;
@@ -112,9 +115,6 @@ VISH.Status = (function(V,$,undefined){
 		}
 	};
 
-   /*
-	* Use to see if we are inside an iframe
-	*/
 	var _checkSite = function(){
 		var options = V.Utils.getOptions();
 
@@ -133,6 +133,28 @@ VISH.Status = (function(V,$,undefined){
 		
 		_isInExternalSite = ((_isExternalDomain)||(_scorm));
 		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
+	};
+
+	var _checkProtocol = function(){
+		var protocol;
+		try {
+			protocol = document.location.protocol;
+		} catch(e){}
+
+		if(typeof protocol == "string"){
+			var protocolMatch = protocol.match(/[\w]+/);
+			if((protocolMatch instanceof Array)&&(typeof protocolMatch[0] == "string")){
+				protocol = protocolMatch[0];
+			} else {
+				protocol = undefined;
+			}
+		}
+
+		if(typeof protocol == "string"){
+			_protocol = protocol;
+		} else {
+			_protocol = "unknown";
+		}
 	};
 
 	var _checkPreview = function(){
@@ -256,6 +278,13 @@ VISH.Status = (function(V,$,undefined){
 		return _isLocalFile;
 	};
 
+	var getProtocol = function(){
+		if(typeof _protocol == "undefined"){
+			_checkProtocol();
+		}
+		return _protocol;
+	};
+
 	var isScorm = function(){
 		return _scorm;
 	};
@@ -362,6 +391,7 @@ VISH.Status = (function(V,$,undefined){
 		isScorm						: isScorm,
 		isExternalSite				: isExternalSite,
 		isVishSite					: isVishSite,
+		getProtocol					: getProtocol,
 		isPreview 					: isPreview,
 		isPreviewInsertMode			: isPreviewInsertMode,
 		getIsUniqMode				: getIsUniqMode,

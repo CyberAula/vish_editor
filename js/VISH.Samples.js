@@ -1546,6 +1546,8 @@ VISH.Samples = (function(V,undefined){
 		]
 	};
 
+	var webAPPVEAPIexample = {"VEVersion":"0.9.3","type":"presentation","title":"Quiz samples","description":"Quiz example","avatar":"http://vishub.org/assets/logos/original/excursion-15.png","author":{"name":"agordillo","vishMetadata":{"id":"20"}},"tags":["e-Learning","Game-based Learning"],"license":{"name":"Creative Commons Reconocimiento-NoComercial","key":"cc-by-nc"},"theme":"theme1","animation":"animation1","language":"independent","age_range":"4 - 20","subject":["Education","Environmental Education","Geology","Physics"],"allow_clone":"true","allow_comment":"true","allow_download":"true","allow_following_rte":"true","vishMetadata":{"url":"http://vishub.org","draft":"false","id":"500"},"slides":[{"id":"article9","type":"standard","template":"t10","elements":[{"id":"article9_zone1","type":"object","areaid":"center","settings":{"wappAPI_supported":true},"body":"<iframe src=\"http://localhost/examples/API/webapp.html?wmode=opaque&amp;wappid=wapp2\" wmode=\"opaque\" id=\"resizableunicID36\" class=\"t10_object\" objecttype=\"webapp\" wappid=\"wapp2\"></iframe>","style":"position: relative; width:100%; height:100%; top:0%; left:0%;","subtype":"webapp"}]}]};
+
 	var SCORMexample = {
 		"author": "Aldo",
 		"description": "Uploaded by Aldo via ViSH Editor",
@@ -1574,6 +1576,7 @@ VISH.Samples = (function(V,undefined){
 		text_samples 		: text_samples,
 		VE01_samples		: VE01_samples,
 		mooc_samples		: mooc_samples,
+		webAPPVEAPIexample	: webAPPVEAPIexample,
 		SCORMexample		: SCORMexample,
 		Webappexample		: Webappexample
 	};

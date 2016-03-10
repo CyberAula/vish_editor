@@ -259,6 +259,10 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 			renderOptions.controls = videoJSON[&#x27;controls&#x27;];
 		}
 		if(typeof renderOptions.poster == &quot;undefined&quot;){
+			if(isDefaultPosterPath(videoJSON[&#x27;poster&#x27;])){
+				//Default HTML5 poster. Update route.
+				videoJSON[&#x27;poster&#x27;] = getDefaultPosterURL();
+			}
 			renderOptions.poster = videoJSON[&#x27;poster&#x27;];
 		}
 
@@ -505,6 +509,14 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		return $(videoDOM).attr(&quot;poster&quot;);
 	};
 
+	var getDefaultPosterURL = function(){
+		return V.ImagesPath + &quot;vicons/example_poster_image.jpg&quot;;
+	};
+
+	var isDefaultPosterPath = function(posterURL){
+		return ((typeof posterURL == &quot;string&quot;)&amp;&amp;((/^\/[\w\/]+example_poster_image/g).test(posterURL)));
+	};
+
 	return {
 		init 					: init,
 		renderVideoFromJSON		: renderVideoFromJSON,
@@ -521,6 +533,8 @@ VISH.Video.HTML5 = (function(V,$,undefined){
 		getSourcesFromJSON		: getSourcesFromJSON,
 		getVideoMimeType		: getVideoMimeType,
 		getPoster				: getPoster,
+		getDefaultPosterURL		: getDefaultPosterURL,
+		isDefaultPosterPath		: isDefaultPosterPath,
 		onVideoReady 			: onVideoReady
 	};
 

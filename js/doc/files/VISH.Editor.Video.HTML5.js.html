@@ -125,12 +125,12 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		current_area.attr(&#x27;type&#x27;,&#x27;video&#x27;);
 
 		//Default options
-		var posterUrl = V.ImagesPath + &quot;vicons/example_poster_image.jpg&quot;;
+		var posterUrl = V.Video.HTML5.getDefaultPosterURL();
 		var autoplay = false;
 			
 		//Replace defeault options if options hash is defined
 		if(options){
-			if(options[&#x27;poster&#x27;]){
+			if((options[&#x27;poster&#x27;])&amp;&amp;(!V.Video.HTML5.isDefaultPosterPath(options[&#x27;poster&#x27;]))){
 				posterUrl = options[&#x27;poster&#x27;];
 			}
 			if(options[&#x27;autoplay&#x27;]){

@@ -33,9 +33,9 @@ VISH.FullScreen = (function(V,$,undefined){
 		_pageIsFullScreen = false;
 
 		if(V.Status.isEmbed()){
-			_enterFsURL = options["fullScreenFallback"]["enterFullscreenURL"];
+			_enterFsURL = V.Utils.checkUrlProtocol(options["fullScreenFallback"]["enterFullscreenURL"]);
 		} else {
-			_exitFsURL = options["fullScreenFallback"]["exitFullscreenURL"];
+			_exitFsURL = V.Utils.checkUrlProtocol(options["fullScreenFallback"]["exitFullscreenURL"]);
 			_pageIsFullScreen = true;
 		}
 	};

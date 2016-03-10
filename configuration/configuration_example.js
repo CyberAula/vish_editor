@@ -141,6 +141,7 @@ var getOptions = function(){
 				// developmentSettings.samples = VISH.Samples.quiz_samples.slides[0].elements[0].quiz_simple_json;
 				//developmentSettings.samples = VISH.Samples.text_samples;
 				// developmentSettings.samples = VISH.Samples.VE01_samples;
+				// developmentSettings.samples = VISH.Samples.webAPPVEAPIexample;
 
 				// Activate insertMode
 				// developmentSettings.samples.insertMode = true;
