@@ -48,7 +48,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 			
 		//Replace defeault options if options hash is defined
 		if(options){
-			if(options['poster']){
+			if((options['poster'])&&(!V.Video.HTML5.isDefaultPosterPath(options['poster']))){
 				posterUrl = options['poster'];
 			}
 			if(options['autoplay']){
