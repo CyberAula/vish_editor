@@ -28,12 +28,12 @@ VISH.Viewer = (function(V,$,undefined){
 			}
 		}
 
+		V.Utils.init();
 		V.I18n.init(initOptions,presentation);
 
 		V.Debugging.log("\n\nViSH Viewer init with presentation:\n"); 
 		V.Debugging.log(JSON.stringify(presentation));
 
-		V.Utils.init();
 		presentation = V.Utils.fixPresentation(presentation);
 		if(presentation===null){
 			V.Utils.showPNotValidDialog();
