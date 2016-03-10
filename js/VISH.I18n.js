@@ -62,20 +62,21 @@ VISH.I18n = (function(V,$,undefined){
 			var translation = getTrans($(elem).attr("i18n-key"));
 			if(translation!=null){
 				switch(elem.tagName){
-					 case "INPUT":
-					 	_translateInput(elem,translation);
-					 	break;
-					 case "TEXTAREA":
-					 	_translateTextArea(elem,translation);
-					 	break;
-					 case "DIV":
-					 	_translateDiv(elem,translation);
-					 	break;
-					 case "LI":
-					 	_translateLI(elem,translation);
-					 	break;
-					 case "IMG":
-					 	_translateImg(elem,translation);
+					case "INPUT":
+						_translateInput(elem,translation);
+						break;
+					case "TEXTAREA":
+						_translateTextArea(elem,translation);
+						break;
+					case "DIV":
+						_translateDiv(elem,translation);
+						break;
+					case "LI":
+						_translateLI(elem,translation);
+						break;
+					case "IMG":
+						_translateImg(elem,translation);
+						break;
 					default:
 						//Generic translation (for h,p or span elements)
 						_genericTranslate(elem,translation);
