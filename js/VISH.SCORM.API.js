@@ -21,7 +21,7 @@ VISH.SCORM.API = (function(V,$,undefined){
         connected = scorm.initialize();
         scorm.debug("Connected: " + connected,4);
         
-        if(!connected){
+        if(connected=='false'){
             return;
         }
 
