@@ -6,7 +6,7 @@ VISH.SCORM.API = (function(V,$,undefined){
 
     //SCORM API Instance
     var scorm;
-    var connected;
+    var _connected;
 
     //Vars
     var COMPLETION_THRESHOLD = 0; //Force attempt completion!
@@ -18,10 +18,10 @@ VISH.SCORM.API = (function(V,$,undefined){
 
     var init = function(){
         scorm = new SCORM_API({debug: (V.Utils.getOptions().developping===true), windowDebug: false, exit_type: ""});
-        connected = scorm.initialize();
-        scorm.debug("Connected: " + connected,4);
+        _connected = scorm.initialize();
+        scorm.debug("Connected: " + _connected,4);
         
-        if(connected=='false'){
+        if(!isConnected()){
             return;
         }
 
@@ -133,7 +133,7 @@ VISH.SCORM.API = (function(V,$,undefined){
     };
 
     var getAPIInstance = function(){
-        if(connected){
+        if(isConnected()){
             return scorm;
         } else {
             return undefined;
@@ -141,11 +141,18 @@ VISH.SCORM.API = (function(V,$,undefined){
     };
 
     var getLMSAPIInstance = function(){
-        if((connected)&&(scorm)&&(scorm.API)&&((scorm.API.path))){
+        if((isConnected())&&(scorm)&&(scorm.API)&&((scorm.API.path))){
             return scorm.API.path;
         } else {
             return undefined;
         }       
+    };
+
+    var isConnected = function(){
+        if((!_connected)||(_connected==="false")){
+            return false;
+        }
+        return true;
     };
 
 
@@ -1512,7 +1519,8 @@ VISH.SCORM.API = (function(V,$,undefined){
     return {
         init                : init,
         getAPIInstance      : getAPIInstance,
-        getLMSAPIInstance   : getLMSAPIInstance
+        getLMSAPIInstance   : getLMSAPIInstance,
+        isConnected         : isConnected
     };
 
 })(VISH,jQuery);
