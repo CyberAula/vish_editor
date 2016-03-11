@@ -10,6 +10,7 @@ VISH.Object.Webapp = (function(V,$,undefined){
 		var body = webappJSON['body'];
 		var webappBody = $(body);
 		$(webappBody).attr("objecttype",V.Constant.MEDIA.WEB_APP);
+		$(webappBody).attr("src",V.Utils.checkUrlProtocol($(webappBody).attr("src")));
 		webappBody = V.Utils.getOuterHTML(webappBody);
 
 		var zoomInStyle = (webappJSON['zoomInStyle']) ? webappJSON['zoomInStyle'] : "";

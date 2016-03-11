@@ -192,7 +192,7 @@ VISH.Editor.Video.Repository = (function(V, $, undefined) {
 			if(selectedVideo.poster){
 				options['poster'] = selectedVideo.poster;
 			} else {
-				options['poster'] = V.Editor.Video.HTML5.getDefaultPoster();
+				options['poster'] = V.Video.HTML5.getDefaultPosterURL();
 			}
 			V.Editor.Video.addContent(V.Video.HTML5.renderVideoFromSources(V.Video.HTML5.getSourcesFromJSON(selectedVideo),options));
 		}

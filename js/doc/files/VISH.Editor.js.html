@@ -151,8 +151,8 @@ VISH.Editor = (function(V,$,undefined){
 		_isDraft = _initPresentationDraft();
 
 		// V.Storage.setTestingMode(true);
-		V.I18n.init(initOptions,presentation);
 		V.Utils.init();
+		V.I18n.init(initOptions,presentation);
 		V.Status.init(function(){
 			//Status loading finishes
 			_initAferStatusLoaded(options,presentation);

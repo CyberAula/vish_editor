@@ -7,6 +7,7 @@ VISH.Object.PDF = (function(V,$,undefined){
 	};
 
 	var generateWrapper = function(url){
+		url = V.Utils.checkUrlProtocol(url);
 		if(_pdfSupport){
 			return "<iframe src='" + url + "'></iframe>";
 		} else {

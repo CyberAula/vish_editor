@@ -8,7 +8,7 @@ VISH.Quiz.API = (function(V,$,undefined){
 
 	var init = function(ARS_API){
 		if((typeof ARS_API == "object")&&(typeof ARS_API.rootURL == "string")){
-			ARS_API_RootURL = ARS_API.rootURL;
+			ARS_API_RootURL = V.Utils.checkUrlProtocol(ARS_API.rootURL);
 		}
 	};
 	

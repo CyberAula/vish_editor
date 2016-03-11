@@ -28,12 +28,12 @@ VISH.Editor.Object.Web = (function(V,$,undefined){
 	}
 	
 	var generateWrapperForWeb = function(url){
-		url = V.Utils.addParamToUrl(url,"wmode","opaque");
+		url = V.Utils.checkUrlProtocol(V.Utils.addParamToUrl(url,"wmode","opaque"));
 		return "<iframe src='" + url + "' wmode='opaque'></iframe>";
 	}
 	
 	var generatePreviewWrapperForWeb = function(url){
-		url = V.Utils.addParamToUrl(url,"wmode","opaque");
+		url = V.Utils.checkUrlProtocol(V.Utils.addParamToUrl(url,"wmode","opaque"));
 		return "<iframe class='objectPreview' src='" + url + "' wmode='opaque'></iframe>";
 	};
 			

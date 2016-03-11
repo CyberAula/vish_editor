@@ -294,7 +294,9 @@ VISH.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var onPlayerError = function(event){
-		V.Debugging.log(&quot;onPlayerError with error type &quot; + event.data);
+		if((typeof event == &quot;object&quot;)&amp;&amp;(typeof event.data != &quot;undefined&quot;)){
+			V.Debugging.log(&quot;onPlayerError with error type &quot; + event.data);
+		}
 	};
 
 	var playVideo = function(iframeId,currentTime,triggeredByUser){

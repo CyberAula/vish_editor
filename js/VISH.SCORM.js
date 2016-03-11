@@ -26,6 +26,7 @@ VISH.SCORM = (function(V,$,undefined){
 		var body = scormJSON['body'];
 		var scormBody = $(body);
 		$(scormBody).attr("objecttype",V.Constant.MEDIA.SCORM_PACKAGE);
+		$(scormBody).attr("src",V.Utils.checkUrlProtocol($(scormBody).attr("src")));
 		scormBody = V.Utils.getOuterHTML(scormBody);
 
 		var zoomInStyle = (scormJSON['zoomInStyle']) ? scormJSON['zoomInStyle'] : "";

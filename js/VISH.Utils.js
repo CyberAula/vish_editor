@@ -1448,49 +1448,58 @@ VISH.Utils = (function(V,undefined){
 		return url;
 	};
 
+	var checkUrlProtocolInStringTag = function(stringTag){
+		var htmlElement = $(stringTag);
+		if(typeof $(htmlElement).attr("src") != "undefined"){
+			$(htmlElement).attr("src",V.Utils.checkUrlProtocol($(htmlElement).attr("src")));
+		}
+		return V.Utils.getOuterHTML(htmlElement);
+	};
+
 
 	return {
-		init 					: init,
-		getOptions 				: getOptions,
-		dimentionsToDraw		: dimentionsToDraw,
-		fitChildInParent		: fitChildInParent,
-		getId					: getId,
-		registerId				: registerId,
-		getOuterHTML 			: getOuterHTML,
-		getSrcFromCSS			: getSrcFromCSS,
-		checkMiniumRequirements : checkMiniumRequirements,
-		addFontSizeToStyle 		: addFontSizeToStyle,
-		removeFontSizeInStyle 	: removeFontSizeInStyle,
-		getFontSizeFromStyle 	: getFontSizeFromStyle,
-		getZoomFromStyle 		: getZoomFromStyle,
-		getZoomInStyle    		: getZoomInStyle,
-		getWidthFromStyle   	: getWidthFromStyle,
-		getHeightFromStyle  	: getHeightFromStyle,
+		init 						: init,
+		getOptions 					: getOptions,
+		dimentionsToDraw			: dimentionsToDraw,
+		fitChildInParent			: fitChildInParent,
+		getId						: getId,
+		registerId					: registerId,
+		getOuterHTML 				: getOuterHTML,
+		getSrcFromCSS				: getSrcFromCSS,
+		checkMiniumRequirements 	: checkMiniumRequirements,
+		addFontSizeToStyle 			: addFontSizeToStyle,
+		removeFontSizeInStyle 		: removeFontSizeInStyle,
+		getFontSizeFromStyle 		: getFontSizeFromStyle,
+		getZoomFromStyle 			: getZoomFromStyle,
+		getZoomInStyle    			: getZoomInStyle,
+		getWidthFromStyle   		: getWidthFromStyle,
+		getHeightFromStyle  		: getHeightFromStyle,
 		getPixelDimensionsFromStyle : getPixelDimensionsFromStyle,
-		getBackgroundPosition	: getBackgroundPosition,
-		sendParentToURL			: sendParentToURL,
-		addParamToUrl			: addParamToUrl,
-		removeParamFromUrl		: removeParamFromUrl,
-		getParamsFromUrl		: getParamsFromUrl,
-		fixPresentation			: fixPresentation,
-		addScale3DToElement		: addScale3DToElement,
-		showDialog 				: showDialog,
-		showPNotValidDialog		: showPNotValidDialog,
-		isObseleteVersion		: isObseleteVersion,
-		updateHash				: updateHash,
-		cleanHash				: cleanHash,
-		removeHashFromUrlString	: removeHashFromUrlString,
-		getHashParams			: getHashParams,
-		getSlideNumberFromHash	: getSlideNumberFromHash,
-		checkAnimationsFinish	: checkAnimationsFinish,
-		fomatTimeForMPlayer		: fomatTimeForMPlayer,
-		delayFunction 			: delayFunction,
-		addTempShown			: addTempShown,
-		removeTempShown			: removeTempShown,
-		shuffle 				: shuffle,
-		purgeString				: purgeString,
-		checkUrlProtocol		: checkUrlProtocol,
-		getLevenshteinDistance	: getLevenshteinDistance
+		getBackgroundPosition		: getBackgroundPosition,
+		sendParentToURL				: sendParentToURL,
+		addParamToUrl				: addParamToUrl,
+		removeParamFromUrl			: removeParamFromUrl,
+		getParamsFromUrl			: getParamsFromUrl,
+		fixPresentation				: fixPresentation,
+		addScale3DToElement			: addScale3DToElement,
+		showDialog 					: showDialog,
+		showPNotValidDialog			: showPNotValidDialog,
+		isObseleteVersion			: isObseleteVersion,
+		updateHash					: updateHash,
+		cleanHash					: cleanHash,
+		removeHashFromUrlString		: removeHashFromUrlString,
+		getHashParams				: getHashParams,
+		getSlideNumberFromHash		: getSlideNumberFromHash,
+		checkAnimationsFinish		: checkAnimationsFinish,
+		fomatTimeForMPlayer			: fomatTimeForMPlayer,
+		delayFunction 				: delayFunction,
+		addTempShown				: addTempShown,
+		removeTempShown				: removeTempShown,
+		shuffle 					: shuffle,
+		purgeString					: purgeString,
+		checkUrlProtocol			: checkUrlProtocol,
+		checkUrlProtocolInStringTag : checkUrlProtocolInStringTag,
+		getLevenshteinDistance		: getLevenshteinDistance
 	};
 
 }) (VISH);

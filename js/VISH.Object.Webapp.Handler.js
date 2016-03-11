@@ -9,7 +9,7 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 	var init = function(){
 		if(typeof V.Configuration.getConfiguration()["WAPP_TOKEN_API"] == "object"){
 			if(typeof V.Configuration.getConfiguration()["WAPP_TOKEN_API"]["rootURL"] == "string"){
-				_WAPP_TOKEN_API_URL = V.Configuration.getConfiguration()["WAPP_TOKEN_API"]["rootURL"];
+				_WAPP_TOKEN_API_URL = V.Utils.checkUrlProtocol(V.Configuration.getConfiguration()["WAPP_TOKEN_API"]["rootURL"]);
 			}
 		}
 	};

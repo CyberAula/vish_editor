@@ -108,11 +108,6 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		return V.Video.HTML5.renderVideoFromSources([{src: url}],options);
 	};
 
-	/* More Utils */
-	var getDefaultPoster = function(){
-		return V.ImagesPath + "icons/example_poster_image.jpg";
-	};
-
 
 	return {
 		init 					: init,
@@ -120,8 +115,7 @@ VISH.Editor.Video.HTML5 = (function(V,$,undefined){
 		drawVideo 				: drawVideo,
 		drawVideoWithWrapper	: drawVideoWithWrapper,
 		renderVideoFromWrapper	: renderVideoFromWrapper,
-		renderVideoWithURL		: renderVideoWithURL,
-		getDefaultPoster		: getDefaultPoster
+		renderVideoWithURL		: renderVideoWithURL
 	};
 
 }) (VISH, jQuery);

@@ -105,20 +105,20 @@ VISH.Object = (function(V,$,undefined){
 		}
 
 		if((wrapper==null)||(wrapper==V.Constant.WRAPPER.IFRAME)){
-			var googledoc_pattern=/(^http:\/\/docs.google.com\/viewer\?url=)/g
-			if(source.match(googledoc_pattern)!=null){
-				source = source.replace("http://docs.google.com/viewer?url=","").replace("&embedded=true","");
+			var googledoc_pattern=/(^https?:\/\/docs.google.com\/viewer\?url=)/g
+			var googleDocMatch = source.match(googledoc_pattern);
+			if((googleDocMatch instanceof Array)&&(googleDocMatch.length === 1)){
+				source = source.replace(googleDocMatch[0],"").replace("&embedded=true","");
 			}
 		}
 		
 		return source;
 	};
-	
-	
+
+
 	/**
 	 * Patterns
-	 */                                                         		
-	
+	 */
 	var _getTypeFromSource = function(source){
 		if((typeof source == "object")&&(source !== null)&&(typeof source.length == "number")&&(source.length > 0)){
 			source = source[0];

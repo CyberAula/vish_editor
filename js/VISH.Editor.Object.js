@@ -350,7 +350,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return "<img class='imagePreview' src='" + object + "'></img>";
 						break;
 					case V.Constant.MEDIA.FLASH:
-						object = V.Utils.addParamToUrl(object,"wmode","opaque");
+						object = V.Utils.checkUrlProtocol(V.Utils.addParamToUrl(object,"wmode","opaque"));
 						return "<embed class='objectPreview' src='" + object + "'></embed>";
 						break;
 					case V.Constant.MEDIA.PDF:
@@ -364,7 +364,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 						return V.Editor.Video.Youtube.generatePreviewWrapperForYoutubeVideoUrl(object);
 						break;
 					case V.Constant.MEDIA.HTML5_VIDEO:
-						return V.Editor.Video.HTML5.renderVideoWithURL(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
+						return V.Editor.Video.HTML5.renderVideoWithURL(object,{loadSources: false, poster: V.Video.HTML5.getDefaultPosterURL(), extraClasses: ["objectPreview"]});
 						break;
 					case V.Constant.MEDIA.HTML5_AUDIO:
 						return V.Editor.Audio.HTML5.renderAudioWithURL(object,{loadSources: false, extraClasses: ["objectPreview"]});
@@ -400,7 +400,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				}
 				break;
 			case V.Constant.WRAPPER.VIDEO:
-				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Editor.Video.HTML5.getDefaultPoster(), extraClasses: ["objectPreview"]});
+				return V.Editor.Video.HTML5.renderVideoFromWrapper(object,{loadSources: false, poster: V.Video.HTML5.getDefaultPosterURL(), extraClasses: ["objectPreview"]});
 				break;
 			case V.Constant.WRAPPER.AUDIO:
 				return V.Editor.Audio.HTML5.renderAudioFromWrapper(object,{loadSources: false, extraClasses: ["objectPreview"]});
@@ -409,7 +409,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 				V.Debugging.log("Unrecognized object wrapper: " + objectInfo.wrapper);
 				break;
 		}
-	}
+	};
 	
 	var _genericWrapperPreview = function(object){
 		var wrapperPreview = $(object);
@@ -417,6 +417,9 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperPreview).attr('wmode','opaque');
 		$(wrapperPreview).removeAttr('width');
 		$(wrapperPreview).removeAttr('height');
+		if(typeof $(wrapperPreview).attr("src") != "undefined"){
+			$(wrapperPreview).attr("src",V.Utils.checkUrlProtocol($(wrapperPreview).attr("src")));
+		}
 		//Force scrolling auto if the wrapper has specified the scrolling param
 		if(typeof $(wrapperPreview).attr("scrolling") != "undefined"){
 			$(wrapperPreview).attr("scrolling","auto");

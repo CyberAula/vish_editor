@@ -9,7 +9,7 @@ VISH.Editor.Object.GoogleDOC = (function(V,$,undefined){
 	
 	var generatePreviewWrapper = function(url){
 		var objectWrapper = V.Object.GoogleDOC.generateWrapper(url);
-		previewWrapper = $(objectWrapper);
+		var previewWrapper = $(objectWrapper);
 		$(previewWrapper).addClass("objectPreview");
 		return V.Utils.getOuterHTML(previewWrapper);
 	};

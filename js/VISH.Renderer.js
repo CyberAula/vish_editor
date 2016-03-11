@@ -160,7 +160,7 @@ VISH.Renderer = (function(V,$,undefined){
 				break;
 			default:
 				var style = (element['style'])? element['style'] : "";
-				var body = element['body'];
+				var body = V.Utils.checkUrlProtocolInStringTag(element['body']);
 				var zoomInStyle = (element['zoomInStyle'])? element['zoomInStyle'] : "";
 				return "<div id='"+ element['id'] +"' class='objectelement " + loadingObjectClass + " " + template + "_" + element['areaid'] + "' objectStyle='" + style + "' zoomInStyle='" + zoomInStyle + "' objectWrapper='" + body + "'>" + "" + "</div>";
 				break;
@@ -169,7 +169,7 @@ VISH.Renderer = (function(V,$,undefined){
 	
 	var _renderSnapshot = function(element, template){
 		var style = (element['style'])? element['style'] : "";
-		var body = element['body'];
+		var body = V.Utils.checkUrlProtocolInStringTag(element['body']);
 		var scrollTop = (element['scrollTop'])? element['scrollTop'] : 0;
 		var scrollLeft = (element['scrollLeft'])? element['scrollLeft'] : 0;
 		return "<div id='"+element['id']+"' class='snapshotelement "+template+"_"+element['areaid']+ "' template='" + template + "' objectStyle='" + style + "' scrollTop='" + scrollTop + "' scrollTopOrigin='" + scrollTop + "' scrollLeft='" + scrollLeft + "' scrollLeftOrigin='" + scrollLeft + "' objectWrapper='" + body + "'>" + "" + "</div>";

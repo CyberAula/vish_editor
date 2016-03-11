@@ -4,7 +4,8 @@ VISH.Object.GoogleDOC = (function(V,$,undefined){
 	};
 
 	var generateWrapper = function(url){
-		return "<iframe src='http://docs.google.com/viewer?url=" + url + "&embedded=true'></iframe>";
+		url = V.Utils.checkUrlProtocol(url);
+		return "<iframe src='https://docs.google.com/viewer?url=" + url + "&embedded=true'></iframe>";
 	};
 		
 	return {
