@@ -32,7 +32,7 @@ A server side implementation has been developed in **Ruby on Rails**. The source
 * Internacionalization support: English, Spanish, German, Dutch, Hungarian, French.
 * Audience Response System to launch the questions of the quizzes and get instant feedback from the audience.
 * Conversion of PDF presentations into ViSH Editor web presentations.
-* Exportation to SCORM (2004 4th).
+* Exportation to SCORM (1.2 and 2004 4th).
 * Exportation to files (in JSON format).
 * Quizzes exportation and importation (IMS QTI 2.1 and Moodle XML).
 * Metadata tagging according to the IEEE LOM (Learning Object Metadata) standard.
