@@ -29,6 +29,7 @@ A server side implementation has been developed in **Ruby on Rails**. The source
   * SoundCloud
   * [ViSH](http://vishub.org)
   * LRE (Learning Resource Exchange)
+  * Europeana
 * Internacionalization support: English, Spanish, German, Dutch, Hungarian, French.
 * Audience Response System to launch the questions of the quizzes and get instant feedback from the audience.
 * Conversion of PDF presentations into ViSH Editor web presentations.
