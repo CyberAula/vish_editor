@@ -169,6 +169,12 @@ VISH.FullScreen = (function(V,$,undefined){
 					$(container).attr("allowfullscreen","true");
 					$(container).attr("webkitAllowFullScreen","true");
 					$(container).attr("mozallowfullscreen","true");
+				} else if($(container).attr("allowfullscreen") == "false"){
+					//Allow to explicitly disable fs
+					$(container).removeAttr("allowfullscreen");
+					$(container).removeAttr("webkitAllowFullScreen");
+					$(container).removeAttr("mozallowfullscreen");
+					return;
 				}
 
 				var fsElementTarget = _getFSElementTarget();
