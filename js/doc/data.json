@@ -694,13 +694,13 @@
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 437,
+            "line": 436,
             "description": "Returns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 531,
+            "line": 530,
             "description": "param style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -1993,11 +1993,11 @@
         },
         {
             "message": "Missing item type\nReturns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:437"
+            "line": " VISH.Editor.Object.js:436"
         },
         {
             "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:531"
+            "line": " VISH.Editor.Object.js:530"
         },
         {
             "message": "Missing item type\nInsert the selected slides of a slide presentation in JSON",

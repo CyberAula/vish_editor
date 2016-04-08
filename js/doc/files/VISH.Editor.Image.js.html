@@ -120,7 +120,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 			$(&quot;#&quot; + uploadDivId + &quot; .upload_progress_bar_wrapper&quot;).hide();
 		});
 
-		$(&quot;#&quot; + uploadDivId + &quot; #upload_document_submit&quot;).click(function(event) {
+		$(&quot;#&quot; + uploadDivId + &quot; .upload_file_submit&quot;).click(function(event) {
 			if(!V.Police.validateFileUpload($(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val())[0]){
 				event.preventDefault();
 			} else {

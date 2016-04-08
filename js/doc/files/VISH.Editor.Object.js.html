@@ -128,7 +128,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		});
 		
 		
-		$(&quot;#&quot; + uploadDivId + &quot; #upload_document_submit&quot;).click(function(event){
+		$(&quot;#&quot; + uploadDivId + &quot; .upload_file_submit&quot;).click(function(event){
 			if(!V.Police.validateFileUpload($(&quot;#&quot; + uploadDivId + &quot; input[name=&#x27;document[file]&#x27;]&quot;).val())[0]){
 				event.preventDefault();
 			} else {
@@ -499,7 +499,6 @@ VISH.Editor.Object = (function(V,$,undefined){
 		$(wrapperPreview).attr(&#x27;wmode&#x27;,&#x27;opaque&#x27;);
 		$(wrapperPreview).removeAttr(&#x27;width&#x27;);
 		$(wrapperPreview).removeAttr(&#x27;height&#x27;);
-		//Force scrolling auto if the wrapper has specified the scrolling param
 		if(typeof $(wrapperPreview).attr(&quot;src&quot;) != &quot;undefined&quot;){
 			$(wrapperPreview).attr(&quot;src&quot;,V.Utils.checkUrlProtocol($(wrapperPreview).attr(&quot;src&quot;)));
 		}
