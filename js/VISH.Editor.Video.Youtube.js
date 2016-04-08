@@ -93,6 +93,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 			if((item['snippet']['thumbnails'])&&(item['snippet']['thumbnails']['default'])&&(item['snippet']['thumbnails']['default']['url'])){
 				thumbnail_url = item['snippet']['thumbnails']['default']['url'];
 			};
+			thumbnail_url = V.Utils.checkUrlProtocol(thumbnail_url);
 			
 			if((typeof author != "string")||(author.trim()==="")){
 				author = V.I18n.getTrans("i.Unknown");
@@ -219,7 +220,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _generateWrapper = function(videoId){
-		var videoURL = "http://www.youtube.com/embed/"+videoId;
+		var videoURL = "https://www.youtube.com/embed/"+videoId;
 		videoURL = V.Utils.addParamToUrl(videoURL,"wmode","opaque");
 		var videoWContainer = ((typeof V.Editor.getCurrentArea() != "undefined")&&(V.Editor.getCurrentArea() != null)) ? V.Editor.getCurrentArea() : V.Editor.getCurrentContainer();
 		var dimensionsToDraw = V.Utils.dimentionsToDraw($(videoWContainer).width(), $(videoWContainer).height(),325,243);
@@ -237,7 +238,7 @@ VISH.Editor.Video.Youtube = (function(V,$,undefined){
 	};
 
 	var _generatePreviewWrapper = function(videoId){
-		var videoURL = "http://www.youtube.com/embed/"+videoId;
+		var videoURL = "https://www.youtube.com/embed/"+videoId;
 		videoURL = V.Utils.addParamToUrl(videoURL,"wmode","opaque");
 		var wrapper = '<iframe class="objectPreview" src="'+videoURL+'" frameborder="0"></iframe>';
 		return wrapper;
