@@ -50,7 +50,6 @@ VISH.Editor = (function(V,$,undefined){
 			initOptions = options;
 			if((options.configuration)&&(V.Configuration)){
 				V.Configuration.init(options.configuration);
-				V.Configuration.applyConfiguration();
 			}
 		} else {
 			initOptions = {};

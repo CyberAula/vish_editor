@@ -1,101 +1,215 @@
 VISH.Configuration = (function(V,$,undefined){
   
-	var configuration;
-	
-	var init = function(myConfiguration){ 
-		configuration = myConfiguration;
-		_initPaths();
-	};
+  var configuration;
+  
+  var init = function(VEconfiguration){ 
+    configuration = VEconfiguration;
+    _applyConfiguration();
+  };
 
-	var _initPaths = function(){
-		//Assets paths
-		V.ImagesPath = configuration["ImagesPath"];
-		V.StylesheetsPath = configuration["StylesheetsPath"];
+  var _applyConfiguration = function(){
+    
+    /////////////////////
+    // VE paths
+    /////////////////////
 
-		//Services
-		V.RootPath = V.Utils.checkUrlProtocol(configuration["rootPath"]);
+    //Assets paths
+    V.ImagesPath = configuration["ImagesPath"];
+    V.StylesheetsPath = configuration["StylesheetsPath"];
 
-		//Upload paths
-		V.UploadImagePath = configuration["uploadImagePath"];
-		V.UploadObjectPath = configuration["uploadObjectPath"];
-		V.UploadPresentationPath = configuration["uploadPresentationPath"];
-		V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
+    //CORE paths
+    V.UploadPresentationPath = configuration["uploadPresentationPath"];
 
-		//Source paths
-		V.LREPath = V.Utils.checkUrlProtocol(configuration["LRE_path"]);
-		V.ViSHInstances = [];
-		if(configuration["ViSH_instances"] instanceof Array){
-			for(var i=0; i<configuration["ViSH_instances"].length; i++){
-				V.ViSHInstances.push(V.Utils.checkUrlProtocol(configuration["ViSH_instances"][i]));
-			}
-		}
-	};
-	
-	var applyConfiguration = function(){
-		//Sources
-		if(!configuration["Upload"]){
-			$("#tab_pic_upload").css("display","none").addClass("disabled");
-			$("#tab_object_upload").css("display","none").addClass("disabled");
-		}
+    //Upload paths
+    V.UploadImagePath = configuration["uploadImagePath"];
+    V.UploadObjectPath = configuration["uploadObjectPath"];
+    V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
+    V.UploadEPackagesPath = configuration["uploadEPackagesPath"];
+    V.UploadAttachmentPath = configuration["uploadAttachmentPath"];
 
-		if(!configuration["ViSH"]){
-			$("#tab_pic_repo").css("display","none").addClass("disabled");
-			$("#tab_object_repo").css("display","none").addClass("disabled");
-			$("#tab_video_repo").css("display","none").addClass("disabled");
-		}
+    //Root path for other services (tags, thumbnails, tmpJson, ...) [DEPRECATED!]
+    V.RootPath = V.Utils.checkUrlProtocol(configuration["rootPath"]);
 
-		if(!configuration["Youtube"]){
-			$("#tab_video_youtube").css("display","none").addClass("disabled");
-		}
+    //Other services
+    //Thumbnails
+    V.ThumbnailsPath = configuration["thumbnailsPath"];
+    //Tags
+    V.TagsPath = configuration["tagsPath"];
+    //TmpJSON
+    V.UploadJSONPath = configuration["uploadJSONPath"];
 
-		if(!configuration["SoundCloud"]){
-			$("#tab_audio_soundcloud").css("display","none").addClass("disabled");
-		}
-			
-		if(!configuration["Vimeo"]){
-			$("#tab_video_vimeo").css("display","none").addClass("disabled");
-		}
+    //Repository paths
+    V.LREPath = V.Utils.checkUrlProtocol(configuration["LRE_path"]);
+    V.ViSHInstances = [];
+    if(configuration["ViSH_instances"] instanceof Array){
+      for(var i=0; i<configuration["ViSH_instances"].length; i++){
+        V.ViSHInstances.push(V.Utils.checkUrlProtocol(configuration["ViSH_instances"][i]));
+      }
+    }
 
-		if(!configuration["LRE"]){
-			$("#tab_pic_lre").css("display","none").addClass("disabled");
-			$("#tab_object_lre").css("display","none").addClass("disabled");
-		}
-			
-		if(!configuration["Flickr"]){
-			$("#tab_pic_flikr").css("display","none").addClass("disabled");
-		}
 
-		if(!configuration["Europeana"]){
-			$("#tab_pic_europeana").css("display","none").addClass("disabled");
-		}
+    //Modify UI based on configuration
 
-		//Tags configuration
-		//Default config
-		var tagsSettings = {maxLength: 20, maxTags: 8, triggerKeys: ['enter', 'space', 'comma', 'tab']};
+    ////////////////
+    // Uploads
+    ////////////////
+    var defaultUpload = (!(configuration["Upload"]===false));
 
-		if(typeof configuration.tagsSettings == "object"){
-			if(!typeof configuration.tagsSettings.maxLength == "number"){
-				configuration.tagsSettings.maxLength = tagsSettings.maxLength;
-			}
-			if(!typeof configuration.tagsSettings.maxTags == "number"){
-				configuration.tagsSettings.maxTags = tagsSettings.maxTags;
-			}
-			if(!(configuration.tagsSettings.triggerKeys instanceof Array)){
-				configuration.tagsSettings.triggerKeys = tagsSettings.triggerKeys;
-			}
-		} else {
-			configuration.tagsSettings = tagsSettings;
-		}
-	};
-	
-	var getConfiguration = function(){
-		return configuration;
-	};
-	
-	return {
-    	init                : init,
-    	applyConfiguration  : applyConfiguration,
-		getConfiguration    : getConfiguration
-  	};
-	
+    //Images
+    if(typeof V.UploadImagePath == "undefined"){
+      //Disable images
+      $("#tab_pic_upload").css("display","none").addClass("disabled");
+    }
+
+    //Objects
+    if(typeof V.UploadObjectPath == "undefined"){
+      $("#tab_object_upload").css("display","none").addClass("disabled");
+    }
+
+    //PDFs
+    if(typeof V.UploadPDF2PPath == "undefined"){
+      $("#tab_pdfex").css("display","none").addClass("disabled");
+      $("#menu a[action='insertPDFex']").hide().addClass("disabled_config");
+    }
+
+    //e-Learning packages
+    if(typeof V.UploadEPackagesPath == "undefined"){
+      $("#tab_epackage").css("display","none").addClass("disabled");
+      $("#menu a[action='insertPackage']").hide().addClass("disabled_config");
+    }
+    
+    //Attachments
+    if(typeof V.UploadAttachmentPath == "undefined"){
+      $("#attachment_in_presentation_details").css("display","none").addClass("disabled");
+    }
+
+    
+    ////////////////
+    // Importations
+    ////////////////
+
+    //File importation
+    if(configuration["enableFileImportation"] === false){
+      $("#tab_efile").css("display","none").addClass("disabled");
+      $("#menu a[action='insertEFile']").hide().addClass("disabled_config");
+    }
+
+
+    ////////////////
+    // Repositories
+    ////////////////
+
+    //ViSH
+    if((configuration["ViSH"] !== true)||(typeof configuration["ViSH_instances"] != "object")||(configuration["ViSH_instances"].length < 1)){
+      $("#tab_pic_repo").css("display","none").addClass("disabled");
+      $("#tab_object_repo").css("display","none").addClass("disabled");
+      $("#tab_video_repo").css("display","none").addClass("disabled");
+      $("#tab_presentations_repo").css("display","none").addClass("disabled");
+      $("#menu a[action='insertPresentation']").hide().addClass("disabled_config");
+    }
+
+    //Flickr
+    if(configuration["Flickr"]!==true){
+      $("#tab_pic_flickr").css("display","none").addClass("disabled");
+    }
+
+    //YouTube
+    if((configuration["Youtube"]!==true)||(typeof configuration["YoutubeAPIKEY"] != "string")){
+      $("#tab_video_youtube").css("display","none").addClass("disabled");
+    }
+
+    //SoundCloud
+    if((configuration["SoundCloud"]!==true)||(typeof configuration["SoundCloudAPIKEY"] != "string")){
+      $("#tab_audio_soundcloud").css("display","none").addClass("disabled");
+    }
+
+    //Vimeo
+    if(configuration["Vimeo"]!==true){
+      $("#tab_video_vimeo").css("display","none").addClass("disabled");
+    }
+
+    //LRE
+    if((configuration["LRE"]!==true)||(typeof configuration["LRE_path"] != "string")){
+      $("#tab_pic_lre").css("display","none").addClass("disabled");
+      $("#tab_object_lre").css("display","none").addClass("disabled");
+    }
+
+    //Europeana
+    if((configuration["Europeana"]!==true)||(typeof configuration["EuropeanaAPIKEY"] != "string")){
+      $("#tab_pic_europeana").css("display","none").addClass("disabled");
+    }
+
+    ////////////////
+    // Other services
+    ////////////////
+
+    if(typeof V.ThumbnailsPath == "undefined"){
+      $("#tab_pic_thumbnails").css("display","none").addClass("disabled");
+    }
+
+    if(typeof V.UploadJSONPath == "undefined"){
+      //Disable export
+      $("#vemenu_export").hide().addClass("disabled_config");
+      $("#advanced_tabs a[tab='rte-tab']").hide().addClass("disabled");
+    }
+
+    //Tags configuration
+    //Default config
+    var tagsSettings = {maxLength: 20, maxTags: 8, triggerKeys: ['enter', 'space', 'comma', 'tab']};
+
+    if(typeof configuration.tagsSettings == "object"){
+      if(!typeof configuration.tagsSettings.maxLength == "number"){
+        configuration.tagsSettings.maxLength = tagsSettings.maxLength;
+      }
+      if(!typeof configuration.tagsSettings.maxTags == "number"){
+        configuration.tagsSettings.maxTags = tagsSettings.maxTags;
+      }
+      if(!(configuration.tagsSettings.triggerKeys instanceof Array)){
+        configuration.tagsSettings.triggerKeys = tagsSettings.triggerKeys;
+      }
+    } else {
+      configuration.tagsSettings = tagsSettings;
+    }
+
+    if(typeof configuration["publishPermissions"] != "object"){
+      configuration["publishPermissions"] = [];
+    }
+    
+    if(configuration["publishPermissions"].indexOf("Comment") == -1){
+      $("#allow_comment").parent("p").hide().addClass("disabled");
+    }
+    if(configuration["publishPermissions"].indexOf("Download") == -1){
+      $("#allow_download").parent("p").hide().addClass("disabled");
+    }
+    if(configuration["publishPermissions"].indexOf("Clone") == -1){
+      $("#allow_clone").parent("p").hide().addClass("disabled");
+    }
+    if($("#publication_content p").not(".disabled").length === 0){
+      $("#advanced_tabs a[tab='publication-tab']").hide().addClass("disabled");
+    }
+
+    if((typeof configuration["catalog"] != "object")||(configuration["catalog"].length < 1)){
+      $("#catalog_button").hide().addClass("disabled");
+    }
+
+    //Last actions
+
+    //Hide unsefull li options on menu
+    $("#menu li").each(function(index,li){
+      if($(li).find("a[action]").not(".disabled_config").length < 1){
+        $(li).hide().addClass("disabled_config");
+      }
+    });
+
+  };
+  
+  var getConfiguration = function(){
+    return configuration;
+  };
+  
+  return {
+      init                : init,
+    getConfiguration    : getConfiguration
+    };
+  
 }) (VISH, jQuery);

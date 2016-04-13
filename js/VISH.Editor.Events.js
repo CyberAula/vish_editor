@@ -21,7 +21,22 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click', '#addSlideButton', V.Editor.Tools.Menu.insertSlide);
 			$(document).on('click', '#addSlideButtonOnSubslides', V.Editor.Tools.Menu.insertSubslide);
-			$(document).on('click', '#importButton', V.Editor.Tools.Menu.insertPDFex);
+			$(document).on('click', '#importButton', function(){
+				var firstEnabledId = $("#tab_pdfex,#tab_efile,#tab_presentations_repo").not(".disabled").attr("id");
+				switch(firstEnabledId){
+					case "tab_pdfex":
+						return V.Editor.Tools.Menu.insertPDFex();
+					case "tab_efile":
+						return V.Editor.Tools.Menu.insertEFile();
+					case "tab_epackage":
+						return V.Editor.Tools.Menu.insertPackage();
+					case "tab_presentations_repo":
+						return V.Editor.Tools.Menu.insertPresentation();
+					default:
+						return V.Editor.Tools.Menu.insertSlide();
+						break;
+				}
+			});
 
 			$(document).on('click', '#slideset_selected_img', V.Editor.Slideset.onClickOpenSlideset);
 			
@@ -229,7 +244,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 				'padding' : 0,
 				"onStart"  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
-					V.Editor.Utils.loadTab('tab_pic_upload');
+
+					var firstEnabledId = $("#tab_pic_upload,#tab_pic_thumbnails").not(".disabled").attr("id");
+					switch(firstEnabledId){
+						case "tab_pic_upload":
+							V.Editor.Utils.loadTab('tab_pic_upload');
+						case "tab_pic_thumbnails":
+							V.Editor.Utils.loadTab('tab_pic_thumbnails');
+						default:
+							//Allow thumbnail by URL (the uniq possibility)
+							$("#tab_pic_from_url").show();
+							V.Editor.Utils.loadTab('tab_pic_from_url');
+							break;
+					}
 				},
 				"onClosed" : function(data){
 					if(V.Editor.Image.getAddContentMode()===V.Constant.THUMBNAIL){

@@ -267,7 +267,7 @@
 									<span i18n-key="i.AddSlide">Add Slide</span>
 								</a>
 							</li>
-							<li>
+							<li id="vemenu_import">
 								<a class="menu_option expansive" href="#">
 									<i class="icon-button icon-rotate-180 icon-download-alt"></i>
 									<span i18n-key="i.Import">Import</span>
@@ -287,7 +287,7 @@
 									</li>
 								</ul>
 							</li>
-							<li>
+							<li id="vemenu_export">
 								<a class="menu_option expansive" href="#">
 									<i class="icon-button icon-rotate-360 icon-download-alt"></i>
 									<span i18n-key="i.Export">Export</span>
@@ -549,21 +549,21 @@
 						</div>			
 
 					    <div id="attachment_in_presentation_details">
-					    	<span class="presentation_details_text" i18n-key="i.Attatchment">Attatchment</span>
+					    	<span class="presentation_details_text" i18n-key="i.Attatchment">Attatchment</span><br/>
+					    	<div class="file_details_upload">
+								<form id="attachment_file_form" method="post" action="attachment_file.json" enctype="multipart/form-data">
+									<div class="attachmentFileUpload" disabled="disabled" i18n-key-tooltip="i.tooltip.UploadAttachment" title="If this button is deactivated, you need to save your excursion first.">
+										<span i18n-key="i.ChooseFile">Choose File</span>
+										<input type="file" name="attachment" id="attachment_file">
+									</div>
+									<input id="description_attachment" placeholder="Choose File" disabled="disabled">
+									<input type="hidden" name="author_id" id="attachment_author">
+									<input type="hidden" name="authenticity_token" id="attachment_aut_token">
+									<input id="upload_file_attachment" type="submit" class="button" i18n-key="i.Upload" value="Upload" disabled="true">
+									<span id="upload_icon_success" class="icon-button icon-ok" aria-hidden="true"></span>
+								</form>
+							</div>
 					    </div>
-						<div class="file_details_upload">
-							<form id="attachment_file_form" method="post" action="attatchment_file.json" enctype="multipart/form-data">
-								<div class="attachmentFileUpload" disabled="disabled" i18n-key-tooltip="i.tooltip.UploadAttachment" title="If this button is deactivated, you need to save your excursion first.">
-									<span i18n-key="i.ChooseFile">Choose File</span>
-									<input type="file" name="attachment" id="attachment_file">
-								</div>
-								<input id="description_attachment" placeholder="Choose File" disabled="disabled">
-								<input type="hidden" name="author_id" id="attachment_author">
-								<input type="hidden" name="authenticity_token" id="attachment_aut_token">
-								<input id="upload_file_attachment" type="submit" class="button" i18n-key="i.Upload" value="Upload" disabled="true">
-								<span id="upload_icon_success" class="icon-button icon-ok" aria-hidden="true"></span>
-							</form>
-						</div>
 
 					</div>
 
