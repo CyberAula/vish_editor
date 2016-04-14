@@ -279,6 +279,7 @@ VISH.Status = (function(V,$,undefined){
 	};
 
 	var getProtocol = function(){
+		return "https";
 		if(typeof _protocol == "undefined"){
 			_checkProtocol();
 		}

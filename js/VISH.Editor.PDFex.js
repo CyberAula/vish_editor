@@ -3,7 +3,6 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 	var uploadDivId = "tab_pdfex_content";
 
 	var init = function(){
-		var options = V.Editor.getOptions();
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
 
@@ -19,12 +18,10 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='pdfex[attach]']").val())[0]){
 				event.preventDefault();
 			} else {
-				if (options) {
-					$("#" + uploadDivId + " input[name='pdfex[owner_id]']").val(V.User.getId());
-					$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
-					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadPDF2PPath);
-					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
-				}
+				$("#" + uploadDivId + " input[name='pdfex[owner_id]']").val(V.User.getId());
+				$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
+				$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadPDF2PPath);
+				$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
 			}
 		});
 

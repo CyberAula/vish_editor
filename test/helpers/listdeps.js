@@ -79,7 +79,6 @@ vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Audio.Soundcloud.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Audio.HTML5.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Video.Repository.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Video.Youtube.js'));
-vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Video.Vimeo.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Video.HTML5.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.Repository.js'));

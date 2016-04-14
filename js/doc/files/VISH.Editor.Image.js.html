@@ -341,8 +341,8 @@ VISH.Editor.Image = (function(V,$,undefined){
 			case V.Constant.THUMBNAIL:
 				//When choosing thumbnail, only allow upload and thumbnail tabs.
 				$(&quot;#picture_fancybox div.fancy_tabs a.fancy_tab&quot;).hide();
-				$(&quot;#tab_pic_upload&quot;).show();
-				$(&quot;#tab_pic_thumbnails&quot;).show();
+				$(&quot;#tab_pic_upload&quot;).not(&quot;.disabled&quot;).show();
+				$(&quot;#tab_pic_thumbnails&quot;).not(&quot;.disabled&quot;).show();
 				break;
 			case V.Constant.NONE:
 			case V.Constant.FLASHCARD:

@@ -176,7 +176,7 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * Function to call ViSH and request tags
 	 */
 	var requestTags = function(successCallback, failCallback){
-		if(typeof V.RootPath != "string"){
+		if(typeof V.TagsPath != "string"){
 			if(typeof failCallback == "function"){
 				failCallback();
 			}
@@ -185,7 +185,7 @@ VISH.Editor.API = (function(V,$,undefined){
 
 		$.ajax({
 			type: "GET",
-			url: V.RootPath + "/tags.json?mode=popular&limit=100",
+			url: V.TagsPath,
 			dataType:"html",
 			success:function(response){
 				if(typeof successCallback == "function"){
@@ -211,9 +211,16 @@ VISH.Editor.API = (function(V,$,undefined){
 	 * Function to get the available avatars
 	 */
 	var requestThumbnails = function(successCallback, failCallback){
+		if(typeof V.ThumbnailsPath != "string"){
+			if(typeof failCallback == "function"){
+				failCallback();
+			}
+			return;
+		}
+
 		$.ajax({
 			type: 'GET',
-			url: V.RootPath + '/thumbnails.json',
+			url: V.ThumbnailsPath,
 			dataType: 'json',
 			success: function(data) {
 				if(typeof successCallback == "function"){
@@ -229,11 +236,18 @@ VISH.Editor.API = (function(V,$,undefined){
 	};
 
 	var uploadTmpJSON = function(json, responseFormat, successCallback, failCallback){
+		if(typeof V.UploadJSONPath != "string"){
+			if(typeof failCallback == "function"){
+				failCallback();
+			}
+			return;
+		}
+
 		responseFormat = (typeof responseFormat=="string") ? responseFormat : "json"
 
 		$.ajax({
 			type: 'POST',
-			url: V.RootPath + '/excursions/tmpJson.json',
+			url: V.UploadJSONPath,
 			dataType: 'json',
 			data: { 
 				"authenticity_token" : V.User.getToken(),

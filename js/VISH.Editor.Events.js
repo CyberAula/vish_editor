@@ -433,7 +433,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('object_fancy_tabs_main_help', 'top');
 		});
 
-		//Help inserting videos [URL, ViSH, YouTube, Vimeo]
+		//Help inserting videos [URL, ViSH, YouTube]
 		$(document).on('click','#tab_video_from_url_help', function(){
 			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
 		});
@@ -441,9 +441,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
 		});
 		$(document).on('click','#tab_video_youtube_help', function(){
-			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
-		});
-		$(document).on('click','#tab_video_vimeo_help', function(){
 			V.Tour.startTourWithId('video_fancy_tabs_main_help', 'top');
 		});
 

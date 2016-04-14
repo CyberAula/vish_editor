@@ -752,28 +752,29 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(V.Editor.hasBeenSaved()){
 			var fileName = document.getElementById("attachment_file").value;
 			if(fileName != ""){
-				var attachment_url = "/excursions/"+ V.Editor.getPresentationId() + "/upload_attachment";
-				$("#attachment_file_form").attr("action", attachment_url);
-				$("#attachment_author").val(V.User.getId());
-				$("#attachment_aut_token").val(V.User.getToken());
-				$("#attachment_file_form").ajaxForm({
-					success: function(responseText, statusText, xhr, form) {
-						if(responseText.status == "bad_request" && responseText.message == "bad_size"){
-							V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorTooBig"));
-							$('#upload_file_attachment').prop('disabled', true);
-						}else if(responseText.status == "bad_request" && responseText.message == "wrong_params"){
+				if(typeof V.UploadAttachmentPath == "string"){
+					$("#attachment_file_form").attr("action", V.UploadAttachmentPath);
+					$("#attachment_author").val(V.User.getId());
+					$("#attachment_aut_token").val(V.User.getToken());
+					$("#attachment_file_form").ajaxForm({
+						success: function(responseText, statusText, xhr, form) {
+							if(responseText.status == "bad_request" && responseText.message == "bad_size"){
+								V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorTooBig"));
+								$('#upload_file_attachment').prop('disabled', true);
+							}else if(responseText.status == "bad_request" && responseText.message == "wrong_params"){
+								V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
+								$('#upload_file_attachment').prop('disabled', true);
+							} else if (responseText.status == "ok" && responseText.message == "success") {
+								$("#upload_icon_success").show();
+								$('#upload_file_attachment').prop('disabled', true);
+								V.Editor.Tools.save();
+							}
+						},
+						error: function(error){
 							V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
-							$('#upload_file_attachment').prop('disabled', true);
-						} else if (responseText.status == "ok" && responseText.message == "success") {
-							$("#upload_icon_success").show();
-							$('#upload_file_attachment').prop('disabled', true);
-							V.Editor.Tools.save();
 						}
-					},
-					error: function(error){
-						V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorWrongServer"));
-					}
-				});
+					});
+				}
 			} else {
 				event.preventDefault();
 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans("i.uploadErrorCantReach"));

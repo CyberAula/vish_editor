@@ -103,7 +103,22 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButton&#x27;, V.Editor.Tools.Menu.insertSlide);
 			$(document).on(&#x27;click&#x27;, &#x27;#addSlideButtonOnSubslides&#x27;, V.Editor.Tools.Menu.insertSubslide);
-			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, V.Editor.Tools.Menu.insertPDFex);
+			$(document).on(&#x27;click&#x27;, &#x27;#importButton&#x27;, function(){
+				var firstEnabledId = $(&quot;#tab_pdfex,#tab_efile,#tab_presentations_repo&quot;).not(&quot;.disabled&quot;).attr(&quot;id&quot;);
+				switch(firstEnabledId){
+					case &quot;tab_pdfex&quot;:
+						return V.Editor.Tools.Menu.insertPDFex();
+					case &quot;tab_efile&quot;:
+						return V.Editor.Tools.Menu.insertEFile();
+					case &quot;tab_epackage&quot;:
+						return V.Editor.Tools.Menu.insertPackage();
+					case &quot;tab_presentations_repo&quot;:
+						return V.Editor.Tools.Menu.insertPresentation();
+					default:
+						return V.Editor.Tools.Menu.insertSlide();
+						break;
+				}
+			});
 
 			$(document).on(&#x27;click&#x27;, &#x27;#slideset_selected_img&#x27;, V.Editor.Slideset.onClickOpenSlideset);
 			
@@ -311,7 +326,19 @@ VISH.Editor.Events = (function(V,$,undefined){
 				&#x27;padding&#x27; : 0,
 				&quot;onStart&quot;  : function(data) {
 					V.Editor.Image.setAddContentMode(V.Constant.THUMBNAIL);
-					V.Editor.Utils.loadTab(&#x27;tab_pic_upload&#x27;);
+
+					var firstEnabledId = $(&quot;#tab_pic_upload,#tab_pic_thumbnails&quot;).not(&quot;.disabled&quot;).attr(&quot;id&quot;);
+					switch(firstEnabledId){
+						case &quot;tab_pic_upload&quot;:
+							V.Editor.Utils.loadTab(&#x27;tab_pic_upload&#x27;);
+						case &quot;tab_pic_thumbnails&quot;:
+							V.Editor.Utils.loadTab(&#x27;tab_pic_thumbnails&#x27;);
+						default:
+							//Allow thumbnail by URL (the uniq possibility)
+							$(&quot;#tab_pic_from_url&quot;).show();
+							V.Editor.Utils.loadTab(&#x27;tab_pic_from_url&#x27;);
+							break;
+					}
 				},
 				&quot;onClosed&quot; : function(data){
 					if(V.Editor.Image.getAddContentMode()===V.Constant.THUMBNAIL){
@@ -488,7 +515,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;object_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 
-		//Help inserting videos [URL, ViSH, YouTube, Vimeo]
+		//Help inserting videos [URL, ViSH, YouTube]
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_from_url_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
@@ -496,9 +523,6 @@ VISH.Editor.Events = (function(V,$,undefined){
 			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_youtube_help&#x27;, function(){
-			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
-		});
-		$(document).on(&#x27;click&#x27;,&#x27;#tab_video_vimeo_help&#x27;, function(){
 			V.Tour.startTourWithId(&#x27;video_fancy_tabs_main_help&#x27;, &#x27;top&#x27;);
 		});
 

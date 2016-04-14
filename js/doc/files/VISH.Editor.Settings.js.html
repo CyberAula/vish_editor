@@ -834,28 +834,29 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(V.Editor.hasBeenSaved()){
 			var fileName = document.getElementById(&quot;attachment_file&quot;).value;
 			if(fileName != &quot;&quot;){
-				var attachment_url = &quot;/excursions/&quot;+ V.Editor.getPresentationId() + &quot;/upload_attachment&quot;;
-				$(&quot;#attachment_file_form&quot;).attr(&quot;action&quot;, attachment_url);
-				$(&quot;#attachment_author&quot;).val(V.User.getId());
-				$(&quot;#attachment_aut_token&quot;).val(V.User.getToken());
-				$(&quot;#attachment_file_form&quot;).ajaxForm({
-					success: function(responseText, statusText, xhr, form) {
-						if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;bad_size&quot;){
-							V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorTooBig&quot;));
-							$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
-						}else if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;wrong_params&quot;){
+				if(typeof V.UploadAttachmentPath == &quot;string&quot;){
+					$(&quot;#attachment_file_form&quot;).attr(&quot;action&quot;, V.UploadAttachmentPath);
+					$(&quot;#attachment_author&quot;).val(V.User.getId());
+					$(&quot;#attachment_aut_token&quot;).val(V.User.getToken());
+					$(&quot;#attachment_file_form&quot;).ajaxForm({
+						success: function(responseText, statusText, xhr, form) {
+							if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;bad_size&quot;){
+								V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorTooBig&quot;));
+								$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
+							}else if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;wrong_params&quot;){
+								V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorWrongServer&quot;));
+								$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
+							} else if (responseText.status == &quot;ok&quot; &amp;&amp; responseText.message == &quot;success&quot;) {
+								$(&quot;#upload_icon_success&quot;).show();
+								$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
+								V.Editor.Tools.save();
+							}
+						},
+						error: function(error){
 							V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorWrongServer&quot;));
-							$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
-						} else if (responseText.status == &quot;ok&quot; &amp;&amp; responseText.message == &quot;success&quot;) {
-							$(&quot;#upload_icon_success&quot;).show();
-							$(&#x27;#upload_file_attachment&#x27;).prop(&#x27;disabled&#x27;, true);
-							V.Editor.Tools.save();
 						}
-					},
-					error: function(error){
-						V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorWrongServer&quot;));
-					}
-				});
+					});
+				}
 			} else {
 				event.preventDefault();
 				V.Editor.Utils.showErrorDialog(V.I18n.getTrans(&quot;i.uploadErrorCantReach&quot;));

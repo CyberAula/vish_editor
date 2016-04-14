@@ -387,9 +387,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_video_youtube":
 				V.Editor.Video.Youtube.beforeLoadTab();
 				break;
-			case "tab_video_vimeo":
-				V.Editor.Video.Vimeo.beforeLoadTab();
-				break;	
 			//Audio
 			case "tab_audio_soundcloud":
 				V.Editor.Audio.Soundcloud.beforeLoadTab();
@@ -461,9 +458,6 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_video_youtube":
 				V.Editor.Video.Youtube.onLoadTab();
 				break;
-			case "tab_video_vimeo":
-				V.Editor.Video.Vimeo.onLoadTab();
-				break;	
 			//Objects
 			case "tab_object_from_url":
 				V.Editor.Object.onLoadTab("url");

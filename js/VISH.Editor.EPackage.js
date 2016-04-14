@@ -4,11 +4,10 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 		
 	var init = function(){
 		//Upload content
-		var options = V.Editor.getOptions();
 		var tagList = $("#" + uploadDivId + " .tagList");
 		var bar = $("#" + uploadDivId + " .upload_progress_bar");
 		var percent = $("#" + uploadDivId + " .upload_progress_bar_percent");
-    
+
 		$("#" + uploadDivId + " input[name='document[file]']").change(function(){
 			var filterFilePath = V.Editor.Utils.filterFilePath($("#" + uploadDivId + " input:file").val());
 			$("#" + uploadDivId + " input[name='document[title]']").val(filterFilePath);
@@ -22,17 +21,15 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 			if(!V.Police.validateFileUpload($("#" + uploadDivId + " input[name='document[file]']").val())[0]){
 				event.preventDefault();
 			} else {
-				if (options) {
-					var description = "Uploaded by " + V.User.getName() + " via ViSH Editor"
-					$("#" + uploadDivId + " input[name='document[description]']").val(description);
-					$("#" + uploadDivId + " input[name='document[owner_id]']").val(V.User.getId());
-					$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
-					$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadObjectPath);
-					var tagList = $("#" + uploadDivId + " .tagList");
-					$("#" + uploadDivId + " input[name='document[tag_list]']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
-					$(tagList).parent().hide();
-					$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
-				}
+				var description = "Uploaded by " + V.User.getName() + " via ViSH Editor"
+				$("#" + uploadDivId + " input[name='document[description]']").val(description);
+				$("#" + uploadDivId + " input[name='document[owner_id]']").val(V.User.getId());
+				$("#" + uploadDivId + " input[name='authenticity_token']").val(V.User.getToken());
+				$("#" + uploadDivId + " .documentsForm").attr("action", V.UploadEPackagesPath);
+				var tagList = $("#" + uploadDivId + " .tagList");
+				$("#" + uploadDivId + " input[name='document[tag_list]']").val(V.Editor.Utils.convertToTagsArray($(tagList).tagit("tags")));
+				$(tagList).parent().hide();
+				$("#" + uploadDivId + " .upload_progress_bar_wrapper").show();
 			}
 		});
     		

@@ -19,24 +19,14 @@ VISH.Configuration = (function(V,$,undefined){
 
     //CORE paths
     V.UploadPresentationPath = configuration["uploadPresentationPath"];
+    V.PreviewPresentationPath = configuration["previewPresentationPath"];
 
     //Upload paths
     V.UploadImagePath = configuration["uploadImagePath"];
     V.UploadObjectPath = configuration["uploadObjectPath"];
     V.UploadPDF2PPath = configuration["uploadPDF2PPath"];
     V.UploadEPackagesPath = configuration["uploadEPackagesPath"];
-    V.UploadAttachmentPath = configuration["uploadAttachmentPath"];
-
-    //Root path for other services (tags, thumbnails, tmpJson, ...) [DEPRECATED!]
-    V.RootPath = V.Utils.checkUrlProtocol(configuration["rootPath"]);
-
-    //Other services
-    //Thumbnails
-    V.ThumbnailsPath = configuration["thumbnailsPath"];
-    //Tags
-    V.TagsPath = configuration["tagsPath"];
-    //TmpJSON
-    V.UploadJSONPath = configuration["uploadJSONPath"];
+    V.EnableFileImportation = (!(configuration["enableFileImportation"]===false));
 
     //Repository paths
     V.LREPath = V.Utils.checkUrlProtocol(configuration["LRE_path"]);
@@ -47,13 +37,21 @@ VISH.Configuration = (function(V,$,undefined){
       }
     }
 
+    //Other services
+    //Thumbnails
+    V.ThumbnailsPath = configuration["thumbnailsPath"];
+    //Tags
+    V.TagsPath = configuration["tagsPath"];
+    //TmpJSON
+    V.UploadJSONPath = configuration["uploadJSONPath"];
+    //Attachment
+    V.UploadAttachmentPath = configuration["uploadAttachmentPath"];
 
     //Modify UI based on configuration
 
     ////////////////
     // Uploads
     ////////////////
-    var defaultUpload = (!(configuration["Upload"]===false));
 
     //Images
     if(typeof V.UploadImagePath == "undefined"){
@@ -67,13 +65,13 @@ VISH.Configuration = (function(V,$,undefined){
     }
 
     //PDFs
-    if(typeof V.UploadPDF2PPath == "undefined"){
+    if((typeof V.UploadPDF2PPath == "undefined")||(typeof V.PreviewPresentationPath == "undefined")){
       $("#tab_pdfex").css("display","none").addClass("disabled");
       $("#menu a[action='insertPDFex']").hide().addClass("disabled_config");
     }
 
     //e-Learning packages
-    if(typeof V.UploadEPackagesPath == "undefined"){
+    if((typeof V.UploadEPackagesPath == "undefined")||(typeof V.PreviewPresentationPath == "undefined")){
       $("#tab_epackage").css("display","none").addClass("disabled");
       $("#menu a[action='insertPackage']").hide().addClass("disabled_config");
     }
@@ -89,7 +87,7 @@ VISH.Configuration = (function(V,$,undefined){
     ////////////////
 
     //File importation
-    if(configuration["enableFileImportation"] === false){
+    if((V.EnableFileImportation === false)||(typeof V.PreviewPresentationPath == "undefined")){
       $("#tab_efile").css("display","none").addClass("disabled");
       $("#menu a[action='insertEFile']").hide().addClass("disabled_config");
     }
@@ -123,11 +121,6 @@ VISH.Configuration = (function(V,$,undefined){
       $("#tab_audio_soundcloud").css("display","none").addClass("disabled");
     }
 
-    //Vimeo
-    if(configuration["Vimeo"]!==true){
-      $("#tab_video_vimeo").css("display","none").addClass("disabled");
-    }
-
     //LRE
     if((configuration["LRE"]!==true)||(typeof configuration["LRE_path"] != "string")){
       $("#tab_pic_lre").css("display","none").addClass("disabled");
@@ -142,6 +135,12 @@ VISH.Configuration = (function(V,$,undefined){
     ////////////////
     // Other services
     ////////////////
+
+    if(typeof V.PreviewPresentationPath == "undefined"){
+      $("#toolbar_preview").hide().addClass("disabled");
+      $("#menu a[action='preview']").hide().addClass("disabled_config");
+      $("#menu a[action='insertPresentation']").hide().addClass("disabled_config");
+    }
 
     if(typeof V.ThumbnailsPath == "undefined"){
       $("#tab_pic_thumbnails").css("display","none").addClass("disabled");

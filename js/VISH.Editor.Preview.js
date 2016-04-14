@@ -31,7 +31,7 @@ VISH.Editor.Preview = (function(V,$,undefined){
 			'onComplete': function() {
 				$("#fancybox-wrap").css('top','45px');
 				$("#fancybox-wrap").css('left','135px');
-				$("#fancybox-frame").addClass("vishEditorIframe");	
+				$("#fancybox-frame").addClass("vishEditorIframe");
 			}
 		});
 	}
@@ -47,17 +47,14 @@ VISH.Editor.Preview = (function(V,$,undefined){
 	 */
 	var _prepare = function(options){
 		var slideNumberToPreview;
-
 		if((!options)||(!options["slideNumberToPreview"])||(typeof options["slideNumberToPreview"] != "number")){
 			slideNumberToPreview =  V.Slides.getCurrentSlideNumber();
 		} else {
 			slideNumberToPreview =  options["slideNumberToPreview"];
 		}
 
-		if(V.Configuration.getConfiguration().mode==V.Constant.VISH){
-			$("#preview_action").attr("href",  "/excursions/preview#" + slideNumberToPreview);
-		} else if(V.Configuration.getConfiguration().mode==V.Constant.NOSERVER){
-			$("#preview_action").attr("href", "/viewer.html#" + slideNumberToPreview);
+		if(typeof V.PreviewPresentationPath != "undefined"){
+			$("#preview_action").attr("href", V.PreviewPresentationPath + "#" + slideNumberToPreview);
 		}
 
 		if((!options)||(!options["presentationJSON"])||(typeof options["presentationJSON"] != "object")){
@@ -69,7 +66,6 @@ VISH.Editor.Preview = (function(V,$,undefined){
 		if((options)&&(options["insertMode"])&&(typeof options["insertMode"] == "boolean")){
 			presentationPreview.insertMode = options["insertMode"];
 		}
-		
 	};
 
 	var getPreview = function(){

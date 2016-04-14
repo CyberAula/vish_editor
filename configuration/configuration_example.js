@@ -67,7 +67,6 @@ var getOptions = function(){
 		configuration["EuropeanaAPIKEY"] = "EuropeanaAPIKEY";
 		configuration["Youtube"] = true;
 		configuration["YoutubeAPIKEY"] = 'YoutubeAPIKey';
-		configuration["Vimeo"] = false;
 		configuration["LRE"] = true;
 		configuration["LRE_path"] = "http://localhost:3000/lre/search";
 		configuration["SoundCloud"] = true;
