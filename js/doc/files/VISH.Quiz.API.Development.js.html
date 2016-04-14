@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>VISH.Quiz.API.Development.js</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/3.9.1/build/cssgrids/cssgrids-min.css">
+    <link rel="stylesheet" href="../assets/vendor/prettify/prettify-min.css">
+    <link rel="stylesheet" href="../assets/css/main.css" id="site_styles">
+    <link rel="icon" href="../assets/favicon.ico">
+    <script src="http://yui.yahooapis.com/combo?3.9.1/build/yui/yui-min.js"></script>
+</head>
+<body class="yui3-skin-sam">
+
+<div id="doc">
+    <div id="hd" class="yui3-g header">
+        <div class="yui3-u-3-4">
+                <h1><img src="../assets/css/logo.png" title="" width="117" height="52"></h1>
+        </div>
+        <div class="yui3-u-1-4 version">
+            <em>API Docs for: </em>
+        </div>
+    </div>
+    <div id="bd" class="yui3-g">
+
+        <div class="yui3-u-1-4">
+            <div id="docs-sidebar" class="sidebar apidocs">
+                <div id="api-list">
+                    <h2 class="off-left">APIs</h2>
+                    <div id="api-tabview" class="tabview">
+                        <ul class="tabs">
+                            <li><a href="#api-classes">Classes</a></li>
+                            <li><a href="#api-modules">Modules</a></li>
+                        </ul>
+                
+                        <div id="api-tabview-filter">
+                            <input type="search" id="api-filter" placeholder="Type to filter APIs">
+                        </div>
+                
+                        <div id="api-tabview-panel">
+                            <ul id="api-classes" class="apis classes">
+                                <li><a href="../classes/VISH.Editor.html">VISH.Editor</a></li>
+                            </ul>
+                
+                            <ul id="api-modules" class="apis modules">
+                                <li><a href="../modules/ViSH.html">ViSH</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="yui3-u-3-4">
+                <div id="api-options">
+                    Show:
+                    <label for="api-show-inherited">
+                        <input type="checkbox" id="api-show-inherited" checked>
+                        Inherited
+                    </label>
+            
+                    <label for="api-show-protected">
+                        <input type="checkbox" id="api-show-protected">
+                        Protected
+                    </label>
+            
+                    <label for="api-show-private">
+                        <input type="checkbox" id="api-show-private">
+                        Private
+                    </label>
+                    <label for="api-show-deprecated">
+                        <input type="checkbox" id="api-show-deprecated">
+                        Deprecated
+                    </label>
+            
+                </div>
+            
+            <div class="apidocs">
+                <div id="docs-main">
+                    <div class="content">
+<h1 class="file-heading">File: VISH.Quiz.API.Development.js</h1>
+
+<div class="file">
+    <pre class="code prettyprint linenums">
+VISH.Quiz.API.Development = (function(V,$,undefined){
+	
+	// URL in the form: &quot;http://localhost:3000/quiz_sessions/&quot;
+	var ARS_API_RootURL;
+
+	// Just for developping
+	var getResultsCount = 0;
+
+	var init = function(ARS_API){
+		if((typeof ARS_API == &quot;object&quot;)&amp;&amp;(typeof ARS_API.rootURL == &quot;string&quot;)){
+			ARS_API_RootURL = V.Utils.checkUrlProtocol(ARS_API.rootURL);
+		}
+	};
+	
+   /*
+	* Create new quiz session
+	* Server responds with a quiz_session JSON object including the quiz session id
+	*/
+	var startQuizSession = function(quizDOM,quizJSON,successCallback, failCallback){
+		//Developping
+		var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
+		var url = ARS_API_RootURL + quizSessionId;
+		var quiz_session = {id: quizSessionId, url: url};
+		
+		if((typeof successCallback==&quot;function&quot;)&amp;&amp;(typeof failCallback==&quot;function&quot;)){
+			setTimeout(function(){
+				// failCallback(quizDOM,&quot;error&quot;);
+				successCallback(quizDOM,quiz_session);
+			},1000);
+		}
+		return;
+	};
+
+   /*
+	* Close opened quiz session
+	*/
+	var closeQuizSession = function(quizSessionId,name,successCallback,failCallback){
+		var data = {&quot;processed&quot;:&quot;true&quot;};
+		if((typeof successCallback==&quot;function&quot;)&amp;&amp;(typeof failCallback==&quot;function&quot;)){
+			setTimeout(function(){
+				successCallback(data);
+				// failCallback();
+			},1000);
+		}
+		return;
+	};
+
+   /*
+	* Delete opened quiz session
+	*/
+	var deleteQuizSession = function(quizSessionId,successCallback,failCallback){
+		var data = {&quot;processed&quot;:&quot;true&quot;};
+		if(typeof successCallback==&quot;function&quot;){
+			setTimeout(function(){
+				successCallback(data);
+			},1000);
+		}
+		return;
+	};
+
+	var getResults = function(quizSessionId, successCallback, failCallback){
+		//Test
+		//MC (Multiple Choice)
+		var mc_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:62,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:22Z&quot;,&quot;id&quot;:63,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:25:13Z&quot;,&quot;id&quot;:64,&quot;quiz_session_id&quot;:50}];
+
+		//MC with only one result
+		var mc_one_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:47,&quot;quiz_session_id&quot;:31}];
+
+		//MC Multiple answer
+		var mcm_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:20Z&quot;,&quot;id&quot;:37,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:29Z&quot;,&quot;id&quot;:38,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:35Z&quot;,&quot;id&quot;:39,&quot;quiz_session_id&quot;:27}];
+
+		//TF Quiz (True/False)
+		var tf_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:23Z&quot;,&quot;id&quot;:30,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:37Z&quot;,&quot;id&quot;:31,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:52Z&quot;,&quot;id&quot;:32,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:09Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:41Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:19}];
+		
+		//Sorting Quiz
+		var s_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:2},{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:1},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:3},{\&quot;selfAssessment\&quot;:{\&quot;result\&quot;:true}}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:47,&quot;quiz_session_id&quot;:31},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:1},{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:2},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:3},{\&quot;selfAssessment\&quot;:{\&quot;result\&quot;:false}}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:48,&quot;quiz_session_id&quot;:31}];
+		
+		//Open Ended Quiz
+		var o_data = [{&quot;answer&quot;:&quot;[{\&quot;answer\&quot;:\&quot;Lorem ipsum dolor si amet one.\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:62,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;answer\&quot;:\&quot;Proin in blandit odio. Mauris placerat sollicitudin urna, at malesuada odio rhoncus eget.\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:63,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;answer\&quot;:\&quot;Aenean imperdiet tortor arcu, at congue sapien aliquam a.\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:64,&quot;quiz_session_id&quot;:50}];
+
+		//Empty
+		var data;
+		if(getResultsCount&lt;1){
+			//Empty data
+			data = [];
+		} else if(getResultsCount&lt;3){
+			data = mc_data;
+		} else {
+			data = mc_data;
+		}
+		getResultsCount++;
+
+		if(typeof successCallback==&quot;function&quot;){
+			setTimeout(function(){
+				successCallback(data);
+			},1000);
+		}
+	};
+
+	/**
+	 * Send answers for real time quizzes
+	 */
+	var sendAnwers = function(answers, quizSessionId, successCallback, failCallback){
+		if(typeof successCallback==&quot;function&quot;){
+			setTimeout(function(){
+				successCallback();
+			},1000);
+		}
+		return;
+	};
+
+
+	return {
+		init					: init, 
+		startQuizSession		: startQuizSession, 
+		closeQuizSession		: closeQuizSession,
+		deleteQuizSession		: deleteQuizSession,
+		getResults 				: getResults,
+		sendAnwers				: sendAnwers
+	};
+
+}) (VISH, jQuery);
+    </pre>
+</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../assets/vendor/prettify/prettify-min.js"></script>
+<script>prettyPrint();</script>
+<script src="../assets/js/yui-prettify.js"></script>
+<script src="../assets/../api.js"></script>
+<script src="../assets/js/api-filter.js"></script>
+<script src="../assets/js/api-list.js"></script>
+<script src="../assets/js/api-search.js"></script>
+<script src="../assets/js/apidocs.js"></script>
+</body>
+</html>

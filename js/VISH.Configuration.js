@@ -46,6 +46,9 @@ VISH.Configuration = (function(V,$,undefined){
     V.UploadJSONPath = configuration["uploadJSONPath"];
     //Attachment
     V.UploadAttachmentPath = configuration["uploadAttachmentPath"];
+    //Teacher notification
+    V.NotifyTeacherPath = configuration["notifyTeacherPath"];
+    V.StudentMode = configuration["userMode"]==="student";
 
     //Modify UI based on configuration
 

@@ -39,24 +39,15 @@ VISH.Debugging = (function(V,$,undefined){
 	
 	var enableDevelopingMode = function(){
 		developping = true;
-	}
+	};
 	
 	var disableDevelopingMode = function(){
 		developping = false;
-	}
+	};
 	
 	var isDevelopping = function(){
 		return developping;
-	}
-	
-	var getActionSave = function(){
-		if(settings){
-			return settings.actionSave;
-		} else {
-			//Default action
-			return "preview";
-		}
-	}
+	};
 	
 	var getActionInit = function(){
 		if(settings){
@@ -65,7 +56,7 @@ VISH.Debugging = (function(V,$,undefined){
 			//Default action
 			return "nothing";
 		}
-	}
+	};
 	
 	var getPresentationSamples = function(){
 		if((settings)&&(settings.samples)){
@@ -74,7 +65,19 @@ VISH.Debugging = (function(V,$,undefined){
 			log("VISH.Debugging Error: Please specify development settings");
 			return null;
 		}
-	}
+	};
+
+	var getRandomToken = function(length){
+		var _token = "";
+		if(typeof length != "number"){
+			length = 6;
+		}
+		length = Math.max(length,1);
+		for(var i=0; i<length; i++){
+			_token += parseInt(Math.random()*10)
+		}
+		return parseInt(_token);
+	};
 	
 	return {
 		init 						: init,
@@ -83,9 +86,9 @@ VISH.Debugging = (function(V,$,undefined){
 		enableDevelopingMode 		: enableDevelopingMode,
 		disableDevelopingMode		: disableDevelopingMode,
 		isDevelopping				: isDevelopping,
-		getActionSave           	: getActionSave,
 		getActionInit				: getActionInit,
-		getPresentationSamples		: getPresentationSamples
+		getPresentationSamples		: getPresentationSamples,
+		getRandomToken				: getRandomToken
 	};
 
 }) (VISH, jQuery);

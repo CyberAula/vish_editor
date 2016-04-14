@@ -196,16 +196,14 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 			var presentation = V.Editor.savePresentation();
 			V.Editor.sendPresentation(presentation,"publish", function(data){
 				//onSuccess
-
-				switch(V.Configuration.getConfiguration().mode){
-					case V.Constant.VISH:
+				if(V.Debugging.isDevelopping()){
+					V.Editor.Preview.preview();
+					V.Editor.Tools.changePublishButtonStatus("unpublish");
+				} else {
+					if((typeof data == "object")&&(typeof data.url == "string")){
 						V.Editor.Events.allowExitWithoutConfirmation();
 						window.top.location.href = data.url;
-						break;
-					case V.Constant.NOSERVER:
-						V.Editor.Preview.preview();
-						V.Editor.Tools.changePublishButtonStatus("unpublish");
-						break;
+					}
 				}
 			}, function(){
 				//onFail
@@ -277,7 +275,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		var button2 = {};
 		button2.callback = function(){
 			V.Editor.savePresentation();
-			V.Editor.notify_teacher();
+			V.Editor.notifyTeacher();
 			$.fancybox.close();
 		};
 		button2.text = V.I18n.getTrans("i.yes");

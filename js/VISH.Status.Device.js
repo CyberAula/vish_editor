@@ -122,23 +122,6 @@ VISH.Status.Device = (function(V,$,undefined){
 					device.hasTestingViewport = true; //Indicate that the viewport is only for testing
 					_setTestingViewportForAndroidBrowser(callback);
 				} else {
-					 //Some tablets presents unreliable behaviours when viewport is loaded dinamically
-					 //In iframe there are no problems...
-					 //In addition, we need a server functionality (require Vish)
-					 //Currently disabled
-
-					 // if((device.tablet)&&(!V.Status.isEmbed())&&((V.Utils.getOptions().configuration.mode===V.Constant.VISH))){
-					 // 	//Is already loaded the static viewport?
-					 // 	//Look in URL params and options
-					 // 	if((V.Utils.getOptions().staticViewport)||(V.Utils.getParamsFromUrl(window.location.href).hasOwnProperty("viewport"))){
-					 // 		callback();
-					 // 	} else {
-						//  	var url = V.Utils.addParamToUrl(window.location.href,"viewport","A");  
-						// 	window.location.href = url;
-					 // 	}
-					 // 	return;
-					 // }
-
 					_setViewportForAndroidBrowser(callback);
 				}
 			}

@@ -82,14 +82,11 @@ VISH.Object.Webapp.Handler = (function(V,$,undefined){
 	};
 
 	var _requestAuthToken = function(successCallback,failCallback){
-
-		if(V.Configuration.getConfiguration()["mode"]==V.Constant.NOSERVER){
-			var _token = parseInt(Math.random()*1000000000);
-			successCallback({auth_token: _token});
-			return;
-		}
-
 		if(typeof _WAPP_TOKEN_API_URL != "string"){
+			if(V.Debugging.isDevelopping()){
+				successCallback({auth_token: V.Debugging.getRandomToken(8)});
+				return;
+			}
 			return;
 		}
 

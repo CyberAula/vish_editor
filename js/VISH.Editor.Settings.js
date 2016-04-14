@@ -650,14 +650,14 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			author = {};
 		}
 
-		if(V.User.isUser()){
+		var user = V.User.getUser();
+		if(typeof user != "undefined"){
 			//Override some params
-			var user = V.User.getUser();
-			if(V.User.getName()){
+			if(typeof V.User.getName() != "undefined"){
 				author.name = V.User.getName();
 			}
 			author.vishMetadata = {};
-			if(V.User.getId()){
+			if(typeof V.User.getId() != "undefined"){
 				author.vishMetadata.id = V.User.getId();
 			}
 		}

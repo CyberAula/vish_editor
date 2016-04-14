@@ -6,14 +6,15 @@ VISH.Recommendations = (function(V,$,undefined){
 	var _generated;
 	var _isRecVisible;
 	var _isEvalVisible;
+	var _hasParentEvaluateFunction;
 	var _showFancyboxTimer;
 
 	//Recommendations API
 	var _recommendationAPIUrl;
-
-	//Vishub params
-	var user_id;
-	var vishub_pres_id;
+	//Params to be sent to the Recommendations API
+	var _userId;
+	var _presEnvironment;
+	var _presId;
 
 	//Params to enhance recommendation
 	var _searchTerms;
@@ -40,14 +41,14 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
-		if(V.Status.isVishSite()){
-			user_id = V.User.getId();
-			var presentation = V.Viewer.getCurrentPresentation();
-			if(presentation["vishMetadata"] && presentation["vishMetadata"]["id"]){
-				vishub_pres_id = presentation["vishMetadata"]["id"];
-			}
+		_userId = V.User.getId();
+		var presentation = V.Viewer.getCurrentPresentation();
+		if(presentation["vishMetadata"] && presentation["vishMetadata"]["id"]){
+			_presEnvironment = presentation["vishMetadata"].name;
+			_presId = presentation["vishMetadata"]["id"];
 		}
 
+		_getHasParentEvaluateFunction();
 		_searchTerms = getCurrentSearchTerms();
 
 		//Redimension of fancybox is done in ViewerAdapter
@@ -142,7 +143,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite() && V.Status.isEmbed()));
+		var _showEvaluateButton = (_hasLOEPSettings() || (_getHasParentEvaluateFunction()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton && V.Status.getDevice().desktop;
 		return _showEvaluateButton;
@@ -178,13 +179,15 @@ VISH.Recommendations = (function(V,$,undefined){
 			if(_searchTerms){
 				params["q"] = _searchTerms;
 			}
-			if(user_id){
-				params["user_id"] = user_id;
+			if(typeof _userId != "undefined"){
+				params["user_id"] = _userId;
 			}
-			if(vishub_pres_id){
-				params["excursion_id"] = vishub_pres_id;
+			if(typeof _presId != "undefined"){
+				params["presentation_id"] = _presId;
 			}
-
+			params["user_environment"] = V.Status.getEnvironmentName();
+			params["presentation_environment"] = _presEnvironment;
+			
 			$.ajax({
 				type    : "GET",
 				url     : _recommendationAPIUrl,
@@ -242,7 +245,7 @@ VISH.Recommendations = (function(V,$,undefined){
         _requesting = false;
 
         if(!applyTargetBlank){
-        	//we join the recom-X with sending the parent to the excursion url
+        	//we join the recom-X with sending the parent to the presentation url
         	 for (var i = data.length - 1; i >= 0; i--){
         	 	$("#recom-"+data[i].id).click(function(my_event){
         	 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAcceptRecommendation,{"id": $(this).attr("ex_id")},true);
@@ -364,8 +367,9 @@ VISH.Recommendations = (function(V,$,undefined){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
 
 		try {
-			if(V.Status.isVishSite()&&V.Status.isEmbed()&&(typeof window.parent.triggerEvaluation == "function")){
-				//VE in the ViSH site. Trigger ViSH evaluation. This case is not triggered when we access the .full in ViSH.
+			if(_getHasParentEvaluateFunction()){
+				// VE in embeded in the same domain and a triggerEvaluation function exists. Trigger parent evaluation. 
+				// This case is not triggered when we access the .full format.
 				V.FullScreen.exitFromNativeFullScreen();
 				window.parent.triggerEvaluation();
 				return;
@@ -379,6 +383,18 @@ VISH.Recommendations = (function(V,$,undefined){
 			//Otherwise (testing)
 			window.alert("Evaluate!");
 		}
+	};
+
+	var _getHasParentEvaluateFunction = function(){
+		if(typeof _hasParentEvaluateFunction == "boolean"){
+			return _hasParentEvaluateFunction;
+		}
+		try {
+			_hasParentEvaluateFunction = ((V.Status.isExternalDomain()===false)&&(V.Status.isEmbed())&&(typeof window.parent.triggerEvaluation == "function"));
+		} catch(e){
+			_hasParentEvaluateFunction = false;
+		}
+		return _hasParentEvaluateFunction;
 	};
 
 	var _hasLOEPSettings = function(){

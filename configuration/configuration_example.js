@@ -12,35 +12,53 @@ var getOptions = function(){
 		var configuration = {};
 
 		/////////////////////
-		// Operation Modes
-		// Possible values:
-		// noserver: working with a HTTP server like apache for developping.
-		// vish: working with a vish server.
-		/////////////////////
-		configuration["mode"] = "noserver";
-		// configuration["mode"] = "vish";
-
-
-		/////////////////////
-		// Assets paths (use relative paths)
+		// Assets paths
 		/////////////////////
 		configuration["ImagesPath"] = "/images/";
 		configuration["StylesheetsPath"] = "/stylesheets/";
 
-
 		/////////////////////
-		// Configuration of server services
+		// CORE paths
 		/////////////////////
-
-		//Root path of the ViSH server (used for tags, thumbnails, etc.)
-		configuration["rootPath"] = "http://localhost:3000";
-
-		//Upload
-		configuration["Upload"] = true;
-		configuration["uploadImagePath"] = "/image";
-		configuration["uploadObjectPath"] = "/object";
 		configuration["uploadPresentationPath"] = "/presentation";
-		configuration["uploadPDF2PPath"] = "/pdfex";
+		configuration["previewPresentationPath"] = "/viewer.html";
+
+		/////////////////////
+		// Upload paths
+		/////////////////////
+		// configuration["uploadImagePath"]
+		// configuration["uploadObjectPath"]
+		// configuration["uploadPDF2PPath"]
+		// configuration["uploadEPackagesPath"]
+		configuration["enableFileImportation"] = true;
+
+		/////////////////////
+		// Sources enabled
+		/////////////////////
+		configuration["ViSH"] = true;
+		configuration["ViSH_instances"] = ["http://localhost:3000"];
+		configuration["Flickr"] = true;
+		configuration["Europeana"] = true;
+		configuration["EuropeanaAPIKEY"] = "EuropeanaAPIKEY";
+		configuration["Youtube"] = true;
+		configuration["YoutubeAPIKEY"] = 'YoutubeAPIKey';
+		configuration["LRE"] = true;
+		configuration["LRE_path"] = "http://localhost:3000/lre/search";
+		configuration["SoundCloud"] = true;
+		configuration["SoundCloudAPIKEY"] = 'SoundcloudAPIKey';
+
+		/////////////////////
+		// Features enabled (other services)
+		/////////////////////
+
+		//Thumbnails
+		// configuration["thumbnailsPath"]
+		//Tags
+		// configuration["tagsPath"]
+		//TmpJSON
+		// configuration["uploadJSONPath"]
+		//Attachment
+		// configuration["uploadAttachmentPath"]
 
 		// Recommendations API
 		configuration["recommendationsAPI"] = {
@@ -57,33 +75,14 @@ var getOptions = function(){
 			rootURL: "http://localhost:3000/apis/wapp_token"
 		};
 
-		/////////////////////
-		// Sources enabled
-		/////////////////////
-		configuration["ViSH"] = true;
-		configuration["ViSH_instances"] = ["http://localhost:3000"];
-		configuration["Flickr"] = true;
-		configuration["Europeana"] = true;
-		configuration["EuropeanaAPIKEY"] = "EuropeanaAPIKEY";
-		configuration["Youtube"] = true;
-		configuration["YoutubeAPIKEY"] = 'YoutubeAPIKey';
-		configuration["LRE"] = true;
-		configuration["LRE_path"] = "http://localhost:3000/lre/search";
-		configuration["SoundCloud"] = true;
-		configuration["SoundCloudAPIKEY"] = 'SoundcloudAPIKey';
-		configuration["catalog"] = ["Art", "Astronomy", "Biology", "Chemistry", "Citizenship", "Classical Languages", "Cross Curricular Education", "Computer Science", "General Culture", "Economics", "Education", "Electronics", "Environmental Education", "Ethics", "Foreign Languages", "Geography", "Geology", "Health Education", "History", "Home Economics", "Literature", "Law", "Mathematics", "Music", "Natural Sciences", "Philosophy", "Physical Education", "Physics", "Politics", "Psychology", "Religion", "Social Sciences", "Software Engineering", "Technology", "Telecommunications"];
-
-		/////////////////////
-		// Features enabled
-		/////////////////////
-
 		// Tracking System
 		// configuration["TrackingSystemAPIKEY"] = "TrackingSystemAPIKEY";
 		// configuration["TrackingSystemAPIURL"] = "http://localhost:3000/tracking_system_entries";
 		// options["TrackingSystemRelatedEntryId"] = "1"
+		// options["referrer"] = "some url"
 
 		// Evaluation System
-		//LOEP configuration (For evaluations)
+		// LOEP configuration (For evaluations)
 		// configuration["loepSettings"] = {
 		// 	tokenURL: "http://localhost:3000/loep/session_token.json",
 		// 	domain: "http://localhost:8080",
@@ -93,15 +92,17 @@ var getOptions = function(){
 		// };
 
 		// Private Student Groups
-		// configuration["notify_teacher_path"] = "/private_student_group/notify_teacher";
-		// configuration["classroom_pupil"] = true;
+		// configuration["notifyTeacherPath"] = "/private_student_group/notify_teacher";
+		// configuration["userMode"] = "student";
 
 
 		/////////////////////
 		// Behaviour customization
 		/////////////////////
 		configuration["presentationSettings"] = true;
-		configuration["tagsSettings"] = {maxLength: 20, maxTags: 8, triggerKeys: ['enter', 'space', 'comma', 'tab']};
+		configuration["tagsSettings"] = {maxLength: 20, maxTags: 8, triggerKeys: ['enter', 'space', 'comma', 'tab']};	
+		configuration["catalog"] = ["Art", "Astronomy", "Biology", "Chemistry", "Citizenship", "Classical Languages", "Cross Curricular Education", "Computer Science", "General Culture", "Economics", "Education", "Electronics", "Environmental Education", "Ethics", "Foreign Languages", "Geography", "Geology", "Health Education", "History", "Home Economics", "Literature", "Law", "Mathematics", "Music", "Natural Sciences", "Philosophy", "Physical Education", "Physics", "Politics", "Psychology", "Religion", "Social Sciences", "Software Engineering", "Technology", "Telecommunications"];
+		configuration["publishPermissions"] = ["Comment","Download","Clone"]
 
 		options["configuration"] = configuration;
 
@@ -125,7 +126,7 @@ var getOptions = function(){
 			var developmentSettings = new Object();
 
 			// Possible action: "nothing" or "loadSamples".
-			developmentSettings.actionInit = "loadSamples";
+			developmentSettings.actionInit = "nothing";
 			// developmentSettings.actionInit = "nothing";
 
 			//Select your samples
@@ -147,10 +148,12 @@ var getOptions = function(){
 				// options["preview"] = true;
 			}
 
-			//Possible actions: "preview"
-			developmentSettings.actionSave = "preview";
-
 			options["developmentSettings"] = developmentSettings;
+		}
+
+		//Environment data
+		options["environment"] = {
+			name: "ViSH Editor Development"
 		}
 
 		//User data
@@ -161,12 +164,12 @@ var getOptions = function(){
 		}
 
 		//QuizSessionId to answer a quiz using the ARS (Audience Response System)
-		options["quizSessionId"] = "1";
+		// options["quizSessionId"] = "1";
 
-		options["fullScreenFallback"] = {
-			enterFullscreenURL: "http://localhost/viewer.html",
-			exitFullscreenURL: "http://localhost/framed_viewer.html"
-		};
+		// options["fullScreenFallback"] = {
+		// 	enterFullscreenURL: "http://localhost/viewer.html",
+		// 	exitFullscreenURL: "http://localhost/framed_viewer.html"
+		// };
 
 		// options["comeBackUrl"] = "https://github.com/ging/vish_editor";
 
@@ -188,7 +191,7 @@ var getOptions = function(){
 		// options["videoCustomPlayer"]  = true;
 
 		//Add a Watermark
-		options["watermarkURL"] = "http://localhost/viewer.html";
+		// options["watermarkURL"] = "http://localhost/viewer.html";
 		// options["watermarkIcon"] = "custom";
 
 		//Addons

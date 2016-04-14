@@ -85,12 +85,12 @@ VISH.Quiz.API = (function(V,$,undefined){
 	// URL in the form: &quot;http://localhost:3000/quiz_sessions/&quot;
 	var ARS_API_RootURL;
 
-	// Just for developping
-	var getResultsCount = 0;
-
 	var init = function(ARS_API){
 		if((typeof ARS_API == &quot;object&quot;)&amp;&amp;(typeof ARS_API.rootURL == &quot;string&quot;)){
 			ARS_API_RootURL = V.Utils.checkUrlProtocol(ARS_API.rootURL);
+		}
+		if(V.Debugging.isDevelopping()){
+			V.Quiz.API.Development.init(ARS_API);
 		}
 	};
 	
@@ -99,204 +99,133 @@ VISH.Quiz.API = (function(V,$,undefined){
 	* Server responds with a quiz_session JSON object including the quiz session id
 	*/
 	var startQuizSession = function(quizDOM,quizJSON,successCallback, failCallback){
-		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
-			var send_type = &#x27;POST&#x27;;
-
-			var params = {
-			  &quot;quiz&quot;: JSON.stringify(quizJSON),
-			  &quot;authenticity_token&quot; : V.User.getToken()
-			}
-
-			$.ajax({
-				type    : send_type,
-				url     : ARS_API_RootURL,
-				data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(quizDOM,data);
-					}
-				},
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(quizDOM,error);
-					}
-				}
-			});
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-			var quizSessionId = Math.ceil(10000*(1+Math.random())).toString();
-			var url = ARS_API_RootURL + quizSessionId;
-			var quiz_session = {id: quizSessionId, url: url};
-			
-			if((typeof successCallback==&quot;function&quot;)&amp;&amp;(typeof failCallback==&quot;function&quot;)){
-				setTimeout(function(){
-					// failCallback(quizDOM,&quot;error&quot;);
-					successCallback(quizDOM,quiz_session);
-				},1000);
-			}
+		if(V.Debugging.isDevelopping()){
+			return V.Quiz.API.Development.startQuizSession(quizDOM,quizJSON,successCallback, failCallback);
 		}
+
+
+		var send_type = &#x27;POST&#x27;;
+
+		var params = {
+		  &quot;quiz&quot;: JSON.stringify(quizJSON),
+		  &quot;authenticity_token&quot; : V.User.getToken()
+		}
+
+		$.ajax({
+			type    : send_type,
+			url     : ARS_API_RootURL,
+			data    : params,
+			success : function(data) {
+				if(typeof successCallback==&quot;function&quot;){
+					successCallback(quizDOM,data);
+				}
+			},
+			error: function(error){
+				if(typeof failCallback==&quot;function&quot;){
+					failCallback(quizDOM,error);
+				}
+			}
+		});
 	};
 
    /*
 	* Close opened quiz session
 	*/
 	var closeQuizSession = function(quizSessionId,name,successCallback,failCallback){
-
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH){
-
-			var send_type = &#x27;GET&#x27;;
-			var params = {
-				&quot;id&quot;: quizSessionId, 
-				&quot;authenticity_token&quot; : V.User.getToken() 
-			}
-
-			if((typeof name == &quot;string&quot;)&amp;&amp;(name.trim()!=&quot;&quot;)){
-				params[&quot;name&quot;] = name;
-			}
-
-			$.ajax({
-				type    : send_type,
-				url     : ARS_API_RootURL + quizSessionId + &#x27;/close&#x27;,
-				data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(data);
-					}
-				},
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
-					}
-				}
-			});
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-
-			// var params = {
-			// 	&quot;id&quot;: quizSessionId, 
-			// 	&quot;authenticity_token&quot; : V.User.getToken() 
-			// }
-			// if(typeof name == &quot;string&quot;){
-			// 	params[&quot;name&quot;] = name;
-			// }
-			// V.Debugging.log(params)
-
-			var data = {&quot;processed&quot;:&quot;true&quot;};
-			if((typeof successCallback==&quot;function&quot;)&amp;&amp;(typeof failCallback==&quot;function&quot;)){
-				setTimeout(function(){
-					successCallback(data);
-					// failCallback();
-				},1000);
-			}
+		if(V.Debugging.isDevelopping()){
+			return V.Quiz.API.Development.closeQuizSession(quizSessionId,name,successCallback,failCallback);
 		}
+
+		var send_type = &#x27;GET&#x27;;
+		var params = {
+			&quot;id&quot;: quizSessionId, 
+			&quot;authenticity_token&quot; : V.User.getToken() 
+		}
+
+		if((typeof name == &quot;string&quot;)&amp;&amp;(name.trim()!=&quot;&quot;)){
+			params[&quot;name&quot;] = name;
+		}
+
+		$.ajax({
+			type    : send_type,
+			url     : ARS_API_RootURL + quizSessionId + &#x27;/close&#x27;,
+			data    : params,
+			success : function(data) {
+				if(typeof successCallback==&quot;function&quot;){
+					successCallback(data);
+				}
+			},
+			error: function(error){
+				if(typeof failCallback==&quot;function&quot;){
+					failCallback(error);
+				}
+			}
+		});
 	};
 
    /*
 	* Delete opened quiz session
 	*/
 	var deleteQuizSession = function(quizSessionId,successCallback,failCallback){
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH){
-
-			var send_type = &#x27;GET&#x27;;
-			var params = {
-				&quot;id&quot;: quizSessionId, 
-				&quot;authenticity_token&quot; : V.User.getToken()
-			}
-
-			$.ajax({
-				type    : send_type,
-				url     : ARS_API_RootURL + quizSessionId + &#x27;/delete&#x27;,
-				data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(data);
-					}
-				},
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
-					}
-				}
-			});
-
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-			var data = {&quot;processed&quot;:&quot;true&quot;};
-			if(typeof successCallback==&quot;function&quot;){
-				setTimeout(function(){
-					successCallback(data);
-				},1000);
-			}
+		if(V.Debugging.isDevelopping()){
+			return V.Quiz.API.Development.deleteQuizSession(quizSessionId,successCallback,failCallback);
 		}
+
+		var send_type = &#x27;GET&#x27;;
+		var params = {
+			&quot;id&quot;: quizSessionId, 
+			&quot;authenticity_token&quot; : V.User.getToken()
+		}
+
+		$.ajax({
+			type    : send_type,
+			url     : ARS_API_RootURL + quizSessionId + &#x27;/delete&#x27;,
+			data    : params,
+			success : function(data) {
+				if(typeof successCallback==&quot;function&quot;){
+					successCallback(data);
+				}
+			},
+			error: function(error){
+				if(typeof failCallback==&quot;function&quot;){
+					failCallback(error);
+				}
+			}
+		});
 	};
 
 	/**
 	 * GET /quiz_sessions/X/results.json.
 	 */
 	var getResults = function(quizSessionId, successCallback, failCallback){
-		if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.VISH){
-
-			var send_type = &#x27;GET&#x27;;
-			var params = {
-				&quot;id&quot;: quizSessionId
-			}
-
-			if(V.User.isLogged()){
-				params[&quot;authenticity_token&quot;] = V.User.getToken();
-			}
-
-			$.ajax({
-				type    : send_type,
-				url     : ARS_API_RootURL + quizSessionId + &#x27;/results.json&#x27;,
-				data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(data);
-					}
-				},
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
-					}
-				}
-			});
-		} else if(V.Configuration.getConfiguration()[&quot;mode&quot;]==V.Constant.NOSERVER){
-			//Test
-
-			//MC (Multiple Choice)
-			var mc_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:62,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:22Z&quot;,&quot;id&quot;:63,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:25:13Z&quot;,&quot;id&quot;:64,&quot;quiz_session_id&quot;:50}];
-
-			//MC with only one result
-			var mc_one_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:47,&quot;quiz_session_id&quot;:31}];
-
-			//MC Multiple answer
-			var mcm_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:20Z&quot;,&quot;id&quot;:37,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:29Z&quot;,&quot;id&quot;:38,&quot;quiz_session_id&quot;:27},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-22T17:51:35Z&quot;,&quot;id&quot;:39,&quot;quiz_session_id&quot;:27}];
-
-			//TF Quiz (True/False)
-			var tf_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:23Z&quot;,&quot;id&quot;:30,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:37Z&quot;,&quot;id&quot;:31,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:10:52Z&quot;,&quot;id&quot;:32,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:09Z&quot;,&quot;id&quot;:33,&quot;quiz_session_id&quot;:19},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:\&quot;false\&quot;},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;},{\&quot;choiceId\&quot;:\&quot;4\&quot;,\&quot;answer\&quot;:\&quot;true\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-05-13T13:11:41Z&quot;,&quot;id&quot;:34,&quot;quiz_session_id&quot;:19}];
-			
-			//Sorting Quiz
-			var s_data = [{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:2},{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:1},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:3},{\&quot;selfAssessment\&quot;:{\&quot;result\&quot;:true}}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:47,&quot;quiz_session_id&quot;:31},{&quot;answer&quot;:&quot;[{\&quot;choiceId\&quot;:\&quot;2\&quot;,\&quot;answer\&quot;:1},{\&quot;choiceId\&quot;:\&quot;1\&quot;,\&quot;answer\&quot;:2},{\&quot;choiceId\&quot;:\&quot;3\&quot;,\&quot;answer\&quot;:3},{\&quot;selfAssessment\&quot;:{\&quot;result\&quot;:false}}]&quot;,&quot;created_at&quot;:&quot;2013-11-26T12:49:34Z&quot;,&quot;id&quot;:48,&quot;quiz_session_id&quot;:31}];
-			
-			//Open Ended Quiz
-			var o_data = [{&quot;answer&quot;:&quot;[{\&quot;answer\&quot;:\&quot;Lorem ipsum dolor si amet one.\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:62,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;answer\&quot;:\&quot;Proin in blandit odio. Mauris placerat sollicitudin urna, at malesuada odio rhoncus eget.\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:63,&quot;quiz_session_id&quot;:50},{&quot;answer&quot;:&quot;[{\&quot;answer\&quot;:\&quot;Aenean imperdiet tortor arcu, at congue sapien aliquam a.\&quot;}]&quot;,&quot;created_at&quot;:&quot;2013-11-28T13:24:14Z&quot;,&quot;id&quot;:64,&quot;quiz_session_id&quot;:50}];
-
-
-			//Empty
-			var data;
-			if(getResultsCount&lt;1){
-				//Empty data
-				data = [];
-			} else if(getResultsCount&lt;3){
-				data = mc_data;
-			} else {
-				data = mc_data;
-			}
-			getResultsCount++;
-
-			if(typeof successCallback==&quot;function&quot;){
-				setTimeout(function(){
-					successCallback(data);
-				},1000);
-			}
+		if(V.Debugging.isDevelopping()){
+			return V.Quiz.API.Development.getResults(quizSessionId, successCallback, failCallback);
 		}
+
+		var send_type = &#x27;GET&#x27;;
+		var params = {
+			&quot;id&quot;: quizSessionId
+		}
+
+		if(V.User.isLogged()){
+			params[&quot;authenticity_token&quot;] = V.User.getToken();
+		}
+
+		$.ajax({
+			type    : send_type,
+			url     : ARS_API_RootURL + quizSessionId + &#x27;/results.json&#x27;,
+			data    : params,
+			success : function(data) {
+				if(typeof successCallback==&quot;function&quot;){
+					successCallback(data);
+				}
+			},
+			error: function(error){
+				if(typeof failCallback==&quot;function&quot;){
+					failCallback(error);
+				}
+			}
+		});
 	};
 
 	/**
@@ -304,43 +233,38 @@ VISH.Quiz.API = (function(V,$,undefined){
 	 * PUT /quiz_sessions/X
 	 */
 	var sendAnwers = function(answers, quizSessionId, successCallback, failCallback){
-		if(V.Configuration.getConfiguration().mode===V.Constant.VISH){
-			var send_type = &#x27;POST&#x27;;
-		   
-			var params = {
-				&quot;id&quot;: quizSessionId,
-				&quot;answers&quot;: JSON.stringify(answers)
-			}
-
-			if(V.User.isLogged()){
-				params[&quot;authenticity_token&quot;] = V.User.getToken();
-			}
-
-			$.ajax({
-			  type    : send_type,
-			  url     : ARS_API_RootURL + quizSessionId + &#x27;/answer&#x27;,
-			  data    : params,
-				success : function(data) {
-					if(typeof successCallback==&quot;function&quot;){
-						successCallback(data);
-					}
-			  },
-				error: function(error){
-					if(typeof failCallback==&quot;function&quot;){
-						failCallback(error);
-					}
-				}
-			 });
-
-			 return null;
-		} else {
-			if(typeof successCallback==&quot;function&quot;){
-				setTimeout(function(){
-					successCallback();
-				},1000);
-			}
+		if(V.Debugging.isDevelopping()){
+			return V.Quiz.API.Development.sendAnwers(answers, quizSessionId, successCallback, failCallback);
 		}
-   };
+
+		var send_type = &#x27;POST&#x27;;
+
+		var params = {
+			&quot;id&quot;: quizSessionId,
+			&quot;answers&quot;: JSON.stringify(answers)
+		}
+
+		if(V.User.isLogged()){
+			params[&quot;authenticity_token&quot;] = V.User.getToken();
+		}
+
+		$.ajax({
+			type    : send_type,
+			url     : ARS_API_RootURL + quizSessionId + &#x27;/answer&#x27;,
+			data    : params,
+			success : function(data) {
+				if(typeof successCallback==&quot;function&quot;){
+					successCallback(data);
+				}
+			},
+			error: function(error){
+				if(typeof failCallback==&quot;function&quot;){
+					failCallback(error);
+				}
+			}
+		});
+	};
+
 
 	return {
 		init					: init, 

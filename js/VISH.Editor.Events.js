@@ -596,16 +596,11 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 	var _exitConfirmation = function(){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.exit);
-		
 		if(_confirmOnExit){
 			if(V.Editor.hasPresentationChanged()){
-				if((V.Configuration.getConfiguration().mode===V.Constant.VISH)||(true)){
-					var confirmationMsg = V.I18n.getTrans("i.exitConfirmation");
-					return confirmationMsg;
-				}
+				var confirmationMsg = V.I18n.getTrans("i.exitConfirmation");
+				return confirmationMsg;
 			}
-		} else {
-			return;
 		}
 	};
 

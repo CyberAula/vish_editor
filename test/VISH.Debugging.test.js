@@ -37,10 +37,6 @@ describe("VISH.Debugging", function(){
         VISH.Debugging.should.have.property('isDevelopping');
     });
 
-    it('should export getActionSave function', function(){
-        VISH.Debugging.should.have.property('getActionSave');
-    });
-
     it('should export getActionInit function', function(){
         VISH.Debugging.should.have.property('getActionInit');
     });

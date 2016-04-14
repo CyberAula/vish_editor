@@ -10,8 +10,10 @@ VISH.Status = (function(V,$,undefined){
 	var _isExternalDomain;
 	//External or Internal site
 	var _isInExternalSite;
-	var _isInVishSite;
+	//Local file
 	var _isLocalFile;
+	//Environment name
+	var _envName;
 
 	//SCORM Package (same domain but external site)
 	var _scorm;
@@ -132,7 +134,17 @@ VISH.Status = (function(V,$,undefined){
 		}
 		
 		_isInExternalSite = ((_isExternalDomain)||(_scorm));
-		_isInVishSite = ((!_isInExternalSite)&&(V.Configuration.getConfiguration()["mode"]===V.Constant.VISH));
+
+		if((typeof options["environment"] == "object")&&(typeof options["environment"]["name"] == "string")){
+			_envName = options["environment"]["name"];
+		}
+		if(typeof _envName != "string"){
+			try {
+				_envName = window.top.document.title;
+			} catch(e){
+				envName = "Unknown";
+			}
+		}
 	};
 
 	var _checkProtocol = function(){
@@ -270,8 +282,8 @@ VISH.Status = (function(V,$,undefined){
 		return _isInExternalSite;
 	};
 
-	var isVishSite = function(){
-		return _isInVishSite;
+	var getEnvironmentName = function(){
+		return _envName;
 	};
 
 	var getIsLocalFile = function(){
@@ -279,7 +291,6 @@ VISH.Status = (function(V,$,undefined){
 	};
 
 	var getProtocol = function(){
-		return "https";
 		if(typeof _protocol == "undefined"){
 			_checkProtocol();
 		}
@@ -391,7 +402,7 @@ VISH.Status = (function(V,$,undefined){
 		getContainerType			: getContainerType,
 		isScorm						: isScorm,
 		isExternalSite				: isExternalSite,
-		isVishSite					: isVishSite,
+		getEnvironmentName			: getEnvironmentName,
 		getProtocol					: getProtocol,
 		isPreview 					: isPreview,
 		isPreviewInsertMode			: isPreviewInsertMode,

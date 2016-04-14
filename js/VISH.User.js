@@ -2,80 +2,63 @@ VISH.User = (function(V,$,undefined){
 
 	var _user; //{name: "user_name", id: "id", token: "token"}
 
+
 	var init = function(options){
-		_user= {};
-
-		if(options.scorm===true){
-			if(typeof options['user'] == "object"){
-				//SCORM do not allow user token on option params
-				delete options['user']['token'];
-			}
+		var userOptions = {};
+		if(typeof options == "object"){
+			userOptions = options['user'];
 		}
-
-		setUser(options['user']);
-	};
-
-	var isUser = function(){
-		return !(JSON.stringify(_user) == '{}');
-	}
-
-	var isLogged = function(){
-		if((_user)&&(typeof _user.token == "string")&&(_user.id)){
-			return true;
-		} else {
-			return false;
-		}
+		setUser(userOptions);
 	};
 
 	var getUser = function(){
-		if(_user){
+		if(Object.keys(_user).length > 0){
 			return _user;
 		} else {
-			return null;
+			return undefined;
 		}
 	};
 
 	var setUser = function(userObject){
-		if(typeof userObject == "object") {
-			_user= userObject;
+		if(typeof userObject == "object"){
+			_user = userObject;
 		} else {
-			_user= {};
+			_user = {};
 		}
+
+		var options = V.Utils.getOptions();
+		if(options.scorm===true){
+			if(typeof _user['token'] != "undefined"){
+				//SCORM do not allow user token on option params
+				delete _user['token'];
+			}
+		}
+	};
+
+	var isLogged = function(){
+		return ((_user)&&(typeof _user['token'] == "string")&&(_user['id']));
 	};
 
 	var getName = function(){
-		if((_user)&&(_user.name)){
-			return _user.name;
-		} else {
-			return null;
-		}
+		return _user['name'];
 	};
 
 	var getId = function(){
-		if((_user)&&(_user.id)){
-			return _user.id;
-		} else {
-			return null;
-		}
+		return _user['id'];
 	};
 
 	var getToken = function(){
-		if((_user)&&(_user.token)){
-			return _user.token;
-		} else {
-			return null;
-		}
+		return _user['token'];
 	};
 
 	return {
-		init:           init,
-		isUser:			isUser,
-		isLogged: 		isLogged,
+		init: 			init,
 		getUser: 		getUser,
 		setUser: 		setUser,
+		isLogged: 		isLogged,
 		getName:  		getName,
 		getId: 			getId,
-		getToken:   	getToken
+		getToken: 		getToken
 	};
-    
+	
 }) (VISH, jQuery);

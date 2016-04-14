@@ -67,10 +67,10 @@ VISH.TrackingSystem = (function(V,$,undefined){
 
 		var sessionOptions = V.Viewer.getOptions();
 		if(typeof sessionOptions == "object"){
+			_environment.name = V.Status.getEnvironmentName();
 			_environment.lang = sessionOptions.lang;
 			_environment.scorm = V.Status.isScorm();
 			_environment.isExternalDomain = V.Status.isExternalDomain();
-			_environment.vish = V.Status.isVishSite();
 			_environment.isEmbed = V.Status.isEmbed();
 			_environment.developping = sessionOptions.developping;
 			_referrer = sessionOptions.referrer;

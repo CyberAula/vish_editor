@@ -17,10 +17,6 @@ describe("VISH.User", function(){
         VISH.User.should.have.property('init');
     });
 
-    it('should export isUser function', function(){
-        VISH.User.should.have.property('isUser');
-    });
-
     it('should export isLogged function', function(){
         VISH.User.should.have.property('isLogged');
     });
@@ -43,14 +39,6 @@ describe("VISH.User", function(){
 
     it('should export getToken function', function(){
         VISH.User.should.have.property('getToken');
-    });
-
-//// METHOD RETURNS
-
-    describe("#isUser", function(){
-       it('should return unknown', function(){
-           VISH.User.isUser().should.eql(true);
-       })
     });
 
 });

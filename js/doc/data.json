@@ -201,6 +201,13 @@
             "fors": {},
             "namespaces": {}
         },
+        "VISH.Quiz.API.Development.js": {
+            "name": "VISH.Quiz.API.Development.js",
+            "modules": {},
+            "classes": {},
+            "fors": {},
+            "namespaces": {}
+        },
         "VISH.Quiz.API.js": {
             "name": "VISH.Quiz.API.js",
             "modules": {},
@@ -628,7 +635,7 @@
         },
         {
             "file": "VISH.Editor.Image.js",
-            "line": 182,
+            "line": 178,
             "description": "Function to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -694,13 +701,13 @@
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 436,
+            "line": 429,
             "description": "Returns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Object.js",
-            "line": 530,
+            "line": 523,
             "description": "param style: optional param with the style, used in editing presentation",
             "class": "VISH.Editor"
         },
@@ -938,7 +945,7 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 889,
+            "line": 886,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
@@ -1000,15 +1007,22 @@
             "namespace": "VISH"
         },
         {
+            "file": "VISH.Quiz.API.Development.js",
+            "line": 100,
+            "description": "Send answers for real time quizzes",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
             "file": "VISH.Quiz.API.js",
-            "line": 148,
+            "line": 115,
             "description": "GET /quiz_sessions/X/results.json.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Quiz.API.js",
-            "line": 220,
+            "line": 149,
             "description": "Send answers for real time quizzes\nPUT /quiz_sessions/X",
             "class": "",
             "namespace": "VISH"
@@ -1029,21 +1043,21 @@
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 25,
+            "line": 26,
             "description": "Function to initialize the Recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 151,
+            "line": 152,
             "description": "Function to check if this is the appropiate moment to request the recommendations",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Recommendations.js",
-            "line": 169,
+            "line": 170,
             "description": "Function to call ViSH via AJAX to get recommendations",
             "class": "",
             "namespace": "VISH"
@@ -1949,7 +1963,7 @@
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Image.js:182"
+            "line": " VISH.Editor.Image.js:178"
         },
         {
             "message": "Missing item type\nfunction to call to LRE and request images\nsuccessCallback: function to pass the results if everything goes well.\nfailCallback: function to pass the error if something fails. Format: {\"error\":\"cnf cannot be null!\"}",
@@ -1993,11 +2007,11 @@
         },
         {
             "message": "Missing item type\nReturns a object prepared to draw.\nparam options.area: optional param indicating the area to add the object, used for editing presentations\nparam options.style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:436"
+            "line": " VISH.Editor.Object.js:429"
         },
         {
             "message": "Missing item type\nparam style: optional param with the style, used in editing presentation",
-            "line": " VISH.Editor.Object.js:530"
+            "line": " VISH.Editor.Object.js:523"
         },
         {
             "message": "Missing item type\nInsert the selected slides of a slide presentation in JSON",
@@ -2133,7 +2147,7 @@
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:889"
+            "line": " VISH.Editor.js:886"
         },
         {
             "message": "Missing item type\nFunction to add the events to the help buttons to launch joy ride bubbles",
@@ -2168,12 +2182,16 @@
             "line": " VISH.Presentation.js:4"
         },
         {
+            "message": "Missing item type\nSend answers for real time quizzes",
+            "line": " VISH.Quiz.API.Development.js:100"
+        },
+        {
             "message": "Missing item type\nGET /quiz_sessions/X/results.json.",
-            "line": " VISH.Quiz.API.js:148"
+            "line": " VISH.Quiz.API.js:115"
         },
         {
             "message": "Missing item type\nSend answers for real time quizzes\nPUT /quiz_sessions/X",
-            "line": " VISH.Quiz.API.js:220"
+            "line": " VISH.Quiz.API.js:149"
         },
         {
             "message": "Missing item type\nFunction to render a quiz inside an article (a slide)",
@@ -2185,15 +2203,15 @@
         },
         {
             "message": "Missing item type\nFunction to initialize the Recommendations",
-            "line": " VISH.Recommendations.js:25"
+            "line": " VISH.Recommendations.js:26"
         },
         {
             "message": "Missing item type\nFunction to check if this is the appropiate moment to request the recommendations",
-            "line": " VISH.Recommendations.js:151"
+            "line": " VISH.Recommendations.js:152"
         },
         {
             "message": "Missing item type\nFunction to call ViSH via AJAX to get recommendations",
-            "line": " VISH.Recommendations.js:169"
+            "line": " VISH.Recommendations.js:170"
         },
         {
             "message": "Missing item type\nSCORM API\nThis is a content API, it self-establishes communication with the LMS in SCORM 2004 or 1.2.\nSwitch statements will convert some SCORM 2004 calls to SCORM 1.2, but you must understand there are limitations\non data storage between versions. Example: Suspend Data 64,000 vs 4096 or Bookmark(location) 1000 vs 255.\nDepending on your use, your content may not squeeze into the SCORM 1.2 available space.  Because of this, log messages\nwill be output so you can monitor your cmi \"set\" value length.  Ultimately, a LMS may block your request because of this.\nThis API is meant to simplify common SCORM Tasks, but also offers the ability to use it 'long hand'. Several other\npublic API's are available online, some free some charge, and this is a best effort to boil it all down.\nDocumentation, samples, resources, and credits: ADL, Claude Ostyn, Pipwerks, SCORM.com\nGoals: SCORM For Everyone else, low overhead, simple API's, containment, and transparency.\n\nTypical CMI Usage (if used by itself):\nvar scorm = new SCORM_API({debug: true, exit_type: 'suspend'}),\nlmsconnected = scorm.initialize();\nscorm.getvalue('cmi.location');\nscorm.setvalue('cmi.location', '4');\nscorm.commit();\nscorm.terminate();\n\nHTML Event Setup:\nIf you choose not to use SCOBot tips for onload and onunload, onbeforeunload events you may need to make init, exit methods to do other things\nvs. directly referencing the SCORM API here.  Feel free to make those methods if you need to.  'window.top' can be used because\nsome deployments self occur within a popup in a IFRAME will not fire properly on exit, in some Mozilla browsers.  Last checked, window worked with\nJQuery 1.7+ however.  If you have issues trapping the unload event, please try window.top.\n$(window).bind('load', YOUR_INITIALIZATION_METHOD);\n$(window).bind('unload', YOUR_EXIT_METHOD);\n\nJSLint was recently changed and its throwing a \"use spaces, not tabs\" error.  I decided to switch to spaces.\nhttps://github.com/douglascrockford/JSLint/pull/140\n\nhttps://github.com/cybercussion/SCOBot",

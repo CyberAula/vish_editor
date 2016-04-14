@@ -20,8 +20,8 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			return;
 		}
 
-		//Pupil view modification in Editor
-		if (V.Utils.getOptions().configuration.classroom_pupil === true){
+		if (V.StudentMode===true){
+			//Student view modification in VEditor
 			var draft = V.Utils.getOptions().draft;
 			var notified = V.Utils.getOptions().notified;
 			var publish_button = $("#toolbar_publish_wrapper");
@@ -33,7 +33,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 			} else if (draft) {
 				publish_button.children("p").html(V.I18n.getTrans("i.notify_teacher"));
 				publish_button.find("i").removeClass().addClass("icon-button icon-bell-alt");
-				$('#toolbar_publish').attr('action', 'notify_teacher');
+				$('#toolbar_publish').attr('action', 'notifyTeacher');
 			} else {
 				publish_button.addClass("menu_item_disabled");
 				publish_button.children("p").html(V.I18n.getTrans("i.Published"));
@@ -522,7 +522,7 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		V.Editor.EVideo.onChangeVideo();
 	};
 
-	var notify_teacher = function(){
+	var notifyTeacher = function(){
 		V.Editor.Tools.Menu.onSaveButtonClicked();
 		V.Editor.Tools.Menu.notifyTeacherClicked();
 	};
@@ -758,10 +758,10 @@ VISH.Editor.Tools = (function(V,$,undefined){
 		zoomMore 						: zoomMore,
 		zoomLess 						: zoomLess,
 		save 							: save,
-		displaySettings   : displaySettings,
+		displaySettings   				: displaySettings,
 		publish							: publish,
 		unpublish 						: unpublish,
-		notify_teacher					: notify_teacher,
+		notifyTeacher					: notifyTeacher,
 		preview 						: preview,
 		selectTheme						: selectTheme,
 		selectAnimation					: selectAnimation,

@@ -40,40 +40,29 @@ VISH.Editor.PDFex = (function(V,$,undefined){
 				}
 			},
 			success: function(responseText, statusText, xhr, form) {
-				//responseText == JSON.parse(xhr.responseText)
-				switch(V.Configuration.getConfiguration()["mode"]){
-					case V.Constant.VISH:
-						processResponse(responseText);
-						break;
-					default:
-						break;
+				if(V.Debugging.isDevelopping()!==true){
+					processResponse(responseText);
 				}
 				var percentVal = '100%';
 				bar.width(percentVal)
 				percent.html(percentVal);
 			},
 			complete: function(xhr){
-				switch(V.Configuration.getConfiguration()["mode"]){
-					case V.Constant.VISH:
-						break;
-					case V.Constant.NOSERVER:
-						setTimeout(function(){
-							var responseTest = {};
-							responseTest.urls = [];
-							for(var v=0; v<13; v++){
-								responseTest.urls.push("http://localhost/examples/contents/pdf2p/Presentacion_INTED2013_VishViewer-"+v+".jpg");
-							}
-							responseTest.pdfexId = 365;
-							processResponse(responseTest);
-						},10000);
-						break;
-					default:
-						break;
+				if(V.Debugging.isDevelopping()){
+					//Testing PDFex in development
+					setTimeout(function(){
+						var responseTest = {};
+						responseTest.urls = [];
+						for(var v=0; v<13; v++){
+							responseTest.urls.push("http://localhost/examples/contents/pdf2p/Presentacion_INTED2013_VishViewer-"+v+".jpg");
+						}
+						responseTest.pdfexId = 365;
+						processResponse(responseTest);
+					},10000);
 				}
 			},
 			error: function(error){
-				if(V.Configuration.getConfiguration()["mode"]===V.Constant.NOSERVER){
-					//uncomment to ignore the error
+				if(V.Debugging.isDevelopping()){
 					return; 
 				}
 				var PDFexAPIError = error;

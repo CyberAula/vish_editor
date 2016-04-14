@@ -88,14 +88,15 @@ VISH.Recommendations = (function(V,$,undefined){
 	var _generated;
 	var _isRecVisible;
 	var _isEvalVisible;
+	var _hasParentEvaluateFunction;
 	var _showFancyboxTimer;
 
 	//Recommendations API
 	var _recommendationAPIUrl;
-
-	//Vishub params
-	var user_id;
-	var vishub_pres_id;
+	//Params to be sent to the Recommendations API
+	var _userId;
+	var _presEnvironment;
+	var _presId;
 
 	//Params to enhance recommendation
 	var _searchTerms;
@@ -122,14 +123,14 @@ VISH.Recommendations = (function(V,$,undefined){
 			return;
 		}
 
-		if(V.Status.isVishSite()){
-			user_id = V.User.getId();
-			var presentation = V.Viewer.getCurrentPresentation();
-			if(presentation[&quot;vishMetadata&quot;] &amp;&amp; presentation[&quot;vishMetadata&quot;][&quot;id&quot;]){
-				vishub_pres_id = presentation[&quot;vishMetadata&quot;][&quot;id&quot;];
-			}
+		_userId = V.User.getId();
+		var presentation = V.Viewer.getCurrentPresentation();
+		if(presentation[&quot;vishMetadata&quot;] &amp;&amp; presentation[&quot;vishMetadata&quot;][&quot;id&quot;]){
+			_presEnvironment = presentation[&quot;vishMetadata&quot;].name;
+			_presId = presentation[&quot;vishMetadata&quot;][&quot;id&quot;];
 		}
 
+		_getHasParentEvaluateFunction();
 		_searchTerms = getCurrentSearchTerms();
 
 		//Redimension of fancybox is done in ViewerAdapter
@@ -224,7 +225,7 @@ VISH.Recommendations = (function(V,$,undefined){
 	};
 
 	var canShowEvaluateButton = function(){
-		var _showEvaluateButton = (_hasLOEPSettings() || (V.Status.isVishSite() &amp;&amp; V.Status.isEmbed()));
+		var _showEvaluateButton = (_hasLOEPSettings() || (_getHasParentEvaluateFunction()));
 		//Only available for desktop
 		_showEvaluateButton = _showEvaluateButton &amp;&amp; V.Status.getDevice().desktop;
 		return _showEvaluateButton;
@@ -260,13 +261,15 @@ VISH.Recommendations = (function(V,$,undefined){
 			if(_searchTerms){
 				params[&quot;q&quot;] = _searchTerms;
 			}
-			if(user_id){
-				params[&quot;user_id&quot;] = user_id;
+			if(typeof _userId != &quot;undefined&quot;){
+				params[&quot;user_id&quot;] = _userId;
 			}
-			if(vishub_pres_id){
-				params[&quot;excursion_id&quot;] = vishub_pres_id;
+			if(typeof _presId != &quot;undefined&quot;){
+				params[&quot;presentation_id&quot;] = _presId;
 			}
-
+			params[&quot;user_environment&quot;] = V.Status.getEnvironmentName();
+			params[&quot;presentation_environment&quot;] = _presEnvironment;
+			
 			$.ajax({
 				type    : &quot;GET&quot;,
 				url     : _recommendationAPIUrl,
@@ -324,7 +327,7 @@ VISH.Recommendations = (function(V,$,undefined){
         _requesting = false;
 
         if(!applyTargetBlank){
-        	//we join the recom-X with sending the parent to the excursion url
+        	//we join the recom-X with sending the parent to the presentation url
         	 for (var i = data.length - 1; i &gt;= 0; i--){
         	 	$(&quot;#recom-&quot;+data[i].id).click(function(my_event){
         	 		V.EventsNotifier.notifyEvent(V.Constant.Event.onAcceptRecommendation,{&quot;id&quot;: $(this).attr(&quot;ex_id&quot;)},true);
@@ -446,8 +449,9 @@ VISH.Recommendations = (function(V,$,undefined){
 		V.EventsNotifier.notifyEvent(V.Constant.Event.onEvaluate,{},true);
 
 		try {
-			if(V.Status.isVishSite()&amp;&amp;V.Status.isEmbed()&amp;&amp;(typeof window.parent.triggerEvaluation == &quot;function&quot;)){
-				//VE in the ViSH site. Trigger ViSH evaluation. This case is not triggered when we access the .full in ViSH.
+			if(_getHasParentEvaluateFunction()){
+				// VE in embeded in the same domain and a triggerEvaluation function exists. Trigger parent evaluation. 
+				// This case is not triggered when we access the .full format.
 				V.FullScreen.exitFromNativeFullScreen();
 				window.parent.triggerEvaluation();
 				return;
@@ -461,6 +465,18 @@ VISH.Recommendations = (function(V,$,undefined){
 			//Otherwise (testing)
 			window.alert(&quot;Evaluate!&quot;);
 		}
+	};
+
+	var _getHasParentEvaluateFunction = function(){
+		if(typeof _hasParentEvaluateFunction == &quot;boolean&quot;){
+			return _hasParentEvaluateFunction;
+		}
+		try {
+			_hasParentEvaluateFunction = ((V.Status.isExternalDomain()===false)&amp;&amp;(V.Status.isEmbed())&amp;&amp;(typeof window.parent.triggerEvaluation == &quot;function&quot;));
+		} catch(e){
+			_hasParentEvaluateFunction = false;
+		}
+		return _hasParentEvaluateFunction;
 	};
 
 	var _hasLOEPSettings = function(){

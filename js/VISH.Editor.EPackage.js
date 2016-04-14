@@ -45,13 +45,7 @@ VISH.Editor.EPackage = (function(V,$,undefined){
 				percent.html(percentVal);
 			},
 			complete: function(xhr) {
-				switch(V.Configuration.getConfiguration()["mode"]){
-					case V.Constant.VISH:
-						_processResponse(xhr.responseText);
-						break;
-					default:
-						break;
-				}
+				_processResponse(xhr.responseText);
 				var percentVal = '100%';
 				bar.width(percentVal)
 				percent.html(percentVal);
