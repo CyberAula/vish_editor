@@ -755,7 +755,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				if(typeof V.UploadAttachmentPath == "string"){
 					$("#attachment_file_form").attr("action", V.UploadAttachmentPath);
 					$("#attachment_author").val(V.User.getId());
-					$("#attachment_aut_token").val(V.User.getToken());
+					$("#attachment_auth_token").val(V.User.getToken());
+					$("#attachment_pres_id").val(V.Editor.getPresentationId());
 					$("#attachment_file_form").ajaxForm({
 						success: function(responseText, statusText, xhr, form) {
 							if(responseText.status == "bad_request" && responseText.message == "bad_size"){
