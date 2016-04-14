@@ -249,8 +249,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 					switch(firstEnabledId){
 						case "tab_pic_upload":
 							V.Editor.Utils.loadTab('tab_pic_upload');
+							break;
 						case "tab_pic_thumbnails":
 							V.Editor.Utils.loadTab('tab_pic_thumbnails');
+							break;
 						default:
 							//Allow thumbnail by URL (the uniq possibility)
 							$("#tab_pic_from_url").show();
