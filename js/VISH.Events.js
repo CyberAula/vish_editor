@@ -82,6 +82,8 @@ VISH.Events = (function(V,$,undefined){
 			V.Recommendations.onClickEvaluateButton(event);
 		});
 
+		V.Flashcard.loadEvents();
+
 		//Focus
 		$(window).focus(function(){
 			V.Status.setWindowFocus(true);
@@ -209,6 +211,8 @@ VISH.Events = (function(V,$,undefined){
 		$(document).off('click', '#closeButton');
 
 		$(document).off('click','.close_subslide');
+
+		V.Flashcard.unloadEvents();
 
 		if(_mobile){
 			V.Events.Mobile.unbindViewerMobileEventListeners();

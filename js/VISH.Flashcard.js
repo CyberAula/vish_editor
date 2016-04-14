@@ -20,26 +20,37 @@ VISH.Flashcard = (function(V,$,undefined){
 			initialized = true;
 			flashcards = {};
 			pois = {};
-			_loadEvents();
 		}
 	};
 
-	var _loadEvents = function(){
+	var loadEvents = function(){
 		var device = V.Status.getDevice();
 		var isIphoneAndSafari = ((device.iPhone)&&(device.browser.name===V.Constant.SAFARI));
 		if(isIphoneAndSafari){
 			//Fix for Iphone With Safari
-			V.EventsNotifier.registerCallback(V.Constant.Event.Touchable.onSimpleClick, function(params){
-				var event = params.event;
-				var target = event.target;
-				if($(target).hasClass("fc_poi")){
-					event.preventDefault();
-					var poiId = target.id;
-					_onFlashcardPoiSelected(poiId);
-				}
-			});	
+			V.EventsNotifier.registerCallback(V.Constant.Event.Touchable.onSimpleClick,_onSimpleClickEvent);
 		} else {
 			$(document).on("click", '.fc_poi', _onFlashcardPoiClicked);
+		}
+	};
+
+	var _onSimpleClickEvent = function(params){
+		var event = params.event;
+		var target = event.target;
+		if($(target).hasClass("fc_poi")){
+			event.preventDefault();
+			var poiId = target.id;
+			_onFlashcardPoiSelected(poiId);
+		}
+	};
+
+	var unloadEvents = function(){
+		var device = V.Status.getDevice();
+		var isIphoneAndSafari = ((device.iPhone)&&(device.browser.name===V.Constant.SAFARI));
+		if(isIphoneAndSafari){
+			V.EventsNotifier.unRegisterCallback(V.Constant.Event.Touchable.onSimpleClick, _onSimpleClickEvent);
+		} else {
+			$(document).off('click', '.fc_poi');
 		}
 	};
 
@@ -186,7 +197,9 @@ VISH.Flashcard = (function(V,$,undefined){
 		draw			: draw,
 		onEnterSlideset	: onEnterSlideset,
 		onLeaveSlideset	: onLeaveSlideset,
-		afterSetupSize	: afterSetupSize
+		afterSetupSize	: afterSetupSize,
+		loadEvents		: loadEvents,
+		unloadEvents	: unloadEvents
 	};
 
 }) (VISH, jQuery);
