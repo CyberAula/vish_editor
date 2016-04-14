@@ -23,7 +23,7 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 		if(V.Debugging.isDevelopping()){
-			if ((initOptions["configuration"]["mode"]===V.Constant.NOSERVER)&&(!presentation)&&(V.Debugging.getPresentationSamples()!==null)){
+			if ((!presentation)&&(V.Debugging.getPresentationSamples()!==null)){
 			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}
