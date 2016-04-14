@@ -203,14 +203,14 @@ VISH.Events = (function(V,$,undefined){
 		$(document).off('click', '#page-switcher-start');
 		$(document).off('click', '#page-switcher-end');
 
-		$(document).off('click', '#back_arrow', V.Slides.backwardOneSlide);
-		$(document).off('click', '#forward_arrow', V.Slides.forwardOneSlide);
+		$(document).off('click', '#back_arrow');
+		$(document).off('click', '#forward_arrow');
 
 		$(document).off('click', '#closeButton');
 
-		$(document).off('click','.close_subslide', V.Slideset.onCloseSubslideClicked);
+		$(document).off('click','.close_subslide');
 
-		if (_mobile){
+		if(_mobile){
 			V.Events.Mobile.unbindViewerMobileEventListeners();
 		}
 
