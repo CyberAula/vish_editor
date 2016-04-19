@@ -139,9 +139,6 @@ VISH.I18n = (function(V,$,undefined){
 				$(elem).attr("href",translation);
 			}
 		});
-
-		// Translate images (if any)
-		// ...
 	};
 		
 	var _translateInput = function(input,translation){
