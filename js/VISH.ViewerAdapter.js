@@ -104,9 +104,6 @@ VISH.ViewerAdapter = (function(V,$,undefined){
 		if((options)&&(typeof options.watermarkURL == "string")){
 			if((V.Status.isExternalSite())&&(!V.Status.isPreviewInsertMode())){
 				$("#embedWatermark").parent().attr("href",options.watermarkURL);
-				if(typeof options.watermarkIcon == "string"){
-					$("#embedWatermark").css("background-image","url('" + V.ImagesPath + "vicons/watermark_" + options.watermarkIcon + ".png')");
-				}
 				$("#embedWatermark").show();
 			}
 		}

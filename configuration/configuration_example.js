@@ -108,7 +108,6 @@ var getOptions = function(){
 		////////////////////
 		// Locales
 		///////////////////
-		
 		// configuration["defaultLanguage"] = "en";
 		// configuration["locales"] = {
 		// 	"en": {
@@ -119,16 +118,18 @@ var getOptions = function(){
 		// 	}
 		// }
 
+		////////////////////
+		// Apply a custom VE theme
+		///////////////////
+		// configuration["ve_theme"] = {
+		// 	"cssPath": "http://localhost/examples/VE_Theme/ve_theme.css",
+		// 	"callback": function(V,options,presentation){
+		// 		V.Utils.showDialog({"text": "VE Theme was loaded", "buttons": [{"text": "Ok", "callback": $.fancybox.close}]});
+		// 	}
+		// }
+
 		options["configuration"] = configuration;
 
-
-		/////////////////////
-		// Aspect Customization
-		/////////////////////
-		// configuration["repository_image"] = "/images/logos/repositoryimg_educa.png";
-		// configuration["editor_logo"] = "/images/icons/logo_educa.png";
-		// configuration["menu_logo"] = "/images/toolbar/logofondo_educa.png";
-		
 
 		/////////////////////
 		// Options to initialize ViSH Editor
@@ -207,7 +208,6 @@ var getOptions = function(){
 
 		//Add a Watermark
 		// options["watermarkURL"] = "http://localhost/viewer.html";
-		// options["watermarkIcon"] = "custom";
 
 		//Addons
 		options.addons = [];

@@ -110,7 +110,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.LRE.init(V.I18n.getLanguage());
 		V.Editor.Settings.init(); //Settings must be initialize before V.Editor.Renderer.init(presentation);
 		V.SCORM.init();
-		V.Editor.Customization.init();
 		
 		//If we have to edit
 		if(initialPresentation){

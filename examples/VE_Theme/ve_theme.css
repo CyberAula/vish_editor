@@ -1,3 +1,9 @@
 section.slides article[type="standard"] {
-	background: black;
+	background: black !important;
 }
+
+/*
+#menuButton {
+	background-image: url(/images/toolbar/logofondo_educa.png);
+}
+*/
