@@ -130,14 +130,21 @@ VISH.Viewer = (function(V,$,undefined){
 	};
 
 	var _initAferStatusLoaded = function(options,presentation){
+		V.Utils.Loader.loadDeviceCSS();
+		V.Utils.Loader.loadLanguageCSS();
+		V.Themes.init();
+		V.Themes.Core.applyConfigTheme(function(VEtheme){
+			_initAferVEThemeLoaded(options,presentation);
+		});
+	};
+
+	var _initAferVEThemeLoaded = function(options,presentation){
 		V.EventsNotifier.init();
 		V.Object.init();
 		V.Slideset.init();
 		V.Quiz.initBeforeRender(presentation);
 		V.Slides.init();
 		V.I18n.translateUI();
-		V.Utils.Loader.loadDeviceCSS();
-		V.Utils.Loader.loadLanguageCSS();
 		V.User.init(options);
 		V.Storage.init();
 		V.Recommendations.init(options);
@@ -146,12 +153,12 @@ VISH.Viewer = (function(V,$,undefined){
 		V.Audio.init();
 		V.FullScreen.init();
 		V.SCORM.init();
-		V.Themes.loadTheme(presentation.theme, function(){
-			_initAferThemeLoaded(options,presentation);
+		V.Themes.Presentation.loadTheme(presentation.theme, function(){
+			_initAferPresentationThemeLoaded(options,presentation);
 		});
 	};
 
-	var _initAferThemeLoaded = function(options,presentation){
+	var _initAferPresentationThemeLoaded = function(options,presentation){
 		V.Presentation.init(presentation.slides, function(){
 			_initAferRenderPresentation(options,presentation);
 		});

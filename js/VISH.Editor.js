@@ -83,8 +83,9 @@ VISH.Editor = (function(V,$,undefined){
 		}
 		V.Utils.Loader.loadDeviceCSS();
 		V.Utils.Loader.loadLanguageCSS();
+		V.Themes.init();
 		V.Editor.Themes.init();
-		V.Editor.Themes.Core.applyConfigTheme(function(VEtheme){
+		V.Themes.Core.applyConfigTheme(function(VEtheme){
 			_initAferVEThemeLoaded(options,presentation);
 		});
 	};
@@ -209,7 +210,7 @@ VISH.Editor = (function(V,$,undefined){
 		window.focus();
 
 		//Call VE theme callback (for custom JS features)
-		V.Editor.Themes.Core.onThemeCallback(options,presentation);
+		V.Themes.Core.onThemeCallback(options,presentation);
 
 		$("#waiting_overlay").hide();
 	};

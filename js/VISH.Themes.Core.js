@@ -1,4 +1,4 @@
-VISH.Editor.Themes.Core = (function(V,$,undefined){
+VISH.Themes.Core = (function(V,$,undefined){
 
 	var _initialized = false;
 	var _theme = {};

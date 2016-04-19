@@ -1,9 +1,11 @@
-section.slides article[type="standard"] {
+/*section.slides article[type="standard"] {
 	background: black !important;
 }
-
-/*
-#menuButton {
-	background-image: url(/images/toolbar/logofondo_educa.png);
-}
 */
+
+#menuButton {
+	background-image: url(/images/logos/europeanalogo.png);
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}

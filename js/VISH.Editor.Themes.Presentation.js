@@ -121,7 +121,7 @@ VISH.Editor.Themes.Presentation = (function(V,$,undefined){
 			$(".themethumb").addClass("waitCursor");
 		}
 
-		V.Themes.loadTheme(theme, function(){
+		V.Themes.Presentation.loadTheme(theme, function(){
 			//Theme loaded callback
 			_currentTheme = theme;
 

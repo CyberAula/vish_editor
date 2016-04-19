@@ -6,7 +6,6 @@ VISH.Editor.Themes = (function(V,$,undefined){
 		if(_initialized === true){
 			return;
 		}
-		V.Editor.Themes.Core.init();
 		V.Editor.Themes.Presentation.init();
 		_initialized = true;
 	};
