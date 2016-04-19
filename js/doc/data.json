@@ -629,7 +629,7 @@
         },
         {
             "file": "VISH.Editor.Events.js",
-            "line": 301,
+            "line": 303,
             "description": "Tutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
             "class": "VISH.Editor"
         },
@@ -875,105 +875,112 @@
         },
         {
             "file": "VISH.Editor.js",
-            "line": 215,
+            "line": 223,
             "description": "function called when user clicks on template\nIncludes a new slide following the template selected",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 270,
+            "line": 278,
             "description": "Function called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 316,
+            "line": 324,
             "description": "function called when user clicks on the delete icon of the zone",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 348,
+            "line": 356,
             "description": "Function called when user delete a slide",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 387,
+            "line": 395,
             "description": "function called when user clicks on template zone with class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 396,
+            "line": 404,
             "description": "Function called when user clicks on any element without class selectable",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 460,
+            "line": 468,
             "description": "Function to add a delete button to the element",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 472,
+            "line": 480,
             "description": "Function called when entering slide in editor, we have to show the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 498,
+            "line": 506,
             "description": "Function called when leaving slide in editor, we have to hide the objects",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 523,
+            "line": 531,
             "description": "Function to save the presentation",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Editor.js",
-            "line": 886,
+            "line": 897,
             "description": "function to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
             "class": "VISH.Editor",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Events.js",
-            "line": 156,
+            "line": 158,
             "description": "Function to add the events to the help buttons to launch joy ride bubbles",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 12,
+            "line": 20,
             "description": "Init I18n module",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 138,
+            "line": 182,
             "description": "Function to translate a string",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 183,
+            "line": 207,
+            "description": "Function to translate a string",
+            "class": "",
+            "namespace": "VISH"
+        },
+        {
+            "file": "VISH.I18n.js",
+            "line": 246,
             "description": "Return the current language",
             "class": "",
             "namespace": "VISH"
@@ -1586,8 +1593,8 @@
         },
         {
             "file": "VISH.Utils.Loader.js",
-            "line": 159,
-            "description": "Function to dinamically add a css",
+            "line": 162,
+            "description": "Function to dynamically add a css",
             "class": "",
             "namespace": "VISH"
         },
@@ -1610,42 +1617,42 @@
         },
         {
             "file": "VISH.Utils.js",
-            "line": 208,
+            "line": 210,
             "description": "Return a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 250,
+            "line": 252,
             "description": "Fix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 283,
+            "line": 285,
             "description": "Check slide types and fix it",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 771,
+            "line": 773,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 779,
+            "line": 781,
             "description": "Function to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.Utils.js",
-            "line": 788,
+            "line": 790,
             "description": "Function to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
             "class": "",
             "namespace": "VISH"
@@ -1959,7 +1966,7 @@
         },
         {
             "message": "Missing item type\nTutorial\nFunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Editor.Events.js:301"
+            "line": " VISH.Editor.Events.js:303"
         },
         {
             "message": "Missing item type\nFunction to draw an image in a zone of the template\nthe zone to draw is the one in current_area\nthis function also makes the image draggable\nparam area: optional param indicating the area to add the image, used for editing presentations\nparam style: optional param with the style, used in editing presentation",
@@ -2107,63 +2114,67 @@
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template\nIncludes a new slide following the template selected",
-            "line": " VISH.Editor.js:215"
+            "line": " VISH.Editor.js:223"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on an editable element\nEvent launched when an editable element belonging to the slide is clicked",
-            "line": " VISH.Editor.js:270"
+            "line": " VISH.Editor.js:278"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on the delete icon of the zone",
-            "line": " VISH.Editor.js:316"
+            "line": " VISH.Editor.js:324"
         },
         {
             "message": "Missing item type\nFunction called when user delete a slide",
-            "line": " VISH.Editor.js:348"
+            "line": " VISH.Editor.js:356"
         },
         {
             "message": "Missing item type\nfunction called when user clicks on template zone with class selectable",
-            "line": " VISH.Editor.js:387"
+            "line": " VISH.Editor.js:395"
         },
         {
             "message": "Missing item type\nFunction called when user clicks on any element without class selectable",
-            "line": " VISH.Editor.js:396"
+            "line": " VISH.Editor.js:404"
         },
         {
             "message": "Missing item type\nFunction to add a delete button to the element",
-            "line": " VISH.Editor.js:460"
+            "line": " VISH.Editor.js:468"
         },
         {
             "message": "Missing item type\nFunction called when entering slide in editor, we have to show the objects",
-            "line": " VISH.Editor.js:472"
+            "line": " VISH.Editor.js:480"
         },
         {
             "message": "Missing item type\nFunction called when leaving slide in editor, we have to hide the objects",
-            "line": " VISH.Editor.js:498"
+            "line": " VISH.Editor.js:506"
         },
         {
             "message": "Missing item type\nFunction to save the presentation",
-            "line": " VISH.Editor.js:523"
+            "line": " VISH.Editor.js:531"
         },
         {
             "message": "Missing item type\nfunction to get the template of the slide of current_el\nparam area: optional param indicating the area to get the template, used for editing presentations",
-            "line": " VISH.Editor.js:886"
+            "line": " VISH.Editor.js:897"
         },
         {
             "message": "Missing item type\nFunction to add the events to the help buttons to launch joy ride bubbles",
-            "line": " VISH.Events.js:156"
+            "line": " VISH.Events.js:158"
         },
         {
             "message": "Missing item type\nInit I18n module",
-            "line": " VISH.I18n.js:12"
+            "line": " VISH.I18n.js:20"
         },
         {
             "message": "Missing item type\nFunction to translate a string",
-            "line": " VISH.I18n.js:138"
+            "line": " VISH.I18n.js:182"
+        },
+        {
+            "message": "Missing item type\nFunction to translate a string",
+            "line": " VISH.I18n.js:207"
         },
         {
             "message": "Missing item type\nReturn the current language",
-            "line": " VISH.I18n.js:183"
+            "line": " VISH.I18n.js:246"
         },
         {
             "message": "Missing item type\nFunction to reload a gifs in the slide for Mobile devices",
@@ -2366,8 +2377,8 @@
             "line": " VISH.Tour.js:3"
         },
         {
-            "message": "Missing item type\nFunction to dinamically add a css",
-            "line": " VISH.Utils.Loader.js:159"
+            "message": "Missing item type\nFunction to dynamically add a css",
+            "line": " VISH.Utils.Loader.js:162"
         },
         {
             "message": "Missing item type\nParses a ISO8601 period string.",
@@ -2375,27 +2386,27 @@
         },
         {
             "message": "Missing item type\nReturn a unic id.\nfull_id_prefix: Specify a prefix for the id, for example, article to get \"article_x\" ids.\nSpecify a separator for nested ids.\njustCheck: only check if the id is really unic, if not generate a new id.",
-            "line": " VISH.Utils.js:208"
+            "line": " VISH.Utils.js:210"
         },
         {
             "message": "Missing item type\nFix presentations with old JSON format\nTry to update them to current version\nReturn null if presentation is irretrievable",
-            "line": " VISH.Utils.js:250"
+            "line": " VISH.Utils.js:252"
         },
         {
             "message": "Missing item type\nCheck slide types and fix it",
-            "line": " VISH.Utils.js:283"
+            "line": " VISH.Utils.js:285"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:771"
+            "line": " VISH.Utils.js:773"
         },
         {
             "message": "Missing item type\nFunction to get width in pixels from a style attribute.\nIf width attribute is given by percent, area (parent container) attribute is needed.",
-            "line": " VISH.Utils.js:779"
+            "line": " VISH.Utils.js:781"
         },
         {
             "message": "Missing item type\nFunction to get width and height in pixels from a style attribute.\nIf widht or height attribute is given by percent, area (parent container) attribute is needed to convert to pixels.",
-            "line": " VISH.Utils.js:788"
+            "line": " VISH.Utils.js:790"
         },
         {
             "message": "Missing item type\nFunction to play all videos and audios of a slide",

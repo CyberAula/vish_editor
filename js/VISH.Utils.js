@@ -172,6 +172,8 @@ VISH.Utils = (function(V,undefined){
 				$(this).attr("placeholder",text);
 			}
 		};
+
+		V.Utils.Loader.init();
 	};
 
 	var dimentionsToDraw = function(w_zone, h_zone, w_content, h_content){

@@ -74,17 +74,23 @@ VISH.Editor = (function(V,$,undefined){
 			//Status loading finishes
 			_initAferStatusLoaded(options,presentation);
 		});
-	}
+	};
 
 	var _initAferStatusLoaded = function(options,presentation){
 		if(!V.Utils.checkMiniumRequirements()){
 			$("#waiting_overlay").hide();
 			return;
 		}
-
-		V.I18n.translateUI();
 		V.Utils.Loader.loadDeviceCSS();
 		V.Utils.Loader.loadLanguageCSS();
+		V.Editor.Themes.init();
+		V.Editor.Themes.Core.applyConfigTheme(function(VEtheme){
+			_initAferVEThemeLoaded(options,presentation);
+		});
+	};
+
+	var _initAferVEThemeLoaded = function(options,presentation){
+		V.I18n.translateUI();
 		V.Editor.ViewerAdapter.init();
 		V.Object.init();
 		V.Editor.IMSQTI.init();
@@ -92,7 +98,6 @@ VISH.Editor = (function(V,$,undefined){
 		V.Editor.API.init();
 		V.EventsNotifier.init();
 		V.Editor.Animations.init();
-		V.Editor.Themes.init();
 		V.Flashcard.init();
 		V.VirtualTour.init();
 		V.Editor.Slideset.init();
@@ -122,8 +127,8 @@ VISH.Editor = (function(V,$,undefined){
 				// V.Editor.Tools.changePublishButtonStatus("disabled");
 				V.Editor.Tools.changePublishButtonStatus("unpublish");
 			}
-			V.Editor.Themes.selectTheme(presentation.theme,false,function(){
-				//Theme loaded
+			V.Editor.Themes.Presentation.selectTheme(presentation.theme,false,function(){
+				//Presentation theme loaded
 				V.Editor.Renderer.init(presentation);
 				//remove focus from any zone
 				_removeSelectableProperties();
@@ -204,8 +209,11 @@ VISH.Editor = (function(V,$,undefined){
 		//Try to win focus
 		window.focus();
 
+		//Call VE theme callback (for custom JS features)
+		V.Editor.Themes.Core.onThemeCallback(options,presentation);
+
 		$("#waiting_overlay").hide();
-	}
+	};
   
 
 	////////////

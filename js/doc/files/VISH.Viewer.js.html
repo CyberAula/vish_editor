@@ -105,7 +105,7 @@ VISH.Viewer = (function(V,$,undefined){
 		}
 
 		if(V.Debugging.isDevelopping()){
-			if ((initOptions[&quot;configuration&quot;][&quot;mode&quot;]===V.Constant.NOSERVER)&amp;&amp;(!presentation)&amp;&amp;(V.Debugging.getPresentationSamples()!==null)){
+			if ((!presentation)&amp;&amp;(V.Debugging.getPresentationSamples()!==null)){
 			 	presentation = V.Debugging.getPresentationSamples();
 			}
 		}

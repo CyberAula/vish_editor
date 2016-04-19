@@ -265,7 +265,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//Themes
-		selectTheme(V.Editor.Themes.getCurrentTheme().number);
+		selectTheme(V.Editor.Themes.Presentation.getCurrentTheme().number);
 
 		//Metadata
 
@@ -573,7 +573,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.license = {name: licenseName, key: licenseKey};
 		}
 		
-		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
+		var themeNumber = V.Editor.Themes.Presentation.getCurrentTheme().number;
 		if(typeof  themeNumber == &quot;string&quot;){
 			settings.theme = &quot;theme&quot; + themeNumber;
 		} else {
@@ -837,7 +837,8 @@ VISH.Editor.Settings = (function(V,$,undefined){
 				if(typeof V.UploadAttachmentPath == &quot;string&quot;){
 					$(&quot;#attachment_file_form&quot;).attr(&quot;action&quot;, V.UploadAttachmentPath);
 					$(&quot;#attachment_author&quot;).val(V.User.getId());
-					$(&quot;#attachment_aut_token&quot;).val(V.User.getToken());
+					$(&quot;#attachment_auth_token&quot;).val(V.User.getToken());
+					$(&quot;#attachment_pres_id&quot;).val(V.Editor.getPresentationId());
 					$(&quot;#attachment_file_form&quot;).ajaxForm({
 						success: function(responseText, statusText, xhr, form) {
 							if(responseText.status == &quot;bad_request&quot; &amp;&amp; responseText.message == &quot;bad_size&quot;){

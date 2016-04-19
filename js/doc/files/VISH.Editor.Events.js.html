@@ -169,7 +169,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on(&#x27;click&#x27;,&#x27;#animation_fancybox div[animation]&#x27;, V.Editor.Animations.onAnimationSelected);
 
-			$(document).on(&#x27;click&#x27;,&#x27;#theme_fancybox img[theme]&#x27;, V.Editor.Themes.onThemeSelected);
+			$(document).on(&#x27;click&#x27;,&#x27;#theme_fancybox img[theme]&#x27;, V.Editor.Themes.Presentation.onThemeSelected);
 
 			$(document).on(&quot;click&quot;, &quot;.change_bg_button&quot;, V.Editor.Tools.changeBackground);
 
@@ -331,8 +331,10 @@ VISH.Editor.Events = (function(V,$,undefined){
 					switch(firstEnabledId){
 						case &quot;tab_pic_upload&quot;:
 							V.Editor.Utils.loadTab(&#x27;tab_pic_upload&#x27;);
+							break;
 						case &quot;tab_pic_thumbnails&quot;:
 							V.Editor.Utils.loadTab(&#x27;tab_pic_thumbnails&#x27;);
+							break;
 						default:
 							//Allow thumbnail by URL (the uniq possibility)
 							$(&quot;#tab_pic_from_url&quot;).show();

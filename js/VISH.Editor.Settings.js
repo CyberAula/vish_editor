@@ -183,7 +183,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		}
 
 		//Themes
-		selectTheme(V.Editor.Themes.getCurrentTheme().number);
+		selectTheme(V.Editor.Themes.Presentation.getCurrentTheme().number);
 
 		//Metadata
 
@@ -491,7 +491,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 			settings.license = {name: licenseName, key: licenseKey};
 		}
 		
-		var themeNumber = V.Editor.Themes.getCurrentTheme().number;
+		var themeNumber = V.Editor.Themes.Presentation.getCurrentTheme().number;
 		if(typeof  themeNumber == "string"){
 			settings.theme = "theme" + themeNumber;
 		} else {

@@ -335,7 +335,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 			}
 
 			//Color depends of the current theme
-			var initialTextColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
+			var initialTextColor = "color:#" + V.Editor.Themes.Presentation.getCurrentTheme().color;
 			var blankTextColor = initialTextColor; //For placeholders
 
 			//We can also specify initial_texts style in the options param
@@ -590,7 +590,7 @@ VISH.Editor.Text = (function(V,$,undefined){
 	};
 
 	var refreshAutoColors = function(){
-		var currentColor = "color:#" + V.Editor.Themes.getCurrentTheme().color;
+		var currentColor = "color:#" + V.Editor.Themes.Presentation.getCurrentTheme().color;
 		jQuery.each(CKEDITOR.instances, function(name, CKinstance) {
 			 var iframe = $($(document.getElementById('cke_contents_' + CKinstance.name)).find("iframe")[0]).contents()[0];
 			 var spans = $(iframe).find("span[autocolor][style]");

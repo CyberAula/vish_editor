@@ -143,7 +143,7 @@ VISH.Editor.Tools.Menu = (function(V,$,undefined){
 		$(&quot;#menu&quot;).show();
 
 		$(&quot;.theme_selected_in_fancybox&quot;).removeClass(&quot;theme_selected_in_fancybox&quot;);
-		$(&quot;#theme_fancybox div#select_theme&quot;+V.Editor.Themes.getCurrentTheme().number+&quot; img&quot;).addClass(&quot;theme_selected_in_fancybox&quot;);
+		$(&quot;#theme_fancybox div#select_theme&quot;+V.Editor.Themes.Presentation.getCurrentTheme().number+&quot; img&quot;).addClass(&quot;theme_selected_in_fancybox&quot;);
 
 			//menu click show withouth css instead of hover
 		if(V.Status.getDevice().desktop){

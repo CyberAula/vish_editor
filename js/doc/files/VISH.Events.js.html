@@ -164,6 +164,8 @@ VISH.Events = (function(V,$,undefined){
 			V.Recommendations.onClickEvaluateButton(event);
 		});
 
+		V.Flashcard.loadEvents();
+
 		//Focus
 		$(window).focus(function(){
 			V.Status.setWindowFocus(true);
@@ -285,14 +287,16 @@ VISH.Events = (function(V,$,undefined){
 		$(document).off(&#x27;click&#x27;, &#x27;#page-switcher-start&#x27;);
 		$(document).off(&#x27;click&#x27;, &#x27;#page-switcher-end&#x27;);
 
-		$(document).off(&#x27;click&#x27;, &#x27;#back_arrow&#x27;, V.Slides.backwardOneSlide);
-		$(document).off(&#x27;click&#x27;, &#x27;#forward_arrow&#x27;, V.Slides.forwardOneSlide);
+		$(document).off(&#x27;click&#x27;, &#x27;#back_arrow&#x27;);
+		$(document).off(&#x27;click&#x27;, &#x27;#forward_arrow&#x27;);
 
 		$(document).off(&#x27;click&#x27;, &#x27;#closeButton&#x27;);
 
-		$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;, V.Slideset.onCloseSubslideClicked);
+		$(document).off(&#x27;click&#x27;,&#x27;.close_subslide&#x27;);
 
-		if (_mobile){
+		V.Flashcard.unloadEvents();
+
+		if(_mobile){
 			V.Events.Mobile.unbindViewerMobileEventListeners();
 		}
 

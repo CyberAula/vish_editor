@@ -6,7 +6,7 @@ VISH.Themes = (function(V,$,undefined){
 		}
 		_unloadAllThemes();
 		V.Utils.Loader.loadCSS("themes/" + theme + ".css",callback);
-	}
+	};
 
 	var _unloadAllThemes = function(){
 		var theme_pattern = "(^" + V.StylesheetsPath + "themes/)";
@@ -18,7 +18,7 @@ VISH.Themes = (function(V,$,undefined){
 				}
 			}
 		});
-	}
+	};
 
 	return {
 		loadTheme	: loadTheme

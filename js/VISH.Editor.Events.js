@@ -87,7 +87,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 
 			$(document).on('click','#animation_fancybox div[animation]', V.Editor.Animations.onAnimationSelected);
 
-			$(document).on('click','#theme_fancybox img[theme]', V.Editor.Themes.onThemeSelected);
+			$(document).on('click','#theme_fancybox img[theme]', V.Editor.Themes.Presentation.onThemeSelected);
 
 			$(document).on("click", ".change_bg_button", V.Editor.Tools.changeBackground);
 

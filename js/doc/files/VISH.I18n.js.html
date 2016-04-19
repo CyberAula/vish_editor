@@ -82,33 +82,49 @@
     <pre class="code prettyprint linenums">
 VISH.I18n = (function(V,$,undefined){
 	
-	var DEFAULT_ENV = &quot;vish&quot;;
 	var DEFAULT_LANGUAGE = &quot;en&quot;;
 
+	//Locales (translation files) available on VE
 	var _availableLocales;
+	//Environment locales
+	var _envLocales;
+	//Languages available on VE
+	var _availableLanguages;
+	//User preferred language
 	var _language;
-	var _translations;
-	var _defaultTranslations;
+
+	//Preferred locales (environment locales if defined)
+	var _locales;
+	//Default locales
+	var _defaultLocales;
 	
 
 	/**
 	 * Init I18n module
 	 */
 	var init = function(options, presentation){
+		var configuration = V.Configuration.getConfiguration();
+
 		_availableLocales = _getAvailableLocales();
+		_availableLanguages = _getAvailableLanguages();
+
+		//Set default language from config
+		if(_isValidLanguage(configuration[&quot;defaultLanguage&quot;])){
+			DEFAULT_LANGUAGE = configuration[&quot;defaultLanguage&quot;];
+		}
 		
 		//Get language
 		//1. Language specified by options
-		if(_isValidLocale(options.lang)){
+		if(_isValidLanguage(options.lang)){
 			_language = options.lang;
 		} else {
 			//2. Browser language
 			var browserLang = (navigator.language || navigator.userLanguage);
-			if(_isValidLocale(browserLang)){
+			if(_isValidLanguage(browserLang)){
 				_language = browserLang;
 			} else {
 				//3. LO language
-				if((typeof presentation == &quot;object&quot;)&amp;&amp;(_isValidLocale(presentation.language))){
+				if((typeof presentation == &quot;object&quot;)&amp;&amp;(_isValidLanguage(presentation.language))){
 					_language = presentation.language;
 				} else {
 					//4. Default language
@@ -117,15 +133,46 @@ VISH.I18n = (function(V,$,undefined){
 			}
 		}
 
-		_translations = i18n[DEFAULT_ENV][_language];
-		_defaultTranslations = i18n[DEFAULT_ENV][DEFAULT_LANGUAGE];
+		_defaultLocales = V.Locales;
+		if(typeof _envLocales == &quot;object&quot;){
+			_locales = _envLocales;
+		} else {
+			_locales = _defaultLocales;
+		}
+	};
+
+	var _getAvailableLanguages = function(){
+		var _availableLanguages = [];
+		var _availableLocales = _getAvailableLocales();
+		for(var i=0; i&lt;_availableLocales.length; i++){
+			var languages = Object.keys(_availableLocales[i]);
+			for(var j=0; j&lt;languages.length; j++){
+				if(_availableLanguages.indexOf(languages[j])==-1){
+					_availableLanguages.push(languages[j]);
+				}
+			}
+		}
+		return _availableLanguages;
+	};
+
+	var getAvailableLanguages = function(){
+		if(_availableLanguages instanceof Array) {
+			return _availableLanguages;
+		}
+		return _getAvailableLanguages();
 	};
 
 	var _getAvailableLocales = function(){
-		if((typeof i18n != &quot;object&quot;)||(typeof i18n[DEFAULT_ENV] != &quot;object&quot;)){
-			return [];
+		var availableLocales = [];
+		var configuration = V.Configuration.getConfiguration();
+		if(typeof V.Locales == &quot;object&quot;){
+			availableLocales.push(V.Locales);
 		}
-		return Object.keys(i18n[DEFAULT_ENV]);
+		if(typeof configuration[&quot;locales&quot;] == &quot;object&quot;){
+			availableLocales.push(configuration[&quot;locales&quot;]);
+			_envLocales = configuration[&quot;locales&quot;];
+		}
+		return availableLocales;
 	};
 
 	var getAvailableLocales = function(){
@@ -135,8 +182,8 @@ VISH.I18n = (function(V,$,undefined){
 		return _getAvailableLocales();
 	};
 
-	var _isValidLocale = function(locale){
-		return ((typeof locale == &quot;string&quot;)&amp;&amp;(getAvailableLocales().indexOf(locale)!=-1));
+	var _isValidLanguage = function(language){
+		return ((typeof language == &quot;string&quot;)&amp;&amp;(getAvailableLanguages().indexOf(language)!=-1));
 	};
 
 	var translateUI = function(){
@@ -174,9 +221,6 @@ VISH.I18n = (function(V,$,undefined){
 				$(elem).attr(&quot;href&quot;,translation);
 			}
 		});
-
-		// Translate images (if any)
-		// ...
 	};
 		
 	var _translateInput = function(input,translation){
@@ -220,26 +264,45 @@ VISH.I18n = (function(V,$,undefined){
 	/**
 	 * Function to translate a string
 	 */
-	var getTrans = function(s, params) {
-		//First language
-		if((typeof _translations != &quot;undefined&quot;)&amp;&amp;(typeof _translations[s] == &quot;string&quot;)) {
-			return _getTrans(_translations[s],params);
+	var getTrans = function(s,params){
+		//Preferred locale
+		var trans = _getTransFromLocales(_locales,s,params);
+		if(typeof trans == &quot;string&quot;){
+			return trans;
 		}
-		// V.Debugging.log(&quot;Text without translation: &quot; + s + &quot; for language &quot; + _language);
 
-		//Default language
-		if((_language != DEFAULT_LANGUAGE)&amp;&amp;(typeof _defaultTranslations != &quot;undefined&quot;)&amp;&amp;(typeof _defaultTranslations[s] == &quot;string&quot;)) {
-			return _getTrans(_defaultTranslations[s],params);
+		//Default locale
+		trans = _getTransFromLocales(_defaultLocales,s,params);
+		if(typeof trans == &quot;string&quot;){
+			return trans;
 		}
-		// V.Debugging.log(&quot;Text without default translation: &quot; + s);
 
 		//Don&#x27;t return s if it is a key.
 		var key_pattern =/^i\./g;
 		if(key_pattern.exec(s)!=null){
-			return null;
+			return undefined;
 		} else {
 			return s;
 		}
+	};
+
+	/**
+	 * Function to translate a string
+	 */
+	var _getTransFromLocales = function(locales,s,params){
+		//First language
+		if((typeof locales[_language] != &quot;undefined&quot;)&amp;&amp;(typeof locales[_language][s] == &quot;string&quot;)) {
+			return _getTransWithParams(locales[_language][s],params);
+		}
+		// V.Debugging.log(&quot;Text without translation: &quot; + s + &quot; for language &quot; + _language);
+
+		//Default language
+		if((_language != DEFAULT_LANGUAGE)&amp;&amp;(typeof locales[DEFAULT_LANGUAGE] != &quot;undefined&quot;)&amp;&amp;(typeof locales[DEFAULT_LANGUAGE][s] == &quot;string&quot;)){
+			return _getTransWithParams(locales[DEFAULT_LANGUAGE][s],params);
+		}
+		// V.Debugging.log(&quot;Text without default translation: &quot; + s);
+
+		return undefined;
 	};
 
 	/*
@@ -247,7 +310,7 @@ VISH.I18n = (function(V,$,undefined){
 	 * // &quot;i.dtest&quot;	: &quot;Uploaded by #{name} via ViSH Editor&quot;,
 	 * // VISH.I18n.getTrans(&quot;i.dtest&quot;, {name: &quot;Aldo&quot;}) -&gt; &quot;Uploaded by Aldo via ViSH Editor&quot;
 	 */
-	var _getTrans = function(trans, params){
+	var _getTransWithParams = function(trans, params){
 		if(typeof params != &quot;object&quot;){
 			return trans;
 		}
@@ -271,11 +334,11 @@ VISH.I18n = (function(V,$,undefined){
 
 
 	return {
-		init 				: init,
-		getAvailableLocales : getAvailableLocales,
-		getLanguage			: getLanguage,
-		getTrans 			: getTrans,
-		translateUI 		: translateUI
+		init 					: init,
+		getAvailableLanguages 	: getAvailableLanguages,
+		getLanguage				: getLanguage,
+		getTrans 				: getTrans,
+		translateUI 			: translateUI
 	};
 
 }) (VISH, jQuery);

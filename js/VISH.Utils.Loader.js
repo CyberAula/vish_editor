@@ -1,7 +1,7 @@
 VISH.Utils.Loader = (function(V,undefined){
 
-	var _loadGoogleLibraryCallback = undefined;
-
+	var init = function(){
+	};
 
 	var loadImagesOnContainer = function(imagesArray,containerId,options){
 		if(options.order===true){
@@ -134,6 +134,9 @@ VISH.Utils.Loader = (function(V,undefined){
 		}
 	};
 
+
+	var _loadGoogleLibraryCallback = undefined;
+
 	var loadGoogleLibrary = function(scriptSrc,callback){
 		if(typeof callback === "function"){
 			_loadGoogleLibraryCallback = callback;
@@ -157,10 +160,14 @@ VISH.Utils.Loader = (function(V,undefined){
 	};
 
 	/**
-	* Function to dinamically add a css
+	* Function to dynamically add a css
 	*/
-	var loadCSS = function(path, callback){
-		var url = V.StylesheetsPath + path;
+	var loadCSS = function(path,callback){
+		var url = path;
+		if(url.indexOf("http") != 0){
+			url = V.StylesheetsPath + url;
+		}
+		
 		var head = document.getElementsByTagName('head')[0];
 		var link = document.createElement('link');
 		link.type = "text/css";
@@ -312,18 +319,19 @@ VISH.Utils.Loader = (function(V,undefined){
 
 
 	return {
-		loadImagesOnContainer		: loadImagesOnContainer,
-		loadScript					: loadScript,
-		loadGoogleLibrary			: loadGoogleLibrary,
-		loadCSS						: loadCSS,
-		loadDeviceCSS				: loadDeviceCSS,
-		loadLanguageCSS				: loadLanguageCSS,
-		onGoogleLibraryLoaded		: onGoogleLibraryLoaded,
+		init 							: init,
+		loadImagesOnContainer			: loadImagesOnContainer,
+		loadScript						: loadScript,
+		loadGoogleLibrary				: loadGoogleLibrary,
+		loadCSS							: loadCSS,
+		loadDeviceCSS					: loadDeviceCSS,
+		loadLanguageCSS					: loadLanguageCSS,
+		onGoogleLibraryLoaded			: onGoogleLibraryLoaded,
 		prepareFancyboxForFullLoading	: prepareFancyboxForFullLoading,
-		startLoading				: startLoading,
-		stopLoading					: stopLoading,
-		startLoadingInContainer		: startLoadingInContainer,
-		stopLoadingInContainer		: stopLoadingInContainer
+		startLoading					: startLoading,
+		stopLoading						: stopLoading,
+		startLoadingInContainer			: startLoadingInContainer,
+		stopLoadingInContainer			: stopLoadingInContainer
 	};
 
 }) (VISH);

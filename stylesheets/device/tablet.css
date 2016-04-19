@@ -7,6 +7,6 @@
 
 /* Remove default minimum font-size */
 * {
-  -webkit-text-size-adjust: none;
-  font-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	font-size-adjust: none;
 }
