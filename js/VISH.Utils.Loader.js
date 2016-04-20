@@ -166,6 +166,11 @@ VISH.Utils.Loader = (function(V,undefined){
 		var url = path;
 		if(url.indexOf("http") != 0){
 			url = V.StylesheetsPath + url;
+			if(V.Status.getProtocol()==="file"){
+				if(url.indexOf("/") == 0){
+					url = url.replace("/","");
+				} 
+			}
 		}
 		
 		var head = document.getElementsByTagName('head')[0];
