@@ -214,7 +214,7 @@ function SCORM_Player(options){
 			return;
 		}
 		
-		if(settings.SCORM_VERSION === "12"){
+		if(settings.SCORM_VERSION === "1.2"){
 			settings.LMS_API.addListener("cmi.core.lesson_status", function(value){
 				if(settings.VISH_IFRAME_API.isConnected()){
 					// Completion status and success status are not considered in SCORM 1.2, but can be inferred from lesson_status
