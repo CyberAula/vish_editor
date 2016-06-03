@@ -17,11 +17,10 @@ img {
 }
 
 #presentation_details_preview_thumbnail_img_wrapper {
-	width: 60%;
-	height: 60%;
-	margin-left: 20%;
-	margin-top: 20%;
-	/*overflow: hidden;*/
+	width: 80%;
+	height: 67.3%;
+	margin-left: 10%;
+	margin-top: 10%;
 	background: #EEE none repeat scroll 0% 0%;
 }
 
@@ -155,30 +154,42 @@ p.presentation_details_column_title {
 
 #presentation_details_preview_addtitle {
 	padding-top: 5px;
-	padding-left: 5px;
+	padding-left: 2%;
+	padding-right: 2%;
+	width: 96%;
 	padding-bottom: 10px;
-    border-top: 3px solid #fff;
-    border-bottom: 3px solid #fff;
+    margin-top: 3px;
+    margin-bottom: 3px;
+    border: 1px solid #aaa;
 }
 
-#presentation_details_preview_addtitle_input{
+#presentation_details_preview_addtitle_textarea{
 	border: none;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 1.3em;
 	font-weight: 400;
 	color: #111;
-	width: 193px;
+	height: 36px;
+	width: 100%;
 	background-color: #EEE;
 	margin-top: 8px;
+	resize: none;
+	overflow: hidden;
+}
+
+#presentation_details_preview_addtitle_textarea::-webkit-scrollbar {
+   display: none;
 }
 
 #presentation_details_preview_author {
 	cursor: default;
-    padding: 7px 5px 8px 5px;
+    padding: 7px 2% 8px 2%;
+    width: 96%;
     font-family: 'Open Sans', arial, sans-serif;
     font-size: 1em;
     font-weight: 400;
     color: #111;
+    border: 1px solid #aaa;
     border-radius: 0px 0px 8px 8px;
 }
 
@@ -202,7 +213,7 @@ p.presentation_details_column_title {
 	margin-top: 12px;
 	background-color: rgb(255, 255, 255);
 	border-radius: 5px;
-	border: medium none transparent;
+	border: 1px solid #aaa;
 	padding: 3px;
 	color:#0E0E0E;
 	background-color: #EEE;
@@ -247,7 +258,7 @@ input.presentation_details_input {
 	height: 25px;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 14px;
-	border: none;
+	border: 1px solid #aaa;
 	border-radius: 10px;
 	outline: 0 none;
 	padding: 5px 7px;
@@ -259,6 +270,7 @@ input.presentation_details_input {
 	width: 100%;
 	display: block;
 	margin-bottom: 25px;
+	border: 1px solid #aaa;
 }
 
 div#tags_in_presentation_details {
@@ -272,7 +284,7 @@ textarea#presentation_details_textarea {
 	width: 80%;
 	height: 177px;
 	resize: none;
-	border: none;
+	border: 1px solid #aaa;
 	border-radius: 8px;
 	font-family: 'Open Sans', arial, sans-serif;
 	font-size: 14px;
@@ -284,10 +296,11 @@ textarea#presentation_details_textarea {
 
 #presentation_details_preview_thumbnail {
 	position: relative;
-	height: 200px;
+	height: 180px;
 	width: 100%;
 	overflow: hidden;
 	cursor: pointer;
+	border: 1px solid #aaa;
 	border-radius: 8px 8px 0px 0px;
 }
 
@@ -443,22 +456,23 @@ div#aniF1 {
 
 div#tagBoxIntro {
 	padding: 0px;
-    color: #7a8fa9;
-    font-family: 'Open Sans', arial, sans-serif;
-    font-size: 14px;
-    -moz-border-radius: 5px;
-    -khtml-border-radius: 5px;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    background: #fff;
-    width: 93%;
-    height: 174px;
-    margin-top: -7px;
+	color: #7a8fa9;
+	font-family: 'Open Sans', arial, sans-serif;
+	font-size: 14px;
+	-moz-border-radius: 5px;
+	-khtml-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	background: #fff;
+	width: 93%;
+	height: 174px;
+	margin-top: -7px;
 }
 
 div#tagBoxIntro .tagit {
 	height: 262px;
-    margin-top: 16px;
+	margin-top: 16px;
+	border: 1px solid #aaa;
 }
 
 #attachment_file{
@@ -481,7 +495,7 @@ div#tagBoxIntro .tagit {
 
 #catalog_tags{
 	width: 94%;
-	border: transparent;
+	border: 1px solid #aaa;
 	border-radius: 5px;
 	background-color: #EEE;
 	padding: 5px;
@@ -510,10 +524,8 @@ div#tagBoxIntro .tagit {
     right: 342px;
 	padding-left: 23px;
     padding-right: 4px;
+    border: 2px solid #aaa;
 	border-radius: 10px;
-	-webkit-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
-    -moz-box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
-    box-shadow: 0px 3px 5px 1.25px rgba(0, 0, 0, 0.6);
 }
 
 #catalog_done_button{
@@ -587,11 +599,11 @@ div#tagBoxIntro .tagit {
 }
 
 #description_attachment {
-	border: medium none;
 	background-color: #EEE;
 	color: #555;
 	padding-left: 10px;
 	width: 207px;
+	border: 1px solid #aaa;
 	border-radius: 5px;
 	height: 20px;
 }
@@ -601,7 +613,7 @@ div#tagBoxIntro .tagit {
 }
 
 #upload_file_attachment:disabled {
-	background: #CECECE;
+	background: #aaa;
 }
 
 #upload_file_attachment:hover:disabled {
@@ -759,6 +771,10 @@ div#advanced_tabs {
 	margin-bottom: 10px;
 }
 
+#language_tag, #context_tag {
+	border: 1px solid #aaa;
+}
+
 #language_tag_box_text {
 	display: inline;
 }
@@ -801,7 +817,7 @@ input.slider_range_input {
 	height: 171px;
 	width: 234px;
 	font-family: "Open Sans",arial,sans-serif;
-	border: medium none transparent;
+	border: 1px solid #aaa;
 	border-radius: 5px;
 	background-color: rgb(238, 238, 238);
 	padding: 4px;
@@ -844,7 +860,7 @@ input.slider_range_input {
 	margin-left: 46px;
 	resize: none;
 	background-color: rgb(238, 238, 238);
-	border: medium none transparent;
+	border: 1px solid #aaa;
 	border-radius: 10px;
 	padding: 10px 18px 10px 10px;
 	color: rgb(68, 68, 68);
@@ -863,7 +879,7 @@ input.slider_range_input {
 	background: #eeeeed  50% 50% repeat-x; color: #ffffff; font-weight: bold; 
 }
 #presentationdetails .ui-widget-content { 
-	border: none; 
+	border: 1px solid #aaa; 
 	background: #eeeeee; 
 }
 
@@ -899,7 +915,7 @@ input.slider_range_input {
 .tlt_input {
 	width: 60%;
 	text-align: center;
-	border: medium none transparent;
+	border: 1px solid #aaa;
 	border-radius: 3px;
 	background-color: rgb(238, 238, 238);
 	color: #444;

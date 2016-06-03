@@ -55,7 +55,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 			});
 			
 			$(document).on('keyup', '#presentation_details_input_title', V.Editor.Settings.onKeyUpOnTitle);
-			$(document).on('keyup', '#presentation_details_preview_addtitle_input', V.Editor.Settings.onKeyUpOnPreviewTitle);
+			$(document).on('keyup', '#presentation_details_preview_addtitle_textarea', V.Editor.Settings.onKeyUpOnPreviewTitle);
 			$(document).on('click', '#metadata_clasification_button', V.Editor.Settings.onMetadataButtonClicked);
 			$(document).on('click', '#done_in_metadata', V.Editor.Settings.onDoneMetadataButtonClicked);
 			$(document).on('click', '.js_tabs_asettings', V.Editor.Settings.advancedTabs);

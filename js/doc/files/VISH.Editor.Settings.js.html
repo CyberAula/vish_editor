@@ -178,7 +178,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 		//Title
 		if(presentation.title){
-			$(&quot;#presentation_details_preview_addtitle_input&quot;).val(presentation.title); //preview input
+			$(&quot;#presentation_details_preview_addtitle_textarea&quot;).val(presentation.title); //preview title textarea
 			$(&quot;#presentation_details_input_title&quot;).val(presentation.title); //data input
 		}
 
@@ -421,7 +421,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var onKeyUpOnTitle = function(event){
 		var inputData = $(&quot;#presentation_details_input_title&quot;);
-		var inputPreview = $(&quot;#presentation_details_preview_addtitle_input&quot;);
+		var inputPreview = $(&quot;#presentation_details_preview_addtitle_textarea&quot;);
 
 		var title = $(inputData).val();
 		if(title.trim() != &quot;&quot;){
@@ -439,7 +439,7 @@ VISH.Editor.Settings = (function(V,$,undefined){
 
 	var onKeyUpOnPreviewTitle = function(event){
 		var inputData = $(&quot;#presentation_details_input_title&quot;);
-		var inputPreview = $(&quot;#presentation_details_preview_addtitle_input&quot;);
+		var inputPreview = $(&quot;#presentation_details_preview_addtitle_textarea&quot;);
 
 		var title = $(inputPreview).val();
 		if(title.trim() != &quot;&quot;){
