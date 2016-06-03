@@ -254,7 +254,11 @@ VISH.I18n = (function(V,$,undefined){
 	};
 
 	var _translateImg = function(img,translation){
-		$(img).attr(&quot;src&quot;,V.ImagesPath + translation);
+		var attrToChange = &quot;src&quot;;
+		if(typeof $(img).attr(&quot;srctoload&quot;) != &quot;undefined&quot;){
+			attrToChange = &quot;srctoload&quot;;
+		}
+		$(img).attr(attrToChange,V.ImagesPath + translation);
 	};
 
 	var _genericTranslate = function(elem,translation){

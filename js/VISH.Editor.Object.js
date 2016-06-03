@@ -92,7 +92,7 @@ VISH.Editor.Object = (function(V,$,undefined){
 		_hiddenLinkToInitObjectSettings = $('<a href="#objectSettings_fancybox" style="display:none"></a>');
 		$(_hiddenLinkToInitObjectSettings).fancybox({
 			'autoDimensions' : false,
-			'height': 360,
+			'height': 400,
 			'width': 400,
 			'scrolling': 'no',
 			'showCloseButton': false,
