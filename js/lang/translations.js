@@ -350,7 +350,8 @@ VISH.Locales = {
 		"i.Zoom"					: "Zoom",
 		"i.Zoom-"					: "Zoom-",
 		"i.Zoom+"					: "Zoom+",
-		"i.tooltip.QSInput"			: "Enter a name for the live quiz",
+		"i.tooltip.continueDisabled" : "Write a title and choose an avatar to continue",
+		"i.tooltip.QSInput"			 : "Enter a name for the live quiz",
 		"i.tooltip.UploadAttachment" : "If this button is disabled, you need to save your excursion first",
 		"i.vtTitle_GStarted"		: "Getting Started with ViSH Editor",
 		"i.last"					: "last"
@@ -992,8 +993,9 @@ VISH.Locales = {
 		"i.Zoom-"					: "Ampliar-",
 		"i.Zoom+"					: "Ampliar+",
 		//Tooltips
-		"i.tooltip.QSInput"			: "Introduce un nombre para el cuestionario en vivo",
-		"i.tooltip.Help"			: "Ayuda",
+		"i.tooltip.continueDisabled" : "Escribe un título y escoge un avatar para continuar",
+		"i.tooltip.QSInput"			 : "Introduce un nombre para el cuestionario en vivo",
+		"i.tooltip.Help"			 : "Ayuda",
 		"i.tooltip.UploadAttachment" : "Si no puedes subir un archivo adjunto, guarda primero la excursión",
 		//Video Tutorials
 		"i.vtTitle_GStarted"		: "Introducción a ViSH Editor",

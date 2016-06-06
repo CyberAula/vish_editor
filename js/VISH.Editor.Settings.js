@@ -401,11 +401,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(enable){
 			$("#save_presentation_details").removeClass("buttonDisabledOnSettings");
 			$("#save_presentation_details").removeAttr("disabled");
-			$("#save_presentation_details").attr("disabledTitle",$("#save_presentation_details").attr("title"));
 			$("#save_presentation_details").removeAttr("title");
 		} else {
-			if(!$("#save_presentation_details").attr("title")){
-				$("#save_presentation_details").attr("title",$("#save_presentation_details").attr("disabledTitle"));
+			if(typeof $("#save_presentation_details").attr("title") == "undefined"){
+				$("#save_presentation_details").attr("title",V.I18n.getTrans("i.tooltip.continueDisabled"));
 			}
 			$("#save_presentation_details").addClass("buttonDisabledOnSettings");
 			$("#save_presentation_details").attr("disabled","true");

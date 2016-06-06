@@ -737,49 +737,49 @@
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 429,
+            "line": 428,
             "description": "function called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 668,
+            "line": 667,
             "description": "function called when navigating into metadata options to manage tabs",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 685,
+            "line": 684,
             "description": "function called when the user clicks on the metadata options button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 698,
+            "line": 697,
             "description": "Function called when the user clicks on the done button in the metadata options panel",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 708,
+            "line": 707,
             "description": "Function called when the user clicks on the catalog button",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 717,
+            "line": 716,
             "description": "Function called when the user clicks on the done button in the catalog panel",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 732,
+            "line": 731,
             "description": "Function to beautify upload behaviour",
             "class": "VISH.Editor"
         },
         {
             "file": "VISH.Editor.Settings.js",
-            "line": 748,
+            "line": 747,
             "description": "Function to handle uploading an attachment behaviour",
             "class": "VISH.Editor"
         },
@@ -2038,35 +2038,35 @@
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the save button\nin the initial presentation details fancybox to save\nthe data in order to be stored at the end in the JSON file",
-            "line": " VISH.Editor.Settings.js:429"
+            "line": " VISH.Editor.Settings.js:428"
         },
         {
             "message": "Missing item type\nfunction called when navigating into metadata options to manage tabs",
-            "line": " VISH.Editor.Settings.js:668"
+            "line": " VISH.Editor.Settings.js:667"
         },
         {
             "message": "Missing item type\nfunction called when the user clicks on the metadata options button",
-            "line": " VISH.Editor.Settings.js:685"
+            "line": " VISH.Editor.Settings.js:684"
         },
         {
             "message": "Missing item type\nFunction called when the user clicks on the done button in the metadata options panel",
-            "line": " VISH.Editor.Settings.js:698"
+            "line": " VISH.Editor.Settings.js:697"
         },
         {
             "message": "Missing item type\nFunction called when the user clicks on the catalog button",
-            "line": " VISH.Editor.Settings.js:708"
+            "line": " VISH.Editor.Settings.js:707"
         },
         {
             "message": "Missing item type\nFunction called when the user clicks on the done button in the catalog panel",
-            "line": " VISH.Editor.Settings.js:717"
+            "line": " VISH.Editor.Settings.js:716"
         },
         {
             "message": "Missing item type\nFunction to beautify upload behaviour",
-            "line": " VISH.Editor.Settings.js:732"
+            "line": " VISH.Editor.Settings.js:731"
         },
         {
             "message": "Missing item type\nFunction to handle uploading an attachment behaviour",
-            "line": " VISH.Editor.Settings.js:748"
+            "line": " VISH.Editor.Settings.js:747"
         },
         {
             "message": "Missing item type\nfunction to know if the slides have the focus or not\nUse to disable actions (like keyboard shortcuts) when the slide is not focused",

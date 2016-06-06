@@ -483,11 +483,10 @@ VISH.Editor.Settings = (function(V,$,undefined){
 		if(enable){
 			$(&quot;#save_presentation_details&quot;).removeClass(&quot;buttonDisabledOnSettings&quot;);
 			$(&quot;#save_presentation_details&quot;).removeAttr(&quot;disabled&quot;);
-			$(&quot;#save_presentation_details&quot;).attr(&quot;disabledTitle&quot;,$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;));
 			$(&quot;#save_presentation_details&quot;).removeAttr(&quot;title&quot;);
 		} else {
-			if(!$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;)){
-				$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;,$(&quot;#save_presentation_details&quot;).attr(&quot;disabledTitle&quot;));
+			if(typeof $(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;) == &quot;undefined&quot;){
+				$(&quot;#save_presentation_details&quot;).attr(&quot;title&quot;,V.I18n.getTrans(&quot;i.tooltip.continueDisabled&quot;));
 			}
 			$(&quot;#save_presentation_details&quot;).addClass(&quot;buttonDisabledOnSettings&quot;);
 			$(&quot;#save_presentation_details&quot;).attr(&quot;disabled&quot;,&quot;true&quot;);
