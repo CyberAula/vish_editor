@@ -70,7 +70,7 @@ select.tagit-hiddenSelect{
 }
 
 ul.tagit {
-    cursor: text;
+    cursor: default;
     overflow: hidden;
     font-size: 14px;
     padding: 9px;
@@ -107,6 +107,7 @@ ul.tagit li.tagit-choice {
 	font-size: 15px;
 	font-family: Helvetica;
 	margin-bottom: 5px;
+    cursor: default;
 }
 
 ul.tagit li.tagit-choice.selected {
@@ -153,6 +154,7 @@ ul.tagit li.tagit-choice a.tagit-close:hover {
 }
 
 ul.tagit input[type="text"] {
+    cursor: text;
     -moz-box-sizing: border-box;
     border: none !important;
     margin: 0 !important;

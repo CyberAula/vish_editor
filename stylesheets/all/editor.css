@@ -39,7 +39,7 @@ p.addthumbtitle  {
 	margin-top: -80px;
 	margin-left: 85px;
 	width: 35%;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.3em;
 	color: #222;
 	pointer-events: none;
@@ -72,7 +72,7 @@ img.addThumbnailPlus:hover {
 }
 
 #editthumb p {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
 	font-weight: 700;
 	color: #323232;
@@ -85,7 +85,7 @@ img.addThumbnailPlus:hover {
 }
 
 p.presentation_details_column_title {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.6em;
 	margin-top:15px;
 	margin-bottom:10px;
@@ -165,11 +165,11 @@ p.presentation_details_column_title {
 
 #presentation_details_preview_addtitle_textarea{
 	border: none;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.3em;
 	font-weight: 400;
 	color: #111;
-	height: 37px;
+	height: 34px;
 	width: 100%;
 	background-color: #EEE;
 	margin-top: 0px;
@@ -185,7 +185,7 @@ p.presentation_details_column_title {
 	cursor: default;
     padding: 7px 2% 8px 2%;
     width: 96%;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1em;
     font-weight: 400;
     color: #111;
@@ -230,7 +230,7 @@ p.presentation_details_column_title {
 }
 
 span.presentation_details_text {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.6em;
 	font-weight: bold;
 	color: #428BCA;
@@ -240,7 +240,7 @@ span.presentation_details_text {
 p#tags {
     display: inline-block;
     width: 200px;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.6em;
     font-weight: bold;
     margin: 5px 0px 0px 0px;
@@ -256,7 +256,7 @@ input.presentation_details_input {
 	margin-bottom: 25px;
 	width: 80%;
 	height: 25px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	border: 1px solid #aaa;
 	border-radius: 10px;
@@ -286,7 +286,7 @@ textarea#presentation_details_textarea {
 	resize: none;
 	border: 1px solid #aaa;
 	border-radius: 8px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	outline: 0 none;
 	padding: 5px 7px;
@@ -305,13 +305,8 @@ textarea#presentation_details_textarea {
 }
 
 .buttonDisabledOnSettings{
-	background: #ccc !important;
+	background: #aaa !important;
 	cursor: default !important;
-}
-
-.buttonDisabledOnSettings:hover {
-	opacity: 0.6 !important;
-	text-shadow: none !important;
 }
 
 #tlt_current_value {
@@ -457,7 +452,7 @@ div#aniF1 {
 div#tagBoxIntro {
 	padding: 0px;
 	color: #7a8fa9;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 14px;
 	-moz-border-radius: 5px;
 	-khtml-border-radius: 5px;
@@ -482,7 +477,7 @@ div#tagBoxIntro .tagit {
 #catalog_title{
   width: 85%;
   position: relative;
-  font-family: 'Open Sans', arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0px;
   font-size: 19px;
   font-weight: bold;
@@ -564,7 +559,7 @@ div#tagBoxIntro .tagit {
     border-radius: 5px;
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1em;
 }
 
@@ -668,14 +663,14 @@ div#tagBoxIntro .tagit {
 
 #metadata_options_fields {
 	overflow: hidden;
-	font-size: 1.4em;
-	font-family: 'Open Sans', arial, sans-serif;
-	font-weight: 300;
+	font-size: 1.3em;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
 	color: #428BCA;
 } 
 
 .metadata_title {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
   	font-size: 1.5em;
   	color: #fff;
   	padding: 13px 26px 13px 26px;
@@ -752,7 +747,7 @@ div#advanced_tabs {
 #publication-tab{
 	overflow: hidden;
   	font-size: 1.4em;
-  	font-family: 'Open Sans', arial, sans-serif;
+  	font-family: Arial, Helvetica, sans-serif;
   	font-weight: 300;
   	height: 472px;
 }
@@ -763,7 +758,9 @@ div#advanced_tabs {
   margin-top: 40px;
   height: 432px;
   overflow: hidden;
-  font-size: 17px;
+  font-size: 1.1em;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 300;
 }
 
 #rte-tab p{
@@ -813,10 +810,9 @@ input.slider_range_input {
 #subject_tag {
 	height: 171px;
 	width: 234px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	height: 171px;
 	width: 234px;
-	font-family: "Open Sans",arial,sans-serif;
 	border: 1px solid #aaa;
 	border-radius: 5px;
 	background-color: rgb(238, 238, 238);
@@ -852,7 +848,7 @@ input.slider_range_input {
 }
 
 #educational_objectives_textarea {
-	font-family: "Open Sans",arial,sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1em;
 	width: 903px;
 	height: 131px;
@@ -1072,7 +1068,7 @@ input.slider_range_input {
 }
 
 #addSlideButton, #importButton {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	text-decoration: none;
 }
 
@@ -1141,7 +1137,7 @@ input.slider_range_input {
 	display: block;
 	float: left;
 	font-size: 1em;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	cursor: default;
 	width: 25px;
 	margin: 30px 0px;
@@ -1207,7 +1203,7 @@ button.downimport {
 	right: -22px;
 	background: white;
 	padding: 4px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	border-radius: 5px 0px 5px 0px;
 	cursor: default;
 	pointer-events: none;
@@ -1312,7 +1308,7 @@ div.vezone[tooltip='true'][size='large'] {
 .zone_tooltip {
 	text-align: center;
 	display: block;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 100;
 	color:  #888;
 }
@@ -1402,7 +1398,7 @@ div.vezone[tooltip='true'][size='large'] {
 .textfancy {
 	width: 85%;
 	position: relative;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
 	font-size: 19px;
 	color: #2D2D2D;
@@ -1545,7 +1541,7 @@ div.addUrlButtons{
 }
 
 .input_text_fancy {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	background-color:#eee;
 	position:absolute;
@@ -2038,7 +2034,7 @@ img#erivideo:hover {
 	display: block;
 	color: #000;
 	font-size: 14px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	text-align: center;
 }
@@ -2098,7 +2094,7 @@ img#erivideo:hover {
 	text-align: center;
 	font-size: 1.1em;
 	font-weight: 400;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	padding: 0px;
 	margin-top: 15px;
 	margin-bottom: 4px;
@@ -2187,7 +2183,7 @@ div.vezone {
 	background: #ffffff;
 	opacity: 0.8;
 	font-size: 15px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	color: #000;
 }
@@ -2211,7 +2207,7 @@ p#descSearch {
     margin-left: 77px;
     margin-top: 40px;
     margin-bottom: 0px;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 19px;
     color: #2D2D2D;
 }
@@ -2557,7 +2553,7 @@ table.metadata_presentation {
 
 table.metadata td {
 	text-align: left;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: normal;
 	font-size: 12px;
 	padding-top: 4px;
@@ -2680,7 +2676,7 @@ div.object_wrapper {
 	display:inline-block; 
 	top:2px; 
 	left:44%; 
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 }
 
@@ -2708,7 +2704,7 @@ div.object_wrapper {
 
 .upload_file_input {
 	display: inline-block;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
   	font-size: 16px;
   	background: 5px 50% no-repeat;
   	color: #656565;
@@ -2729,7 +2725,7 @@ div.object_wrapper {
 .carrouselNoResults {
 	margin: auto;
 	
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 23px;
 	text-align: center;
 	padding: 5px;
@@ -2806,7 +2802,7 @@ i#themeIheader {
 
 #header_fancybox p {
     margin: 0px;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 2em;
     color: white;
     font-weight: bold;
@@ -2894,7 +2890,7 @@ i#aniIheader {
 
 div#ani_header_fancybox p {
     margin: 0px;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 2em;
     color: white;
     font-weight: bold;
@@ -2935,7 +2931,7 @@ div#ani_header_fancybox p {
 .anim_text > h3 {
 	margin-left: 3px;
 	margin-top: 26px;
-	font-family:"Open Sans",arial,sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	color: #fff;
 	opacity: 1;
@@ -3166,7 +3162,7 @@ table.contentIconsWalkthrough td {
 .tut_add_resources_fancybox table tr td:first-child p {
 	color: #000;
 	font-size: 15px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 600;
 	margin-top: 13px;
 	text-align: center;
@@ -3193,7 +3189,7 @@ table.tut_table_imagewithsubtitle tr td:first-child {
 table.tut_table_imagewithsubtitle tr td:first-child p {
 	color: #000;
 	font-size: 15px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	margin-top: 8px;
 	margin-bottom: 0px;
@@ -3210,7 +3206,7 @@ table.tut_table_imagewithsubtitle_row2 tr td:nth-child(2) {
 table.tut_table_imagewithsubtitle_row2 tr td:nth-child(2) p {
 	color: #000;
 	font-size: 15px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	margin-top: 8px;
 	margin-bottom: 0px;
@@ -3224,7 +3220,7 @@ table.tut_table_imagewithsubtitle_row2 img {
 table.tut_table_image tr td:first-child p {
 	color: #000;
 	font-size: 15px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	margin-top: 8px;
 	margin-bottom: 0px;
@@ -3392,7 +3388,7 @@ p.draggable_number {
 	top: -45px;
 	left: 0px !important;
 	text-align: center;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 15px;
 }
 
@@ -3458,7 +3454,7 @@ p.draggable_number {
 	border-top: 1px solid rgba(0,0,0,0.25);
 	height: 25px;
 	padding-left: 4px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .vt_search_input:hover {
@@ -3498,7 +3494,7 @@ span.poi_label {
 	border: none;
 	padding: 2px; 
 	background-color: transparent;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 div.poi_label_container {
@@ -3511,7 +3507,7 @@ div.poi_label_container {
  */
 .pac-container {
 	z-index: 2000 !important;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .pac-container:after {
@@ -3693,7 +3689,7 @@ section.slides_editor div.ballWrapper div.ballImg {
 }
 
 span.ballLetterSpan, span.ballTimeSpan {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 11px;
 	color: black;
 	left: 0%;
@@ -3724,7 +3720,7 @@ img.notificationIconDeleteTimestampLink {
 
 #chapters_fancybox{
 	font-size: 1.4em;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 300;
 	padding: 25px;
 }
@@ -3768,7 +3764,7 @@ font-size: 1.7em;
 }
 
 #eVideoChaptersTextArea{
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     width: 94%;
     height: 35px;
@@ -3821,7 +3817,7 @@ span.letterInChapterDialog {
 	-ms-user-select: none;
 	-o-user-select: none;
 	user-select: none;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 
@@ -3866,7 +3862,7 @@ span.letterInChapterDialog {
 
 .select_text {
 	font-size: 1.4em;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 400;
 	margin-bottom: 10px;
 	margin-top: -7px;
@@ -3894,7 +3890,7 @@ background-color: #326999;
 /* scroll bar */
 
 .mCSB_container {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .mCSB_scrollTools .mCSB_dragger .mCSB_dragger_bar {
@@ -3956,7 +3952,7 @@ background-color: #326999;
 
 #efile_input {
 	display: inline-block;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 16px;
 	background: 5px 50% no-repeat;
 	margin-top: 2%;
@@ -3975,9 +3971,9 @@ background-color: #326999;
 }
 
 p.elsettings_fancybox_title {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 20px;
-	color: #B6B6B6;
+	color: #aaa;
 	margin-top: 0px;
 	margin-bottom: 10px;
 }
@@ -3994,7 +3990,7 @@ div.new_elsettings_subfield {
 
 div.new_elsettings_field span, div.new_elsettings_field p, div.new_elsettings_subfield span, div.new_elsettings_subfield p {
 	font-size: 16px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: 300;
 }
 
@@ -4021,7 +4017,7 @@ div.elSettingsButtonsWrapper {
 }
 
 div.disableSettingsField {
-	color: #ccc;
+	color: #aaa;
 }
 
 #exportQuizToIMSQTI, #exportQuizToMoodleXML {

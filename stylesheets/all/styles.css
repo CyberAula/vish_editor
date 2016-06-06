@@ -266,7 +266,7 @@ section.slides > article > article.show_in_smartcard {
 }
 
 #slide-counter-span, #slide-counter-input {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 #slide-counter-input {
@@ -314,7 +314,7 @@ html {
 }
 
 article {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 article > div > p {
@@ -589,7 +589,7 @@ div.fc_poi {
 	margin-bottom: 2%;
 	color: rgb(114, 114, 114);
 	font-size: 2.7em;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	padding: 13px;
 }
@@ -661,7 +661,7 @@ div#tab_quiz_session_results {
 	background: transparent;
 	color: #ff005d;
 	font-size: 1.5rem;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-weight: bold;
 	border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
@@ -1101,7 +1101,7 @@ img.selectSlidesimgbutton {
 	border-radius: 5px;
 	-moz-border-radius: 5px;
 	-webkit-border-radius: 5px;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.1em;
 	border:none;
 }
@@ -1186,7 +1186,7 @@ img.selectSlidesimgbutton {
 
 .notification_text {
 	text-decoration: none;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 2.1rem;
 	color: #666;
 	padding-bottom: 4%;
@@ -1245,7 +1245,7 @@ img.browser_img {
 }
 
 span.browserTitle {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
   	font-size: 1.2rem;
 	display: block;
 	padding: 5px;
@@ -1259,7 +1259,7 @@ div.recomended_browser {
 
 span.adverttext {
 	text-decoration:none;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 2.6rem;
 	color:#CCC;
 	padding-bottom: 15px;
@@ -1306,7 +1306,7 @@ a.button_advert:hover {
 }
 
 .textrec1 {
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size:2rem;
 	color: #fff ;
 	white-space: nowrap;
@@ -1366,13 +1366,13 @@ a.button_advert:hover {
 }
 
 .rec-name {
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.3rem;
 }
 
 .rec-views {
 	color: #404040;
-	font-family: 'Open Sans', arial, sans-serif;
+	font-family: Arial, Helvetica, sans-serif;
 	font-size: 1.2rem;
 	margin-left: 1%;
 	margin-right: 7%;
@@ -1396,7 +1396,7 @@ a.button_advert:hover {
 }
 
 .rec-title-excursion {
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     width: 100%;
     font-size: 1.5rem;
     font-weight: bold;
@@ -1423,7 +1423,7 @@ div#rec-cont-np {
 }
 
 .rec-number_pages {
-	    font-family: 'Open Sans', arial, sans-serif;
+	    font-family: Arial, Helvetica, sans-serif;
     padding: 3% 0% 0% 0%;
     position: relative;
     left: 28px;
@@ -1447,7 +1447,7 @@ div#rec-cont-np {
 }
 
 .rec-by {
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1rem;
     margin-top: 0%;
     margin-bottom: 2%;
@@ -1459,7 +1459,7 @@ div#rec-cont-np {
 
 .rec-visits {
     font-weight: bold;
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.2rem;
     display: inline-block;
     color: #000;
@@ -1467,7 +1467,7 @@ div#rec-cont-np {
 }
 
 .rec-likes {
-    font-family: 'Open Sans', arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.1rem;
     display: inline-block;
     color: #000;

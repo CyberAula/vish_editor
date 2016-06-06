@@ -8,8 +8,6 @@ section.slides > article > div.vezone, section.slides > article > article > div.
 }
 
 div.vezone > span.zone_tooltip {
-	font-family: 'Open Sans', arial, sans-serif;
-	font-weight: 100;
 	color: #616161;
 }
 
