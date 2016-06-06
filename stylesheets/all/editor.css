@@ -2132,7 +2132,7 @@ div.vezone {
 	background-color:#333 !important;
 }
 
-#fancybox-close {
+body.ViSHEditorBody #fancybox-close {
 	width: 22px;
 	height: auto;
 	right: 3px;
@@ -2141,7 +2141,7 @@ div.vezone {
 	background-size:60%;
 }
 
-#fancybox-close:hover {
+body.ViSHEditorBody #fancybox-close:hover {
 	background: transparent url('/images/vicons/ve_close2_hover.png') no-repeat center top;
 	background-size:60%;
 }
@@ -2760,13 +2760,13 @@ div.object_wrapper {
 .help_in_fancybox {
 	background-image: url("/images/vicons/helptutorial_circle2.png");
 	position: absolute;
-	top: 6.6px;
-    right: 34px;
-    width:23px;
-    height:21px;
-    background-repeat: no-repeat;
-    background-size: 100%;
-    -webkit-user-select:none;
+	top: 6px;
+	right: 34px;
+	width: 23px;
+	height: 21px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	-webkit-user-select:none;
 	-moz-user-select:none;
 	-khtml-user-select:none;
 	-ms-user-select:none;
