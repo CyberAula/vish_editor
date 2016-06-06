@@ -189,7 +189,7 @@ VISH.I18n = (function(V,$,undefined){
 	var translateUI = function(){
 		$(&quot;[i18n-key]&quot;).each(function(index, elem){
 			var translation = getTrans($(elem).attr(&quot;i18n-key&quot;));
-			if(translation!=null){
+			if(typeof translation != &quot;undefined&quot;){
 				switch(elem.tagName){
 					case &quot;INPUT&quot;:
 						_translateInput(elem,translation);
@@ -214,10 +214,18 @@ VISH.I18n = (function(V,$,undefined){
 			}
 		});
 
+		//Translante tooltip attributes
+		$(&quot;[i18n-key-tooltip]&quot;).each(function(index, elem){
+			var translation = getTrans($(elem).attr(&quot;i18n-key-tooltip&quot;));
+			if(typeof translation != &quot;undefined&quot;){
+				$(elem).attr(&quot;title&quot;,translation);
+			}
+		});
+
 		//Translante hrefs attributes
 		$(&quot;[i18n-key-href]&quot;).each(function(index, elem){
 			var translation = getTrans($(elem).attr(&quot;i18n-key-href&quot;));
-			if(translation!=null){
+			if(typeof translation != &quot;undefined&quot;){
 				$(elem).attr(&quot;href&quot;,translation);
 			}
 		});

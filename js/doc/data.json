@@ -966,21 +966,21 @@
         },
         {
             "file": "VISH.I18n.js",
-            "line": 186,
+            "line": 194,
             "description": "Function to translate a string",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 211,
+            "line": 219,
             "description": "Function to translate a string",
             "class": "",
             "namespace": "VISH"
         },
         {
             "file": "VISH.I18n.js",
-            "line": 250,
+            "line": 258,
             "description": "Return the current language",
             "class": "",
             "namespace": "VISH"
@@ -2166,15 +2166,15 @@
         },
         {
             "message": "Missing item type\nFunction to translate a string",
-            "line": " VISH.I18n.js:186"
+            "line": " VISH.I18n.js:194"
         },
         {
             "message": "Missing item type\nFunction to translate a string",
-            "line": " VISH.I18n.js:211"
+            "line": " VISH.I18n.js:219"
         },
         {
             "message": "Missing item type\nReturn the current language",
-            "line": " VISH.I18n.js:250"
+            "line": " VISH.I18n.js:258"
         },
         {
             "message": "Missing item type\nFunction to reload a gifs in the slide for Mobile devices",

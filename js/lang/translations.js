@@ -30,6 +30,7 @@ VISH.Locales = {
 		"i.add"						: "add",
 		"i.Add"						: "Add",
 		"i.Addanavatar"				: "Add an avatar *",
+		"i.AddanavatarHover"		: "Click to add an avatar. You should select an avatar to identify your excursion",
 		"i.addatitle"				: "add a title",
 		"i.AddContent"				: "Add Content",
 		"i.addembeddedobject"		: "add embedded object",
@@ -350,6 +351,7 @@ VISH.Locales = {
 		"i.Zoom-"					: "Zoom-",
 		"i.Zoom+"					: "Zoom+",
 		"i.tooltip.QSInput"			: "Enter a name for the live quiz",
+		"i.tooltip.UploadAttachment" : "If this button is disabled, you need to save your excursion first",
 		"i.vtTitle_GStarted"		: "Getting Started with ViSH Editor",
 		"i.last"					: "last"
 	},
@@ -662,6 +664,7 @@ VISH.Locales = {
 		"i.add"						: "añadir",
 		"i.Add"						: "Añadir",
 		"i.Addanavatar"				: "Añadir avatar *",
+		"i.AddanavatarHover"		: "Haz clic para añadir un avatar. Debes seleccionar un avatar para identificar tu excursión",
 		"i.addatitle"				: "añade un título",
 		"i.AddContent"				: "Añadir Contenido",
 		"i.addembeddedobject"		: "añadir objeto embebido",
@@ -991,7 +994,7 @@ VISH.Locales = {
 		//Tooltips
 		"i.tooltip.QSInput"			: "Introduce un nombre para el cuestionario en vivo",
 		"i.tooltip.Help"			: "Ayuda",
-		"i.tooltip.UploadAttachment" : "Si no puedes subir un archivo adjunto, guarda primero la excusión",
+		"i.tooltip.UploadAttachment" : "Si no puedes subir un archivo adjunto, guarda primero la excursión",
 		//Video Tutorials
 		"i.vtTitle_GStarted"		: "Introducción a ViSH Editor",
 		//Images (V.ImagesPath is omitted here)
