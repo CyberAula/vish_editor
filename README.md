@@ -40,6 +40,7 @@ A server side implementation has been developed in **Ruby on Rails**. The source
 * Themes and slide transitions.
 * e-Learning standards support:
   * SCORM (1.2 and 2004)
+  * IMS CP
   * IEEE LOM
   * IMS QTI 2.1
   * Moodle XML
