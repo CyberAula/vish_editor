@@ -83,6 +83,7 @@ vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Video.HTML5.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.Repository.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.Flickr.js'));
+vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.XWiki.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.Europeana.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.LRE.js'));
 vm.runInThisContext(fs.readFileSync('./js/VISH.Editor.Image.Thumbnails.js'));

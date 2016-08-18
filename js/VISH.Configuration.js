@@ -114,6 +114,11 @@ VISH.Configuration = (function(V,$,undefined){
       $("#tab_pic_flickr").css("display","none").addClass("disabled");
     }
 
+    //XWiki
+    if(configuration["XWiki"]!==true){
+      $("#tab_pic_xwiki").css("display","none").addClass("disabled");
+    }
+
     //YouTube
     if((configuration["Youtube"]!==true)||(typeof configuration["YoutubeAPIKEY"] != "string")){
       $("#tab_video_youtube").css("display","none").addClass("disabled");

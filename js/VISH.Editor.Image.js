@@ -9,6 +9,7 @@ VISH.Editor.Image = (function(V,$,undefined){
 	
 	var init = function(){
 		V.Editor.Image.Flickr.init();
+		V.Editor.Image.XWiki.init();
 		VISH.Editor.Image.Europeana.init();
 		V.Editor.Image.Repository.init();
 		V.Editor.Image.LRE.init();
