@@ -266,6 +266,7 @@ VISH.I18n = (function(V,$,undefined){
 	return {
 		init 					: init,
 		getAvailableLanguages 	: getAvailableLanguages,
+		getAvailableLocales     : getAvailableLocales,
 		getLanguage				: getLanguage,
 		getTrans 				: getTrans,
 		translateUI 			: translateUI
