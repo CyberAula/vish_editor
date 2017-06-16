@@ -658,7 +658,7 @@ VISH.Locales = {
 		"i.VESurvey2"				: "Por favor, rellena",
 		"i.VESurvey3"				: "esta encuesta",
 		"i.VESurvey4"				: "¡Gracias por tu colaboración",
-		"i.VESurveyURL"				: "https://docs.google.com/forms/d/1b_Ml2iua0oDNKkJqc7eT1W2CDlRhIZR__w2AlicfwjA/viewform",
+		"i.VESurveyURL"				: "http://docs.google.com/forms/d/e/1FAIpQLSdJpv7o323BY5TFoZrKKQXczRBXko1YD066CAjKkTBqAJremw/viewform",
 
 		//UI
 		"i.accept"					: "aceptar",
