@@ -38,16 +38,16 @@ var getOptions = function(){
 		configuration["ViSH"] = true;
 		configuration["ViSH_instances"] = ["http://localhost:3000"];
 		configuration["Flickr"] = true;
-		configuration["XWiki"] = true;
-		configuration["XWiki_url"] = "http://localhost:8080/xwiki/bin/view/";
-		configuration["Europeana"] = true;
-		configuration["EuropeanaAPIKEY"] = "EuropeanaAPIKEY";
 		configuration["Youtube"] = true;
 		configuration["YoutubeAPIKEY"] = 'YoutubeAPIKey';
-		configuration["LRE"] = true;
-		configuration["LRE_path"] = "http://localhost:3000/lre/search";
 		configuration["SoundCloud"] = true;
 		configuration["SoundCloudAPIKEY"] = 'SoundcloudAPIKey';
+		configuration["Europeana"] = true;
+		configuration["EuropeanaAPIKEY"] = "EuropeanaAPIKEY";
+		configuration["LRE"] = true;
+		configuration["LRE_path"] = "http://localhost:3000/lre/search";
+		configuration["XWiki"] = false;
+		configuration["XWiki_url"] = "http://localhost:8080/xwiki/bin/view/";
 
 		/////////////////////
 		// Features enabled (other services)

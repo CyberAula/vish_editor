@@ -60,11 +60,13 @@ VISH.Configuration = (function(V,$,undefined){
     if(typeof V.UploadImagePath == "undefined"){
       //Disable images
       $("#tab_pic_upload").css("display","none").addClass("disabled");
+      $(".upload_image_help_content").css("display","none");
     }
 
     //Objects
     if(typeof V.UploadObjectPath == "undefined"){
       $("#tab_object_upload").css("display","none").addClass("disabled");
+      $(".upload_objects_help_content").css("display","none");
     }
 
     //PDFs
@@ -107,37 +109,44 @@ VISH.Configuration = (function(V,$,undefined){
       $("#tab_video_repo").css("display","none").addClass("disabled");
       $("#tab_presentations_repo").css("display","none").addClass("disabled");
       $("#menu a[action='insertPresentation']").hide().addClass("disabled_config");
+      $(".vish_help_content").css("display","none");
     }
 
     //Flickr
     if(configuration["Flickr"]!==true){
       $("#tab_pic_flickr").css("display","none").addClass("disabled");
+      $(".flickr_help_content").css("display","none");
     }
 
     //XWiki
     if(configuration["XWiki"]!==true){
       $("#tab_pic_xwiki").css("display","none").addClass("disabled");
+      $(".xwiki_help_content").css("display","none");
     }
 
     //YouTube
     if((configuration["Youtube"]!==true)||(typeof configuration["YoutubeAPIKEY"] != "string")){
       $("#tab_video_youtube").css("display","none").addClass("disabled");
+      $(".youtube_help_content").css("display","none");
     }
 
     //SoundCloud
     if((configuration["SoundCloud"]!==true)||(typeof configuration["SoundCloudAPIKEY"] != "string")){
       $("#tab_audio_soundcloud").css("display","none").addClass("disabled");
+      $(".soundcloud_help_content").css("display","none");
     }
 
     //LRE
     if((configuration["LRE"]!==true)||(typeof configuration["LRE_path"] != "string")){
       $("#tab_pic_lre").css("display","none").addClass("disabled");
       $("#tab_object_lre").css("display","none").addClass("disabled");
+      $(".lre_help_content").css("display","none");
     }
 
     //Europeana
     if((configuration["Europeana"]!==true)||(typeof configuration["EuropeanaAPIKEY"] != "string")){
       $("#tab_pic_europeana").css("display","none").addClass("disabled");
+      $(".europeana_help_content").css("display","none");
     }
 
     ////////////////
