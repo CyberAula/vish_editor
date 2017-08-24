@@ -21,7 +21,6 @@ VISH.Editor.Image.XWiki = (function(V,$,undefined){
 	}
 	
 	var onLoadTab = function(){
-		
 	};
 
 	var _requestData = function(text){
@@ -34,32 +33,32 @@ VISH.Editor.Image.XWiki = (function(V,$,undefined){
 		V.Utils.Loader.startLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).attr("disabled","true");
 		timestampLastSearch = Date.now();
-	}
+	};
 
 	var _cleanSearch = function(){
 		timestampLastSearch = undefined;
 		$(myInput).val("");
 		$(myInput).removeAttr("disabled");
 		_cleanCarrousel();
-	}
+	};
 
 	var _cleanCarrousel = function(){
 		$("#" + carrouselDivId).hide();
 		V.Editor.Carrousel.cleanCarrousel(carrouselDivId);
-	}
+	};
 
 	var _searchInXWiki = function(text){
 		var config = V.Configuration.getConfiguration();
 		if (!config.XWiki_url) {
-			_onAPIError()
+			_onAPIError();
 			return;
 		}
 		var xwikiURL = config.XWiki_url + "MOOC/Code/FindImages?tags=" + text + "&outputSyntax=plain&xpage=plain";
 		xwikiURL = V.Utils.checkUrlProtocol(xwikiURL);
 		$.getJSON(xwikiURL, function(data) {
-			_onDataReceived(data)
+			_onDataReceived(data);
 		}).error(function() {
-			_onAPIError()
+			_onAPIError();
 		});
 	};
 
@@ -85,17 +84,17 @@ VISH.Editor.Image.XWiki = (function(V,$,undefined){
 		var options = {};
 		options.callback = _onImagesLoaded;
 		V.Utils.Loader.loadImagesOnContainer(carrouselImages,carrouselDivId,options);
-	}
+	};
 
 	var _onImagesLoaded = function(){
 		_onSearchFinished();
 		_drawData();
-	}
+	};
 
 	var _onSearchFinished = function(){
 		V.Utils.Loader.stopLoadingInContainer($("#"+carrouselDivId));
 		$(myInput).removeAttr("disabled");
-	}
+	};
 
 	var _drawData = function(noResults){
 		$("#" + carrouselDivId).show();
@@ -128,7 +127,7 @@ VISH.Editor.Image.XWiki = (function(V,$,undefined){
 			};
 			V.Editor.Carrousel.createCarrousel(carrouselDivId, options);
 		}
-	}
+	};
 
 	var _onAPIError = function(){
 		if(_isValidResult()){
@@ -154,7 +153,7 @@ VISH.Editor.Image.XWiki = (function(V,$,undefined){
 		}
 
 		return true;
-	}
+	};
 	
 	return {
 		init 			: init,

@@ -2253,6 +2253,17 @@ a#tab_object_lre > img, a#tab_pic_lre > img {
 	padding-top: 5px !important;
 }
 
+a#tab_pic_xwiki {
+    padding-bottom: 7px;
+}
+
+a#tab_pic_xwiki > img {
+    width: 53px;
+    max-width: 100%;
+    height: 18px;
+    margin-bottom: -2px;
+}
+
 a#tab_pic_europeana {
     padding-left: 10px;
     padding-right: 10px;

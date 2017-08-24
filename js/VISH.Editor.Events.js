@@ -405,7 +405,7 @@ VISH.Editor.Events = (function(V,$,undefined){
 		$(document).on('click','#tab_pic_repo_help', function(){
 			V.Tour.startTourWithId('search_picture_help', 'bottom');
 		});
-		$(document).on('click','#tab_pic_flikr_help', function(){
+		$(document).on('click','#tab_pic_flickr_help', function(){
 			V.Tour.startTourWithId('search_flickr_fancy_help', 'bottom');
 		});
 		$(document).on('click','#tab_pic_xwiki_help', function(){
