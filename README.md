@@ -25,6 +25,7 @@ A server side implementation has been developed in **Ruby on Rails**. The source
   * Office documents (doc, ppt, odt, odp, etc.)
 * Available repositories:
   * Flickr
+  * XWiki
   * YouTube
   * SoundCloud
   * [ViSH](http://vishub.org)

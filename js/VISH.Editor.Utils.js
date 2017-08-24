@@ -374,6 +374,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 			case "tab_pic_flikr":
 				V.Editor.Image.Flickr.beforeLoadTab();
 				break;
+			case "tab_pic_xwiki":
+				V.Editor.Image.XWiki.beforeLoadTab();
+				break;
 			case "tab_pic_europeana":
 				V.Editor.Image.Europeana.beforeLoadTab();
 				break;
@@ -441,6 +444,9 @@ VISH.Editor.Utils = (function(V,$,undefined){
 				break;
 			case "tab_pic_flikr":
 				V.Editor.Image.Flickr.onLoadTab();
+				break;
+			case "tab_pic_xwiki":
+				V.Editor.Image.XWiki.onLoadTab();
 				break;
 			case "tab_pic_europeana":
 				V.Editor.Image.Europeana.onLoadTab();
@@ -559,3 +565,4 @@ VISH.Editor.Utils = (function(V,$,undefined){
 	};
 
 }) (VISH, jQuery);
+

@@ -132,6 +132,7 @@
 	<script type="text/javascript" src="/js/VISH.Editor.Image.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Image.Repository.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Image.Flickr.js"></script>
+	<script type="text/javascript" src="/js/VISH.Editor.Image.XWiki.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Image.Europeana.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Image.LRE.js"></script>
 	<script type="text/javascript" src="/js/VISH.Editor.Image.Thumbnails.js"></script>
@@ -1105,6 +1106,7 @@
 					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_thumbnails'); return false;" id="tab_pic_thumbnails" class="fancy_tab tabbable venondefaulttab" style="display:none" i18n-key="i.thumbnails">thumbnails</a></li>
 					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_repo'); return false;" id="tab_pic_repo" class="fancy_tab">ViSH</a></li>
 					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_flickr'); return false;" id="tab_pic_flickr" class="fancy_tab"><img src='/images/logos/flickrlogo2.png'/></a></li>
+					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_xwiki'); return false;" id="tab_pic_xwiki" class="fancy_tab"><img src='/images/logos/xwikilogo-small.png'/></a></li>
 					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_europeana'); return false;" id="tab_pic_europeana" class="fancy_tab"><img src='/images/logos/europeanalogo.png'/></a></li>
 					<li><a href="#" onclick="VISH.Editor.Utils.loadTab('tab_pic_lre'); return false;" id="tab_pic_lre" class="fancy_tab"><img src='/images/logos/lrelogo.gif'/></a></li>
 				</ul>
@@ -1113,6 +1115,7 @@
 				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_pic_upload_help' src='/images/vicons/helptutorial_circle_blank.png'/>
 				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_pic_repo_help' src='/images/vicons/helptutorial_circle_blank.png'/>
 				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_pic_flickr_help' src='/images/vicons/helptutorial_circle_blank.png'/>
+				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_pic_xwiki_help' src='/images/vicons/helptutorial_circle_blank.png'/>
 				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_pic_europeana_help' src='/images/vicons/helptutorial_circle_blank.png'/>
 				<img title="Help" i18n-key-tooltip="i.tooltip.Help" class='help_in_fancybox' id='tab_pic_lre_help' src='/images/vicons/helptutorial_circle_blank.png'/>
 			</div>
@@ -1194,6 +1197,16 @@
 						<input id="search_flickr_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
 					</div>	
 					<div id="tab_pic_flickr_content_carrousel"></div>
+				</div>
+			</div>
+
+			<div id='tab_pic_xwiki_content' class="fancy_tab_content">
+				<div class="box1 box1fancy2">
+					<img src="/images/logos/xwikilogo.png" class="imagelogotab">
+					<div class="search_container">
+						<input id="search_xwiki_fancy" type="search" class="input_text_fancy formsizefancy2 marginsfancy2" > </input>
+					</div>	
+					<div id="tab_pic_xwiki_content_carrousel"></div>
 				</div>
 			</div>
 
@@ -2361,7 +2374,7 @@
 		</li>
 	</ol>
 
-	<!-- Help inserting images [URL, Upload, ViSH, Flickr, Europeana, LRE] -->
+	<!-- Help inserting images [URL, Upload, ViSH, Flickr, XWiki, Europeana, LRE] -->
 	<ol id="images_fancy_tabs_id_help" class="joyRideTipContent">
 
 		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_add_resources_fancybox tut_width600_center tut_without_arrow" data-options="tipLocation:none">
@@ -2384,6 +2397,10 @@
 				<tr>
 					<td><p>Flickr</p></td>
 					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
+				</tr>
+				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
 				</tr>
 				<tr>
 					<td><p>Europeana</p></td>
@@ -2436,6 +2453,10 @@
 					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
 				</tr>
 				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
+				</tr>
+				<tr>
 					<td><p>Europeana</p></td>
 					<td><p i18n-key="i.walkImagesMain_Europeana">search images on Europeana</p></td>
 				</tr>
@@ -2478,6 +2499,10 @@
 				<tr>
 					<td><p>Flickr</p></td>
 					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
+				</tr>
+				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
 				</tr>
 				<tr>
 					<td><p>Europeana</p></td>
@@ -2526,6 +2551,10 @@
 					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
 				</tr>
 				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
+				</tr>
+				<tr>
 					<td><p>Europeana</p></td>
 					<td><p i18n-key="i.walkImagesMain_Europeana">search images on Europeana</p></td>
 				</tr>
@@ -2542,6 +2571,56 @@
 		<li data-id="search_flickr_fancy" data-text="Close" i18n-key="i.Close" class="tut_width500 tut_with_arrow" data-options="tipLocation:bottom">
 			<h2 i18n-key="i.walkImagesFlickr2_1">Search images on Flickr</h2>
 			<p i18n-key="i.walkImagesFlickr2_2">This screen allows you to search images on Flickr.</p>
+			<p>
+				<span i18n-key="i.walkSearch1">Write the name you want to search inside the text box, for example</span> <i><span i18n-key="i.nature">nature</span></i>, <span i18n-key="i.walkImagesSearch2">and press the 'enter' key to start the search. When the search has finished, the found images will be shown in this screen. To add any of them to the slide, you should just click on the desired one.</span>
+			</p>
+			<p class="tut_space">&nbsp;</p>
+		</li>
+	</ol>
+
+	<ol id="search_xwiki_fancy_help" class="joyRideTipContent">
+		<li data-id="thumbcontent" data-text="Next" i18n-key="i.Next" class="tut_add_resources_fancybox tut_width600_center tut_without_arrow" data-options="tipLocation:none">
+			<h2 i18n-key="i.walkImagesMain_1">Adding images</h2>
+			<p i18n-key="i.walkImagesMain_2">This screen allows you to add images to the slide. You can select the image to be added from different sources:</p>
+
+			<table>
+				<tr>
+					<td><p i18n-key="i.Url">Url</p></td>
+					<td><p i18n-key="i.walkImagesMain_Url">add an image by pasting a url</p></td>
+				</tr>
+				<tr>
+					<td><p i18n-key="i.Upload">Upload</p></td>
+					<td><p i18n-key="i.walkImagesMain_Upload">upload an own image from your computer</p></td>
+				</tr>
+				<tr>
+					<td><p>ViSH</p></td>
+					<td><p i18n-key="i.walkImagesMain_ViSH">search images on the ViSH repository</p></td>
+				</tr>
+				<tr>
+					<td><p>Flickr</p></td>
+					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
+				</tr>
+				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
+				</tr>
+				<tr>
+					<td><p>Europeana</p></td>
+					<td><p i18n-key="i.walkImagesMain_Europeana">search images on Europeana</p></td>
+				</tr>
+				<tr>
+					<td><p>LRE</p></td>
+					<td><p i18n-key="i.walkImagesMain_LRE">search images on the LRE repository</p></td>
+				</tr>
+			</table>
+
+			<p i18n-key="i.walkImagesXWiki1_1">Now you are in the XWiki tab, click on "Next" to continue.</p>
+			<p class="tut_space">&nbsp;</p>
+		</li>
+
+		<li data-id="search_xwiki_fancy" data-text="Close" i18n-key="i.Close" class="tut_width500 tut_with_arrow" data-options="tipLocation:bottom">
+			<h2 i18n-key="i.walkImagesXWiki2_1">Search images on XWiki</h2>
+			<p i18n-key="i.walkImagesXWiki2_2">This screen allows you to search images on XWiki.</p>
 			<p>
 				<span i18n-key="i.walkSearch1">Write the name you want to search inside the text box, for example</span> <i><span i18n-key="i.nature">nature</span></i>, <span i18n-key="i.walkImagesSearch2">and press the 'enter' key to start the search. When the search has finished, the found images will be shown in this screen. To add any of them to the slide, you should just click on the desired one.</span>
 			</p>
@@ -2570,6 +2649,10 @@
 				<tr>
 					<td><p>Flickr</p></td>
 					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
+				</tr>
+				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
 				</tr>
 				<tr>
 					<td><p>Europeana</p></td>
@@ -2616,6 +2699,10 @@
 				<tr>
 					<td><p>Flickr</p></td>
 					<td><p i18n-key="i.walkImagesMain_Flickr">search images on Flickr</p></td>
+				</tr>
+				<tr>
+					<td><p>XWiki</p></td>
+					<td><p i18n-key="i.walkImagesMain_XWiki">search images on XWiki</p></td>
 				</tr>
 				<tr>
 					<td><p>Europeana</p></td>
