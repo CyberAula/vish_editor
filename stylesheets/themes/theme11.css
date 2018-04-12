@@ -25,7 +25,6 @@ section.slides {
 	background-color: #cacaca
 }
 
-
 section.slides article[type='standard'][template='t10'] > div.t10_center {
 	border-radius: 10px !important;
 	-moz-border-radius: 10px !important;

@@ -8,7 +8,13 @@ VISH.Editor.Themes.Presentation = (function(V,$,undefined){
 		if(_initialized === true){
 			return;
 		}
+		_loadThemes();
+		_enableThemes(getAvailableThemes());
 
+		_initialized = true;
+	};
+
+	var _loadThemes = function(){
 		_themes["theme1"] = {
 			number: "1",
 			color: "000"
@@ -55,7 +61,8 @@ VISH.Editor.Themes.Presentation = (function(V,$,undefined){
 		};
 		_themes["theme12"] = {
 			number: "12",
-			color: "666"
+			color: "666",
+			thumbnail: "select.gif"
 		};
 		_themes["theme13"] = {
 			number: "13",
@@ -99,10 +106,58 @@ VISH.Editor.Themes.Presentation = (function(V,$,undefined){
 		};
 		_themes["theme23"] = {
 			number: "23",
-			color: "666"
+			color: "fff"
 		};
+		_themes["theme24"] = {
+			number: "24",
+			color: "000"
+		};
+	};
 
-		_initialized = true;
+	var _enableThemes = function(themes){
+		for(var i=0; i<themes.length; i++){
+			var theme = themes[i];
+			
+			//Enable theme
+			var elem = $("<div id='select_" + theme + "' class='slidethumb'></div>");
+
+			switch(i+1) {
+			case 1:
+				$(elem).addClass("row1");
+				$(elem).addClass("col1");
+				break;
+			case 2:
+			case 3:
+			case 4:
+				$(elem).addClass("row1");
+				break;
+			case 5:
+			case 9:
+				$(elem).addClass("col1");
+				break;
+			default:
+			}
+
+			if(typeof _themes[theme].thumbnail == "string"){
+				var thumbName = _themes[theme].thumbnail;
+			} else {
+				var thumbName = "select.png";
+			}
+			$(elem).append("<img src='/images/themes/" + theme + "/" + thumbName + "' class='themethumb' theme='" + theme + "'/>");
+			$("#theme_fancybox").append(elem);
+		}
+	};
+
+	var getAvailableThemes = function(){
+		var configuration = V.Configuration.getConfiguration();
+		if((typeof configuration["available_themes"] == "object")&&(configuration["available_themes"] instanceof Array)&&(configuration["available_themes"].length > 0)){
+			return configuration["available_themes"].slice(0,12);
+		}
+		return _getDefaultAvailableThemes();
+	};
+
+	var _getDefaultAvailableThemes = function(){
+		return ["theme1","theme13","theme14","theme15","theme16","theme17","theme18","theme19","theme20","theme21","theme22","theme23"];
 	};
 
 	var onThemeSelected = function(event){
@@ -150,12 +205,12 @@ VISH.Editor.Themes.Presentation = (function(V,$,undefined){
 		}
 	};
 
-
 	return {
-		init			: init,
-		onThemeSelected	: onThemeSelected,
-		selectTheme		: selectTheme,
-		getCurrentTheme	: getCurrentTheme
+		init				: init,
+		getAvailableThemes	: getAvailableThemes,
+		onThemeSelected		: onThemeSelected,
+		selectTheme			: selectTheme,
+		getCurrentTheme		: getCurrentTheme
 	};
 
 }) (VISH, jQuery);

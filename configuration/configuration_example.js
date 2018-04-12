@@ -130,6 +130,9 @@ var getOptions = function(){
 		// 	}
 		// }
 
+		//Select available VE presentation themes
+		// configuration["available_themes"] = ["theme1","theme2"];
+
 		options["configuration"] = configuration;
 
 
