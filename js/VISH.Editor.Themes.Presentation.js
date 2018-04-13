@@ -143,7 +143,8 @@ VISH.Editor.Themes.Presentation = (function(V,$,undefined){
 			} else {
 				var thumbName = "select.png";
 			}
-			$(elem).append("<img src='/images/themes/" + theme + "/" + thumbName + "' class='themethumb' theme='" + theme + "'/>");
+
+			$(elem).append("<img src='" + V.ImagesPath + "themes/" + theme + "/" + thumbName + "' class='themethumb' theme='" + theme + "'/>");
 			$("#theme_fancybox").append(elem);
 		}
 	};
