@@ -1,3 +1,0 @@
-In order to test, we upload the file to https://webapps.ph.ed.ac.uk/qtiworks/anonymous/standalonerunner in order to check if the file is well written in IMS QTI.
-When it passes the test, we check if the file is well represented in Vish_Editor by importing it.
-
