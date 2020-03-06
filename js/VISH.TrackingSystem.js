@@ -235,12 +235,30 @@ VISH.TrackingSystem = (function(V,$,undefined){
 			data["tracking_system_entry_id"] = _rTrse;
 		}
 
-		$.ajax({
-			type    : 'POST',
-			url     : _apiUrl,
-			data    : data,
-			async	: false
-		});
+		//From release 80, Google Chrome disallows synchronous XHR during page dismissal when the page is being navigated away from or closed by the user (https://www.chromestatus.com/feature/4664843055398912).
+		//Thus, the previous way of sending data no longer works.
+		//Changing async to true causes that data is not always sent.
+		//Alternative to send data with Google Chrome during page dismissal: use Fetch keep-alive.
+
+		if(V.Status.getDevice().browser.name !== V.Constant.CHROME){
+			$.ajax({
+				type    : 'POST',
+				url     : _apiUrl,
+				data    : data,
+				async	: false
+			});
+		} else {
+			fetch(_apiUrl, {
+				method: 'POST',
+  				body: JSON.stringify(data),
+  				headers: {
+      				'Accept': 'application/json',
+      				'Content-Type': 'application/json'
+    			},
+    			mode: 'cors',
+				keepAlive: true
+			});
+		}
 	};
 
 	var _composeTrackingObject = function(){
