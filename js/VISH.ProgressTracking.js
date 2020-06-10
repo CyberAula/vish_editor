@@ -218,7 +218,7 @@ VISH.ProgressTracking = (function(V,$,undefined){
 					}
 					break;
 				default:
-					return;
+					break;
 			}
 		}
 	};
